@@ -45,6 +45,17 @@ to avoid over-engineering.
 - No concrete document or acceptance criteria to review against
 - Purely conversational brainstorming without formal output
 
+## Skill Dependencies
+
+Judge a spec under review against `doc-organize`: its content levels
+(`doc-organize/CONTENT-PRIORITY.md`), the authority model
+(`doc-organize/AUTHORITY-BY-CONCERN.md`), and the rule that a spec describes
+behavior rather than implementation (`doc-organize/SPEC-SCOPE.md`).
+
+Report as findings: L1 content that is missing, implementation detail that should
+not be there, and any claim about current implementation that the code does not
+support. Report them — never rewrite the spec or the code silently.
+
 ## Process
 
 ### Step 0: Determine Review Type

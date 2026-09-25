@@ -26,6 +26,9 @@ metadata:
     - spec is stale
     - INDEX.md
     - feature docs
+    - spec drift
+    - source of truth
+    - authority by concern
 ---
 
 # doc-organize
@@ -50,6 +53,85 @@ file per type, and sync documents with each other and with the code.
 - Resolving git merge conflicts in code — use git, not this skill
 - Deciding which of two conflicting decisions is correct — this skill reports
   the conflict, a human rules on it
+
+## Authority by Concern
+
+No single artifact is the source of truth for everything. Each concern has one
+authoritative artifact:
+
+| Concern | Authoritative artifact |
+|---|---|
+| Intended behavior | the feature's `spec` |
+| API contract | OpenAPI, protobuf, GraphQL, JSON Schema, event schema, AsyncAPI |
+| Database structure | migrations and schema definitions |
+| Current implementation | the code |
+| Executable verification | the tests |
+
+A spec is authoritative for what the system SHOULD do. Code is authoritative for
+what the system CURRENTLY does. A disagreement is never resolved by assuming
+`spec > code` or `code > spec` — establish the intended behavior first, and ask
+when it cannot be established.
+
+## Spec Scope and Size
+
+A healthy spec is not a complete description of the code. It describes behavior,
+contracts, invariants, constraints, error semantics, state transitions, and
+architecture boundaries — not class hierarchies, private methods, or internal
+algorithms. If the implementation can change while externally observable
+behavior does not, the spec should not change.
+
+A `spec` or `impl-plan` must stay under 1,000 lines. `decision-history` is exempt
+— it is append-only history, and history is never trimmed. Split on bounded
+context, domain, ownership, or lifecycle boundaries, never on a line count.
+
+## Content Priority
+
+Content sits at one of four levels, and the level decides what happens when a
+document has to shrink:
+
+| Level | Holds | On trim |
+|---|---|---|
+| L1 Decisive | Behavior, contracts, invariants, constraints, error semantics, security rules, architecture boundaries, out-of-scope, assumptions, compatibility constraints | Never deleted |
+| L2 Rationale | Why this design, with evidence | Compressed |
+| L3 Alternatives | Why not the other approach | Deleted |
+| L4 Support | References, research, examples, raw output, links to facts owned elsewhere | Deleted first |
+
+A fact whose authoritative home is another document is a link, never a
+restatement — that copy is L4. Trim L4, then L3, then compress L2. If the
+document is still over 1,000 lines, split it. Deleting L1 to fit the cap is a
+defect, not an optimization. See `CONTENT-PRIORITY.md`.
+
+## Spec Health
+
+A `final` document is maintained rather than rewritten. An important spec may
+carry `health` (`active` | `stale` | `deprecated`), `owner`, and `last_verified`.
+`stale` means not recently verified, not wrong. Health tracks `last_verified`,
+not `last_updated`.
+
+## Change-Driven Sync
+
+Sync on change of behavior, not on change of code:
+
+```
+Behavior changed -> identify the relevant spec -> review it ->
+update it if intended behavior changed -> update code -> update tests -> verify
+```
+
+Refactoring, renaming, internal optimization, class restructuring, framework
+migration, and swapping an implementation detail do not change the spec. Update
+the spec because intended behavior changed, not merely because code changed.
+
+## Reference Files
+
+Sibling files in this skill's directory, loaded on demand:
+
+| File | Read when |
+|---|---|
+| `AUTHORITY-BY-CONCERN.md` | Deciding which artifact owns a fact, or resolving a spec/code conflict |
+| `SPEC-SCOPE.md` | Writing a spec, or deciding whether something belongs in one |
+| `SPEC-HEALTH.md` | Auditing spec health, staleness, or drift |
+| `CONTENT-PRIORITY.md` | Trimming or splitting a spec, or classifying a piece of content |
+| `NAMING.md` | Placing, naming, or splitting a document, or resolving a name collision |
 
 ## The Standard
 
@@ -92,14 +174,28 @@ exists. Do not add frontmatter to them.
 docs/features/<feature>/<type>/<feature>-<type>.md
 ```
 
-One file per type per feature. A feature has at most one `prd`, one `spec`, one
-`impl-plan`, one `test-plan`, one `decision-history`, and one `how-to`.
+One file per type per feature by default. `prd`, `test-plan`, `decision-history`,
+and `how-to` stay single-file. `spec` and `impl-plan` may be split, because they
+are the two types that grow without bound.
 
 - `<feature>` is kebab-case, lowercase, no spaces or special characters
 - The filename repeats the feature and the type, so a file is identifiable
   outside its directory
 - A supporting file that a document cites sits in that document's folder:
   `docs/features/<feature>/spec/<source-name>.md`
+- A feature has at most one `decision-history`, and it is exempt from the
+  1,000-line cap: it is append-only history, and history is never trimmed
+
+### Splitting and collisions
+
+Split parts take an aspect noun for `spec` (`payment-spec-authorization.md`) and
+a zero-padded sequence plus a phase name for `impl-plan`
+(`payment-impl-plan-01-schema.md`). Check every new feature and file name against
+what already exists before creating it, and log a rename rather than performing
+it silently.
+
+See `NAMING.md` for the boundary rules, the collision signals, and how to resolve
+each case.
 
 ### Frontmatter
 
@@ -115,8 +211,13 @@ final_date: YYYY-MM-DD
 ```
 
 `final_date` is required when `state` is `final`. A document becomes `final` when
-its content is settled; after that, the code becomes the source of truth and the
-document is maintained rather than rewritten.
+its content is settled; after that it is maintained rather than rewritten, and
+authority follows the concern table above rather than defaulting to the code.
+
+An important spec may additionally carry `spec_id`, `version`, `health`, `owner`,
+and `last_verified`. All five are optional — see `SPEC-HEALTH.md`. `health` is
+deliberately not called `status`: `state` already tracks the authoring state
+(`draft` or `final`), and two fields named for "state" invite confusion.
 
 ### Required sections
 
@@ -133,7 +234,14 @@ dropped.
 | `how-to` | Overview, Prerequisites, Steps, Verification |
 
 `prd` carries product intent. `spec` carries technical intent and the `Design`
-section replacing the old separate design document.
+section replacing the old separate design document. `Implementation Decisions`
+records architecture-level choices and their rationale — not class structure,
+private methods, or internal algorithms. See `SPEC-SCOPE.md`.
+
+`spec` may also carry an optional `Alternatives Considered` section holding the
+rejected approaches and why each lost. It is L3 and the first thing deleted when
+the document runs long; omit it when no alternative was seriously considered.
+`to-spec` produces it as part of its template.
 
 ### Decision history
 
@@ -251,12 +359,18 @@ is doc-review, not this skill.
 2. Identify the type from the six committed types. If the content spans types —
    product intent and technical detail together — split it: intent goes to `prd`,
    technical detail to `spec`.
-3. Compute the path: `docs/features/<feature>/<type>/<feature>-<type>.md`.
-4. If that file already exists, do not create a second one. Merge the new content
-   into the existing file in the right section, and append a Change Log entry.
-5. Write the frontmatter and required sections for the type.
-6. Append the Change Log entry.
-7. Regenerate INDEX.md.
+3. Check the feature name and the intended filename against what already exists
+   (`NAMING.md` lists the collision signals). Merge, rename, or confirm with the
+   user before going further.
+4. Compute the path: `docs/features/<feature>/<type>/<feature>-<type>.md`.
+5. If that file already exists, do not create a second one — unless the type is
+   `spec` or `impl-plan` and the existing file is at the 1,000-line cap. Prefer
+   merging into the existing file in the right section and appending a Change Log
+   entry. Split only when the cap forces it, and name the parts by the rules
+   above.
+6. Write the frontmatter and required sections for the type.
+7. Append the Change Log entry.
+8. Regenerate INDEX.md.
 
 ### Mode B: Lint
 
@@ -280,6 +394,18 @@ rest.
    - **Dead links** — a relative link whose target does not exist
    - **Orphan or dangling INDEX.md entries**
    - **`docs/adr/`** — legacy layout; fold into the feature's `decision-history`
+   - **Stale verification** — `last_verified` older than roughly 90 days; report
+     only, never edit a file to move a timestamp
+   - **Excessive implementation detail** — a spec describing class structure,
+     private methods, or internal algorithms rather than behavior
+   - **Reference drift** — a spec citing an API, component, or file that no
+     longer exists; report it, do not guess the replacement
+   - **Oversized document** — a `spec` or `impl-plan` over 1,000 lines; report it
+     for splitting. `decision-history` is exempt
+   - **Name collision** — two features or two files whose names trip a collision
+     signal from `NAMING.md`
+   - **Restated fact** — the same fact written out in two documents; the second
+     occurrence should be a link
 3. Apply the mechanical fixes directly: rename to the standard filename, move to
    the standard directory, add missing frontmatter, move Change Log to the end.
 4. Report what was applied and what needs a human decision — content that must be
@@ -319,14 +445,24 @@ Reconcile documents with each other and with the code.
    - **Tone and terminology** — the same concept named differently in two places,
      or a glossary term from CONTEXT.md not used
    - **Decision conflict** — two documents asserting different decisions
-   - **Code drift** — a document describing behavior the code no longer has
-3. Resolve in this order:
+   - **Spec drift** — a document and the code disagreeing about the same concern,
+     or a document describing behavior the code no longer has
+   - **Reference drift** — a document citing an API, component, or file that no
+     longer exists
+   - **Duplicated facts** — the same fact maintained by hand in two places
+3. Classify each drift by the concern it touches, then resolve by authority:
    - **Change Log first.** If one document records a later change than another,
-     the later one wins.
-   - **Code is the source of truth.** Where a document and the code disagree
-     about what the system does, update the document to match the code.
-   - **Report what cannot be resolved.** A disagreement about which decision is
-     correct is a human decision. Report it; never silently pick one.
+     the later one wins — a document-to-document question.
+   - **Intended behavior** — the spec is authoritative. If the code contradicts
+     the intended behavior, the code is what changes.
+   - **Current implementation** — the code is authoritative. If the spec
+     describes an implementation difference, the spec is what changes.
+   - **Contract or schema** — the machine-readable artifact is authoritative.
+     Never hand-edit a spec to mirror it.
+   - **Report what cannot be resolved.** Which decision or which behavior is
+     correct is a human decision. Detect, explain, show the evidence from both
+     sides, and ask. Never silently pick one, and never rewrite the spec to match
+     the code by default. See `AUTHORITY-BY-CONCERN.md`.
 4. Auto-fix formatting, tone, terminology, links, and heading hierarchy directly.
 5. Report every semantic conflict with the two positions and the evidence from
    each side. Do not rewrite a decision.
@@ -346,27 +482,57 @@ MUST:
 - [ ] Consolidation preserved every decision, including superseded ones
 - [ ] Scratch content is gitignored and not committed
 - [ ] No content lost — every unique section from a merged file has a home
+- [ ] Spec changes trace to a change in intended behavior, not to a code change
+- [ ] Authority for each affected concern identified before resolving a conflict
+- [ ] No spec/code conflict resolved silently
+- [ ] No fact maintained by hand in two places
+- [ ] `spec` and `impl-plan` under 1,000 lines, or split on a bounded context
+- [ ] Feature and file names checked for collisions before creation
+- [ ] No L1 content dropped to meet the size cap
 
 NICE:
 
 - [ ] Heading hierarchy has no skipped levels
 - [ ] All relative links resolve
 - [ ] Terminology matches CONTEXT.md
+- [ ] `last_verified` present and current on important specs
+- [ ] Spec stays within a useful context boundary
 
 ## Anti-Patterns
 
-- **Creating a second file for a type that already exists.** One feature has one
-  `spec`. Add to it rather than creating `spec-v2.md`.
+- **Creating a second file for a type that already exists.** A feature has one
+  `spec` until it crosses the 1,000-line cap. Add to the existing file rather
+  than creating `spec-v2.md`, and split only on a real boundary.
+- **Splitting a spec to dodge the cap without a boundary.** A split part is a
+  bounded context, not a page break.
+- **Numbering spec parts.** A number says nothing about the contents. Plans are
+  numbered because a plan is ordered; specs are named by their aspect.
+- **Deleting L1 content to fit the cap.** L1 is never deleted. Trim L4, then L3,
+  and split if it is still too long.
+- **Restating a fact that already has a home.** The second occurrence is a link,
+  and a link is L4.
+- **Letting two features carry confusable names.** Merge them, or rename both so
+  each is distinguishable.
 - **Deleting a superseded decision.** Superseded and wrong decisions stay in the
   log. That history is the point.
 - **Committing scratch.** Research and discussion are working material. If it
   matters enough to commit, it belongs in the document it supports.
 - **Silently resolving a decision conflict.** Report it and let a human rule.
-- **Rewriting a `final` document.** After `final`, maintain it; the code is the
-  source of truth.
+- **Rewriting a `final` document.** After `final`, maintain it; authority follows
+  the concern, not the code by default.
 - **Consolidating without approval.** Mode C deletes files. Always propose first.
 - **Treating a content review as a lint.** Judging whether a design is sound is
   doc-review, not this skill.
+- **Treating code as the source of truth for everything.** Code answers what the
+  system currently does. It does not answer what the system should do.
+- **Treating the spec as the source of truth for everything.** A spec is not a
+  description of the current implementation, and code that diverges from it is
+  not automatically wrong.
+- **Editing a spec to prove it is in sync.** Update the spec because intended
+  behavior changed, not because code changed.
+- **Maintaining the same fact in two places by hand.** Pick the authoritative
+  artifact and generate or delete the copy.
+- **Splitting a spec to satisfy a line count.** Split on bounded context.
 
 ## Sources
 
@@ -380,3 +546,14 @@ NICE:
 - User requirement: one file per type per feature, feature vocabulary, scratch
   gitignored, decision history kept whole, Lint applies while Consolidate
   proposes
+- User requirement (2026-09-25): authority by concern in place of a single global
+  source of truth, behavior described over implementation, change-driven sync,
+  spec size and agent-context guidance, spec health metadata, and drift
+  detection. Detail carried in `AUTHORITY-BY-CONCERN.md`, `SPEC-SCOPE.md`, and
+  `SPEC-HEALTH.md` so SKILL.md stays loadable in one pass.
+- User requirement (2026-09-25, second pass): four content priority levels with
+  L1 undeletable, trim order L4 then L3, a hard 1,000-line cap exempting
+  `decision-history`, a feature folder allowed more than one `spec` or
+  `impl-plan`, aspect names for spec parts and numbered phase names for plan
+  parts, and a name-collision check on every placement. Detail in
+  `CONTENT-PRIORITY.md`.

@@ -34,3 +34,14 @@ Run typechecking regularly, single test files regularly, and the full test suite
 Once done, use /code-review to review the work.
 
 Commit your work to the current branch.
+
+## Skill Dependencies
+
+Classify the change before touching the spec. `doc-organize/CONTENT-PRIORITY.md`
+and `doc-organize/AUTHORITY-BY-CONCERN.md` define the difference between a
+behavior change and an implementation-only change. Refactoring, renaming, internal
+optimization, and framework migration do not require a spec edit; a change to
+externally observable behavior does.
+
+When code and spec disagree, do not silently rewrite either one. Report the
+conflict, show the evidence on both sides, and ask.
