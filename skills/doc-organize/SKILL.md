@@ -201,6 +201,18 @@ docs/features/*/discussion/
 docs/features/*/state/
 ```
 
+**Not to be confused with `.scratch/`.** Two gitignored trees exist by design,
+and they hold different things:
+
+| Tree | Holds | Written by |
+|---|---|---|
+| `docs/features/<feature>/` | Reasoning material — research, discussion, adversarial review, progress state | This skill, and the skills that produce reasoning |
+| `.scratch/<feature-slug>/` | Ephemeral build artifacts — tickets and issues | wayfinder and to-tickets |
+
+Reasoning is worth keeping on disk next to the feature it belongs to. Tickets are
+throwaway work items and stay outside the docs tree. This skill does not manage
+`.scratch/`, and Lint does not report it.
+
 ### INDEX.md
 
 Regenerate after every create, move, rename, or delete. Walk the docs tree and
