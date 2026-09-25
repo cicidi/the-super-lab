@@ -1,6 +1,11 @@
 ---
+feature: spec-driven-development
+type: test-plan
 state: final
 final_date: 2026-08-02
+health: active
+owner: cicidi
+last_verified: 2026-09-25
 ---
 
 # Wayfinder Import — Test Plan
@@ -215,3 +220,9 @@ TC-11 (smoke test)   ──  Run last
 - **TC-01 through TC-09, TC-12**: MUST pass before commit
 - **TC-10, TC-11**: MUST pass after deploy
 - Any failure → fix, re-run that TC
+
+## Change Log
+
+| Date | Change |
+|------|--------|
+| 2026-09-25 | Added frontmatter and Change Log; stripped numeric prefixes from section headings |

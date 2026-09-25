@@ -9,3 +9,8 @@ CLAUDE.local.md
 CONVENTIONS.md
 CHANGELOG.md
 .idea/
+
+# doc-organize: scratch and state are working material, never committed
+docs/features/*/research/
+docs/features/*/discussion/
+docs/features/*/state/

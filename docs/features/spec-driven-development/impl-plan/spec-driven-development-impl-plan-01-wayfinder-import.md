@@ -1,6 +1,11 @@
 ---
+feature: spec-driven-development
+type: impl-plan
 state: final
 final_date: 2026-08-02
+health: active
+owner: cicidi
+last_verified: 2026-09-25
 ---
 
 # Wayfinder Import — Implementation Plan
@@ -561,3 +566,9 @@ metadata:
 5. **Add "Spec Creation & Doc-Review Checkpoint" section** after Fog of War
 6. **Replace `/research` reference** with ai-coworker research in interface config
 7. **Remove `setup-matt-pocock-skills` reference** — use ai-coworker init/project
+
+## Change Log
+
+| Date | Change |
+|------|--------|
+| 2026-09-25 | Added frontmatter and Change Log; stripped numeric prefixes from section headings |

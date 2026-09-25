@@ -1,6 +1,11 @@
 ---
+feature: spec-driven-development
+type: spec
 state: final
 final_date: 2026-08-02
+health: active
+owner: cicidi
+last_verified: 2026-09-25
 ---
 
 # Wayfinder Import & Adaptation — Design Spec
@@ -9,14 +14,14 @@ final_date: 2026-08-02
 > brief terminology, pluggable skill interfaces, delivery review gate, and
 > doc-review checkpoint before to-tickets.
 
-## 1. Problem Statement
+## Problem Statement
 
 Matt Pocock's Wayfinder is a decision-mapping methodology for work too large
 for one agent session. It charts a shared map on an issue tracker and resolves
 decision tickets one at a time. We want to import it into skill-factory with
 several adaptations to fit ai-coworker's ecosystem and clarify terminology.
 
-## 2. Terminology Changes
+## Terminology Changes
 
 Only one term changes:
 
@@ -28,7 +33,7 @@ All other terms preserved: map, destination, frontier, fog of war, claim,
 blocking, chart the map, work the map, decisions so far, not yet specified,
 out of scope.
 
-## 3. Attribution
+## Attribution
 
 ```yaml
 metadata:
@@ -38,7 +43,7 @@ metadata:
 
 Format follows existing `import-skills/tdd/SKILL.md` convention.
 
-## 4. Pluggable Skill Interfaces
+## Pluggable Skill Interfaces
 
 Wayfinder depends on four capabilities. Each is an interface with a Matt
 default and an optional ai-coworker replacement.
@@ -66,7 +71,7 @@ or a companion config file).
 
 Our install: investigate → ai-coworker research, all others → Matt defaults.
 
-## 5. Delivery Review Gate
+## Delivery Review Gate
 
 Wayfinder's "Work the map" Step 4 (record resolution) gains a review checkpoint:
 
@@ -85,7 +90,7 @@ IF brief type is task AND deliverables were produced:
 Research, grilling, and prototype briefs do NOT trigger this gate — their
 output is knowledge/decisions, not deliverables.
 
-## 6. Doc-Organize: MkDocs-Ready Guarantee
+## Doc-Organize: MkDocs-Ready Guarantee
 
 All documents produced during Wayfinder must be MkDocs-ready — deployable
 as a GitHub Pages website without additional conversion.
@@ -101,7 +106,7 @@ step to ensure:
 This is NOT a separate checkpoint — it's an inline discipline. Every time a
 document is created or moved, doc-organize runs to keep the site buildable.
 
-## 7. Spec Creation & Doc-Review Checkpoint
+## Spec Creation & Doc-Review Checkpoint
 
 After all briefs are resolved (map done), before to-tickets:
 
@@ -134,7 +139,7 @@ Three checkpoints total:
 | Doc-organize | Every doc create/move | INDEX.md + mkdocs nav + file naming |
 | Doc-review | After to-spec, before to-tickets | All documents: content consistency + completeness + mkdocs-ready |
 
-## 8. Complete Lifecycle
+## Complete Lifecycle
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐
@@ -211,7 +216,7 @@ N briefs (decisions) → 1 spec (PRD, a Jira ticket) → M Jira tickets (build)
   Tickets:  M issues, label ready-for-agent (created by to-tickets)
 ```
 
-## 9. Testing Strategy
+## Testing Decisions
 
 ### 9.1 Test-First Discipline
 
@@ -243,7 +248,7 @@ Test plan MUST be written and reviewed **before** implementation plan. Implement
 1. `docs/spec-driven-development/test-plan/wayfinder-import-test-plan.md` — written BEFORE impl plan
 2. Test results recorded inline in impl plan tasks (pass/fail per step)
 
-## 10. Files to Import
+## Files to Import
 
 | Skill | Source | Destination |
 |---|---|---|
@@ -254,9 +259,15 @@ Test plan MUST be written and reviewed **before** implementation plan. Implement
 
 research is NOT imported — ai-coworker's own research skill replaces it.
 
-## 11. Out of Scope
+## Out of Scope
 
 - `setup-matt-pocock-skills` — use ai-coworker's init/project instead
 - `to-spec`, `to-tickets`, `implement` — future imports
 - Breaking Bad terminology rename — separate future map
 - `triage` — not needed by wayfinder
+
+## Change Log
+
+| Date | Change |
+|------|--------|
+| 2026-09-25 | Added frontmatter and Change Log; stripped numeric prefixes from section headings |

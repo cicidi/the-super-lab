@@ -1,8 +1,12 @@
-## Change Log
-| Date | Change |
-|------|--------|
-| 2026-07-26 | Auto-generated from 126 session decisions |
-
+---
+feature: skill-factory
+type: prd
+state: final
+final_date: 2026-09-25
+health: stale
+owner: cicidi
+last_verified: 2026-09-25
+---
 
 # skill-factory PRD
 
@@ -14,7 +18,7 @@
 
 ---
 
-## 1. Overview
+## Overview
 
 skill-factory is a curated, framework-agnostic collection of AI agent skills, each packaged as a self-contained directory with a `SKILL.md` file. It is designed to be **opencode-native** – any SKILL.md-aware agent can copy, fork, or move a skill between projects without modification. The project serves:
 
@@ -24,7 +28,7 @@ skill-factory is a curated, framework-agnostic collection of AI agent skills, ea
 
 The project has grown organically through 126 documented decisions, covering everything from skill creation workflows to import policies for external contributions. This PRD formalises the requirements for the platform itself.
 
-## 2. Goals & Success Metrics
+## Goals and Success Metrics
 
 | Goal | Success Metric |
 |------|----------------|
@@ -35,7 +39,7 @@ The project has grown organically through 126 documented decisions, covering eve
 | **Self‑healing** | 80% of user corrections to skill output automatically trigger pattern injection into `CLAUDE.md` |
 | **Reusability** | 100% of skills contain no hard‑coded absolute paths; all config stored in `~/.person_info.md` or environment variables |
 
-## 3. User Stories / Use Cases
+## User Stories
 
 - **As a skill author**, I want to scaffold a new skill using a guided 5‑phase workflow (`skill-create`) so that I produce a SKILL.md that follows the schema, includes examples, and deploys to the correct source repository.
 - **As a skill maintainer**, I want to edit an existing skill (`skill-edit`) with safety checks (source repo enforcement) and automatic deployment so that changes are version‑controlled and traceable.
@@ -45,7 +49,7 @@ The project has grown organically through 126 documented decisions, covering eve
 - **As a documentation curator**, I want the factory to automatically generate an `INDEX.md` with summaries and content type columns for all published skills.
 - **As a power user**, I want to aggregate decision logs and correction traces (`self-heal`, `self-analyze`) to continuously improve skill behaviour.
 
-## 4. Functional Requirements
+## Functional Requirements
 
 ### 4.1 Skill Lifecycle
 
@@ -88,7 +92,7 @@ The project has grown organically through 126 documented decisions, covering eve
 | F15  | On every pull request, run a pipeline that validates SKILL.md structure, checks for forbidden patterns (absolute paths, missing type suffix), and runs a quick smoke test against a sandbox agent. | P1 |
 | F16  | Deploy changes to the main branch only after successful validation and approval. | P0 |
 
-## 5. Non-Functional Requirements
+## Non-Functional Requirements
 
 | ID   | Requirement | Target / Constraint |
 |------|-------------|---------------------|
@@ -99,7 +103,7 @@ The project has grown organically through 126 documented decisions, covering eve
 | N5   **Backward Compatibility** | Skills created under a previous schema version must continue to work; schema migrations must be documented. | Provide a `VERSION.md` per skill if needed. |
 | N6   **Documentation** | Every skill must include a `CHANGELOG.md` (or section in SKILL.md) and a meaningful description. | Mandatory. |
 
-## 6. Out of Scope
+## Out of Scope
 
 - **Defining the full set of skills** – The PRD covers the platform, not the content of individual skills. Existing skills (e.g., `youtube‑research‑pipeline`, `luma-event-scout`) are examples, not requirements.
 - **Building a runtime agent** – skill-factory does not ship its own AI agent; it relies on external SKILL.md‑aware agents (e.g., Claude via opencode).
@@ -108,3 +112,11 @@ The project has grown organically through 126 documented decisions, covering eve
 - **Hosting a skill execution sandbox** – The factory is a static collection; it does not provide a cloud execution environment.
 - **Multi‑language support** – All skills are currently English‑only; internationalisation is deferred.
 - **Formal verification of skill correctness** – Quality relies on testing skills (`auto-tdd`, `bug-hunt`) but not external theorem proving.
+
+## Change Log
+
+| Date | Change |
+|------|--------|
+| Date | Change |
+| 2026-07-26 | Auto-generated from 126 session decisions |
+| 2026-09-25 | Added frontmatter; normalized section names to the standard; moved Change Log to the end |
