@@ -33,7 +33,7 @@ available.
 ## When NOT to Use
 
 - Running an existing skill — just invoke it directly
-- Creating an initiative → use /initiative
+- Creating a feature → use /feature
 - Managing the project catalog → use /project
 
 ## Process

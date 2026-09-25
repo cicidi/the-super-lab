@@ -42,7 +42,7 @@ A **skill** is a self-contained directory with a `SKILL.md` file. It packages "h
 | [doc-protect](personal-skills/doc-protect/) | Protect sections of documents from AI edits |
 | [luma-event-scout](personal-skills/luma-event-scout/) | Scout AI/tech events on Luma in the Bay Area with advanced filtering |
 | [pic-to-txt](personal-skills/pic-to-txt/) | Convert a folder of screenshot images into a clean text document via OCR |
-| [tmux-status-bar](personal-skills/tmux-status-bar/) | Set up tmux status bar with session, git, and initiative info |
+| [tmux-status-bar](personal-skills/tmux-status-bar/) | Set up tmux status bar with session, git, and feature info |
 | [transcribe-audio](personal-skills/transcribe-audio/) | Convert audio files to text transcripts using local Whisper on GPU |
 | [video-production-pip-style](personal-skills/video-production-pip-style/) | Replicate the Andrei Jikh video production style with PiP citations |
 | [youtube-research-pipeline](personal-skills/youtube-research-pipeline/) | Turn any topic into a complete YouTube video package with research and interactive HTML |
