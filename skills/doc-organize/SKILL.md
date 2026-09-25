@@ -221,8 +221,10 @@ not listed is an orphan; a listed file that does not exist is a dead link.
 
 ### PROTECTED blocks
 
-Content between `<!-- PROTECTED START -->` and `<!-- PROTECTED END -->` is never
-modified by any mode.
+Content between `<!-- PROTECTED -->` and `<!-- END PROTECTED -->` is never
+modified by any mode. The `<!-- PROTECTED START -->` / `<!-- PROTECTED END -->`
+spelling is also recognised, but prefer the shorter form, which is what the rest
+of the tooling uses.
 
 ## Process
 
