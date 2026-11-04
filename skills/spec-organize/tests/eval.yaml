@@ -1,9 +1,10 @@
 # SDD eval configuration — see parent test-plan
+# Copy to local overrides only; do not commit API secrets.
 judge:
-  model: "" # set before run, e.g. provider/model id
+  model: "" # required before TST-E+: provider/model id
 gold:
-  version: v1
-  models: [] # three provider slugs for TST-C
+  version: v1 # bump when annotations.yaml grows
+  models: [] # three provider slugs for TST-C parallel runs
 target:
   repo: .
   feature: iphone-purchase

@@ -1,6 +1,6 @@
 # SDD tooling index
 
-Mechanical gate: `skills/spec-organize/tests/run_mechanical.sh` (see `skills/spec-organize/tests/README.md`).
+Mechanical gate: `./tools/run_sdd_mechanical.sh` (alias for `skills/spec-organize/tests/run_mechanical.sh`; see `skills/spec-organize/tests/README.md`).
 
 | Script | Role |
 |---|---|

@@ -42,6 +42,7 @@ Match initiative summary HTML (e.g. `spec-driven-development.html`): self-contai
 - **spec-pipeline:** prompt/trigger after major spec changes or on user request
 - **spec-write / spec-organize:** md and paths only — not HTML template owner
 - Conflict or spec bug found while assembling → **Ask human** → fix md → regenerate HTML
+- SDD parent: `python3 tools/build_sdd_reader.py` then `python3 tools/validate_sdd_reader.py`
 
 ## Sequence / flow diagrams
 

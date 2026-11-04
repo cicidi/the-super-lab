@@ -60,7 +60,8 @@ def main() -> None:
     flags = {a for a in sys.argv[1:] if a.startswith("-")}
     if "--help" in flags or "-h" in flags:
         print("usage: run_spec_checks.py [--summary] [docs/features/path]")
-        print("  Tree-level checks (collision, INDEX, no_commit) run when path is under docs/features/.")
+        print("  Per-file: frontmatter, paths, sections, decision_log, change_log, ids, size")
+        print("  Tree (under docs/features/): collision, index_book, no_commit; parent five-doc when linting a feature root")
         sys.exit(0)
     summary_only = "--summary" in flags
     target = Path(args[0]) if args else ROOT / "docs/features"

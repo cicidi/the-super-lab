@@ -261,6 +261,7 @@ def test_run_pos_fixtures_script():
         text=True,
     )
     assert proc.returncode == 0, proc.stdout + proc.stderr
+    assert "ok: 2 pos markdown" in proc.stdout
 
 
 def test_run_neg_fixtures_script():
@@ -272,6 +273,14 @@ def test_run_neg_fixtures_script():
         text=True,
     )
     assert proc.returncode == 0, proc.stdout + proc.stderr
+    assert "ok: 10 neg fixtures" in proc.stdout
+
+
+def test_run_sdd_mechanical_wrapper():
+    repo = ROOT.parents[2]
+    script = repo / "tools/run_sdd_mechanical.sh"
+    assert script.is_file()
+    assert script.stat().st_mode & 0o111
 
 
 def test_tst_a_registry_stats_script():

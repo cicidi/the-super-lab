@@ -28,4 +28,4 @@ jobs:
       - name: Install pytest
         run: pip install pytest
       - name: SDD mechanical gate
-        run: ./skills/spec-organize/tests/run_mechanical.sh
+        run: ./tools/run_sdd_mechanical.sh
