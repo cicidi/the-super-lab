@@ -2,8 +2,6 @@
 
 from pathlib import Path
 
-import pytest
-
 from checks.frontmatter import check_frontmatter
 from checks.paths import check_committed_path
 
@@ -17,7 +15,16 @@ def test_neg_missing_frontmatter():
 
 
 def test_neg_bad_filename():
-    p = FIX / "neg" / "bad-filename" / "design" / "wrong-name.md"
+    p = (
+        FIX
+        / "neg"
+        / "bad-filename"
+        / "docs"
+        / "features"
+        / "demo"
+        / "design"
+        / "wrong-name.md"
+    )
     assert any(f.check == "paths" for f in check_committed_path(p))
 
 
