@@ -35,7 +35,7 @@ last_verified: 2026-11-03
 | **文件名** | `<parent>-reader.html` |
 | **目录** | `docs/features/<parent>/`（与 parent initiative 同级，不在 `features/<sub>/` 内） |
 | **Source of truth** | 各 Tab 对应的一篇或多篇 committed `.md`；HTML **derived** |
-| **参考（待加料）** | `docs/features/spec-driven-development/spec-driven-development-reader.html` — 结构可参考，**内容须按 N-B 补全** |
+| **参考** | `spec-driven-development-reader.html` — 由 `tools/build_sdd_reader.py` 自 canonical `.md` 生成（**DSGN-N-B**） |
 
 #### DSGN-N-B — 保真（MUST — 回应「不要精简这么多」）
 

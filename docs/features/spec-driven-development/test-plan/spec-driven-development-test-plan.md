@@ -10,11 +10,11 @@ last_verified: 2026-11-03
 
 # Spec-Driven Development — Test Plan
 
-Initiative 级 test plan。**被测对象** = deliverable 三个 skill：**spec-organize**（主 skill）、**spec-review**、**spec-write**（不单独测，由 spec-organize 覆盖）。**Oracle** = `skills/spec-organize/SPEC-STANDARD.md`（待建，自 `features/document-standard/design/document-standard-design.md` 产出）。Sub-feature 不另写 test-plan。
+Initiative 级 test plan。**被测对象** = **spec-organize**（主）、**spec-review**、**spec-write**（write 由 organize 覆盖）；**spec-pipeline** 编排 **Out of scope** 本 harness（见 pipeline design / TST-J 可选矩阵）。**Oracle** = `skills/spec-organize/SPEC-STANDARD.md`（自 document-standard design）。Sub-feature 不另写 test-plan。
 
 ## Test Scope
 
-**In scope：** 三个 skill 在「装进任意项目」场景下的行为；输入三类——本 repo `docs/features/`、外部 repo（`eval.yaml` 指定路径）、人工 fixture。**Out of scope：** skill 正文改动（本 plan 只定义测什么）；设计合理性；merge 策略；pipeline 阶段编排。
+**In scope：** 上列三 skill 在「装进任意项目」场景下的行为；输入三类——本 repo `docs/features/`、外部 repo（`eval.yaml` 指定路径）、人工 fixture。**Out of scope：** skill 正文改动（本 plan 只定义测什么）；设计合理性；merge 策略；**spec-pipeline** 阶段编排（除 TST-J 配置矩阵）。
 
 **Parent vs sub（spec-review）：** 审 **parent**（`docs/features/spec-driven-development/` 根，不含 `features/<sub>/`）时须核对五篇均在：`prd`、`design`、`decision-history`、`impl-plan`、`test-plan`（见 parent HLD §8）。**Sub-feature** 不要求齐全，只审已有文件。
 
@@ -142,3 +142,4 @@ Initiative 级 test plan。**被测对象** = deliverable 三个 skill：**spec-
 | 2026-11-03 | 重写为 initiative 级：被测 = spec-organize / spec-review；两分制；gold 版本化；资产在 skills/<skill>/tests |
 | 2026-11-03 | 移除 wayfinder-import 例外与 out-of-scope 项 |
 | 2026-11-03 | §8 对齐：parent 五篇齐备（TST-N）；sub 豁免 |
+| 2026-11-04 | 被测三 skill + spec-pipeline 编排 out of scope（HLD §7） |

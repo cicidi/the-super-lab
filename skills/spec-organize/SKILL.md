@@ -430,7 +430,7 @@ it proposes and waits — it never applies without approval.
      it supported before removing it.
    - A `reference/` file is a supporting file, not scratch. Move it into the
      folder of the document it supports — a source cited by the spec goes to
-     `spec/` — and keep it committed so the citation stays verifiable.
+     `design/` — and keep it committed so the citation stays verifiable.
 3. Present the plan: every move, merge, and deletion, with the target of each.
 4. On approval, apply it, regenerate INDEX.md, and append Change Log entries.
 5. If a decision is being overwritten by consolidation, add a superseding entry

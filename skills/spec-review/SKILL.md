@@ -56,6 +56,14 @@ Report as findings: L1 content that is missing, implementation detail that shoul
 not be there, and any claim about current implementation that the code does not
 support. Report them — never rewrite the spec or the code silently.
 
+Also load `skills/spec-organize/SPEC-STANDARD.md` for **mechanical MUST** checks
+(**ARD-P**): path/filename, frontmatter, letter IDs, decision-log shape, size caps,
+INDEX orphans — **suggest fixes only**, never apply edits.
+
+**Parent initiative** (`docs/features/<parent>/` root, not `features/<sub>/`):
+missing any of prd, design, decision-history, impl-plan, test-plan → severity **≥3**
+(parent HLD §8, **TST-N**).
+
 ## Process
 
 ### Step 0: Determine Review Type
