@@ -38,8 +38,8 @@ items:
   - id: MUST-H
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:103
     text: '不得要求 frontmatter、Change Log、INDEX 条目。升格进 committed type 时 **link**，不把 raw 当 authoritative home。'
-    method: python
-    check: 'change_log'
+    method: llm
+    check: ''
   - id: MUST-I
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:131
     text: '- **质量（DSGN-M MUST）**：disk 有文件但未 listed → **orphan**；listed 但文件不存在 → **dead link**。'
@@ -83,8 +83,8 @@ items:
   - id: MUST-Q
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:307
     text: '**MUST：** **DSGN-A** 全满足（含 **DSGN-F** ID 不可改、不可复用）；**DSGN-G** 冲突不 silent；**DSGN-I** 不删 L1；consolidation 不丢 decision；**Commit = no** 路径未 commit；INDEX 无 orphan/dead link；含 `docs/features/` 变更的 **push** 时 INDEX/book 已与源同步；collision 已查。'
-    method: python
-    check: 'collision'
+    method: llm
+    check: ''
   - id: MUST-R
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:315
     text: '验证见 parent **`../../../test-plan/spec-driven-development-test-plan.md`**：被测对象是 **spec-organize / spec-review**，不是本篇；本篇全部 **MUST / 禁止** 由 **TST-A** 扫入 `must_registry.yaml`，机械项 Python 判、其余 LLM judge 判。'
@@ -140,3 +140,33 @@ items:
     text: '**Sub-feature（`features/<sub>/`）：** **不** 要求五篇齐全；可以只有 `design` 等。review 只查**已有**文稿；**不得**因未计划的 type 缺失而 fail。'
     method: llm
     check: ''
+  - id: MUST-AC
+    source: docs/features/spec-driven-development/design/spec-driven-development-design.md:124
+    text: '**Parent（本 initiative 根`docs/features/spec-driven-development/`）：** spec-review 须核对 **feature spec 五篇** 均在。'
+    method: python
+    check: 'parent_complete'
+  - id: MUST-AD
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:189
+    text: 'Decision Log 表头：`ID | Date | Decision`；**倒序**；Change Log **最后一节**。'
+    method: python
+    check: 'decision_log'
+  - id: MUST-AE
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:180
+    text: '| Type | Required sections（可 add，不可 rename/drop） |'
+    method: python
+    check: 'sections'
+  - id: MUST-AF
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:171
+    text: 'feature: <feature-name> — committed frontmatter block（DSGN-E）。'
+    method: python
+    check: 'frontmatter'
+  - id: MUST-AG
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:189
+    text: 'Change Log：**最后一节**，只 append。'
+    method: python
+    check: 'change_log'
+  - id: MUST-AH
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:69
+    text: '**Collision** → **DSGN-K**。'
+    method: python
+    check: 'collision'

@@ -377,6 +377,9 @@ is spec-review, not this skill.
 Audit the docs tree against the standard. Applies mechanical fixes; reports the
 rest.
 
+**SDD harness (this repo):** `skills/spec-organize/tests/run_mechanical.sh` runs
+`tools/run_spec_checks.py`, `must_registry_coverage.py`, and `tst_a_anchor_check.py`, then pytest on `test_checks.py`.
+
 1. Walk `docs/features/` and collect every markdown file.
 2. Check each file against the standard:
    - **Wrong root** — a doc tree under `docs/initiatives/` or `docs/<feature>/`,

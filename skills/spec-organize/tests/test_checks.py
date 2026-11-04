@@ -144,6 +144,24 @@ def test_pos_sdd_index_book():
     assert not check_index_book(repo)
 
 
+def test_pos_pipeline_subfeature_design():
+    repo = ROOT.parents[2]
+    p = repo / "docs/features/spec-driven-development/features/pipeline/design/pipeline-design.md"
+    assert not check_sections(p)
+
+
+def test_tst_a_anchor_check_script():
+    repo = ROOT.parents[2]
+    script = repo / "tools/tst_a_anchor_check.py"
+    proc = subprocess.run(
+        [sys.executable, str(script)],
+        cwd=repo,
+        capture_output=True,
+        text=True,
+    )
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+
+
 def test_must_registry_coverage_script():
     repo = ROOT.parents[2]
     script = repo / "tools/must_registry_coverage.py"
