@@ -9,4 +9,4 @@
 | `RECAP-TEMPLATE.md` | Copy-paste recap shape |
 | `SPEC-READER.md` | Pointer to **SPEC-HTML-STANDARD** / DSGN-N |
 
-Mechanical gate: `tools/run_sdd_mechanical.sh` · tool catalog: `tools/README-SDD.md`.
+Mechanical gate: `tools/run_sdd_mechanical.sh` · tool catalog: `tools/README-SDD.md` · all SDD skills: `skills/SDD-DELIVERABLES.md`.

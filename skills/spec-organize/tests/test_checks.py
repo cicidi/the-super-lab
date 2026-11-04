@@ -241,6 +241,18 @@ def test_validate_sdd_reader_script():
     assert proc.returncode == 0, proc.stdout + proc.stderr
 
 
+def test_eval_next_steps_script():
+    repo = ROOT.parents[2]
+    proc = subprocess.run(
+        [sys.executable, str(repo / "tools/eval_next_steps.py")],
+        cwd=repo,
+        capture_output=True,
+        text=True,
+    )
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+    assert "TST-C" in proc.stdout
+
+
 def test_eval_preflight_script():
     repo = ROOT.parents[2]
     proc = subprocess.run(

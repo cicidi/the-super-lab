@@ -40,9 +40,10 @@ def main() -> None:
             print(f"README cases missing: {sorted(missing)}", file=sys.stderr)
         sys.exit(1)
     text = README.read_text(encoding="utf-8")
-    if str(len(DOCUMENTED)) not in text and "mechanical-missing-frontmatter" not in text:
-        print("cases/README.md may be stale", file=sys.stderr)
-        sys.exit(1)
+    for slug in DOCUMENTED:
+        if slug not in text:
+            print(f"cases/README.md missing row for {slug}", file=sys.stderr)
+            sys.exit(1)
     print(f"ok: {len(on_disk)} review cases synced with README")
 
 
