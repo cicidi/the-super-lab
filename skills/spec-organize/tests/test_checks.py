@@ -264,6 +264,17 @@ def test_run_pos_fixtures_script():
     assert "ok: 2 pos markdown" in proc.stdout
 
 
+def test_check_neg_fixture_catalog_script():
+    repo = ROOT.parents[2]
+    proc = subprocess.run(
+        [sys.executable, str(repo / "tools/check_neg_fixture_catalog.py")],
+        cwd=repo,
+        capture_output=True,
+        text=True,
+    )
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+
+
 def test_run_neg_fixtures_script():
     repo = ROOT.parents[2]
     proc = subprocess.run(

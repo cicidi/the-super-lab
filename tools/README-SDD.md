@@ -6,6 +6,7 @@ Mechanical gate: `./tools/run_sdd_mechanical.sh` (alias for `skills/spec-organiz
 |---|---|
 | `run_spec_checks.py` | Lint `docs/features/` (`--summary`, `--help`; tree checks when path under `docs/features/`) |
 | `run_neg_fixtures.py` / `run_pos_fixtures.py` | TST-B fixture gates |
+| `check_neg_fixture_catalog.py` | `neg/*` dirs ↔ runner `CASES` |
 | `must_registry_coverage.py` | Registry vs checker mapping |
 | `tst_a_anchor_check.py` | Registry source line anchors |
 | `tst_a_registry_stats.py` | Registry vs scan candidate counts |

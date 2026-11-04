@@ -377,8 +377,7 @@ is spec-review, not this skill.
 Audit the docs tree against the standard. Applies mechanical fixes; reports the
 rest.
 
-**SDD harness (this repo):** `skills/spec-organize/tests/run_mechanical.sh` runs
-`tools/run_spec_checks.py`, `must_registry_coverage.py`, and `tst_a_anchor_check.py`, then pytest on `test_checks.py`.
+**SDD harness (this repo):** `./tools/run_sdd_mechanical.sh` — lint, neg/pos fixtures, registry anchors, gold/reader smoke, spec-review cases, pytest (`skills/spec-organize/tests/README.md`).
 
 1. Walk `docs/features/` and collect every markdown file.
 2. Check each file against the standard:

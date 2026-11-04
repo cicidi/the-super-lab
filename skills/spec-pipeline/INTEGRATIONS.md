@@ -36,3 +36,4 @@ When user asks recap, emit:
 - **Decision log + ADR split**: executive table + deep appendix — matches our **decision-history** + Evidence Appendix; IDs stay **ARD-*** per frozen document-standard.
 - **Spec-first / “spec kit” loops** (e.g. constitution → specify → plan → tasks): treat as **Map/Converge** inspiration only — our committed types stay **DSGN-B**; do not add parallel markdown schemas under `docs/features/`.
 - **Human-readable bundle**: one HTML reader per parent (our **SPEC-HTML-STANDARD** + `build_sdd_reader.py`) vs wiki/PDF exports — same rule: derived artifact, `.md` stays canonical.
+- **Contract-first APIs** (OpenAPI / protobuf / etc.): authoritative for wire format per **spec-organize** authority table — map to **design** + contract artifacts in Converge, not a sixth committed “spec type.”
