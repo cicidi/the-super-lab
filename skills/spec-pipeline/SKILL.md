@@ -27,7 +27,7 @@ metadata:
 Orchestrates spec-driven development: **Create → Map → Converge → Downstream**.
 Entry point before **spec-organize** / **spec-write**; prompts for **spec-review** before commit.
 
-Design: `docs/features/spec-driven-development/features/pipeline/design/pipeline-design.md` (**PIPE-***). Skill routing table: **`INTEGRATIONS.md`**; phase/lint/reader flows: **`SEQUENCE.md`** (this directory).
+Design: `docs/features/spec-driven-development/features/pipeline/design/pipeline-design.md` (**PIPE-***). Skill routing table: **`INTEGRATIONS.md`**; phase/lint/reader flows: **`SEQUENCE.md`**; phase checklists: **`PHASE-CHECKLISTS.md`** (this directory).
 
 ## When to Use
 
@@ -86,7 +86,7 @@ When the user wants a **readable spec bundle** or after major spec updates:
 3. Assemble rich HTML (tabs, cards, tables, flows) — **not** md fetch/preview.
 4. Write `docs/features/<parent>/<parent>-reader.html`; canonical footers per tab.
 5. Match initiative summary HTML styling when present.
-6. For SDD parent, may run `python3 tools/build_sdd_reader.py` after `.md` updates.
+6. For SDD parent, may run `python3 tools/build_sdd_reader.py` then `python3 tools/validate_sdd_reader.py` after `.md` updates.
 
 Do not treat the HTML as source of truth. If assembly exposes a spec error, **ask the human** → update **spec** first → regenerate reader → then skills.
 

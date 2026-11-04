@@ -167,6 +167,25 @@ def test_pos_pipeline_subfeature_design():
     assert not check_sections(p)
 
 
+def test_gold_v1_annotations_scaffold():
+    ann = ROOT / "gold/v1/annotations.yaml"
+    text = ann.read_text(encoding="utf-8")
+    assert "version: v1" in text
+    assert "GOOD-A" in text
+
+
+def test_validate_sdd_reader_script():
+    repo = ROOT.parents[2]
+    script = repo / "tools/validate_sdd_reader.py"
+    proc = subprocess.run(
+        [sys.executable, str(script)],
+        cwd=repo,
+        capture_output=True,
+        text=True,
+    )
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+
+
 def test_spec_review_case_checks_script():
     repo = ROOT.parents[2]
     script = repo / "skills/spec-review/tests/run_case_checks.py"

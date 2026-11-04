@@ -15,6 +15,7 @@
 | **Any** | Before commit | **spec-review** | ask (PIPE-A4) | Mechanical MUST + semantic; suggest only |
 | **Downstream** | impl-plan / test-plan | **spec-write** + **spec-organize** | MUST | Parallel, both from design 篇 |
 | **Any** | Human reader HTML | **SPEC-HTML-STANDARD** + `tools/build_sdd_reader.py` | optional | No spec edits; derived HTML only |
+| **Any** | Reader smoke test | `tools/validate_sdd_reader.py` | optional | After build; panel ids + Mermaid CDN |
 | **Any** | Mechanical MUST (TST-B) | `python3 tools/run_spec_checks.py docs/features/<f>/` | optional | Tree: collision, INDEX, `no_commit`; see **`SEQUENCE.md`** lint diagram |
 | **Any** | Registry vs checkers (TST-A) | `python3 tools/must_registry_coverage.py` | optional | After editing `must_registry.yaml` or checkers |
 
