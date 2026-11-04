@@ -8,7 +8,7 @@
 | Path | Purpose |
 |---|---|
 | `context-variants/` | TST-F unhappy inputs (`budget-conflict`, etc.) |
-| `runs/<model>/` | TST-C outputs + `interview.md` |
+| `runs/<model>/` | TST-C outputs + `interview.md` (see `runs/README.md`, `_template/`) |
 | `exemplar/` | TST-D consolidated good spec tree |
 | `annotations.yaml` | GOOD/BAD labels for score 2 |
 

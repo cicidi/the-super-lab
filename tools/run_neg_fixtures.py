@@ -19,6 +19,7 @@ from checks.ids import check_ids  # noqa: E402
 from checks.no_commit import check_no_commit_tree  # noqa: E402
 from checks.paths import check_committed_path  # noqa: E402
 from checks.sections import check_sections  # noqa: E402
+from checks.parent_complete import check_parent_complete  # noqa: E402
 from checks.size import check_size  # noqa: E402
 
 # neg folder name → (expected check id, runner)
@@ -32,6 +33,7 @@ CASES: list[tuple[str, str, object]] = [
     ("bad-size", "size", check_size),
     ("bad-no-commit", "no_commit", check_no_commit_tree),
     ("collision-pair", "collision", check_collision),
+    ("bad-parent-incomplete", "parent_complete", check_parent_complete),
 ]
 
 
@@ -39,6 +41,13 @@ def _run_case(name: str, check: str, fn) -> list:
     base = FIX / name
     if not base.is_dir():
         return [f"missing fixture dir {name}"]
+    if fn is check_parent_complete:
+        for feat in (base / "docs" / "features").iterdir():
+            if feat.is_dir():
+                findings = fn(feat)
+                if any(f.check == check for f in findings):
+                    return []
+        return [f"{name}: no {check} finding"]
     if fn is check_no_commit_tree or fn is check_collision:
         root = base / "docs" / "features"
         if not root.is_dir():

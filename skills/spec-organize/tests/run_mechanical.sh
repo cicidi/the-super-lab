@@ -9,6 +9,7 @@ python3 tools/run_pos_fixtures.py
 python3 tools/must_registry_coverage.py
 python3 tools/tst_a_anchor_check.py
 python3 tools/test_gold_annotations.py
+python3 tools/eval_preflight.py
 python3 tools/validate_sdd_reader.py
 python3 skills/spec-review/tests/run_case_checks.py
 export PYTHONPATH="$ROOT/skills/spec-organize/tests"

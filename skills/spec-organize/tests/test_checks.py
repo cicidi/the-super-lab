@@ -120,6 +120,11 @@ def test_neg_bad_no_commit_reference():
     assert any(f.check == "no_commit" and "reference" in f.message for f in check_no_commit_tree(root))
 
 
+def test_neg_bad_parent_incomplete():
+    root = FIX / "neg" / "bad-parent-incomplete" / "docs" / "features" / "incomplete-parent"
+    assert any(f.check == "parent_complete" for f in check_parent_complete(root))
+
+
 def test_neg_index_dead_link():
     repo = ROOT.parents[2]
     index = repo / "docs/INDEX.md"
@@ -217,6 +222,17 @@ def test_validate_sdd_reader_script():
     script = repo / "tools/validate_sdd_reader.py"
     proc = subprocess.run(
         [sys.executable, str(script)],
+        cwd=repo,
+        capture_output=True,
+        text=True,
+    )
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+
+
+def test_eval_preflight_script():
+    repo = ROOT.parents[2]
+    proc = subprocess.run(
+        [sys.executable, str(repo / "tools/eval_preflight.py")],
         cwd=repo,
         capture_output=True,
         text=True,
