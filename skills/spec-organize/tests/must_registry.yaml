@@ -19,7 +19,7 @@ items:
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:69
     text: '**Split / size：** 六种 type 均可 part；`行数 > 硬 cap` → MUST fail；按 bounded context / domain / ownership / lifecycle / 时间线 拆（不机械切行数）。可先 **DSGN-I** trim（`decision-history` 不 trim entry，只拆 part）。Entry 文件可链 part。**Collision** → **DSGN-K**。硬 cap 含 frontmatter 与 Change Log；**删 L1 凑 cap = defect**。'
     method: python
-    check: 'frontmatter'
+    check: 'size'
   - id: MUST-E
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:92
     text: 'Part 命名：`prd`/`design`/`test-plan`/`how-to` 用名词；`impl-plan`/`decision-history` 用 `<NN>`+phase/period。Legacy 顶层 `state/`、`research/`、`discussion/` → 迁入 `raw/`。Ticket：`.scratch/<feature-slug>/`（同样 **不得 commit**）。'
@@ -28,23 +28,23 @@ items:
   - id: MUST-F
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:94
     text: '**Commit 列：** `yes` = 纳入版本库的标准 feature 文档；`no` = **不得** 进入 git（本地可存在）。`no` 路径须 `.gitignore` 或等价策略；误 commit 视为 **DSGN-M MUST** 违规。'
-    method: llm
-    check: ''
+    method: python
+    check: 'no_commit'
   - id: MUST-G
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:96
     text: '#### DSGN-C — 不得 commit（`Commit = no`）'
-    method: llm
-    check: ''
+    method: python
+    check: 'no_commit'
   - id: MUST-H
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:103
     text: '不得要求 frontmatter、Change Log、INDEX 条目。升格进 committed type 时 **link**，不把 raw 当 authoritative home。'
     method: python
-    check: 'frontmatter'
+    check: 'change_log'
   - id: MUST-I
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:131
     text: '- **质量（DSGN-M MUST）**：disk 有文件但未 listed → **orphan**；listed 但文件不存在 → **dead link**。'
-    method: llm
-    check: ''
+    method: python
+    check: 'index_book'
   - id: MUST-J
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:150
     text: '- 新增/变更 decision 只改 feature / `decision-history`，再 **重生成** book 摘要，禁止只在 book 改口径。'
@@ -58,13 +58,13 @@ items:
   - id: MUST-L
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:195
     text: '**ID immutable（MUST）：** 某 ID **一旦写入** feature spec（表、标题、正文、外链），该字符串 **终身固定** — **禁止** 改字母、改前缀、拼写「修正」、重编号、把 `PRD-A` 合并进 `PRD-B`。**禁止复用** 已出现过的 ID（即使 entry 被 strike / 整段作废）。口径变了 → **新 ID** + 旧处 strike / link（**DSGN-J**）；**不得** 改旧 ID 本身。'
-    method: llm
-    check: ''
+    method: python
+    check: 'ids'
   - id: MUST-M
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:207
     text: '**凡有序号即 ID（MUST）：** ADR、requirement、design 规则小节、impl task、test case、defer/open question 等 **一切** 可追溯条目 — **必须** 用上表 `{前缀}-{字母}`。**禁止** 裸数字（`0001`）、`PRD-1`/`DH-1`/`FR-3`/`OQ-1`/`D1` 等作永久 ID。本 design 篇小节即 **DSGN-A** 起（见索引）。'
-    method: llm
-    check: ''
+    method: python
+    check: 'ids'
   - id: MUST-N
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:215
     text: '不要 global single source of truth — **按 concern 各认一个 authoritative artifact**；不一致时 **Detect → Report → Ask**（禁止 silent 改一侧；禁止默认 `design` 篇 > code）。'
@@ -83,8 +83,8 @@ items:
   - id: MUST-Q
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:307
     text: '**MUST：** **DSGN-A** 全满足（含 **DSGN-F** ID 不可改、不可复用）；**DSGN-G** 冲突不 silent；**DSGN-I** 不删 L1；consolidation 不丢 decision；**Commit = no** 路径未 commit；INDEX 无 orphan/dead link；含 `docs/features/` 变更的 **push** 时 INDEX/book 已与源同步；collision 已查。'
-    method: llm
-    check: ''
+    method: python
+    check: 'collision'
   - id: MUST-R
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:315
     text: '验证见 parent **`../../../test-plan/spec-driven-development-test-plan.md`**：被测对象是 **spec-organize / spec-review**，不是本篇；本篇全部 **MUST / 禁止** 由 **TST-A** 扫入 `must_registry.yaml`，机械项 Python 判、其余 LLM judge 判。'

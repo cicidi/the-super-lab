@@ -10,11 +10,25 @@ ROOT = Path(__file__).resolve().parents[1]
 REG = ROOT / "skills/spec-organize/tests/must_registry.yaml"
 
 RULES: list[tuple[re.Pattern[str], str, str]] = [
-    (re.compile(r"frontmatter|final_date|health.*status", re.I), "python", "frontmatter"),
-    (re.compile(r"文件名.*必须|`<f>-<type>", re.I), "python", "paths"),
+    (re.compile(r"文件名.*必须|`<f>-<type>|禁止.*reference/", re.I), "python", "paths"),
+    (re.compile(r"硬 cap|行数\s*>`|删 L1 凑 cap", re.I), "python", "size"),
+    (re.compile(r"DSGN-K|\*\*Collision\*\*|collision 已查", re.I), "python", "collision"),
+    (re.compile(r"orphan|dead link|INDEX.*同步", re.I), "python", "index_book"),
+    (re.compile(r"ID immutable|凡有序号即 ID|前缀}-\{字母\}|禁止.*裸数字", re.I), "python", "ids"),
     (re.compile(r"Decision Log|倒序", re.I), "python", "decision_log"),
-    (re.compile(r"硬 cap|行数\s*>`", re.I), "python", "size"),
     (re.compile(r"Change Log", re.I), "python", "change_log"),
+    (re.compile(r"Commit = no|不得.*进入 git|reference/", re.I), "python", "no_commit"),
+    (
+        re.compile(r"final_date|health:\s|frontmatter.*必须|Required frontmatter", re.I),
+        "python",
+        "frontmatter",
+    ),
+    (re.compile(r"Required sections|必备章节", re.I), "python", "sections"),
+    (
+        re.compile(r"五篇均在|parent.*五篇|prd.*design.*decision-history.*impl-plan.*test-plan", re.I),
+        "python",
+        "parent_complete",
+    ),
 ]
 
 

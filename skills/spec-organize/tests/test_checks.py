@@ -1,5 +1,7 @@
 """TST-B: mechanical checks vs fixtures."""
 
+import subprocess
+import sys
 from pathlib import Path
 
 from checks.change_log import check_change_log
@@ -110,3 +112,16 @@ def test_neg_index_dead_link():
 def test_pos_sdd_index_book():
     repo = ROOT.parents[2]
     assert not check_index_book(repo)
+
+
+def test_must_registry_coverage_script():
+    repo = ROOT.parents[2]
+    script = repo / "tools/must_registry_coverage.py"
+    proc = subprocess.run(
+        [sys.executable, str(script)],
+        cwd=repo,
+        capture_output=True,
+        text=True,
+    )
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+    assert "python:" in proc.stdout
