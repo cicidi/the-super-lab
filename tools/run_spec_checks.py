@@ -56,7 +56,10 @@ RUNNERS = [
 
 
 def main() -> None:
-    target = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "docs/features"
+    args = [a for a in sys.argv[1:] if not a.startswith("-")]
+    flags = {a for a in sys.argv[1:] if a.startswith("-")}
+    summary_only = "--summary" in flags
+    target = Path(args[0]) if args else ROOT / "docs/features"
     if not target.exists():
         print(f"missing: {target}", file=sys.stderr)
         sys.exit(1)
@@ -81,9 +84,12 @@ def main() -> None:
             continue
         for fn in RUNNERS:
             findings.extend(fn(path, text))
-    for f in findings:
-        print(f"{f.check}\t{f.path}\t{f.message}")
-    print(f"\n# findings: {len(findings)}")
+    if summary_only:
+        print(len(findings))
+    else:
+        for f in findings:
+            print(f"{f.check}\t{f.path}\t{f.message}")
+        print(f"\n# findings: {len(findings)}")
     sys.exit(1 if findings else 0)
 
 

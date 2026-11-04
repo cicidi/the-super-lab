@@ -33,7 +33,7 @@ Writes and edits **committed** feature spec prose. Standard and paths: **spec-or
 
 ## Process
 
-1. Confirm `<f>`, type, and phase via **spec-pipeline** or user (see **spec-pipeline/INTEGRATIONS.md**).
+1. Confirm `<f>`, type, and phase via **spec-pipeline** or user (see **spec-pipeline/INTEGRATIONS.md** and **PHASE-CHECKLISTS.md**).
 2. Load `skills/spec-organize/SPEC-STANDARD.md` + `CONTENT-PRIORITY.md` / `SPEC-SCOPE.md` when trimming.
 3. Edit with **≤10 lines or ≤200 characters per edit** (parent HLD §4); split or ask for `restructure`.
 4. Use letter-prefix IDs only (**PRD-A**, **DSGN-B**, **ARD-C**, **IMPL-A**, **TST-A**).

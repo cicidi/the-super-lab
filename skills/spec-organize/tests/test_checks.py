@@ -167,6 +167,44 @@ def test_pos_pipeline_subfeature_design():
     assert not check_sections(p)
 
 
+def test_gold_v1_context_variants_present():
+    variants = ROOT / "gold/v1/context-variants"
+    for name in ("budget-conflict", "missing-info", "midway-change", "family-disagree"):
+        assert (variants / f"{name}.md").is_file()
+
+
+def test_pos_fixture_valid_decision_history():
+    p = (
+        FIX
+        / "pos"
+        / "valid-decision-history"
+        / "docs"
+        / "features"
+        / "pos-demo"
+        / "decision-history"
+        / "pos-demo-decision-history.md"
+    )
+    assert not check_decision_log(p)
+    assert not check_change_log(p)
+
+
+def test_run_spec_checks_summary_flag():
+    repo = ROOT.parents[2]
+    proc = subprocess.run(
+        [
+            sys.executable,
+            str(repo / "tools/run_spec_checks.py"),
+            "--summary",
+            "docs/features/spec-driven-development",
+        ],
+        cwd=repo,
+        capture_output=True,
+        text=True,
+    )
+    assert proc.returncode == 0
+    assert proc.stdout.strip() == "0"
+
+
 def test_gold_v1_annotations_scaffold():
     ann = ROOT / "gold/v1/annotations.yaml"
     text = ann.read_text(encoding="utf-8")

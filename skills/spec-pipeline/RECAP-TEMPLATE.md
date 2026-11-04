@@ -14,6 +14,7 @@
 
 ### Mechanical check (optional)
 `python3 tools/run_spec_checks.py docs/features/<f>/` → paste finding count  
+Or: `python3 tools/run_spec_checks.py --summary docs/features/<f>/` → number only  
 Full harness (this repo): `skills/spec-organize/tests/run_mechanical.sh`
 
 ### Next skill (see INTEGRATIONS.md)
