@@ -11,3 +11,9 @@ annotations:
     where: context.md
     text: Context pack defines budget conflict (wife cap vs father quote) for interviewer grounding.
     added_in: v1
+  - id: BAD-A
+    kind: bad
+    where: exemplar/ (TST-D)
+    text: Permanent requirement ID uses numeric suffix (e.g. PRD-1) instead of letter ID.
+    expected_fix: Renumber to PRD-A style per DSGN-F; strike+link if superseding.
+    added_in: v1

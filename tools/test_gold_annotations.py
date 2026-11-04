@@ -22,6 +22,8 @@ def main() -> None:
     ids = [ln.split("id:", 1)[1].strip() for ln in text.splitlines() if ln.strip().startswith("- id:")]
     if not ids:
         sys.exit(1)
+    if "BAD-A" in text and "expected_fix:" not in text:
+        sys.exit(1)
     print(f"ok: {len(ids)} annotation(s)")
 
 

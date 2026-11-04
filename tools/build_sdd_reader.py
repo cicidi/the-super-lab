@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import html
 import re
+import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -363,9 +364,25 @@ document.querySelectorAll('.tabs button').forEach(btn=>{
 """
 
 
+def _build_marker() -> str:
+    try:
+        rev = subprocess.run(
+            ["git", "rev-parse", "--short", "HEAD"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            timeout=5,
+        )
+        if rev.returncode == 0:
+            return f"<!-- SDD reader · source .md · git {rev.stdout.strip()} -->\n"
+    except (OSError, subprocess.TimeoutExpired):
+        pass
+    return "<!-- SDD reader · built by tools/build_sdd_reader.py -->\n"
+
+
 def main() -> None:
     panels = "\n\n".join(panel_html(pid, title, [(r, p) for r, p in srcs]) for pid, title, srcs in PANELS)
-    css = SHELL_HEAD + CSS_EXTRA + SHELL_MID + panels + SHELL_TAIL
+    css = _build_marker() + SHELL_HEAD + CSS_EXTRA + SHELL_MID + panels + SHELL_TAIL
     OUT.write_text(css, encoding="utf-8")
     print(f"Wrote {OUT} ({OUT.stat().st_size} bytes)")
 

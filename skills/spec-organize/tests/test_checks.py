@@ -224,6 +224,17 @@ def test_validate_sdd_reader_script():
     assert proc.returncode == 0, proc.stdout + proc.stderr
 
 
+def test_run_neg_fixtures_script():
+    repo = ROOT.parents[2]
+    proc = subprocess.run(
+        [sys.executable, str(repo / "tools/run_neg_fixtures.py")],
+        cwd=repo,
+        capture_output=True,
+        text=True,
+    )
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+
+
 def test_tst_a_registry_stats_script():
     repo = ROOT.parents[2]
     proc = subprocess.run(
