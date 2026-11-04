@@ -5,7 +5,7 @@ gold:
   version: v1
   models: [] # three provider slugs for TST-C
 target:
-  repo: /Users/walter/linux-project/the-super-lab
+  repo: .
   feature: iphone-purchase
 grill:
   skills: [] # baseline: empty

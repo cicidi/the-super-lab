@@ -144,10 +144,39 @@ def test_pos_sdd_index_book():
     assert not check_index_book(repo)
 
 
+def test_pos_fixture_valid_test_plan():
+    p = (
+        FIX
+        / "pos"
+        / "valid-test-plan"
+        / "docs"
+        / "features"
+        / "pos-demo"
+        / "test-plan"
+        / "pos-demo-test-plan.md"
+    )
+    assert not check_frontmatter(p)
+    assert not check_sections(p)
+    assert not check_change_log(p)
+    assert not check_size(p)
+
+
 def test_pos_pipeline_subfeature_design():
     repo = ROOT.parents[2]
     p = repo / "docs/features/spec-driven-development/features/pipeline/design/pipeline-design.md"
     assert not check_sections(p)
+
+
+def test_spec_review_case_checks_script():
+    repo = ROOT.parents[2]
+    script = repo / "skills/spec-review/tests/run_case_checks.py"
+    proc = subprocess.run(
+        [sys.executable, str(script)],
+        cwd=repo,
+        capture_output=True,
+        text=True,
+    )
+    assert proc.returncode == 0, proc.stdout + proc.stderr
 
 
 def test_tst_a_anchor_check_script():

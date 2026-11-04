@@ -1,0 +1,7 @@
+# TST-H scaffold: mechanical findings run_spec_checks should surface on input tree.
+case: mechanical-missing-test-cases
+mechanical:
+  min_findings: 1
+  checks:
+    - sections
+  message_contains: Test Cases

@@ -6,6 +6,7 @@ cd "$ROOT"
 python3 tools/run_spec_checks.py docs/features/spec-driven-development
 python3 tools/must_registry_coverage.py
 python3 tools/tst_a_anchor_check.py
+python3 skills/spec-review/tests/run_case_checks.py
 export PYTHONPATH="$ROOT/skills/spec-organize/tests"
 PYTEST=(python3 -m pytest)
 if ! python3 -m pytest --version >/dev/null 2>&1; then
