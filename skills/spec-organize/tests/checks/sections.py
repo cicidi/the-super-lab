@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import re
 from pathlib import Path
 
 from checks.frontmatter import _parse_frontmatter
@@ -40,6 +41,8 @@ def check_sections(path: Path, text: str | None = None) -> list[Finding]:
     need = REQUIRED.get(t)
     if not need:
         return []
+    if t == "design" and "## Problem Statement" not in raw and re.search(r"^##\s+\d+\.", raw, re.M):
+        return []  # parent HLD-style design
     rel = str(path)
     findings: list[Finding] = []
     for title in need:

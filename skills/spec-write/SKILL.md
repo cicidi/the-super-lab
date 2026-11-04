@@ -33,11 +33,23 @@ Writes and edits **committed** feature spec prose. Standard and paths: **spec-or
 
 ## Process
 
-1. Confirm `<f>`, type, and phase via **spec-pipeline** or user.
-2. Load `skills/spec-organize/SPEC-STANDARD.md` (and sibling refs as needed).
+1. Confirm `<f>`, type, and phase via **spec-pipeline** or user (see **spec-pipeline/INTEGRATIONS.md**).
+2. Load `skills/spec-organize/SPEC-STANDARD.md` + `CONTENT-PRIORITY.md` / `SPEC-SCOPE.md` when trimming.
 3. Edit with **≤10 lines or ≤200 characters per edit** (parent HLD §4); split or ask for `restructure`.
-4. Use correct ID prefixes (**DSGN-F** / **ARD-** etc.).
-5. After create/move: trigger **spec-organize** Organize/Lint + INDEX.
+4. Use letter-prefix IDs only (**PRD-A**, **DSGN-B**, **ARD-C**, **IMPL-A**, **TST-A**).
+5. After create/move: **spec-organize** Organize/Lint; regenerate INDEX when tree changes.
+
+### By type (quick)
+
+| Type | Focus |
+|---|---|
+| **prd** | Problem, goals, requirements with **PRD-*** IDs; deferrals → **ARD-** in decision-history |
+| **design** | Behavior, contracts, boundaries — not class-level code (**SPEC-SCOPE.md**) |
+| **decision-history** | New **ARD-*** row at **top** of Log; supersede = ~~strike~~ + link |
+| **impl-plan** | Numbered tasks **IMPL-***; Global Constraints first |
+| **test-plan** | **TST-*** cases; execution order; pass threshold |
+
+After substantive spec edits on an initiative parent, **spec-pipeline** may run `python3 tools/build_sdd_reader.py` (no spec change in HTML itself).
 
 ## Quality Gates
 
