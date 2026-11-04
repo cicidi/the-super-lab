@@ -7,7 +7,8 @@
 | `mechanical-bad-ids` | Forbidden numeric-style ID |
 | `mechanical-missing-frontmatter` | No YAML frontmatter block |
 | `mechanical-bad-change-log` | Change Log not last `##` section |
+| `mechanical-parent-incomplete` | Parent missing five-doc directories (`tree:` block) |
 
-Run: `python3 skills/spec-review/tests/run_case_checks.py` (expect **5** mechanical cases).
+Run: `python3 skills/spec-review/tests/run_case_checks.py` (expect **6** mechanical cases).
 
 Semantic / severity cases (TST-H full) add `expected.yaml` fields later; see parent test plan.

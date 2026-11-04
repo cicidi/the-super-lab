@@ -16,6 +16,7 @@ from checks.frontmatter import check_frontmatter  # noqa: E402
 from checks.sections import check_sections  # noqa: E402
 from checks.size import check_size  # noqa: E402
 from checks.ids import check_ids  # noqa: E402
+from checks.parent_complete import check_parent_complete  # noqa: E402
 from checks.paths import check_committed_path  # noqa: E402
 
 RUNNERS = [
@@ -32,23 +33,36 @@ def _load_expected(case_dir: Path) -> dict:
     path = case_dir / "expected.yaml"
     if not path.is_file():
         return {}
-    out: dict = {"mechanical": {}}
-    block = None
+    out: dict = {}
+    block: str | None = None
     for line in path.read_text(encoding="utf-8").splitlines():
         s = line.strip()
         if s == "mechanical:":
             block = "mechanical"
+            out.setdefault("mechanical", {})
             continue
-        if block and s.startswith("min_findings:"):
-            out["mechanical"]["min_findings"] = int(s.split(":", 1)[1].strip())
-        if block and s.startswith("max_findings:"):
-            out["mechanical"]["max_findings"] = int(s.split(":", 1)[1].strip())
-        if block and s.startswith("- ") and not s.startswith("- id:"):
-            check_name = s[2:].strip()
-            if check_name and check_name not in ("case:",):
-                out["mechanical"].setdefault("checks", []).append(check_name)
-        if block and s.startswith("message_contains:"):
-            out["mechanical"]["message_contains"] = s.split(":", 1)[1].strip()
+        if s == "tree:":
+            block = "tree"
+            out.setdefault("tree", {})
+            continue
+        if block == "mechanical":
+            if s.startswith("min_findings:"):
+                out["mechanical"]["min_findings"] = int(s.split(":", 1)[1].strip())
+            elif s.startswith("max_findings:"):
+                out["mechanical"]["max_findings"] = int(s.split(":", 1)[1].strip())
+            elif s.startswith("- ") and not s.startswith("- id:"):
+                check_name = s[2:].strip()
+                if check_name:
+                    out["mechanical"].setdefault("checks", []).append(check_name)
+            elif s.startswith("message_contains:"):
+                out["mechanical"]["message_contains"] = s.split(":", 1)[1].strip()
+        if block == "tree":
+            if s.startswith("feature_root:"):
+                out["tree"]["feature_root"] = s.split(":", 1)[1].strip()
+            elif s.startswith("min_findings:"):
+                out["tree"]["min_findings"] = int(s.split(":", 1)[1].strip())
+            elif s.startswith("- "):
+                out["tree"].setdefault("checks", []).append(s[2:].strip())
     return out
 
 
@@ -75,10 +89,22 @@ def main() -> None:
             continue
         exp = _load_expected(case_dir)
         mech = exp.get("mechanical") or {}
-        if not mech:
+        tree = exp.get("tree") or {}
+        if not mech and not tree:
             continue
-        findings = _findings_for_input(input_root)
+        findings = _findings_for_input(input_root) if mech else []
+        if tree:
+            rel = tree.get("feature_root", "")
+            feat = case_dir / rel if rel else input_root
+            if feat.is_dir():
+                findings.extend(check_parent_complete(feat))
+            else:
+                print(f"FAIL {case_dir.name}: missing tree path {rel}")
+                failures += 1
+                continue
         case_fail = False
+        if not mech and tree:
+            mech = tree
         if "max_findings" in mech:
             max_n = int(mech["max_findings"])
             if len(findings) > max_n:

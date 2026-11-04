@@ -18,6 +18,7 @@ DOCUMENTED = frozenset(
         "mechanical-bad-ids",
         "mechanical-missing-frontmatter",
         "mechanical-bad-change-log",
+        "mechanical-parent-incomplete",
     }
 )
 

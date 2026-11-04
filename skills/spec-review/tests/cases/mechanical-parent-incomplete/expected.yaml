@@ -1,0 +1,6 @@
+case: mechanical-parent-incomplete
+tree:
+  feature_root: input/docs/features/incomplete-parent
+  min_findings: 1
+  checks:
+    - parent_complete

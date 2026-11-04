@@ -241,6 +241,17 @@ def test_validate_sdd_reader_script():
     assert proc.returncode == 0, proc.stdout + proc.stderr
 
 
+def test_verify_sdd_tools_manifest_script():
+    repo = ROOT.parents[2]
+    proc = subprocess.run(
+        [sys.executable, str(repo / "tools/verify_sdd_tools_manifest.py")],
+        cwd=repo,
+        capture_output=True,
+        text=True,
+    )
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+
+
 def test_eval_next_steps_script():
     repo = ROOT.parents[2]
     proc = subprocess.run(
@@ -350,7 +361,7 @@ def test_spec_review_case_checks_script():
         text=True,
     )
     assert proc.returncode == 0, proc.stdout + proc.stderr
-    assert "all 5 cases ok" in proc.stdout
+    assert "all 6 cases ok" in proc.stdout
 
 
 def test_tst_a_anchor_check_script():
