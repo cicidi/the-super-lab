@@ -13,13 +13,13 @@ items:
   - id: MUST-C
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:67
     text: 'Committed：**目录 + 文件名**；文件名 **必须** `<f>-<type>…`（`raw/` 除外）。Supporting：`docs/features/<f>/<type>/<source-name>.md`（硬 cap 同 parent type）。**禁止** 单独 `reference/` type（外链材料放在 supporting 或 `raw/`）。'
-    method: llm
-    check: ''
+    method: python
+    check: 'paths'
   - id: MUST-D
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:69
     text: '**Split / size：** 六种 type 均可 part；`行数 > 硬 cap` → MUST fail；按 bounded context / domain / ownership / lifecycle / 时间线 拆（不机械切行数）。可先 **DSGN-I** trim（`decision-history` 不 trim entry，只拆 part）。Entry 文件可链 part。**Collision** → **DSGN-K**。硬 cap 含 frontmatter 与 Change Log；**删 L1 凑 cap = defect**。'
-    method: llm
-    check: ''
+    method: python
+    check: 'frontmatter'
   - id: MUST-E
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:92
     text: 'Part 命名：`prd`/`design`/`test-plan`/`how-to` 用名词；`impl-plan`/`decision-history` 用 `<NN>`+phase/period。Legacy 顶层 `state/`、`research/`、`discussion/` → 迁入 `raw/`。Ticket：`.scratch/<feature-slug>/`（同样 **不得 commit**）。'
@@ -38,8 +38,8 @@ items:
   - id: MUST-H
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:103
     text: '不得要求 frontmatter、Change Log、INDEX 条目。升格进 committed type 时 **link**，不把 raw 当 authoritative home。'
-    method: llm
-    check: ''
+    method: python
+    check: 'frontmatter'
   - id: MUST-I
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:131
     text: '- **质量（DSGN-M MUST）**：disk 有文件但未 listed → **orphan**；listed 但文件不存在 → **dead link**。'
@@ -93,8 +93,8 @@ items:
   - id: MUST-S
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:327
     text: '- **待一起 review：** **DSGN-B** 硬 cap 数字、sub-feature 是否正式 MUST、`raw/` 子目录是否够用。AI edit 上限见 parent HLD §4；agent 全局 norm（含 §5 decision-history、§6 CLAUDE+skill）见 parent HLD。'
-    method: llm
-    check: ''
+    method: python
+    check: 'size'
   - id: MUST-T
     source: docs/features/spec-driven-development/features/pipeline/design/pipeline-design.md:35
     text: '- **Map：** **与人 interview**；AI 判断拆分/decision/scratch；**无** 固定 MUST 产物模板；可选 **可替换** map 工具（示例 wayfinder，**非** SDD deliverable）。'

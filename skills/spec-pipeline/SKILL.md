@@ -75,7 +75,7 @@ Ask: run **spec-review** on changed spec? Record if user declines.
 
 ### Recap (on request)
 
-List: phase, last actions, open items, recommended next skill (**INTEGRATIONS.md** table). Optionally run `python3 tools/run_spec_checks.py docs/features/<f>/` before review.
+List: phase, last actions, open items, recommended next skill (**INTEGRATIONS.md** table). Use **`RECAP-TEMPLATE.md`** format. Optionally run `python3 tools/run_spec_checks.py docs/features/<f>/` before review.
 
 ### Step 6: Human-readable HTML reader (optional)
 
