@@ -193,6 +193,18 @@ def test_pos_fixture_valid_decision_history():
     assert not check_change_log(p)
 
 
+def test_run_spec_checks_help():
+    repo = ROOT.parents[2]
+    proc = subprocess.run(
+        [sys.executable, str(repo / "tools/run_spec_checks.py"), "--help"],
+        cwd=repo,
+        capture_output=True,
+        text=True,
+    )
+    assert proc.returncode == 0
+    assert "usage:" in proc.stdout
+
+
 def test_run_spec_checks_summary_flag():
     repo = ROOT.parents[2]
     proc = subprocess.run(

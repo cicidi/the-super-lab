@@ -58,6 +58,10 @@ RUNNERS = [
 def main() -> None:
     args = [a for a in sys.argv[1:] if not a.startswith("-")]
     flags = {a for a in sys.argv[1:] if a.startswith("-")}
+    if "--help" in flags or "-h" in flags:
+        print("usage: run_spec_checks.py [--summary] [docs/features/path]")
+        print("  Tree-level checks (collision, INDEX, no_commit) run when path is under docs/features/.")
+        sys.exit(0)
     summary_only = "--summary" in flags
     target = Path(args[0]) if args else ROOT / "docs/features"
     if not target.exists():

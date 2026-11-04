@@ -18,7 +18,7 @@ Normative rules: `pipeline-design.md` (**PIPE-***). Routing: **`INTEGRATIONS.md`
 
 - [ ] PRD ↔ design ↔ decision-history loop until PIPE-E satisfied
 - [ ] **spec-write** for prose; **spec-organize** after moves/INDEX
-- [ ] `python3 tools/run_spec_checks.py docs/features/<f>/` before review prompt
+- [ ] `python3 tools/run_spec_checks.py docs/features/<f>/` before review prompt (or full `run_mechanical.sh` on SDD initiative)
 
 ## Downstream
 

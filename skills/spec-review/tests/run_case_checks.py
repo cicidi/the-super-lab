@@ -43,8 +43,10 @@ def _load_expected(case_dir: Path) -> dict:
             out["mechanical"]["min_findings"] = int(s.split(":", 1)[1].strip())
         if block and s.startswith("max_findings:"):
             out["mechanical"]["max_findings"] = int(s.split(":", 1)[1].strip())
-        if block and s.startswith("- ") and s.endswith("sections"):
-            out["mechanical"].setdefault("checks", []).append("sections")
+        if block and s.startswith("- ") and not s.startswith("- id:"):
+            check_name = s[2:].strip()
+            if check_name and check_name not in ("case:",):
+                out["mechanical"].setdefault("checks", []).append(check_name)
         if block and s.startswith("message_contains:"):
             out["mechanical"]["message_contains"] = s.split(":", 1)[1].strip()
     return out
