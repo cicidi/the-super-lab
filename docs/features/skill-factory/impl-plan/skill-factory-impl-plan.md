@@ -186,7 +186,7 @@ last_verified: 2026-09-25
 
 # Skill Consolidation Implementation Plan
 
-> **Spec:** docs/skill-factory/spec/skill-consolidation-spec.md
+> **Spec:** docs/skill-factory/design/skill-consolidation-design.md
 > **Test Plan:** docs/skill-factory/test-plan/skill-consolidation-test-plan.md
 > **Date:** 2026-08-02
 

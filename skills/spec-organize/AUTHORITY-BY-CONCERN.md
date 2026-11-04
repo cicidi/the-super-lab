@@ -8,7 +8,7 @@ first — when the fact is in question.
 
 | Concern | Authoritative artifact | Answers |
 |---|---|---|
-| Intended behavior | the feature's `spec` | What the system SHOULD do |
+| Intended behavior | the feature's `design` | What the system SHOULD do |
 | API contract | OpenAPI, protobuf, GraphQL, JSON Schema, event schema, AsyncAPI — when present | The contract's exact shape |
 | Database structure | migrations and schema definitions | What the database actually is |
 | Current implementation | the code | What the system CURRENTLY does |

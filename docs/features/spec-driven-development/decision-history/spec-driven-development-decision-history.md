@@ -10,28 +10,37 @@ last_verified: 2026-09-25
 
 # Spec-Driven Development — Decision History
 
-Append-only. Superseded and wrong decisions stay in the log; a decision that is
-overturned gets a new numbered entry that supersedes it, never an edit.
+Decision Log uses **`ARD-{letter}`** IDs (document-standard **DSGN-F**, **DSGN-J**): newest entry **first**; supersede = ~~strikethrough~~ + link to the replacing **ARD** ID.
 
 ## Decision Log
 
-| # | Date | Decision | Status | Supersedes |
-|---|------|----------|--------|------------|
-| 0001 | 2026-09-25 | Authority by concern replaces a single global source of truth | accepted | — |
-| 0002 | 2026-09-25 | The standard lives in `doc-organize`, not a new skill | accepted | — |
-| 0003 | 2026-09-25 | Detail is carried in sibling files, not inline in `SKILL.md` | accepted | — |
-| 0004 | 2026-09-25 | The health field is named `health`, not `status` | accepted | — |
-| 0005 | 2026-09-25 | `spec` and `impl-plan` cap at 1,000 lines; `decision-history` is exempt | accepted | — |
-| 0006 | 2026-09-25 | A feature folder may hold more than one `spec` or `impl-plan` | accepted | — |
-| 0007 | 2026-09-25 | Spec parts take an aspect noun, plan parts take a number plus phase | accepted | — |
-| 0008 | 2026-09-25 | Four content priority levels; L1 is never deleted | accepted | — |
-| 0009 | 2026-09-25 | This feature carries two `spec` documents, against the one-per-type rule | accepted | — |
+| ID | Date | Decision |
+|---|------|----------|
+| ARD-U | 2026-11-03 | Pipeline deliverable is **spec-pipeline** orchestrator; Map is interview-led with AI-judged outputs; state CLAUDE.local then `raw/state/` |
+| ARD-T | 2026-11-03 | wayfinder-import is not an SDD sub-feature; its tree under `features/wayfinder-import/` is removed |
+| ARD-S | 2026-11-03 | Gold set grows in both directions and is versioned; scores compare only within one gold version |
+| ARD-R | 2026-11-03 | Two eval scores: MUST `x/total` must be full; exemplar score `(plus−minus)×10/total` must not regress |
+| ARD-Q | 2026-11-03 | Tests live in `skills/<skill>/tests/`; cross-skill checks, gold, and reports in `spec-organize` |
+| ARD-P | 2026-11-03 | `spec-review` detects mechanical MUST violations too; it outputs suggestions, never fixes |
+| ARD-O | 2026-11-03 | Skills are `spec-organize` (main), `spec-review`, `spec-write`; the standard file is `spec-organize/SPEC-STANDARD.md` |
+| ARD-N | 2026-10-30 | Success-metric measurement and baseline are deferred to PRD-G |
+| ARD-M | 2026-10-30 | Multi-participant decision authority is deferred to PRD-F |
+| ARD-L | 2026-10-30 | Blind spots are surfaced by existing skills, not a new mechanism |
+| ARD-K | 2026-10-30 | Every AI edit to a `.md` under `docs/` is ≤10 lines or ≤200 characters; larger changes split |
+| ARD-J | 2026-10-30 | Five stages plus an optional `how-to`; `how-to` is not a stage |
+| ARD-I | 2026-09-25 | This feature carries two `spec` documents, against the one-per-type rule |
+| ARD-H | 2026-09-25 | Four content priority levels; L1 is never deleted |
+| ARD-G | 2026-09-25 | Spec parts take an aspect noun, plan parts take a number plus phase |
+| ARD-F | 2026-09-25 | A feature folder may hold more than one `design` or `impl-plan` |
+| ARD-E | 2026-09-25 | `design` and `impl-plan` cap at 1,000 lines; `decision-history` is exempt |
+| ARD-D | 2026-09-25 | The health field is named `health`, not `status` |
+| ARD-C | 2026-09-25 | Detail is carried in sibling files, not inline in `SKILL.md` |
+| ARD-B | 2026-09-25 | The standard lives in ~~`doc-organize`~~ `spec-organize` (→ [ARD-O](#ard-o--skills-are-spec-organize-main-spec-review-spec-write-the-standard-file-is-spec-organizespec-standardmd)), not a new skill |
+| ARD-A | 2026-09-25 | Authority by concern replaces a single global source of truth |
 
 ## Evidence Appendix
 
-### 0001 — Authority by concern replaces a single global source of truth
-
-Status: accepted
+### ARD-A — Authority by concern replaces a single global source of truth
 
 The previous rule was "code is the source of truth", stated in three places in
 `doc-organize`. It resolves every conflict in one direction and leaves a spec
@@ -53,9 +62,7 @@ Adopted instead: authority by concern. Intended behavior belongs to the spec,
 current implementation to the code, contracts to the machine-readable artifact,
 database structure to migrations, and executable verification to the tests.
 
-### 0002 — The standard lives in `doc-organize`, not a new skill
-
-Status: accepted
+### ARD-B — The standard lives in `doc-organize`, not a new skill
 
 Placement, linting, and consolidation already belong to `doc-organize`, and its
 Sync mode is where drift is detected. A separate skill would have to duplicate
@@ -66,9 +73,7 @@ Considered and rejected: a new `spec-driven-development` skill with
 type list, the frontmatter contract, and the required sections, and the copy
 would drift.
 
-### 0003 — Detail is carried in sibling files, not inline in `SKILL.md`
-
-Status: accepted
+### ARD-C — Detail is carried in sibling files, not inline in `SKILL.md`
 
 The material is seventeen sections. Inline it would have taken `SKILL.md` past
 700 lines, and a skill that must be read in one pass cannot afford that.
@@ -78,9 +83,7 @@ Follows the existing pattern: `domain-modeling/ADR-FORMAT.md` and
 the skill stays portable — it must not point at this repository's `docs/`, which
 does not exist in the projects the skill is deployed to.
 
-### 0004 — The health field is named `health`, not `status`
-
-Status: accepted
+### ARD-D — The health field is named `health`, not `status`
 
 `state` already tracks the authoring state (`draft` or `final`). A second field
 named `status` would be read as the same concept, and it accepted an overlapping
@@ -91,9 +94,7 @@ Considered and rejected: replacing `state`'s vocabulary with
 `draft | active | stale | deprecated`. Rejected because it would invalidate every
 existing document to gain a distinction that a second field provides for free.
 
-### 0005 — `spec` and `impl-plan` cap at 1,000 lines; `decision-history` is exempt
-
-Status: accepted
+### ARD-E — `design` and `impl-plan` cap at 1,000 lines; `decision-history` is exempt
 
 The earlier guideline said feature specs run 500-1,500 lines, which contradicts a
 1,000-line ceiling. The ceiling wins; the guideline is removed.
@@ -102,34 +103,28 @@ The earlier guideline said feature specs run 500-1,500 lines, which contradicts 
 destroy the record that is its entire purpose. Exempting it also means the cap
 never creates pressure to delete a superseded decision.
 
-### 0006 — A feature folder may hold more than one `spec` or `impl-plan`
-
-Status: accepted
+### ARD-F — A feature folder may hold more than one `design` or `impl-plan`
 
 Supersedes the earlier rule "one file per type per feature" for these two types
 only, and removes the anti-pattern that forbade a second spec file.
 
 `prd`, `test-plan`, `decision-history`, and `how-to` stay single-file: none of
-them grows without bound. `spec` and `impl-plan` do, and capping them at 1,000
+them grows without bound. `design` and `impl-plan` do, and capping them at 1,000
 lines without allowing a second file would have made the cap unmeetable.
 
-### 0007 — Spec parts take an aspect noun, plan parts take a number plus phase
-
-Status: accepted
+### ARD-G — Spec parts take an aspect noun, plan parts take a number plus phase
 
 ```
-payment-spec-authorization.md        aspect noun, unordered
+payment-design-authorization.md        aspect noun, unordered
 payment-impl-plan-01-schema.md       number plus phase, ordered
 ```
 
-Considered and rejected: numbering both (`payment-spec-01.md`). A number says
+Considered and rejected: numbering both (`payment-design-01.md`). A number says
 nothing about the contents, and inserting a part forces a renumber across the
 set. A plan is genuinely ordered, so a number carries meaning there; a spec is
 cut by bounded context, so a noun carries meaning there.
 
-### 0008 — Four content priority levels; L1 is never deleted
-
-Status: accepted
+### ARD-H — Four content priority levels; L1 is never deleted
 
 L1 decisive (behavior, contracts, invariants, constraints, error semantics,
 security rules, architecture boundaries, out of scope, assumptions, compatibility
@@ -144,16 +139,14 @@ A fact whose authoritative home is another document is L4 as a link, never a
 restated copy. This connects the level model to the duplication rule: restating a
 fact is a defect, not a level.
 
-### 0009 — This feature carries two `spec` documents
+### ARD-I — This feature carries two `spec` documents
 
-Status: accepted
-
-Deliberate exception to decision 0006's one-`spec`-per-feature default, recorded
+Deliberate exception to decision ARD-F's one-`spec`-per-feature default, recorded
 here because the rule requires a logged reason rather than a silent breach.
 
 This feature is named for the standard itself, so the standard's own spec belongs
-to it. `wayfinder-import-spec.md` already occupied
-`spec-driven-development/spec/`, and the wayfinder import is a distinct effort
+to it. `wayfinder-import-design.md` already occupied
+`spec-driven-development/design/`, and the wayfinder import is a distinct effort
 with its own lifecycle.
 
 Considered and rejected:
@@ -163,15 +156,110 @@ Considered and rejected:
 - *Put the standard's spec in its own feature* — rejected because the standard
   and the import are the same initiative; splitting them into two features would
   misrepresent the work.
-- *Fold the standard into `wayfinder-import-spec.md`* — rejected as a
+- *Fold the standard into `wayfinder-import-design.md`* — rejected as a
   restatement: two unrelated documents in one file.
 
-The two files are distinguished by name, following decision 0007's aspect rule:
-`spec-driven-development-spec.md` for the standard, `wayfinder-import-spec.md`
+The two files are distinguished by name, following decision ARD-G's aspect rule:
+`spec-driven-development-design.md` for the standard, `wayfinder-import-design.md`
 for the import.
+
+### ARD-J — Five stages plus an optional `how-to`
+
+The PRD said six artifacts; `pipeline-design.md` and the document standard said
+five. The pipeline spec is right about stages: `how-to` is an output for the
+case where a human must operate the result, not a step every feature runs.
+
+Considered and rejected: keeping six to match the PRD — rejected because it
+invents a stage most features never execute.
+
+### ARD-K — Every AI edit to a docs file is small
+
+A large edit lands unreviewed and is hard to attribute when it breaks something.
+The limit is 10 lines or 200 characters; satisfying either is enough. A larger
+change is split into sequential edits. A restructure needs explicit human
+instruction, which is how this PRD's own revision was applied.
+
+Considered and rejected: hard rejection of oversized edits — rejected because it
+blocks a legitimate restructure; warning only — rejected because nothing stops
+the edit.
+
+### ARD-L — Blind spots come from existing skills
+
+`research` already has a Discover Unknowns branch and `grill-with-docs` already
+runs an adversarial interview. P4 says to use the current tools first.
+
+Considered and rejected: a new dedicated skill — rejected while the existing
+mechanism works. A future skill may replace them without changing the
+requirement that the step runs.
+
+### ARD-U — spec-pipeline orchestrator and Map/state model
+
+SDD adds **spec-pipeline** as the entry skill that calls spec-organize and
+spec-write and prompts for spec-review before commit. **Map** relies on human
+interview; outputs (split, decision, scratch) are **AI-judged**, not a fixed
+file template. **State** lives in CLAUDE.local until feature create sets `<f>`,
+then in `docs/features/<f>/raw/state/`. Rejected: rigid Map MUST artifacts and
+repo-root BMAD-style state trees.
+
+### ARD-T — wayfinder-import is not an SDD sub-feature
+
+Wayfinder import is a separate skill-factory / import effort, not part of the
+SDD deliverable (spec-organize, spec-review, spec-write). The nested tree under
+`spec-driven-development/features/wayfinder-import/` is removed; wayfinder work
+continues elsewhere if needed. ARD-I's multi-spec exception remains historical.
+
+### ARD-O — Skills are spec-organize (main), spec-review, spec-write
+
+Deliverable skills use the `spec-` prefix because they serve spec-driven
+development, not generic document editing. The standard file stays inside the
+main skill as `SPEC-STANDARD.md`, continuing ARD-B's placement rule. Rejected: a
+separate `spec-standard` skill — three consumers, one extra copy to drift.
+
+### ARD-P — spec-review detects mechanical MUST violations too
+
+Review outputs modification suggestions, not fixes. Mechanical MUST gaps must
+appear in that list or the user gets an incomplete review. Organize Lint may
+fix; review detects and suggests. Rejected: semantic-only review — gold-based
+eval cannot score review against the same MUST set as organize.
+
+### ARD-Q — Tests live under skills/<skill>/tests/
+
+Skills ship to arbitrary projects; tests must travel with them. Cross-skill
+checks, gold, and HTML reports live under `spec-organize` as the main skill.
+Rejected: repo-root `tests/sdd/` — assets would not deploy with the skill bundle.
+
+### ARD-R — Two eval scores and gates
+
+MUST compliance is a hard floor (`x/total` full pass). Exemplar comparison uses
+`(plus−minus)×10/total` and must not regress within one gold version. Rejected: a
+fixed exemplar cutoff — gold version bumps change the denominator.
+
+### ARD-S — Gold set grows and is versioned
+
+New good and bad examples from runs append to `annotations.yaml`; `gold.version`
+increments. Scores compare only within one version. Rejected: frozen gold — no
+accumulation of review findings.
+
+## Path Update — 2026-10-30
+
+The feature was restructured into sub-features. The paths referenced in the
+historical entries now resolve as follows:
+
+| Old path | New path |
+|---|---|
+| `spec-driven-development-design.md` | `features/pipeline/design/pipeline-design.md` |
+
+The historical entries are preserved as written; this note is the current
+pointer. No decision was changed.
 
 ## Change Log
 
 | Date | Change |
 |------|--------|
 | 2026-09-25 | Initial creation; records the SDD standard's adoption and the two-spec exception |
+| 2026-10-30 | Added a path-update note after the feature was split into sub-features |
+| 2026-10-30 | Added decisions ARD-J–ARD-N from the PRD revision: five stages, small edits, existing-skill blind spots, two deferrals |
+| 2026-11-03 | IDs `0001–0014` → `ARD-A`–`ARD-N`; Log 倒序；格式对齐 document-standard **DSGN-E**/**DSGN-J** |
+| 2026-11-03 | ARD-O–ARD-S：skill 命名、review 边界、测试位置、eval 评分与门槛、gold 版本化 |
+| 2026-11-03 | ARD-T：移除 wayfinder-import sub-feature 树 |
+| 2026-11-03 | ARD-U：spec-pipeline 编排；Map interview；state 两阶段 |

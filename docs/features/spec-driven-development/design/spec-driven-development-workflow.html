@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Spec-Driven Development — As-Is Workflow Map</title>
+<style>
+:root{
+  --bg:#F6F7F4; --surface:#FFFFFF; --surface-2:#EEF1F0; --ink:#14202B; --muted:#55636F; --subtle:#7C8A96;
+  --line:#DCE2E6; --code:#F1F3F1;
+  --navy:#102D46; --navy-2:#173B5C; --navy-3:#1E4A70;
+  --yellow:#F2C94C; --green:#5F8D4E; --orange:#D98A3A; --red:#B95547;
+  --soft-yellow:#FCF5DA; --soft-green:#EDF4E9; --soft-orange:#FBF0E4; --soft-red:#F8EBE9; --soft-blue:#E8F0F6;
+  --serif:Georgia,'Times New Roman','Noto Serif CJK SC',serif;
+  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'PingFang SC','Microsoft YaHei',sans-serif;
+  --mono:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;
+  --radius:14px;
+}
+[data-theme="dark"]{
+  --bg:#0B1824; --surface:#102434; --surface-2:#163044; --ink:#EAF0F4; --muted:#A9B8C4; --subtle:#7F93A3;
+  --line:#22394C; --code:#0E2130;
+  --navy:#08131C; --navy-2:#0E2130; --navy-3:#14324A;
+  --soft-yellow:#3A3418; --soft-green:#1B3222; --soft-orange:#3A2A1A; --soft-red:#3A2020; --soft-blue:#122A3D;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15.5px;line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:var(--orange);text-decoration:none}
+a:hover{text-decoration:underline}
+::selection{background:var(--soft-yellow);color:var(--ink)}
+code{font-family:var(--mono);font-size:.88em;background:var(--code);border:1px solid var(--line);padding:1.5px 6px;border-radius:4px}
+pre{background:var(--code);border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow-x:auto;font-size:12.5px;line-height:1.55}
+pre code{background:none;border:0;padding:0}
+
+/* chrome */
+.progress{position:fixed;top:0;left:0;height:4px;background:var(--yellow);z-index:100;transition:width .25s ease;width:0}
+.sidebar{position:fixed;inset:0 auto 0 0;width:290px;background:var(--navy);color:#DCE7EF;display:flex;flex-direction:column;z-index:60}
+.sidebar-head{padding:26px 24px 18px;border-bottom:1px solid rgba(255,255,255,.10)}
+.sidebar-kicker{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--yellow);margin-bottom:8px}
+.sidebar-title{font-family:var(--serif);font-size:21px;line-height:1.25;margin:0;color:#fff}
+.sidebar-sub{font-size:12px;color:#93A9BA;margin-top:8px;line-height:1.45}
+.nav{overflow-y:auto;padding:16px 12px 24px;flex:1}
+.nav-group{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#6F8CA0;margin:16px 12px 6px}
+.nav a{display:flex;align-items:baseline;gap:9px;padding:7px 12px;border-radius:8px;color:#C4D3DE;font-size:13.5px;border-left:3px solid transparent;line-height:1.35}
+.nav a:hover{background:rgba(255,255,255,.06);color:#fff;text-decoration:none}
+.nav a.active{background:rgba(242,201,76,.12);border-left-color:var(--yellow);color:#fff}
+.nav a .n{font-family:var(--mono);font-size:10.5px;color:#7E97A9;min-width:17px}
+.nav a.active .n{color:var(--yellow)}
+.sidebar-foot{padding:14px 24px 22px;border-top:1px solid rgba(255,255,255,.10);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.sidebar-foot span{font-family:var(--mono);font-size:10.5px;color:#7E97A9}
+.theme-btn{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border:1px solid rgba(255,255,255,.18);background:transparent;color:#C4D3DE;border-radius:999px;font-family:var(--mono);font-size:10.5px;cursor:pointer}
+.theme-btn:hover{border-color:var(--yellow);color:var(--yellow)}
+.theme-btn svg{width:12px;height:12px}
+.icon-moon{display:none}
+[data-theme="dark"] .icon-sun{display:none}
+[data-theme="dark"] .icon-moon{display:inline-block}
+
+.main{margin-left:290px;min-height:100vh}
+.page{display:none;max-width:1020px;margin:0 auto;padding:52px 56px 40px}
+.page.active{display:block;animation:fade .22s ease}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.page-head{margin-bottom:34px;padding-bottom:24px;border-bottom:1px solid var(--line)}
+.kicker{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);margin-bottom:10px}
+h1{font-family:var(--serif);font-size:clamp(30px,3.4vw,40px);line-height:1.12;letter-spacing:-.015em;margin:0 0 12px}
+.deck{font-size:16.5px;color:var(--muted);max-width:72ch;margin:0 0 18px;line-height:1.55}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-family:var(--mono);font-size:10.5px;color:var(--muted);background:var(--surface);border:1px solid var(--line);padding:3px 9px;border-radius:999px}
+.chip b{color:var(--ink);font-weight:600}
+h2{font-size:20px;letter-spacing:-.01em;margin:38px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+h3{font-size:16px;margin:26px 0 8px}
+h4{font-size:13.5px;margin:20px 0 6px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-family:var(--mono)}
+p{max-width:78ch;margin:0 0 13px}
+ul,ol{margin:0 0 15px;padding-left:22px;max-width:80ch}
+li{margin:4px 0}
+strong{font-weight:600}
+.small{font-size:13px;color:var(--muted)}
+.src{font-family:var(--mono);font-size:10.5px;color:var(--subtle);margin-top:6px}
+
+/* layout blocks */
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:18px 0}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px}
+.card h3{margin:0 0 8px;font-size:15px}
+.card p{margin:0;color:var(--muted);font-size:13.5px;max-width:none}
+.card .tag{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--orange);margin-bottom:8px}
+.card.link{cursor:pointer;transition:.15s}
+.card.link:hover{border-color:var(--orange);transform:translateY(-1px)}
+
+.callout{background:var(--soft-blue);border:1px solid var(--line);border-left:4px solid var(--navy-3);border-radius:0 10px 10px 0;padding:14px 18px;margin:20px 0;font-size:14px;max-width:82ch}
+.callout.yellow{background:var(--soft-yellow);border-left-color:var(--yellow)}
+.callout.green{background:var(--soft-green);border-left-color:var(--green)}
+.callout.orange{background:var(--soft-orange);border-left-color:var(--orange)}
+.callout.red{background:var(--soft-red);border-left-color:var(--red)}
+.callout .t{font-weight:600;margin:0 0 4px}
+.callout p:last-child,.callout ul:last-child{margin-bottom:0}
+
+.table{width:100%;border-collapse:collapse;margin:16px 0 22px;font-size:13.5px;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.table th,.table td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+.table th{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--subtle);background:var(--surface-2);font-weight:600}
+.table tr:last-child td{border-bottom:0}
+.table tr:hover td{background:var(--surface-2)}
+.table code{font-size:.85em}
+
+.flow{display:flex;align-items:stretch;gap:0;margin:22px 0;flex-wrap:wrap}
+.node{flex:1;min-width:150px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 14px 12px;position:relative}
+.node .n{font-family:var(--mono);font-size:10px;color:var(--subtle);letter-spacing:.08em}
+.node h4{margin:4px 0 4px;font-family:var(--sans);font-size:14px;color:var(--ink);text-transform:none;letter-spacing:0}
+.node p{margin:0;font-size:12.5px;color:var(--muted);line-height:1.45}
+.node.hot{border-color:var(--orange);box-shadow:0 0 0 3px var(--soft-orange)}
+.node.gate{border-color:var(--green);background:var(--soft-green)}
+.arrow{display:flex;align-items:center;justify-content:center;width:34px;color:var(--subtle);font-size:18px;flex:0 0 34px}
+.rail{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 22px}
+.pill{display:inline-block;font-family:var(--mono);font-size:11px;padding:3px 9px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--muted)}
+.pill.y{border-color:#E8D48A;background:var(--soft-yellow);color:#7A6415}
+.pill.g{border-color:#BCD3B4;background:var(--soft-green);color:#3F6534}
+.pill.o{border-color:#E7C39D;background:var(--soft-orange);color:#8A5524}
+.pill.r{border-color:#E2B9B3;background:var(--soft-red);color:#8A3A30}
+[data-theme="dark"] .pill.y{color:var(--yellow)}
+[data-theme="dark"] .pill.g{color:#9CC98C}
+[data-theme="dark"] .pill.o{color:#E8B27A}
+[data-theme="dark"] .pill.r{color:#E39A8F}
+
+.kv{display:grid;grid-template-columns:150px 1fr;gap:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface);margin:16px 0}
+.kv div{padding:9px 13px;border-bottom:1px solid var(--line);font-size:13.5px}
+.kv div:nth-child(odd){background:var(--surface-2);font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--muted);text-transform:uppercase}
+.kv div:nth-last-child(-n+2){border-bottom:0}
+
+.pager{max-width:1020px;margin:0 auto;padding:10px 56px 52px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.pager button{font-family:var(--mono);font-size:11.5px;padding:8px 14px;border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:999px;cursor:pointer}
+.pager button:hover:not(:disabled){border-color:var(--orange);color:var(--orange)}
+.pager button:disabled{opacity:.35;cursor:default}
+.pager .count{font-family:var(--mono);font-size:11px;color:var(--subtle)}
+.footnote{margin-top:40px;padding-top:14px;border-top:1px dashed var(--line);font-family:var(--mono);font-size:10.5px;color:var(--subtle);line-height:1.6}
+.checklist{list-style:none;padding-left:0}
+.checklist li{position:relative;padding-left:26px;margin:7px 0}
+.checklist li::before{content:"";position:absolute;left:0;top:4px;width:14px;height:14px;border:1.5px solid var(--line);border-radius:4px;background:var(--surface)}
+
+@media(max-width:1000px){
+  .sidebar{position:static;width:auto;flex-direction:row;flex-wrap:wrap;align-items:center}
+  .sidebar-head{flex:1 1 100%;border-bottom:0;padding-bottom:8px}
+  .nav{display:flex;flex-wrap:wrap;gap:4px;padding:8px 16px 14px;overflow:visible;width:100%}
+  .nav-group{display:none}
+  .nav a{font-size:12px;padding:5px 8px;border-left:0;border-bottom:2px solid transparent}
+  .nav a.active{border-bottom-color:var(--yellow)}
+  .nav a .n{display:none}
+  .sidebar-foot{display:none}
+  .main{margin-left:0}
+  .page{padding:34px 22px 24px}
+  .pager{padding:0 22px 40px}
+  .grid2,.grid3{grid-template-columns:1fr}
+  .flow{flex-direction:column}
+  .arrow{width:100%;height:26px;transform:rotate(90deg)}
+}
+@media print{
+  .sidebar,.pager,.progress{display:none}
+  .main{margin:0}
+  .page{display:block!important;page-break-after:always;max-width:100%;padding:0 12px}
+  .page-head{border-bottom-color:#ccc}
+}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<aside class="sidebar">
+  <div class="sidebar-head">
+    <div class="sidebar-kicker">As-Is · 2026-10-30</div>
+    <h1 class="sidebar-title">Spec-Driven Development</h1>
+    <div class="sidebar-sub">Every skill, the workflow, and where walter-worker and wayfinder sit — an evidence map for the redesign.</div>
+  </div>
+  <nav class="nav" id="nav">
+    <div class="nav-group">Orientation</div>
+    <a href="#overview" data-page="overview"><span class="n">00</span>Overview</a>
+    <a href="#pipeline" data-page="pipeline"><span class="n">01</span>Pipeline at a Glance</a>
+    <div class="nav-group">The Skills</div>
+    <a href="#wayfinder" data-page="wayfinder"><span class="n">02</span>wayfinder</a>
+    <a href="#to-spec" data-page="to-spec"><span class="n">03</span>to-spec</a>
+    <a href="#doc-review" data-page="doc-review"><span class="n">04</span>doc-review</a>
+    <a href="#to-tickets" data-page="to-tickets"><span class="n">05</span>to-tickets</a>
+    <a href="#implement" data-page="implement"><span class="n">06</span>implement / auto-tdd</a>
+    <a href="#doc-organize" data-page="doc-organize"><span class="n">07</span>doc-organize</a>
+    <a href="#supporting" data-page="supporting"><span class="n">08</span>Supporting skills</a>
+    <div class="nav-group">Runtime</div>
+    <a href="#walter-worker" data-page="walter-worker"><span class="n">09</span>walter-worker</a>
+    <a href="#artifacts" data-page="artifacts"><span class="n">10</span>Artifacts &amp; state</a>
+    <div class="nav-group">Evidence</div>
+    <a href="#questions" data-page="questions"><span class="n">11</span>Gaps &amp; redesign questions</a>
+  </nav>
+  <div class="sidebar-foot">
+    <span>12 pages</span>
+    <button class="theme-btn" onclick="toggleTheme()" title="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg>
+      theme
+    </button>
+  </div>
+</aside>
+
+<main class="main" id="main">
+
+<!-- ================= 00 OVERVIEW ================= -->
+<section class="page" id="overview">
+  <header class="page-head">
+    <span class="kicker">Page 00 · Orientation</span>
+    <h1>What is actually wired today</h1>
+    <p class="deck">An evidence-based map of the spec-driven development system as it exists on 2026-10-30: the pipeline, every skill's design, how walter-worker deploys and feeds those skills, and where wayfinder enters and exits.</p>
+    <div class="chips">
+      <span class="chip">branch <b>refactor/initiative-to-feature</b></span>
+      <span class="chip">skills mapped <b>12</b></span>
+      <span class="chip">SDD docs <b>6</b></span>
+      <span class="chip">decisions <b>9</b></span>
+      <span class="chip">source <b>repo + installed copies</b></span>
+    </div>
+  </header>
+
+  <div class="callout yellow">
+    <p class="t">中文摘要 — 这份文档是什么</p>
+    <p>这是现状地图，不是新设计。它把 spec-driven-development 这条链路拆成 12 页：pipeline、每个 skill 的输入/输出/决策点、wayfinder 如何介入、walter-worker 如何安装与注入 skill，以及现有文档里的矛盾和待重设计的问题。所有结论都标注了来源文件。</p>
+  </div>
+
+  <h2>Three layers, often confused</h2>
+  <div class="grid3">
+    <div class="card">
+      <span class="tag">Layer 1 · Method</span>
+      <h3>wayfinder + to-spec + to-tickets</h3>
+      <p>Decide → write → ticket. These skills define <em>how work is shaped</em>: a map of decisions, one spec, many tracer-bullet tickets.</p>
+    </div>
+    <div class="card">
+      <span class="tag">Layer 2 · Discipline</span>
+      <h3>doc-organize + doc-review + implement</h3>
+      <p>These define <em>how artifacts stay honest</em>: authority by concern, review gates, TDD at agreed seams, conflict reporting.</p>
+    </div>
+    <div class="card">
+      <span class="tag">Layer 3 · Runtime</span>
+      <h3>walter-worker / coworker</h3>
+      <p>This is <em>not</em> the workflow tool. It installs skills into harnesses, injects feature context into <code>CLAUDE.local.md</code>, and records sessions.</p>
+    </div>
+  </div>
+
+  <h2>Key findings at a glance</h2>
+  <table class="table">
+    <thead><tr><th>#</th><th>Finding</th><th>Evidence</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>wayfinder is the front door for work too large for one session; it produces decisions, not deliverables.</td><td><code>wayfinder/SKILL.md:35-37</code></td></tr>
+      <tr><td>2</td><td>walter-worker deploys skills and injects context; it does <strong>not</strong> dispatch skills at runtime. The harness does.</td><td><code>setup/install.sh:11-14, 440-490</code>; <code>adapters/claude.py:452-461</code></td></tr>
+      <tr><td>3</td><td>The build stage has two names: wayfinder's pipeline ends at <code>auto-tdd</code>, while a separate <code>implement</code> skill exists and is listed as a future import.</td><td><code>wayfinder/SKILL.md:209-214</code>; <code>spec-wayfinder-import.md:263-265</code></td></tr>
+      <tr><td>4</td><td><code>doc-organize</code> is the backbone: to-spec, to-tickets, implement, doc-review and wayfinder all defer to it.</td><td>Skill dependencies sections in each file</td></tr>
+      <tr><td>5</td><td>The tracker is not one thing: wayfinder defaults to GitHub Issues or local markdown; to-spec/to-tickets use the configured tracker or local markdown; docs still say "Jira" in prose.</td><td><code>wayfinder/SKILL.md:49</code>; <code>to-tickets/SKILL.md:84-87</code></td></tr>
+      <tr><td>6</td><td>The SDD feature carries three spec documents on purpose — pipeline, document standard, and wayfinder import — a logged exception to the one-per-type rule.</td><td>decision-history 0009</td></tr>
+    </tbody>
+  </table>
+
+  <h2>How to read this map</h2>
+  <div class="grid2">
+    <div class="card link" onclick="go('pipeline')">
+      <span class="tag">Start here</span>
+      <h3>01 · Pipeline at a Glance</h3>
+      <p>The whole chain on one page, with gates and the two entry paths.</p>
+    </div>
+    <div class="card link" onclick="go('wayfinder')">
+      <span class="tag">Deep dive</span>
+      <h3>02 · wayfinder</h3>
+      <p>Map, briefs, claim/blocking/frontier, the four brief types, and the handoff gates.</p>
+    </div>
+    <div class="card link" onclick="go('walter-worker')">
+      <span class="tag">Runtime</span>
+      <h3>09 · walter-worker</h3>
+      <p>Exact install destinations, the runtime truth, feature-context injection, and drift risks.</p>
+    </div>
+    <div class="card link" onclick="go('questions')">
+      <span class="tag">For the redesign</span>
+      <h3>11 · Gaps &amp; questions</h3>
+      <p>Contradictions found in the current system, each with its source, plus the questions to settle first.</p>
+    </div>
+  </div>
+
+  <p class="footnote">Sources: <code>the-super-lab/docs/features/spec-driven-development/**</code>, <code>the-super-lab/skills/{wayfinder,to-spec,to-tickets,implement,doc-organize,doc-review,research,grill-with-docs,domain-modeling,prototype,auto-tdd,matt-code-review}</code>, <code>walter-worker/{README.md,setup/install.sh,src/coworker/adapters/claude.py,src/coworker/features/manager.py}</code>.</p>
+</section>
+
+<!-- ================= 01 PIPELINE ================= -->
+<section class="page" id="pipeline">
+  <header class="page-head">
+    <span class="kicker">Page 01 · Workflow</span>
+    <h1>Pipeline at a glance</h1>
+    <p class="deck">The intended chain from a loose idea to committed code. Three gates sit inside it: a delivery review per task brief, a document review before tickets, and a work-completion review after implementation.</p>
+  </header>
+
+  <div class="callout yellow">
+    <p class="t">As-is vs target</p>
+    <p>This page maps the skills installed today: <code>wayfinder → to-spec → doc-review → to-tickets → implement</code>. The spec's Solution now describes a different target framing — five cooperating artifacts: <code>PRD → decision history → spec → impl plan → test plan</code>. The redesign has to reconcile the two; this page does not claim they are the same.</p>
+  </div>
+
+  <h2>Main chain</h2>
+  <div class="flow">
+    <div class="node hot"><div class="n">START</div><h4>Loose idea</h4><p>Too big for one session, or already sharp.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="n">DECIDE</div><h4>wayfinder</h4><p>Chart a map; resolve decision briefs one at a time.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="n">WRITE</div><h4>to-spec</h4><p>Synthesize decisions into one spec.</p></div>
+    <div class="arrow">→</div>
+    <div class="node gate"><div class="n">GATE</div><h4>doc-review</h4><p>Consistency, completeness, mkdocs-ready.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="n">TICKET</div><h4>to-tickets</h4><p>Vertical tracer-bullet tickets with blockers.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="n">BUILD</div><h4>implement / auto-tdd</h4><p>TDD at pre-agreed seams, then review and commit.</p></div>
+  </div>
+
+  <div class="callout orange">
+    <p class="t">Two entry paths</p>
+    <p><strong>Large work:</strong> wayfinder → to-spec → doc-review → to-tickets → implement.<br>
+    <strong>Small or already-clear work:</strong> to-spec (or implement directly). wayfinder's own <em>When not to use</em> says skip it when the work fits one session or tickets already exist.</p>
+  </div>
+
+  <h2>Stage contract</h2>
+  <table class="table">
+    <thead><tr><th>Stage</th><th>Skill</th><th>Input</th><th>Output</th><th>Gate before next stage</th></tr></thead>
+    <tbody>
+      <tr><td>Decide</td><td><code>wayfinder</code></td><td>a loose idea + repo</td><td>map issue + child briefs</td><td>frontier empty; task-brief delivery review</td></tr>
+      <tr><td>Write</td><td><code>to-spec</code></td><td>conversation + closed briefs</td><td>spec (PRD) on tracker</td><td>none inside the skill</td></tr>
+      <tr><td>Verify docs</td><td><code>doc-review</code></td><td>spec + briefs + CONTEXT.md + ADRs</td><td>gap report or review report</td><td>PASS required before tickets</td></tr>
+      <tr><td>Ticket</td><td><code>to-tickets</code></td><td>approved spec/plan</td><td>tracer-bullet tickets</td><td>user approves the breakdown</td></tr>
+      <tr><td>Build</td><td><code>implement</code> or <code>auto-tdd</code></td><td>spec/tickets + seams</td><td>code, tests, commits</td><td>typecheck + tests + code review</td></tr>
+      <tr><td>Accept</td><td><code>doc-review</code> (Branch B)</td><td>PRD/spec + finished work</td><td>ACCEPTED / REJECTED report</td><td>work-completion sign-off</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Three gates, three scopes</h2>
+  <div class="grid3">
+    <div class="card">
+      <span class="tag">Gate 1</span>
+      <h3>Delivery review</h3>
+      <p><strong>When:</strong> closing a <code>task</code> brief that produced files.<br><strong>Tool:</strong> <code>doc-review</code> for <code>.md</code>, <code>matt-code-review</code> for code.<br><strong>Skips:</strong> research, grilling, prototype briefs.</p>
+    </div>
+    <div class="card">
+      <span class="tag">Gate 2</span>
+      <h3>Document review</h3>
+      <p><strong>When:</strong> after <code>to-spec</code>, before <code>to-tickets</code>.<br><strong>Scope:</strong> spec + all closed briefs + CONTEXT.md + ADRs.<br><strong>Checks:</strong> consistency, completeness, no contradictions, mkdocs-ready.</p>
+    </div>
+    <div class="card">
+      <span class="tag">Gate 3</span>
+      <h3>Work completion</h3>
+      <p><strong>When:</strong> implementation finished.<br><strong>Scope:</strong> acceptance criteria with source + priority.<br><strong>Evidence:</strong> actual test runs, not code reading.</p>
+    </div>
+  </div>
+
+  <h2>Supporting skills around the chain</h2>
+  <div class="rail">
+    <span class="pill o"><code>research</code> · investigate interface</span>
+    <span class="pill o"><code>grill-with-docs</code> · interview interface</span>
+    <span class="pill o"><code>domain-modeling</code> · glossary + ADRs</span>
+    <span class="pill o"><code>prototype</code> · throwaway artifact</span>
+    <span class="pill g"><code>doc-organize</code> · standard + modes</span>
+    <span class="pill g"><code>matt-code-review</code> · two-axis code review</span>
+  </div>
+
+  <div class="callout red">
+    <p class="t">The pipeline has a seam at the build stage</p>
+    <p>wayfinder's declared pipeline is <code>wayfinder → to-spec → doc-review → to-tickets → auto-tdd</code> (<code>wayfinder/SKILL.md:209-214</code>). The installed <code>implement</code> skill says it uses <code>/tdd</code> and <code>/code-review</code> (<code>implement/SKILL.md:28-36</code>). The wayfinder-import spec lists <code>implement</code> as a future import, out of scope (<code>spec-wayfinder-import.md:263-265</code>). All three describe the same stage differently.</p>
+  </div>
+
+  <p class="footnote">Primary sources: <code>wayfinder/SKILL.md</code> (pipeline, gates, entity chain), <code>to-spec/SKILL.md</code>, <code>to-tickets/SKILL.md</code>, <code>implement/SKILL.md</code>, <code>doc-review/SKILL.md</code>, <code>docs/features/spec-driven-development/design/spec-driven-development-design-wayfinder-import.md</code>.</p>
+</section>
+
+<!-- ================= 02 WAYFINDER ================= -->
+<section class="page" id="wayfinder">
+  <header class="page-head">
+    <span class="kicker">Page 02 · Decision layer</span>
+    <h1>wayfinder</h1>
+    <p class="deck">Planning for work too large for one agent session. It charts a shared map of decision briefs on the tracker, then resolves them one at a time until the route to the destination is clear. It produces decisions, not deliverables.</p>
+    <div class="chips"><span class="chip">source <b>mattpocock</b></span><span class="chip">imported <b>2026-08-02</b></span><span class="chip">status <b>adapted</b></span></div>
+  </header>
+
+  <h2>Design in one sentence</h2>
+  <div class="callout yellow">
+    <p><strong>The map is an index, not a store.</strong> Each decision lives in exactly one brief. The map gists it and links to it; it never restates the detail. A session claims one brief, resolves it, records the answer, and graduates newly-specifiable fog into fresh briefs.</p>
+  </div>
+
+  <h2>The map</h2>
+  <p>One issue, labelled <code>wayfinder:map</code>. Its body has five fixed sections:</p>
+  <table class="table">
+    <thead><tr><th>Section</th><th>Holds</th><th>Rule</th></tr></thead>
+    <tbody>
+      <tr><td><code>Destination</code></td><td>What reaching the end looks like — a spec, a decision, or a change.</td><td>One or two lines; every session re-orients to it.</td></tr>
+      <tr><td><code>Notes</code></td><td>Domain, skills to consult, standing preferences.</td><td>May override "plan, don't do" by carrying execution into the map.</td></tr>
+      <tr><td><code>Decisions so far</code></td><td>One line per closed brief + link.</td><td>Index only; detail stays in the brief.</td></tr>
+      <tr><td><code>Not yet specified</code></td><td>Fog of war: in-scope questions not yet sharp enough to brief.</td><td>Never pre-sliced into brief-sized pieces.</td></tr>
+      <tr><td><code>Out of scope</code></td><td>Work consciously ruled beyond the destination.</td><td>Closed, never graduates.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Briefs</h2>
+  <p>A brief is a child issue of the map. Its body is the question, sized to one ~100K-token agent session. The answer is not in the body; it is recorded on resolution.</p>
+  <table class="table">
+    <thead><tr><th>Type</th><th>Mode</th><th>Used when</th><th>Resolved by</th></tr></thead>
+    <tbody>
+      <tr><td><code>research</code></td><td>AFK</td><td>A fact outside the working directory blocks a decision.</td><td><code>/research</code> subagent; findings on a throwaway branch.</td></tr>
+      <tr><td><code>prototype</code></td><td>HITL</td><td>"How should it look / behave?" needs a concrete artifact.</td><td><code>/prototype</code>; asset linked, not pasted.</td></tr>
+      <tr><td><code>grilling</code></td><td>HITL</td><td>The default: a decision needs a live human exchange.</td><td><code>/grilling</code> + <code>/domain-modeling</code>, one question at a time.</td></tr>
+      <tr><td><code>task</code></td><td>HITL or AFK</td><td>Manual work must happen before a decision can be made.</td><td>Do the work; record facts later briefs depend on.</td></tr>
+    </tbody>
+  </table>
+  <div class="callout green">
+    <p class="t">HITL is not optional</p>
+    <p>A HITL brief only resolves through a live exchange with the human. An agent that answers its own grilling questions has broken the design (<code>wayfinder/SKILL.md:99</code>).</p>
+  </div>
+
+  <h2>Mechanics</h2>
+  <div class="grid2">
+    <div class="card">
+      <span class="tag">Claim</span>
+      <h3>Assignment is the lock</h3>
+      <p>A session claims a brief by assigning it to the dev <em>before</em> any work. An open, unassigned brief is unclaimed. This is how parallel sessions skip each other.</p>
+    </div>
+    <div class="card">
+      <span class="tag">Frontier</span>
+      <h3>Open + unblocked + unclaimed</h3>
+      <p>Blocking uses the tracker's native dependency relationship so the frontier renders in the tracker UI. A brief is unblocked when every blocker is closed.</p>
+    </div>
+    <div class="card">
+      <span class="tag">Fog</span>
+      <h3>Brief vs not-yet-specified</h3>
+      <p>Brief when the question is already sharp, even if blocked. Leave it in fog when you cannot yet phrase it precisely. Resolution graduates fog into new briefs.</p>
+    </div>
+    <div class="card">
+      <span class="tag">Scope</span>
+      <h3>Out of scope is not fog</h3>
+      <p>Fog gathers toward the destination. Work beyond it is out of scope: close any existing brief and record one line in <code>Out of scope</code>. It never graduates.</p>
+    </div>
+  </div>
+
+  <h2>Two invocation modes</h2>
+  <div class="grid2">
+    <div class="card">
+      <span class="tag">Mode A</span>
+      <h3>Chart the map</h3>
+      <ol class="small">
+        <li>Name the destination via grilling + domain-modeling.</li>
+        <li>Map the frontier breadth-first.</li>
+        <li>If no fog appears, stop — no map is needed.</li>
+        <li>Create the map issue.</li>
+        <li>Create the briefs you can specify; wire blocking in a second pass.</li>
+        <li>Fire research subagents in parallel.</li>
+        <li>Stop — charting resolves nothing.</li>
+      </ol>
+    </div>
+    <div class="card">
+      <span class="tag">Mode B</span>
+      <h3>Work the map</h3>
+      <ol class="small">
+        <li>Load the map at low resolution.</li>
+        <li>Pick a brief (user-named or first frontier); claim it.</li>
+        <li>Resolve it with the named skills.</li>
+        <li>Run the delivery review gate if it is a task brief with deliverables.</li>
+        <li>Post the answer, close the brief, append to Decisions so far.</li>
+        <li>Add newly surfaced briefs; graduate fog.</li>
+        <li>Stop after one brief, except research.</li>
+      </ol>
+    </div>
+  </div>
+
+  <h2>Pluggable skill interfaces</h2>
+  <p>wayfinder depends on four capabilities, each with a default and an optional replacement. On first install the user answers one question per interface: <em>keep</em>, <em>use &lt;name&gt;</em>, or <em>skip</em>.</p>
+  <table class="table">
+    <thead><tr><th>Interface</th><th>Purpose</th><th>Default</th><th>This install</th></tr></thead>
+    <tbody>
+      <tr><td><code>interview</code></td><td>Grill the user, write CONTEXT.md + ADRs</td><td><code>grill-with-docs</code> + <code>domain-modeling</code></td><td>default (no replacement)</td></tr>
+      <tr><td><code>investigate</code></td><td>Read docs/APIs, produce cited markdown</td><td><code>research</code></td><td>ai-coworker <code>research</code> ✅</td></tr>
+      <tr><td><code>prototype</code></td><td>Build a throwaway artifact</td><td><code>prototype</code></td><td>default (no replacement)</td></tr>
+      <tr><td><code>tracker</code></td><td>Issue CRUD: create, list, label, assign, close</td><td><code>gh</code> CLI (GitHub Issues)</td><td>default; local markdown fallback</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Where wayfinder hands off</h2>
+  <div class="flow">
+    <div class="node"><div class="n">DONE</div><h4>Map done</h4><p>Frontier empty; no briefs left to decide.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="n">WRITE</div><h4>to-spec</h4><p>Synthesize every brief conclusion into one spec.</p></div>
+    <div class="arrow">→</div>
+    <div class="node gate"><div class="n">GATE</div><h4>doc-review checkpoint</h4><p>Spec + briefs + glossary + ADRs; must pass.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="n">TICKET</div><h4>to-tickets</h4><p>Split the spec into build tickets.</p></div>
+  </div>
+
+  <h2>What the import changed from Matt's original</h2>
+  <table class="table">
+    <thead><tr><th>Change</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td><code>ticket</code> → <code>brief</code></td><td>Disambiguate decision tickets from to-tickets' build tickets.</td></tr>
+      <tr><td>Pluggable interfaces</td><td>Let the project swap research/interview/prototype/tracker without forking wayfinder.</td></tr>
+      <tr><td>Delivery review gate</td><td>Task briefs that produce deliverables get reviewed before closure.</td></tr>
+      <tr><td>Doc-review checkpoint</td><td>A hard gate between to-spec and to-tickets.</td></tr>
+      <tr><td>MkDocs-ready discipline</td><td>Every document-producing step keeps INDEX.md/nav/naming deployable.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout red">
+    <p class="t">Open seam: tracker identity</p>
+    <p>wayfinder's default tracker is <code>gh</code> (GitHub Issues) with a local-markdown fallback; to-spec and to-tickets also default to local markdown if none is configured; the SDD docs still describe "Jira tickets" in prose. The redesign has to pick one canonical tracker model or state the matrix explicitly.</p>
+  </div>
+
+  <p class="footnote">Sources: <code>the-super-lab/skills/wayfinder/SKILL.md</code>; <code>docs/features/spec-driven-development/design/spec-driven-development-design-wayfinder-import.md</code>; <code>impl-plan/spec-driven-development-impl-plan-01-wayfinder-import.md</code>.</p>
+</section>
+
+<!-- ================= 03 TO-SPEC ================= -->
+<section class="page" id="to-spec">
+  <header class="page-head">
+    <span class="kicker">Page 03 · Writing layer</span>
+    <h1>to-spec</h1>
+    <p class="deck">Turns the current conversation and codebase understanding into a spec (PRD) and publishes it to the tracker. It does not interview — it synthesizes what is already known.</p>
+    <div class="chips"><span class="chip">source <b>mattpocock</b></span><span class="chip">output <b>spec issue</b></span><span class="chip">label <b>ready-for-agent</b></span></div>
+  </header>
+
+  <h2>Contract</h2>
+  <div class="kv">
+    <div>Input</div><div>Conversation context, closed wayfinder briefs, repo state, domain glossary and ADRs.</div>
+    <div>Output</div><div>A <code>spec</code> (PRD) published to the tracker and labelled <code>ready-for-agent</code>.</div>
+    <div>Does</div><div>Synthesizes decisions; sketches test seams; writes the template; publishes.</div>
+    <div>Does not</div><div>Interview the user; invent decisions; include file paths or code snippets.</div>
+    <div>Depends on</div><div><code>doc-organize</code> for placement, frontmatter and required sections; <code>AUTHORITY-BY-CONCERN.md</code> and <code>CONTENT-PRIORITY.md</code> for content.</div>
+  </div>
+
+  <h2>Process</h2>
+  <div class="flow">
+    <div class="node"><div class="n">1</div><h4>Explore</h4><p>Read the repo; use the domain glossary; respect ADRs.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="n">2</div><h4>Sketch seams</h4><p>Prefer existing seams; use the highest seam; aim for one. Confirm with the user.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="n">3</div><h4>Write</h4><p>Fill the section template, tagged L1–L4.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="n">4</div><h4>Publish</h4><p>Tracker issue + <code>ready-for-agent</code>; no extra triage.</p></div>
+  </div>
+
+  <h2>The template and its content levels</h2>
+  <table class="table">
+    <thead><tr><th>Section</th><th>Level</th><th>What goes in it</th></tr></thead>
+    <tbody>
+      <tr><td>Problem Statement</td><td>L1</td><td>The problem from the user's perspective. Never trimmed — without it the direction cannot be checked.</td></tr>
+      <tr><td>Solution</td><td>L1</td><td>The solution from the user's perspective.</td></tr>
+      <tr><td>User Stories</td><td>L1</td><td>A long numbered list: <em>As an actor, I want a feature, so that benefit.</em></td></tr>
+      <tr><td>Implementation Decisions</td><td>L1 decision / L2 rationale</td><td>Modules, interfaces, schema changes, API contracts, interactions. No file paths or snippets.</td></tr>
+      <tr><td>Alternatives Considered</td><td>L3, optional</td><td>Live options that lost, each with the reason. Omit if none was seriously considered.</td></tr>
+      <tr><td>Testing Decisions</td><td>L1 constraint / L2 specifics</td><td>"Test external behavior, not implementation" plus modules and prior art.</td></tr>
+      <tr><td>Out of Scope</td><td>L1</td><td>Non-goals; never trimmed.</td></tr>
+      <tr><td>Further Notes</td><td>L4</td><td>Background, references, open threads; links, never restatements.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout yellow">
+    <p class="t">The one exception to "no code"</p>
+    <p>If a prototype produced a snippet that encodes a decision more precisely than prose — a state machine, reducer, schema, or type shape — inline that snippet in the relevant decision and note it came from a prototype. Trim to the decision-rich parts, not a working demo.</p>
+  </div>
+
+  <h2>Design consequences</h2>
+  <ul>
+    <li>After <code>to-spec</code>, the spec is the authoritative artifact for intended behavior. Code is authoritative for current implementation. A later disagreement is a conflict to report, not a silent rewrite.</li>
+    <li>The spec is sized by content: the 1,000-line cap and split-by-bounded-context rule from <code>doc-organize</code> apply.</li>
+    <li>"No interview" is deliberate: the grilling already happened in wayfinder or <code>grill-with-docs</code>. If the conversation is still fuzzy, to-spec is the wrong tool.</li>
+  </ul>
+
+  <p class="footnote">Sources: <code>skills/to-spec/SKILL.md:31-150</code>; <code>skills/doc-organize/{AUTHORITY-BY-CONCERN,CONTENT-PRIORITY,SPEC-SCOPE}.md</code>.</p>
+</section>
+
+<!-- ================= 04 DOC-REVIEW ================= -->
+<section class="page" id="doc-review">
+  <header class="page-head">
+    <span class="kicker">Page 04 · Verification layer</span>
+    <h1>doc-review</h1>
+    <p class="deck">Two-branch review skill. Design review stress-tests a spec before implementation; work completion review verifies finished work against acceptance criteria. Every design finding gets a 1–5 severity; only 3+ is discussed.</p>
+    <div class="chips"><span class="chip">branches <b>2</b></span><span class="chip">levels <b>1–5</b></span><span class="chip">max debate <b>3 rounds</b></span></div>
+  </header>
+
+  <h2>Branch A · Design review</h2>
+  <div class="grid2">
+    <div class="card">
+      <span class="tag">Step 1</span>
+      <h3>Severity gate</h3>
+      <table class="table" style="margin:8px 0 0">
+        <tbody>
+          <tr><td><strong>5</strong> Critical</td><td>Would break the system or force major rework</td></tr>
+          <tr><td><strong>4</strong> Important</td><td>Significant design flaw or missing requirement</td></tr>
+          <tr><td><strong>3</strong> Worth discussing</td><td>Real concern, not blocking</td></tr>
+          <tr><td><strong>2</strong> Minor</td><td>Nice-to-have, stylistic</td></tr>
+          <tr><td><strong>1</strong> Nitpick</td><td>Typo, wording</td></tr>
+        </tbody>
+      </table>
+      <p class="small" style="margin-top:8px">Only 3+ is debated. 1–2 are recorded as skipped.</p>
+    </div>
+    <div class="card">
+      <span class="tag">Step 2</span>
+      <h3>Choose intensity</h3>
+      <p><strong>Quick scan</strong> — a single gap report with all 3+ findings.</p>
+      <p><strong>Full adversarial</strong> — two independent reviewers, then debate disagreements; at least one web search per major claim; 3 rounds max per issue; a judge rules on available evidence.</p>
+      <p class="small">If every finding is level 2 or below, the document passes and no changes are needed.</p>
+    </div>
+  </div>
+
+  <h2>Branch B · Work completion review</h2>
+  <div class="flow">
+    <div class="node"><div class="n">PHASE 1</div><h4>Collector</h4><p>Read PRD/design/plan; derive acceptance criteria with source + MUST/SHOULD/NICE; write a test plan and regression guard.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="n">PHASE 2</div><h4>Reviewer</h4><p>Run the suite; Playwright for E2E; curl for APIs; manual code paths; check diff coverage; scan for secrets/debug code.</p></div>
+    <div class="arrow">→</div>
+    <div class="node gate"><div class="n">PHASE 3</div><h4>Sign-off</h4><p>ACCEPTED with evidence (file:line + test result) or REJECTED with action items.</p></div>
+  </div>
+
+  <h2>Role in the SDD chain</h2>
+  <table class="table">
+    <thead><tr><th>Position</th><th>Uses which branch</th><th>Pass condition</th></tr></thead>
+    <tbody>
+      <tr><td>After wayfinder, before to-spec → tickets</td><td>Design review</td><td>No 3+ findings, or all accepted findings fixed.</td></tr>
+      <tr><td>Closing a <code>task</code> brief with <code>.md</code> deliverables</td><td>Design review (delivery gate)</td><td>Review passes before the brief closes.</td></tr>
+      <tr><td>After implementation</td><td>Work completion review</td><td>Every MUST criterion has PASS + evidence.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout red">
+    <p class="t">It reports; it does not rewrite</p>
+    <p>doc-review judges a spec against <code>doc-organize</code>: missing L1 content, implementation detail that should not be there, and claims about current implementation the code does not support. It reports findings — it never silently rewrites the spec or the code.</p>
+  </div>
+
+  <h2>Anti-patterns the skill explicitly blocks</h2>
+  <ul>
+    <li><strong>Bikeshedding</strong> — debating level 2 findings.</li>
+    <li><strong>No evidence</strong> — arguments without citations or search results.</li>
+    <li><strong>Reading instead of testing</strong> — code-reading is not verification.</li>
+    <li><strong>Vague sign-off</strong> — "looks good" is not acceptance; SIGNED needs file:line and a test result.</li>
+    <li><strong>Endless debate</strong> — 3 rounds, then the judge rules.</li>
+  </ul>
+
+  <p class="footnote">Sources: <code>skills/doc-review/SKILL.md:27-297</code>; <code>spec-wayfinder-import.md:74-132</code>.</p>
+</section>
+
+<!-- ================= 05 TO-TICKETS ================= -->
+<section class="page" id="to-tickets">
+  <header class="page-head">
+    <span class="kicker">Page 05 · Decomposition layer</span>
+    <h1>to-tickets</h1>
+    <p class="deck">Breaks a plan, spec, or conversation into tracer-bullet tickets: each cuts a narrow but complete vertical slice through every layer and declares the tickets that block it.</p>
+    <div class="chips"><span class="chip">output <b>tickets</b></span><span class="chip">shape <b>vertical slice</b></span><span class="chip">label <b>ready-for-agent</b></span></div>
+  </header>
+
+  <h2>Rules for a slice</h2>
+  <ul>
+    <li>Cuts a narrow but <strong>complete</strong> path through schema, API, UI, and tests — vertical, not a horizontal layer slice.</li>
+    <li>A completed slice is demoable or verifiable on its own.</li>
+    <li>Each slice fits in a single fresh context window.</li>
+    <li>Prefactoring that makes the change easier is done first: "make the change easy, then make the easy change."</li>
+  </ul>
+
+  <h2>Blocking edges</h2>
+  <p>Each ticket declares the tickets that must complete before it can start. A ticket with no blockers can start immediately. Work the <em>frontier</em>: any ticket whose blockers are done.</p>
+
+  <div class="callout yellow">
+    <p class="t">The one exception: wide refactors</p>
+    <p>A mechanical change whose blast radius fans across the codebase — rename a column, retype a shared symbol — cannot land green as one slice. Sequence it as <strong>expand → migrate in batches → contract</strong>. Each batch is a ticket blocked by the expand; the contract is blocked by every migrate batch. If batches cannot stay green alone, they share an integration branch and all block a final integrate-and-verify ticket.</p>
+  </div>
+
+  <h2>Process</h2>
+  <div class="flow">
+    <div class="node"><div class="n">1</div><h4>Gather</h4><p>Use the conversation; fetch a referenced spec/issue in full.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="n">2</div><h4>Explore</h4><p>Optional codebase pass; find prefactors.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="n">3</div><h4>Draft</h4><p>Vertical slices with blocking edges.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="n">4</div><h4>Quiz</h4><p>Granularity, edges, merge/split; iterate to approval.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="n">5</div><h4>Publish</h4><p>Local files or tracker, blockers first.</p></div>
+  </div>
+
+  <h2>Publishing matrix</h2>
+  <table class="table">
+    <thead><tr><th>Tracker</th><th>Where</th><th>Blocking shape</th></tr></thead>
+    <tbody>
+      <tr><td>Local markdown</td><td><code>.scratch/&lt;feature-slug&gt;/issues/&lt;NN&gt;-&lt;slug&gt;.md</code>, numbered from <code>01</code> in dependency order</td><td>"Blocked by" lists the numbers/titles</td></tr>
+      <tr><td>GitHub / Linear / other</td><td>One issue per ticket, blockers first</td><td>Native blocking / sub-issue relation, else a "Blocked by" section</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Ticket content</h2>
+  <div class="grid2">
+    <div class="card">
+      <span class="tag">Deliver</span>
+      <h3>What to build</h3>
+      <p>The end-to-end behavior this ticket makes work, from the user's perspective — not a layer-by-layer implementation list.</p>
+    </div>
+    <div class="card">
+      <span class="tag">Accept</span>
+      <h3>Acceptance criteria</h3>
+      <p>A checklist of externally observable conditions. Specific file paths and code snippets are avoided; they go stale.</p>
+    </div>
+  </div>
+
+  <div class="callout green">
+    <p class="t">What it deliberately does not do</p>
+    <p>It does not close or modify the parent issue. It does not re-open decisions — if decisions are still being made, the work belongs to wayfinder first.</p>
+  </div>
+
+  <p class="footnote">Sources: <code>skills/to-tickets/SKILL.md:31-129</code>.</p>
+</section>
+
+<!-- ================= 06 IMPLEMENT ================= -->
+<section class="page" id="implement">
+  <header class="page-head">
+    <span class="kicker">Page 06 · Build layer</span>
+    <h1>implement / auto-tdd</h1>
+    <p class="deck">The build stage is where specs become code. Today there are two skills that can own it, plus a code-review skill at the end — and the pipeline names them inconsistently.</p>
+    <div class="chips"><span class="chip">implement <b>47 lines</b></span><span class="chip">auto-tdd <b>138 lines</b></span><span class="chip">review <b>matt-code-review</b></span></div>
+  </header>
+
+  <h2>implement</h2>
+  <div class="kv">
+    <div>Trigger</div><div>Spec and tickets are ready; acceptance criteria and testing seams are agreed.</div>
+    <div>Does</div><div>TDD at pre-agreed seams; typecheck regularly; run single test files regularly; full suite once at the end; <code>/code-review</code>; commit to the current branch.</div>
+    <div>Refuses</div><div>Working when the spec is fuzzy or decisions are unmade — that is wayfinder or grill-with-docs first.</div>
+    <div>Spec handling</div><div>Classify the change before touching the spec. Refactor/rename/optimization/framework migration do not require a spec edit; externally observable behavior does. Conflicts are reported, not silently resolved.</div>
+  </div>
+
+  <h2>auto-tdd</h2>
+  <div class="grid2">
+    <div class="card">
+      <span class="tag">Basic</span>
+      <h3>Red–green–refactor</h3>
+      <p>Classic TDD through public interfaces: plan and approve; write one tracer-bullet test (RED); minimal code (GREEN); then one behavior at a time. Tests verify behavior, not implementation details.</p>
+    </div>
+    <div class="card">
+      <span class="tag">Auto</span>
+      <h3>Multi-agent continuous loop</h3>
+      <p>A self-correcting loop with an arbitration judge and a quality judge. It does not stop until all tiers pass. Used when correctness matters and the work is complex.</p>
+    </div>
+  </div>
+
+  <h2>matt-code-review</h2>
+  <p>Two independent axes over the diff between <code>HEAD</code> and a fixed point:</p>
+  <table class="table">
+    <thead><tr><th>Axis</th><th>Checks</th><th>Why separate</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Standards</strong></td><td>Coding conventions + Fowler smell baseline.</td><td>Wrong style is a different question from wrong behavior.</td></tr>
+      <tr><td><strong>Spec</strong></td><td>Faithfulness to the originating issue / PRD / spec.</td><td>Both run as parallel sub-agents so contexts do not pollute each other; findings are reported side by side, never merged.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout red">
+    <p class="t">Three names for one stage</p>
+    <p>wayfinder says <code>to-tickets → auto-tdd</code>; the installed <code>implement</code> skill says it drives TDD and closes with <code>/code-review</code>; the wayfinder-import spec lists <code>implement</code> as "future import, out of scope". The redesign needs one canonical build-stage contract (and a decision on which review skill owns the final gate).</p>
+  </div>
+
+  <h2>Where the quality evidence comes from</h2>
+  <ul>
+    <li><code>implement</code> guarantees typecheck + tests; it delegates review to <code>/code-review</code>.</li>
+    <li><code>auto-tdd</code> guarantees its own loop and judges; it does not mention spec-drift classification.</li>
+    <li><code>matt-code-review</code> guarantees two-axis diff review; it needs a fixed reference point.</li>
+    <li><code>doc-review</code> Branch B guarantees acceptance against criteria with executed evidence.</li>
+  </ul>
+
+  <p class="footnote">Sources: <code>skills/implement/SKILL.md:26-47</code>; <code>skills/auto-tdd/SKILL.md:20-70</code>; <code>skills/matt-code-review/SKILL.md:34-60</code>; <code>skills/wayfinder/SKILL.md:209-214</code>.</p>
+</section>
+
+<!-- ================= 07 DOC-ORGANIZE ================= -->
+<section class="page" id="doc-organize">
+  <header class="page-head">
+    <span class="kicker">Page 07 · Standard</span>
+    <h1>doc-organize</h1>
+    <p class="deck">The documentation standard and its four enforcement modes: Organize, Lint, Consolidate, Sync. Every other skill in the chain defers to it for placement, frontmatter, required sections, and conflict authority.</p>
+    <div class="chips"><span class="chip">modes <b>4</b></span><span class="chip">types <b>6 + state</b></span><span class="chip">cap <b>1,000 lines</b></span></div>
+  </header>
+
+  <h2>What it owns</h2>
+  <div class="grid3">
+    <div class="card"><span class="tag">Authority</span><h3>One owner per concern</h3><p>Spec owns intended behavior; code owns current implementation; contracts, migrations, tests own their facts.</p></div>
+    <div class="card"><span class="tag">Content</span><h3>L1–L4 priority</h3><p>L1 is never deleted. Trim L4, then L3, compress L2, split if still over the cap.</p></div>
+    <div class="card"><span class="tag">Structure</span><h3>Type, path, sections</h3><p>Six committed types plus gitignored state; fixed required sections per type; Change Log last.</p></div>
+  </div>
+
+  <h2>The standard at a glance</h2>
+  <table class="table">
+    <thead><tr><th>Rule</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><td>Path</td><td><code>docs/features/&lt;feature&gt;/&lt;type&gt;/&lt;feature&gt;-&lt;type&gt;.md</code></td></tr>
+      <tr><td>Types</td><td><code>prd</code>, <code>spec</code>, <code>impl-plan</code>, <code>test-plan</code>, <code>decision-history</code>, <code>how-to</code>; <code>state</code> is local/gitignored</td></tr>
+      <tr><td>Frontmatter</td><td><code>feature</code>, <code>type</code>, <code>state</code>, <code>final_date</code>; optional <code>spec_id</code>, <code>version</code>, <code>health</code>, <code>owner</code>, <code>last_verified</code></td></tr>
+      <tr><td>Required spec sections</td><td>Problem Statement, Solution, User Stories, Implementation Decisions, Design, Testing Decisions, Out of Scope, Further Notes</td></tr>
+      <tr><td>Size cap</td><td><code>spec</code> and <code>impl-plan</code> under 1,000 lines; <code>decision-history</code> exempt</td></tr>
+      <tr><td>Change Log</td><td>Final section; append-only; existing entries never removed</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Four modes</h2>
+  <table class="table">
+    <thead><tr><th>Mode</th><th>Trigger</th><th>Does</th><th>Refuses</th></tr></thead>
+    <tbody>
+      <tr><td><strong>A · Organize</strong></td><td>"where should this go", a new document</td><td>Identify feature/type, check collisions, compute path, write frontmatter/sections, append log, regenerate INDEX</td><td>Creating a second file for an existing type (unless at the cap)</td></tr>
+      <tr><td><strong>B · Lint</strong></td><td>"check the docs", "is this valid"</td><td>Walk the tree, mechanical fixes, report the rest, regenerate INDEX</td><td>Guessing a replacement for reference drift; editing a timestamp</td></tr>
+      <tr><td><strong>C · Consolidate</strong></td><td>"too many files", "merge these"</td><td>Propose every move/merge/delete; apply only on approval; preserve every decision</td><td>Applying without approval</td></tr>
+      <tr><td><strong>D · Sync</strong></td><td>"docs disagree", "spec is stale"</td><td>Detect drift, resolve by authority, auto-fix formatting, report semantic conflicts</td><td>Silently picking a side or rewriting a decision</td></tr>
+    </tbody>
+  </table>
+
+  <h2>How the chain uses it</h2>
+  <table class="table">
+    <thead><tr><th>Skill</th><th>Uses doc-organize for</th></tr></thead>
+    <tbody>
+      <tr><td><code>wayfinder</code></td><td>MkDocs-ready inline discipline: INDEX.md, naming, directory → nav hierarchy, <code>mkdocs.yml</code> update.</td></tr>
+      <tr><td><code>to-spec</code></td><td>Placement, frontmatter, required sections; L1–L4 content classification.</td></tr>
+      <tr><td><code>to-tickets</code></td><td>Tracker/local-file conventions and <code>.scratch</code> placement.</td></tr>
+      <tr><td><code>implement</code></td><td>Deciding whether a change is behavior (spec edit) or implementation-only (no spec edit).</td></tr>
+      <tr><td><code>doc-review</code></td><td>Judging missing L1, forbidden implementation detail, and unsupported claims.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout yellow">
+    <p class="t">Recent change: the spec is now self-contained</p>
+    <p>The SDD spec was split on 2026-10-30 into a pipeline design and a document standard. The pipeline spec (296 lines) defines the five artifacts and their cooperation; its Problem Statement and Solution now live in the parent PRD. The document-standard spec (910 lines) defines authority, content priority, health, naming, document types, and enforcement. Both specs stay under the 1,000-line cap, and the document standard remains the operational contract implemented by the <code>doc-organize</code> skill.</p>
+  </div>
+
+  <p class="footnote">Sources: <code>skills/doc-organize/SKILL.md</code>, <code>AUTHORITY-BY-CONCERN.md</code>, <code>SPEC-SCOPE.md</code>, <code>SPEC-HEALTH.md</code>, <code>CONTENT-PRIORITY.md</code>, <code>NAMING.md</code>; <code>docs/features/spec-driven-development/design/spec-driven-development-design.md</code>.</p>
+</section>
+
+<!-- ================= 08 SUPPORTING ================= -->
+<section class="page" id="supporting">
+  <header class="page-head">
+    <span class="kicker">Page 08 · Interfaces</span>
+    <h1>Supporting skills</h1>
+    <p class="deck">Four skills plug into wayfinder's interfaces; one reviews code deliverables. They are the replaceable edges of the method, not its core.</p>
+  </header>
+
+  <h2>research</h2>
+  <div class="kv">
+    <div>Two branches</div><div><strong>Discover unknowns</strong> — interview-first, surface blind spots before coding. <strong>Design spec</strong> — structured brainstorming to a written spec.</div>
+    <div>Interview</div><div>One question at a time; wait for the answer; 2–3 rounds per topic; stop when the user says "whatever you think" twice.</div>
+    <div>Output</div><div>Summarized decisions + open questions; optionally a spec at <code>docs/features/&lt;feature&gt;/design/</code>.</div>
+    <div>In wayfinder</div><div>The <code>investigate</code> interface; research briefs run as AFK subagents on throwaway branches.</div>
+  </div>
+
+  <h2>grill-with-docs + domain-modeling</h2>
+  <div class="grid2">
+    <div class="card">
+      <span class="tag">Interview</span>
+      <h3>grill-with-docs</h3>
+      <p>Composes <code>/grilling</code> and <code>/domain-modeling</code> into one session: a relentless interview that writes ADRs and <code>CONTEXT.md</code> inline as terminology crystallizes. wayfinder's default <code>interview</code> interface.</p>
+    </div>
+    <div class="card">
+      <span class="tag">Model</span>
+      <h3>domain-modeling</h3>
+      <p>Challenges conflicting terms, proposes canonical ones, stress-tests with scenarios, and maintains <code>CONTEXT.md</code> plus <code>docs/adr/</code>. Creates files lazily, only when there is something to write.</p>
+    </div>
+  </div>
+
+  <h2>prototype</h2>
+  <div class="grid2">
+    <div class="card">
+      <span class="tag">Logic</span>
+      <h3>Terminal state-machine app</h3>
+      <p>"Does this logic / state model feel right?" Build a tiny interactive terminal app that pushes hard cases through the state machine.</p>
+    </div>
+    <div class="card">
+      <span class="tag">UI</span>
+      <h3>Route variations</h3>
+      <p>"What should this look like?" Several radically different UI variations on a single route, switchable by URL param and a floating bottom bar.</p>
+    </div>
+  </div>
+  <p class="small">Rules: throwaway and clearly marked; one command to run; no persistence by default; skip polish; surface state after every action; capture the validated decision, commit the prototype to a throwaway branch, and link it.</p>
+
+  <h2>matt-code-review</h2>
+  <p>Used by wayfinder's delivery gate for code deliverables. Two independent axes — Standards and Spec — run as parallel sub-agents and report side by side.</p>
+
+  <h2>Interface map</h2>
+  <table class="table">
+    <thead><tr><th>Skill</th><th>Used by</th><th>Interface / role</th><th>Output</th></tr></thead>
+    <tbody>
+      <tr><td><code>research</code></td><td>wayfinder</td><td><code>investigate</code></td><td>Cited research markdown</td></tr>
+      <tr><td><code>grill-with-docs</code></td><td>wayfinder</td><td><code>interview</code> (composed)</td><td>Decisions, glossary, ADRs</td></tr>
+      <tr><td><code>domain-modeling</code></td><td>grill-with-docs, to-spec, doc-review</td><td>Model maintenance</td><td><code>CONTEXT.md</code>, ADRs</td></tr>
+      <tr><td><code>prototype</code></td><td>wayfinder</td><td><code>prototype</code></td><td>Throwaway artifact + verdict</td></tr>
+      <tr><td><code>matt-code-review</code></td><td>wayfinder delivery gate, implement close-out</td><td>Code review</td><td>Two-axis findings</td></tr>
+      <tr><td><code>auto-tdd</code></td><td>build stage (declared pipeline)</td><td>TDD loop</td><td>Tests + code</td></tr>
+    </tbody>
+  </table>
+
+  <p class="footnote">Sources: <code>skills/research/SKILL.md</code>; <code>skills/grill-with-docs/SKILL.md</code>; <code>skills/domain-modeling/SKILL.md</code>; <code>skills/prototype/SKILL.md</code>; <code>skills/matt-code-review/SKILL.md</code>; <code>skills/auto-tdd/SKILL.md</code>.</p>
+</section>
+
+<!-- ================= 09 WALTER-WORKER ================= -->
+<section class="page" id="walter-worker">
+  <header class="page-head">
+    <span class="kicker">Page 09 · Runtime</span>
+    <h1>walter-worker: deploy, inject, record</h1>
+    <p class="deck">walter-worker is a Claude Code context and memory manager. It installs skills into harnesses, injects feature context into <code>CLAUDE.local.md</code>, and records sessions. It does not run the SDD workflow and does not dispatch skills at runtime.</p>
+    <div class="chips"><span class="chip">CLI <b>coworker</b></span><span class="chip">source of truth <b>the-super-lab</b></span><span class="chip">runtime <b>harness</b></span></div>
+  </header>
+
+  <h2>What it is / is not</h2>
+  <div class="grid2">
+    <div class="card">
+      <span class="tag">Is</span>
+      <h3>Context, memory, analytics</h3>
+      <p>Manages the global → project → local CLAUDE.md layers; records sessions, tool calls, file I/O, skill usage, tokens and cost; builds cross-session memory; ships slash commands for project/feature/memory/dashboard.</p>
+    </div>
+    <div class="card">
+      <span class="tag">Is not</span>
+      <h3>A workflow executor</h3>
+      <p>It does not decide when to call wayfinder, to-spec, or to-tickets. Those are invoked by the agent in the harness. The one exception is <code>auto-worker</code>, which spawns a headless Claude session with a prompt.</p>
+    </div>
+  </div>
+
+  <h2>Skill source of truth</h2>
+  <div class="flow">
+    <div class="node hot"><div class="n">SOURCE</div><h4>the-super-lab</h4><p><code>skills/</code> and <code>personal-skills/</code> are edited first.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="n">BUNDLE</div><h4>walter-worker/skills</h4><p>Its own operational skills, deployed separately.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="n">INSTALL</div><h4>setup/install.sh</h4><p>Selects skills and copies/symlinks them into harness directories.</p></div>
+    <div class="arrow">→</div>
+    <div class="node gate"><div class="n">RUNTIME</div><h4>Harness</h4><p>Claude Code / OpenCode / Cursor discover and invoke the skill.</p></div>
+  </div>
+
+  <h2>Install destinations (exact)</h2>
+  <table class="table">
+    <thead><tr><th>Source</th><th>Destination</th><th>Form</th></tr></thead>
+    <tbody>
+      <tr><td>the-super-lab <code>skills/&lt;name&gt;</code></td><td><code>~/.claude/skills/&lt;name&gt;/</code></td><td>Whole directory copy, so sibling files travel</td></tr>
+      <tr><td>the-super-lab <code>skills/&lt;name&gt;</code></td><td><code>~/.config/opencode/skills/the-super-lab/&lt;name&gt;</code></td><td>Symlink to the source directory</td></tr>
+      <tr><td>the-super-lab <code>skills/&lt;name&gt;</code></td><td><code>~/.cursor/rules/&lt;name&gt;.md</code></td><td>Flattened <code>SKILL.md</code> copy</td></tr>
+      <tr><td>walter-worker <code>skills/&lt;name&gt;</code></td><td><code>~/.claude/commands/&lt;name&gt;.md</code></td><td>Flattened copy (global mode)</td></tr>
+      <tr><td>walter-worker <code>skills/&lt;name&gt;</code></td><td><code>~/.opencode/instructions/&lt;name&gt;.md</code></td><td>Symlink, or copy as fallback</td></tr>
+    </tbody>
+  </table>
+  <p class="small">Project mode swaps the home paths for <code>&lt;project&gt;/.claude/commands</code> and <code>&lt;project&gt;/.opencode/instructions</code>. The <code>init</code> skill is always installed.</p>
+
+  <h2>How a skill actually gets called</h2>
+  <div class="grid3">
+    <div class="card">
+      <span class="tag">1 · Install</span>
+      <h3>Deploy</h3>
+      <p><code>install.sh</code> copies the skill directory into the harness's discovery path. Nothing else is needed for the agent to see it.</p>
+    </div>
+    <div class="card">
+      <span class="tag">2 · Context</span>
+      <h3>Inject</h3>
+      <p><code>coworker feature activate &lt;name&gt;</code> writes a managed block into <code>CLAUDE.local.md</code> including <code>recommended_skills</code>.</p>
+    </div>
+    <div class="card">
+      <span class="tag">3 · Invoke</span>
+      <h3>Harness</h3>
+      <p>The agent matches the task against the skill description and invokes it (Skill tool / slash command). wayfinder's research briefs spawn <code>/research</code> subagents.</p>
+    </div>
+  </div>
+
+  <h2>What feature activation injects</h2>
+  <pre><code>&lt;!-- FEATURE:spec-driven-development START --&gt;
+## Active Feature: spec-driven-development
+### Goal
+### Approach
+### Testing
+### Recommended Skills
+_User-reviewed skills for this feature. Invoke when relevant._
+- `wayfinder`
+- `to-spec`
+- `to-tickets`
+### Projects in scope
+### Key Decisions
+### Reference Docs
+&lt;!-- FEATURE:spec-driven-development END --&gt;</code></pre>
+  <p class="small">Source: <code>walter-worker/src/coworker/adapters/claude.py:430-480</code>; <code>FeatureConfig.recommended_skills</code> in <code>models.py:142</code>.</p>
+
+  <h2>The one runtime exception: auto-worker</h2>
+  <p><code>AutoWorkerAgent</code> spawns <code>claude -p &lt;prompt&gt; --output-format json</code> as a fresh headless session, with the auto-worker skill loaded as context. It is used for the QA loop: <code>find-issues</code> ( inspector) → <code>auto-worker</code> (fixer) → verify → repeat. This is the only place walter-worker itself starts an agent.</p>
+
+  <div class="callout red">
+    <p class="t">Deployment drift is a real failure mode</p>
+    <p>The script copies skills but does not prune removed or renamed skills from <code>~/.claude/skills</code> or <code>~/.cursor/rules</code>. Only OpenCode dangling symlinks are pruned. A rename leaves the old skill installed, so two copies with similar names are discoverable — which is exactly the name-collision problem <code>doc-organize/NAMING.md</code> warns about.</p>
+  </div>
+
+  <p class="footnote">Sources: <code>walter-worker/README.md:56-99</code>; <code>setup/install.sh:11-22, 164-168, 440-520</code>; <code>src/coworker/adapters/claude.py:204-286, 430-480</code>; <code>src/coworker/autoworker/engine.py:1-90</code>; <code>.claude/commands/auto-worker.md</code>.</p>
+</section>
+
+<!-- ================= 10 ARTIFACTS ================= -->
+<section class="page" id="artifacts">
+  <header class="page-head">
+    <span class="kicker">Page 10 · State</span>
+    <h1>Artifacts and state</h1>
+    <p class="deck">The chain creates different artifacts at different layers. Confusing them is the most common source of drift: a map is not a spec, a brief is not a build ticket, and a doc spec is not a tracker issue.</p>
+  </header>
+
+  <h2>Artifact map</h2>
+  <table class="table">
+    <thead><tr><th>Artifact</th><th>Created by</th><th>Lives in</th><th>Identity</th></tr></thead>
+    <tbody>
+      <tr><td>Map</td><td>wayfinder</td><td>Tracker</td><td>One issue, label <code>wayfinder:map</code></td></tr>
+      <tr><td>Brief</td><td>wayfinder</td><td>Tracker</td><td>Child issue, label <code>wayfinder:&lt;type&gt;</code></td></tr>
+      <tr><td>Spec / PRD</td><td>to-spec</td><td>Tracker issue + repo doc</td><td><code>ready-for-agent</code>; <code>docs/features/&lt;feature&gt;/design/</code></td></tr>
+      <tr><td>Build ticket</td><td>to-tickets</td><td>Tracker or <code>.scratch/</code></td><td><code>ready-for-agent</code>; <code>.scratch/&lt;slug&gt;/issues/NN-*.md</code></td></tr>
+      <tr><td>Impl plan</td><td>planning skill</td><td><code>docs/features/&lt;feature&gt;/impl-plan/</code></td><td><code>&lt;feature&gt;-impl-plan-NN-*.md</code></td></tr>
+      <tr><td>Test plan</td><td>planning skill</td><td><code>docs/features/&lt;feature&gt;/test-plan/</code></td><td><code>&lt;feature&gt;-test-plan.md</code></td></tr>
+      <tr><td>Decision history</td><td>any decision point</td><td><code>docs/features/&lt;feature&gt;/decision-history/</code></td><td>One append-only file</td></tr>
+      <tr><td>Glossary / ADR</td><td>domain-modeling</td><td><code>CONTEXT.md</code>, <code>docs/adr/</code></td><td>Domain vocabulary / decision</td></tr>
+      <tr><td>Feature state</td><td>coworker / state hooks</td><td><code>docs/features/&lt;feature&gt;/state/</code></td><td>Gitignored progress</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Entity chain</h2>
+  <div class="flow">
+    <div class="node"><div class="n">N</div><h4>Briefs</h4><p>Decisions; one answer each.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="n">1</div><h4>Spec</h4><p>The synthesized intended behavior.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="n">M</div><h4>Tickets</h4><p>Build slices with blocking edges.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="n">1</div><h4>Change</h4><p>Code + tests + reviewed commit.</p></div>
+  </div>
+
+  <h2>Tracker matrix</h2>
+  <table class="table">
+    <thead><tr><th>Skill</th><th>Configured tracker</th><th>Fallback</th><th>Labels / shape</th></tr></thead>
+    <tbody>
+      <tr><td><code>wayfinder</code></td><td>Project init flow</td><td>Local markdown under <code>.scratch/</code></td><td><code>wayfinder:map</code>, <code>wayfinder:&lt;type&gt;</code>; native blocking</td></tr>
+      <tr><td><code>to-spec</code></td><td>Project init flow</td><td>Local markdown</td><td><code>ready-for-agent</code></td></tr>
+      <tr><td><code>to-tickets</code></td><td>Project init flow</td><td><code>.scratch/&lt;slug&gt;/issues/</code></td><td><code>ready-for-agent</code>; blockers first</td></tr>
+      <tr><td><code>matt-code-review</code></td><td><code>docs/agents/issue-tracker.md</code></td><td>Ask for the fixed point</td><td>Diff against commit/branch/tag</td></tr>
+    </tbody>
+  </table>
+
+  <h2>The initiative's own documents</h2>
+  <table class="table">
+    <thead><tr><th>Document</th><th>Lines</th><th>State</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td><code>features/pipeline/design/pipeline-design.md</code></td><td>296</td><td>draft</td><td>Pipeline design; Problem/Solution moved to the parent PRD</td></tr>
+      <tr><td><code>spec-driven-development-design-document-standard.md</code></td><td>910</td><td>final</td><td>Document standard D1–D9; split 2026-10-30</td></tr>
+      <tr><td><code>spec-driven-development-design-wayfinder-import.md</code></td><td>273</td><td>final</td><td>Import design + gates</td></tr>
+      <tr><td><code>spec-driven-development-impl-plan-01-wayfinder-import.md</code></td><td>574</td><td>final</td><td>9 tasks: fetch → convert → adapt → review → deploy → smoke</td></tr>
+      <tr><td><code>spec-driven-development-test-plan-01-wayfinder-import.md</code></td><td>228</td><td>final</td><td>Written before the impl plan</td></tr>
+      <tr><td><code>spec-driven-development-decision-history.md</code></td><td>177</td><td>final</td><td>9 accepted decisions</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout yellow">
+    <p class="t">The deliberate two-spec exception</p>
+    <p>Decision 0009 records why this feature carries multiple <code>spec</code> documents: the pipeline, the document standard, and the wayfinder import are distinct bounded concerns. Decision 0006 allows more than one <code>spec</code>/<code>impl-plan</code> per feature, so the exception is now consistent rather than a violation.</p>
+  </div>
+
+  <h2>Timeline</h2>
+  <table class="table">
+    <thead><tr><th>Date</th><th>Event</th></tr></thead>
+    <tbody>
+      <tr><td>2026-08-02</td><td>Wayfinder import spec finalized: brief terminology, pluggable interfaces, review gates, doc-review checkpoint.</td></tr>
+      <tr><td>2026-09-24</td><td>docs tree moved from <code>docs/initiatives/</code> to <code>docs/features/</code>.</td></tr>
+      <tr><td>2026-09-25</td><td>Authority by concern adopted; SDD standard written into <code>doc-organize</code>; decision history 0001–0009; health field renamed; 1,000-line cap; docs consolidated to the standard.</td></tr>
+      <tr><td>2026-10-30</td><td>SDD spec split into a pipeline design and a document-standard spec; the full Problem Statement and Solution moved to the parent PRD; the pipeline spec is 296 lines, the document standard 910; this as-is map produced.</td></tr>
+    </tbody>
+  </table>
+
+  <p class="footnote">Sources: <code>docs/features/spec-driven-development/**</code>; <code>decision-history</code> 0001–0009; <code>git log -- docs/features/spec-driven-development</code>.</p>
+</section>
+
+<!-- ================= 11 QUESTIONS ================= -->
+<section class="page" id="questions">
+  <header class="page-head">
+    <span class="kicker">Page 11 · For the redesign</span>
+    <h1>Gaps and questions to settle first</h1>
+    <p class="deck">These are observed contradictions and seams, each with its evidence. They are not proposals — they are the decisions the redesign has to make before skills or wayfinder are rewritten.</p>
+  </header>
+
+  <h2>Observed gaps</h2>
+  <table class="table">
+    <thead><tr><th>#</th><th>Gap</th><th>Evidence</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><strong>Build stage has three contracts.</strong> wayfinder says <code>auto-tdd</code>; <code>implement</code> exists and drives TDD + <code>/code-review</code>; the import spec lists <code>implement</code> as future/out of scope.</td><td><code>wayfinder/SKILL.md:209-214</code>; <code>implement/SKILL.md:26-36</code>; <code>spec-wayfinder-import.md:263-265</code></td><td>No single answer to "what runs after to-tickets?"</td></tr>
+      <tr><td>2</td><td><strong>Tracker identity is ambiguous.</strong> GitHub Issues default, local markdown fallback, "Jira tickets" in prose.</td><td><code>wayfinder/SKILL.md:49</code>; <code>to-tickets/SKILL.md:84-87</code>; <code>spec-wayfinder-import.md:119</code></td><td>Blocking edges and identity differ per tracker.</td></tr>
+      <tr><td>3</td><td><strong>Gates are specified but not enforced.</strong> doc-review is a hard gate in wayfinder, but no skill invokes it automatically; delivery review depends on brief type.</td><td><code>wayfinder/SKILL.md:165-195, 239-250</code></td><td>A gate that depends on agent obedience is advisory.</td></tr>
+      <tr><td>4</td><td><strong>wayfinder is optional but the pipeline reads as mandatory.</strong> Small work skips it; the handoff assumes a map exists.</td><td><code>wayfinder/SKILL.md:19-22</code>; <code>to-spec/SKILL.md:16-22</code></td><td>The entry criteria for each stage are not one rule.</td></tr>
+      <tr><td>5</td><td><strong>walter-worker does not orchestrate.</strong> It installs, injects context, and records; invocation is the harness's job. The only programmatic spawn is auto-worker.</td><td><code>install.sh:440-520</code>; <code>autoworker/engine.py:1-90</code></td><td>Any redesign assuming "walter-worker runs the pipeline" is wrong.</td></tr>
+      <tr><td>6</td><td><strong>Deployment drift.</strong> Claude/Cursor copies are not pruned when a skill is renamed or removed; only OpenCode dangling symlinks are pruned.</td><td><code>install.sh:390-430</code></td><td>Old skills stay discoverable under near-duplicate names.</td></tr>
+      <tr><td>7</td><td><strong>Spec authority flipped recently.</strong> The standard's spec now says it is the design and the skill is implementation; the earlier decision said the skill holds the normative text.</td><td><code>spec-driven-development-design.md:11-13, 86-100</code>; decision 0003</td><td>Future edits need one rule for which artifact wins.</td></tr>
+      <tr><td>8</td><td><strong>MkDocs-ready is a wayfinder standing requirement but not in the doc-organize standard.</strong></td><td><code>wayfinder/SKILL.md:152-163</code>; <code>doc-organize/SKILL.md</code></td><td>Two sources of truth for document layout.</td></tr>
+      <tr><td>9</td><td><strong>Vocabulary is mid-migration.</strong> initiative → feature is on the current branch; "brief" vs "ticket", "spec" vs "PRD" remain overloaded.</td><td>branch <code>refactor/initiative-to-feature</code>; commit <code>c2b3f22</code></td><td>Skill descriptions and docs use both vocabularies.</td></tr>
+      <tr><td>10</td><td><strong>Three spec documents</strong> in one feature — pipeline, document standard, wayfinder import — deliberate but still an exception.</td><td>decision 0009; <code>spec-driven-development-design-wayfinder-import.md</code></td><td>Splitting/naming rules must accommodate it or remove it.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Questions to answer before rewriting</h2>
+  <ul class="checklist">
+    <li><strong>Entry criteria:</strong> What exactly makes work "large enough for wayfinder"? One session? One context window? Decision count?</li>
+    <li><strong>Build contract:</strong> Does <code>implement</code> replace <code>auto-tdd</code>, wrap it, or become its basic mode? Who owns the final review gate?</li>
+    <li><strong>Tracker:</strong> Is GitHub Issues canonical, local markdown canonical, or is the tracker an explicit per-project config the skills must read?</li>
+    <li><strong>Gate enforcement:</strong> Is a gate a skill invocation the agent must run, a checklist in the skill, or an external CI hook? What happens when it is skipped?</li>
+    <li><strong>Artifact authority:</strong> After the self-contained spec rewrite, is the spec always the design source and the skill always implementation? What is duplicated, and how is drift checked?</li>
+    <li><strong>walter-worker's boundary:</strong> Does it stay a deployment/context layer, or should it own orchestration? If it owns orchestration, which skill dispatch API does it use?</li>
+    <li><strong>Skill ownership:</strong> Which skills belong to the-super-lab, which to walter-worker's bundle, and which are imported upstream? What is the update path?</li>
+    <li><strong>Deployment hygiene:</strong> Should install prune removed/renamed skills in all four destinations? How are collisions detected before they reach the agent?</li>
+    <li><strong>Document layout:</strong> Does MkDocs-ready move into <code>doc-organize</code> as a standard rule, or stay a wayfinder discipline?</li>
+    <li><strong>Vocabulary:</strong> Freeze <code>feature</code>, <code>brief</code>, <code>spec</code>, <code>ticket</code>, <code>map</code>, <code>destination</code> — and retire the synonyms.</li>
+  </ul>
+
+  <h2>Where to look next</h2>
+  <table class="table">
+    <thead><tr><th>If you are redesigning…</th><th>Read first</th></tr></thead>
+    <tbody>
+      <tr><td>the method</td><td><code>wayfinder/SKILL.md</code>, <code>spec-wayfinder-import.md</code></td></tr>
+      <tr><td>the document standard</td><td><code>spec-driven-development-design.md</code> D1–D9, <code>doc-organize/SKILL.md</code></td></tr>
+      <tr><td>the build stage</td><td><code>implement/SKILL.md</code>, <code>auto-tdd/SKILL.md</code>, <code>matt-code-review/SKILL.md</code></td></tr>
+      <tr><td>the runtime</td><td><code>walter-worker/setup/install.sh</code>, <code>adapters/claude.py</code>, <code>features/manager.py</code></td></tr>
+      <tr><td>the decisions already made</td><td><code>decision-history/spec-driven-development-decision-history.md</code></td></tr>
+    </tbody>
+  </table>
+
+  <p class="footnote">This page reports conflicts; it does not rule on them. Per <code>doc-organize</code>: detect → report → ask, never detect → guess → rewrite.</p>
+</section>
+
+</main>
+
+<div class="pager">
+  <button id="prev" onclick="step(-1)">← Previous</button>
+  <span class="count" id="count">00 / 12</span>
+  <button id="next" onclick="step(1)">Next →</button>
+</div>
+
+<script>
+(function(){
+  var order = ['overview','pipeline','wayfinder','to-spec','doc-review','to-tickets','implement','doc-organize','supporting','walter-worker','artifacts','questions'];
+  var current = 0;
+
+  function show(id, push){
+    var idx = order.indexOf(id);
+    if (idx < 0) idx = 0;
+    current = idx;
+    document.querySelectorAll('.page').forEach(function(p){ p.classList.toggle('active', p.id === id); });
+    document.querySelectorAll('#nav a').forEach(function(a){ a.classList.toggle('active', a.getAttribute('data-page') === id); });
+    document.getElementById('count').textContent = String(idx).padStart(2,'0') + ' / ' + order.length;
+    document.getElementById('prev').disabled = idx === 0;
+    document.getElementById('next').disabled = idx === order.length - 1;
+    document.getElementById('progress').style.width = ((idx + 1) / order.length * 100) + '%';
+    if (push !== false && location.hash !== '#' + id) history.replaceState(null, '', '#' + id);
+    window.scrollTo({top:0, behavior:'instant' in window ? 'instant' : 'auto'});
+  }
+  window.go = function(id){ show(id); };
+  window.step = function(d){ var n = current + d; if (n >= 0 && n < order.length) show(order[n]); };
+
+  window.toggleTheme = function(){
+    var root = document.documentElement;
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('sdd-map-theme', next); } catch(e){}
+  };
+
+  try {
+    var saved = localStorage.getItem('sdd-map-theme');
+    if (saved) document.documentElement.setAttribute('data-theme', saved);
+  } catch(e){}
+
+  document.addEventListener('keydown', function(e){
+    if (e.target && /INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return;
+    if (e.key === 'ArrowRight') step(1);
+    if (e.key === 'ArrowLeft') step(-1);
+  });
+
+  window.addEventListener('hashchange', function(){
+    show(location.hash.slice(1) || 'overview', false);
+  });
+
+  show(location.hash.slice(1) || 'overview', false);
+})();
+</script>
+</body>
+</html>

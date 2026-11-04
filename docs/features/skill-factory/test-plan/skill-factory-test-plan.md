@@ -194,7 +194,7 @@ All skills and tools in the skill‑factory project must meet the following crit
 
 # Skill Consolidation Test Plan
 
-> **Spec:** docs/skill-factory/spec/skill-consolidation-spec.md
+> **Spec:** docs/skill-factory/design/skill-consolidation-design.md
 > **Date:** 2026-08-02
 
 ## Scope

@@ -14,7 +14,7 @@ and `how-to` stay single-file — none of them grows without bound. `spec` and
 - The filename repeats the feature and the type, so a file is identifiable
   outside its directory
 - A supporting file that a document cites sits in that document's folder:
-  `docs/features/<feature>/spec/<source-name>.md`
+  `docs/features/<feature>/design/<source-name>.md`
 - A feature has at most one `decision-history`, and it is exempt from the
   1,000-line cap: it is append-only history, and history is never trimmed
 
@@ -24,8 +24,8 @@ Split when one file would cross 1,000 lines. Split on a boundary — a bounded
 context, domain, ownership edge, or lifecycle — never to reach a line count.
 
 ```
-docs/features/payment/spec/payment-spec-authorization.md
-docs/features/payment/spec/payment-spec-settlement.md
+docs/features/payment/design/payment-design-authorization.md
+docs/features/payment/design/payment-design-settlement.md
 docs/features/payment/impl-plan/payment-impl-plan-01-schema.md
 docs/features/payment/impl-plan/payment-impl-plan-02-api.md
 ```
@@ -35,7 +35,7 @@ docs/features/payment/impl-plan/payment-impl-plan-02-api.md
   set. A spec is cut by bounded context, so a noun carries the meaning
 - An `impl-plan` part takes a zero-padded sequence plus a phase name. A plan is
   ordered, so the number carries meaning there
-- A `<feature>-spec.md` may stay as an entry file holding global L1 constraints
+- A `<feature>-design.md` may stay as an entry file holding global L1 constraints
   and links to the parts. Do not keep one as an empty shell
 
 ## Name collisions
@@ -53,7 +53,7 @@ Any one of these is a collision:
 
 Resolve by intent, not by picking a winner:
 
-- **Same bounded context** — merge into one feature folder, then split its `spec`
+- **Same bounded context** — merge into one feature folder, then split its `design`
   by aspect
 - **Different contexts, confusable names** — rename both so each is
   distinguishable (a bare `auth` becomes `payment-auth` and `user-auth`), and

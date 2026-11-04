@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Spec-Driven Development — Pipeline &amp; Document Standard — Brief</title>
+<style>
+:root {
+  --paper: #FAFAF5; --ink: #1A1A1A; --ink-muted: rgba(26,26,26,0.65); --ink-subtle: rgba(26,26,26,0.40);
+  --signal: #D9430D; --signal-soft: rgba(217,67,13,0.08);
+  --hairline: rgba(26,26,26,0.12);
+  --font-serif: Georgia, 'Times New Roman', 'Noto Serif CJK SC', 'Source Han Serif SC', serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+  --font-sans: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+*{box-sizing:border-box}
+body{max-width:720px;margin:0 auto;padding:48px 24px 96px;font-family:var(--font-sans);background:var(--paper);color:var(--ink);line-height:1.7;font-size:17px}
+.masthead{margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid var(--hairline)}
+.kicker{font-family:var(--font-mono);font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--signal);margin:0 0 8px}
+h1{font-family:var(--font-serif);font-size:clamp(2.4rem,5vw,3.6rem);font-weight:700;line-height:1.15;margin:0 0 16px;letter-spacing:-.01em}
+.dek{font-size:1.15rem;color:var(--ink-muted);margin:0 0 20px;line-height:1.55;max-width:60ch}
+.meta{font-family:var(--font-mono);font-size:.8rem;color:var(--ink-subtle);display:flex;gap:20px;flex-wrap:wrap}
+h2{font-family:var(--font-sans);font-size:.8rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-subtle);margin:56px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--hairline)}
+h3{font-size:1.25rem;font-weight:600;margin:32px 0 10px}
+p{max-width:60ch;margin:0 0 14px}
+ul,ol{max-width:60ch;margin:0 0 16px;padding-left:22px}
+li{margin:5px 0}
+code{font-family:var(--font-mono);background:rgba(0,0,0,.04);padding:1px 5px;border-radius:3px;font-size:.88em}
+pre{background:rgba(0,0,0,.03);border:1px solid var(--hairline);padding:16px 20px;overflow-x:auto;font-size:13px;line-height:1.55;margin:16px 0}
+pre code{background:none;padding:0}
+.highlight{background:var(--signal-soft);border-left:4px solid var(--signal);padding:16px 20px;margin:24px 0}
+.highlight .hl{font-family:var(--font-mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--signal);margin-bottom:6px}
+.highlight p{margin:0}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin:24px 0}
+.metric{text-align:center;padding:20px 16px;border:1px solid var(--hairline)}
+.metric .val{font-family:var(--font-serif);font-size:2.2rem;color:var(--signal)}
+.metric .lbl{font-size:.8rem;color:var(--ink-muted);margin-top:4px}
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:.92rem}
+th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--hairline);vertical-align:top}
+th{font-family:var(--font-mono);font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-subtle);font-weight:600}
+.callout{padding:14px 18px;border-left:3px solid var(--signal);background:var(--signal-soft);margin:20px 0;font-size:.95rem}
+.callout p:last-child{margin-bottom:0}
+.lang-bar{display:flex;justify-content:flex-end;margin-bottom:32px}
+.lang-bar button{font-family:var(--font-mono);font-size:.78rem;padding:6px 14px;border:1px solid var(--hairline);background:var(--paper);color:var(--ink-muted);border-radius:20px;cursor:pointer}
+.lang-bar button:hover{color:var(--signal);border-color:var(--signal)}
+footer{margin-top:64px;padding-top:16px;border-top:1px solid var(--hairline);font-family:var(--font-mono);font-size:.75rem;color:var(--ink-subtle)}
+@media(max-width:600px){body{padding:24px 16px 64px}h1{font-size:2rem}}
+@media print{body{max-width:100%}}
+</style>
+</head>
+<body>
+<header class="masthead">
+  <p class="kicker">Combined specs · Pipeline draft · Standard final · 2026-10-30</p>
+  <h1>Spec-Driven Development — Pipeline &amp; Document Standard</h1>
+  <p class="dek">Defines how spec, code, tests, and machine-readable artifacts stay consistent over time.</p>
+  <div class="meta"><span>feature: spec-driven-development</span><span>pipeline: draft</span><span>standard: final</span><span>approx. 4 min read</span></div>
+</header>
+
+<div class="lang-bar"><button id="lang-btn" onclick="toggleLang()">中文</button></div>
+
+<div class="lang-en">
+  <div class="callout" style="border-left-color:#102D46">
+    <p><strong>Combined view of two specs.</strong> The pipeline spec (<code>spec-driven-development-design.md</code>, 409 lines) defines the five artifacts; the document-standard spec (<code>spec-driven-development-design-document-standard.md</code>, 910 lines) defines how documents are placed, named, and kept consistent.</p>
+  </div>
+
+  <h2>At a Glance</h2>
+  <div class="highlight">
+    <div class="hl">Key point</div>
+    <p>These two specs are the human-readable design: the pipeline spec defines the five artifacts, and the document-standard spec defines how the artifacts are placed, named, and kept consistent. The <code>doc-organize</code> skill is the implementation of the document standard.</p>
+  </div>
+  <div class="metrics">
+    <div class="metric"><div class="val">8</div><div class="lbl">rule groups</div></div>
+    <div class="metric"><div class="val">49</div><div class="lbl">numbered rules</div></div>
+    <div class="metric"><div class="val">409</div><div class="lbl">pipeline lines</div></div>
+    <div class="metric"><div class="val">910</div><div class="lbl">standard lines</div></div>
+  </div>
+  <table>
+    <thead><tr><th>Topic</th><th>Rule prefix</th><th>Implementing file</th></tr></thead>
+    <tbody>
+      <tr><td>Authority by concern</td><td><code>AUTH</code></td><td><code>AUTHORITY-BY-CONCERN.md</code></td></tr>
+      <tr><td>Spec scope, size, context</td><td><code>SCOPE</code></td><td><code>SPEC-SCOPE.md</code></td></tr>
+      <tr><td>Metadata, staleness, drift</td><td><code>HEALTH</code></td><td><code>SPEC-HEALTH.md</code></td></tr>
+      <tr><td>Content priority, trimming</td><td><code>PRIO</code></td><td><code>CONTENT-PRIORITY.md</code></td></tr>
+      <tr><td>Paths, naming, collisions</td><td><code>NAME</code></td><td><code>NAMING.md</code></td></tr>
+      <tr><td>Document standard</td><td><code>STD</code></td><td><code>SKILL.md</code></td></tr>
+      <tr><td>Modes, quality gates</td><td><code>MODE</code>, <code>GATE</code></td><td><code>SKILL.md</code></td></tr>
+    </tbody>
+  </table>
+
+  <h2>Problem Statement</h2>
+  <p>Today's AI is strong, yet it disappoints because four problems sit upstream of any solution:</p>
+  <ol>
+    <li><strong>The problem is often never defined.</strong> "iPhone 18 Duo or base?" omits use, budget, history, and preferences — so the answer cannot be accurate.</li>
+    <li><strong>AI's real value is discovering the unknown.</strong> What we know, what we know we do not know, what we do not know we know, and the blind spots we do not know we do not know.</li>
+    <li><strong>Decisions change and conflict.</strong> A budget moves from $2,000 to $1,000 and the whole direction changes; multiple participants can assert different decisions, so authority and propagation must be explicit.</li>
+    <li><strong>The human and the document are the bottleneck.</strong> Files must be readable, findable, clearly scoped; large projects need specs split by boundary and linked so people and agents can find the right one.</li>
+  </ol>
+  <div class="callout">
+    <p>This standard addresses the documentation side: one authoritative artifact per concern, changes recorded instead of overwritten, and rules for splitting and naming documents. Defining the problem, discovering unknowns, and negotiating between participants belong to the skills before and around the documents — <code>wayfinder</code>, <code>research</code>, and grilling.</p>
+  </div>
+
+  <h2>Solution</h2>
+  <p>Spec-driven development is a set of skills that work together, not one skill. Their shared goal is to analyze the concrete problem until the work is clear, then carry that clarity through five artifacts:</p>
+  <ol>
+    <li><strong>PRD</strong> — what we are building, the problem it solves, limitations, preferences, timeline, resources, tools.</li>
+    <li><strong>Decision history</strong> — every product-direction decision recorded before it is acted on; append-only; 50/50 AI-draft / human-confirm.</li>
+    <li><strong>Spec</strong> — the chosen technical approach, contracts, tools, interfaces, boundaries; HLD + LLD material.</li>
+    <li><strong>Impl plan</strong> — what comes first, what later, task details and preparation.</li>
+    <li><strong>Test plan</strong> — done and usable now, plus a regression guard for future changes.</li>
+  </ol>
+  <div class="callout">
+    <p>The skills never silently rewrite an earlier artifact. If a decision and a requirement conflict, the human resolves it and states which one is right; the skill records the ruling. The shared document contract — authority by concern, content priority, health, naming, and the four enforcement modes — is specified in the spec's D1–D9.</p>
+  </div>
+
+  <h2>Design at a Glance</h2>
+  <table>
+    <thead><tr><th>Section</th><th>Covers</th></tr></thead>
+    <tbody>
+      <tr><td><strong>D1 · AUTH</strong></td><td>One owner per concern; what spec and code each own; conflict resolution; a passing test is not a requirement.</td></tr>
+      <tr><td><strong>D2 · SCOPE</strong></td><td>Behavior over implementation; the change test; size guidelines; the 1,000-line cap; loading order.</td></tr>
+      <tr><td><strong>D3 · HEALTH</strong></td><td>Metadata; <code>health</code> not <code>status</code>; stale; drift detection; change checklist; duplication.</td></tr>
+      <tr><td><strong>D4 · PRIO</strong></td><td>L1 decisive, L2 rationale, L3 alternatives, L4 support; duplicated fact is L4; trimming order.</td></tr>
+      <tr><td><strong>D5 · NAME</strong></td><td>Path and filename; splitting by boundary; collision signals and resolution; renames are decisions.</td></tr>
+      <tr><td><strong>D6 · STD</strong></td><td>Six committed types; exempt docs; frontmatter; required sections; decision history; Change Log; scratch; INDEX; PROTECTED.</td></tr>
+      <tr><td><strong>D7 · MODE</strong></td><td>Organize, Lint, Consolidate, Sync — what each does and what it refuses to do.</td></tr>
+      <tr><td><strong>D8 · GATE</strong></td><td>MUST and NICE checklists; anti-patterns.</td></tr>
+      <tr><td><strong>D9 · Traceability</strong></td><td>Rule group to implementing file; spec first, skill second.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>User Stories</h2>
+  <table>
+    <thead><tr><th>As a…</th><th>I want…</th></tr></thead>
+    <tbody>
+      <tr><td>developer</td><td>a reported conflict with evidence when code and spec disagree, rather than a silent rewrite in one direction</td></tr>
+      <tr><td>agent</td><td>to find the authoritative artifact for a concern without loading the entire documentation tree</td></tr>
+      <tr><td>maintainer</td><td>to tell a spec that is stale from a spec that is wrong</td></tr>
+      <tr><td>reader of the standard</td><td>to understand every rule, why it exists, and what it covers without opening the skill's source files</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Implementation Decisions</h2>
+  <ul>
+    <li>The rules live in <code>doc-organize</code> rather than a new skill, because placement, linting, and consolidation already belong there.</li>
+    <li>Detail is carried in sibling reference files rather than inline in <code>SKILL.md</code>, so <code>SKILL.md</code> stays loadable in one pass.</li>
+    <li><code>state</code> keeps <code>draft</code> / <code>final</code>; health is a separate optional field, so no migration is required.</li>
+    <li>No rule is enforced by a timestamp edit. <code>last_verified</code> moves only when a real verification happened.</li>
+    <li>This spec is self-contained by design; the skill is implementation and operational text.</li>
+    <li>Rule IDs and traceability replace verbatim copies of agent-facing text. Prose is paraphrased; exact identifiers, enum values, paths, commands, and tables are verbatim.</li>
+  </ul>
+
+  <h2>Testing Decisions</h2>
+  <p>Verified by reading the modified skill end to end against the seventeen source rules, and by confirming no remaining instance of the replaced rule (<code>grep -i "code is the source of truth"</code> returns nothing). The self-contained redesign is checked against the traceability table: every rule group resolves to an existing implementing file, and every rule ID appears in the spec. The pipeline spec is 409 lines and the document standard is 910 lines; both are under the 1,000-line cap.</p>
+
+  <h2>Out of Scope</h2>
+  <ul>
+    <li>Migrating existing documents to the new optional metadata fields.</li>
+    <li>Bringing <code>docs/features/</code> into compliance with the existing standard.</li>
+    <li>Automating drift detection in CI.</li>
+  </ul>
+
+  <h2>Further Notes</h2>
+  <p>Known non-compliance in the tree, observed while writing this document and not addressed here:</p>
+  <ul>
+    <li>The wayfinder-import spec and its siblings do not follow <code>&lt;feature&gt;-&lt;type&gt;.md</code>.</li>
+    <li><code>docs/features/skill-factory/</code> has a <code>design/</code> directory and fourteen separate <code>decision-history</code> files.</li>
+    <li>This feature carries three <code>spec</code> documents (pipeline, document standard, wayfinder import). Decision 0006 allows more than one <code>spec</code>; decision 0009 records the reason.</li>
+  </ul>
+
+  <h2>Change Log</h2>
+  <table>
+    <thead><tr><th>Date</th><th>Change</th></tr></thead>
+    <tbody>
+      <tr><td>2026-09-25</td><td>Initial creation; records adoption of the SDD standard in <code>doc-organize</code></td></tr>
+      <tr><td>2026-10-30</td><td>Made the spec self-contained; added rule IDs and traceability; corrected <code>status</code> to <code>health</code></td></tr>
+      <tr><td>2026-10-30</td><td>Expanded the Problem Statement with the four upstream problems</td></tr>
+      <tr><td>2026-10-30</td><td>Rewrote the Solution as the five cooperating artifacts: PRD, decision history, spec, impl plan, test plan</td></tr>
+      <tr><td>2026-10-30</td><td>Clarified the PRD relationship: it impacts every decision, and a decision/requirement conflict is resolved by the human</td></tr>
+      <tr><td>2026-10-30</td><td>Split into two specs: pipeline (409 lines) and document standard (910 lines)</td></tr>
+    </tbody>
+  </table>
+
+  <footer>Generated by spec-to-demo · Sources: spec-driven-development-design.md + spec-driven-development-design-document-standard.md</footer>
+</div>
+
+<div class="lang-zh" style="display:none">
+  <div class="callout">
+    <p><strong>中文版本暂未生成。</strong> This document has not been translated to Chinese yet. / 本文档暂未翻译为中文。Switch to English to read the original.</p>
+  </div>
+  <footer>Generated by spec-to-demo · Sources: spec-driven-development-design.md + spec-driven-development-design-document-standard.md</footer>
+</div>
+
+<script>
+(function(){
+  var lang = 'en';
+  function applyLang(){
+    document.querySelectorAll('.lang-en').forEach(function(e){ e.style.display = lang === 'en' ? '' : 'none'; });
+    document.querySelectorAll('.lang-zh').forEach(function(e){ e.style.display = lang === 'zh' ? '' : 'none'; });
+    var b = document.getElementById('lang-btn');
+    if (b) b.textContent = lang === 'en' ? '中文' : 'English';
+  }
+  window.toggleLang = function(){
+    lang = lang === 'en' ? 'zh' : 'en';
+    applyLang();
+    try { localStorage.setItem('spec-demo-lang', lang); } catch(e){}
+  };
+  try {
+    var saved = localStorage.getItem('spec-demo-lang');
+    if (saved) lang = saved;
+  } catch(e){}
+  document.addEventListener('DOMContentLoaded', applyLang);
+})();
+</script>
+</body>
+</html>

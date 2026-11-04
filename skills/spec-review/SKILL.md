@@ -1,5 +1,5 @@
 ---
-name: doc-review
+name: spec-review
 description: |
   Use when the user wants a design/spec review (adversarial stress-test before
   implementation) or a work completion review (verify finished work against
@@ -24,7 +24,7 @@ metadata:
     - challenge this
 ---
 
-# doc-review
+# spec-review
 
 Two-branch review skill. Design review stress-tests a spec/design/proposal
 before implementation. Work completion review verifies finished work against
@@ -47,10 +47,10 @@ to avoid over-engineering.
 
 ## Skill Dependencies
 
-Judge a spec under review against `doc-organize`: its content levels
-(`doc-organize/CONTENT-PRIORITY.md`), the authority model
-(`doc-organize/AUTHORITY-BY-CONCERN.md`), and the rule that a spec describes
-behavior rather than implementation (`doc-organize/SPEC-SCOPE.md`).
+Judge a spec under review against `spec-organize`: its content levels
+(`spec-organize/CONTENT-PRIORITY.md`), the authority model
+(`spec-organize/AUTHORITY-BY-CONCERN.md`), and the rule that a spec describes
+behavior rather than implementation (`spec-organize/SPEC-SCOPE.md`).
 
 Report as findings: L1 content that is missing, implementation detail that should
 not be there, and any claim about current implementation that the code does not

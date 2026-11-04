@@ -1,6 +1,6 @@
 ---
 feature: skill-factory
-type: spec
+type: design
 state: final
 final_date: 2026-09-25
 health: stale

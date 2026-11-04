@@ -1,0 +1,13 @@
+# SDD eval configuration — see parent test-plan
+judge:
+  model: "" # set before run, e.g. provider/model id
+gold:
+  version: v1
+  models: [] # three provider slugs for TST-C
+target:
+  repo: /Users/walter/linux-project/the-super-lab
+  feature: iphone-purchase
+grill:
+  skills: [] # baseline: empty
+checkers:
+  models: [] # three for TST-L

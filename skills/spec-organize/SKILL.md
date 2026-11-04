@@ -1,5 +1,5 @@
 ---
-name: doc-organize
+name: spec-organize
 description: |
   Use when creating, moving, reorganizing, or merging documentation, when a
   document needs checking against the project's doc standard, or when specs and
@@ -31,7 +31,7 @@ metadata:
     - authority by concern
 ---
 
-# doc-organize
+# spec-organize
 
 Defines the project's documentation standard, then enforces it in four modes:
 place a document, lint the tree against the standard, consolidate sprawl into one
@@ -49,7 +49,7 @@ file per type, and sync documents with each other and with the code.
 ## When NOT to Use
 
 - Writing document content — write it, then use Organize mode for placement
-- Reviewing whether a design is sound — use doc-review
+- Reviewing whether a design is sound — use spec-review
 - Resolving git merge conflicts in code — use git, not this skill
 - Deciding which of two conflicting decisions is correct — this skill reports
   the conflict, a human rules on it
@@ -61,7 +61,7 @@ authoritative artifact:
 
 | Concern | Authoritative artifact |
 |---|---|
-| Intended behavior | the feature's `spec` |
+| Intended behavior | the feature's `design` |
 | API contract | OpenAPI, protobuf, GraphQL, JSON Schema, event schema, AsyncAPI |
 | Database structure | migrations and schema definitions |
 | Current implementation | the code |
@@ -80,7 +80,7 @@ architecture boundaries — not class hierarchies, private methods, or internal
 algorithms. If the implementation can change while externally observable
 behavior does not, the spec should not change.
 
-A `spec` or `impl-plan` must stay under 1,000 lines. `decision-history` is exempt
+A `design` or `impl-plan` must stay under 1,000 lines. `decision-history` is exempt
 — it is append-only history, and history is never trimmed. Split on bounded
 context, domain, ownership, or lifecycle boundaries, never on a line count.
 
@@ -142,14 +142,14 @@ Six committed types, one local type. Every document belongs to exactly one.
 | Type | Holds | Committed |
 |---|---|---|
 | `prd` | What to build and why — product-level requirements | yes |
-| `spec` | How it is built — technical detail, interfaces, design decisions | yes |
+| `design` | How it is built — technical detail, interfaces, design decisions | yes |
 | `impl-plan` | The task breakdown that implements the spec | yes |
 | `test-plan` | How the implementation is verified | yes |
 | `decision-history` | Every decision ever made for the feature, in order | yes |
 | `how-to` | Operational instructions for using the result | yes |
 | `state` | Working progress, for compaction recovery | no — gitignored |
 
-Architecture and design content belongs in a `## Design` section of `spec`, not
+Architecture and design content belongs in a `## Design` section of `design`, not
 in a separate `design` type. External material that a document cites belongs
 beside that document, not in a separate `reference` type.
 
@@ -175,20 +175,20 @@ docs/features/<feature>/<type>/<feature>-<type>.md
 ```
 
 One file per type per feature by default. `prd`, `test-plan`, `decision-history`,
-and `how-to` stay single-file. `spec` and `impl-plan` may be split, because they
+and `how-to` stay single-file. `design` and `impl-plan` may be split, because they
 are the two types that grow without bound.
 
 - `<feature>` is kebab-case, lowercase, no spaces or special characters
 - The filename repeats the feature and the type, so a file is identifiable
   outside its directory
 - A supporting file that a document cites sits in that document's folder:
-  `docs/features/<feature>/spec/<source-name>.md`
+  `docs/features/<feature>/design/<source-name>.md`
 - A feature has at most one `decision-history`, and it is exempt from the
   1,000-line cap: it is append-only history, and history is never trimmed
 
 ### Splitting and collisions
 
-Split parts take an aspect noun for `spec` (`payment-spec-authorization.md`) and
+Split parts take an aspect noun for `design` (`payment-design-authorization.md`) and
 a zero-padded sequence plus a phase name for `impl-plan`
 (`payment-impl-plan-01-schema.md`). Check every new feature and file name against
 what already exists before creating it, and log a rename rather than performing
@@ -204,7 +204,7 @@ Every document carries these four fields:
 ```yaml
 ---
 feature: <feature-name>
-type: prd | spec | impl-plan | test-plan | decision-history | how-to
+type: prd | design | impl-plan | test-plan | decision-history | how-to
 state: draft | final
 final_date: YYYY-MM-DD
 ---
@@ -227,7 +227,7 @@ dropped.
 | Type | Required sections |
 |---|---|
 | `prd` | Overview, Goals and Success Metrics, User Stories, Functional Requirements, Non-Functional Requirements, Out of Scope |
-| `spec` | Problem Statement, Solution, User Stories, Implementation Decisions, Design, Testing Decisions, Out of Scope, Further Notes |
+| `design` | Problem Statement, Solution, User Stories, Implementation Decisions, Design, Testing Decisions, Out of Scope, Further Notes |
 | `impl-plan` | Global Constraints, then numbered Tasks |
 | `test-plan` | Test Cases, Test Execution Order, Expected Pass Threshold |
 | `decision-history` | Decision Log, Evidence Appendix |
@@ -349,7 +349,7 @@ Infer from what the user asked. Ask one question only when genuinely ambiguous.
 
 If the user asks to "review the file and fix the format", that is B — Lint.
 If they ask to "review the file" meaning whether its content is any good, that
-is doc-review, not this skill.
+is spec-review, not this skill.
 
 ---
 
@@ -358,7 +358,7 @@ is doc-review, not this skill.
 1. Identify the feature. If it is not obvious from context, ask.
 2. Identify the type from the six committed types. If the content spans types —
    product intent and technical detail together — split it: intent goes to `prd`,
-   technical detail to `spec`.
+   technical detail to `design`.
 3. Check the feature name and the intended filename against what already exists
    (`NAMING.md` lists the collision signals). Merge, rename, or confirm with the
    user before going further.
@@ -400,7 +400,7 @@ rest.
      private methods, or internal algorithms rather than behavior
    - **Reference drift** — a spec citing an API, component, or file that no
      longer exists; report it, do not guess the replacement
-   - **Oversized document** — a `spec` or `impl-plan` over 1,000 lines; report it
+   - **Oversized document** — a `design` or `impl-plan` over 1,000 lines; report it
      for splitting. `decision-history` is exempt
    - **Name collision** — two features or two files whose names trip a collision
      signal from `NAMING.md`
@@ -420,7 +420,7 @@ it proposes and waits — it never applies without approval.
 
 1. For each feature, list the files by type.
 2. Identify what consolidates:
-   - Multiple `prd`, `spec`, `impl-plan`, `test-plan`, or `how-to` files for the
+   - Multiple `prd`, `design`, `impl-plan`, `test-plan`, or `how-to` files for the
      same feature become one file per type.
    - Multiple decision records become one `decision-history`, with the Decision
      Log in chronological order and every original preserved in the Evidence
@@ -486,7 +486,7 @@ MUST:
 - [ ] Authority for each affected concern identified before resolving a conflict
 - [ ] No spec/code conflict resolved silently
 - [ ] No fact maintained by hand in two places
-- [ ] `spec` and `impl-plan` under 1,000 lines, or split on a bounded context
+- [ ] `design` and `impl-plan` under 1,000 lines, or split on a bounded context
 - [ ] Feature and file names checked for collisions before creation
 - [ ] No L1 content dropped to meet the size cap
 
@@ -522,7 +522,7 @@ NICE:
   the concern, not the code by default.
 - **Consolidating without approval.** Mode C deletes files. Always propose first.
 - **Treating a content review as a lint.** Judging whether a design is sound is
-  doc-review, not this skill.
+  spec-review, not this skill.
 - **Treating code as the source of truth for everything.** Code answers what the
   system currently does. It does not answer what the system should do.
 - **Treating the spec as the source of truth for everything.** A spec is not a
@@ -538,10 +538,10 @@ NICE:
 
 - Existing doc-organize skill: two-branch structure (organize, merge) and
   PROTECTED block handling, carried forward
-- to-spec (mattpocock): the `spec` required-section template, reused verbatim
+- to-spec (mattpocock): the `design` required-section template, reused verbatim
 - domain-modeling (mattpocock): ADR status vocabulary and evidence format
 - write-doc (walter-worker): Change Log format and append-only rule
-- Observed in skill-factory and wayfinder-import documents: the `prd`, `spec`,
+- Observed in skill-factory and wayfinder-import documents: the `prd`, `design`,
   `impl-plan`, and `test-plan` section sets
 - User requirement: one file per type per feature, feature vocabulary, scratch
   gitignored, decision history kept whole, Lint applies while Consolidate
@@ -553,7 +553,7 @@ NICE:
   `SPEC-HEALTH.md` so SKILL.md stays loadable in one pass.
 - User requirement (2026-09-25, second pass): four content priority levels with
   L1 undeletable, trim order L4 then L3, a hard 1,000-line cap exempting
-  `decision-history`, a feature folder allowed more than one `spec` or
+  `decision-history`, a feature folder allowed more than one `design` or
   `impl-plan`, aspect names for spec parts and numbered phase names for plan
   parts, and a name-collision check on every placement. Detail in
   `CONTENT-PRIORITY.md`.
