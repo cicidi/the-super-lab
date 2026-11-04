@@ -82,6 +82,7 @@ def main() -> None:
     if "--help" in sys.argv or "-h" in sys.argv:
         print("usage: run_case_checks.py [--help]")
         print("  Runs mechanical:/tree: blocks in cases/*/expected.yaml under cases/*/input/")
+        print("  semantic: blocks documented in EXPECTED-YAML.md (not executed)")
         sys.exit(0)
     failures = 0
     ok_count = 0

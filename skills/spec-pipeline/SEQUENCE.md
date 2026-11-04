@@ -75,3 +75,20 @@ sequenceDiagram
     P->>U: open HTML (not source of truth)
     Note over P,U: spec error → ask human → fix .md → regen
 ```
+
+## Gold eval prep (TST-C scaffold)
+
+```mermaid
+sequenceDiagram
+    participant U as Human
+    participant P as spec-pipeline
+    participant O as spec-organize
+    participant G as gold v1 assets
+
+    U->>P: eval / gold iPhone scenario
+    P->>G: eval_preflight + check_gold_run_scaffold
+    G-->>P: TST-C-RUNBOOK.md + runs/_template
+    P->>O: interview (context.md only)
+    O->>G: runs/<model>/interview.md (local)
+    Note over P,G: exemplar/ after TST-D; no model calls in CI
+```

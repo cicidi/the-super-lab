@@ -11,4 +11,4 @@
 
 Run: `python3 skills/spec-review/tests/run_case_checks.py` (expect **6** mechanical cases).
 
-Semantic / severity cases (TST-H full) add `expected.yaml` fields later; see parent test plan.
+Semantic / severity cases (TST-H full): **`../EXPECTED-YAML.md`** (`semantic:` block); not run in CI yet.
