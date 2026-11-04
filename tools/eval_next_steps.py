@@ -11,6 +11,8 @@ ROOT = Path(__file__).resolve().parents[1]
 PREFLIGHT = ROOT / "tools/eval_preflight.py"
 
 STEPS = """
+Runbook: skills/spec-organize/tests/gold/v1/TST-C-RUNBOOK.md
+
 TST-C+ checklist (configure skills/spec-organize/tests/eval.yaml first):
   1. Set judge.model and three gold.models for parallel iPhone runs.
   2. Run spec-organize with requirement.md + context.md; grill.skills: [].

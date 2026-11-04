@@ -19,6 +19,6 @@ skills/spec-organize/tests/run_mechanical.sh
 python3 tools/build_sdd_reader.py   # after approved .md changes
 ```
 
-Configure models in `skills/spec-organize/tests/eval.yaml` before judge/checker runs. Hint: `python3 tools/eval_next_steps.py`.
+Configure models in `skills/spec-organize/tests/eval.yaml` before judge/checker runs. Procedure: **`TST-C-RUNBOOK.md`**. Hint: `python3 tools/eval_next_steps.py`.
 
 Reports (TST-K): `../../reports/README.md`.

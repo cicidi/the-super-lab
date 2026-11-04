@@ -297,6 +297,18 @@ def test_eval_preflight_script():
     assert proc.returncode == 0, proc.stdout + proc.stderr
 
 
+def test_check_gold_run_scaffold_script():
+    repo = ROOT.parents[2]
+    proc = subprocess.run(
+        [sys.executable, str(repo / "tools/check_gold_run_scaffold.py")],
+        cwd=repo,
+        capture_output=True,
+        text=True,
+    )
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+    assert "gold v1 run scaffold" in proc.stdout
+
+
 def test_run_pos_fixtures_script():
     repo = ROOT.parents[2]
     proc = subprocess.run(

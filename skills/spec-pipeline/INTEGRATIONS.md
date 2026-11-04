@@ -19,6 +19,7 @@
 | **Any** | Mechanical MUST (TST-B) | `python3 tools/run_spec_checks.py docs/features/<f>/` | optional | Tree: collision, INDEX, `no_commit`; see **`SEQUENCE.md`** lint diagram |
 | **Any** | Registry vs checkers (TST-A) | `python3 tools/must_registry_coverage.py` | optional | After editing `must_registry.yaml` or checkers |
 | **Downstream** | Gold eval preflight | `python3 tools/eval_preflight.py` | optional | Before TST-C; configure `eval.yaml` locally |
+| **Downstream** | Gold run scaffold | `python3 tools/check_gold_run_scaffold.py` | optional | Runbook + `runs/_template`; see **`gold/v1/TST-C-RUNBOOK.md`** |
 
 ## Recap payload (PIPE-A5)
 

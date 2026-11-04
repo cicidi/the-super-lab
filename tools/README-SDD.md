@@ -20,6 +20,7 @@ Mechanical gate: `./tools/run_sdd_mechanical.sh` (alias for `skills/spec-organiz
 | `verify_sdd_skills_map.py` | `SDD-DELIVERABLES.md` links exist |
 | `validate_sdd_reader.py` | Reader smoke test |
 | `eval_preflight.py` | Gold v1 asset check before TST-C |
+| `check_gold_run_scaffold.py` | Gold runs template + TST-C runbook present |
 | `eval_next_steps.py` | Preflight + printed TST-C+ checklist (no API) |
 | `verify_sdd_tools_manifest.py` | README-SDD tool files exist |
 | `skills/spec-review/tests/run_case_checks.py` | TST-H mechanical cases |
