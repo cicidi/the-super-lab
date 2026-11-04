@@ -15,6 +15,7 @@ EXTRA = (
     ROOT / "skills/spec-organize/tests/run_mechanical.sh",
     ROOT / "skills/spec-review/tests/run_case_checks.py",
     ROOT / "skills/SDD-DELIVERABLES.md",
+    ROOT / "tools/verify_sdd_skills_map.py",
 )
 
 

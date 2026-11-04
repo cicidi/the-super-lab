@@ -377,7 +377,7 @@ is spec-review, not this skill.
 Audit the docs tree against the standard. Applies mechanical fixes; reports the
 rest.
 
-**SDD harness (this repo):** `./tools/run_sdd_mechanical.sh` — lint, neg/pos fixtures, registry anchors, gold/reader smoke, spec-review cases, pytest (`skills/spec-organize/tests/README.md`).
+**SDD harness (this repo):** `./tools/run_sdd_mechanical.sh` — lint, neg/pos fixtures, registry anchors, gold/reader smoke, spec-review cases, pytest (`skills/spec-organize/tests/README.md`). Skill map: `skills/SDD-DELIVERABLES.md`.
 
 1. Walk `docs/features/` and collect every markdown file.
 2. Check each file against the standard:

@@ -364,6 +364,15 @@ document.querySelectorAll('.tabs button').forEach(btn=>{
 """
 
 
+def check_sources() -> list[str]:
+    missing: list[str] = []
+    for _pid, _title, srcs in PANELS:
+        for _rel, path in srcs:
+            if not path.is_file():
+                missing.append(str(path.relative_to(ROOT)))
+    return missing
+
+
 def _build_marker() -> str:
     try:
         rev = subprocess.run(
@@ -381,6 +390,16 @@ def _build_marker() -> str:
 
 
 def main() -> None:
+    import sys
+
+    missing = check_sources()
+    if missing:
+        for m in missing:
+            print(f"missing source: {m}", file=sys.stderr)
+        sys.exit(1)
+    if "--check-sources" in sys.argv:
+        print(f"ok: {sum(len(s) for _, _, s in PANELS)} reader source file(s)")
+        return
     panels = "\n\n".join(panel_html(pid, title, [(r, p) for r, p in srcs]) for pid, title, srcs in PANELS)
     css = _build_marker() + SHELL_HEAD + CSS_EXTRA + SHELL_MID + panels + SHELL_TAIL
     OUT.write_text(css, encoding="utf-8")

@@ -229,6 +229,28 @@ def test_gold_v1_annotations_scaffold():
     assert "GOOD-A" in text
 
 
+def test_build_sdd_reader_check_sources():
+    repo = ROOT.parents[2]
+    proc = subprocess.run(
+        [sys.executable, str(repo / "tools/build_sdd_reader.py"), "--check-sources"],
+        cwd=repo,
+        capture_output=True,
+        text=True,
+    )
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+
+
+def test_verify_sdd_skills_map_script():
+    repo = ROOT.parents[2]
+    proc = subprocess.run(
+        [sys.executable, str(repo / "tools/verify_sdd_skills_map.py")],
+        cwd=repo,
+        capture_output=True,
+        text=True,
+    )
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+
+
 def test_validate_sdd_reader_script():
     repo = ROOT.parents[2]
     script = repo / "tools/validate_sdd_reader.py"
