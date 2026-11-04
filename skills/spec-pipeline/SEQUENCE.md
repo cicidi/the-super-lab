@@ -1,6 +1,6 @@
 # spec-pipeline — sequence diagrams
 
-Operational view of **PIPE-*** flows. Normative rules stay in `pipeline-design.md`; routing in **`INTEGRATIONS.md`**.
+Operational view of **PIPE-*** flows. Normative rules stay in `pipeline-design.md`; routing in **`INTEGRATIONS.md`**. Sample Mermaid for `.md`/reader: `skills/spec-html-standard/MERMAID-PATTERNS.md`.
 
 ## Phase loop (Create → Downstream)
 

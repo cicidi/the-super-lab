@@ -20,6 +20,7 @@ REQUIRED_PANELS = (
 )
 
 REQUIRED_SNIPPETS = (
+    "SDD reader ·",
     "SPEC-HTML-STANDARD",
     "mermaid.min.js",
     "Human-readable spec",
