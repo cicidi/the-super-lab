@@ -6,6 +6,7 @@ from pathlib import Path
 
 from checks.change_log import check_change_log
 from checks.collision import check_collision
+from checks.no_commit import check_no_commit_tree
 from checks.index_book import check_index_book
 from checks.parent_complete import check_parent_complete
 from checks.decision_log import check_decision_log
@@ -88,6 +89,35 @@ def test_pos_sdd_decision_history():
 def test_neg_collision_fixture():
     root = FIX / "neg" / "collision-pair" / "docs" / "features"
     assert any(f.check == "collision" for f in check_collision(root))
+
+
+def test_neg_bad_change_log():
+    p = FIX / "neg" / "bad-change-log" / "docs" / "features" / "demo" / "prd" / "demo-prd.md"
+    assert any(f.check == "change_log" for f in check_change_log(p))
+
+
+def test_neg_bad_sections():
+    p = (
+        FIX
+        / "neg"
+        / "bad-sections"
+        / "docs"
+        / "features"
+        / "demo"
+        / "test-plan"
+        / "demo-test-plan.md"
+    )
+    assert any(f.check == "sections" for f in check_sections(p))
+
+
+def test_neg_bad_size():
+    p = FIX / "neg" / "bad-size" / "docs" / "features" / "demo" / "prd" / "demo-prd.md"
+    assert any(f.check == "size" for f in check_size(p))
+
+
+def test_neg_bad_no_commit_reference():
+    root = FIX / "neg" / "bad-no-commit" / "docs" / "features"
+    assert any(f.check == "no_commit" and "reference" in f.message for f in check_no_commit_tree(root))
 
 
 def test_neg_index_dead_link():
