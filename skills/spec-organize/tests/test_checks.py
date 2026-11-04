@@ -264,6 +264,28 @@ def test_run_pos_fixtures_script():
     assert "ok: 2 pos markdown" in proc.stdout
 
 
+def test_check_pos_fixture_catalog_script():
+    repo = ROOT.parents[2]
+    proc = subprocess.run(
+        [sys.executable, str(repo / "tools/check_pos_fixture_catalog.py")],
+        cwd=repo,
+        capture_output=True,
+        text=True,
+    )
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+
+
+def test_check_review_case_catalog_script():
+    repo = ROOT.parents[2]
+    proc = subprocess.run(
+        [sys.executable, str(repo / "tools/check_review_case_catalog.py")],
+        cwd=repo,
+        capture_output=True,
+        text=True,
+    )
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+
+
 def test_check_neg_fixture_catalog_script():
     repo = ROOT.parents[2]
     proc = subprocess.run(
@@ -316,7 +338,7 @@ def test_spec_review_case_checks_script():
         text=True,
     )
     assert proc.returncode == 0, proc.stdout + proc.stderr
-    assert "all 4 cases ok" in proc.stdout
+    assert "all 5 cases ok" in proc.stdout
 
 
 def test_tst_a_anchor_check_script():
