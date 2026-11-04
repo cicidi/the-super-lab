@@ -64,7 +64,7 @@ INDEX/dead links, collision signals, forbidden `reference/`/`raw/` — **suggest
 missing any of prd, design, decision-history, impl-plan, test-plan → severity **≥3**
 (parent HLD §8, **TST-N**).
 
-**Mechanical pass:** run `python3 tools/run_spec_checks.py docs/features/<f>/` (or review tree); cite each finding with `check` id + path — **suggest fixes only**. Harness cases: `python3 skills/spec-review/tests/run_case_checks.py`.
+**Mechanical pass:** run `python3 tools/run_spec_checks.py docs/features/<f>/` (or review tree); cite each finding with `check` id + path — **suggest fixes only**. Harness cases: `python3 skills/spec-review/tests/run_case_checks.py` (`cases/README.md`). SDD map: `skills/SDD-DELIVERABLES.md`.
 
 ## Process
 

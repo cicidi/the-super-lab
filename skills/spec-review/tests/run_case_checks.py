@@ -79,6 +79,10 @@ def _findings_for_input(input_root: Path) -> list:
 
 
 def main() -> None:
+    if "--help" in sys.argv or "-h" in sys.argv:
+        print("usage: run_case_checks.py [--help]")
+        print("  Runs mechanical:/tree: blocks in cases/*/expected.yaml under cases/*/input/")
+        sys.exit(0)
     failures = 0
     ok_count = 0
     for case_dir in sorted(CASES.iterdir()):

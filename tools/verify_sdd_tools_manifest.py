@@ -10,6 +10,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 README = ROOT / "tools/README-SDD.md"
 TOOLS = ROOT / "tools"
+EXTRA = (
+    TOOLS / "run_sdd_mechanical.sh",
+    ROOT / "skills/spec-organize/tests/run_mechanical.sh",
+    ROOT / "skills/spec-review/tests/run_case_checks.py",
+    ROOT / "skills/SDD-DELIVERABLES.md",
+)
 
 
 def main() -> None:
@@ -24,7 +30,11 @@ def main() -> None:
         for n in missing:
             print(f"missing tool: tools/{n}", file=sys.stderr)
         sys.exit(1)
-    print(f"ok: {len(names)} tools from README-SDD")
+    for path in EXTRA:
+        if not path.is_file():
+            print(f"missing: {path.relative_to(ROOT)}", file=sys.stderr)
+            sys.exit(1)
+    print(f"ok: {len(names)} tools from README-SDD + harness entrypoints")
 
 
 if __name__ == "__main__":

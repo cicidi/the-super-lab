@@ -351,6 +351,18 @@ def test_tst_a_registry_stats_script():
     assert "registry items:" in proc.stdout
 
 
+def test_run_case_checks_help():
+    repo = ROOT.parents[2]
+    proc = subprocess.run(
+        [sys.executable, str(repo / "skills/spec-review/tests/run_case_checks.py"), "--help"],
+        cwd=repo,
+        capture_output=True,
+        text=True,
+    )
+    assert proc.returncode == 0
+    assert "usage:" in proc.stdout
+
+
 def test_spec_review_case_checks_script():
     repo = ROOT.parents[2]
     script = repo / "skills/spec-review/tests/run_case_checks.py"

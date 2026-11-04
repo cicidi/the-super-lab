@@ -31,6 +31,8 @@ Writes and edits **committed** feature spec prose. Standard and paths: **spec-or
 - Design adversarial review — **spec-review**
 - Orchestration / recap — **spec-pipeline**
 
+SDD skill map: `skills/SDD-DELIVERABLES.md`.
+
 ## Process
 
 1. Confirm `<f>`, type, and phase via **spec-pipeline** or user (see **spec-pipeline/INTEGRATIONS.md** and **PHASE-CHECKLISTS.md**).

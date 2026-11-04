@@ -2,6 +2,8 @@
 
 Mechanical gate: `./tools/run_sdd_mechanical.sh` (alias for `skills/spec-organize/tests/run_mechanical.sh`; see `skills/spec-organize/tests/README.md`).
 
+**Scope:** Improve skills, tools, tests, and derived HTML only — not committed feature spec under `docs/features/` unless the user explicitly approves (document-standard / DSGN-N frozen).
+
 | Script | Role |
 |---|---|
 | `run_spec_checks.py` | Lint `docs/features/` (`--summary`, `--help`; tree checks when path under `docs/features/`) |
