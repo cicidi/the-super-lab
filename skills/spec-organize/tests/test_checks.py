@@ -3,6 +3,7 @@
 from pathlib import Path
 
 from checks.change_log import check_change_log
+from checks.parent_complete import check_parent_complete
 from checks.decision_log import check_decision_log
 from checks.frontmatter import check_frontmatter
 from checks.ids import check_ids
@@ -65,6 +66,12 @@ def test_pos_sdd_test_plan_sections():
     repo = ROOT.parents[2]
     p = repo / "docs/features/spec-driven-development/test-plan/spec-driven-development-test-plan.md"
     assert not check_sections(p)
+
+
+def test_pos_sdd_parent_five_docs():
+    repo = ROOT.parents[2]
+    p = repo / "docs/features/spec-driven-development"
+    assert not check_parent_complete(p)
 
 
 def test_pos_sdd_decision_history():

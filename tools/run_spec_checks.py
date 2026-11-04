@@ -16,6 +16,7 @@ from checks.frontmatter import Finding, check_frontmatter  # noqa: E402
 from checks.ids import check_ids  # noqa: E402
 from checks.paths import check_committed_path  # noqa: E402
 from checks.sections import check_sections  # noqa: E402
+from checks.parent_complete import check_parent_complete  # noqa: E402
 from checks.size import check_size  # noqa: E402
 
 # Grandfathered paths (spec frozen — fix when user approves spec edit)
@@ -40,6 +41,8 @@ def main() -> None:
         print(f"missing: {target}", file=sys.stderr)
         sys.exit(1)
     findings = []
+    if target.is_dir() and target.name not in ("features", "docs") and "docs/features" in target.as_posix():
+        findings.extend(check_parent_complete(target))
     for path in sorted(target.rglob("*.md")):
         if path.name.startswith("._") or "/raw/" in path.as_posix() or ".scratch" in path.as_posix():
             continue

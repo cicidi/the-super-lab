@@ -64,6 +64,8 @@ INDEX orphans — **suggest fixes only**, never apply edits.
 missing any of prd, design, decision-history, impl-plan, test-plan → severity **≥3**
 (parent HLD §8, **TST-N**).
 
+**Mechanical pass:** run `python3 tools/run_spec_checks.py docs/features/<f>/` (or review tree); cite each finding with `check` id + path — **suggest fixes only**.
+
 ## Process
 
 ### Step 0: Determine Review Type

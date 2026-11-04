@@ -43,6 +43,11 @@ Match initiative summary HTML (e.g. `spec-driven-development.html`): self-contai
 - **spec-write / spec-organize:** md and paths only — not HTML template owner
 - Conflict or spec bug found while assembling → **Ask human** → fix md → regenerate HTML
 
+## Sequence / flow diagrams
+
+- Prefer **Mermaid** fenced blocks in `.md`; reader build renders them (`MERMAID-PATTERNS.md` samples).
+- ASCII flows acceptable; do not drop L1 labels when converting.
+
 ## Reference (structure OK, content must meet fidelity)
 
 `docs/features/spec-driven-development/spec-driven-development-reader.html`

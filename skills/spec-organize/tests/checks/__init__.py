@@ -1,6 +1,7 @@
 """Mechanical spec checks (TST-B). See parent test-plan."""
 
 from checks.change_log import check_change_log
+from checks.parent_complete import check_parent_complete
 from checks.decision_log import check_decision_log
 from checks.frontmatter import check_frontmatter
 from checks.ids import check_ids
@@ -16,4 +17,5 @@ __all__ = [
     "check_ids",
     "check_sections",
     "check_size",
+    "check_parent_complete",
 ]
