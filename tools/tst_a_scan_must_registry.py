@@ -18,17 +18,51 @@ PAT = re.compile(
 )
 
 
+def _letter(n: int) -> str:
+    """MUST-A … MUST-Z, MUST-AA …"""
+    s = ""
+    n += 1
+    while n:
+        n, r = divmod(n - 1, 26)
+        s = chr(ord("A") + r) + s
+    return s
+
+
 def main() -> None:
-    n = 0
+    import sys
+
+    write = "--write" in sys.argv
+    items: list[dict] = []
     for path in SOURCES:
         if not path.exists():
             print(f"missing: {path}")
             continue
+        rel = path.relative_to(ROOT).as_posix()
         for i, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
             if PAT.search(line) and line.strip() and not line.strip().startswith("|"):
-                n += 1
-                print(f"{path.relative_to(ROOT)}:{i}: {line.strip()[:120]}")
-    print(f"\n# candidate lines: {n} (manual curate → must_registry.yaml)")
+                text = line.strip()[:500]
+                print(f"{rel}:{i}: {text[:120]}")
+                items.append(
+                    {
+                        "id": f"MUST-{_letter(len(items))}",
+                        "source": f"{rel}:{i}",
+                        "text": text,
+                        "method": "llm",
+                        "check": "",
+                    }
+                )
+    print(f"\n# candidates: {len(items)}")
+    if write and items:
+        out = ROOT / "skills/spec-organize/tests/must_registry.yaml"
+        lines = ["version: 1", "items:"]
+        for it in items:
+            lines.append(f"  - id: {it['id']}")
+            lines.append(f"    source: {it['source']}")
+            lines.append(f"    text: {it['text']!r}")
+            lines.append(f"    method: {it['method']}")
+            lines.append(f"    check: {it['check']!r}")
+        out.write_text("\n".join(lines) + "\n", encoding="utf-8")
+        print(f"wrote {out}")
 
 
 if __name__ == "__main__":
