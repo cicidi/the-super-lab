@@ -96,6 +96,7 @@ def md_to_html(md: str) -> str:
     out: list[str] = []
     i = 0
     in_code = False
+    code_lang: str = ""
     code_buf: list[str] = []
     list_type: str | None = None
 
@@ -110,8 +111,13 @@ def md_to_html(md: str) -> str:
 
         if in_code:
             if line.strip().startswith("```"):
-                out.append("<pre><code>" + html.escape("\n".join(code_buf)) + "</code></pre>")
+                body = html.escape("\n".join(code_buf))
+                if code_lang.lower() == "mermaid":
+                    out.append(f'<pre class="mermaid">{body}</pre>')
+                else:
+                    out.append(f"<pre><code>{body}</code></pre>")
                 code_buf = []
+                code_lang = ""
                 in_code = False
             else:
                 code_buf.append(line)
@@ -120,7 +126,10 @@ def md_to_html(md: str) -> str:
 
         if line.strip().startswith("```"):
             close_list()
-            in_code = True
+            if not in_code:
+                in_code = True
+                code_lang = line.strip()[3:].strip()
+                code_buf = []
             i += 1
             continue
 
@@ -208,7 +217,11 @@ def md_to_html(md: str) -> str:
 
     close_list()
     if in_code and code_buf:
-        out.append("<pre><code>" + html.escape("\n".join(code_buf)) + "</code></pre>")
+        body = html.escape("\n".join(code_buf))
+        if code_lang.lower() == "mermaid":
+            out.append(f'<pre class="mermaid">{body}</pre>')
+        else:
+            out.append(f"<pre><code>{body}</code></pre>")
     return "\n".join(out)
 
 
@@ -234,6 +247,7 @@ CSS_EXTRA = """
 .md-body h3{font-size:16px;margin:18px 0 8px}
 .md-body h4{font-size:14.5px;margin:14px 0 6px;color:var(--muted)}
 .md-body pre{background:var(--code);border:1px solid var(--line);border-radius:8px;padding:12px 14px;overflow-x:auto;font-size:12px;line-height:1.45;max-width:100%}
+.md-body pre.mermaid{background:var(--surface);border:1px solid var(--line);text-align:center}
 .md-body blockquote{margin:12px 0;padding:8px 14px;border-left:3px solid var(--line);color:var(--muted);background:var(--surface-2);border-radius:0 8px 8px 0}
 .src-inline{font-family:var(--mono);font-size:10.5px;color:var(--subtle);margin:20px 0 8px}
 """
@@ -342,6 +356,8 @@ document.querySelectorAll('.tabs button').forEach(btn=>{
   });
 });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'neutral'});</script>
 </body>
 </html>
 """

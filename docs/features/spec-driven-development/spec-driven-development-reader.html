@@ -55,6 +55,7 @@ tr:last-child td{border-bottom:0}
 .md-body h3{font-size:16px;margin:18px 0 8px}
 .md-body h4{font-size:14.5px;margin:14px 0 6px;color:var(--muted)}
 .md-body pre{background:var(--code);border:1px solid var(--line);border-radius:8px;padding:12px 14px;overflow-x:auto;font-size:12px;line-height:1.45;max-width:100%}
+.md-body pre.mermaid{background:var(--surface);border:1px solid var(--line);text-align:center}
 .md-body blockquote{margin:12px 0;padding:8px 14px;border-left:3px solid var(--line);color:var(--muted);background:var(--surface-2);border-radius:0 8px 8px 0}
 .src-inline{font-family:var(--mono);font-size:10.5px;color:var(--subtle);margin:20px 0 8px}
 
@@ -460,9 +461,9 @@ tr:last-child td{border-bottom:0}
 <p class="panel-label">Test plan</p>
 <div class="md-body">
 <h2>Spec-Driven Development — Test Plan</h2>
-<p>Initiative 级 test plan。<strong>被测对象</strong> = deliverable 三个 skill：<strong>spec-organize</strong>（主 skill）、<strong>spec-review</strong>、<strong>spec-write</strong>（不单独测，由 spec-organize 覆盖）。<strong>Oracle</strong> = <code>skills/spec-organize/SPEC-STANDARD.md</code>（待建，自 <code>features/document-standard/design/document-standard-design.md</code> 产出）。Sub-feature 不另写 test-plan。</p>
+<p>Initiative 级 test plan。<strong>被测对象</strong> = <strong>spec-organize</strong>（主）、<strong>spec-review</strong>、<strong>spec-write</strong>（write 由 organize 覆盖）；<strong>spec-pipeline</strong> 编排 <strong>Out of scope</strong> 本 harness（见 pipeline design / TST-J 可选矩阵）。<strong>Oracle</strong> = <code>skills/spec-organize/SPEC-STANDARD.md</code>（自 document-standard design）。Sub-feature 不另写 test-plan。</p>
 <h3>Test Scope</h3>
-<p><strong>In scope：</strong> 三个 skill 在「装进任意项目」场景下的行为；输入三类——本 repo <code>docs/features/</code>、外部 repo（<code>eval.yaml</code> 指定路径）、人工 fixture。<strong>Out of scope：</strong> skill 正文改动（本 plan 只定义测什么）；设计合理性；merge 策略；pipeline 阶段编排。</p>
+<p><strong>In scope：</strong> 上列三 skill 在「装进任意项目」场景下的行为；输入三类——本 repo <code>docs/features/</code>、外部 repo（<code>eval.yaml</code> 指定路径）、人工 fixture。<strong>Out of scope：</strong> skill 正文改动（本 plan 只定义测什么）；设计合理性；merge 策略；<strong>spec-pipeline</strong> 阶段编排（除 TST-J 配置矩阵）。</p>
 <p><strong>Parent vs sub（spec-review）：</strong> 审 <strong>parent</strong>（<code>docs/features/spec-driven-development/</code> 根，不含 <code>features/&lt;sub&gt;/</code>）时须核对五篇均在：<code>prd</code>、<code>design</code>、<code>decision-history</code>、<code>impl-plan</code>、<code>test-plan</code>（见 parent HLD §8）。<strong>Sub-feature</strong> 不要求齐全，只审已有文件。</p>
 <table><thead><tr>
 <th>术语</th>
@@ -633,6 +634,10 @@ tr:last-child td{border-bottom:0}
 <tr>
 <td>2026-11-03</td>
 <td>§8 对齐：parent 五篇齐备（TST-N）；sub 豁免</td>
+</tr>
+<tr>
+<td>2026-11-04</td>
+<td>被测三 skill + spec-pipeline 编排 out of scope（HLD §7）</td>
 </tr>
 </tbody></table>
 </div>
@@ -1819,8 +1824,8 @@ final_date: YYYY-MM-DD   # final 时必填
 <td>各 Tab 对应的一篇或多篇 committed <code>.md</code>；HTML <strong>derived</strong></td>
 </tr>
 <tr>
-<td><strong>参考（待加料）</strong></td>
-<td><code>docs/features/spec-driven-development/spec-driven-development-reader.html</code> — 结构可参考，<strong>内容须按 N-B 补全</strong></td>
+<td><strong>参考</strong></td>
+<td><code>spec-driven-development-reader.html</code> — 由 <code>tools/build_sdd_reader.py</code> 自 canonical <code>.md</code> 生成（<strong>DSGN-N-B</strong>）</td>
 </tr>
 </tbody></table>
 <h5>DSGN-N-B — 保真（MUST — 回应「不要精简这么多」）</h5>
@@ -2064,5 +2069,7 @@ document.querySelectorAll('.tabs button').forEach(btn=>{
   });
 });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'neutral'});</script>
 </body>
 </html>

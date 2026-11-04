@@ -27,7 +27,7 @@ metadata:
 Orchestrates spec-driven development: **Create → Map → Converge → Downstream**.
 Entry point before **spec-organize** / **spec-write**; prompts for **spec-review** before commit.
 
-Design: `docs/features/spec-driven-development/features/pipeline/design/pipeline-design.md` (**PIPE-***)
+Design: `docs/features/spec-driven-development/features/pipeline/design/pipeline-design.md` (**PIPE-***). Skill routing table: **`INTEGRATIONS.md`** (this directory).
 
 ## When to Use
 
