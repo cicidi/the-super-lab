@@ -21,6 +21,7 @@ Runs: `run_spec_checks.py` (SDD tree), `must_registry_coverage.py`, `tst_a_ancho
 | `must_registry.yaml` | TST-A MUST index (`python` vs `llm`) |
 | `gold/v1/` | TST-C–F eval assets |
 | `eval.yaml` | Judge/checker config |
+| `eval/TST-J-MATRIX.md` | Grill.skills run matrix |
 
 ## Tools (repo root)
 

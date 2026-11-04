@@ -27,6 +27,10 @@ python3 tools/eval_next_steps.py   # preflight + printed checklist
 
 Re-run interview using one file under `context-variants/` instead of `context.md`; note variant path in interview header.
 
+## Grill matrix (TST-J)
+
+See **`../../eval/TST-J-MATRIX.md`**. After each run, copy `tools/eval_report_template.html` → `../../reports/<run_id>.html` and fill TST-K markers per **`../../reports/REPORT-SCHEMA.md`**.
+
 ## After runs (TST-D+)
 
 - Distill passing tree into **`exemplar/`** (see `exemplar/README.md`).

@@ -4,4 +4,4 @@ Write HTML reports here as `reports/<run_id>.html` where `run_id = <YYYY-MM-DD>-
 
 Reports must include: gold version, eval config snapshot, score 1 line items, score 2 delta, checker verdicts (TST-L).
 
-No report generator committed yet — placeholder directory for harness layout.
+Schema: **`REPORT-SCHEMA.md`**. Template: `tools/eval_report_template.html`. Gate: `python3 tools/check_eval_reports.py`.

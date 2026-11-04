@@ -16,6 +16,8 @@ python3 tools/tst_a_registry_stats.py
 python3 tools/test_gold_annotations.py
 python3 tools/eval_preflight.py
 python3 tools/check_gold_run_scaffold.py
+python3 tools/check_eval_config.py
+python3 tools/check_eval_reports.py
 python3 tools/build_sdd_reader.py --check-sources
 python3 tools/verify_sdd_skills_map.py
 python3 tools/validate_sdd_reader.py

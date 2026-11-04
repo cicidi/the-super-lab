@@ -309,6 +309,30 @@ def test_check_gold_run_scaffold_script():
     assert "gold v1 run scaffold" in proc.stdout
 
 
+def test_check_eval_config_script():
+    repo = ROOT.parents[2]
+    proc = subprocess.run(
+        [sys.executable, str(repo / "tools/check_eval_config.py")],
+        cwd=repo,
+        capture_output=True,
+        text=True,
+    )
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+    assert "eval.yaml schema" in proc.stdout
+
+
+def test_check_eval_reports_script():
+    repo = ROOT.parents[2]
+    proc = subprocess.run(
+        [sys.executable, str(repo / "tools/check_eval_reports.py")],
+        cwd=repo,
+        capture_output=True,
+        text=True,
+    )
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+    assert "eval report template" in proc.stdout
+
+
 def test_run_pos_fixtures_script():
     repo = ROOT.parents[2]
     proc = subprocess.run(

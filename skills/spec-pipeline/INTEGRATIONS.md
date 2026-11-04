@@ -33,6 +33,8 @@ When user asks recap, emit:
 
 ## External patterns (reference only)
 
+Full Spec Kit phase map: **`EXTERNAL-SDD-MAP.md`**.
+
 - **Doc creation order** by change size (PRD → design → plan): see e.g. documentation-criteria workflows — map to **Converge → Downstream**, not new artifact types.  
 - **Decision log + ADR split**: executive table + deep appendix — matches our **decision-history** + Evidence Appendix; IDs stay **ARD-*** per frozen document-standard.
 - **Spec-first / “spec kit” loops** (e.g. constitution → specify → plan → tasks): treat as **Map/Converge** inspiration only — our committed types stay **DSGN-B**; do not add parallel markdown schemas under `docs/features/`. Map **tasks** to **Downstream** (`impl-plan` + `test-plan`), not a separate committed task markdown type.
