@@ -1,6 +1,6 @@
 # spec-organize — SDD test harness
 
-Oracle: `skills/spec-organize/SPEC-STANDARD.md`. Parent test plan: `docs/features/spec-driven-development/test-plan/spec-driven-development-test-plan.md`.
+Oracle: `skills/spec-organize/SPEC-STANDARD.md`. Parent test plan: `docs/features/spec-driven-development/test-plan/spec-driven-development-test-plan.md`. Tool index: `tools/README-SDD.md`.
 
 ## Quick gate
 

@@ -1,7 +1,19 @@
-# Mechanical checks (TST-B)
+# TST-B check modules
 
-Implement Python modules per parent test plan: paths, size, frontmatter, sections, ids, decision_log, change_log, index_book, collision, no_commit.
+Invoked by `tools/run_spec_checks.py` and pytest `test_checks.py`.
 
-Run on a tree: `python3 tools/run_spec_checks.py docs/features/<f>/`
+| Module | Finding `check` id |
+|---|---|
+| `frontmatter.py` | `frontmatter` |
+| `paths.py` | `paths` |
+| `sections.py` | `sections` |
+| `ids.py` | `ids` |
+| `size.py` | `size` |
+| `change_log.py` | `change_log` |
+| `decision_log.py` | `decision_log` |
+| `index_book.py` | `index_book` |
+| `collision.py` | `collision` |
+| `no_commit.py` | `no_commit` |
+| `parent_complete.py` | `parent_complete` |
 
-Modules: `frontmatter`, `paths`, `sections`, `decision_log`, `change_log`, `ids`, `size`, `parent_complete`, `collision`, `index_book`, `no_commit`. Tree-level: `collision`, `index_book`, `no_commit` (via `run_spec_checks` on any `docs/features/` path). Unit tests: `tests/test_checks.py` with `PYTHONPATH=checks`.
+Registry mapping: `../must_registry.yaml` · coverage: `tools/must_registry_coverage.py`.

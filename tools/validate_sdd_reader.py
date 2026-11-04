@@ -26,6 +26,8 @@ REQUIRED_SNIPPETS = (
     "Human-readable spec",
     'id="p-prd"',
     "Canonical:",
+    "document-standard-prd-spec-reader-html.md",
+    "document-standard-design-spec-reader-html.md",
 )
 
 
