@@ -4,7 +4,7 @@ Mechanical gate: `skills/spec-organize/tests/run_mechanical.sh` (see `skills/spe
 
 | Script | Role |
 |---|---|
-| `run_spec_checks.py` | Lint `docs/features/` (`--summary` for count only) |
+| `run_spec_checks.py` | Lint `docs/features/` (`--summary`, `--help`; tree checks when path under `docs/features/`) |
 | `run_neg_fixtures.py` / `run_pos_fixtures.py` | TST-B fixture gates |
 | `must_registry_coverage.py` | Registry vs checker mapping |
 | `tst_a_anchor_check.py` | Registry source line anchors |

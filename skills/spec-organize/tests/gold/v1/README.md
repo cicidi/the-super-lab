@@ -20,3 +20,5 @@ python3 tools/build_sdd_reader.py   # after approved .md changes
 ```
 
 Configure models in `skills/spec-organize/tests/eval.yaml` before judge/checker runs.
+
+Reports (TST-K): `../../reports/README.md`.

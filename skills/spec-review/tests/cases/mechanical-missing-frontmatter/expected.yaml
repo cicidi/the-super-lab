@@ -1,0 +1,5 @@
+case: mechanical-missing-frontmatter
+mechanical:
+  min_findings: 1
+  checks:
+    - frontmatter

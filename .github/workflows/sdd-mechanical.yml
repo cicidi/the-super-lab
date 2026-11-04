@@ -8,12 +8,14 @@ on:
       - "tools/**"
       - "docs/features/**"
       - "docs/INDEX.md"
+      - ".github/workflows/sdd-mechanical.yml"
   pull_request:
     paths:
       - "skills/**"
       - "tools/**"
       - "docs/features/**"
       - "docs/INDEX.md"
+      - ".github/workflows/sdd-mechanical.yml"
 
 jobs:
   mechanical:
