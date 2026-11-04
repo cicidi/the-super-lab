@@ -333,6 +333,18 @@ def test_check_eval_reports_script():
     assert "eval report template" in proc.stdout
 
 
+def test_tst_g_real_tree_script():
+    repo = ROOT.parents[2]
+    proc = subprocess.run(
+        [sys.executable, str(repo / "tools/tst_g_real_tree.py")],
+        cwd=repo,
+        capture_output=True,
+        text=True,
+    )
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+    assert "TST-G baseline" in proc.stdout
+
+
 def test_run_pos_fixtures_script():
     repo = ROOT.parents[2]
     proc = subprocess.run(

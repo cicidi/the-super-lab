@@ -19,6 +19,7 @@ Runs: `run_spec_checks.py` (SDD tree), `must_registry_coverage.py`, `tst_a_ancho
 | `fixtures/pos/` | Must pass |
 | `fixtures/README.md` | Neg/pos catalog |
 | `must_registry.yaml` | TST-A MUST index (`python` vs `llm`) |
+| `tst_g_baselines.txt` / `TST-G.md` | Real-tree lint baselines |
 | `gold/v1/` | TST-C–F eval assets |
 | `eval.yaml` | Judge/checker config |
 | `eval/TST-J-MATRIX.md` | Grill.skills run matrix |

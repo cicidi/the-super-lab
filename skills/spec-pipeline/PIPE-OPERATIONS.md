@@ -14,6 +14,7 @@ Norm: `pipeline-design.md` (**PIPE-***). Routing table: **`INTEGRATIONS.md`**. C
 | **Converge** | Before commit | **spec-review** (offer) | User accept or decline recorded |
 | **Downstream** | Post PIPE-E | **spec-write** impl + test plans | Both from design 篇 |
 | **Any** | Initiative gate | `./tools/run_sdd_mechanical.sh` | pytest + catalogs green |
+| **Any** | Real tree (TST-G) | `python3 tools/tst_g_real_tree.py` | baselines match `--summary` counts |
 | **Any** | Registry drift | `python3 tools/must_registry_coverage.py` | no unmapped python MUST |
 | **Any** | Reader | `build_sdd_reader.py` → `validate_sdd_reader.py` | validate exit 0 |
 | **Any** | Gold prep | `eval_preflight.py` + `check_gold_run_scaffold.py` | ok lines |

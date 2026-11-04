@@ -27,7 +27,7 @@ metadata:
 Orchestrates spec-driven development: **Create → Map → Converge → Downstream**.
 Entry point before **spec-organize** / **spec-write**; prompts for **spec-review** before commit.
 
-Design: `docs/features/spec-driven-development/features/pipeline/design/pipeline-design.md` (**PIPE-***). Ops index: **`INDEX.md`**; routing: **`INTEGRATIONS.md`**; commands: **`PIPE-OPERATIONS.md`**; flows: **`SEQUENCE.md`**; checklists: **`PHASE-CHECKLISTS.md`** (this directory).
+Design: `docs/features/spec-driven-development/features/pipeline/design/pipeline-design.md` (**PIPE-***). Ops index: **`INDEX.md`**; routing: **`INTEGRATIONS.md`**; commands: **`PIPE-OPERATIONS.md`**; external SDD map: **`EXTERNAL-SDD-MAP.md`**; flows: **`SEQUENCE.md`**; checklists: **`PHASE-CHECKLISTS.md`** (this directory).
 
 ## When to Use
 

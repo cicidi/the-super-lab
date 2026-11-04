@@ -7,6 +7,7 @@ Mechanical gate: `./tools/run_sdd_mechanical.sh` (alias for `skills/spec-organiz
 | Script | Role |
 |---|---|
 | `run_spec_checks.py` | Lint `docs/features/` (`--summary`, `--help`; tree checks when path under `docs/features/`) |
+| `tst_g_real_tree.py` | TST-G finding counts vs `tst_g_baselines.txt` |
 | `run_neg_fixtures.py` / `run_pos_fixtures.py` | TST-B fixture gates |
 | `check_neg_fixture_catalog.py` | `neg/*` dirs ↔ runner `CASES` |
 | `check_pos_fixture_catalog.py` | `pos/*` ↔ `fixtures/README.md` |

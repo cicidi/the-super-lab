@@ -1,0 +1,2 @@
+# TST-G real-tree lint baselines (path<TAB>expected_findings)
+docs/features/spec-driven-development	0

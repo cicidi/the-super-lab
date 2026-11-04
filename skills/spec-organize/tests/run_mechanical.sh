@@ -4,6 +4,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../../.." && pwd)"
 cd "$ROOT"
 python3 tools/run_spec_checks.py docs/features/spec-driven-development
+python3 tools/tst_g_real_tree.py
 python3 tools/check_neg_fixture_catalog.py
 python3 tools/check_pos_fixture_catalog.py
 python3 tools/check_review_case_catalog.py
