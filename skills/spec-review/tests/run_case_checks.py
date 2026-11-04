@@ -41,6 +41,8 @@ def _load_expected(case_dir: Path) -> dict:
             continue
         if block and s.startswith("min_findings:"):
             out["mechanical"]["min_findings"] = int(s.split(":", 1)[1].strip())
+        if block and s.startswith("max_findings:"):
+            out["mechanical"]["max_findings"] = int(s.split(":", 1)[1].strip())
         if block and s.startswith("- ") and s.endswith("sections"):
             out["mechanical"].setdefault("checks", []).append("sections")
         if block and s.startswith("message_contains:"):
@@ -74,10 +76,25 @@ def main() -> None:
             continue
         findings = _findings_for_input(input_root)
         case_fail = False
-        min_n = int(mech.get("min_findings", 1))
-        if len(findings) < min_n:
-            print(f"FAIL {case_dir.name}: expected >={min_n} findings, got {len(findings)}")
-            case_fail = True
+        if "max_findings" in mech:
+            max_n = int(mech["max_findings"])
+            if len(findings) > max_n:
+                print(
+                    f"FAIL {case_dir.name}: expected <={max_n} findings, got {len(findings)}"
+                )
+                for f in findings[:5]:
+                    print(f"  {f.check}\t{f.path}\t{f.message}")
+                case_fail = True
+        if "min_findings" in mech:
+            min_n = int(mech["min_findings"])
+            if len(findings) < min_n:
+                print(f"FAIL {case_dir.name}: expected >={min_n} findings, got {len(findings)}")
+                case_fail = True
+        elif "max_findings" not in mech:
+            min_n = 1
+            if len(findings) < min_n:
+                print(f"FAIL {case_dir.name}: expected >={min_n} findings, got {len(findings)}")
+                case_fail = True
         for check in mech.get("checks") or []:
             if not any(f.check == check for f in findings):
                 print(f"FAIL {case_dir.name}: missing check {check!r}")

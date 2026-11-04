@@ -224,6 +224,18 @@ def test_validate_sdd_reader_script():
     assert proc.returncode == 0, proc.stdout + proc.stderr
 
 
+def test_tst_a_registry_stats_script():
+    repo = ROOT.parents[2]
+    proc = subprocess.run(
+        [sys.executable, str(repo / "tools/tst_a_registry_stats.py")],
+        cwd=repo,
+        capture_output=True,
+        text=True,
+    )
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+    assert "registry items:" in proc.stdout
+
+
 def test_spec_review_case_checks_script():
     repo = ROOT.parents[2]
     script = repo / "skills/spec-review/tests/run_case_checks.py"
