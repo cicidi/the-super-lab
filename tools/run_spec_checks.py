@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import re
 import sys
 from pathlib import Path
 
@@ -16,6 +17,9 @@ from checks.frontmatter import Finding, check_frontmatter  # noqa: E402
 from checks.ids import check_ids  # noqa: E402
 from checks.paths import check_committed_path  # noqa: E402
 from checks.sections import check_sections  # noqa: E402
+from checks.collision import check_collision  # noqa: E402
+from checks.index_book import check_index_book  # noqa: E402
+from checks.no_commit import check_no_commit_tree  # noqa: E402
 from checks.parent_complete import check_parent_complete  # noqa: E402
 from checks.size import check_size  # noqa: E402
 
@@ -23,6 +27,22 @@ from checks.size import check_size  # noqa: E402
 EXEMPT = {
     ROOT / "docs/features/spec-driven-development/prd/spec-driven-development-prd.md",
 }
+
+# Slug pairs already tracked for rename (avoid blocking lint until resolved)
+COLLISION_ALLOW = {frozenset({"delivery-pipeline", "pipeline"})}
+
+
+def _filter_collision(findings: list) -> list:
+    out = []
+    for f in findings:
+        if f.check != "collision":
+            out.append(f)
+            continue
+        m = re.match(r"feature `([^`]+)` vs `([^`]+)`", f.message)
+        if m and frozenset(m.groups()) in COLLISION_ALLOW:
+            continue
+        out.append(f)
+    return out
 
 RUNNERS = [
     check_frontmatter,
@@ -41,6 +61,12 @@ def main() -> None:
         print(f"missing: {target}", file=sys.stderr)
         sys.exit(1)
     findings = []
+    features_root = ROOT / "docs/features"
+    if "docs/features" in target.as_posix():
+        if features_root.is_dir():
+            findings.extend(_filter_collision(check_collision(features_root)))
+            findings.extend(check_no_commit_tree(features_root))
+        findings.extend(check_index_book(ROOT))
     if target.is_dir() and target.name not in ("features", "docs") and "docs/features" in target.as_posix():
         findings.extend(check_parent_complete(target))
     for path in sorted(target.rglob("*.md")):

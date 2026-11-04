@@ -58,7 +58,7 @@ support. Report them — never rewrite the spec or the code silently.
 
 Also load `skills/spec-organize/SPEC-STANDARD.md` for **mechanical MUST** checks
 (**ARD-P**): path/filename, frontmatter, letter IDs, decision-log shape, size caps,
-INDEX orphans — **suggest fixes only**, never apply edits.
+INDEX/dead links, collision signals, forbidden `reference/`/`raw/` — **suggest fixes only**, never apply edits.
 
 **Parent initiative** (`docs/features/<parent>/` root, not `features/<sub>/`):
 missing any of prd, design, decision-history, impl-plan, test-plan → severity **≥3**
