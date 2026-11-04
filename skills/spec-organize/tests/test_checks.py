@@ -296,6 +296,7 @@ def test_spec_review_case_checks_script():
         text=True,
     )
     assert proc.returncode == 0, proc.stdout + proc.stderr
+    assert "all 4 cases ok" in proc.stdout
 
 
 def test_tst_a_anchor_check_script():

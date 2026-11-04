@@ -17,6 +17,7 @@ Runs: `run_spec_checks.py` (SDD tree), `must_registry_coverage.py`, `tst_a_ancho
 | `checks/` | TST-B Python checkers |
 | `fixtures/neg/<check>/` | Must fail |
 | `fixtures/pos/` | Must pass |
+| `fixtures/README.md` | Neg/pos catalog |
 | `must_registry.yaml` | TST-A MUST index (`python` vs `llm`) |
 | `gold/v1/` | TST-C–F eval assets |
 | `eval.yaml` | Judge/checker config |

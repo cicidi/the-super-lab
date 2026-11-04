@@ -15,3 +15,9 @@ docs/features/*/research/
 docs/features/*/discussion/
 docs/features/*/state/
 docs/state/
+
+# SDD eval harness (generated)
+skills/spec-organize/tests/reports/*.html
+skills/spec-organize/tests/gold/v1/runs/*
+!skills/spec-organize/tests/gold/v1/runs/README.md
+!skills/spec-organize/tests/gold/v1/runs/_template/

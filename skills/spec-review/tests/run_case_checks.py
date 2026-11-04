@@ -66,6 +66,7 @@ def _findings_for_input(input_root: Path) -> list:
 
 def main() -> None:
     failures = 0
+    ok_count = 0
     for case_dir in sorted(CASES.iterdir()):
         if not case_dir.is_dir():
             continue
@@ -108,10 +109,11 @@ def main() -> None:
         if case_fail:
             failures += 1
         else:
+            ok_count += 1
             print(f"ok {case_dir.name} ({len(findings)} findings)")
     if failures:
         sys.exit(1)
-    print("all cases ok")
+    print(f"all {ok_count} cases ok")
 
 
 if __name__ == "__main__":
