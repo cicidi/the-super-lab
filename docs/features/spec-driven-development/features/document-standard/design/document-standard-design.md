@@ -74,7 +74,7 @@ Committed：**目录 + 文件名**；文件名 **必须** `<f>-<type>…`（`raw
 | `design` | 技术设计（怎么做） | yes | `docs/features/<f>/design/` | `<f>-design.md` | `<f>-design-<aspect>.md` | 200–500；架构 500–900 | 1,000 |
 | `impl-plan` | task 分解 | yes | `docs/features/<f>/impl-plan/` | `<f>-impl-plan.md` | `<f>-impl-plan-<NN>-<phase>.md` | 100–500 | 1,000 |
 | `test-plan` | 验证 | yes | `docs/features/<f>/test-plan/` | `<f>-test-plan.md` | `<f>-test-plan-<area>.md` | 200–600 | 800 |
-| `decision-history` | 全部 decision | yes | `docs/features/<f>/decision-history/` | `<f>-decision-history.md` | `<f>-decision-history-<NN>-<period>.md` | 单 part 宜 ≤600 | 1,000 |
+| `decision-history` | 全部 decision | yes | `docs/features/<f>/decision-history/` | `<f>-decision-history.md` | `<f>-decision-history-<NN>-<period>.md` | — | 不设 |
 | `how-to` | 使用/运维 | yes | `docs/features/<f>/how-to/` | `<f>-how-to.md` | `<f>-how-to-<scenario>.md` | 100–350 | 600 |
 | `raw` | 非 commit 原始区 | no | `docs/features/<f>/raw/<subdir>/` | 见下表 | — | 宜 ≤2,000 | — |
 
@@ -353,3 +353,5 @@ Trim 顺序 L4 → L3 → 压 L2；**L1 永不删**。仍 `> 硬 cap` → **DSGN
 | 2026-11-03 | Feature 级 test plan（parent 仅 harness） |
 | 2026-11-03 | Testing Decisions → parent test plan（被测 = skill）；DSGN-L 加 Review 行；doc-write → spec-write |
 | 2026-11-03 | **DSGN-N** spec reader HTML → aspect design + `skills/spec-html-standard/` |
+| 2026-11-04 | decision-history 硬 cap 改为不设，与 ARD-E 一致 |
+| 2026-11-04 | decision-history 去掉「宜 ≤600 行」，目标行数也不设 |

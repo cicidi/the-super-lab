@@ -82,8 +82,9 @@ docs/features/
 | **单次上限** | ≤ **10 行** *或* ≤ **200 字符**（满足其一） |
 | **超出时** | 拆多次；或 human 授权 `restructure` |
 | **与 document-standard** | cap、路径、frontmatter 见 **document-standard** design 篇 |
+| **验证** | 测试验不了单次编辑大小。不作为 test plan 的通过条件 |
 
-**Implementation（未建）：** **spec-write**。
+**Implementation：** **spec-write** 已有正文。人不读 skill 正文。本条上限看 skill 执行，不靠测试。
 
 ## 5. Decision history — 何时写（agent / 写 spec 时注意）
 
@@ -139,3 +140,5 @@ Implement SDD / document-standard 时：**plan 必须含 skill 变更与 CLAUDE 
 | 2026-11-03 | §7 增加 spec-pipeline deliverable 与 pipeline design 指针 |
 | 2026-11-03 | §7 Spec reader HTML；parent impl-plan 路径 |
 | 2026-11-03 | §7 reader 规范 → **spec-html-standard**（无 spec-reader skill） |
+| 2026-11-04 | §4：spec-write 已有正文；人不读 skill，靠 test plan 验收 |
+| 2026-11-04 | §4：单次编辑大小测试验不了，不作为 test plan 的通过条件 |

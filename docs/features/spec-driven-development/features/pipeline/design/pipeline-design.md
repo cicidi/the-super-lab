@@ -5,7 +5,7 @@ state: draft
 final_date: 2026-10-30
 health: active
 owner: cicidi
-last_verified: 2026-11-03
+last_verified: 2026-11-04
 ---
 
 # Spec-Driven Development — Pipeline
@@ -86,6 +86,8 @@ Create → Map → Converge ⇄ (PRD ↔ design ↔ decision-history) → Downst
 3. **Recap** Map 结论：判断摘要、建议拆分、仍 open 项。
 4. **可选** 调用 **pluggable map skill**（示例 wayfinder）；**不得** 替代 interview。
 5. **禁止** 未经确认创建 `docs/features/<f>/` 或移动 committed 树（Organize 模式负责路径）。
+6. **拆分标准（暂时）：** AI 先给几个拆法推荐。一个人 20 小时以内能搞清楚的，算一个 feature spec；AI 估算超过 20 小时的，拆成 peer 或 sub-feature。小时估算和拆不拆的评判都由 AI 做。
+7. **子问题（PRD-L）：** 每个子问题标成 AI 查、人决定、或 AI 查完后人决定。人没问到的盲区和风险，AI 必须提出。
 
 ### PIPE-E — Converge
 
@@ -94,7 +96,7 @@ Create → Map → Converge ⇄ (PRD ↔ design ↔ decision-history) → Downst
 **收敛条件（MUST 全满足才进 Downstream）：**
 
 - **PIPE-E1** 无 **未命名** 的 blocking open decision（仍 open 的须在 design 中 **点名**）。
-- **PIPE-E2** PRD 含 **六类输入**（building、problem、limitations、preferences、timeline、resources/tools — 见 **PIPE-F** Testing 对齐）。
+- **PIPE-E2** PRD 写清 limitation、preference、timeline、resource、tool；没有的注明 not apply。design 篇与 decision history 都在，才进 Downstream。
 - **PIPE-E3** design 篇列出 **依赖的 decision** 与 **仍 open** 项；含 implementation 所需的 contract/边界决策（impl 任务细节 **下一轮** 再定）。
 
 ### PIPE-F — Downstream
@@ -130,6 +132,7 @@ Create → Map → Converge ⇄ (PRD ↔ design ↔ decision-history) → Downst
 ### PIPE-I — 协作、血缘、齐备度
 
 - **读上游、不 silent 改**；分歧 **report + ask**（**DSGN-G**）。
+- **多人 decision：** 以 decision history 时间较晚的为准；看不出先后则问用户。AI 不猜测（**PRD-F**）。
 - **decision 变更** → 点名需 review 的下游 artifact（PRD、design、impl-plan、test-plan）。
 - **Parent vs sub 齐备：** parent initiative review 见 parent HLD **§8**；**sub-feature** 不要求五篇齐全 — **spec-review** 执行，pipeline **转发** 到 review，不 duplicate 规则。
 
@@ -146,11 +149,14 @@ Create → Map → Converge ⇄ (PRD ↔ design ↔ decision-history) → Downst
 验证见 parent **`../../../test-plan/spec-driven-development-test-plan.md`**。本篇至少覆盖：
 
 - **spec-pipeline：** 进门、recap、提交前 review 询问、state 从 CLAUDE.local 切换到 `raw/state/` 的时机。
-- **PRD：** 六类输入可被 decision 引用。
+- **PRD：** limitation、preference、timeline、resource、tool 均写明或注明 not apply。
 - **decision-history：** 产品方向 decision 有 **ARD-** ID；supersede = strike + link（**DSGN-J**）。
 - **design 篇：** 依赖 decision；open decision 已命名。
 - **test-plan / impl-plan：** 并行存在；test 含 completion + regression guard。
 - **Cross-artifact：** 测试可追溯到 PRD 要求（由 parent test plan / MUST registry 扫入）。
+- **PRD-N：** 正式 spec 结论链到事实；本 harness 评测答案只来自 context 包。
+- **PRD-O：** 一个共用 mock MCP server，call 打出 log 即通过。
+- **PRD-M：** 可读性打分测试验不了。
 
 ## Out of Scope
 
@@ -163,7 +169,7 @@ Create → Map → Converge ⇄ (PRD ↔ design ↔ decision-history) → Downst
 ## Further Notes
 
 - As-is 技能安装图：`../../../design/spec-driven-development-workflow.html`（对照，非 target pipeline 唯一来源）。
-- Open：Map 判断的 rubric 细化；plug-in task skill；收敛条件自动化检查。
+- Open：plug-in task skill；收敛条件自动化检查。Map 拆分见 **PIPE-D** 第 6 点。
 
 ## Change Log
 
@@ -173,3 +179,7 @@ Create → Map → Converge ⇄ (PRD ↔ design ↔ decision-history) → Downst
 | 2026-10-30 | Problem/Solution link to parent PRD; D1–D8 artifact stages |
 | 2026-11-03 | document-standard 引用 DSGN-A–M；移除 wayfinder-import 引用 |
 | 2026-11-03 | 重写：spec-pipeline 编排；四阶段；PIPE-*；Map interview；state CLAUDE.local → raw/state |
+| 2026-11-04 | PIPE-D 第 6 点：20 小时内一个 feature spec，超出拆 peer 或 sub；估算和评判由 AI 做 |
+| 2026-11-04 | PIPE-E2：PRD 写清五项，没有则 not apply；design 与 decision history 都在才进 Downstream |
+| 2026-11-04 | PIPE-I：多人 decision 按 history 时间，否则问用户，AI 不猜测 |
+| 2026-11-04 | PIPE-D 第 7 点：子问题标归属，AI 必须提出人没问的风险 |

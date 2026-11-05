@@ -60,6 +60,12 @@
 
 这些都是 AI 真正落地到实际工作中，需要解决的问题。
 
+### 5. 有门槛的难题不只在软件里
+
+盖一个 shed、去北京旅游、看懂一道著名数学题、不靠猜地分析一只股票——人往往从没做过，不知道怎么拆、盲区在哪、哪些要自己拍板。
+
+AI 要把大问题拆成小的：能查的 AI 自己查（合规、财报、交通），要选的人来选（预算、偏好、风险），人想不到的 AI 主动问。spec 既是学习笔记，也是决策记录，最后交给 AI 执行。
+
 ## Solution
 
 **Spec-driven development**
@@ -88,12 +94,41 @@
 
 Additional constraints:
 
-**PRD-F** — （open）多参与者 decision 谁为准 — deferred，见 **ARD-M**。
+**PRD-F** — 多人 decision 冲突时，以 decision history 里时间较晚的那条为准。看不出先后就问用户。AI 不猜测谁为准。
 
 **PRD-G** — （open）success metric 度量与 baseline — deferred，见 **ARD-N**。
 
 **PRD-H** — Spec-driven development 的 workflow 尽量使用 popular skill，不要自己重新发明。
 
-**PRD-I** — 修改需要验证；没有能验证的，都需要在 spec 里面标注上。
+**PRD-I** — 修改需要验证；没有能验证的，都需要在 spec 里面标注上。标明后不作为 test plan 的通过条件。
 
 **PRD-J** — 提供 **spec-pipeline** skill：凡写/改 feature spec 经 pipeline 进入；编排 spec-organize / spec-write，提交 committed 变更前询问 spec-review；支持 recap 与轻量 state（feature 确定前 CLAUDE.local，之后 `docs/features/<f>/raw/state/`）。
+
+**PRD-K** — 范围不限软件：任何有门槛的难题走同一套 spec。例子四个：盖 shed（合规、成本、施工）、北京旅游（行程、住宿、风险、预算）、看懂著名数学题（零基础逐步学）、分析股票（基本面、财报、新闻，有理有据）。这轮不在本仓库建 gold，放到别处。
+
+**PRD-L** — 每个子问题标明归属：AI 查、人决定、或 AI 查完后人决定。人没问到的盲区和风险，AI 必须主动提出。
+
+**PRD-M** — 把人讲明白是硬需求。交付前由一个 LLM 打分：它假设自己是一个本科水平的程序员真人，只按能不能看懂来判；看不懂不算交付。测试验不了，不作为通过条件。
+
+**PRD-N** — 正式 spec 的结论必须能追溯到查到的事实（合规条文、财报、新闻、定义），不靠猜；查不到的标成未知。评测时答案只能来自 context 包。
+
+**PRD-O** — 执行不真下单、不订票。一个共用 mock MCP server，若干固定工具；client call 打出 log 即算交付成功。
+
+**PRD-P** — 最终交付是这一系列 skill（spec-organize、spec-review、spec-write、spec-pipeline）。它们引导人写出的 spec，要满足 PRD-K 到 PRD-O。
+
+**PRD-Q** — 书写、命名、校验、更新，以及 PRD-K 到 PRD-O，都是需求。四个 skill 不限于这几件事，以后的新题也要能做。skill 正文要写出四个例子：盖 shed、北京旅游、数学题、股票。好不好用只看测试。
+
+## Change Log
+
+| Date | Change |
+|------|--------|
+| 2026-11-04 | 新增 Problem 5：有门槛的非软件难题（shed、北京旅游、数学题、股票）要拆成可查/可决策的小问题，spec 兼学习、决策与执行 |
+| 2026-11-04 | 新增 PRD-K：范围覆盖非软件难题，四个 gold example |
+| 2026-11-04 | 新增 PRD-L：子问题归属（AI 查 / 人决定 / 查完再决定）；AI 主动暴露盲区与风险 |
+| 2026-11-04 | 新增 PRD-M：可读性硬需求，LLM 以本科程序员真人身份按「能不能看懂」打分 |
+| 2026-11-04 | 新增 PRD-N：结论必须追溯到查到的事实；查不到标未知 |
+| 2026-11-04 | 新增 PRD-O：执行用 mock MCP client/server，call 打出 log 即成功 |
+| 2026-11-04 | 新增 PRD-P：交付是 spec-organize / spec-review / spec-write / spec-pipeline，写出的 spec 满足 PRD-K 到 PRD-O |
+| 2026-11-04 | 新增 PRD-Q：skill 不绑定具体题目，以后的新题也要能做；正文是否点名例子未定，验收只看测试 |
+| 2026-11-04 | PRD-F 关闭延期：按 decision history 时间较晚者；看不出先后则问用户；AI 不猜测 |
+| 2026-11-04 | 选择题：G/H/J 维持；I 验不了的不进测试；K 的 gold 放到别处；M 测不了；N 评测只用 context；O 共用一个 mock server；Q 正文写出四个例子 |

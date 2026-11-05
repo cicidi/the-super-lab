@@ -16,6 +16,11 @@ Decision Log uses **`ARD-{letter}`** IDs (document-standard **DSGN-F**, **DSGN-J
 
 | ID | Date | Decision |
 |---|------|----------|
+| ARD-Z | 2026-11-04 | Downstream waits until the PRD states limitation, preference, timeline, resource, and tool, each filled or marked not apply, and design plus decision history both exist |
+| ARD-Y | 2026-11-04 | Map split: AI offers options; ≤20 hours for one person is one feature spec; over that, split into peer or sub-feature; AI estimates and judges |
+| ARD-X | 2026-11-04 | Execution delivery is a mock MCP client call to a mock server; a printed log is success; no live booking or orders |
+| ARD-W | 2026-11-04 | Readability is scored by an LLM playing a bachelor's-level programmer; pass means it understands |
+| ARD-V | 2026-11-04 | Hard non-software problems stay in this PRD and use the same five artifacts; four gold examples |
 | ARD-U | 2026-11-03 | Pipeline deliverable is **spec-pipeline** orchestrator; Map is interview-led with AI-judged outputs; state CLAUDE.local then `raw/state/` |
 | ARD-T | 2026-11-03 | wayfinder-import is not an SDD sub-feature; its tree under `features/wayfinder-import/` is removed |
 | ARD-S | 2026-11-03 | Gold set grows in both directions and is versioned; scores compare only within one gold version |
@@ -192,6 +197,26 @@ Considered and rejected: a new dedicated skill — rejected while the existing
 mechanism works. A future skill may replace them without changing the
 requirement that the step runs.
 
+### ARD-Z — Five PRD fields, then design and decision history
+
+Replaces the undefined six inputs in PIPE-E2. The PRD must state limitation, preference, timeline, resource, and tool. A missing one is marked not apply, not left blank. Downstream starts only after that PRD, the design, and the decision history all exist. Rejected: the word building, and a pointer at PIPE-F for a definition PIPE-F does not hold.
+
+### ARD-Y — Map split uses a 20-hour estimate
+
+Provisional rule (PIPE-D item 6). AI shows several split options. One person able to understand the work within 20 hours stays one feature spec. AI estimates above 20 hours, so it splits into a peer or a sub-feature. AI both estimates and judges. Creating directories still waits for human confirmation (PIPE-D item 5).
+
+### ARD-X — Execution delivery is a mock MCP log
+
+No live booking or trading. A mock MCP client calls a mock MCP server; the printed call log is success (PRD-O). Rejected: real side effects.
+
+### ARD-W — Readability judge is an undergraduate programmer
+
+A second LLM plays a bachelor's-level programmer. Pass only if it understands; otherwise not delivery (PRD-M). ISO 24495-1 was found and not used as the score.
+
+### ARD-V — Hard problems stay on the same five artifacts
+
+Shed, Beijing, a famous math problem, and a stock stay in this PRD (PRD-K) on the same five artifacts. Sub-problems name who acts; claims cite a found fact (PRD-L, PRD-N). Rejected: a new feature.
+
 ### ARD-U — spec-pipeline orchestrator and Map/state model
 
 SDD adds **spec-pipeline** as the entry skill that calls spec-organize and
@@ -263,3 +288,7 @@ pointer. No decision was changed.
 | 2026-11-03 | ARD-O–ARD-S：skill 命名、review 边界、测试位置、eval 评分与门槛、gold 版本化 |
 | 2026-11-03 | ARD-T：移除 wayfinder-import sub-feature 树 |
 | 2026-11-03 | ARD-U：spec-pipeline 编排；Map interview；state 两阶段 |
+| 2026-11-04 | ARD-V–ARD-X：非软件难题留在本 PRD；可读性由本科程序员 LLM 打分；执行以 mock MCP log 为交付 |
+| 2026-11-04 | ARD-Y：Map 拆分以一人 20 小时为界，估算和评判由 AI 做 |
+| 2026-11-04 | ARD-Z：PRD 五项写明或 not apply；design 与 decision history 都在才进 Downstream |
+| 2026-11-04 | PRD-F 关闭 ARD-M 的延期：按 history 时间，否则问用户。无新 ARD（A–Z 已用完） |

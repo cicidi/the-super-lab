@@ -12,9 +12,11 @@ last_verified: 2026-11-03
 
 Initiative 级 test plan。**被测对象** = **spec-organize**（主）、**spec-review**、**spec-write**（write 由 organize 覆盖）；**spec-pipeline** 编排 **Out of scope** 本 harness（见 pipeline design / TST-J 可选矩阵）。**Oracle** = `skills/spec-organize/SPEC-STANDARD.md`（自 document-standard design）。Sub-feature 不另写 test-plan。
 
+**验收：** 四个 skill 是产出。人不读 skill 正文；好不好用只看本计划的测试结果。
+
 ## Test Scope
 
-**In scope：** 上列三 skill 在「装进任意项目」场景下的行为；输入三类——本 repo `docs/features/`、外部 repo（`eval.yaml` 指定路径）、人工 fixture。**Out of scope：** skill 正文改动（本 plan 只定义测什么）；设计合理性；merge 策略；**spec-pipeline** 阶段编排（除 TST-J 配置矩阵）。
+**In scope：** 上列三 skill 在「装进任意项目」场景下的行为；输入三类——本 repo `docs/features/`、外部 repo（`eval.yaml` 指定路径）、人工 fixture。**Out of scope：** skill 正文改动（本 plan 只定义测什么）；设计合理性；merge 策略；**spec-pipeline** 阶段编排（除 TST-J 配置矩阵）；单次编辑大小（PRD-C，测试验不了）；可读性打分（PRD-M，测试验不了）；四套例子的 gold（PRD-K，放到别处）。
 
 **Parent vs sub（spec-review）：** 审 **parent**（`docs/features/spec-driven-development/` 根，不含 `features/<sub>/`）时须核对五篇均在：`prd`、`design`、`decision-history`、`impl-plan`、`test-plan`（见 parent HLD §8）。**Sub-feature** 不要求齐全，只审已有文件。
 
@@ -77,7 +79,7 @@ Initiative 级 test plan。**被测对象** = **spec-organize**（主）、**spe
 
 ### TST-F — spec-organize unhappy（输入侧）
 
-**目标：** context 带坑时不自猜。**输入：** `context-variants/`：`budget-conflict`、`family-disagree`、`missing-info`、`midway-change`。**断言：** 须 report/ask；budget/family 不得选一侧；midway-change 须新 ARD + strike+link；missing-info 不得编造。**判定：** judge + Python（ARD 结构）。
+**目标：** context 带坑时不自猜。**输入：** `context-variants/`：`budget-conflict`、`family-disagree`、`missing-info`、`midway-change`。**断言：** 须 report/ask；budget/family 已有 decision history 先后则取较晚者，否则问用户，不得猜；midway-change 须新 ARD + strike+link；missing-info 不得编造。**判定：** judge + Python（ARD 结构）。
 
 ### TST-G — 真实树 Lint
 
@@ -143,3 +145,7 @@ Initiative 级 test plan。**被测对象** = **spec-organize**（主）、**spe
 | 2026-11-03 | 移除 wayfinder-import 例外与 out-of-scope 项 |
 | 2026-11-03 | §8 对齐：parent 五篇齐备（TST-N）；sub 豁免 |
 | 2026-11-04 | 被测三 skill + spec-pipeline 编排 out of scope（HLD §7） |
+| 2026-11-04 | 验收：四个 skill 是产出；人不读正文，只看测试结果 |
+| 2026-11-04 | PRD-C 单次编辑大小列为测不了，移出 test plan |
+| 2026-11-04 | TST-F：多人冲突取 decision history 较晚者，否则问用户，不得猜 |
+| 2026-11-04 | 选择题：PRD-M 与四套 gold 移出本计划；PRD-N 评测只用 context |
