@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spec-Driven Development — Test Plan · test-plan · Spec Atlas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:400,400italic,500,500italic,700|Roboto+Mono:400,500,700|Noto+Sans+SC:400,500,700&display=swap">
+<link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><a href="../../index.html"><span class="brand-mark">SDD</span><span class="brand-name">Spec Atlas</span></a></div>
+  </div>
+</header>
+<div class="site">
+  <aside class="sidebar">
+  <nav aria-label="Directory">
+    <div class="tree-overview"><a class="tree-link" href="../../index.html"><span class="tree-link__num">00</span>All features</a></div>
+    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../prd/spec-driven-development-prd.html"><span class="tree-link__num">16</span>Spec-Driven Development — PRD</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../design/spec-driven-development-design.html"><span class="tree-link__num">18</span>Spec-Driven Development — HLD</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../design/spec-driven-development-design-skill-contracts.html"><span class="tree-link__num">17</span>Spec-Driven Development — Skill Contracts</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/document-standard/design/document-standard-design.html">document-standard</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/document-standard/prd/document-standard-prd-spec-reader-html.html"><span class="tree-link__num">15</span>Document Standard — Spec Reader HTML（PRD）</a></li><li class="tree-leaf"><a class="tree-link" href="../features/document-standard/design/document-standard-design-spec-reader-html.html"><span class="tree-link__num">19</span>Document Standard — Spec Reader HTML（Design）</a></li><li class="tree-leaf"><a class="tree-link" href="../features/document-standard/design/document-standard-design.html"><span class="tree-link__num">20</span>Document Standard — 文档标准（待 Review）</a></li></ul></details></li><li class="tree-leaf"><a class="tree-link" href="../spec-driven-development-reader.html">spec-driven-development — Reader</a></li></ul></details></li><li class="tree-leaf"><a class="tree-link" href="../impl-plan/spec-driven-development-impl-plan.html"><span class="tree-link__num">21</span>Spec-Driven Development — Implementation Plan</a></li><li class="tree-leaf"><a class="tree-link" href="spec-driven-development-test-plan.html" aria-current="page"><span class="tree-link__num">22</span>Spec-Driven Development — Test Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../decision-history/spec-driven-development-decision-history.html"><span class="tree-link__num">23</span>Spec-Driven Development — Decision History</a></li></ul>
+  </nav>
+</aside>
+  <main class="content">
+    <nav class="breadcrumbs"><a href="../../index.html">Docs</a> / <span>spec-driven-development</span> / <span>test-plan</span> / <span>Spec-Driven Development — Test Plan</span></nav>
+    <article class="doc" data-doc="spec-driven-development/test-plan/spec-driven-development-test-plan">
+      <header class="doc-head">
+        <p class="eyebrow">spec-driven-development</p>
+        <h1>Spec-Driven Development — Test Plan</h1>
+        <p class="source">Canonical: docs/features/spec-driven-development/test-plan/spec-driven-development-test-plan.md</p>
+      </header>
+      
+      <div class="doc-body">
+        <h2>Spec-Driven Development — Test Plan</h2>
+<p>Initiative 级 test plan。<strong>被测对象</strong> = <strong>spec-write</strong> 与 <strong>spec-review</strong>。<strong>Oracle</strong> = <a href="../../../../../skills/spec-organize/SPEC-STANDARD.md"><code>SPEC-STANDARD.md</code></a> 与 <a href="../../../../../skills/spec-html-standard/SPEC-PRESENTATION.md"><code>SPEC-PRESENTATION.md</code></a>。organize / pipeline 旧测试仍在；编排 <strong>Unverified</strong>。Sub-feature 不另写 test-plan。</p>
+<p><strong>验收：</strong> 两个 skill 加两份标准是产出。人不读 skill 正文；好不好用只看本计划的测试结果。</p>
+<h3>Test Scope</h3>
+<p><strong>In scope：</strong> spec-write 与 spec-review 在「装进任意项目」场景下的行为；输入三类——本 repo <code>docs/features/</code>、外部 repo（<code>eval.yaml</code> 指定路径）、人工 fixture。<strong>Out of scope / Unverified：</strong> skill 正文改动（本 plan 只定义测什么）；设计合理性；merge 策略；<strong>spec-pipeline 阶段编排</strong>（Unverified，<a href="../prd/spec-driven-development-prd.html#PRD-I">PRD-I</a>）；单次编辑大小（<a href="../prd/spec-driven-development-prd.html#PRD-C">PRD-C</a>，Unverified）；可读性打分（<a href="../prd/spec-driven-development-prd.html#PRD-M">PRD-M</a>，在 spec-review 流程内，不作通过条件）；四套例子的 gold（<a href="../prd/spec-driven-development-prd.html#PRD-K">PRD-K</a>，放到别处；例子写进 skill 正文，由 <a href="#TST-S">TST-S</a> 检查）。</p>
+<p><strong>Parent vs sub（spec-review）：</strong> 审 <strong>parent</strong>（<code>docs/features/spec-driven-development/</code> 根，不含 <code>features/&lt;sub&gt;/</code>）时须核对五篇均在：<code>prd</code>、<code>design</code>、<code>decision-history</code>、<code>impl-plan</code>、<code>test-plan</code>（见 parent HLD §8）。<strong>Sub-feature</strong> 不要求齐全，只审已有文件。</p>
+<div class="table-wrap"><table><thead><tr>
+<th>术语</th>
+<th>含义</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>requirement</strong></td>
+<td>固定需求：「给我推荐一个 iPhone 并帮我购买」</td>
+</tr>
+<tr>
+<td><strong>context 包</strong></td>
+<td>模拟「人」的唯一答题来源；AI 反问时只从此取答案</td>
+</tr>
+<tr>
+<td><strong>gold case</strong></td>
+<td>一个输入案例：<a href="../../../../../skills/spec-organize/tests/gold/v1/requirement.md"><code>requirement.md</code></a> + <a href="../../../../../skills/spec-organize/tests/gold/v1/context.md"><code>context.md</code></a>，带独立版本</td>
+</tr>
+<tr>
+<td><strong>gold version</strong></td>
+<td>某个 gold case 的版本；分数只在同一 case/version 内比较</td>
+</tr>
+<tr>
+<td><strong>exemplar</strong></td>
+<td>被接受的模范产出</td>
+</tr>
+<tr>
+<td><strong>annotations</strong></td>
+<td><code>GOOD-*</code> / <code>BAD-*</code> 标注，含 <code>where</code> / <code>text</code> / <code>expected_fix</code></td>
+</tr>
+<tr>
+<td><strong>judge</strong></td>
+<td>单一固定模型 <code>deepseek-flash</code>，逐条 MUST / 对标打分</td>
+</tr>
+<tr>
+<td><strong>checker</strong></td>
+<td>3 次独立裁决；只有 <code>deepseek-flash</code> 时标 Unverified cross-model</td>
+</tr>
+<tr>
+<td><strong>eval 配置</strong></td>
+<td><a href="../../../../../skills/spec-organize/tests/eval.yaml"><code>skills/spec-organize/tests/eval.yaml</code></a>；<strong>基线</strong> = 只装 spec-organize + 裸模型，<code>grill.skills: []</code></td>
+</tr>
+</tbody></table></div>
+<h3>Test Assets</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>路径</th>
+<th>内容</th>
+</tr></thead><tbody>
+<tr>
+<td><a href="../../../../../skills/spec-organize/tests/eval.yaml"><code>skills/spec-organize/tests/eval.yaml</code></a></td>
+<td><code>judge.model: deepseek-flash</code>；<code>gold.cases.iphone.version: v1</code>；<code>gold.repeats: 3</code>；<code>grill.skills</code>（基线 <code>[]</code>）；<code>target.repo</code>（默认 <code>../the-super-lab-eval</code>，<code>SDD_EVAL_REPO</code> 覆盖）；<code>checkers.models: [deepseek-flash]</code>；<code>checkers.repeats: 3</code>；<code>single_provider: true</code></td>
+</tr>
+<tr>
+<td><code>skills/spec-organize/tests/checks/</code></td>
+<td>Python：<code>paths</code> <code>size</code> <code>frontmatter</code> <code>sections</code> <code>ids</code> <code>decision_log</code> <code>change_log</code> <code>index_book</code> <code>collision</code> <code>no_commit</code></td>
+</tr>
+<tr>
+<td><code>skills/spec-organize/tests/mock-mcp/</code></td>
+<td>共用一个 mock MCP client/server；固定工具；call 打出 stdout log，不真下单</td>
+</tr>
+<tr>
+<td><code>skills/spec-organize/tests/fixtures/neg/&lt;check&gt;/</code></td>
+<td>每检查 ≥1 最小违规树</td>
+</tr>
+<tr>
+<td><code>skills/spec-organize/tests/fixtures/pos/</code></td>
+<td>不得误报：ID 缺口、豁免路径、raw 无 frontmatter</td>
+</tr>
+<tr>
+<td><a href="../../../../../skills/spec-organize/tests/must_registry.yaml"><code>skills/spec-organize/tests/must_registry.yaml</code></a></td>
+<td>每条 MUST：<code>id</code>（<code>MUST-{字母}</code>）、<code>source</code>、<code>text</code>、<code>method</code>（<code>python</code> \</td>
+<td><code>llm</code>）、<code>check</code></td>
+</tr>
+<tr>
+<td><code>skills/spec-organize/tests/gold/iphone/v1/</code></td>
+<td><a href="../../../../../skills/spec-organize/tests/gold/v1/requirement.md"><code>requirement.md</code></a>、<a href="../../../../../skills/spec-organize/tests/gold/v1/context.md"><code>context.md</code></a>、<code>context-variants/&lt;slug&gt;.md</code>、<code>runs/deepseek-flash/</code>（3 次产出 + <a href="../../../../../skills/spec-organize/tests/gold/v1/runs/_template/interview.md"><code>interview.md</code></a>）、<code>exemplar/</code>、<code>annotations.yaml</code>；<a href="../prd/spec-driven-development-prd.html#PRD-K">PRD-K</a> 四例的 gold 放到别处</td>
+</tr>
+<tr>
+<td><code>skills/spec-organize/tests/gold/iphone/v1/annotations.yaml</code></td>
+<td><code>GOOD-*</code> / <code>BAD-*</code>；<code>where</code>、<code>text</code>；BAD 含 <code>expected_fix</code>；<code>added_in</code>（gold 版本）</td>
+</tr>
+<tr>
+<td><strong>当前状态</strong></td>
+<td>gold 实际目录仍是 <code>gold/v1/</code>；<a href="../impl-plan/spec-driven-development-impl-plan.html#IMPL-D">IMPL-D</a> 迁移到 <code>gold/iphone/v1/</code></td>
+</tr>
+<tr>
+<td><code>skills/spec-organize/tests/reports/&lt;run_id&gt;.html</code></td>
+<td>单 HTML；<code>run_id = &lt;YYYY-MM-DD&gt;-&lt;branch&gt;</code>；<a href="../../../../../tools/render_eval_report.py"><code>tools/render_eval_report.py</code></a> 生成；不入库</td>
+</tr>
+<tr>
+<td><code>skills/spec-review/tests/cases/&lt;slug&gt;/</code></td>
+<td><code>input/</code>（植入缺陷）、<code>expected.yaml</code>（应检出 id、应忽略 severity 1–2）；11 机械 + 5 语义</td>
+</tr>
+</tbody></table></div>
+<p><strong>分支：</strong> 产出在 <code>target.repo</code> 开 <code>eval/&lt;gold-version&gt;/&lt;run_id&gt;</code>，<strong>不开 PR</strong>；<code>runs/</code> 和 <code>reports/</code> 不入库；gold 的 requirement/context/exemplar/annotations 可 push。跨 skill 检查器、gold、报告均在 <strong>spec-organize</strong> 下。</p>
+<h3>Scoring</h3>
+<p><strong>分数 1 — MUST 合规：</strong> <code>x / total</code>，<code>total</code> = <code>must_registry.yaml</code> 条目数；<code>method: python</code> → 检查器；<code>method: llm</code> → <code>judge.model</code>；逐条 pass/fail。</p>
+<p><strong>分数 2 — 对标 gold：</strong> 对 <code>annotations.yaml</code> 每条——GOOD 相似命中 +1、未命中 0；BAD 未犯 0、相似犯 −1（judge 判相似）。<code>(Σ加分 − Σ减分) × 10 / annotations 条目总数</code>，满分 10，可为负；<strong>仅同一 <code>gold.version</code> 内比较</strong>。</p>
+<p><strong>门槛：</strong> 分数 1 = <code>total/total</code>；分数 2 ≥ 同 gold 版本<strong>上一次</strong> run。Checker：3 次独立裁决（同一 <code>deepseek-flash</code>），<strong>不得推翻</strong> python 项；<strong>3/3</strong> PASS。跨模型偏差标 <strong>Unverified cross-model</strong>。</p>
+<p><strong>指标边界：</strong> 分数 1/2 是 <strong>eval 指标</strong>，不是产品 success metric（<a href="../prd/spec-driven-development-prd.html#PRD-G">PRD-G</a> / <a href="../decision-history/spec-driven-development-decision-history.html#ARD-N">ARD-N</a>）。</p>
+<p><strong>Gold 增长：</strong> run 中发现新 good/bad → 追加 <code>annotations.yaml</code>，<code>gold.version</code> +1，<code>added_in</code> 标版本；报告须标 gold 版本。</p>
+<h3>Test Cases</h3>
+<h4 id="TST-A"><a href="#TST-A">TST-A</a> — MUST registry 构建</h4>
+<p><strong>目标：</strong> 扫描 document-standard design、pipeline design、parent HLD §4–§5 全部 MUST/禁止/必须 → <code>must_registry.yaml</code>；spec 定稿后重扫。<strong>输入：</strong> 三篇 design。<strong>断言：</strong> 覆盖率 100%；每条标 <code>python</code> 或 <code>llm</code>。<strong>判定：</strong> 锚点比对脚本。</p>
+<h4 id="TST-B"><a href="#TST-B">TST-B</a> — 机械检查器 + 负向 fixture</h4>
+<p><strong>目标：</strong> 检查器有效。<strong>输入：</strong> <code>fixtures/neg/*</code>、<code>fixtures/pos/*</code>。<strong>断言：</strong> neg 必 fail；pos 必 pass。<strong>判定：</strong> pytest。</p>
+<h4 id="TST-C"><a href="#TST-C">TST-C</a> — Gold 生成（3 次 run）</h4>
+<p><strong>目标：</strong> 基线下 3 次 iPhone feature spec。<strong>输入：</strong> <code>gold/iphone/v1/requirement.md</code> + <a href="../../../../../skills/spec-organize/tests/gold/v1/context.md"><code>context.md</code></a>；<code>grill.skills: []</code>；只装 spec-organize；<code>deepseek-flash</code>。<strong>断言：</strong> 每次含 prd/design/decision-history/impl-plan/test-plan；<a href="../../../../../skills/spec-organize/tests/gold/v1/runs/_template/interview.md"><code>interview.md</code></a> 中模拟人回答均出自 context 或「未提供」。<strong>判定：</strong> Python（文件）+ judge（出处）。跨模型偏差 <strong>Unverified</strong>。</p>
+<h4 id="TST-D"><a href="#TST-D">TST-D</a> — Gold 提炼</h4>
+<p><strong>目标：</strong> 3 次 run → <code>exemplar/</code> + <code>annotations.yaml</code> v1。<strong>输入：</strong> <a href="#TST-C">TST-C</a> 产出。<strong>断言：</strong> exemplar 过 <a href="#TST-B">TST-B</a>、分数 1 全过；annotation 有 <code>where</code>/<code>text</code>；BAD 有 <code>expected_fix</code>。<strong>判定：</strong> Python + 人工认可（Change Log 记录）。</p>
+<h4 id="TST-E"><a href="#TST-E">TST-E</a> — spec-organize happy path</h4>
+<p><strong>目标：</strong> 改 skill 后同需求重跑。<strong>输入：</strong> 同 <a href="#TST-C">TST-C</a>。<strong>断言：</strong> 分数 1 全过；分数 2 不退步。<strong>判定：</strong> Python + judge。</p>
+<h4 id="TST-F"><a href="#TST-F">TST-F</a> — spec-organize unhappy（输入侧）</h4>
+<p><strong>目标：</strong> context 带坑时不自猜。<strong>输入：</strong> <code>context-variants/</code>：<code>budget-conflict</code>、<code>family-disagree</code>、<code>missing-info</code>、<code>midway-change</code>。<strong>断言：</strong> 须 report/ask；budget/family 已有 decision history 先后则取较晚者，否则问用户，不得猜；midway-change 须新 ARD + strike+link；missing-info 不得编造。<strong>判定：</strong> judge + Python（ARD 结构）。</p>
+<h4 id="TST-G"><a href="#TST-G">TST-G</a> — 真实树 Lint</h4>
+<p><strong>目标：</strong> 别人写的 spec 是否合规。<strong>输入：</strong> 本 repo <code>docs/features/</code>；外部 repo 路径。<strong>断言：</strong> spec-organize Lint 与 <code>checks/</code> 一致；豁免不报。<strong>判定：</strong> Python 对比。</p>
+<h4 id="TST-H"><a href="#TST-H">TST-H</a> — spec-review 检出率</h4>
+<p><strong>目标：</strong> 找全缺陷、不误报。<strong>输入：</strong> 11 个机械检查案例 + 5 个语义案例；干净 exemplar。<strong>断言：</strong> 植入项均检出并引用 DSGN/MUST id；干净零 3+ 发现；1–2 不进讨论。<strong>判定：</strong> id 集合比对。</p>
+<h4 id="TST-I"><a href="#TST-I">TST-I</a> — spec-review 建议质量</h4>
+<p><strong>目标：</strong> 修改建议正确。<strong>输入：</strong> <a href="#TST-H">TST-H</a> 检出项。<strong>断言：</strong> 建议 vs <code>expected_fix</code>：照改后缺陷消除且无新 MUST 违规。<strong>判定：</strong> judge；报 <code>x / 检出数</code>。</p>
+<h4 id="TST-J"><a href="#TST-J">TST-J</a> — Eval 配置矩阵</h4>
+<p><strong>目标：</strong> 不同 grill 组合。<strong>输入：</strong> <code>grill.skills</code>: <code>[]</code>、<code>[wayfinder]</code>、<code>[grill-with-docs]</code>、两者。<strong>断言：</strong> 每配置一份报告；基线先跑；只报分不设门槛。<strong>判定：</strong> 同 <a href="#TST-E">TST-E</a>。</p>
+<h4 id="TST-K"><a href="#TST-K">TST-K</a> — 报告</h4>
+<p><strong>目标：</strong> 单 HTML。<strong>输入：</strong> 任一 run。<strong>断言：</strong> run_id、分支、gold 版本、eval 配置、分数 1 逐条（python/llm）、分数 2 ±、<a href="#TST-F">TST-F</a> 变体、3 次 checker。<strong>判定：</strong> 生成 + schema。</p>
+<h4 id="TST-L"><a href="#TST-L">TST-L</a> — 3 次独立裁决</h4>
+<p><strong>目标：</strong> 最终 PASS/FAIL。<strong>输入：</strong> HTML + diff。<strong>断言：</strong> 3/3；不推翻 python；同一 <code>deepseek-flash</code> 的 3 次独立 run。<strong>判定：</strong> 3 次；跨模型偏差 <strong>Unverified</strong>。</p>
+<h4 id="TST-M"><a href="#TST-M">TST-M</a> — 变更联动</h4>
+<p><strong>目标：</strong> 标准或 gold 变更后测试同步。<strong>输入：</strong> 改 SPEC-STANDARD / design；或 run 中新 good/bad。<strong>断言：</strong> design 改 → <a href="#TST-A">TST-A</a> + registry/fixtures 同批；新标注 → gold.version +1。<strong>判定：</strong> 流程 + 覆盖率。</p>
+<h4 id="TST-N"><a href="#TST-N">TST-N</a> — Parent 齐备 / sub 豁免</h4>
+<p><strong>目标：</strong> parent 五篇齐全；sub 不因缺篇 fail。<strong>输入：</strong> SDD parent 根 + <code>features/pipeline/</code>、<code>features/document-standard/</code>。<strong>断言：</strong> parent 缺任一篇 → spec-review ≥3；sub 仅 design 等仍 pass。<strong>判定：</strong> Python（路径）+ spec-review 报告。</p>
+<h4 id="TST-O"><a href="#TST-O">TST-O</a> — PRD → design 追溯</h4>
+<p><strong>目标：</strong> 每条 PRD 需求都有 design 锚点。<strong>输入：</strong> 父 PRD、parent HLD、pipeline/document-standard design。<strong>断言：</strong> 每个 <code>PRD-*</code> ID 映射到至少一个 <code>DSGN-*</code> / <code>PIPE-*</code>；未映射 fail。<strong>判定：</strong> Python（ID 集合比对）。</p>
+<h4 id="TST-P"><a href="#TST-P">TST-P</a> — 归属 / 证据 / UNKNOWN</h4>
+<p><strong>目标：</strong> design 篇有「子问题归属」表且结论可追溯。<strong>输入：</strong> 含归属表的 design；无依据结论；UNKNOWN 样例。<strong>断言：</strong> 缺表 fail；有结论无依据 fail；UNKNOWN 当事实 fail。<strong>判定：</strong> Python（表结构）+ judge（依据质量）。</p>
+<h4 id="TST-Q"><a href="#TST-Q">TST-Q</a> — mock MCP log</h4>
+<p><strong>目标：</strong> 执行只到 mock。<strong>输入：</strong> <code>skills/spec-organize/tests/mock-mcp/</code> 的 client/server。<strong>断言：</strong> call 打出 stdout log（tool/args/result）；无真实下单/订票。<strong>判定：</strong> Python（log 存在 + 无真实副作用）。</p>
+<h4 id="TST-R"><a href="#TST-R">TST-R</a> — reader 新鲜度</h4>
+<p><strong>目标：</strong> reader 不落后于 source。<strong>输入：</strong> <a href="../spec-driven-development-reader.html"><code>docs/book/html/spec-driven-development/spec-driven-development-reader.html</code></a> + 所有 source <code>.md</code>。<strong>断言：</strong> reader mtime ≥ 每个 source mtime；否则 fail。<strong>判定：</strong> Python。</p>
+<h4 id="TST-T"><a href="#TST-T">TST-T</a> — 外部参照 gold</h4>
+<p><strong>目标：</strong> defect 快照上每条 expect 都被报出；gold 快照上除 allow 外 0 finding。源仓库不在本机时跳过。<strong>输入：</strong> <code>gold/refs/&lt;slug&gt;/manifest.yaml</code>（<a href="../decision-history/spec-driven-development-decision-history.html#ARD-BD">ARD-BD</a>）。<strong>判定：</strong> Python。不把私有 spec 正文复制进本仓库。</p>
+<h4 id="TST-S"><a href="#TST-S">TST-S</a> — skill 正文四例</h4>
+<p><strong>目标：</strong> spec-write 与 spec-review 正文包含 <a href="../prd/spec-driven-development-prd.html#PRD-Q">PRD-Q</a> 四例。<strong>输入：</strong> 这两份 SKILL.md。<strong>断言：</strong> 每个至少提到 shed、北京旅游、数学题、股票；缺 fail。<strong>判定：</strong> Python（关键词）+ judge（是否只是点名）。</p>
+<h3>Test Execution Order</h3>
+<ol>
+<li><strong><a href="#TST-A">TST-A</a></strong>（registry 不足 100% 则停）</li>
+<li><strong><a href="#TST-B">TST-B</a></strong>（检查器失效则停）</li>
+<li><strong><a href="#TST-O">TST-O</a></strong>、<strong><a href="#TST-P">TST-P</a></strong>（设计覆盖/证据）</li>
+<li><strong><a href="#TST-C">TST-C</a></strong> → <strong><a href="#TST-D">TST-D</a></strong>（首次或 gold 升版）</li>
+<li><strong><a href="#TST-G">TST-G</a></strong>、<strong><a href="#TST-N">TST-N</a></strong>、<strong><a href="#TST-R">TST-R</a></strong>、<strong><a href="#TST-S">TST-S</a></strong>、<strong><a href="#TST-T">TST-T</a></strong></li>
+<li><strong><a href="#TST-E">TST-E</a></strong>、<strong><a href="#TST-F">TST-F</a></strong></li>
+<li><strong><a href="#TST-H">TST-H</a></strong> → <strong><a href="#TST-I">TST-I</a></strong></li>
+<li><strong><a href="#TST-Q">TST-Q</a></strong>（mock 执行）</li>
+<li><strong><a href="#TST-K">TST-K</a></strong> → <strong><a href="#TST-L">TST-L</a></strong></li>
+<li><strong><a href="#TST-J">TST-J</a></strong>（可选）</li>
+<li>改动 → <strong><a href="#TST-M">TST-M</a></strong> → 1</li>
+</ol>
+<h3>Expected Pass Threshold</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Gate</th>
+<th>条件</th>
+</tr></thead><tbody>
+<tr>
+<td>测试框架可用</td>
+<td><a href="#TST-A">TST-A</a> 100%；<a href="#TST-B">TST-B</a> 全过</td>
+</tr>
+<tr>
+<td>设计完整</td>
+<td><a href="#TST-O">TST-O</a> 100%；<a href="#TST-P">TST-P</a> 全过</td>
+</tr>
+<tr>
+<td>执行 mock</td>
+<td><a href="#TST-Q">TST-Q</a> log 存在且无真实副作用</td>
+</tr>
+<tr>
+<td>reader / skill 正文</td>
+<td><a href="#TST-R">TST-R</a> 新鲜；<a href="#TST-S">TST-S</a> 四例齐全</td>
+</tr>
+<tr>
+<td>外部 gold</td>
+<td><a href="#TST-T">TST-T</a>：defect 的 expect 全报出；gold 除 allow 外 0 条；源不在本机则跳过</td>
+</tr>
+<tr>
+<td>Gold v1 冻结</td>
+<td><a href="#TST-D">TST-D</a>：exemplar 分数 1 全过；annotations 人工认可</td>
+</tr>
+<tr>
+<td>spec-organize 可发布</td>
+<td><a href="#TST-E">TST-E</a> 分数 1 全过、分数 2 不退步；<a href="#TST-F">TST-F</a> 四变体全过；<a href="#TST-G">TST-G</a> 零差异；<a href="#TST-L">TST-L</a> 3/3</td>
+</tr>
+<tr>
+<td>spec-review 可发布</td>
+<td><a href="#TST-H">TST-H</a> 检出 100%、误报 0；<a href="#TST-I">TST-I</a> ≥ 上一次；<a href="#TST-L">TST-L</a> 3/3</td>
+</tr>
+<tr>
+<td>Gold 升版</td>
+<td><a href="#TST-M">TST-M</a> 追加后重跑 <a href="#TST-E">TST-E</a>/H 建新基线</td>
+</tr>
+</tbody></table></div>
+<h3>Traceability — PRD → TST</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>PRD</th>
+<th>Covered by</th>
+</tr></thead><tbody>
+<tr>
+<td><a href="../prd/spec-driven-development-prd.html#PRD-A">PRD-A</a></td>
+<td>Unverified</td>
+</tr>
+<tr>
+<td><a href="../prd/spec-driven-development-prd.html#PRD-B">PRD-B</a></td>
+<td>Unverified</td>
+</tr>
+<tr>
+<td><a href="../prd/spec-driven-development-prd.html#PRD-D">PRD-D</a></td>
+<td><a href="#TST-B">TST-B</a>（size cap）</td>
+</tr>
+<tr>
+<td><a href="../prd/spec-driven-development-prd.html#PRD-E">PRD-E</a></td>
+<td><a href="#TST-B">TST-B</a>（paths）</td>
+</tr>
+<tr>
+<td><a href="../prd/spec-driven-development-prd.html#PRD-F">PRD-F</a></td>
+<td><a href="#TST-B">TST-B</a>（decision_log）</td>
+</tr>
+<tr>
+<td><a href="../prd/spec-driven-development-prd.html#PRD-H">PRD-H</a></td>
+<td><a href="#TST-M">TST-M</a>；<a href="#TST-S">TST-S</a></td>
+</tr>
+<tr>
+<td><a href="../prd/spec-driven-development-prd.html#PRD-J">PRD-J</a></td>
+<td>Unverified（spec-pipeline 编排，<a href="../prd/spec-driven-development-prd.html#PRD-I">PRD-I</a>）</td>
+</tr>
+<tr>
+<td><a href="../prd/spec-driven-development-prd.html#PRD-L">PRD-L</a></td>
+<td><a href="#TST-P">TST-P</a></td>
+</tr>
+<tr>
+<td><a href="../prd/spec-driven-development-prd.html#PRD-O">PRD-O</a></td>
+<td><a href="#TST-Q">TST-Q</a></td>
+</tr>
+<tr>
+<td><a href="../prd/spec-driven-development-prd.html#PRD-P">PRD-P</a></td>
+<td><a href="#TST-S">TST-S</a>；Expected Pass Threshold 表</td>
+</tr>
+<tr>
+<td><a href="../prd/spec-driven-development-prd.html#PRD-C">PRD-C</a></td>
+<td>Unverified</td>
+</tr>
+<tr>
+<td><a href="../prd/spec-driven-development-prd.html#PRD-G">PRD-G</a></td>
+<td>Unverified（<a href="../decision-history/spec-driven-development-decision-history.html#ARD-N">ARD-N</a>）</td>
+</tr>
+<tr>
+<td><a href="../prd/spec-driven-development-prd.html#PRD-I">PRD-I</a></td>
+<td>Unverified</td>
+</tr>
+<tr>
+<td><a href="../prd/spec-driven-development-prd.html#PRD-K">PRD-K</a></td>
+<td>Unverified</td>
+</tr>
+<tr>
+<td><a href="../prd/spec-driven-development-prd.html#PRD-M">PRD-M</a></td>
+<td>Unverified</td>
+</tr>
+<tr>
+<td><a href="../prd/spec-driven-development-prd.html#PRD-N">PRD-N</a></td>
+<td>Unverified</td>
+</tr>
+<tr>
+<td><a href="../prd/spec-driven-development-prd.html#PRD-Q">PRD-Q</a></td>
+<td>Unverified</td>
+</tr>
+</tbody></table></div>
+<h3>Change Log</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Date</th>
+<th>Change</th>
+</tr></thead><tbody>
+<tr>
+<td>2026-11-03</td>
+<td>Initiative harness only；Phase 1 测例在 document-standard test-plan</td>
+</tr>
+<tr>
+<td>2026-11-03</td>
+<td>document-standard 改回 feature 级 test plan</td>
+</tr>
+<tr>
+<td>2026-11-03</td>
+<td>重写为 initiative 级：被测 = spec-organize / spec-review；两分制；gold 版本化；资产在 skills/&lt;skill&gt;/tests</td>
+</tr>
+<tr>
+<td>2026-11-03</td>
+<td>移除 wayfinder-import 例外与 out-of-scope 项</td>
+</tr>
+<tr>
+<td>2026-11-03</td>
+<td>§8 对齐：parent 五篇齐备（<a href="#TST-N">TST-N</a>）；sub 豁免</td>
+</tr>
+<tr>
+<td>2026-11-04</td>
+<td>被测三 skill + spec-pipeline 编排 out of scope（HLD §7）</td>
+</tr>
+<tr>
+<td>2026-11-04</td>
+<td>验收：四个 skill 是产出；人不读正文，只看测试结果</td>
+</tr>
+<tr>
+<td>2026-11-04</td>
+<td><a href="../prd/spec-driven-development-prd.html#PRD-C">PRD-C</a> 单次编辑大小列为测不了，移出 test plan</td>
+</tr>
+<tr>
+<td>2026-11-04</td>
+<td><a href="#TST-F">TST-F</a>：多人冲突取 decision history 较晚者，否则问用户，不得猜</td>
+</tr>
+<tr>
+<td>2026-11-04</td>
+<td>选择题：<a href="../prd/spec-driven-development-prd.html#PRD-M">PRD-M</a> 与四套 gold 移出本计划；<a href="../prd/spec-driven-development-prd.html#PRD-N">PRD-N</a> 评测只用 context</td>
+</tr>
+<tr>
+<td>2026-11-04</td>
+<td>单模型 deepseek-flash 3 次 run；gold case/version/exemplar/annotations 四词；runs/reports 不入库</td>
+</tr>
+<tr>
+<td>2026-11-04</td>
+<td>新增 <a href="#TST-O">TST-O</a> PRD→design、<a href="#TST-P">TST-P</a> 归属/证据、<a href="#TST-Q">TST-Q</a> mock MCP、<a href="#TST-R">TST-R</a> reader、<a href="#TST-S">TST-S</a> 四例</td>
+</tr>
+<tr>
+<td>2026-11-04</td>
+<td><a href="#TST-D">TST-D</a>/<a href="#TST-K">TST-K</a> 改为 3 次 run/checker；<a href="#TST-H">TST-H</a> 改为 11 机械 + 5 语义案例</td>
+</tr>
+<tr>
+<td>2026-11-04</td>
+<td>标注 gold 实际目录 v1 与目标 iphone/v1 的迁移</td>
+</tr>
+<tr>
+<td>2026-11-07</td>
+<td>被测改为 spec-write 与 spec-review；<a href="#TST-S">TST-S</a> 只查这两份（<a href="../decision-history/spec-driven-development-decision-history.html#ARD-AJ">ARD-AJ</a>）</td>
+</tr>
+<tr>
+<td>2026-11-07</td>
+<td><a href="#TST-T">TST-T</a>：外部 gold 只留 manifest，不复制私有正文（<a href="../decision-history/spec-driven-development-decision-history.html#ARD-BD">ARD-BD</a>）</td>
+</tr>
+<tr>
+<td>2026-11-07</td>
+<td><a href="#TST-R">TST-R</a> 输入改为 docs/book/html/ 下的 reader（<a href="../decision-history/spec-driven-development-decision-history.html#ARD-BF">ARD-BF</a>）</td>
+</tr>
+</tbody></table></div>
+      </div>
+    </article>
+    <nav class="pager" aria-label="Previous and next"><a class="prev" href="../impl-plan/spec-driven-development-impl-plan.html"><span class="label">Previous</span>Spec-Driven Development — Implementation Plan</a><a class="next" href="../decision-history/spec-driven-development-decision-history.html"><span class="label">Next</span>Spec-Driven Development — Decision History</a></nav>
+  </main>
+</div>
+<footer class="foot"><div class="foot-inner">Assembled from committed <code>.md</code>. The Markdown is authoritative; this page is a reading view.</div></footer>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>if(window.mermaid){mermaid.initialize({startOnLoad:false});}</script>
+<script src="../../assets/app.js"></script>
+</body>
+</html>

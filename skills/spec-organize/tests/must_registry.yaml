@@ -1,10 +1,5 @@
 version: 1
 items:
-  - id: MUST-A
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:15
-    text: '相关：**pipeline** 见 `../pipeline/design/pipeline-design.md`；**测试** 见 parent `../../../test-plan/spec-driven-development-test-plan.md`（被测 = spec-organize / spec-review；本篇 MUST 进其 registry）。'
-    method: llm
-    check: ''
   - id: MUST-B
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:45
     text: '**DSGN-A = 契约**（MUST 主要来自 **DSGN-A**（含 **DSGN-B–F**）与 **DSGN-M**）。**DSGN-G–DSGN-L** = 语义与流程补充。'
@@ -85,16 +80,6 @@ items:
     text: '**MUST：** **DSGN-A** 全满足（含 **DSGN-F** ID 不可改、不可复用）；**DSGN-G** 冲突不 silent；**DSGN-I** 不删 L1；consolidation 不丢 decision；**Commit = no** 路径未 commit；INDEX 无 orphan/dead link；含 `docs/features/` 变更的 **push** 时 INDEX/book 已与源同步；collision 已查。'
     method: python
     check: 'index_book'
-  - id: MUST-R
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:315
-    text: '验证见 parent **`../../../test-plan/spec-driven-development-test-plan.md`**：被测对象是 **spec-organize / spec-review**，不是本篇；本篇全部 **MUST / 禁止** 由 **TST-A** 扫入 `must_registry.yaml`，机械项 Python 判、其余 LLM judge 判。'
-    method: llm
-    check: ''
-  - id: MUST-S
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:327
-    text: '- **待一起 review：** **DSGN-B** 硬 cap 数字、sub-feature 是否正式 MUST、`raw/` 子目录是否够用。AI edit 上限见 parent HLD §4；agent 全局 norm（含 §5 decision-history、§6 CLAUDE+skill）见 parent HLD。'
-    method: python
-    check: 'size'
   - id: MUST-T
     source: docs/features/spec-driven-development/features/pipeline/design/pipeline-design.md:35
     text: '- **Map：** **与人 interview**；AI 判断拆分/decision/scratch；**无** 固定 MUST 产物模板；可选 **可替换** map 工具（示例 wayfinder，**非** SDD deliverable）。'
@@ -175,3 +160,58 @@ items:
     text: 'Committed：目录 + 文件名；文件名 **必须** `<f>-<type>…`（`raw/` 除外）。'
     method: python
     check: 'paths'
+  - id: MUST-AJ
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design-spec-reader-html.md:43
+    text: '手写 HTML 带 spec-paired 与 sha256；同名 html 无声明或 hash 不一致则 fail；changelog 盖住每个 md 日期。'
+    method: python
+    check: 'paired_html'
+  - id: MUST-AK
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:359
+    text: '声明了 audience 的 design 必须写明本篇对哪些事实有权威。'
+    method: python
+    check: 'audience_authority'
+  - id: MUST-AL
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:357
+    text: '问题 tracker 用 QUES- 字母号，正文有 Question、Answer、Owner。'
+    method: python
+    check: 'open_questions'
+  - id: MUST-AM
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:358
+    text: '改标题保留旧锚点；markdown 锚点必须落到标题或显式 a id。'
+    method: python
+    check: 'anchors'
+  - id: MUST-AN
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:354
+    text: '代码引用 file:line 的同一篇里必须有 7-40 位 commit。'
+    method: python
+    check: 'code_citation_base'
+  - id: MUST-AO
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:354
+    text: '每个 IMPL 任务有 Done when、Verify 或完成标准。'
+    method: python
+    check: 'impl_tasks'
+  - id: MUST-AP
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:362
+    text: '翻译副本开头链接原文并写明以原文为准；被跟踪的翻译副本不得提交。'
+    method: python
+    check: 'translation_banner'
+  - id: MUST-AQ
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:358
+    text: '§ 链接落到对应标题；同一篇 steps 段不得重叠。'
+    method: python
+    check: 'section_refs'
+  - id: MUST-AR
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:357
+    text: 'tracker 里 all N questions 等于 QUES 条目数。'
+    method: python
+    check: 'counts'
+  - id: MUST-AS
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:357
+    text: 'QUES 引用处紧邻的状态必须与 tracker 条目一致。'
+    method: python
+    check: 'resolved_refs'
+  - id: MUST-AT
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:360
+    text: '标题声明 steps a-b 且含时序图时，消息数等于 b-a+1。'
+    method: python
+    check: 'diagram_steps'

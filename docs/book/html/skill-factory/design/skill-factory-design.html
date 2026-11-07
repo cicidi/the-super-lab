@@ -1,0 +1,1114 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>skill-factory Specification · design · Spec Atlas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:400,400italic,500,500italic,700|Roboto+Mono:400,500,700|Noto+Sans+SC:400,500,700&display=swap">
+<link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><a href="../../index.html"><span class="brand-mark">SDD</span><span class="brand-name">Spec Atlas</span></a></div>
+  </div>
+</header>
+<div class="site">
+  <aside class="sidebar">
+  <nav aria-label="Directory">
+    <div class="tree-overview"><a class="tree-link" href="../../index.html"><span class="tree-link__num">00</span>All features</a></div>
+    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../prd/skill-factory-prd.html"><span class="tree-link__num">10</span>skill-factory PRD</a></li><li class="tree-leaf"><a class="tree-link" href="skill-factory-design.html" aria-current="page"><span class="tree-link__num">11</span>skill-factory Specification</a></li><li class="tree-leaf"><a class="tree-link" href="../impl-plan/skill-factory-impl-plan.html"><span class="tree-link__num">12</span>skill-factory Implementation Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../test-plan/skill-factory-test-plan.html"><span class="tree-link__num">13</span>skill-factory Test Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../decision-history/skill-factory-decision-history.html"><span class="tree-link__num">14</span>skill-factory — Decision History</a></li></ul>
+  </nav>
+</aside>
+  <main class="content">
+    <nav class="breadcrumbs"><a href="../../index.html">Docs</a> / <span>skill-factory</span> / <span>design</span> / <span>skill-factory Specification</span></nav>
+    <article class="doc" data-doc="skill-factory/design/skill-factory-design">
+      <header class="doc-head">
+        <p class="eyebrow">skill-factory</p>
+        <h1>skill-factory Specification</h1>
+        <p class="source">Canonical: docs/features/skill-factory/design/skill-factory-design.md</p>
+      </header>
+      
+      <div class="doc-body">
+        <h2>skill-factory Specification</h2>
+<h3>Specification</h3>
+<h2>skill-factory Technical Specification</h2>
+<p><strong>Version:</strong> 1.0   <strong>Status:</strong> Implemented   <strong>Last Updated:</strong> 2026-07-23</p>
+<hr>
+<h3>System Architecture Overview</h3>
+<p>The <strong>skill-factory</strong> is a skill management and creation system for the OpenCode/Claude Code ecosystem. It organizes skills into three isolated directories, provides creation, editing, and import workflows, and enforces quality gates through a defined specification format.</p>
+<h4>1.1 High-Level Structure</h4>
+<pre><code>&lt;project-root&gt;/
+├── walter-worker-skills/          # Native (first-party) skills
+├── import-skills/               # Imported third-party skills
+├── personal-skills/             # Private user skills (gitignored)
+├── docs/
+│   ├── devil-advocate/          # Devil&#x27;s advocate debate outputs
+│   ├── work-review/             # Work review acceptance outputs
+│   └── ...                      # Other doc types
+├── CONVENTIONS.md               # Project conventions
+├── CLAUDE.md                    # Agent behavior rules
+└── .gitignore                   # Excludes personal-skills/</code></pre>
+<h4>1.2 Skill Lifecycle</h4>
+<ul>
+<li><strong>Create</strong>: via <code>skill-create</code> (self-bootstrapping process: Phase 0→1→2→3→4)</li>
+<li><strong>Edit</strong>: via <code>skill-edit</code> (Step 1→2→3→4→5→6→7)</li>
+<li><strong>Import</strong>: via <code>skill-import</code> (fetch → convert → audit → register)</li>
+<li><strong>Publish</strong>: via conventional commit + quality gate validation</li>
+<li><strong>Personal</strong>: via symlink (gitignored, not in marketplace)</li>
+</ul>
+<h4>1.3 Runtime Environment</h4>
+<ul>
+<li>Skills execute within <strong>Claude Code</strong> (CLI) and <strong>OpenCode</strong> (GUI) environments</li>
+<li>OpenCode installation: git plugin + project-level symlink</li>
+<li>Claude Code: local marketplace via <code>extraKnownMarketplaces</code></li>
+<li>Skills can be triggered via trigger keywords defined in skill frontmatter</li>
+</ul>
+<hr>
+<h3>Key Interfaces / APIs</h3>
+<h4>2.1 SKILL.md Frontmatter Format (5-field)</h4>
+<p>All skills must have exactly these five frontmatter fields:</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Field</th>
+<th>Description</th>
+<th>Rules</th>
+</tr></thead><tbody>
+<tr>
+<td><code>name</code></td>
+<td>Skill name</td>
+<td>kebab-case; walter-worker- prefix for native/personal</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>One-line purpose</td>
+<td>Must start with &quot;Use when...&quot;</td>
+</tr>
+<tr>
+<td><code>license</code></td>
+<td>License type</td>
+<td>Default: MIT</td>
+</tr>
+<tr>
+<td><code>compatibility</code></td>
+<td>Compatible platforms</td>
+<td>Default: &quot;opencode, claude-code&quot;</td>
+</tr>
+<tr>
+<td><code>trigger</code></td>
+<td>Activation keywords</td>
+<td>Comma-separated; inferred from description+body</td>
+</tr>
+</tbody></table></div>
+<p><strong>Example:</strong></p>
+<pre><code>---
+name: walter-worker-dev-advocate
+description: Use when you need adversarial review of specs or design docs
+license: MIT
+compatibility: opencode, claude-code
+trigger: review spec, 杠精, devil advocate, adversarial review
+---</code></pre>
+<h4>2.2 META.yaml Schema (Import Only)</h4>
+<p>Required for every imported skill in <code>import-skills/</code>:</p>
+<pre><code>source: &lt;URL or repo&gt;                     # Required
+upstream_commit: &lt;commit hash&gt;            # Required
+license: &lt;SPDX identifier&gt;               # Required
+imported_at: &lt;ISO 8601 timestamp&gt;         # Required
+imported_by: &lt;author/github handle&gt;       # Required
+note: &lt;free text&gt;                         # Optional</code></pre>
+<h4>2.3 Skill Workflow Interfaces</h4>
+<h5>2.3.1 <code>skill-create</code> (Self-Bootstrapping Process)</h5>
+<p><strong>Entry</strong>: No target exists   <strong>Phases</strong>:</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Phase</th>
+<th>Action</th>
+<th>Output</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>Multi-source search (GitHub ≥10 repo results, web search)</td>
+<td>Decision: import / absorb inspiration / build from scratch</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Interview (user role simulation)</td>
+<td>Requirements</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Build SKILL.md following 5-field frontmatter + CONVENTIONS.md body</td>
+<td>Draft SKILL.md (≤150 lines)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Precision &amp; Examples with legal-clause bounds + 2-3 example spectrum</td>
+<td>Refined SKILL.md</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Quality gates validation + commit + publish</td>
+<td>Final SKILL.md</td>
+</tr>
+</tbody></table></div>
+<p><strong>Quality Gates (MUST — block commit)</strong>:</p>
+<ul>
+<li><code>description ≤ 500 characters</code></li>
+<li><code>Body &lt; 150 lines</code> (hardened from 500)</li>
+<li><code>No deploy/ concept</code> (prevent invalid structures)</li>
+<li><code>Quality Gates section present with MUST/NICE checkboxes</code></li>
+<li><code>Anti-Patterns section present</code></li>
+<li><code>Philosophy-driven overview</code></li>
+</ul>
+<p><strong>Quality Gates (NICE — warn only)</strong>:</p>
+<ul>
+<li><code>description ≤ 500 chars</code></li>
+<li><code>Anti-Patterns section present</code></li>
+<li><code>Quality Gates section present</code></li>
+<li><code>Philosophy-driven overview</code></li>
+<li><code>Body &lt; 150 lines</code></li>
+</ul>
+<h5>2.3.2 <code>skill-edit</code> (Modification Workflow)</h5>
+<p><strong>Entry</strong>: Target exists and change &lt; 80% rewrite   <strong>Steps</strong>:</p>
+<ol>
+<li><strong>Check existence</strong>: If not exists → redirect to <code>skill-create</code></li>
+<li><strong>Fetch source</strong>: Use <code>webfetch</code> (preferred) or <code>curl</code></li>
+<li><strong>Assess scope</strong>: If ≥80% rewrite → redirect to <code>skill-create</code></li>
+<li><strong>Present diff summary</strong> → get user approval</li>
+<li><strong>Make targeted edits</strong> (Edit tool only, never Write entire file, never create new file)</li>
+<li><strong>Run quality gates</strong> (MUST gates block commit)</li>
+<li><strong>Publish</strong> with conventional commit message</li>
+</ol>
+<h5>2.3.3 <code>skill-import</code> (Third-Party Conversion)</h5>
+<p><strong>Entry</strong>: External source URL/repo   <strong>Steps</strong>:</p>
+<ol>
+<li><strong>Fetch source</strong> SKILL.md using webfetch/curl</li>
+<li><strong>Auto-convert frontmatter</strong>:</li>
+</ol>
+<ul>
+<li><code>name</code> → kebab-case</li>
+<li><code>description</code> → begins with &quot;Use when...&quot;</li>
+<li><code>license</code> → MIT (default)</li>
+<li><code>compatibility</code> → &quot;opencode, claude-code&quot; (default)</li>
+<li><code>triggers</code> → inferred from description and body</li>
+</ul>
+<ol>
+<li><strong>Auto-adapt body sections</strong>:</li>
+</ol>
+<ul>
+<li>Philosophy → overview</li>
+<li>Anti-Pattern → Anti-Patterns</li>
+<li>Workflow → Process</li>
+<li>Checklist → Quality Gates</li>
+<li>Remove: Changelog, Convention Notes</li>
+</ul>
+<ol>
+<li><strong>Write META.yaml</strong> with source, upstream_commit, license, imported_at, imported_by</li>
+<li><strong>Place in</strong> <code>import-skills/&lt;name&gt;/SKILL.md</code></li>
+<li><strong>Validate quality gates</strong> → commit</li>
+</ol>
+<p><strong>Ambiguity Triggers</strong>: Ask user one question at a time only when:</p>
+<ul>
+<li>No license specified</li>
+<li>Triggers are unclear</li>
+<li>Unknown body section encountered</li>
+</ul>
+<h5>2.3.4 <code>devil-advocate</code> (Adversarial Review)</h5>
+<p><strong>Architecture</strong>: Main agent orchestration with 3 stateless subagents per round   <strong>Process</strong>:</p>
+<ol>
+<li>Con agent → presents arguments against</li>
+<li>Pro agent → defends position</li>
+<li>Judge agent → summarizes and identifies unresolved points</li>
+<li><strong>Limit</strong>: Max 5 rounds; unresolved points resolved by 3-agent majority vote</li>
+</ol>
+<p><strong>Output</strong>: <code>{project-path}/docs/devil-advocate/YYYY-MM-DD-&lt;topic&gt;/</code></p>
+<ul>
+<li><code>discussion.md</code> — full debate transcript</li>
+<li><code>report.md</code> — human-readable summary</li>
+</ul>
+<p><strong>Triggers</strong>: <code>review spec</code>, <code>杠精</code>, <code>devil advocate</code>, <code>adversarial review</code></p>
+<h5>2.3.5 <code>work-review</code> (Acceptance Gatekeeper)</h5>
+<p><strong>Architecture</strong>: Sequential 2-agent (Collector → Reviewer), no auto-retry   <strong>Agent 1 (Collector)</strong>:</p>
+<ul>
+<li>Writes test plan (scenarios, types, steps)</li>
+<li><strong>Does NOT</strong> write executable test code</li>
+</ul>
+<p><strong>Agent 2 (Reviewer)</strong>:</p>
+<ul>
+<li>Executes test plan</li>
+<li>Runs existing UT/FT</li>
+<li>Writes Playwright tests for E2E</li>
+<li>Uses curl/httpie for manual tests</li>
+<li>Validates each acceptance criterion</li>
+</ul>
+<p><strong>Output</strong>: <code>{project-path}/docs/work-review/YYYY-MM-DD-&lt;topic&gt;/</code></p>
+<ul>
+<li><code>acceptance.md</code> — test plan</li>
+<li><code>report.md</code> — execution results</li>
+</ul>
+<p><strong>Triggers</strong>: <code>work review</code>, <code>acceptance</code>, <code>sign off</code>, <code>verify work</code></p>
+<hr>
+<h3>Data Models / Schemas</h3>
+<h4>3.1 Skill Definition (SKILL.md)</h4>
+<p><strong>Structure</strong>:</p>
+<pre><code>---
+name: &lt;string&gt;                        # 5-field frontmatter
+description: &lt;string&gt;                 # Must start &quot;Use when...&quot;
+license: &lt;string&gt;                     # Default: MIT
+compatibility: &lt;string&gt;               # Default: &quot;opencode, claude-code&quot;
+trigger: &lt;string&gt;                     # Comma-separated
+---
+
+# Overview
+&lt;philosophy-driven description&gt;        # Mapped from Philosophy
+
+## Process
+&lt;workflow description&gt;                 # Mapped from Workflow
+
+## Anti-Patterns
+- &lt;list of common mistakes&gt;           # Required section
+
+## Quality Gates
+### MUST (block)
+- [ ] &lt;gate description&gt;
+### NICE (warn)
+- [ ] &lt;gate description&gt;</code></pre>
+<p><strong>Constraints</strong>:</p>
+<ul>
+<li>Body (excluding frontmatter): ≤150 lines (target; soft limit)</li>
+<li>File must end with newline</li>
+</ul>
+<h4>3.2 Import Metadata (META.yaml)</h4>
+<pre><code>source: &lt;url&gt;
+upstream_commit: &lt;
+
+## Skill Consolidation (2026-08-02)
+
+# Skill Consolidation Spec
+
+&gt; **Status:** design approved, pending implementation
+&gt; **Date:** 2026-08-02
+
+## Goal
+
+Reduce walter-worker-skills from 38 to 13 by merging skills that are near-duplicates,
+complementary, or naturally grouped. Each merged skill uses conversation-driven
+branching (Option A pattern): ask clarifying questions upfront, then route to the
+right logic path.
+
+## Principles
+
+1. **Merge logic, don&#x27;t just stack** — genuinely fuse the workflows; when they
+   differ, branch on parameters/conditions.
+2. **Ask first** — every merged skill starts by asking what the user wants,
+   presents options, then branches.
+3. **Severity gate for reviews** — `doc-review` uses a 5-point severity scale;
+   only level 3+ issues are discussed. Level 1-2 issues are skipped to avoid
+   bikeshedding and over-engineering.
+4. **Simple subcommands for CRUD sets** — `/initiative`, `/project`, `/skill`,
+   `/dashboard` accept subcommands directly (like git).
+
+## Merge Map
+
+### Category 3 — Natural CRUD Sets (subcommand-driven)
+
+| # | Merged Name | Subcommands | Absorbed | Reduction |
+|---|-------------|------------|----------|-----------|
+| 1 | **`/initiative`** | `create`, `edit`, `activate`, `deactivate`, `list`, `show`, `delete` | initiative-create, initiative-edit, initiative-activate, initiative-deactivate, initiative-list, initiative-show, initiative-remove (7) | -6 |
+| 2 | **`/dashboard`** | `start [--daemon]`, `import [--files]`, `stop` | analytics-create-db, analytics-daemon, analytics-dashboard, analytics-import, analytics-once (5) | -4 |
+| 3 | **`/project`** | `add`, `edit`, `remove`, `list`, `show`, `sync` | project-add, project-edit, project-remove, project-list, project-show, project-sync (6) | -5 |
+| 4 | **`/skill`** | `create`, `edit`, `import`, `list` | skill-create, skill-edit, skill-import, skill-list (4) | -3 |
+
+### Category 1 — Near-Duplicates (conversation-branch)
+
+| # | Merged Name | Branches | Absorbed | Reduction |
+|---|-------------|----------|----------|-----------|
+| 5 | **`/doc-review`** | `design review` (adversarial stress-test for specs/designs) / `work completion review` (acceptance check against PRD/design) | devil-advocate, contrarian-review, work-review (3) | -2 |
+| 6 | **`/bug`** | `hunt` (scientific debug: hypothesis→test→fix) / `report` (file GitHub issue) / `heal` (record correction → analyze patterns → generate prevention rules) | bug-hunt, bug-report, self-analyze, self-heal (4) | -3 |
+
+### Category 2 — Complementary (auto-detect + branch)
+
+| # | Merged Name | Branches | Absorbed | Reduction |
+|---|-------------|----------|----------|-----------|
+| 7 | **`/doc-organize`** | `organize` (decide placement/naming/maintain INDEX.md) / `merge` (resolve upstream sync conflicts with protected blocks) | doc-merge, doc-organize (2) | -1 |
+| 8 | **`/knowledge`** | `obsidian vault` (extract memory cards from sessions → Obsidian) / `sqlite analytics` (LLM analysis → session_summaries + knowledge cards → analytics.db) | session-memory, knowledge-skill (2) | -1 |
+| 9 | **`/auto-tdd`** | `basic` (red-green-refactor from imported tdd) / `auto` (multi-agent continuous TDD loop with arbiter + quality judge) | auto-tdd, tdd (import) (2) | -1 |
+| 10 | **`/research`** | `discover unknowns` (interview-style, surface blind spots before coding) / `design spec` (brainstorming → design → spec → transition to plan) | find-my-unknown, superpowers:brainstorming (2) | -1 |
+
+### Independent — No Merge
+
+| Skill | Reason |
+|-------|--------|
+| `english-grammar-fix` | Pure utility, no overlap with anything |
+| `multi-model-team` | Unique multi-model architecture, distinct workflow |
+| `status` | Simple CLI passthrough, just runs `coworker status` |
+
+## Internal Structure (Option A Pattern)
+
+Each merged SKILL.md follows this structure (illustrative — not the actual content):
+</code></pre>
+<hr>
+<p>name: example-skill description: Use when the user wants to ... (describe trigger, not workflow) --- ...</p>
+<h3>Dashboard Merge Detail</h3>
+<p>5 → 1: <code>/dashboard [start|import|stop]</code></p>
+<div class="table-wrap"><table><thead><tr>
+<th>Subcommand</th>
+<th>Behavior</th>
+</tr></thead><tbody>
+<tr>
+<td><code>start</code> (default)</td>
+<td>Launch web dashboard on localhost:8080. DB auto-created if missing. <code>--daemon</code> flag enables background auto-import</td>
+</tr>
+<tr>
+<td><code>import</code></td>
+<td>One-shot scan and import. <code>--files &lt;paths&gt;</code> for specific files</td>
+</tr>
+<tr>
+<td><code>stop</code></td>
+<td>Stop the daemon if running</td>
+</tr>
+</tbody></table></div>
+<p><code>analytics-create-db</code> is removed — DB creation happens automatically on first use. <code>analytics-once</code> and <code>analytics-import</code> are merged — <code>import</code> without <code>--files</code> does a full scan.</p>
+<h3>Files Changed</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>File</th>
+<th>Change</th>
+</tr></thead><tbody>
+<tr>
+<td><code>walter-worker-skills/initiative/SKILL.md</code></td>
+<td>New merged skill (replaces 7)</td>
+</tr>
+<tr>
+<td><code>walter-worker-skills/dashboard/SKILL.md</code></td>
+<td>New merged skill (replaces 5)</td>
+</tr>
+<tr>
+<td><code>walter-worker-skills/project/SKILL.md</code></td>
+<td>New merged skill (replaces 6)</td>
+</tr>
+<tr>
+<td><code>walter-worker-skills/skill/SKILL.md</code></td>
+<td>New merged skill (replaces 4)</td>
+</tr>
+<tr>
+<td><code>walter-worker-skills/doc-review/SKILL.md</code></td>
+<td>New merged skill (replaces 3)</td>
+</tr>
+<tr>
+<td><code>walter-worker-skills/doc-organize/SKILL.md</code></td>
+<td>Merged skill (replaces 2)</td>
+</tr>
+<tr>
+<td><code>walter-worker-skills/bug/SKILL.md</code></td>
+<td>New merged skill (replaces 4)</td>
+</tr>
+<tr>
+<td><code>walter-worker-skills/knowledge/SKILL.md</code></td>
+<td>Merged skill (replaces 2)</td>
+</tr>
+<tr>
+<td><code>walter-worker-skills/auto-tdd/SKILL.md</code></td>
+<td>Merged skill (replaces 2)</td>
+</tr>
+<tr>
+<td><code>walter-worker-skills/research/SKILL.md</code></td>
+<td>New merged skill (replaces 2)</td>
+</tr>
+</tbody></table></div>
+<p>Old skill directories to delete: 35 total (38 - 3 independents kept + import-skills/tdd).</p>
+<h3>Out of Scope (personal-skills)</h3>
+<p><code>personal-skills/</code> consolidation is deferred to a separate round. The two YouTube skills (<code>youtube-research-pipeline</code> + <code>youtube-summarize</code> → <code>/youtube</code>) are noted but not touched in this round.</p>
+<h3>Design — Project</h3>
+<p>好的，根据您提供的完整开发历史记录，我为您整理并撰写了《skill-factory Design》技术设计文档。</p>
+<hr>
+<h2>skill-factory Design</h2>
+<h3>高层次架构 (High-level Architecture)</h3>
+<p><code>skill-factory</code> 是一个<strong>元技能工厂 (Metaskill Factory)</strong>，旨在系统化地创建、导入、编辑和管理 AI Coworker 技能。其架构核心是一个<strong>自举 (Self-Bootstrapping)</strong> 系统：核心技能 <code>skill-create</code> 既是工厂的工具也是工厂的产品，确保了全系统质量标准的一致性。</p>
+<h4>1.1 物理目录结构</h4>
+<p>项目采用三层平级目录结构，严格区分技能来源和可见性，避免语义混叠：</p>
+<pre><code>&lt;project-root&gt;/
+├── walter-worker-skills/    # 工厂原生、官方维护的技能。文件名匹配的 SKILL.md 前导元数据 (name) 带 `walter-worker-` 前缀。
+├── import-skills/         # 从第三方导入的技能。保留原名，不添加前缀。强制要求 META.yaml 文件以记录归因信息。
+└── personal-skills/       # 用户个人私有的技能。同样带 `walter-worker-` 前缀。该目录被 .gitignore 忽略，不纳入版本控制。</code></pre>
+<p>此结构基于用户明确的 “三个独立目录” 要求，解决了原仓库结构混乱的问题。</p>
+<h4>1.2 自举系统 (Bootstrapping System)</h4>
+<p>系统通过 <code>skill-create</code> 作为入口，遵循标准化的 5 阶段流程 (Phase 0 -&gt; 1 -&gt; 2 -&gt; 3 -&gt; 4) 创建任何新技能。当 <code>skill-edit</code> 检测到目标技能不存在或修改量达到 80% 时，系统会重定向回 <code>skill-create</code>，从而保证所有技能的构建源头一致。</p>
+<h4>1.3 安装与市场策略</h4>
+<ul>
+<li><strong>Claude Code</strong>: 使用原生 <code>extraKnownMarketplaces</code> 机制进行安装，通常以 Git 仓库形式提供。</li>
+<li><strong>OpenCode</strong>: 采用 Git plugin 结合项目级别符号链接 (symlink) 的方式，以支持其非原生的 Marketplace 环境。</li>
+<li><strong>Personal Skills</strong>: 仅通过符号链接激活，且位于 <code>.gitignore</code> 保护的目录内，保证隐私性。</li>
+</ul>
+<h3>使用的设计模式 (Design Patterns Used)</h3>
+<p>项目从开发过程中提炼并固化了一套模式语言：</p>
+<ol>
+<li><strong>多智能体编排 (Multi-Agent Orchestration)</strong>:</li>
+</ol>
+<ul>
+<li><strong>对抗性审查 (Devil’s Advocate / Contrarian Review)</strong>: 使用多个有状态的 Agent (如 “反对者 Con”、“支持者 Pro”、“评判者 Judge”) 进行辩论。通过 “多数投票” 机制终结无限循环。</li>
+<li><strong>流水线审查 (Work Review)</strong>: 采用 “收集者 (Collector) -&gt; 审查者 (Reviewer)” 的顺序无状态 Agent 模式，实现关注点分离和清晰的执行链路。</li>
+</ul>
+<ol>
+<li><strong>模拟交互式访谈 (Simulated Interactive Interview)</strong>:</li>
+</ol>
+<ul>
+<li>在 Phase 1 阶段，不进行真人对话，而是将用户需求预置为 “答案” 输入给系统，模拟访谈过程，从而在全自动化流程中生成标准化的技能需求规格。</li>
+</ul>
+<ol>
+<li><strong>门禁系统 (Q-Gate / Quality Gates)</strong>:</li>
+</ol>
+<ul>
+<li>定义了 <code>MUST</code> (阻止提交) 和 <code>NICE</code> (仅警告) 两级质量门禁。这是将 “不可妥协的质量标准” 代码化并强制执行的核心模式。</li>
+</ul>
+<ol>
+<li><strong>元数据驱动导入 (Metadata-Driven Import)</strong>:</li>
+</ol>
+<ul>
+<li>强制为每个 <code>import-skills</code> 下的技能创建 <code>META.yaml</code> 文件，记录 <code>source</code>、<code>upstream_commit</code>、<code>license</code> 等字段。这是实现知识溯源和开源合规性的关键模式。</li>
+</ul>
+<ol>
+<li><strong>标准化文件模板 (Standardized Frontmatter &amp; Body)</strong>:</li>
+</ol>
+<ul>
+<li>所有技能使用统一的 5 字段前导元数据 (opencode 格式) 和固定的 Body 结构 (<code>Overview</code>, <code>Workflow</code>, <code>Anti-Patterns</code>, <code>Quality Gates</code>)。导入工具会自动执行从其他格式到本模板的映射。</li>
+</ul>
+<h3>技术选择与理由 (Technology Choices and Rationale)</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>技术/工具 / 决策</th>
+<th>理由</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>Git</strong></td>
+<td>所有设计决策落地的唯一版本控制工具。所有代码、文档变更均可追溯。</td>
+</tr>
+<tr>
+<td><strong>opencode &amp; Claude Code</strong></td>
+<td>作为 AI 编程工具的运行时环境。项目决策明确针对这两种工具的安装机制（Marketplace vs Symlink）进行了区分处理。</td>
+</tr>
+<tr>
+<td><strong>Playwright, curl/httpie</strong></td>
+<td>作为 <code>skill-review</code> 中的自动化测试执行器。Playwright 用于 E2E (浏览器自动化测试)，curl/httpie 用于手动或 API 测试。</td>
+</tr>
+<tr>
+<td><strong>SKILL.md + META.yaml</strong></td>
+<td><code>SKILL.md</code> 是技能的定义和执行文件，由 AI Agent 解析和执行。<code>META.yaml</code> 是结构化的、可由 CI 验证的元数据文件，专门用于处理第三方技能导入后的合规性问题。</td>
+</tr>
+<tr>
+<td><strong>Whisper (本地 GPU)</strong></td>
+<td>音频转文字 (<code>transcribe-audio</code>) 时采用，强调本地化处理与数据安全。</td>
+</tr>
+<tr>
+<td><strong>Webfetch (首选) / curl (备选)</strong></td>
+<td>技能 <code>skill-import</code> 中用于获取远程 <code>SKILL.md</code> 内容的统一入口，<code>webfetch</code> 能更好地融入 AI 工作流，<code>curl</code> 作为备选以防不兼容。</td>
+</tr>
+</tbody></table></div>
+<h3>数据流与服务拓扑 (Data Flow and Service Topology)</h3>
+<h4>4.1 技能创建流程 (Skill Creation Flow)</h4>
+<pre class="mermaid">graph TD
+    User[User Request] --&gt; Phase0[Phase 0: Research]
+    Phase0 --&gt; |GitHub Search, Web Search| SearchResults[External Inspiration]
+    Phase0 --&gt; Decision{Decision Branch}
+    Decision --&gt; |Import| ImportProcess[Run skill-import]
+    Decision --&gt; |Get Inspired| Phase1
+    Decision --&gt; |Build| Phase1
+
+    subgraph Core Pipeline
+        Phase1[Phase 1: Interview] --&gt; |Simulated| Requirements[Structured Requirements]
+        Requirements --&gt; Phase2[Phase 2: Build]
+        Phase2 --&gt; |Creates| SKILL_md[SKILL.md]
+        SKILL_md --&gt; Phase3[Phase 3: Precision &amp; Examples]
+        Phase3 --&gt; Phase4[Phase 4: Commit]
+        Phase4 --&gt; |Quality Gates| Pass{Pass?}
+        Pass -- Yes --&gt; FinalCommit[Commit &amp; Publish]
+        Pass -- No --&gt; Reprocess[Further Refinement]
+        Reprocess --&gt; Phase2
+    end
+
+    FinalCommit --&gt; SkillRepo[Target Skill Directory]</pre>
+<h4>4.2 服务拓扑 (Service Topology)</h4>
+<ul>
+<li><strong>入口</strong>: 通过 <code>opencode</code> 或 <code>Claude Code</code> 的 CLI 配置触发对应的 skill。</li>
+<li><strong>调度器</strong>: 技能的 <code>Process</code> / <code>Workflow</code> 部分定义了 Agent 编排逻辑。</li>
+<li><strong>技能工厂 (Core Meta-Skills)</strong>:</li>
+<li><strong><code>skill-create</code></strong>: 控制器，驱动 Phase Pipeline。</li>
+<li><strong><code>skill-edit</code></strong>: 重定向器，判断是编辑还是重导向至 <code>skill-create</code>。</li>
+<li><strong><code>skill-import</code></strong>: 转换器 (Adapter)，负责获取外部内容并映射为内部标准格式。</li>
+<li><strong>执行技能 (Application Skills)</strong>:</li>
+<li><strong><code>devil-advocate</code></strong>: 多 Agent 辩论系统，输出 <code>discussion.md</code> 和 <code>report.md</code>。</li>
+<li><strong><code>work-review</code></strong>: 双 Agent 验证系统，输出 <code>acceptance.md</code> 和 <code>report.md</code>。</li>
+<li><strong>其他技能</strong>: 处理特定领域问题（如 <code>youtube-summarize</code>, <code>luma-event-scout</code> 等）。</li>
+</ul>
+<h4>4.3 数据转换：导入管线 (Data Flow: Import Pipeline)</h4>
+<pre><code>External SKILL.md
+      ↓ (step 2: webfetch / curl)
+Mapper (skill-import)
+      ↓ (Frontmatter Conversion)
+      1. name → kebab-case
+      2. description → starts with &quot;Use when...&quot;
+      3. defaults: license=MIT, compatibility=&#x27;opencode, claude-code&#x27;
+      ↓ (Body Section Mapping)
+      Philosophy → overview
+      Anti-Pattern → Anti-Patterns
+      Workflow → Process
+      Checklist → Quality Gates
+      ↓ (Remove: Changelog, Convention Notes)
+      ↓ (Metadata Injection)
+Internal SKILL.md + META.yaml (source, upstream_commit, etc.)
+      ↓ (Output)
+import-skills/&lt;topic&gt;/ directory</code></pre>
+<h3>关键权衡与选型原因 (Key Trade-offs and Why Specific Approaches Were Chosen)</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>权衡点</th>
+<th>选择</th>
+<th>理由</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>线数限制 vs 内容完整性</strong></td>
+<td>在某些情况下，优先保证内容完整性，软限制 150 行。<code>skill-import</code> 预期为 186 行。</td>
+<td>CONVENTIONS.md 的线数限制是 “NICE” 级门禁。对于导入或特定复杂技能，强制删除必要信息会降低技能质量。</td>
+</tr>
+<tr>
+<td><strong>实时真人访谈 vs 模拟访谈 vs 跳过</strong></td>
+<td>多数场景下选择 “模拟访谈 (Simulated Interview)” 或 “跳过 (Skip)”。</td>
+<td>实时真人访谈会严重拖慢自动化流程。在需求由用户明确提出的情况下，跳过最为高效。模拟访谈则保证了流程的统一性。</td>
+</tr>
+<tr>
+<td><strong>扁平 vs 嵌套 SKILL.md 结构</strong></td>
+<td>倾向于扁平化结构 (<code>skills/&lt;name&gt;/SKILL.md</code>)。</td>
+<td>测试表明两者均兼容。扁平化结构在路径上更简单，减少了目录深度和潜在混乱。</td>
+</tr>
+<tr>
+<td><strong>目录重命名 vs 前缀命名</strong></td>
+<td>保留原文件夹名，仅在前导元数据中添加 <code>walter-worker-</code> 前缀。</td>
+<td>这是用户为避免大规模 git 文件重命名操作而做出的直接指示，仅修改了元数据层的显示逻辑。</td>
+</tr>
+<tr>
+<td><strong>单次询问 vs 批量解决歧义</strong></td>
+<td>在 <code>skill-import</code> 中，对于歧义（如无许可协议、不明触发器）采用 “一次只问一个问题” 的策略。</td>
+<td>这是用户明确要求，旨在最小化交互中断次数，同时确保关键决策点的准确性。</td>
+</tr>
+</tbody></table></div>
+<h3>Design — devil-advocate</h3>
+<h2>walter-worker-devil-advocate Design</h2>
+<p>Date: 2026-06-11</p>
+<h3>Goal</h3>
+<p>Create a skill that stress-tests specs, design docs, and proposals through structured adversarial debate. Three AI agents (con, pro, judge) engage in multi-round debate, with a majority-vote fallback when consensus cannot be reached.</p>
+<h3>Use Case</h3>
+<p>Primary: review spec/design docs to discover hidden assumptions, missing edge cases, and risks before implementation.</p>
+<p>Trigger: user provides a spec, design doc, or proposal file. Pro stance defaults to &quot;this document is reasonable&quot; — no manual stance specification needed.</p>
+<h3>Output</h3>
+<p>Terminal: round-by-round summary + final conclusion + key risk highlights.</p>
+<p>Files:</p>
+<pre><code>{project-path}/docs/devil-advocate/YYYY-MM-DD-&lt;topic&gt;/
+├── discussion.md    # Full debate record: per-round arguments, judge rulings, unresolved items
+└── report.md        # Final summary: consensus items, key risks, actionable findings (human-readable)</code></pre>
+<h3>Architecture</h3>
+<p>Main-agent orchestrated pattern (follows skill-factory bootstrap Agent-A/B/C model). The driving agent maintains round state, unresolved issues, and termination conditions.</p>
+<pre><code>User provides spec/doc
+  │
+  ├── Phase 1: Prepare
+  │     - Read document
+  │     - Create output directory
+  │     - Initialize discussion.md with metadata
+  │
+  ├── Phase 2: Debate (max 5 rounds)
+  │     ┌── Per-round:
+  │     ├── Con agent (Task subagent)
+  │     │     Input: original doc + previous round unresolved items
+  │     │     Output: structured arguments against the doc
+  │     ├── Pro agent (Task subagent)
+  │     │     Input: original doc + con arguments
+  │     │     Output: counter-arguments + defense of the doc
+  │     ├── Judge agent (Task subagent)
+  │     │     Input: both sides&#x27; arguments
+  │     │     Output: consensus items + rulings + unresolved items
+  │     └── Unresolved &gt; 0 and round &lt; 5 → next round
+  │
+  ├── Phase 3: Vote (only if unresolved after 5 rounds)
+  │     - 3 agents vote per unresolved item
+  │     - Majority decides; tie → marked &quot;unresolved&quot;
+  │
+  └── Phase 4: Output
+        - Append final vote results to discussion.md
+        - Generate report.md (summary for humans)
+        - Print key findings to terminal</code></pre>
+<h4>Con Agent</h4>
+<p>Stance: attacks the document. Challenges assumptions, completeness, feasibility, risks, and simpler alternatives.</p>
+<p>Analysis dimensions:</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Dimension</th>
+<th>Check</th>
+</tr></thead><tbody>
+<tr>
+<td>Assumptions</td>
+<td>What implicit assumptions does the doc make? Are they reliable?</td>
+</tr>
+<tr>
+<td>Completeness</td>
+<td>Missing scenarios, edge cases, error handling, failure modes?</td>
+</tr>
+<tr>
+<td>Feasibility</td>
+<td>Is the technical approach viable? Are dependencies stable?</td>
+</tr>
+<tr>
+<td>Risks</td>
+<td>Security, performance, maintainability concerns?</td>
+</tr>
+<tr>
+<td>Alternatives</td>
+<td>Are simpler solutions ignored? (YAGNI attack)</td>
+</tr>
+</tbody></table></div>
+<p>Each argument must include:</p>
+<ul>
+<li><strong>Evidence</strong>: quote doc line numbers, external sources, similar case studies</li>
+<li><strong>Impact</strong>: severity rating (high/medium/low)</li>
+</ul>
+<h4>Pro Agent</h4>
+<p>Stance: defends the document. Reads con&#x27;s arguments, accepts valid criticism, refutes flawed arguments, supplements with supporting evidence.</p>
+<p>Each response must include:</p>
+<ul>
+<li><strong>Accept/Refute</strong>: clear stance per con argument</li>
+<li><strong>Counter-evidence</strong>: new evidence gathered from files, web, or docs</li>
+</ul>
+<h4>Judge Agent</h4>
+<p>Stance: neutral evaluator. Assesses argument quality, identifies consensus, rules on disputes.</p>
+<p>Ruling criteria:</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Ruling</th>
+<th>Condition</th>
+</tr></thead><tbody>
+<tr>
+<td>Con wins</td>
+<td>Argument has solid evidence, pro cannot effectively refute</td>
+</tr>
+<tr>
+<td>Pro wins</td>
+<td>Pro provides stronger counter-evidence</td>
+</tr>
+<tr>
+<td>Deferred</td>
+<td>Both sides&#x27; evidence is comparable, needs next round</td>
+</tr>
+</tbody></table></div>
+<p>Output: structured ruling (consensus list + ruling list + unresolved list).</p>
+<h4>Voting Phase (Phase 3)</h4>
+<p>Triggered only when 5 rounds complete with unresolved items.</p>
+<ol>
+<li>Driving agent dispatches one Task subagent per unresolved item</li>
+<li>Each subagent votes: Con / Pro / Abstain</li>
+<li>Majority decides the ruling direction</li>
+<li>Tie → marked &quot;unresolved&quot; in report</li>
+<li>Results appended to discussion.md and report.md</li>
+</ol>
+<h3>Skill Structure</h3>
+<p>File: <code>walter-worker-skills/devil-advocate/SKILL.md</code></p>
+<p>Frontmatter:</p>
+<pre><code>---
+name: walter-worker-devil-advocate
+description: |
+  Use when reviewing a spec, design doc, or proposal that needs
+  adversarial stress-testing. Use when you want to find hidden
+  assumptions, missing edge cases, or risks before implementation.
+license: MIT
+compatibility: opencode
+metadata:
+  triggers:
+    - review spec
+    - review design
+    - devil advocate
+    - stress test
+    - adversarial review
+    - 杠精
+  when_to_use: |
+    When a spec, design doc, or proposal needs rigorous adversarial
+    review before implementation. When hidden assumptions, risks,
+    or missing edge cases need to be discovered.
+  when_not_to_use: |
+    For simple changes that don&#x27;t warrant structured debate. For
+    reviews where all stakeholders are already aligned. For code
+    reviews (use walter-worker-issue-report instead).
+---</code></pre>
+<p>Body sections:</p>
+<ul>
+<li>Overview + When to Use / When NOT to Use</li>
+<li>Process: Phase 1 (Prepare), Phase 2 (Debate rounds), Phase 3 (Vote), Phase 4 (Output)</li>
+<li>Agent prompts: Con dimensions, Pro response format, Judge ruling criteria</li>
+<li>Quality Gates</li>
+<li>Anti-Patterns</li>
+</ul>
+<h3>Quality Gates</h3>
+<h4>MUST</h4>
+<ul>
+<li>[ ] Frontmatter 5 fields complete</li>
+<li>[ ] name matches folder name (walter-worker-devil-advocate)</li>
+<li>[ ] description starts with &quot;Use when...&quot;</li>
+<li>[ ] No workflow summary in description</li>
+<li>[ ] No references to non-existent skills or directories</li>
+<li>[ ] No concrete-context leaks</li>
+<li>[ ] No TBD/TODO placeholders</li>
+<li>[ ] Phase 2 round limit explicit (max 5)</li>
+<li>[ ] All 3 agent roles defined (con, pro, judge)</li>
+<li>[ ] Output path convention specified ({project-path}/docs/devil-advocate/)</li>
+</ul>
+<h4>NICE</h4>
+<ul>
+<li>[ ] Body &lt; 150 lines</li>
+<li>[ ] Anti-Patterns section present</li>
+<li>[ ] Con analysis dimensions documented as a table</li>
+<li>[ ] Judge ruling criteria documented as a table</li>
+<li>[ ] Sources section present</li>
+</ul>
+<h3>Sources</h3>
+<ul>
+<li>User requirement: 3-agent debate with con/pro/judge roles, max 5 rounds, majority-vote fallback</li>
+<li>skill-factory/CONVENTIONS.md: project-wide skill conventions</li>
+<li>skill-factory bootstrap design: Agent-A/B/C multi-subagent pattern</li>
+<li>User-confirmed: auto-review mode, both terminal + file output, primary use case is spec/design review</li>
+</ul>
+<h3>Design — work-review</h3>
+<h2>walter-worker-work-review Design</h2>
+<p>Date: 2026-06-12</p>
+<h3>Goal</h3>
+<p>A gatekeeper skill that reviews completed work against synthesized acceptance criteria. Agent 1 collects docs and writes a test plan (no code). Agent 2 executes the test plan (writing code if needed, running existing tests, running Playwright) and either signs off or produces a rejection report for external workers to fix.</p>
+<h3>Architecture</h3>
+<pre><code>User provides: scope/design/PRD/plan paths + base branch
+  │
+  ├── Phase 1: Agent 1 (Collector) — Task subagent
+  │     1. Read all docs
+  │     2. Search GitHub issues (repo, keyword-filtered)
+  │     3. Read git log (commits after base branch)
+  │     4. Read test directory structure
+  │     5. Synthesize → acceptance.md:
+  │        - Acceptance Criteria (MUST/SHOULD/NICE) with source tracing
+  │        - Test Plan (E2E/UT/FT/Manual, steps/assertions, no code)
+  │        - Regression Guard (existing features that must not break)
+  │
+  └── Phase 2: Agent 2 (Reviewer) — Task subagent
+        1. Read acceptance.md and original docs
+        2. Execute Test Plan:
+           - Existing tests (UT/FT): run dev&#x27;s test suite
+           - E2E: write Playwright scripts, start dev server, run
+           - No tests: curl/httpie/script verification
+        3. Check: git diff coverage, file changes, regression
+        4. Outcome:
+           - FAIL/MISSING/BREAK → write report.md (rejection)
+           - ALL PASS → write report.md (signed), mark acceptance.md [SIGNED]</code></pre>
+<h3>Acceptance Criteria Synthesis</h3>
+<p>Agent 1 derives criteria from each source:</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Source</th>
+<th>Derivation</th>
+</tr></thead><tbody>
+<tr>
+<td>PRD</td>
+<td>Functional requirements → MUST criteria</td>
+</tr>
+<tr>
+<td>Design doc</td>
+<td>Technical constraints, architecture → MUST/SHOULD criteria</td>
+</tr>
+<tr>
+<td>Plan</td>
+<td>Implementation steps → SHOULD criteria</td>
+</tr>
+<tr>
+<td>GitHub issues</td>
+<td>Related bugs/features → regression guard criteria</td>
+</tr>
+<tr>
+<td>Git history</td>
+<td>Recent changes in affected areas → regression guard</td>
+</tr>
+<tr>
+<td>Test directory</td>
+<td>Existing test coverage → baseline for test plan</td>
+</tr>
+</tbody></table></div>
+<p>Each criterion includes: ID, description, source (doc + line), priority (MUST/SHOULD/NICE).</p>
+<h3>Test Plan Structure</h3>
+<p>Agent 1 writes test scenarios without implementation code:</p>
+<pre><code>## Test Plan
+
+| # | Scenario | Type | Source | Steps / Expected Behavior |
+|---|----------|------|--------|---------------------------|
+| 1 | User login flow | E2E | PRD L5 | Open /login, enter credentials, verify redirect to /dashboard |
+| 2 | API /users returns 200 | UT | Design L30 | Run `npm test -- users` |
+| 3 | Empty form submission | FT | Plan L12 | POST /submit with empty body, expect 400 |</code></pre>
+<p>Types: E2E (Playwright), UT (unit test), FT (functional/integration test), Manual.</p>
+<h3>Agent 2 Execution Logic</h3>
+<p>For each test scenario in the plan:</p>
+<ol>
+<li><strong>UT/FT — existing tests</strong>: Run the project&#x27;s test command. Record pass/fail.</li>
+<li><strong>E2E — no existing automation</strong>: Write a Playwright script based on Steps/Expected Behavior, start dev server, execute, record pass/fail with screenshots on failure.</li>
+<li><strong>No test coverage</strong>: Use curl/httpie for API scenarios, or write minimal scripts. Record pass/fail.</li>
+<li><strong>Manual scenarios</strong>: Walk through steps by reading code paths, verify implementation exists.</li>
+</ol>
+<p>Additionally:</p>
+<ul>
+<li>Inspect <code>git diff</code> for coverage of each acceptance criterion</li>
+<li>Check file change list for unexpected modifications</li>
+<li>Verify regression guard items by running relevant existing tests</li>
+</ul>
+<h3>Output</h3>
+<p>Path: <code>{project-path}/docs/work-review/YYYY-MM-DD-&lt;topic&gt;/</code></p>
+<p>Files:</p>
+<ul>
+<li><code>acceptance.md</code> — Agent 1 output: criteria + test plan + regression guard</li>
+<li><code>report.md</code> — Agent 2 output: review conclusion</li>
+</ul>
+<h4>Rejection report</h4>
+<pre><code># Work Review: &lt;topic&gt;
+## Status: REJECTED
+## Failed
+| # | Criteria | Status | Reason |
+|---|----------|--------|--------|
+| 3 | Login redirect | MISSING | No implementation found for redirect after login |
+## Action Required
+- Fix #3 in auth module, re-run work-review</code></pre>
+<h4>Acceptance report</h4>
+<pre><code># Work Review: &lt;topic&gt;
+## Status: ACCEPTED
+## Signed
+| # | Criteria | Status | Evidence |
+|---|----------|--------|----------|
+| 1 | Login flow | SIGNED | src/auth.ts:42, Playwright test passed |</code></pre>
+<p>Acceptance.md is appended with <code>[SIGNED]</code> next to each passed criterion.</p>
+<h3>Skill Structure</h3>
+<p>File: <code>walter-worker-skills/work-review/SKILL.md</code></p>
+<p>Frontmatter:</p>
+<pre><code>---
+name: walter-worker-work-review
+description: |
+  Use when completed work needs acceptance review against scope,
+  design, and PRD. Use when a feature branch is ready for sign-off
+  and needs verification that all acceptance criteria are met with
+  no regressions.
+license: MIT
+compatibility: opencode
+metadata:
+  triggers:
+    - work review
+    - acceptance review
+    - sign off
+    - verify work
+    - check work
+  when_to_use: |
+    When a feature branch is complete and needs formal acceptance
+    review. When all acceptance criteria must be verified against
+    implementation before sign-off.
+  when_not_to_use: |
+    For pre-implementation design review (use devil-advocate).
+    For code-level review of PRs. For work without defined
+    scope/design/PRD documents.
+---</code></pre>
+<h3>Quality Gates</h3>
+<h4>MUST</h4>
+<ul>
+<li>[ ] Frontmatter 5 fields complete, name matches folder</li>
+<li>[ ] Agent 1 collects all specified document types</li>
+<li>[ ] Agent 1 produces acceptance.md with all 3 sections (criteria, test plan, regression guard)</li>
+<li>[ ] Test plan has no implementation code (scenarios only)</li>
+<li>[ ] Agent 2 executes test plan (existing + Playwright + scripts)</li>
+<li>[ ] Agent 2 checks git diff + file changes + regression</li>
+<li>[ ] report.md always generated (ACCEPTED or REJECTED)</li>
+<li>[ ] ACCEPTED report has SIGNED per criterion with evidence</li>
+<li>[ ] No TBD/TODO, no concrete-context leaks, no prohibited sections</li>
+</ul>
+<h4>NICE</h4>
+<ul>
+<li>[ ] Body &lt; 150 lines</li>
+<li>[ ] Playwright scripts include screenshot on failure</li>
+<li>[ ] Each criterion cites source doc line number</li>
+<li>[ ] Regression guard items traced to git history or issues</li>
+</ul>
+<h3>Known Drift</h3>
+<p>The document below was accurate when written and is kept as the record. These parts no longer match the repository, detected by reading the code against it on 2026-09-25. Nothing here has been rewritten — decide each one before changing it.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Stated in this document</th>
+<th>Current state</th>
+<th>Evidence</th>
+</tr></thead><tbody>
+<tr>
+<td>Three skill directories: <code>walter-worker-skills/</code>, <code>import-skills/</code>, <code>personal-skills/</code></td>
+<td>Two: <code>skills/</code> and <code>personal-skills/</code></td>
+<td>commit <code>93d4a4a</code>, <code>8d451059</code></td>
+</tr>
+<tr>
+<td><code>walter-worker-</code> prefix on native skill names</td>
+<td>Prefix removed</td>
+<td>commit <code>bc4d6cc0</code></td>
+</tr>
+<tr>
+<td>Five-field frontmatter with a <code>trigger</code> string</td>
+<td><code>name</code>, <code>description</code>, <code>license</code>, <code>compatibility</code>, <code>metadata</code> map</td>
+<td><a href="../../../../../CONVENTIONS.md"><code>CONVENTIONS.md</code></a></td>
+</tr>
+<tr>
+<td><code>skill-create</code>, <code>skill-edit</code>, <code>skill-import</code> as separate skills</td>
+<td>Merged into one <code>skill</code> skill</td>
+<td>commit <code>6086424</code></td>
+</tr>
+<tr>
+<td><code>devil-advocate</code>, <code>work-review</code>, <code>contrarian-review</code> skills</td>
+<td>Removed or merged into <code>doc-review</code></td>
+<td>commit <code>6086424</code></td>
+</tr>
+<tr>
+<td>Outputs under <code>docs/devil-advocate/</code>, <code>docs/work-review/</code></td>
+<td>Documents live under <code>docs/features/</code></td>
+<td><code>doc-organize</code> standard</td>
+</tr>
+<tr>
+<td><code>self-heal</code>, <code>self-analyze</code>, <code>tmux-setup</code> skills</td>
+<td>No longer present</td>
+<td><code>coworker skill list</code></td>
+</tr>
+</tbody></table></div>
+<h3>Change Log</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Date</th>
+<th>Change</th>
+</tr></thead><tbody>
+<tr>
+<td>Date</td>
+<td>Change</td>
+<td>Reference</td>
+</tr>
+<tr>
+<td>2026-06-10</td>
+<td>Public open source repository; directory structure with three skill categories (walter-worker-skills, import-skills, personal-skills); naming convention with prefix</td>
+<td>various decisions</td>
+</tr>
+<tr>
+<td>2026-06-10</td>
+<td>Repository initialization with <code>skill-create</code> as bootstrap entry point</td>
+<td>git-commit 5d9747e9</td>
+</tr>
+<tr>
+<td>2026-06-11</td>
+<td>Three-directory structure finalized + prefix naming</td>
+<td>git-commit a2e47245</td>
+</tr>
+<tr>
+<td>2026-06-11</td>
+<td><code>skill-create</code> Phase 0 multi-source search (GitHub ≥10 repos, web search, import-vs-inspire decision)</td>
+<td>git-commit d30f01c0</td>
+</tr>
+<tr>
+<td>2026-06-11</td>
+<td><code>skill-import</code> with author preservation, import/ subdirectory</td>
+<td>git-commit 773594b9</td>
+</tr>
+<tr>
+<td>2026-06-11</td>
+<td><code>skill-edit</code> and <code>skill-import</code> PASS quality gates</td>
+<td>git-commit d9baa432</td>
+</tr>
+<tr>
+<td>2026-06-11</td>
+<td><code>skill-create</code> quality gate improvements</td>
+<td>git-commit 33e48d2e</td>
+</tr>
+<tr>
+<td>2026-06-11</td>
+<td>TDD skill imported from mattpocock/skills</td>
+<td>git-commit eed365ce</td>
+</tr>
+<tr>
+<td>2026-06-11</td>
+<td>5 migrated coworker skills added</td>
+<td>git-commit a5dcc4e9</td>
+</tr>
+<tr>
+<td>2026-06-12</td>
+<td><code>walter-worker-devil-advocate</code> — multi-agent adversarial review</td>
+<td>git-commit 70ccdc4a</td>
+</tr>
+<tr>
+<td>2026-06-12</td>
+<td><code>walter-worker-work-review</code> — 2-agent gatekeeper</td>
+<td>git-commit 01f533c9</td>
+</tr>
+<tr>
+<td>2026-06-18</td>
+<td><code>walter-worker-contrarian-review</code> — 5-agent adversarial review</td>
+<td>git-commit 3a54ffc6</td>
+</tr>
+<tr>
+<td>2026-06-23</td>
+<td>Multiple skill additions, removals, and renaming; simplified naming convention</td>
+<td>git-commit 3395648c</td>
+</tr>
+<tr>
+<td>2026-06-23</td>
+<td><code>self-heal</code> and <code>self-analyze</code> skills added</td>
+<td>git-commit dce0d79c</td>
+</tr>
+<tr>
+<td>2026-06-23</td>
+<td><code>self-patch</code> renamed to <code>english-grammar-fix</code></td>
+<td>git-commit 7226d537</td>
+</tr>
+<tr>
+<td>2026-07-01</td>
+<td><code>tmux-status-bar</code> skill added</td>
+<td>git-commit 5cc3d4bc</td>
+</tr>
+<tr>
+<td>2026-07-02</td>
+<td>Frontmatter name fixes (prefix removed from 4 skills)</td>
+<td>git-commit bc4d6cc0</td>
+</tr>
+<tr>
+<td>2026-07-14</td>
+<td><code>multi-model-team</code> skill (GLM 5.2 + DeepSeek v4 Pro orchestration)</td>
+<td>git-commit 56f3e001</td>
+</tr>
+<tr>
+<td>2026-07-17</td>
+<td><code>doc-organize</code> skill (9 doc types, 6 stages, INDEX.md)</td>
+<td>git-commit ee7c7087</td>
+</tr>
+<tr>
+<td>2026-07-18</td>
+<td><code>youtube-summarize</code>, <code>pic-to-txt</code>, <code>youtube-research-pipeline</code> skills</td>
+<td>multiple commits</td>
+</tr>
+<tr>
+<td>2026-07-22</td>
+<td><code>skill-create</code> Phase 3 enhancement; <code>create-video-workflow</code> v3; <code>transcribe-audio</code></td>
+<td>multiple commits</td>
+</tr>
+<tr>
+<td>2026-07-23</td>
+<td><code>luma-event-scout</code> skill with API scraping, speaker gate, form filling</td>
+<td>multiple commits</td>
+</tr>
+<tr>
+<td>版本</td>
+<td>日期</td>
+<td>作者</td>
+<td>变更描述</td>
+</tr>
+<tr>
+<td>1.0</td>
+<td>2026-07-24</td>
+<td>AI Agent</td>
+<td>基于全部开发决策，首次编写完整设计文档。</td>
+</tr>
+<tr>
+<td>2026-09-25</td>
+<td>Merged the companion document of the same type into this file; added frontmatter and the drift table</td>
+</tr>
+</tbody></table></div>
+      </div>
+    </article>
+    <nav class="pager" aria-label="Previous and next"><a class="prev" href="../prd/skill-factory-prd.html"><span class="label">Previous</span>skill-factory PRD</a><a class="next" href="../impl-plan/skill-factory-impl-plan.html"><span class="label">Next</span>skill-factory Implementation Plan</a></nav>
+  </main>
+</div>
+<footer class="foot"><div class="foot-inner">Assembled from committed <code>.md</code>. The Markdown is authoritative; this page is a reading view.</div></footer>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>if(window.mermaid){mermaid.initialize({startOnLoad:false});}</script>
+<script src="../../assets/app.js"></script>
+</body>
+</html>

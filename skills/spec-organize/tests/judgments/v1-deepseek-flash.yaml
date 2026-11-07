@@ -3,15 +3,6 @@ runs: 3
 target: must
 corpus_sha: b3e6be1ad9a8be2b
 items:
-- id: MUST-A
-  verdict: pass
-  votes:
-  - pass
-  - pass
-  - pass
-  evidence: document-standard-design.md:15 links pipeline/test-plan; test-plan names
-    spec-organize/spec-review; must_registry.yaml includes MUST-A.
-  confidence: 0.9
 - id: MUST-H
   verdict: pass
   votes:
@@ -39,15 +30,6 @@ items:
   evidence: spec-organize/SKILL.md anti-pattern says content review is spec-review,
     not lint; spec-review Branch A is semantic review.
   confidence: 0.9
-- id: MUST-R
-  verdict: pass
-  votes:
-  - pass
-  - pass
-  - pass
-  evidence: test-plan TST-A scans designs into must_registry.yaml; scoring uses python/llm
-    methods; registry exists.
-  confidence: 0.95
 - id: MUST-T
   verdict: pass
   votes:

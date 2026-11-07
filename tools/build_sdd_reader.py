@@ -10,7 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SDD = ROOT / "docs/features/spec-driven-development"
-OUT = SDD / "spec-driven-development-reader.html"
+OUT = ROOT / "docs/book/html/spec-driven-development/spec-driven-development-reader.html"
 
 PANELS: list[tuple[str, str, list[tuple[str, Path]]]] = [
     (
@@ -147,7 +147,12 @@ def md_to_html(md: str) -> str:
             tag = f"h{min(level + 1, 6)}" if level > 1 else "h2"
             if level == 1:
                 tag = "h2"
-            out.append(f"<{tag}>{inline_md(title)}</{tag}>")
+            id_match = re.match(
+                r"^((?:PRD|DSGN|ARD|IMPL|TST|PIPE|QUES)-[A-Z]+(?:-[A-Z]+)*)\b",
+                title,
+            )
+            attr = f' id="{id_match.group(1)}"' if id_match else ""
+            out.append(f"<{tag}{attr}>{inline_md(title)}</{tag}>")
             i += 1
             continue
 
@@ -317,7 +322,7 @@ SHELL_MID = """
 </head>
 <body>
 <div class="top">
-  <div class="crumbs"><a href="../../index.html">The Super Lab</a><span>/</span><a href="spec-driven-development.html">SDD</a><span>/</span><span>Reader</span></div>
+  <div class="crumbs"><a href="../index.html">Spec Atlas</a><span>/</span><a href="prd/spec-driven-development-prd.html">SDD</a><span>/</span><span>Reader</span></div>
   <button class="theme-btn" type="button" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark'">theme</button>
 </div>
 <div class="wrap">
@@ -408,6 +413,7 @@ def main() -> None:
         return
     panels = "\n\n".join(panel_html(pid, title, [(r, p) for r, p in srcs]) for pid, title, srcs in PANELS)
     css = _build_marker() + SHELL_HEAD + CSS_EXTRA + SHELL_MID + panels + SHELL_TAIL
+    OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(css, encoding="utf-8")
     print(f"Wrote {OUT} ({OUT.stat().st_size} bytes)")
 

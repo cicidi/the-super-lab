@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 POS = ROOT / "skills/spec-organize/tests/fixtures/pos"
 
 # Keep in sync with fixtures/README.md pos list.
-DOCUMENTED = frozenset({"valid-test-plan", "valid-decision-history"})
+DOCUMENTED = frozenset({"valid-test-plan", "valid-decision-history", "clean-feature"})
 
 
 def main() -> None:

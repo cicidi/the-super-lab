@@ -1,0 +1,10 @@
+slug: smb-balance
+source: ~/src/smb-balance
+defect_commit: 57351b9
+gold_commit: 382f81e
+expect:
+  - check: sections
+  - check: decision_log
+  - check: ids
+allow: []
+note: Private spec text stays in the source checkout. This file stores the pins only (ARD-BD).

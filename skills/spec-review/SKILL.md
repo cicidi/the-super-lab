@@ -47,10 +47,10 @@ to avoid over-engineering.
 
 ## Skill Dependencies
 
-Judge a spec under review against `spec-organize`: its content levels
+Judge a spec under review against `SPEC-STANDARD.md` chapters 1–3 and
+`SPEC-PRESENTATION.md`. Also load content levels
 (`spec-organize/CONTENT-PRIORITY.md`), the authority model
-(`spec-organize/AUTHORITY-BY-CONCERN.md`), and the rule that a spec describes
-behavior rather than implementation (`spec-organize/SPEC-SCOPE.md`).
+(`spec-organize/AUTHORITY-BY-CONCERN.md`), and `spec-organize/SPEC-SCOPE.md`.
 
 Report as findings: L1 content that is missing, implementation detail that should
 not be there, and any claim about current implementation that the code does not
@@ -58,7 +58,7 @@ support. Report them — never rewrite the spec or the code silently.
 
 Also load `skills/spec-organize/SPEC-STANDARD.md` for **mechanical MUST** checks
 (**ARD-P**): path/filename, frontmatter, letter IDs, decision-log shape, size caps,
-INDEX/dead links, collision signals, forbidden `reference/`/`raw/` — **suggest fixes only**, never apply edits.
+INDEX/dead links, collision signals. `reference/` is not a committed type; `raw/` may exist locally and must not be committed — **suggest fixes only**, never apply edits.
 
 **Parent initiative** (`docs/features/<parent>/` root, not `features/<sub>/`):
 missing any of prd, design, decision-history, impl-plan, test-plan → severity **≥3**
@@ -68,30 +68,31 @@ missing any of prd, design, decision-history, impl-plan, test-plan → severity 
 
 **Contract authority:** `docs/features/spec-driven-development/design/spec-driven-development-design-skill-contracts.md`
 defines this skill's inputs, outputs, and boundary. If this body and the contract
-disagree, the contract wins (`DSGN-G`); change the contract first.
+disagree, the contract wins; change the contract first. `DSGN-G` is a different
+rule: spec and code each own their concern, and a conflict is reported, not silently picked.
 
 ## Example Domains
 
-Review criteria are domain-agnostic. The same severity gate applies to the four
-PRD-Q examples: **盖 shed** (garden shed), **北京旅游** (Beijing trip), **数学题**
-(math problem), **股票** (stock analysis). They are illustrations, not gold
-cases; gold lives outside this repo.
+Illustrations, not gold. Report only. Do not edit the spec.
+
+- **盖 shed**: a design that skips the permit limit is severity 4. Write the gap under `docs/features/garden-shed/raw/discussion/`.
+- **北京旅游**: "the hotel is cheap" with no source is severity 3. Ask for a URL, or require `UNKNOWN`.
+- **数学题**: a heading `## 1. 概述` is a mechanical MUST. Suggest the English unnumbered heading. Do not rename it yourself.
+- **股票**: a price target with no filing citation is severity 4. The report goes in `raw/work-review/`, not a committed `docs/work-review/`.
 
 ## Process
 
-### Step 0: Determine Review Type
+### Step 0: One choice at a time
 
-Ask the user ONE question:
+1. Read `SPEC-STANDARD.md` chapters 1–3 and `SPEC-PRESENTATION.md`.
+2. Decide whether the work is a new document or an edit. If an edit, name every document that states the same fact.
+3. Write findings at severity 3+ in this table. Do not edit the spec.
 
-> "Design review (stress-test a spec/design before building) or work
-> completion review (verify finished work against acceptance criteria)?"
+| # | 问题 | 严重度 | 选项 A | 选项 B | 建议 | 附加题 |
+|---|---|---|---|---|---|---|
 
-If the user chooses design review, let them know upfront: "After I collect
-findings, you can choose quick scan (a single gap report) or full adversarial
-review (two independent reviewers + debate on disagreements)."
-
-Then ask which documents to review. Present candidates from `docs/` if the
-user hasn't specified.
+4. Ask row 1 only. After the answer, ask the 附加题 when that cell is non-empty, then the next row.
+5. If the user did not name the documents, the first choice is which tree to review. Then fill the table.
 
 ---
 
@@ -118,13 +119,7 @@ prevents bikeshedding and keeps the design from becoming over-complicated.
 
 ### Choose Intensity
 
-After collecting findings, if ALL are level 2 or below → the doc passes,
-no changes needed. If any level 3+ findings exist, ask:
-
-> "Quick scan or full adversarial review?"
->
-> - Quick scan — I'll produce a gap report (GAPS.md) with all 3+ findings.
-> - Full review — two independent reviewers + debate on disagreements.
+Step 0 is the only way to ask. One table row at a time. Do not add a second menu that batches every finding into "quick scan or full review". If every finding is level 2 or below, say the doc passes and stop.
 
 ### Quick Scan
 
@@ -134,7 +129,7 @@ no changes needed. If any level 3+ findings exist, ask:
 3. Search the web for conflicting evidence or better patterns (at least one
    search per major claim).
 4. Rate every finding 1-5 using the severity scale.
-5. Write `docs/discussion/YYYY-MM-DD-<topic>-gaps.md`:
+5. Write `docs/features/<f>/raw/discussion/YYYY-MM-DD-<topic>-gaps.md` (do not commit `raw/`):
 
 ```markdown
 # Gap Report — {document}
@@ -201,7 +196,7 @@ The coordinator (the driving agent):
 
 #### Phase 3: Report
 
-Write `docs/discussion/YYYY-MM-DD-<topic>-review.md`:
+Write `docs/features/<f>/raw/discussion/YYYY-MM-DD-<topic>-review.md` (do not commit `raw/`):
 
 ```markdown
 # Review Report — {document}
@@ -241,7 +236,7 @@ Gather all work context:
 3. Read git log (commits since base branch).
 4. Scan the test directory and existing test files.
 
-Synthesize `docs/work-review/YYYY-MM-DD-<topic>/acceptance.md` with three sections:
+Synthesize `docs/features/<f>/raw/work-review/YYYY-MM-DD-<topic>/acceptance.md` (do not commit `raw/`) with three sections:
 
 **Acceptance Criteria** — derived from the source documents. Each criterion has
 a source (doc + line), priority (MUST/SHOULD/NICE), and what "done" means.
@@ -267,7 +262,7 @@ Execute the test plan:
 
 ### Phase 3: Sign-Off
 
-Produce `docs/work-review/YYYY-MM-DD-<topic>/report.md`:
+Produce `docs/features/<f>/raw/work-review/YYYY-MM-DD-<topic>/report.md` (do not commit `raw/`):
 
 **REJECTED** (any FAIL or MISSING criterion):
 - Failed criteria table: #, criterion, status (FAIL/MISSING), reason, fix target
@@ -287,7 +282,7 @@ Produce `docs/work-review/YYYY-MM-DD-<topic>/report.md`:
 - [ ] Web search performed for at least one major claim in full adversarial review
 - [ ] Two independent reviewers used in full adversarial mode
 - [ ] Debate capped at 3 rounds per issue
-- [ ] All debate and ruling files written to docs/discussion/ or docs/work-review/
+- [ ] All debate and ruling files written under `raw/discussion/` or `raw/work-review/`, and not committed
 - [ ] Work completion: acceptance.md has all 3 sections (criteria, test plan, regression)
 - [ ] Work completion: Reviewer actually executes tests, doesn't just read code
 - [ ] Report always generated (GAPS.md for quick scan, review.md for full, report.md for work)
@@ -315,4 +310,4 @@ Produce `docs/work-review/YYYY-MM-DD-<topic>/report.md`:
 - contrarian-review (skill-factory): 2-mode structure, web search mandate, cross-model review
 - work-review (skill-factory): collector/reviewer gatekeeper pattern for work acceptance
 - User requirement: severity gate (5-point scale, 1-2 skipped), "不要钻牛角尖"
-- CONVENTIONS.md: SKILL.md structure and naming conventions
+- `skills/spec-organize/SPEC-STANDARD.md`: section headings, IDs, and paths

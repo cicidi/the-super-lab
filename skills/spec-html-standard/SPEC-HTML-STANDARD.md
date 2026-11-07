@@ -2,11 +2,13 @@
 
 **Authoritative spec:** `docs/features/spec-driven-development/features/document-standard/design/document-standard-design-spec-reader-html.md` (**DSGN-N**). PRD: `docs/features/spec-driven-development/features/document-standard/prd/document-standard-prd-spec-reader-html.md` (**PRD-A–P**). If this file and **DSGN-N** diverge, **fix the design first**, then update this summary.
 
-**Not a skill.** Agents assemble or update reader HTML by loading this standard (often via **spec-pipeline** Step 6). No separate `spec-reader` skill.
+**Not a skill.** Expression rules: `SPEC-PRESENTATION.md`. Agents assemble reader HTML from this standard. spec-write edits markdown; spec-review checks fidelity. No separate `spec-reader` skill.
+
+Hand-maintained HTML (ARD-AK) sets `spec-paired` to `hand-maintained`, `spec-source` to the repo path of the markdown, and `spec-source-sha256` to that file's hash. A mismatch fails `paired_html_stale`. Generated readers omit this meta and are rebuilt. Its changelog has one row for every date in the markdown Change Log (ARD-BA). `<!-- html-skip -->` may wrap L4 or struck history, not L1.
 
 ## Output (MUST)
 
-- Path: `docs/features/<parent>/<parent>-reader.html`
+- Path: `docs/book/html/<parent>/<parent>-reader.html`. Other spec HTML mirrors `docs/features/` under `docs/book/html/` (ARD-BF)
 - Source of truth: committed `.md` only; HTML is **derived**
 - Scope: parent types present (`prd`, `design`, `impl-plan`, `test-plan`, `decision-history`; `how-to` optional); each `features/<sub>/` at least **design** (+ other types if committed)
 
@@ -33,6 +35,23 @@ Align with document-standard **DSGN-I**:
 - Tabs: parent (one per type); children (per sub-feature)
 - Per tab footer: `Canonical:` path(s); all parts listed if split
 
+## Site (MUST, ARD-BG)
+
+One website for the whole project. Entry: `docs/book/html/index.html`.
+
+- Each spec HTML page is one line in the directory.
+- The directory opens a feature. It does not dump every feature's pages into one flat list with no feature.
+- Inside a feature, the left column is that feature's directory. The right column is the page.
+- The left directory lists only the five entry pages: prd, design, impl-plan, test-plan, decision-history. Design parts and the reader expand under design. A sub-feature is one line in that layer, and its own pages expand under that line (DSGN-N-L). Pipeline has no HTML page.
+- spec-write rebuilds this site after a spec edit. It does not invent a second layout.
+
+Rebuild: `python3 tools/build_sdd_site.py`
+
+## Links (MUST, DSGN-N-K)
+
+- An ID (`PRD-`, `DSGN-`, `ARD-`, `IMPL-`, `TST-`, `PIPE-`, `QUES-`) links to its definition in the same feature. If a sub-feature does not define that ID, the link goes to the parent.
+- A path written in the body is a link. A `.md` under `docs/features/` links to the same path under `docs/book/html/` with `.html`. Any other file that exists links to that file.
+
 ## Visual (SHOULD)
 
 Match initiative summary HTML (e.g. `spec-driven-development.html`): self-contained CSS v0; no runtime md fetch for delivery.
@@ -40,7 +59,7 @@ Match initiative summary HTML (e.g. `spec-driven-development.html`): self-contai
 ## Workflow
 
 - **spec-pipeline:** prompt/trigger after major spec changes or on user request
-- **spec-write / spec-organize:** md and paths only — not HTML template owner
+- **spec-write:** after the markdown edit, rebuild the one site from this standard (`python3 tools/build_sdd_site.py`)
 - Conflict or spec bug found while assembling → **Ask human** → fix md → regenerate HTML
 - SDD parent: `python3 tools/build_sdd_reader.py` then `python3 tools/validate_sdd_reader.py`
 
@@ -51,4 +70,4 @@ Match initiative summary HTML (e.g. `spec-driven-development.html`): self-contai
 
 ## Reference (structure OK, content must meet fidelity)
 
-`docs/features/spec-driven-development/spec-driven-development-reader.html`
+`docs/book/html/spec-driven-development/spec-driven-development-reader.html`

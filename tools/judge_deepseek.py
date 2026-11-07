@@ -67,8 +67,6 @@ def corpus_files() -> list[Path]:
     skip = {
         "build_sdd_reader.py",
         "build_sdd_site.py",
-        "build_sdd_styles.py",
-        "prototype_clean_styles.py",
         "judge_deepseek.py",
         "score_eval.py",
         "render_eval_report.py",

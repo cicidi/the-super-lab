@@ -1,11 +1,9 @@
 ---
 name: spec-pipeline
 description: |
-  Use when starting or continuing spec-driven work on a feature — creating a
-  feature, mapping a large requirement, converging PRD/design/decision-history,
-  or before committing spec changes. Use when the user needs recap, state, skill
-  recommendations for the SDD pipeline, or a human-readable HTML spec reader
-  (parent + child tabs, not a markdown preview).
+  Not an entry skill (ARD-AJ). Standards live in SPEC-STANDARD.md and
+  SPEC-PRESENTATION.md. Use spec-write to create or edit a spec. Use
+  spec-review to review one. This file keeps the phase notes as reference.
 license: MIT
 compatibility: claude-code,opencode
 metadata:
@@ -24,8 +22,7 @@ metadata:
 
 # spec-pipeline
 
-Orchestrates spec-driven development: **Create → Map → Converge → Downstream**.
-Entry point before **spec-organize** / **spec-write**; prompts for **spec-review** before commit.
+**Not an entry skill (ARD-AJ).** Create, map, converge, and downstream steps live in the standards and in **spec-write**. Review is **spec-review**. The notes below are reference, not an entry point.
 
 Design: `docs/features/spec-driven-development/features/pipeline/design/pipeline-design.md` (**PIPE-***). Ops index: **`INDEX.md`**; routing: **`INTEGRATIONS.md`**; commands: **`PIPE-OPERATIONS.md`**; external SDD map: **`EXTERNAL-SDD-MAP.md`**; flows: **`SEQUENCE.md`**; checklists: **`PHASE-CHECKLISTS.md`** (this directory). Registry coverage: `python3 tools/must_registry_coverage.py`.
 
@@ -43,10 +40,12 @@ Design: `docs/features/spec-driven-development/features/pipeline/design/pipeline
 
 ## Example Domains
 
-Phases are domain-agnostic. The same Create → Map → Converge → Downstream flow
-must carry the four PRD-Q examples: **盖 shed** (garden shed), **北京旅游**
-(Beijing trip), **数学题** (math problem), **股票** (stock analysis). They are
-illustrations, not gold cases; gold lives outside this repo.
+Illustrations, not gold. `blocking: true` stops Downstream. `blocking: false` does not.
+
+- **盖 shed**: Map interviews permit versus cost. Converge the PRD and design before any plan. Downstream writes impl-plan and test-plan together only when no open item is `blocking: true`.
+- **北京旅游**: Create keeps the trip in `CLAUDE.local.md` until the slug exists, then in `raw/state/`. An undecided hotel is an open item with `blocking: false` unless the user says the trip cannot be planned without it.
+- **数学题**: Map asks which theorem. A definition still `UNKNOWN` and marked `blocking: true` stays in Converge.
+- **股票**: Map separates facts to look up from decisions the human makes. Downstream does not start while a `blocking: true` item is open.
 
 ## Process
 
@@ -91,7 +90,7 @@ When the user wants a **readable spec bundle** or after major spec updates:
 1. Load **`skills/spec-html-standard/SPEC-HTML-STANDARD.md`** (**DSGN-N** fidelity — no executive-summary trimming).
 2. Gather canonical paths: parent five types; each `features/<sub>/` (at least `design/`).
 3. Assemble rich HTML (tabs, cards, tables, flows) — **not** md fetch/preview.
-4. Write `docs/features/<parent>/<parent>-reader.html`; canonical footers per tab.
+4. Write `docs/book/html/<parent>/<parent>-reader.html`. Other spec HTML uses the same path as its markdown under `docs/book/html/`. Canonical footers per tab.
 5. Match initiative summary HTML styling when present.
 6. For SDD parent, may run `python3 tools/build_sdd_reader.py` then `python3 tools/validate_sdd_reader.py` after `.md` updates.
 

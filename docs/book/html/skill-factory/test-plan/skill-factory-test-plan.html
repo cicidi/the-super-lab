@@ -1,0 +1,875 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>skill-factory Test Plan · test-plan · Spec Atlas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:400,400italic,500,500italic,700|Roboto+Mono:400,500,700|Noto+Sans+SC:400,500,700&display=swap">
+<link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><a href="../../index.html"><span class="brand-mark">SDD</span><span class="brand-name">Spec Atlas</span></a></div>
+  </div>
+</header>
+<div class="site">
+  <aside class="sidebar">
+  <nav aria-label="Directory">
+    <div class="tree-overview"><a class="tree-link" href="../../index.html"><span class="tree-link__num">00</span>All features</a></div>
+    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../prd/skill-factory-prd.html"><span class="tree-link__num">10</span>skill-factory PRD</a></li><li class="tree-leaf"><a class="tree-link" href="../design/skill-factory-design.html"><span class="tree-link__num">11</span>skill-factory Specification</a></li><li class="tree-leaf"><a class="tree-link" href="../impl-plan/skill-factory-impl-plan.html"><span class="tree-link__num">12</span>skill-factory Implementation Plan</a></li><li class="tree-leaf"><a class="tree-link" href="skill-factory-test-plan.html" aria-current="page"><span class="tree-link__num">13</span>skill-factory Test Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../decision-history/skill-factory-decision-history.html"><span class="tree-link__num">14</span>skill-factory — Decision History</a></li></ul>
+  </nav>
+</aside>
+  <main class="content">
+    <nav class="breadcrumbs"><a href="../../index.html">Docs</a> / <span>skill-factory</span> / <span>test-plan</span> / <span>skill-factory Test Plan</span></nav>
+    <article class="doc" data-doc="skill-factory/test-plan/skill-factory-test-plan">
+      <header class="doc-head">
+        <p class="eyebrow">skill-factory</p>
+        <h1>skill-factory Test Plan</h1>
+        <p class="source">Canonical: docs/features/skill-factory/test-plan/skill-factory-test-plan.md</p>
+      </header>
+      
+      <div class="doc-body">
+        <h2>skill-factory Test Plan</h2>
+<h3>Test Plan</h3>
+<h2>skill-factory Test Plan</h2>
+<h3>Testing Decisions</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Level</th>
+<th>Scope</th>
+<th>Approach</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>Unit</strong></td>
+<td>Skill helper scripts, validation functions, metadata parsers</td>
+<td>Isolated tests with mock inputs; run in CI on every push.</td>
+</tr>
+<tr>
+<td><strong>Integration</strong></td>
+<td>Cross-skill workflows (skill-create → skill-edit → commit), agent orchestrations (devil-advocate, work-review), import pipeline</td>
+<td>Use real or simulated skill files; verify intermediate outputs and final state.</td>
+</tr>
+<tr>
+<td><strong>End‑to‑End</strong></td>
+<td>Full user journeys: create a skill from scratch, import a third‑party skill, run an adversarial review, execute a work‑review sign‑off</td>
+<td>Execute in a temporary repository; verify all side‑effects (commits, files, marketplace registration).</td>
+</tr>
+<tr>
+<td><strong>Static Analysis</strong></td>
+<td>Skill content conformance, frontmatter format, line count, naming rules, metadata completeness</td>
+<td>Lint‑style checks (MUST / NICE gates) set up in CI and optionally as pre‑commit hooks.</td>
+</tr>
+</tbody></table></div>
+<h4>1.1 Unit Testing</h4>
+<ul>
+<li><strong>Validation helpers</strong>: <code>is_under_150_lines()</code>, <code>description_length_check()</code>, <code>prefix_enforcement()</code>, <code>anti_patterns_present()</code>, <code>metadata_complete()</code>.</li>
+<li><strong>Agent sub‑components</strong>: Collector/Reviewer logic for <code>work-review</code>, Con/Pro/Judge for <code>devil-advocate</code> – test state transitions and vote aggregation.</li>
+</ul>
+<h4>1.2 Integration Testing</h4>
+<ul>
+<li><strong>skill-create</strong> execution (Phase 0–4) with mocked external search results.</li>
+<li><strong>skill-edit</strong> pipeline: fetch → convert → write → validate.</li>
+<li><strong>skill-import</strong> workflow: fetch → extract → write metadata → register.</li>
+<li><strong>Cross‑skill</strong>: skill-edit → redirect to skill-create when ≥80% rewrite.</li>
+<li><strong>Agent orchestration</strong>: devil-advocate 5‑round debate with vote fallback; work-review with automatic test execution.</li>
+</ul>
+<h4>1.3 End‑to‑End Testing</h4>
+<ul>
+<li>Full “Create a coworker skill” journey (including commit and marketplace symlink).</li>
+<li>“Import a skill from GitHub” with metadata validation and CI enforcement.</li>
+<li>“Run work-review against a feature branch” – agent 2 runs Playwright E2E + existing unit tests, produces <code>acceptance.md</code> and <code>report.md</code>.</li>
+<li>“Trigger devil-advocate on a spec” – outputs <code>discussion.md</code> and <code>report.md</code> in <code>docs/devil-advocate/</code>.</li>
+</ul>
+<h4>1.4 Static Analysis / Content Validation</h4>
+<ul>
+<li><strong>All skills</strong> must pass the MUST gates defined in their own <code>Quality Gates</code> section.</li>
+<li><strong>Import skills</strong> must have a complete <code>META.yaml</code> (source, upstream_commit, license, imported_at, imported_by, note).</li>
+<li><strong>Naming</strong>: <code>walter-worker-</code> prefix for own skills; no prefix for imports; folder names unchanged.</li>
+<li><strong>Line count</strong>: body ≤150 lines (NICE), enforced as soft target.</li>
+<li><strong>Description</strong>: ≤500 chars.</li>
+<li><strong>Sections</strong>: must include Anti-Patterns, Quality Gates (MUST/NICE), Philosophy‑driven overview.</li>
+</ul>
+<hr>
+<h3>Key Test Scenarios</h3>
+<h4>2.1 Skill Creation (<code>skill-create</code>)</h4>
+<div class="table-wrap"><table><thead><tr>
+<th>ID</th>
+<th>Scenario</th>
+<th>Expected Outcome</th>
+</tr></thead><tbody>
+<tr>
+<td>SC‑01</td>
+<td>Phase 0 with external search – GitHub (≥10 repos) and Web search – user chooses “import”</td>
+<td>Skill is created from fetched content, stored in <code>import-skills/</code>.</td>
+</tr>
+<tr>
+<td>SC‑02</td>
+<td>Phase 0 – user chooses “absorb inspiration”</td>
+<td>Skill is created with original content but inspired by found examples.</td>
+</tr>
+<tr>
+<td>SC‑03</td>
+<td>Phase 0 – user chooses “build from scratch”</td>
+<td>No external data used; standard interview Phase 1 begins.</td>
+</tr>
+<tr>
+<td>SC‑04</td>
+<td>Phase 2 – generated skill includes Anti-Patterns, Quality Gates, Philosophy overview</td>
+<td>All three sections present.</td>
+</tr>
+<tr>
+<td>SC‑05</td>
+<td>Line count of body exceeds 150</td>
+<td>NICE gate triggers warning; skill can still be committed.</td>
+</tr>
+<tr>
+<td>SC‑06</td>
+<td>Body exceeds 500 lines</td>
+<td>(Original loose gate) – tightened to &lt;150; test that gate now warns at 151+.</td>
+</tr>
+<tr>
+<td>SC‑07</td>
+<td>Description &gt;500 chars</td>
+<td>NICE gate warns.</td>
+</tr>
+<tr>
+<td>SC‑08</td>
+<td>Skill contains <code>deploy/</code> concept</td>
+<td>MUST gate blocks commit.</td>
+</tr>
+</tbody></table></div>
+<h4>2.2 Skill Editing (<code>skill-edit</code>)</h4>
+<div class="table-wrap"><table><thead><tr>
+<th>ID</th>
+<th>Scenario</th>
+<th>Expected Outcome</th>
+</tr></thead><tbody>
+<tr>
+<td>SE‑01</td>
+<td>Edit existing skill – change &lt;80% of content</td>
+<td>Targeted changes applied via Edit tool; no new file created.</td>
+</tr>
+<tr>
+<td>SE‑02</td>
+<td>Change ≥80% of content</td>
+<td>Tool redirects to <code>skill-create</code>.</td>
+</tr>
+<tr>
+<td>SE‑03</td>
+<td>Non‑existent skill</td>
+<td>Redirect to <code>skill-create</code>.</td>
+</tr>
+<tr>
+<td>SE‑04</td>
+<td>Auto‑convert frontmatter (kebab‑case name, <code>Use when…</code> description, MIT license, opencode/claude‑code compatibility)</td>
+<td>All fields correct.</td>
+</tr>
+<tr>
+<td>SE‑05</td>
+<td>Auto‑adapt body sections (Philosophy→overview, Anti‑Pattern→Anti‑Patterns, Workflow→Process, Checklist→Quality Gates; remove Changelog/Convention Notes)</td>
+<td>Section mapping performed correctly.</td>
+</tr>
+<tr>
+<td>SE‑06</td>
+<td>Ambiguity triggers – unclear license, unknown body section</td>
+<td>Agent asks exactly one clarifying question.</td>
+</tr>
+</tbody></table></div>
+<h4>2.3 Skill Import (<code>skill-import</code>)</h4>
+<div class="table-wrap"><table><thead><tr>
+<th>ID</th>
+<th>Scenario</th>
+<th>Expected Outcome</th>
+</tr></thead><tbody>
+<tr>
+<td>SI‑01</td>
+<td>Import valid upstream skill (e.g. <code>tdd</code> from mattpocock/skills)</td>
+<td>Skill placed in <code>import-skills/</code>, name unchanged, prefix not added.</td>
+</tr>
+<tr>
+<td>SI‑02</td>
+<td>Metadata preservation – <code>source_author</code>, <code>source_url</code> present</td>
+<td>Both fields written and validated in CI.</td>
+</tr>
+<tr>
+<td>SI‑03</td>
+<td>Missing metadata (no license)</td>
+<td>Ambiguity trigger: agent asks one question.</td>
+</tr>
+<tr>
+<td>SI‑04</td>
+<td>CI validation of import metadata completeness</td>
+<td>Pipeline fails if <code>META.yaml</code> is missing or incomplete.</td>
+</tr>
+</tbody></table></div>
+<h4>2.4 Agent‑Based Skills</h4>
+<h5>Devil‑Advocate (<code>walter-worker-devil-advocate</code>)</h5>
+<div class="table-wrap"><table><thead><tr>
+<th>ID</th>
+<th>Scenario</th>
+<th>Expected Outcome</th>
+</tr></thead><tbody>
+<tr>
+<td>DA‑01</td>
+<td>Trigger: “review spec” on a design document</td>
+<td>Two output files: <code>discussion.md</code> (full debate) and <code>report.md</code> (summary).</td>
+</tr>
+<tr>
+<td>DA‑02</td>
+<td>Debate reaches 5‑round limit</td>
+<td>Fallback to 3‑agent majority vote; vote recorded in report.</td>
+</tr>
+<tr>
+<td>DA‑03</td>
+<td>Trigger: “杠精” / “devil advocate” / “adversarial review”</td>
+<td>Skill activates and follows same process.</td>
+</tr>
+</tbody></table></div>
+<h5>Work‑Review (<code>walter-worker-work-review</code>)</h5>
+<div class="table-wrap"><table><thead><tr>
+<th>ID</th>
+<th>Scenario</th>
+<th>Expected Outcome</th>
+</tr></thead><tbody>
+<tr>
+<td>WR‑01</td>
+<td>Agent 1 (Collector) creates a test plan (no executable code)</td>
+<td>Test plan written to <code>acceptance.md</code>.</td>
+</tr>
+<tr>
+<td>WR‑02</td>
+<td>Agent 2 (Reviewer) executes tests using Playwright, curl, existing UT/FT</td>
+<td>Acceptance criteria verified; <code>report.md</code> generated.</td>
+</tr>
+<tr>
+<td>WR‑03</td>
+<td>Output path: <code>docs/work-review/YYYY-MM-DD-&lt;topic&gt;/</code></td>
+<td>Files appear in correct directory.</td>
+</tr>
+<tr>
+<td>WR‑04</td>
+<td>Trigger: “work review” / “acceptance” / “sign off” / “verify work”</td>
+<td>Skill activates.</td>
+</tr>
+</tbody></table></div>
+<h5>Multi‑Model Team (<code>multi-model-team</code>)</h5>
+<div class="table-wrap"><table><thead><tr>
+<th>ID</th>
+<th>Scenario</th>
+<th>Expected Outcome</th>
+</tr></thead><tbody>
+<tr>
+<td>MT‑01</td>
+<td>GLM 5.2 architect + DeepSeek v4 Pro worker orchestration</td>
+<td>Two‑agent collaboration produces coherent output.</td>
+</tr>
+</tbody></table></div>
+<h5>Contrarian Review (<code>walter-worker-contrarian-review</code>)</h5>
+<div class="table-wrap"><table><thead><tr>
+<th>ID</th>
+<th>Scenario</th>
+<th>Expected Outcome</th>
+</tr></thead><tbody>
+<tr>
+<td>CR‑01</td>
+<td>5‑agent adversarial document review</td>
+<td>All agents produce independent critiques.</td>
+</tr>
+<tr>
+<td>CR‑02</td>
+<td>Mode 1 activation</td>
+<td>Correct sub‑process invoked.</td>
+</tr>
+</tbody></table></div>
+<h4>2.5 Directory &amp; Naming Conventions</h4>
+<div class="table-wrap"><table><thead><tr>
+<th>ID</th>
+<th>Scenario</th>
+<th>Expected Outcome</th>
+</tr></thead><tbody>
+<tr>
+<td>NC‑01</td>
+<td>All own skills in <code>walter-worker-skills/</code></td>
+<td>Folder exists; skills inside have <code>walter-worker-</code> prefix in name field.</td>
+</tr>
+<tr>
+<td>NC‑02</td>
+<td>Imported skills in <code>import-skills/</code></td>
+<td>Folder exists; skills have original names (no prefix).</td>
+</tr>
+<tr>
+<td>NC‑03</td>
+<td>Private skills in <code>personal-skills/</code></td>
+<td>Folder exists; symlinked locally, gitignored, not in marketplace.</td>
+</tr>
+<tr>
+<td>NC‑04</td>
+<td>Flat vs nested structure</td>
+<td>Both validated; flat structure allowed.</td>
+</tr>
+</tbody></table></div>
+<h4>2.6 Quality Gates Enforcement</h4>
+<div class="table-wrap"><table><thead><tr>
+<th>ID</th>
+<th>Scenario</th>
+<th>Expected Outcome</th>
+</tr></thead><tbody>
+<tr>
+<td>QG‑01</td>
+<td>MUST gate violation (e.g., no Anti-Patterns section)</td>
+<td>Commit blocked.</td>
+</tr>
+<tr>
+<td>QG‑02</td>
+<td>NICE gate violation (e.g., body &gt;150 lines)</td>
+<td>Warning displayed; commit allowed.</td>
+</tr>
+<tr>
+<td>QG‑03</td>
+<td>Quality gates run before every commit (Step 6 of process)</td>
+<td>Script executes; passes/fails reported.</td>
+</tr>
+</tbody></table></div>
+<h4>2.7 CI / Automation</h4>
+<div class="table-wrap"><table><thead><tr>
+<th>ID</th>
+<th>Scenario</th>
+<th>Expected Outcome</th>
+</tr></thead><tbody>
+<tr>
+<td>CI‑01</td>
+<td>Push containing import without complete <code>META.yaml</code></td>
+<td>CI job fails.</td>
+</tr>
+<tr>
+<td>CI‑02</td>
+<td>Push with skill missing required frontmatter fields</td>
+<td>CI job fails.</td>
+</tr>
+<tr>
+<td>CI‑03</td>
+<td>Push with skill that has <code>deploy/</code> concept</td>
+<td>MUST gate fails in CI.</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h3>Quality Gates / Acceptance Criteria</h3>
+<p>All skills and tools in the skill‑factory project must meet the following criteria.   <strong>MUST</strong> gates block commit; <strong>NICE</strong> gates produce warnings.</p>
+<h4>3.1 Skill Content</h4>
+<div class="table-wrap"><table><thead><tr>
+<th>Gate</th>
+<th>Type</th>
+<th>Criteria</th>
+</tr></thead><tbody>
+<tr>
+<td>Anti‑Patterns section present</td>
+<td>MUST</td>
+<td>Skill includes an <code>Anti‑Patterns</code> or <code>Anti-Patterns</code> section (or mapped section).</td>
+</tr>
+<tr>
+<td>Quality Gates section with MUST / NICE</td>
+<td>MUST</td>
+<td>Skill contains a Quality Gates section with checkbox‑style lists.</td>
+</tr>
+<tr>
+<td>Philosophy‑driven overview</td>
+<td>NICE</td>
+<td>Skill starts with a rationale/overview that explains the “why”.</td>
+</tr>
+<tr>
+<td>No <code>deploy/</code> concept</td>
+<td>MUST</td>
+<td>Skill does not reference a <code>deploy/</code> directory or deployment workflow.</td>
+</tr>
+<tr>
+<td>Description ≤500 chars</td>
+<td>NICE</td>
+<td><code>description</code> field in frontmatter is ≤500 characters.</td>
+</tr>
+<tr>
+<td>Body ≤150 lines</td>
+<td>NICE</td>
+<td>Body of SKILL.md (after frontmatter) is ≤150 lines. (Formerly 500; tightened.)</td>
+</tr>
+<tr>
+<td>Name kebab‑case</td>
+<td>MUST</td>
+<td>Skill <code>name</code> field is kebab‑case (enforced by skill-edit auto‑conversion).</td>
+</tr>
+<tr>
+<td><code>Use when…</code> description start</td>
+<td>NICE</td>
+<td>Description begins with <code>&quot;Use when...&quot;</code>.</td>
+</tr>
+</tbody></table></div>
+<h4>3.2 Imported Skills</h4>
+<div class="table-wrap"><table><thead><tr>
+<th>Gate</th>
+<th>Type</th>
+<th>Criteria</th>
+</tr></thead><tbody>
+<tr>
+<td>META.yaml complete</td>
+<td>MUST</td>
+<td>Contains <code>source</code>, <code>upstream_commit</code>, <code>license</code>, <code>imported_at</code>, <code>imported_by</code>, <code>note</code>.</td>
+</tr>
+<tr>
+<td>Original author preserved</td>
+<td>MUST</td>
+<td><code>source_author</code> and <code>source_url</code> present in metadata.</td>
+</tr>
+<tr>
+<td>No prefix added</td>
+<td>MUST</td>
+<td>Imported skill name does not get <code>walter-worker-</code> prefix.</td>
+</tr>
+</tbody></table></div>
+<h4>3.3 Naming &amp; Directory</h4>
+<div class="table-wrap"><table><thead><tr>
+<th>Gate</th>
+<th>Type</th>
+<th>Criteria</th>
+</tr></thead><tbody>
+<tr>
+<td>Own skills in <code>walter-worker-skills/</code></td>
+<td>MUST</td>
+<td>Skills created by the factory reside in <code>walter-worker-skills/</code>.</td>
+</tr>
+<tr>
+<td>Prefix applied to own skill name</td>
+<td>MUST</td>
+<td>Skill name field includes <code>walter-worker-</code> prefix.</td>
+</tr>
+<tr>
+<td>Import skills in <code>import-skills/</code></td>
+<td>MUST</td>
+<td>Third‑party skills go to <code>import-skills/</code>.</td>
+</tr>
+<tr>
+<td>Personal skills in <code>personal-skills/</code></td>
+<td>MUST</td>
+<td>Private skills go to <code>personal-skills/</code> (gitignored).</td>
+</tr>
+<tr>
+<td>No generic filenames</td>
+<td>MUST</td>
+<td>File names must include type suffix (e.g., <code>-decision-YYYY-MM-DD.md</code>).</td>
+</tr>
+</tbody></table></div>
+<h4>3.4 Process Steps</h4>
+<div class="table-wrap"><table><thead><tr>
+<th>Gate</th>
+<th>Type</th>
+<th>Criteria</th>
+</tr></thead><tbody>
+<tr>
+<td>Phase 0 external search</td>
+<td>MUST (for skill-create)</td>
+<td>At least one external source consulted (GitHub ≥10 repos or web search).</td>
+</tr>
+</tbody></table></div>
+<h3>Skill Consolidation (2026-08-02)</h3>
+<h2>Skill Consolidation Test Plan</h2>
+<blockquote class="callout" data-label="NOTE"><p><strong>Spec:</strong> docs/skill-factory/design/skill-consolidation-design.md <strong>Date:</strong> 2026-08-02</p></blockquote>
+<h3>Scope</h3>
+<p>Verify 38 walter-worker-skills → 10 merged skills correctly implemented.</p>
+<ul>
+<li>10 new merged SKILL.md files created</li>
+<li>35 old skill directories deleted</li>
+<li>3 independent skills untouched (english-grammar-fix, multi-model-team, status)</li>
+<li>9 personal-skills untouched</li>
+<li>1 import-skills/tdd deleted (absorbed into auto-tdd)</li>
+</ul>
+<hr>
+<h3>Layer 1: Conventions Compliance (3 tests per merged skill — 30 tests)</h3>
+<h4>T1.1 — Frontmatter fields</h4>
+<blockquote class="callout" data-label="NOTE"><p>For each new SKILL.md: - ✅ <code>name</code> is lowercase kebab-case, 1-5 words - ✅ <code>description</code> starts with &quot;Use when...&quot;, ≤1024 chars, third person, describes trigger not workflow - ✅ <code>license: MIT</code> present - ✅ <code>compatibility</code> includes <code>claude-code,opencode</code> - ✅ No extra frontmatter fields beyond the 5 recognized</p></blockquote>
+<pre><code># Script: for each merged skill, parse frontmatter and validate
+for skill in initiative dashboard project skill doc-review doc-organize bug knowledge auto-tdd research; do
+  echo &quot;=== $skill ===&quot;
+  # check name matches directory
+  # check description starts with &quot;Use when&quot;
+  # check description length ≤ 1024
+  # check license field
+  # check compatibility field
+done</code></pre>
+<div class="table-wrap"><table><thead><tr>
+<th>Skill</th>
+<th>Expected name</th>
+<th>Expected description trigger</th>
+</tr></thead><tbody>
+<tr>
+<td>initiative</td>
+<td><code>initiative</code></td>
+<td>Use when managing cross-project initiatives</td>
+</tr>
+<tr>
+<td>dashboard</td>
+<td><code>dashboard</code></td>
+<td>Use when viewing analytics or managing dashboard</td>
+</tr>
+<tr>
+<td>project</td>
+<td><code>project</code></td>
+<td>Use when managing the project catalog</td>
+</tr>
+<tr>
+<td>skill</td>
+<td><code>skill</code></td>
+<td>Use when creating, editing, or listing skills</td>
+</tr>
+<tr>
+<td>doc-review</td>
+<td><code>doc-review</code></td>
+<td>Use when reviewing a design, spec, proposal, or completed work</td>
+</tr>
+<tr>
+<td>doc-organize</td>
+<td><code>doc-organize</code></td>
+<td>Use when organizing or merging documentation</td>
+</tr>
+<tr>
+<td>bug</td>
+<td><code>bug</code></td>
+<td>Use when debugging, reporting bugs, or recording corrections</td>
+</tr>
+<tr>
+<td>knowledge</td>
+<td><code>knowledge</code></td>
+<td>Use when extracting or querying session knowledge</td>
+</tr>
+<tr>
+<td>auto-tdd</td>
+<td><code>auto-tdd</code></td>
+<td>Use when developing with test-driven methodology</td>
+</tr>
+<tr>
+<td>research</td>
+<td><code>research</code></td>
+<td>Use when exploring unknowns or designing before implementation</td>
+</tr>
+</tbody></table></div>
+<h4>T1.2 — Body structure</h4>
+<blockquote class="callout" data-label="NOTE"><p>For each new SKILL.md: - ✅ <code># &lt;skill-name&gt;</code> heading + 1-2 sentence overview - ✅ <code>## When to Use</code> section - ✅ <code>## When NOT to Use</code> section - ✅ <code>## Process</code> section - ✅ No prohibited content (changelog, emoji, TBD, truncated sentences)</p></blockquote>
+<h4>T1.3 — Naming convention</h4>
+<blockquote class="callout" data-label="NOTE"><p>- ✅ Each directory name matches <code>{verb}-{object}</code> or <code>{domain}-{action}</code> - ✅ SKILL.md is uppercase - ✅ No filler words in names</p></blockquote>
+<hr>
+<h3>Layer 2: Structural Tests (10 tests)</h3>
+<h4>T2.1 — Old skills deleted</h4>
+<blockquote class="callout" data-label="NOTE"><p>35 old directories must NOT exist:</p></blockquote>
+<pre><code># Category 3 — CRUD sets (22 removed)
+test ! -d walter-worker-skills/initiative-create
+test ! -d walter-worker-skills/initiative-edit
+test ! -d walter-worker-skills/initiative-activate
+test ! -d walter-worker-skills/initiative-deactivate
+test ! -d walter-worker-skills/initiative-list
+test ! -d walter-worker-skills/initiative-show
+test ! -d walter-worker-skills/initiative-remove
+
+test ! -d walter-worker-skills/analytics-create-db
+test ! -d walter-worker-skills/analytics-daemon
+test ! -d walter-worker-skills/analytics-dashboard
+test ! -d walter-worker-skills/analytics-import
+test ! -d walter-worker-skills/analytics-once
+
+test ! -d walter-worker-skills/project-add
+test ! -d walter-worker-skills/project-edit
+test ! -d walter-worker-skills/project-remove
+test ! -d walter-worker-skills/project-list
+test ! -d walter-worker-skills/project-show
+test ! -d walter-worker-skills/project-sync
+
+test ! -d walter-worker-skills/skill-create
+test ! -d walter-worker-skills/skill-edit
+test ! -d walter-worker-skills/skill-import
+test ! -d walter-worker-skills/skill-list
+
+# Category 1/2 — merged skills (12 removed, doc-organize overwritten in-place)
+test ! -d walter-worker-skills/devil-advocate
+test ! -d walter-worker-skills/contrarian-review
+test ! -d walter-worker-skills/work-review
+test ! -d walter-worker-skills/bug-hunt
+test ! -d walter-worker-skills/bug-report
+test ! -d walter-worker-skills/self-analyze
+test ! -d walter-worker-skills/self-heal
+test ! -d walter-worker-skills/doc-merge
+test ! -d walter-worker-skills/session-memory
+test ! -d walter-worker-skills/knowledge-skill
+test ! -d walter-worker-skills/find-my-unknown
+
+# import-skills absorbed
+test ! -d import-skills/tdd</code></pre>
+<h4>T2.2 — New skills exist</h4>
+<blockquote class="callout" data-label="NOTE"><p>10 new directories must exist with SKILL.md:</p></blockquote>
+<pre><code>for skill in initiative dashboard project skill doc-review doc-organize bug knowledge auto-tdd research; do
+  test -f walter-worker-skills/$skill/SKILL.md || echo &quot;MISSING: $skill&quot;
+done</code></pre>
+<h4>T2.3 — Independent skills untouched</h4>
+<blockquote class="callout" data-label="NOTE"><p>3 skills must still exist unchanged:</p></blockquote>
+<pre><code>test -f walter-worker-skills/english-grammar-fix/SKILL.md
+test -f walter-worker-skills/multi-model-team/SKILL.md
+test -f walter-worker-skills/status/SKILL.md</code></pre>
+<h4>T2.4 — Personal-skills untouched</h4>
+<blockquote class="callout" data-label="NOTE"><p>All 9 must still exist:</p></blockquote>
+<pre><code>ls personal-skills/*/SKILL.md | wc -l  # must be 9</code></pre>
+<hr>
+<h3>Layer 3: Content Merge Quality Tests (20 tests)</h3>
+<h4>T3.1 — CRUD subcommand routing</h4>
+<blockquote class="callout" data-label="NOTE"><p>For <code>/initiative</code>, <code>/project</code>, <code>/skill</code>, <code>/dashboard</code>:</p></blockquote>
+<div class="table-wrap"><table><thead><tr>
+<th>Test</th>
+<th>Description</th>
+</tr></thead><tbody>
+<tr>
+<td>T3.1.1</td>
+<td>No subcommand → lists current state + asks user what to do</td>
+</tr>
+<tr>
+<td>T3.1.2</td>
+<td>Each subcommand has a clear one-line description</td>
+</tr>
+<tr>
+<td>T3.1.3</td>
+<td>Invalid subcommand → suggests valid options</td>
+</tr>
+<tr>
+<td>T3.1.4</td>
+<td>Each subcommand&#x27;s process section references the CLI command it wraps</td>
+</tr>
+</tbody></table></div>
+<h4>T3.2 — Conversation-branch routing</h4>
+<blockquote class="callout" data-label="NOTE"><p>For <code>/doc-review</code>, <code>/bug</code>, <code>/knowledge</code>, <code>/auto-tdd</code>, <code>/research</code>:</p></blockquote>
+<div class="table-wrap"><table><thead><tr>
+<th>Test</th>
+<th>Description</th>
+</tr></thead><tbody>
+<tr>
+<td>T3.2.1</td>
+<td>Skill starts by asking ONE question to determine branch</td>
+</tr>
+<tr>
+<td>T3.2.2</td>
+<td>Each branch has a self-contained <code>## Process</code> sub-section</td>
+</tr>
+<tr>
+<td>T3.2.3</td>
+<td>Branches are mutually exclusive and collectively exhaustive</td>
+</tr>
+<tr>
+<td>T3.2.4</td>
+<td>If user gives ambiguous answer, skill asks ONE clarifying follow-up</td>
+</tr>
+</tbody></table></div>
+<h4>T3.3 — Merged logic: doc-review</h4>
+<div class="table-wrap"><table><thead><tr>
+<th>Test</th>
+<th>Description</th>
+</tr></thead><tbody>
+<tr>
+<td>T3.3.1</td>
+<td>Design review branch includes adversarial questioning from devil-advocate</td>
+</tr>
+<tr>
+<td>T3.3.2</td>
+<td>Design review branch includes alternative-searching from contrarian-review</td>
+</tr>
+<tr>
+<td>T3.3.3</td>
+<td>Work completion branch includes acceptance criteria checking from work-review</td>
+</tr>
+<tr>
+<td>T3.3.4</td>
+<td>Severity gate is explicitly defined (5-point scale, 3+ only discussed)</td>
+</tr>
+</tbody></table></div>
+<h4>T3.4 — Merged logic: bug</h4>
+<div class="table-wrap"><table><thead><tr>
+<th>Test</th>
+<th>Description</th>
+</tr></thead><tbody>
+<tr>
+<td>T3.4.1</td>
+<td>Hunt branch includes hypothesis→test→fix loop from bug-hunt</td>
+</tr>
+<tr>
+<td>T3.4.2</td>
+<td>Report branch includes GitHub issue creation from bug-report</td>
+</tr>
+<tr>
+<td>T3.4.3</td>
+<td>Heal branch includes trace recording from self-heal + pattern analysis from self-analyze</td>
+</tr>
+</tbody></table></div>
+<h4>T3.5 — Merged logic: research</h4>
+<div class="table-wrap"><table><thead><tr>
+<th>Test</th>
+<th>Description</th>
+</tr></thead><tbody>
+<tr>
+<td>T3.5.1</td>
+<td>Discover unknowns branch includes interview rules (one question, depth heuristic, stop condition)</td>
+</tr>
+<tr>
+<td>T3.5.2</td>
+<td>Design spec branch includes explore→clarify→approaches→design→spec→write→review flow</td>
+</tr>
+<tr>
+<td>T3.5.3</td>
+<td>After design spec completes, transitions to writing-plans</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h3>Layer 4: Deployment Tests (5 tests)</h3>
+<h4>T4.1 — coworker sync</h4>
+<pre><code>coworker sync</code></pre>
+<blockquote class="callout" data-label="NOTE"><p>- ✅ No errors - ✅ All 10 new skills appear in <code>~/.claude/skills/</code> as SKILL.md files - ✅ Old skill directories removed from <code>~/.claude/skills/</code></p></blockquote>
+<h4>T4.2 — Slash command availability</h4>
+<pre><code>ls ~/.claude/skills/ | grep -E &quot;^(initiative|dashboard|project|skill|doc-review|doc-organize|bug|knowledge|auto-tdd|research)$&quot; | wc -l
+# must be 10</code></pre>
+<h4>T4.3 — Old commands removed</h4>
+<pre><code>ls ~/.claude/skills/ | grep -E &quot;^(initiative-create|devil-advocate|bug-hunt|self-heal|find-my-unknown)$&quot; | wc -l
+# must be 0</code></pre>
+<h4>T4.4 — Config consistency</h4>
+<pre><code># skills in coworker.yaml match actual skill directories
+coworker skill list</code></pre>
+<blockquote class="callout" data-label="NOTE"><p>- ✅ Count matches number of deployed skills (10 merged + 3 independent + ~20 other global skills) - ✅ No orphaned paths pointing to deleted skill directories</p></blockquote>
+<h4>T4.5 — coworker status still works</h4>
+<pre><code>coworker status</code></pre>
+<blockquote class="callout" data-label="NOTE"><p>- ✅ Shows config table - ✅ Shows initiative progress if one is active</p></blockquote>
+<hr>
+<h3>Layer 5: Functional Regression (manual, via Claude Code)</h3>
+<h4>T5.1 — Each merged skill can be invoked</h4>
+<pre><code>/initiative list
+/dashboard start
+/project list
+/skill list
+/doc-review          ← should ask &quot;design or work review?&quot;
+/doc-organize
+/bug                 ← should ask &quot;hunt, report, or heal?&quot;
+/knowledge           ← should ask &quot;obsidian vault or sqlite analytics?&quot;
+/auto-tdd            ← should ask &quot;basic or auto?&quot;
+/research            ← should ask &quot;discover unknowns or design spec?&quot;</code></pre>
+<h4>T5.2 — Independent skills still work</h4>
+<pre><code>/english-grammar-fix  ← should not break
+/multi-model-team     ← should not break
+/status               ← should run coworker status</code></pre>
+<hr>
+<h3>Summary</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Layer</th>
+<th>Tests</th>
+<th>Type</th>
+</tr></thead><tbody>
+<tr>
+<td>L1 — Conventions</td>
+<td>30</td>
+<td>Automated</td>
+</tr>
+<tr>
+<td>L2 — Structural</td>
+<td>10</td>
+<td>Automated</td>
+</tr>
+<tr>
+<td>L3 — Content</td>
+<td>20</td>
+<td>Manual review</td>
+</tr>
+<tr>
+<td>L4 — Deployment</td>
+<td>5</td>
+<td>Shell</td>
+</tr>
+<tr>
+<td>L5 — Functional</td>
+<td>12</td>
+<td>Manual (Claude Code)</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>77</strong></td>
+<td></td>
+</tr>
+</tbody></table></div>
+<h4>Automation Priority</h4>
+<ol>
+<li><strong>L2 (10 tests)</strong> — run first, pure shell, catches missing/extra directories immediately</li>
+<li><strong>L4 (5 tests)</strong> — run after <code>coworker sync</code>, verifies deployment</li>
+<li><strong>L1 (30 tests)</strong> — a script that parses SKILL.md frontmatter + validates sections</li>
+<li><strong>L3 (20 tests)</strong> — manual review of each merged SKILL.md body content</li>
+<li><strong>L5 (12 tests)</strong> — final smoke test in real Claude Code session</li>
+</ol>
+<h3>Known Drift</h3>
+<p>The document below was accurate when written and is kept as the record. These parts no longer match the repository, detected by reading the code against it on 2026-09-25. Nothing here has been rewritten — decide each one before changing it.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Stated in this document</th>
+<th>Current state</th>
+<th>Evidence</th>
+</tr></thead><tbody>
+<tr>
+<td>Three skill directories: <code>walter-worker-skills/</code>, <code>import-skills/</code>, <code>personal-skills/</code></td>
+<td>Two: <code>skills/</code> and <code>personal-skills/</code></td>
+<td>commit <code>93d4a4a</code>, <code>8d451059</code></td>
+</tr>
+<tr>
+<td><code>walter-worker-</code> prefix on native skill names</td>
+<td>Prefix removed</td>
+<td>commit <code>bc4d6cc0</code></td>
+</tr>
+<tr>
+<td>Five-field frontmatter with a <code>trigger</code> string</td>
+<td><code>name</code>, <code>description</code>, <code>license</code>, <code>compatibility</code>, <code>metadata</code> map</td>
+<td><a href="../../../../../CONVENTIONS.md"><code>CONVENTIONS.md</code></a></td>
+</tr>
+<tr>
+<td><code>skill-create</code>, <code>skill-edit</code>, <code>skill-import</code> as separate skills</td>
+<td>Merged into one <code>skill</code> skill</td>
+<td>commit <code>6086424</code></td>
+</tr>
+<tr>
+<td><code>devil-advocate</code>, <code>work-review</code>, <code>contrarian-review</code> skills</td>
+<td>Removed or merged into <code>doc-review</code></td>
+<td>commit <code>6086424</code></td>
+</tr>
+<tr>
+<td>Outputs under <code>docs/devil-advocate/</code>, <code>docs/work-review/</code></td>
+<td>Documents live under <code>docs/features/</code></td>
+<td><code>doc-organize</code> standard</td>
+</tr>
+<tr>
+<td><code>self-heal</code>, <code>self-analyze</code>, <code>tmux-setup</code> skills</td>
+<td>No longer present</td>
+<td><code>coworker skill list</code></td>
+</tr>
+</tbody></table></div>
+<h3>Change Log</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Date</th>
+<th>Change</th>
+</tr></thead><tbody>
+<tr>
+<td>Date</td>
+<td>Version</td>
+<td>Description</td>
+</tr>
+<tr>
+<td>2026-07-23</td>
+<td>1.0</td>
+<td>Initial test plan, derived from development history (commits 5d9747e9…5bfdb57e)</td>
+</tr>
+<tr>
+<td>2026-09-25</td>
+<td>Merged the companion document of the same type into this file; added frontmatter and the drift table</td>
+</tr>
+</tbody></table></div>
+      </div>
+    </article>
+    <nav class="pager" aria-label="Previous and next"><a class="prev" href="../impl-plan/skill-factory-impl-plan.html"><span class="label">Previous</span>skill-factory Implementation Plan</a><a class="next" href="../decision-history/skill-factory-decision-history.html"><span class="label">Next</span>skill-factory — Decision History</a></nav>
+  </main>
+</div>
+<footer class="foot"><div class="foot-inner">Assembled from committed <code>.md</code>. The Markdown is authoritative; this page is a reading view.</div></footer>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>if(window.mermaid){mermaid.initialize({startOnLoad:false});}</script>
+<script src="../../assets/app.js"></script>
+</body>
+</html>

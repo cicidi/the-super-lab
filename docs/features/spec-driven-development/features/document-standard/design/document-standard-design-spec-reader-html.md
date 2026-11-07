@@ -10,7 +10,9 @@ last_verified: 2026-11-03
 
 # Document Standard — Spec Reader HTML（Design）
 
-**Aspect design：** **DSGN-N**（spec reader / human HTML 汇编）。PRD：**PRD-A–P** 见 `../prd/document-standard-prd-spec-reader-html.md`。与 **DSGN-B** 路径、**DSGN-I** 优先级、**DSGN-F** ID 引用一致。**Implementation：** `skills/spec-html-standard/SPEC-HTML-STANDARD.md`（标准文件，**非** skill）；**spec-pipeline** 编排入口，加载该标准汇编 HTML。
+入口文件：[document-standard-design.md](document-standard-design.md)。
+
+**Aspect design：** **DSGN-N**（spec reader / human HTML 汇编）。PRD：**PRD-A–P** 见 `../prd/document-standard-prd-spec-reader-html.md`。与 **DSGN-B** 路径、**DSGN-I** 优先级、**DSGN-F** ID 引用一致。**Implementation：** `SPEC-HTML-STANDARD.md` 与 `SPEC-PRESENTATION.md`。MD 是全文，HTML 是阅读视图。spec-write 改 md；spec-review 查保真（ARD-AJ）。
 
 ## Problem Statement
 
@@ -32,10 +34,14 @@ last_verified: 2026-11-03
 
 | 项 | Rule |
 |---|---|
-| **文件名** | `<parent>-reader.html` |
-| **目录** | `docs/features/<parent>/`（与 parent initiative 同级，不在 `features/<sub>/` 内） |
-| **Source of truth** | 各 Tab 对应的一篇或多篇 committed `.md`；HTML **derived** |
-| **参考** | `spec-driven-development-reader.html` — 由 `tools/build_sdd_reader.py` 自 canonical `.md` 生成（**DSGN-N-B**） |
+| **文件名** | 汇编为 `<parent>/<parent>-reader.html`；其余 HTML 与对应 `.md` 在 `docs/features/` 下的相对路径相同，扩展名改为 `.html` |
+| **目录** | `docs/book/html/`（ARD-BF）。Parent 与 sub-feature 都在这棵树里，不放在 `docs/features/` 或 `site/` |
+| **Source of truth** | 各 Tab 对应的一篇或多篇 committed `.md`；HTML **derived**。手写稿须带 `spec-source` 与 sha256（ARD-AK） |
+
+#### DSGN-N-H — 单篇阅读视图
+
+.md 是 source，HTML 是派生物。`<!-- html-skip -->` 与已 strike 的历史可省略；不许用它们包住 L1。生成稿带 `spec-source-sha256`；手写稿带 `spec-paired=hand-maintained`。hash 不一致则重新生成。手写 changelog 对 md Change Log 的每个日期都有一行（ARD-BA）。
+| **参考** | `docs/book/html/spec-driven-development/spec-driven-development-reader.html` — 由 `tools/build_sdd_reader.py` 自 canonical `.md` 生成（**DSGN-N-B**，ARD-BF） |
 
 #### DSGN-N-B — 保真（MUST — 回应「不要精简这么多」）
 
@@ -71,6 +77,18 @@ last_verified: 2026-11-03
 **Tab 组 2+ — Children：** 每个 `docs/features/<parent>/features/<sub>/` 一组 Tab（或一组内 section per type）。**至少** 纳入 `<sub>` 的 `design/<sub>-design.md` 及 design part 文件。
 
 **每 Tab footer（MUST）：** `Canonical:` + 相对 repo 路径；多 part 时 **列出全部** part 路径。
+
+#### DSGN-N-I — 全站目录（ARD-BG）
+
+全项目一份网站，入口 `docs/book/html/index.html`。每一篇 spec HTML 是目录里的一条。目录先进入 feature。进入 feature 后，左侧是该 feature 的目录，右侧是正文。
+
+#### DSGN-N-K — 正文链接
+
+条目号 `PRD-` `DSGN-` `ARD-` `IMPL-` `TST-` `PIPE-` `QUES-` 链到本 feature 的定义；子 feature 没有该号则链到 parent。`docs/features/` 下的 `.md` 链到 `docs/book/html/` 同路径 HTML；其他现存文件链到该文件。
+
+#### DSGN-N-L — 左侧五篇
+
+feature 左侧只列五篇入口：prd、design、impl-plan、test-plan、decision-history。design part 与 reader 展开在 design 下。子 feature 在这一层占一行，再展开自己的页面。pipeline 不生成 HTML。
 
 #### DSGN-N-D — 视觉与 HTML 技术
 
@@ -156,3 +174,12 @@ Initiative test plan 暂不单独为 reader 开 TST；**NICE：** spec-review �
 |------|--------|
 | 2026-11-03 | Initial aspect design **DSGN-N**；保真规则 |
 | 2026-11-03 | **spec-html-standard** 替代 spec-reader skill（**DSGN-N-E/J**） |
+| 2026-11-07 | 表达标准 SPEC-PRESENTATION；write 改 md，review 查保真（ARD-AJ） |
+| 2026-11-07 | 手写 HTML 须带 spec-source 与 sha256（ARD-AK） |
+| 2026-11-07 | DSGN-N-H：单篇阅读视图；手写 changelog 盖住每个 md 日期（ARD-BA） |
+| 2026-11-07 | part 链回 document-standard-design.md（ARD-AV） |
+| 2026-11-07 | HTML 改到 docs/book/html/，目录与 features 同构（ARD-BF） |
+| 2026-11-07 | DSGN-N-I：全站一份目录；feature 页左目录右正文（ARD-BG） |
+| 2026-11-07 | DSGN-N-K：正文条目号与路径必须是可用链接 |
+| 2026-11-07 | DSGN-N-L：左侧只列五篇；其余展开在 design 下；pipeline 无 HTML |
+| 2026-11-07 | DSGN-N-L：子 feature 在 design 下一层占一行，再展开自己的页面 |

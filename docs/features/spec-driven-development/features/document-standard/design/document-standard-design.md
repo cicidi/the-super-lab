@@ -12,7 +12,7 @@ last_verified: 2026-11-04
 
 本文件定义 **`docs/features/` 下 feature 文档** 的类型、路径、命名、体量、格式、authority、health 与 enforcement。**不** 规定 agent skill 拆几个文件、如何加载 — 那是 **implementation** 另文对齐。
 
-相关：**pipeline** 见 `../pipeline/design/pipeline-design.md`；**测试** 见 parent `../../../test-plan/spec-driven-development-test-plan.md`（被测 = spec-organize / spec-review；本篇 MUST 进其 registry）。
+相关：**pipeline** 见 `../pipeline/design/pipeline-design.md`；**测试** 见 parent `../../../test-plan/spec-driven-development-test-plan.md`（被测 = spec-write / spec-review；本篇 MUST 进其 registry）。
 
 ### 术语（避免与 SDD「spec-driven」混淆）
 
@@ -54,7 +54,7 @@ Feature 文档多时，缺少统一 standard 会导致：无 authoritative artif
 
 ## Implementation Decisions
 
-- 本标准的 MUST 由 **spec-organize** 的 Lint 执行；semantic 由 **spec-review** 报告（DSGN-L）。
+- 可执行摘要在 SPEC-STANDARD.md 与 SPEC-PRESENTATION.md。机械 MUST 由检查脚本执行；semantic 由 **spec-review** 报告。入口是 spec-write 与 spec-review（ARD-AJ）。
 - `how-to` 暂不机械检查；其余五类按 DSGN-E 执行。
 - 存量不合规文档不迁移，只报告（ARD-AF）。
 
@@ -170,6 +170,7 @@ Part 命名：`prd`/`design`/`test-plan`/`how-to` 用名词；`impl-plan`/`decis
 **其它**
 
 - 路径：`docs/book/**`；无 **DSGN-E** frontmatter；Lint 查 **link 有效**、摘要指向的文件存在。
+- HTML：`docs/book/html/` 镜像 `docs/features/`。摘要仍在 book 其他路径；HTML 不是 source of truth（ARD-BF）。
 - 可 **额外** 用于 MkDocs / Pages 发布；发布 nav 属 impl，不得与 feature 树、INDEX 矛盾。
 
 ---
@@ -200,6 +201,8 @@ final_date: YYYY-MM-DD   # final 时必填
 
 **检查范围：** `how-to` 暂不机械检查；其余五类按本表执行。
 
+**impl-plan 正文（MUST，spec-write 执行）：** 每条 `IMPL-*` 写依赖谁、挡住谁。`Execution order` 把被挡住的排后面（先改库，再改 API）。优先级高且没被挡住的先做；没被挡住的可以同时做。
+
 新增节承自 KEP / Rust RFC：`Alternatives Considered`、`Drawbacks`、`Risks and Mitigations`、
 `Open Questions` 为通用节;`Acceptance Criteria`(= Graduation Criteria)、`Reversibility`
 (= Upgrade/Downgrade)、`Resources Needed`(= Infrastructure Needed)为改名后的通用语义。
@@ -218,6 +221,7 @@ final_date: YYYY-MM-DD   # final 时必填
 | `decision-history` | `ARD` | `ARD-A`, `ARD-AA` |
 | `impl-plan` | `IMPL` | `IMPL-A`, `IMPL-B` |
 | `test-plan` | `TST` | `TST-A`, `TST-B` |
+| question（Open Questions） | `QUES` | `QUES-A`, `QUES-B` |
 
 跨文档引用 **写全 ID**（如 `PRD-A`、`ARD-F`）。`how-to` 无强制 letter ID。
 
@@ -225,9 +229,9 @@ final_date: YYYY-MM-DD   # final 时必填
 
 **HLD 例外：** 父 HLD 的 System Context / Logical Architecture 等 **架构章节** 不要求 `DSGN-*` ID；只有可追溯的规则小节才要 ID。
 
-**凡有序号即 ID（MUST）：** ADR、requirement、design 规则小节、impl task、test case、defer/open question 等 **一切** 可追溯条目 — **必须** 用上表 `{前缀}-{字母}`。**禁止** 裸数字（`0001`）、`PRD-1`/`DH-1`/`FR-3`/`OQ-1`/`D1` 等作永久 ID。本 design 篇小节即 **DSGN-A** 起（见索引）。
+**凡有序号即 ID（MUST）：** ADR、requirement、design 规则小节、impl task、test case、defer/open question 等 **一切** 可追溯条目 — **必须** 用上表 `{前缀}-{字母}`。**禁止** 裸数字（`0001`）、`PRD-1`/`DH-1`/`FR-3`/`OQ-1`/`QUES-1`/`D1` 等作永久 ID。Open Questions 的条目用 `QUES-A`。本 design 篇小节即 **DSGN-A** 起（见索引）。
 
-**检查：** `ids.py` 按 type 强制标题模式（`PRD-*` / `DSGN-*` / `IMPL-*` / `TST-*` / `ARD-*`），缺 ID 或裸数字即 fail。
+**检查：** `ids.py` 按 type 强制标题模式（`PRD-*` / `DSGN-*` / `IMPL-*` / `TST-*` / `ARD-*` / `QUES-*`），缺 ID 或裸数字即 fail。
 
 **AI 单次 edit 粒度**（≤10 行 / ≤200 字）属 SDD parent HLD **§4**，不在本 document-standard；impl 目标：**spec-write** 等书写 skill。
 
@@ -348,6 +352,15 @@ Trim 顺序 L4 → L3 → 压 L2；**L1 永不删**。仍 `> 硬 cap` → **DSGN
 
 - 已知历史偏离例：`skill-factory/design/` 等 — migrate 时按 DSGN-M 逐项清。
 - **待一起 review：** **DSGN-B** 硬 cap 数字、sub-feature 是否正式 MUST、`raw/` 子目录是否够用。AI edit 上限见 parent HLD §4；agent 全局 norm（含 §5 decision-history、§6 CLAUDE+skill）见 parent HLD。
+- **DSGN-E** 代码引用须带 commit（ARD-AQ）。每个 `IMPL-*` 有完成判据；先读后写；未上线的合作方接口写 mock（ARD-AT）。
+- **DSGN-E** design 拆篇时，13 个必需节只要求入口 `<f>-design.md`；part 链回入口，只写本 aspect（ARD-AV）。
+- **DSGN-E** 必需节用英文、不编号、不翻译。有序流程另加的节可以编号（ARD-AW）。Decision Log 可加 Ready 列，仍禁止 Status 与 Supersedes（ARD-AX）。
+- **DSGN-E** 一份问题 tracker 用 `QUES-` 字母号，正文有 Question、Answer、Owner（ARD-AO）。`all N questions` 等于行数（ARD-BB）。引用处的状态与 tracker 一致（ARD-BC）。
+- **DSGN-F** 步骤号是位置，不是永久 ID（ARD-AM）。迁入旧编号留对照表；改标题保留旧锚点（ARD-AP）。`§N` 落到 N 或其上下级；步骤段不重叠（ARD-AZ）。
+- **DSGN-G** 面向不同读者的篇，开头写明本篇对哪些事实有权威、不一致时先改哪篇（ARD-AL）。
+- **DSGN-H** 不变量写成表（ARD-AR）。图只解释散文说不清的流程；状态用表；一节一张时序图，消息数等于步骤段（ARD-BE）。
+- **DSGN-J** 就绪度可写在条目内；条目可就地修订；未决项按负责人分组（ARD-AN）。正文废弃旧口径时指向新 ARD（ARD-AS）。
+- **DSGN-C** 本地翻译副本不提交；开头写明以原文为准；标题可翻译（ARD-AU）。
 
 ## Alternatives Considered
 
@@ -397,6 +410,7 @@ Trim 顺序 L4 → L3 → 压 L2；**L1 永不删**。仍 `> 硬 cap` → **DSGN
 | 2026-11-03 | 前缀 `Design`→`DSGN`，`TEST`→`TST` |
 | 2026-11-03 | D1-5：ID immutable；D8 MUST 引用 |
 | 2026-11-03 | D1-5：凡有序号即前缀 ID；禁裸数字/伪前缀 |
+| 2026-11-06 | Open Questions 的 ID 前缀为 `QUES`（`QUES-A`，禁止 `QUES-1` / `OQ-1`） |
 | 2026-11-03 | 本篇 `D1`–`D8`/`D1-*` 重命名为 **DSGN-A**–**DSGN-M** |
 | 2026-11-03 | Testing Decisions → `../test-plan/document-standard-test-plan.md` |
 | 2026-11-03 | Feature 级 test plan（parent 仅 harness） |
@@ -407,3 +421,8 @@ Trim 顺序 L4 → L3 → 压 L2；**L1 永不删**。仍 `> 硬 cap` → **DSGN
 | 2026-11-04 | design 补 User Stories / Implementation Decisions 章节 |
 | 2026-11-04 | decision-history 硬 cap 改为不设，与 ARD-E 一致 |
 | 2026-11-04 | decision-history 去掉「宜 ≤600 行」，目标行数也不设 |
+| 2026-11-06 | impl-plan 正文：依赖、挡住谁、Execution order |
+| 2026-11-07 | 入口改为 spec-write 与 spec-review；标准见两份摘要（ARD-AJ） |
+| 2026-11-07 | 开篇被测改为 spec-write / spec-review，与 test-plan 一致 |
+| 2026-11-07 | Further Notes 写入 ARD-AM–BE 的 DSGN-C/E/F/G/H/J 规则 |
+| 2026-11-07 | DSGN-D：book/html 镜像 features 树（ARD-BF） |

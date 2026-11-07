@@ -1,11 +1,9 @@
 ---
 name: spec-organize
 description: |
-  Use when creating, moving, reorganizing, or merging documentation, when a
-  document needs checking against the project's doc standard, or when specs and
-  code have drifted apart. Use when deciding where a document belongs, how to
-  name it, which files to consolidate, or how to reconcile documents that
-  disagree.
+  Not an entry skill (ARD-AJ). Standards live in SPEC-STANDARD.md and
+  SPEC-PRESENTATION.md. Use spec-write to create or edit a spec. Use
+  spec-review to review one. This file keeps organize modes as reference.
 license: MIT
 compatibility: claude-code,opencode
 metadata:
@@ -33,6 +31,10 @@ metadata:
 
 # spec-organize
 
+**Not an entry skill (ARD-AJ).** Path, permission, scope, what to write, and evidence are in `SPEC-STANDARD.md`. Presentation is in `skills/spec-html-standard/SPEC-PRESENTATION.md`. To create or edit a spec, use **spec-write**. To review, use **spec-review**. The modes below are reference for those standards.
+
+Lint wired in `tools/run_spec_checks.py`: Stale paired HTML, audience, Dead anchors, Unanchored code citations, Open-question tracker, Step drift, Diagram/step drift, impl-plan task lines, translation banner, resolved refs, counts. Do not number a required heading. A part file only needs a link back to the design entry.
+
 Defines the project's documentation standard, then enforces it in four modes:
 place a document, lint the tree against the standard, consolidate sprawl into one
 file per type, and sync documents with each other and with the code.
@@ -56,10 +58,12 @@ file per type, and sync documents with each other and with the code.
 
 ## Example Domains
 
-Placement rules are domain-agnostic. The same paths, IDs, and size caps apply to
-the four PRD-Q examples: **盖 shed** (garden shed), **北京旅游** (Beijing trip),
-**数学题** (math problem), **股票** (stock analysis). They are illustrations, not
-gold cases; gold lives outside this repo.
+Illustrations, not gold. Gold lives outside this repo.
+
+- **盖 shed**: the permit limit is `PRD-A` in `docs/features/garden-shed/prd/garden-shed-prd.md`. The build sequence is `design/`, not a second prd.
+- **北京旅游**: the budget cap is a PRD requirement. The day-by-day route is `design/`. An undecided hotel stays in design `Open Questions`.
+- **数学题**: the definition being learned is `prd`. The step order is `design/`. A lemma with no source is `UNKNOWN`, not a guessed proof.
+- **股票**: the claim under analysis is `prd`. The filing URL or `raw/` note is evidence on `design/`. A missing 10-K is `UNKNOWN`.
 
 ## Authority by Concern
 
@@ -150,7 +154,7 @@ Six committed types, one local type. Every document belongs to exactly one.
 |---|---|---|
 | `prd` | What to build and why — product-level requirements | yes |
 | `design` | How it is built — technical detail, interfaces, design decisions | yes |
-| `impl-plan` | The task breakdown that implements the spec | yes |
+| `impl-plan` | Tasks with dependencies and an execution order: what blocks what, what to do first | yes |
 | `test-plan` | How the implementation is verified | yes |
 | `decision-history` | Every decision ever made for the feature, in order | yes |
 | `how-to` | Operational instructions for using the result | yes |
@@ -233,22 +237,22 @@ dropped.
 
 | Type | Required sections |
 |---|---|
-| `prd` | Overview, Goals and Success Metrics, User Stories, Functional Requirements, Non-Functional Requirements, Out of Scope |
-| `design` | Problem Statement, Solution, User Stories, Implementation Decisions, Design, Testing Decisions, Out of Scope, Further Notes |
-| `impl-plan` | Global Constraints, then numbered Tasks |
+| `prd` | Overview, Goals and Success Metrics, User Stories, Functional Requirements, Out of Scope, Resources Needed |
+| `design` | Problem Statement, Solution, User Stories, Implementation Decisions, Design, Testing Decisions, Out of Scope, Further Notes, Alternatives Considered, Drawbacks, Risks and Mitigations, Open Questions, Reversibility |
+| `impl-plan` | Global Constraints, Acceptance Criteria |
 | `test-plan` | Test Cases, Test Execution Order, Expected Pass Threshold |
 | `decision-history` | Decision Log, Evidence Appendix |
 | `how-to` | Overview, Prerequisites, Steps, Verification |
 
-`prd` carries product intent. `spec` carries technical intent and the `Design`
-section replacing the old separate design document. `Implementation Decisions`
-records architecture-level choices and their rationale — not class structure,
-private methods, or internal algorithms. See `SPEC-SCOPE.md`.
+`prd` carries product intent. `design` carries technical intent.
+`Implementation Decisions` records architecture-level choices and their
+rationale — not class structure, private methods, or internal algorithms. See
+`SPEC-SCOPE.md`.
 
-`spec` may also carry an optional `Alternatives Considered` section holding the
-rejected approaches and why each lost. It is L3 and the first thing deleted when
-the document runs long; omit it when no alternative was seriously considered.
-`to-spec` produces it as part of its template.
+On `design`, `Alternatives Considered` lists rejected approaches and why each
+lost. `Drawbacks` is what is bad about the chosen design. `Risks and
+Mitigations` is what can go wrong in use. `Open Questions` lists unresolved
+items with an owner. `Reversibility` covers undo, return, and rollback.
 
 ### Decision history
 
@@ -275,8 +279,6 @@ original rationale and supporting content:
 ```markdown
 ### ARD-A — Adopt kebab-case for feature directories
 
-Status: accepted
-
 Rationale as originally recorded, including any alternatives that were
 considered and why they were rejected. Support content belongs here: benchmark
 output, links to the discussion that produced the decision, quoted constraints.
@@ -302,30 +304,14 @@ Research, discussion, and adversarial-review artifacts are working material, not
 documents. They live under the feature but are gitignored and never committed:
 
 ```
-docs/features/<feature>/research/<topic>.md
-docs/features/<feature>/discussion/<topic>.md
-docs/features/<feature>/state/state-<YYYY-MM-DD>.md
+docs/features/<feature>/raw/research/<topic>.md
+docs/features/<feature>/raw/discussion/<topic>.md
+docs/features/<feature>/raw/state/state-<YYYY-MM-DD>.md
 ```
 
-Add these to `.gitignore`:
-
-```gitignore
-docs/features/*/research/
-docs/features/*/discussion/
-docs/features/*/state/
-```
-
-**Not to be confused with `.scratch/`.** Two gitignored trees exist by design,
-and they hold different things:
-
-| Tree | Holds | Written by |
-|---|---|---|
-| `docs/features/<feature>/` | Reasoning material — research, discussion, adversarial review, progress state | This skill, and the skills that produce reasoning |
-| `.scratch/<feature-slug>/` | Ephemeral build artifacts — tickets and issues | wayfinder and to-tickets |
-
-Reasoning is worth keeping on disk next to the feature it belongs to. Tickets are
-throwaway work items and stay outside the docs tree. This skill does not manage
-`.scratch/`, and Lint does not report it.
+`raw/**` is local only. Do not commit it. `.scratch/<feature-slug>/` holds
+tickets and issues, not spec prose. Do not move `raw/` into `.scratch/`. Lint
+does not report either tree.
 
 ### INDEX.md
 
@@ -370,7 +356,7 @@ is spec-review, not this skill.
    user before going further.
 4. Compute the path: `docs/features/<feature>/<type>/<feature>-<type>.md`.
 5. If that file already exists, do not create a second one — unless the type is
-   `spec` or `impl-plan` and the existing file is at the 1,000-line cap. Prefer
+   `design` or `impl-plan` and the existing file is at the 1,000-line cap. Prefer
    merging into the existing file in the right section and appending a Change Log
    entry. Split only when the cap forces it, and name the parts by the rules
    above.
@@ -389,9 +375,11 @@ rest.
 2. Check each file against the standard:
    - **Wrong root** — a doc tree under `docs/initiatives/` or `docs/<feature>/`,
      outside `docs/features/`
-   - **Wrong type directory** — a directory not in the six types: `design/`,
-     `plan/`, `raw/`, `reference/`, `mockups/`, `work-review/`, `issues-found/`,
-     `devil-advocate/`, `wrong-history/`
+   - **Wrong type directory** — a committed directory other than the six types
+     `prd/`, `design/`, `impl-plan/`, `test-plan/`, `decision-history/`,
+     `how-to/`. Wrong examples: `plan/`, `reference/`, `mockups/`,
+     `work-review/`, `issues-found/`, `devil-advocate/`. `raw/` and `.scratch/`
+     are local-only; they are not wrong directories.
    - **Wrong filename** — not `<feature>-<type>.md`
    - **Missing or invalid frontmatter** — any of the four fields absent, or
      `state` outside `draft|final`, or `final` without `final_date`
@@ -433,12 +421,11 @@ it proposes and waits — it never applies without approval.
    - Multiple decision records become one `decision-history`, with the Decision
      Log in chronological order and every original preserved in the Evidence
      Appendix. Nothing is dropped, including superseded and incorrect decisions.
-   - `research/`, `discussion/`, `devil-advocate/`, and `raw/` content moves to
-     gitignored scratch, or is deleted if it has no continuing value. Cite what
-     it supported before removing it.
-   - A `reference/` file is a supporting file, not scratch. Move it into the
-     folder of the document it supports — a source cited by the spec goes to
-     `design/` — and keep it committed so the citation stays verifiable.
+   - Top-level `research/`, `discussion/`, and `devil-advocate/` move under
+     `raw/`. Do not move `raw/` into `.scratch/`. Cite what a deleted note
+     supported before removing it.
+   - A `reference/` file is not a committed type. Move it next to the document
+     that cites it, or under `raw/` if it must stay uncommitted.
 3. Present the plan: every move, merge, and deletion, with the target of each.
 4. On approval, apply it, regenerate INDEX.md, and append Change Log entries.
 5. If a decision is being overwritten by consolidation, add a superseding entry
@@ -509,8 +496,8 @@ NICE:
 ## Anti-Patterns
 
 - **Creating a second file for a type that already exists.** A feature has one
-  `spec` until it crosses the 1,000-line cap. Add to the existing file rather
-  than creating `spec-v2.md`, and split only on a real boundary.
+  `design` until it crosses the 1,000-line cap. Add to the existing file rather
+  than creating `design-v2.md`, and split only on a real boundary.
 - **Splitting a spec to dodge the cap without a boundary.** A split part is a
   bounded context, not a page break.
 - **Numbering spec parts.** A number says nothing about the contents. Plans are

@@ -16,6 +16,30 @@ Decision Log uses **`ARD-{letter}`** IDs (document-standard **DSGN-F**, **DSGN-J
 
 | ID | Date | Decision |
 |---|------|----------|
+| ARD-BG | 2026-11-07 | One site at docs/book/html/index.html. Each spec page is one directory line. The directory opens a feature. Inside a feature the left side is that feature's directory and the right side is the page |
+| ARD-BF | 2026-11-07 | Spec HTML lives under docs/book/html/ and mirrors docs/features/. Parent and sub-feature HTML both go there. Markdown stays in the feature tree |
+| ARD-BE | 2026-11-07 | A diagram explains a flow prose cannot. One flow, one diagram. A steps a–b heading that contains a sequence diagram has b−a+1 messages |
+| ARD-BD | 2026-11-07 | External gold is a manifest of commits and expected findings. The private spec text is not copied into this repo |
+| ARD-BC | 2026-11-07 | A QUES citation's status mark matches the tracker. A closed item is not called open in the citing prose |
+| ARD-BB | 2026-11-07 | Tracker counts match: all N questions equals the row count; each status tally equals rows with that status |
+| ARD-BA | 2026-11-07 | A hand-maintained HTML changelog has one row for each date in the markdown Change Log |
+| ARD-AZ | 2026-11-07 | A §N link lands on heading N or its parent or child. Steps ranges in one doc do not overlap |
+| ARD-AY | 2026-11-07 | A design may link to a question tracker instead of copying the ownership table, when every tracker row has Owner and Evidence |
+| ARD-AX | 2026-11-07 | Decision Log may add a Ready column. Status and Supersedes columns stay forbidden |
+| ARD-AW | 2026-11-07 | Required headings stay English and unnumbered. A section added for an ordered procedure may be numbered |
+| ARD-AV | 2026-11-07 | A split design requires the 13 sections only on the entry file. A part links back and covers its own aspect |
+| ARD-AU | 2026-11-07 | A local translation is not committed. Its first lines name the source file as authoritative. Headings may be translated |
+| ARD-AT | 2026-11-07 | Each IMPL task has a done line. Order is read side before write side. An unbuilt partner port has a mock |
+| ARD-AS | 2026-11-07 | Body text that drops an old claim points at the new ARD. Strike stays for decision history. Typos may be edited in place |
+| ARD-AR | 2026-11-07 | An invariant is a table of records or impossible states, not a slogan |
+| ARD-AQ | 2026-11-07 | A file:line citation in design or impl-plan names the commit it was read at |
+| ARD-AP | 2026-11-07 | An id migration keeps an old-to-new table. A renamed heading keeps the old anchor |
+| ARD-AO | 2026-11-07 | One open-question tracker per feature. Other docs link to it. Entries are QUES-letter with Question, Answer, and Owner |
+| ARD-AN | 2026-11-07 | Readiness may be recorded in the decision text or a Ready mark. A row may be revised in place. Open items group by owner |
+| ARD-AM | 2026-11-07 | A procedure step number is a position, not a permanent id. Impl and test cite the same step range |
+| ARD-AL | 2026-11-07 | Optional frontmatter audience is internal or external. Each section names its authoritative artifact. Design section ids need not match a partner design |
+| ARD-AK | 2026-11-07 | Markdown is the full text. Hand-maintained HTML carries spec-source and sha256; a mismatch is paired_html_stale. Generated HTML is rebuilt |
+| ARD-AJ | 2026-11-07 | Entry skills are spec-write and spec-review. Standards: SPEC-STANDARD.md and SPEC-PRESENTATION.md. spec-organize and spec-pipeline are not entry skills |
 | ARD-AI | 2026-11-04 | This spec consolidation is an explicitly authorized restructure; larger-than-10-line edits are allowed for this batch |
 | ARD-AH | 2026-11-04 | The human-readable reader is the only HTML deliverable; the legacy summary HTML is deleted |
 | ARD-AG | 2026-11-04 | Convergence is auto-decided: open decisions must carry a structured `blocking` flag; AI does not self-declare "stable" |
@@ -23,14 +47,14 @@ Decision Log uses **`ARD-{letter}`** IDs (document-standard **DSGN-F**, **DSGN-J
 | ARD-AE | 2026-11-04 | Non-software problems map to the same five artifacts; design carries the ownership table; evidence is mandatory and unknowns are marked UNKNOWN |
 | ARD-AD | 2026-11-04 | Eval uses deepseek-flash with 3 independent runs; gold has case/version/exemplar/annotations; runs and reports are not committed; four examples are skill-doc examples, not repo gold |
 | ARD-AC | 2026-11-04 | PRD required sections drop NFR; IDs are scoped feature+type and cross-feature references use feature/ID; how-to stays unchecked |
-| ARD-AB | 2026-11-04 | Four deliverables: spec-pipeline, spec-organize, spec-review, spec-write |
+| ~~ARD-AB~~ | 2026-11-04 | ~~Four deliverables: spec-pipeline, spec-organize, spec-review, spec-write~~ → [ARD-AJ](#ard-aj--entry-skills-are-spec-write-and-spec-review) |
 | ARD-AA | 2026-11-04 | Multi-participant decisions use the latest decision-history entry; if order is unclear, ask the user; AI never guesses |
 | ARD-Z | 2026-11-04 | Downstream waits until the PRD states limitation, preference, timeline, resource, and tool, each filled or marked not apply, and design plus decision history both exist |
 | ARD-Y | 2026-11-04 | Map split: AI offers options; ≤20 hours for one person is one feature spec; over that, split into peer or sub-feature; AI estimates and judges |
 | ARD-X | 2026-11-04 | Execution delivery is a mock MCP client call to a mock server; a printed log is success; no live booking or orders |
 | ARD-W | 2026-11-04 | Readability is scored by an LLM playing a bachelor's-level programmer; pass means it understands |
 | ~~ARD-V~~ | 2026-11-04 | ~~Hard non-software problems stay in this PRD and use the same five artifacts; four gold examples~~ → [ARD-AD](#ard-ad--eval-uses-deepseek-flash-with-3-independent-runs) |
-| ARD-U | 2026-11-03 | Pipeline deliverable is **spec-pipeline** orchestrator; Map is interview-led with AI-judged outputs; state CLAUDE.local then `raw/state/` |
+| ~~ARD-U~~ | 2026-11-03 | ~~Pipeline deliverable is spec-pipeline orchestrator; Map is interview-led; state CLAUDE.local then raw/state/~~ → [ARD-AJ](#ard-aj--entry-skills-are-spec-write-and-spec-review) |
 | ARD-T | 2026-11-03 | wayfinder-import is not an SDD sub-feature; its tree under `features/wayfinder-import/` is removed |
 | ARD-S | 2026-11-03 | Gold set grows in both directions and is versioned; scores compare only within one gold version |
 | ARD-R | 2026-11-03 | Two eval scores: MUST `x/total` must be full; exemplar score `(plus−minus)×10/total` must not regress |
@@ -233,7 +257,8 @@ spec-write and prompts for spec-review before commit. **Map** relies on human
 interview; outputs (split, decision, scratch) are **AI-judged**, not a fixed
 file template. **State** lives in CLAUDE.local until feature create sets `<f>`,
 then in `docs/features/<f>/raw/state/`. Rejected: rigid Map MUST artifacts and
-repo-root BMAD-style state trees.
+repo-root BMAD-style state trees. Superseded as an entry skill by ARD-AJ.
+Create, Map, Converge, and Downstream stay in pipeline-design as reference steps.
 
 ### ARD-T — wayfinder-import is not an SDD sub-feature
 
@@ -241,6 +266,8 @@ Wayfinder import is a separate skill-factory / import effort, not part of the
 SDD deliverable (spec-organize, spec-review, spec-write). The nested tree under
 `spec-driven-development/features/wayfinder-import/` is removed; wayfinder work
 continues elsewhere if needed. ARD-I's multi-spec exception remains historical.
+
+<a id="ard-o--skills-are-spec-organize-main-spec-review-spec-write-the-standard-file-is-spec-organizespec-standardmd"></a>
 
 ### ARD-O — Skills are spec-organize (main), spec-review, spec-write
 
@@ -310,6 +337,102 @@ PIPE-E1–E3 are checked automatically; every open decision must carry a structu
 
 The human explicitly authorized a one-shot consolidation of the SDD spec docs. Edits larger than the normal 10-line / 200-character cap are allowed for this batch; the normal cap resumes afterward.
 
+### ARD-AJ — Entry skills are spec-write and spec-review
+
+Entry skills are spec-write and spec-review. Path, permission, scope, what to write, and evidence live in `skills/spec-organize/SPEC-STANDARD.md`. Prose, format, style, tables, and icons live in `skills/spec-html-standard/SPEC-PRESENTATION.md`. spec-organize and spec-pipeline are not entry skills. Supersedes ~~ARD-AB~~.
+
+### ARD-AK — Markdown is the full text
+
+A generated reader is rebuilt from markdown and carries no `spec-paired` meta. A hand-maintained HTML file names its markdown in `spec-source` and stores `spec-source-sha256`. If the hash differs, check `paired_html_stale` fails.
+
+### ARD-AL — Audience and per-section authority
+
+`audience` may be `internal` or `external`. A missing key is not a failure, so existing documents stay valid. Any other value fails `frontmatter`. A section states which artifact owns its facts. A partner design may use different section ids.
+
+### ARD-AM — Step numbers are positions
+
+A step number locates a procedure. It is not a permanent id. Inserting a step renumbers that section and the citations of it.
+
+### ARD-AN — Readiness and in-place revision
+
+A decision may say it is settled here and waiting on another team. Wording may be revised in the same row. Open items are grouped by owner.
+
+### ARD-AO — One question tracker
+
+When many docs cite the same questions, one tracker holds them. Other docs link. A tracker entry is `QUES-` plus a letter, with Question, Answer, and Owner.
+
+### ARD-AP — Old anchors stay
+
+An id migration keeps an old-to-new table. A renamed heading keeps the previous anchor.
+
+### ARD-AQ — Cite the commit
+
+A `file:line` citation in design or impl-plan names the commit it was read against.
+
+### ARD-AR — Invariants as data
+
+An invariant is a table of stored records, or of states that must not occur, with who guarantees each row.
+
+### ARD-AS — Point at the new decision
+
+Prose that drops an old claim points at the replacing ARD. A typo may be edited in place. Strike-through stays the decision-history form.
+
+### ARD-AT — Done line, order, mock
+
+Each `IMPL-*` has a done line. Work that reads runs before work that writes. A partner port that is not live has a mock.
+
+### ARD-AU — Translation is a local copy
+
+A `<name>.<lang>.md` copy is not committed. Its opening names `<name>.md` as the source. Headings in the copy may be translated.
+
+### ARD-AV — Required sections on the entry
+
+A design split into parts requires the full section list only on `<f>-design.md`. A part links back and writes only its aspect.
+
+### ARD-AW — Number only a procedure
+
+Required headings stay the English text, unnumbered. A section that exists to hold an ordered procedure may carry a number.
+
+### ARD-AX — Optional Ready column
+
+The Decision Log may add Ready. It still has no Status column and no Supersedes column.
+
+### ARD-AY — Tracker may replace the ownership table
+
+If every tracker row has Owner and Evidence, the design may link to that tracker instead of copying the ownership table.
+
+### ARD-AZ — Section links and step ranges
+
+A link written as §N lands on heading N or on its parent or child. Step ranges in one document do not overlap.
+
+### ARD-BA — HTML changelog covers each md date
+
+A hand-maintained reader has a changelog row for every date in the markdown Change Log.
+
+### ARD-BB — Tracker counts match
+
+`all N questions` equals the number of tracker rows. A status tally equals the rows that carry that status.
+
+### ARD-BC — Cited status matches the tracker
+
+The status next to a QUES link matches the tracker row. A closed row is not described as still open.
+
+### ARD-BD — External gold stays outside
+
+The manifest stores the repo path, the defect commit, the gold commit, expected findings, and allowed misses. The private spec text is not copied here.
+
+### ARD-BE — Diagrams carry the flow
+
+One flow, one diagram. A heading that says steps a–b and contains a sequence diagram has b−a+1 messages. State lives in a table. The diagram adds no fact the prose lacks.
+
+### ARD-BF — Spec HTML under book
+
+`docs/book/html/` repeats the `docs/features/` tree. A parent reader is `docs/book/html/<parent>/<parent>-reader.html`. Other spec HTML uses that same relative path with a `.html` suffix. Markdown stays in `docs/features/`.
+
+### ARD-BG — One site, feature directory on the left
+
+`docs/book/html/index.html` lists every feature. Each spec page is one line in that directory. Opening a feature shows that feature's pages on the left and the page body on the right.
+
 ## Path Update — 2026-10-30
 
 The feature was restructured into sub-features. The paths referenced in the
@@ -338,3 +461,11 @@ pointer. No decision was changed.
 | 2026-11-04 | ARD-Z：PRD 五项写明或 not apply；design 与 decision history 都在才进 Downstream |
 | 2026-11-04 | PRD-F 关闭 ARD-M 的延期：按 history 时间，否则问用户。无新 ARD（A–Z 已用完） |
 | 2026-11-04 | ARD-AA–AI：PRD-F 关闭、4 skill、文档标准、eval、非软件映射、未定义项、自动收敛、reader、restructure 授权 |
+| 2026-11-07 | ARD-AJ：入口改为 spec-write 与 spec-review；标准两份文档；organize 与 pipeline 不再是入口 |
+| 2026-11-07 | ARD-U 划掉并链到 ARD-AJ；四阶段名称留在 pipeline-design 作参考 |
+| 2026-11-07 | ARD-AK：手写 HTML 用 spec-source 与 sha256；不一致则 paired_html_stale |
+| 2026-11-07 | ARD-AL：audience 只允许 internal 或 external；缺省不算失败 |
+| 2026-11-07 | ARD-AM–BE：步骤号、tracker、锚点、commit、图、外部 gold（逐字稿） |
+| 2026-11-07 | 保留 ARD-O 旧锚点（ARD-AP） |
+| 2026-11-07 | ARD-BF：spec HTML 统一放 docs/book/html/，目录与 features 同构 |
+| 2026-11-07 | ARD-BG：全站一份目录；feature 页左目录右正文 |

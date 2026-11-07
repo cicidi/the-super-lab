@@ -10,7 +10,7 @@ last_verified: 2026-11-04
 
 # Spec-Driven Development — Pipeline
 
-本篇定义 **spec-pipeline** 编排 skill：轻量 **guidance + 接口**。凡 **写/改 feature spec** 的工作 **先进 spec-pipeline**，由它按阶段 **推荐并调用** 其它 skill、维护 **轻量 state**、在提交前 **询问 review**、在迷路时 **recap**。
+本篇是阶段步骤的参考，不是入口 skill（ARD-AJ）。写或改 feature spec 从 **spec-write** 进入，提交前由 **spec-review** 询问。阶段、state、recap 仍记在本篇。
 
 文档格式、路径、ID、体量见 sibling **`../document-standard/design/document-standard-design.md`**（**DSGN-A–M**）。本篇 **link，不 restate**。
 
@@ -44,7 +44,7 @@ Create → Map → Converge ⇄ (PRD ↔ design ↔ decision-history) → Downst
 
 ## Implementation Decisions
 
-- **编排** = **spec-pipeline**；**标准** = **spec-organize**；**写** = **spec-write**；**审** = **spec-review**（提交前由 pipeline **询问**，非 silent 强制）。
+- **标准** = SPEC-STANDARD.md 与 SPEC-PRESENTATION.md；**写** = **spec-write**；**审** = **spec-review**。spec-pipeline 与 spec-organize 不是入口（ARD-AJ）。
 - **Map** 以 **interview** 为主；**AI 判断** 是否记 decision、建议拆 feature、或仅 scratch task；**人确认** 后才创建 `docs/features/<f>/` 路径。
 - Map 工具（示例 **wayfinder**）经 **推荐表** 调用，**可替换**；不在 SDD deliverable 清单。
 - **State：** **feature create 完成、`<f>` 未确定前** — 进度只写在 **`CLAUDE.local.md`**（或项目 CLAUDE 层），**不** 创建 `raw/state/*.md`。**`<f>` 确定后** — 权威 state 在 **`docs/features/<f>/raw/state/state-<YYYY-MM-DD>.md`**（document-standard **DSGN-B/C**）。
@@ -59,7 +59,7 @@ Create → Map → Converge ⇄ (PRD ↔ design ↔ decision-history) → Downst
 
 **来源：PRD-A**（在既有 pipeline 上改进，不另造编排）。
 
-- **PIPE-A1** 任意「写/改 spec」任务 **经 spec-pipeline 进入**（除非 human 显式跳过并记入 state/recap）。
+- **PIPE-A1** 任意「写/改 spec」任务从 **spec-write** 进入，并先按 SPEC-STANDARD 判断新建或改哪些文（ARD-AJ）。
 - **PIPE-A2** 调用 **spec-organize** 执行标准、Lint、Organize（路径/格式以 organize 为准）。
 - **PIPE-A3** 调用 **spec-write** 执行文稿增删改（含 parent HLD §4 小步编辑 norm）。
 - **PIPE-A4** 在 **提交/推送 committed 变更前**，**询问** 是否 **spec-review**；用户拒绝则记录，不 silent 跳过审计痕迹。
@@ -105,7 +105,7 @@ Create → Map → Converge ⇄ (PRD ↔ design ↔ decision-history) → Downst
 
 - **test-plan** 与 **impl-plan** **并行**启动；**互不** 串行依赖；均从 **design 篇** 总结。
 - **test-plan：** 每项任务 **完成检查** + **regression guard**（PIPE-F1）。
-- **impl-plan：** 有序 task + 准备项（PIPE-F2；task 粒度 **下一轮 impl 讨论**）。
+- **impl-plan：** 每条任务写依赖与挡住谁；被挡住的后做，没被挡住的先做（PIPE-F2）。
 
 ### PIPE-G — Skill 推荐（接口）
 
@@ -170,6 +170,7 @@ Create → Map → Converge ⇄ (PRD ↔ design ↔ decision-history) → Downst
 - 归属只取三值；人没问到的盲区与风险，AI 必须主动补行。
 - 依据必须可追溯；查不到写 `UNKNOWN`，不得写推测。
 - **spec-review** 检查「有结论但无依据」与「该标 UNKNOWN 却写了事实」。
+- **MAY（ARD-AY）：** 子问题都已是 tracker 条目，且每条有 Owner 与 Evidence 时，design 用一行链接代替归属表。没有 tracker 的 feature 仍用表。
 
 ## Testing Decisions
 
@@ -238,3 +239,7 @@ Create → Map → Converge ⇄ (PRD ↔ design ↔ decision-history) → Downst
 | 2026-11-04 | PIPE-D 第 7 点：子问题标归属，AI 必须提出人没问的风险 |
 | 2026-11-04 | PIPE-K 非软件五篇映射；PIPE-L 归属与证据；spec-pipeline 标 Unverified |
 | 2026-11-04 | PIPE-E1 加 blocking 字段；PIPE-L 标注纯标准/编排 design 可 not apply |
+| 2026-11-06 | PIPE-F2：impl 写依赖与挡住谁；被挡住的后做 |
+| 2026-11-07 | 入口改为 spec-write 与 spec-review；本篇步骤不再是入口 skill（ARD-AJ） |
+| 2026-11-07 | 开头与 PIPE-A1：写改 spec 从 spec-write 进入（ARD-AJ） |
+| 2026-11-07 | PIPE-L：tracker 已有 Owner 与 Evidence 时，design 可链过去（ARD-AY） |

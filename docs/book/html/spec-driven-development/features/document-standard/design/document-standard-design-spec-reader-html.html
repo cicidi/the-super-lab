@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Document Standard — Spec Reader HTML（Design） · design · Spec Atlas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:400,400italic,500,500italic,700|Roboto+Mono:400,500,700|Noto+Sans+SC:400,500,700&display=swap">
+<link rel="stylesheet" href="../../../../assets/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><a href="../../../../index.html"><span class="brand-mark">SDD</span><span class="brand-name">Spec Atlas</span></a></div>
+  </div>
+</header>
+<div class="site">
+  <aside class="sidebar">
+  <nav aria-label="Directory">
+    <div class="tree-overview"><a class="tree-link" href="../../../../index.html"><span class="tree-link__num">00</span>All features</a></div>
+    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../../prd/spec-driven-development-prd.html"><span class="tree-link__num">16</span>Spec-Driven Development — PRD</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../../design/spec-driven-development-design.html"><span class="tree-link__num">18</span>Spec-Driven Development — HLD</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../../design/spec-driven-development-design-skill-contracts.html"><span class="tree-link__num">17</span>Spec-Driven Development — Skill Contracts</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="document-standard-design.html">document-standard</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../prd/document-standard-prd-spec-reader-html.html"><span class="tree-link__num">15</span>Document Standard — Spec Reader HTML（PRD）</a></li><li class="tree-leaf"><a class="tree-link" href="document-standard-design-spec-reader-html.html" aria-current="page"><span class="tree-link__num">19</span>Document Standard — Spec Reader HTML（Design）</a></li><li class="tree-leaf"><a class="tree-link" href="document-standard-design.html"><span class="tree-link__num">20</span>Document Standard — 文档标准（待 Review）</a></li></ul></details></li><li class="tree-leaf"><a class="tree-link" href="../../../spec-driven-development-reader.html">spec-driven-development — Reader</a></li></ul></details></li><li class="tree-leaf"><a class="tree-link" href="../../../impl-plan/spec-driven-development-impl-plan.html"><span class="tree-link__num">21</span>Spec-Driven Development — Implementation Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../../../test-plan/spec-driven-development-test-plan.html"><span class="tree-link__num">22</span>Spec-Driven Development — Test Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../../../decision-history/spec-driven-development-decision-history.html"><span class="tree-link__num">23</span>Spec-Driven Development — Decision History</a></li></ul>
+  </nav>
+</aside>
+  <main class="content">
+    <nav class="breadcrumbs"><a href="../../../../index.html">Docs</a> / <span>spec-driven-development</span> / <span>features</span> / <span>document-standard</span> / <span>design</span> / <span>Document Standard — Spec Reader HTML（Design）</span></nav>
+    <article class="doc" data-doc="spec-driven-development/features/document-standard/design/document-standard-design-spec-reader-html">
+      <header class="doc-head">
+        <p class="eyebrow">spec-driven-development</p>
+        <h1>Document Standard — Spec Reader HTML（Design）</h1>
+        <p class="source">Canonical: docs/features/spec-driven-development/features/document-standard/design/document-standard-design-spec-reader-html.md</p>
+      </header>
+      
+      <div class="doc-body">
+        <h2>Document Standard — Spec Reader HTML（Design）</h2>
+<p>入口文件：<a href="document-standard-design.html">document-standard-design.md</a>。</p>
+<p><strong>Aspect design：</strong> <strong><a href="#DSGN-N">DSGN-N</a></strong>（spec reader / human HTML 汇编）。PRD：<strong><a href="../prd/document-standard-prd-spec-reader-html.html#PRD-A">PRD-A</a>–P</strong> 见 <a href="../prd/document-standard-prd-spec-reader-html.html"><code>../prd/document-standard-prd-spec-reader-html.md</code></a>。与 <strong><a href="document-standard-design.html#DSGN-B">DSGN-B</a></strong> 路径、<strong><a href="document-standard-design.html#DSGN-I">DSGN-I</a></strong> 优先级、<strong><a href="document-standard-design.html#DSGN-F">DSGN-F</a></strong> ID 引用一致。<strong>Implementation：</strong> <a href="../../../../../../../skills/spec-html-standard/SPEC-HTML-STANDARD.md"><code>SPEC-HTML-STANDARD.md</code></a> 与 <a href="../../../../../../../skills/spec-html-standard/SPEC-PRESENTATION.md"><code>SPEC-PRESENTATION.md</code></a>。MD 是全文，HTML 是阅读视图。spec-write 改 md；spec-review 查保真（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-AJ">ARD-AJ</a>）。</p>
+<h3>Problem Statement</h3>
+<ol>
+<li>Feature spec 多篇、多层，人类难以一次读全。</li>
+<li>「人类可读 HTML」若写成 <strong>短摘要</strong>，review 与 onboarding 会 <strong>漏 MUST</strong>，与 document-standard「L1 永不删」冲突。</li>
+<li>先前 v0 指引（spec-pipeline <a href="../../../../../../../skills/spec-pipeline/SPEC-READER.md"><code>SPEC-READER.md</code></a>）写「summarize and rephrase」易被理解成 <strong>大幅删减</strong> — <strong>废止该解读</strong>；以本篇 <strong><a href="#DSGN-N">DSGN-N</a></strong> 为准。</li>
+</ol>
+<h3>Solution</h3>
+<p>定义 <strong>Spec Reader HTML</strong> 产物：单文件、Tab 化、富排版、<strong>保真优先</strong> 的 derived view；canonical 永远是 committed <code>.md</code>。</p>
+<hr>
+<h3>Design</h3>
+<h4 id="DSGN-N"><a href="#DSGN-N">DSGN-N</a> — Spec Reader HTML 契约</h4>
+<h5 id="DSGN-N-A"><a href="#DSGN-N-A">DSGN-N-A</a> — 产物与路径</h5>
+<div class="table-wrap"><table><thead><tr>
+<th>项</th>
+<th>Rule</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>文件名</strong></td>
+<td>汇编为 <code>&lt;parent&gt;/&lt;parent&gt;-reader.html</code>；其余 HTML 与对应 <code>.md</code> 在 <code>docs/features/</code> 下的相对路径相同，扩展名改为 <code>.html</code></td>
+</tr>
+<tr>
+<td><strong>目录</strong></td>
+<td><code>docs/book/html/</code>（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-BF">ARD-BF</a>）。Parent 与 sub-feature 都在这棵树里，不放在 <code>docs/features/</code> 或 <code>site/</code></td>
+</tr>
+<tr>
+<td><strong>Source of truth</strong></td>
+<td>各 Tab 对应的一篇或多篇 committed <code>.md</code>；HTML <strong>derived</strong>。手写稿须带 <code>spec-source</code> 与 sha256（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-AK">ARD-AK</a>）</td>
+</tr>
+</tbody></table></div>
+<h5 id="DSGN-N-H"><a href="#DSGN-N-H">DSGN-N-H</a> — 单篇阅读视图</h5>
+<p>.md 是 source，HTML 是派生物。<code>&lt;!-- html-skip --&gt;</code> 与已 strike 的历史可省略；不许用它们包住 L1。生成稿带 <code>spec-source-sha256</code>；手写稿带 <code>spec-paired=hand-maintained</code>。hash 不一致则重新生成。手写 changelog 对 md Change Log 的每个日期都有一行（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-BA">ARD-BA</a>）。</p>
+<p>| <strong>参考</strong> | <a href="../../../spec-driven-development-reader.html"><code>docs/book/html/spec-driven-development/spec-driven-development-reader.html</code></a> — 由 <a href="../../../../../../../tools/build_sdd_reader.py"><code>tools/build_sdd_reader.py</code></a> 自 canonical <code>.md</code> 生成（<strong><a href="#DSGN-N-B">DSGN-N-B</a></strong>，<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-BF">ARD-BF</a>） |</p>
+<h5 id="DSGN-N-B"><a href="#DSGN-N-B">DSGN-N-B</a> — 保真（MUST — 回应「不要精简这么多」）</h5>
+<p>映射 <strong><a href="document-standard-design.html#DSGN-I">DSGN-I</a></strong> 到 HTML 汇编：</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Level</th>
+<th>在 HTML 中</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>L1</strong></td>
+<td><strong>全部呈现</strong>：MUST/禁止/必须、functional req 表 <strong>行</strong>、test case <strong>行</strong>、impl task <strong>条目</strong>、decision-history <strong>Log 行</strong>（含 ID）、contract 表 <strong>数据行</strong>、Out of Scope 列表、assumption、boundary、security、error — <strong>禁止</strong> 用一段话代替整张表或整节</td>
+</tr>
+<tr>
+<td><strong>L2</strong></td>
+<td><strong>保留事实</strong>；表述可改写为更短句子或 callout，<strong>不得</strong> 删掉 rationale 中的结论</td>
+</tr>
+<tr>
+<td><strong>L3</strong></td>
+<td>Alternatives 等 <strong>可压缩</strong> 为 bullet +「详见 canonical md」</td>
+</tr>
+<tr>
+<td><strong>L4</strong></td>
+<td>可省略正文，<strong>MUST</strong> footer/link 指向 md</td>
+</tr>
+</tbody></table></div>
+<p><strong>条目 ID（<a href="document-standard-design.html#DSGN-F">DSGN-F</a>）：</strong> HTML 中 <strong>MUST</strong> 保留可见 ID 字符串（<code>PRD-A</code>、<code>DSGN-B</code>、<code>ARD-C</code>、<code>IMPL-C</code>、<code>TST-A</code> 等 — 以 md 为准），便于与 review / registry 对齐。</p>
+<p><strong>禁止（MUST NOT）：</strong></p>
+<ul>
+<li>仅保留「Problem / Solution 各一段」而删掉 <strong>Design</strong> 下各 <strong>DSGN-</strong>* 小节主体。</li>
+<li>用「见 md」代替 <strong>整 Tab</strong>（允许 <strong>节内</strong> L3/L4 指向 md）。</li>
+<li>Markdown 预览器模式：整页 <code>&lt;pre&gt;</code>、或未排版的 raw md 粘贴。</li>
+</ul>
+<p><strong>允许：</strong></p>
+<ul>
+<li>把 md 表格 <strong>重排</strong> 为 HTML <code>&lt;table&gt;</code>（列可合并显示，<strong>行集合不得少</strong>）。</li>
+<li>把长 prose <strong>分段</strong>、加 callout、加 mini flow（Mermaid 或 ASCII），<strong>不减少</strong> L1 断言数量。</li>
+<li>同一 type 多 part 文件 → 同一 Tab 内 <strong>按 part 分 <code>&lt;section&gt;</code></strong> 或子 Tab。</li>
+</ul>
+<h5 id="DSGN-N-C"><a href="#DSGN-N-C">DSGN-N-C</a> — 结构与 Tab</h5>
+<p><strong>Page header（MUST）：</strong> 说明本页为 <strong>阅读用汇编</strong>；权威修改在 <code>.md</code>；列出 parent slug。</p>
+<p><strong>Tab 组 1 — Parent：</strong> 每存在一类 committed 文档一个 Tab：<code>PRD</code> | <code>Design</code> | <code>Impl plan</code> | <code>Test plan</code> | <code>Decision history</code>（<code>how-to</code> 可选 Tab）。</p>
+<p><strong>Tab 组 2+ — Children：</strong> 每个 <code>docs/features/&lt;parent&gt;/features/&lt;sub&gt;/</code> 一组 Tab（或一组内 section per type）。<strong>至少</strong> 纳入 <code>&lt;sub&gt;</code> 的 <code>design/&lt;sub&gt;-design.md</code> 及 design part 文件。</p>
+<p><strong>每 Tab footer（MUST）：</strong> <code>Canonical:</code> + 相对 repo 路径；多 part 时 <strong>列出全部</strong> part 路径。</p>
+<h5 id="DSGN-N-I"><a href="#DSGN-N-I">DSGN-N-I</a> — 全站目录（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-BG">ARD-BG</a>）</h5>
+<p>全项目一份网站，入口 <a href="../../../../index.html"><code>docs/book/html/index.html</code></a>。每一篇 spec HTML 是目录里的一条。目录先进入 feature。进入 feature 后，左侧是该 feature 的目录，右侧是正文。</p>
+<h5 id="DSGN-N-K"><a href="#DSGN-N-K">DSGN-N-K</a> — 正文链接</h5>
+<p>条目号 <code>PRD-</code> <code>DSGN-</code> <code>ARD-</code> <code>IMPL-</code> <code>TST-</code> <code>PIPE-</code> <code>QUES-</code> 链到本 feature 的定义；子 feature 没有该号则链到 parent。<code>docs/features/</code> 下的 <code>.md</code> 链到 <code>docs/book/html/</code> 同路径 HTML；其他现存文件链到该文件。</p>
+<h5 id="DSGN-N-L"><a href="#DSGN-N-L">DSGN-N-L</a> — 左侧五篇</h5>
+<p>feature 左侧只列五篇入口：prd、design、impl-plan、test-plan、decision-history。design part 与 reader 展开在 design 下。子 feature 在这一层占一行，再展开自己的页面。pipeline 不生成 HTML。</p>
+<h5 id="DSGN-N-D"><a href="#DSGN-N-D">DSGN-N-D</a> — 视觉与 HTML 技术</h5>
+<ul>
+<li><strong>SHOULD</strong> 复用 initiative 已有 CSS 模式（参考 <code>spec-driven-development.html</code>、<a href="../document-standard.html"><code>document-standard.html</code></a>：layout、chip、card、callout）。</li>
+<li><strong>SHOULD</strong> 单文件自包含 CSS（v0），便于 <code>file://</code> 或静态托管。</li>
+<li><strong>MAY</strong> 内联 Mermaid（若 initiative 已有先例）；否则 ASCII flow。</li>
+<li><strong>MUST NOT</strong> 依赖运行时 fetch 加载 <code>.md</code> 作为主内容（可 fetch 仅作 debug，非交付形态）。</li>
+</ul>
+<h5 id="DSGN-N-E"><a href="#DSGN-N-E">DSGN-N-E</a> — 流程与标准边界</h5>
+<div class="table-wrap"><table><thead><tr>
+<th>角色</th>
+<th>职责</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>spec-pipeline</strong></td>
+<td>阶段感知；用户要 reader 或 major spec 更新后 <strong>提示/触发</strong>；指示加载 <strong>SPEC-HTML-STANDARD</strong></td>
+</tr>
+<tr>
+<td><strong>spec-html-standard</strong></td>
+<td><a href="../../../../../../../skills/spec-html-standard/SPEC-HTML-STANDARD.md"><code>skills/spec-html-standard/SPEC-HTML-STANDARD.md</code></a> — <strong><a href="#DSGN-N">DSGN-N</a></strong> 可执行摘要；<strong>无</strong> SKILL.md</td>
+</tr>
+<tr>
+<td><strong>spec-write</strong></td>
+<td>只改 <strong>md</strong> 正文，不拥有 HTML 模板</td>
+</tr>
+<tr>
+<td><strong>spec-organize</strong></td>
+<td>路径、INDEX；不替代 reader 汇编</td>
+</tr>
+</tbody></table></div>
+<p><strong>spec-pipeline <a href="../../../../../../../skills/spec-pipeline/SPEC-READER.md"><code>SPEC-READER.md</code></a>（若仍存在）：</strong> 仅 pointer 至本篇 + <strong>SPEC-HTML-STANDARD</strong>，避免双契约。</p>
+<h5 id="DSGN-N-F"><a href="#DSGN-N-F">DSGN-N-F</a> — 何时更新 reader</h5>
+<ul>
+<li>Parent 或 child 任一 committed spec <strong>实质变更</strong>（尤其 L1/L2）后 <strong>SHOULD</strong> 更新 reader。</li>
+<li>用户显式：「生成 reader」「human html」「spec 汇编」「reader 太简了补全」。</li>
+<li><strong>不必</strong> 每次 typo 级 commit 都 regenerate（NICE）。</li>
+</ul>
+<h5 id="DSGN-N-G"><a href="#DSGN-N-G">DSGN-N-G</a> — 未来 md→html</h5>
+<p>可增 <strong>mechanical contract</strong>（例如 design part <code>document-standard-design-md-to-html.md</code>）：映射 md AST → HTML 组件。自动化 <strong>仍 MUST</strong> 满足 <strong><a href="#DSGN-N-B">DSGN-N-B</a></strong>；本篇 + <strong>SPEC-HTML-STANDARD</strong> 为 semantic norm。</p>
+<hr>
+<h3>User Stories</h3>
+<p>（与 PRD <strong><a href="../prd/document-standard-prd-spec-reader-html.html#PRD-G">PRD-G</a>–I</strong> 相同意图；实现验收以 <strong><a href="#DSGN-N-B">DSGN-N-B</a></strong> 为准。）</p>
+<h3>Implementation Decisions</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>ID</th>
+<th>Decision</th>
+</tr></thead><tbody>
+<tr>
+<td><strong><a href="#DSGN-N-H">DSGN-N-H</a></strong></td>
+<td>Reader 契约挂在 <strong>document-standard</strong> sub-feature（非 pipeline design），因属 <strong>文档形态 / 阅读标准</strong>，与 <strong><a href="document-standard-design.html#DSGN-A">DSGN-A</a></strong> 并列扩展</td>
+</tr>
+<tr>
+<td><strong><a href="#DSGN-N-I">DSGN-N-I</a></strong></td>
+<td>v0 手维 HTML；保真规则先写进 spec，避免 agent 再产出「极简 reader」</td>
+</tr>
+<tr>
+<td><strong id="DSGN-N-J"><a href="#DSGN-N-J">DSGN-N-J</a></strong></td>
+<td>可执行层 <strong><a href="../../../../../../../skills/spec-html-standard/SPEC-HTML-STANDARD.md"><code>skills/spec-html-standard/SPEC-HTML-STANDARD.md</code></a></strong>；main design 索引链到 aspect 篇 <strong><a href="#DSGN-N">DSGN-N</a></strong>；<strong>不</strong> 新增 spec-reader skill</td>
+</tr>
+</tbody></table></div>
+<h3>Testing Decisions</h3>
+<p>Initiative test plan 暂不单独为 reader 开 TST；<strong>NICE：</strong> spec-review 抽检「reader Tab 是否含 md 中全部 **PRD-*/DSGN-*/TST-*** ID」。</p>
+<h3>Out of Scope</h3>
+<ul>
+<li>CI 阻塞「reader 与 md 逐字一致」。</li>
+<li>替代 spec-organize lint。</li>
+</ul>
+<h3>Further Notes</h3>
+<ul>
+<li><strong>反例：</strong> 当前 <a href="../../../spec-driven-development-reader.html"><code>spec-driven-development-reader.html</code></a> 多处 child/parent design 仅留 slogan — regenerate 时按 <strong><a href="#DSGN-N-B">DSGN-N-B</a></strong> 补全。</li>
+<li>Parent HLD 已指 reader 路径；deliverable skills 仍为四个；HTML 规范在 <strong>spec-html-standard</strong>。</li>
+</ul>
+<h3>Alternatives Considered</h3>
+<ul>
+<li>直接嵌 <code>.md</code> 做预览 → 拒:<strong><a href="#DSGN-N">DSGN-N</a></strong> 要求可读汇编,不是 markdown viewer。</li>
+<li>每个 aspect 单独一个 HTML → 拒:读者要跨文档跳转。</li>
+</ul>
+<h3>Drawbacks</h3>
+<ul>
+<li>汇编层与源文档会漂移,需 <a href="../../../test-plan/spec-driven-development-test-plan.html#TST-R">TST-R</a> 新鲜度检查兜底。</li>
+</ul>
+<h3>Risks and Mitigations</h3>
+<ul>
+<li>风险:HTML 被当成 source of truth → 每页标注 canonical 路径。</li>
+<li>风险:ID 在排版中丢失 → <strong><a href="#DSGN-N-B">DSGN-N-B</a></strong> 要求可见 ID 原样保留。</li>
+</ul>
+<h3>Open Questions</h3>
+<ul>
+<li>图(mermaid)在 reader 中的渲染资格是否统一。</li>
+</ul>
+<h3>Reversibility</h3>
+<ul>
+<li>HTML 是派生物,删掉不影响 spec;重建即可。</li>
+</ul>
+<h3>Change Log</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Date</th>
+<th>Change</th>
+</tr></thead><tbody>
+<tr>
+<td>2026-11-03</td>
+<td>Initial aspect design <strong><a href="#DSGN-N">DSGN-N</a></strong>；保真规则</td>
+</tr>
+<tr>
+<td>2026-11-03</td>
+<td><strong>spec-html-standard</strong> 替代 spec-reader skill（<strong><a href="#DSGN-N-E">DSGN-N-E</a>/J</strong>）</td>
+</tr>
+<tr>
+<td>2026-11-07</td>
+<td>表达标准 SPEC-PRESENTATION；write 改 md，review 查保真（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-AJ">ARD-AJ</a>）</td>
+</tr>
+<tr>
+<td>2026-11-07</td>
+<td>手写 HTML 须带 spec-source 与 sha256（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-AK">ARD-AK</a>）</td>
+</tr>
+<tr>
+<td>2026-11-07</td>
+<td><a href="#DSGN-N-H">DSGN-N-H</a>：单篇阅读视图；手写 changelog 盖住每个 md 日期（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-BA">ARD-BA</a>）</td>
+</tr>
+<tr>
+<td>2026-11-07</td>
+<td>part 链回 document-standard-design.md（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-AV">ARD-AV</a>）</td>
+</tr>
+<tr>
+<td>2026-11-07</td>
+<td>HTML 改到 docs/book/html/，目录与 features 同构（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-BF">ARD-BF</a>）</td>
+</tr>
+<tr>
+<td>2026-11-07</td>
+<td><a href="#DSGN-N-I">DSGN-N-I</a>：全站一份目录；feature 页左目录右正文（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-BG">ARD-BG</a>）</td>
+</tr>
+<tr>
+<td>2026-11-07</td>
+<td><a href="#DSGN-N-K">DSGN-N-K</a>：正文条目号与路径必须是可用链接</td>
+</tr>
+<tr>
+<td>2026-11-07</td>
+<td><a href="#DSGN-N-L">DSGN-N-L</a>：左侧只列五篇；其余展开在 design 下；pipeline 无 HTML</td>
+</tr>
+<tr>
+<td>2026-11-07</td>
+<td><a href="#DSGN-N-L">DSGN-N-L</a>：子 feature 在 design 下一层占一行，再展开自己的页面</td>
+</tr>
+</tbody></table></div>
+      </div>
+    </article>
+    <nav class="pager" aria-label="Previous and next"><a class="prev" href="../prd/document-standard-prd-spec-reader-html.html"><span class="label">Previous</span>Document Standard — Spec Reader HTML（PRD）</a><a class="next" href="document-standard-design.html"><span class="label">Next</span>Document Standard — 文档标准（待 Review）</a></nav>
+  </main>
+</div>
+<footer class="foot"><div class="foot-inner">Assembled from committed <code>.md</code>. The Markdown is authoritative; this page is a reading view.</div></footer>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>if(window.mermaid){mermaid.initialize({startOnLoad:false});}</script>
+<script src="../../../../assets/app.js"></script>
+</body>
+</html>

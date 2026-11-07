@@ -11,7 +11,7 @@ last_verified: 2026-11-04
 
 ## Overview
 
-本 PRD 定义 spec-driven development：用 PRD、decision-history、design 篇、impl-plan、test-plan 五篇，把有门槛的问题分析清楚，并交给四个 skill（spec-pipeline、spec-organize、spec-review、spec-write）执行。
+本 PRD 定义 spec-driven development：用 PRD、decision-history、design 篇、impl-plan、test-plan 五篇，把有门槛的问题分析清楚，并由 spec-write 与 spec-review 执行（ARD-AJ）。
 
 ## Problem Statement
 
@@ -82,7 +82,7 @@ AI 要把大问题拆成小的：能查的 AI 自己查（合规、财报、交�
 ## Goals and Success Metrics
 
 - 目标：任何有门槛的难题都能拆成可查、可决策、可执行的小问题。
-- 验收：四个 skill 的测试结果（test-plan）；这不是产品 success metric。
+- 验收：spec-write 与 spec-review 的测试结果（test-plan）；这不是产品 success metric。
 - PRD-G 的产品级 success metric 与 baseline 仍 deferred（ARD-N）。
 
 ## User Stories
@@ -127,7 +127,7 @@ Additional constraints:
 
 **PRD-I** — 修改需要验证；没有能验证的，都需要在 spec 里面标注上。标明后不作为 test plan 的通过条件。
 
-**PRD-J** — 提供 **spec-pipeline** skill：凡写/改 feature spec 经 pipeline 进入；编排 spec-organize / spec-write，提交 committed 变更前询问 spec-review；支持 recap 与轻量 state（feature 确定前 CLAUDE.local，之后 `docs/features/<f>/raw/state/`）。
+**PRD-J** — 写和改 feature spec 时，spec-write 按标准判断新建或修改哪几篇；提交前 spec-review 询问。State：feature 确定前 CLAUDE.local，之后 `docs/features/<f>/raw/state/`（ARD-AJ）。
 
 **PRD-K** — 范围不限软件：任何有门槛的难题走同一套 spec。例子四个：盖 shed（合规、成本、施工）、北京旅游（行程、住宿、风险、预算）、看懂著名数学题（零基础逐步学）、分析股票（基本面、财报、新闻，有理有据）。这轮不在本仓库建 gold，放到别处。
 
@@ -139,9 +139,9 @@ Additional constraints:
 
 **PRD-O** — 执行不真下单、不订票。一个共用 mock MCP server，若干固定工具；client call 打出 log 即算交付成功。
 
-**PRD-P** — 最终交付是这一系列 skill（spec-organize、spec-review、spec-write、spec-pipeline）。它们引导人写出的 spec，要满足 PRD-K 到 PRD-O。
+**PRD-P** — 最终交付是 spec-write、spec-review，以及 SPEC-STANDARD.md 与 SPEC-PRESENTATION.md（ARD-AJ）。写出的 spec 满足 PRD-K 到 PRD-O。
 
-**PRD-Q** — 书写、命名、校验、更新，以及 PRD-K 到 PRD-O，都是需求。四个 skill 不限于这几件事，以后的新题也要能做。skill 正文要写出四个例子：盖 shed、北京旅游、数学题、股票。好不好用只看测试。
+**PRD-Q** — 书写、命名、校验、更新，以及 PRD-K 到 PRD-O，都是需求。spec-write 与 spec-review 不限于这几件事。两份 skill 正文写出四个例子：盖 shed、北京旅游、数学题、股票。好不好用只看测试。
 
 ## Out of Scope
 
@@ -153,7 +153,7 @@ Additional constraints:
 
 ## Resources Needed
 
-- 四个 skill + 一份 test plan;无外部服务、无数据库。
+- spec-write、spec-review、两份标准 + 一份 test plan;无外部服务、无数据库。
 - 评测需 `deepseek-flash` API 与 3 次 run 的预算;runs/reports 不入库(ARD-AD)。
 
 ## Change Log
@@ -172,3 +172,5 @@ Additional constraints:
 | 2026-11-04 | 选择题：G/H/J 维持；I 验不了的不进测试；K 的 gold 放到别处；M 测不了；N 评测只用 context；O 共用一个 mock server；Q 正文写出四个例子 |
 | 2026-11-04 | 补 frontmatter、Overview、Goals and Success Metrics、User Stories、Out of Scope；Requirements → Functional Requirements |
 | 2026-11-04 | PRD-C 改为硬上限 10 行或 200 字符；PRD-G 区分 eval 分数与产品 metric；Solution 术语改 design 篇 |
+| 2026-11-07 | PRD-J/P/Q 与 Resources：入口为 spec-write 与 spec-review（ARD-AJ） |
+| 2026-11-07 | Overview 与 Goals 验收改为 spec-write 与 spec-review（ARD-AJ） |

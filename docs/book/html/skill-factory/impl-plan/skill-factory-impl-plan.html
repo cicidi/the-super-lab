@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>skill-factory Implementation Plan · impl-plan · Spec Atlas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:400,400italic,500,500italic,700|Roboto+Mono:400,500,700|Noto+Sans+SC:400,500,700&display=swap">
+<link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><a href="../../index.html"><span class="brand-mark">SDD</span><span class="brand-name">Spec Atlas</span></a></div>
+  </div>
+</header>
+<div class="site">
+  <aside class="sidebar">
+  <nav aria-label="Directory">
+    <div class="tree-overview"><a class="tree-link" href="../../index.html"><span class="tree-link__num">00</span>All features</a></div>
+    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../prd/skill-factory-prd.html"><span class="tree-link__num">10</span>skill-factory PRD</a></li><li class="tree-leaf"><a class="tree-link" href="../design/skill-factory-design.html"><span class="tree-link__num">11</span>skill-factory Specification</a></li><li class="tree-leaf"><a class="tree-link" href="skill-factory-impl-plan.html" aria-current="page"><span class="tree-link__num">12</span>skill-factory Implementation Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../test-plan/skill-factory-test-plan.html"><span class="tree-link__num">13</span>skill-factory Test Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../decision-history/skill-factory-decision-history.html"><span class="tree-link__num">14</span>skill-factory — Decision History</a></li></ul>
+  </nav>
+</aside>
+  <main class="content">
+    <nav class="breadcrumbs"><a href="../../index.html">Docs</a> / <span>skill-factory</span> / <span>impl-plan</span> / <span>skill-factory Implementation Plan</span></nav>
+    <article class="doc" data-doc="skill-factory/impl-plan/skill-factory-impl-plan">
+      <header class="doc-head">
+        <p class="eyebrow">skill-factory</p>
+        <h1>skill-factory Implementation Plan</h1>
+        <p class="source">Canonical: docs/features/skill-factory/impl-plan/skill-factory-impl-plan.md</p>
+      </header>
+      
+      <div class="doc-body">
+        <h2>skill-factory Implementation Plan</h2>
+<h3>Implementation Plan</h3>
+<h2>skill-factory Implementation Plan</h2>
+<h3>Milestones &amp; Phases</h3>
+<hr>
+<h4>Phase 1: Project Bootstrap &amp; Foundation (2026-06-10)</h4>
+<p><strong>Objective:</strong> Establish the project structure, configuration, and core skill creation mechanism.</p>
+<h5>Key Deliverables</h5>
+<ul>
+<li><code>opencode</code> configuration with <code>variant: thinking-high</code> for build agent</li>
+<li>Three‑directory structure: <code>walter-worker-skills/</code>, <code>import-skills/</code>, <code>personal-skills/</code></li>
+<li>Naming convention: <code>walter-worker-</code> prefix for own skills, no prefix for imports</li>
+<li><a href="../../../../../CONVENTIONS.md"><code>CONVENTIONS.md</code></a> updated to allow name ≠ folder name</li>
+<li><code>CLAUDE.md</code> with 1–3 clarifying questions rule (except ≥90% confidence)</li>
+<li>Initial <code>skill-create</code> module as bootstrap skill</li>
+</ul>
+<h5>Dependencies &amp; Build Order</h5>
+<ol>
+<li>Define project conventions (CONVENTIONS.md, CLAUDE.md) – prerequisite for any skill</li>
+<li>Configure <code>opencode</code> (thinking‑high variant) – prerequisite for agent operations</li>
+<li>Build <code>skill-create</code> as the first skill (self‑bootstrapping)</li>
+<li>Create directory structure and set gitignore for <code>personal-skills/</code></li>
+</ol>
+<h5>Key Commits</h5>
+<ul>
+<li><code>5d9747e9</code> — feat: initialize skill-factory project with skill-create</li>
+<li><code>54496dad</code> — refactor: move skills into walter-worker-skills namespace</li>
+<li><code>5dcb52c7</code> — docs: add skill-factory bootstrap design spec</li>
+<li><code>8ce5ae73</code> — docs: implementation plan for skill-factory bootstrap</li>
+<li><code>8cb87bec</code> — chore: remove ai-worker-skills, fix skill-create description and references</li>
+</ul>
+<hr>
+<h4>Phase 2: Core Editing &amp; Import Infrastructure (2026-06-10 – 2026-06-11)</h4>
+<p><strong>Objective:</strong> Build the skills needed to edit existing skills and import third‑party skills.</p>
+<h5>Key Deliverables</h5>
+<ul>
+<li><code>skill-edit</code> skill: follows <code>skill-create</code> process exactly; accepts requirements as interview answers; uses targeted edits only; enforces quality gates before commit; redirects to <code>skill-create</code> if ≥80% rewrite</li>
+<li><code>skill-import</code> skill: fetches source SKILL.md via webfetch/curl; auto‑converts frontmatter to opencode 5‑field format; auto‑adapts body sections; implements ambiguity triggers (one question at a time); stores imported skills in <code>import-skills/</code>; preserves <code>metadata.source_author</code> and <code>source_url</code></li>
+<li>Quality gates for both skills (MUST/NICE checklists, anti‑patterns, line count &lt;150)</li>
+</ul>
+<h5>Dependencies</h5>
+<ul>
+<li><code>skill-edit</code> depends on <code>skill-create</code> process definition and CONVENTIONS.md</li>
+<li><code>skill-import</code> depends on frontmatter mapping rules and directory structure</li>
+<li>Both depend on quality gate framework from Phase 1</li>
+</ul>
+<h5>Build Order</h5>
+<ol>
+<li>Implement <code>skill-import</code> (needs metadata schema first)</li>
+<li>Implement <code>skill-edit</code> (requires target skill existence check)</li>
+<li>Validate both skills against quality gates (must pass MUSTs)</li>
+</ol>
+<h5>Key Commits</h5>
+<ul>
+<li><code>1d7bb7ed</code> — skill: add skill-edit and skill-import from round-01 Agent-A</li>
+<li><code>d9baa432</code> — docs: round-01 agent-B evaluation — both skills PASS</li>
+<li><code>33e48d2e</code> — fix: skill-create quality gate improvements from round-01 review</li>
+<li><code>773594b9</code> — fix(skill-import): add author preservation, import/ subdirectory, and anti-pattern for lost authorship</li>
+</ul>
+<hr>
+<h4>Phase 3: First Import &amp; Quality Refinements (2026-06-11)</h4>
+<p><strong>Objective:</strong> Validate the import pipeline with a real‑world skill and tighten quality rules.</p>
+<h5>Key Deliverables</h5>
+<ul>
+<li>Import TDD skill from <code>mattpocock/skills</code> into <code>import-skills/</code></li>
+<li>Optimize imported skill to meet project conventions (description, overview, line count)</li>
+<li>Upgrade <code>skill-create</code> quality gates: add anti‑patterns section, MUST/NICE checkboxes, philosophy‑driven overview, <code>deploy/</code> prohibition, description ≤500 chars, body line limit tightened to &lt;150</li>
+<li>META.yaml schema defined for imports: <code>source</code>, <code>upstream_commit</code>, <code>license</code>, <code>imported_at</code>, <code>imported_by</code>, <code>note</code></li>
+<li>CI workflow for import metadata validation</li>
+</ul>
+<h5>Dependencies</h5>
+<ul>
+<li>Import depends on <code>skill-import</code> being functional and META.yaml schema defined</li>
+<li>Quality gate improvements depend on CONVENTIONS.md</li>
+</ul>
+<h5>Key Commits</h5>
+<ul>
+<li><code>eed365ce</code> — skill: import tdd from mattpocock/skills</li>
+<li><code>d98ed8d3</code> — fix(tdd): optimize description and overview per skill-factory conventions</li>
+<li><code>3c058b5e</code> — docs: final verification logs and bootstrap summary</li>
+<li><code>d30f01c0</code> — feat(skill-create): Phase 0 multi-source search — GitHub (&gt;=10 repos), web search, import-vs-inspire decision</li>
+<li><code>a2e47245</code> — refactor: three-directory structure with walter-worker- prefix naming</li>
+</ul>
+<hr>
+<h4>Phase 4: Skill Migration &amp; Bulk Addition (2026-06-11)</h4>
+<p><strong>Objective:</strong> Seed the project with a set of coworker skills.</p>
+<h5>Key Deliverables</h5>
+<ul>
+<li>Migrate 5 skills from previous <code>walter-worker</code> set using <code>skill-edit</code> / <code>skill-import</code> process</li>
+<li>Ensure all skills conform to naming convention and quality gates</li>
+</ul>
+<h5>Dependencies</h5>
+<ul>
+<li>Requires Phase 3 skill‑create improvements for validation</li>
+</ul>
+<h5>Key Commits</h5>
+<ul>
+<li><code>a5dcc4e9</code> — skill: add 5 migrated coworker skills</li>
+</ul>
+<hr>
+<h4>Phase 5: Adversarial Review Skills (2026-06-11 – 2026-06-18)</h4>
+<p><strong>Objective:</strong> Build multi‑agent skills for design review and work acceptance.</p>
+<h5>Key Deliverables</h5>
+<ul>
+<li><code>walter-worker-devil-advocate</code>: 3‑agent architecture (con, pro, judge); max 5 rounds with majority vote; output <code>discussion.md</code> + <code>report.md</code> to <code>docs/devil-advocate/</code>; triggers: <code>review spec</code>, <code>杠精</code>, <code>devil advocate</code>, <code>adversarial review</code></li>
+<li><code>walter-worker-work-review</code>: 2‑agent (Collector → Reviewer); Collector writes test plan; Reviewer executes tests (existing UT/FT, Playwright for E2E, curl for manual); output <code>acceptance.md</code> + <code>report.md</code> to <code>docs/work-review/</code>; triggers: <code>work review</code>, <code>acceptance</code>, <code>sign off</code>, <code>verify work</code></li>
+<li><code>walter-worker-contrarian-review</code>: 5‑agent adversarial document review</li>
+</ul>
+<h5>Dependencies</h5>
+<ul>
+<li>Both skills depend on agent orchestration patterns established in skill-create</li>
+<li>Output directory conventions must be consistent (docs/&lt;skill-name&gt;/)</li>
+</ul>
+<h5>Build Order</h5>
+<ol>
+<li><code>devil-advocate</code> (simpler 3‑agent)</li>
+<li><code>work-review</code> (2‑agent)</li>
+<li><code>contrarian-review</code> (5‑agent, built later)</li>
+</ol>
+<h5>Key Commits</h5>
+<ul>
+<li><code>70ccdc4a</code> — skill: add walter-worker-devil-advocate — multi-agent adversarial review for specs and design docs</li>
+<li><code>01f533c9</code> — skill: add walter-worker-work-review — 2-agent gatekeeper for work acceptance sign-off</li>
+<li><code>3a54ffc6</code> — skill: add walter-worker-contrarian-review — 5-agent adversarial document review</li>
+</ul>
+<hr>
+<h4>Phase 6: Skill Consolidation &amp; Mega‑Migration (2026-06-23)</h4>
+<p><strong>Objective:</strong> Restructure repository to scale: rename, move, deduplicate, and clean up skills.</p>
+<h5>Key Deliverables</h5>
+<ul>
+<li>Rename all 21 walter-worker skills to simplified naming (e.g., <code>self-patch</code> → <code>english-grammar-fix</code>)</li>
+<li>Remove deprecated skills (<code>initiative-create</code>, <code>initiative-edit</code>, <code>session-memory</code>, <code>gate-*</code>, <code>flow-*</code>, <code>connect-*</code>, <code>doc-review</code>, <code>bug-sleuth</code>, <code>bug-create</code>)</li>
+<li>Add new skills: <code>auto-tdd</code>, <code>session-memory</code>, <code>initiative-create/edit</code> (later moved out)</li>
+<li>Add self‑heal / self‑analyze skills</li>
+<li>Remove <code>docs/superpowers</code> from tracking</li>
+<li>Contrarian‑review overhaul: source repo enforcement, naming cleanup, tests, docs</li>
+</ul>
+<h5>Dependencies</h5>
+<ul>
+<li>Rename must preserve internal <code>name</code> fields consistently</li>
+<li>Removal must respect skill interdependencies</li>
+</ul>
+<h5>Key Commits</h5>
+<ul>
+<li><code>7bfe010f</code> — feat: add auto-tdd, session-memory, initiative-create/edit skills; add contrarian-review Mode 1</li>
+<li><code>add4f31e</code> — chore: remove docs/superpowers from tracking, add to gitignore</li>
+<li><code>3395648c</code> — refactor: rename skills to simplified naming, migrate 21 AI coworker skills</li>
+<li><code>4d02f4cd</code> — chore: remove initiative-create/edit (moved to walter-worker)</li>
+<li><code>fca74392</code> — chore: remove session-memory (moved to walter-worker)</li>
+<li><code>dce0d79c</code> — feat: add self-heal and self-analyze skills</li>
+<li><code>887a719b</code> — chore: remove self-init (walter-worker skills/init/ is more current)</li>
+<li><code>82c4563a</code> — chore: remove gate-* skills (not in walter-worker scope)</li>
+<li><code>1b48039a</code> — chore: remove skills deleted from walter-worker (flow-*, connect-*, doc-review, bug-sleuth, bug-create)</li>
+<li><code>7226d537</code> — refactor: rename self-patch to english-grammar-fix</li>
+<li><code>c329159c</code> — fix: add english-grammar-fix (was untracked)</li>
+<li><code>06a4e020</code> — chore: remove self-strain</li>
+<li><code>bd9bb024</code> — chore: remove self-heal/self-analyze from personal-skills (in walter-worker-skills)</li>
+<li><code>559834af</code> — chore: contrarian review overhaul — source repo enforcement, naming cleanup, tests, docs</li>
+<li><code>cca25cd5</code> — fix: re-apply skill fixes lost during rebase (frontmatter + sections)</li>
+<li><code>bc4d6cc0</code> — fix: remove walter-worker- prefix from 4 skill frontmatter names</li>
+</ul>
+<hr>
+<h4>Phase 7: Specialized Productivity Skills (2026-07-01 – 2026-07-14)</h4>
+<p><strong>Objective:</strong> Expand beyond core workflow with domain‑specific skills.</p>
+<h5>Key Deliverables</h5>
+<ul>
+<li><code>tmux-status-bar</code>: tmux bar with project, git, and initiative context</li>
+<li><code>multi-model-team</code>: GLM 5.2 architect + DeepSeek v4 Pro worker orchestration</li>
+<li><code>doc-organize</code>: 9 doc types,</li>
+</ul>
+<h3>Skill Consolidation (2026-08-02)</h3>
+<h2>Skill Consolidation Implementation Plan</h2>
+<blockquote class="callout" data-label="NOTE"><p><strong>Spec:</strong> docs/skill-factory/design/skill-consolidation-design.md <strong>Test Plan:</strong> docs/skill-factory/test-plan/skill-consolidation-test-plan.md <strong>Date:</strong> 2026-08-02</p></blockquote>
+<h3>Overview</h3>
+<p>38 walter-worker-skills → 10 merged + 3 independent = 13 total. Implementation is phased: create new merged SKILL.md files, verify with tests, then delete old directories.</p>
+<hr>
+<h3>Phase 1: Create Merged Skills (10 files)</h3>
+<p>Write each new SKILL.md from scratch, fusing the logic of absorbed skills. Do NOT delete old directories yet.</p>
+<h4>P1.1 — CRUD Sets (subcommand-driven, simpler — do first)</h4>
+<div class="table-wrap"><table><thead><tr>
+<th>#</th>
+<th>Create</th>
+<th>Absorbs</th>
+</tr></thead><tbody>
+<tr>
+<td>1</td>
+<td><code>walter-worker-skills/initiative/SKILL.md</code></td>
+<td>7 initiative-*</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>walter-worker-skills/dashboard/SKILL.md</code></td>
+<td>5 analytics-*</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>walter-worker-skills/project/SKILL.md</code></td>
+<td>6 project-*</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>walter-worker-skills/skill/SKILL.md</code></td>
+<td>4 skill-*</td>
+</tr>
+</tbody></table></div>
+<p>These are thin wrappers — each subcommand maps to the existing CLI command. Structure:</p>
+<pre><code>---
+name: initiative
+description: Use when managing cross-project initiatives — create, edit, activate,
+  deactivate, list, show, or delete
+license: MIT
+compatibility: claude-code,opencode
+---
+
+# initiative
+
+Manage cross-project initiatives.
+
+## When to Use
+
+- Creating, editing, or removing an initiative
+- Activating or deactivating the current initiative context
+- Listing or viewing initiative details
+
+## When NOT to Use
+
+- Managing projects in the catalog → use /project
+- General task tracking → use /status
+
+## Process
+
+### No subcommand given
+If the user doesn&#x27;t specify a subcommand, list current initiatives and ask what
+they want to do.
+
+### Subcommands
+
+| Subcommand | CLI equivalent | Description |
+|------------|---------------|-------------|
+| create | `coworker initiative create &lt;name&gt;` | Create a new initiative |
+| edit | `coworker initiative edit &lt;name&gt;` | Modify an existing initiative |
+| activate | `coworker initiative activate &lt;name&gt;` | Activate an initiative as current context |
+| deactivate | `coworker initiative deactivate` | Deactivate the current initiative |
+| list | `coworker initiative list` | List all initiatives |
+| show | `coworker initiative show &lt;name&gt;` | Show full initiative details |
+| delete | `coworker initiative remove &lt;name&gt;` | Permanently remove an initiative |</code></pre>
+<h4>P1.2 — Conversation-Branch Skills (fuse logic — do second)</h4>
+<div class="table-wrap"><table><thead><tr>
+<th>#</th>
+<th>Create</th>
+<th>Absorbs</th>
+</tr></thead><tbody>
+<tr>
+<td>5</td>
+<td><code>walter-worker-skills/doc-review/SKILL.md</code></td>
+<td>devil-advocate + contrarian-review + work-review</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>walter-worker-skills/bug/SKILL.md</code></td>
+<td>bug-hunt + bug-report + self-heal + self-analyze</td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>walter-worker-skills/knowledge/SKILL.md</code></td>
+<td>session-memory + knowledge-skill</td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>walter-worker-skills/auto-tdd/SKILL.md</code></td>
+<td>auto-tdd + import-skills/tdd</td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>walter-worker-skills/research/SKILL.md</code></td>
+<td>find-my-unknown + superpowers:brainstorming</td>
+</tr>
+<tr>
+<td>10</td>
+<td><code>walter-worker-skills/doc-organize/SKILL.md</code></td>
+<td>doc-merge + doc-organize（逻辑互补，自动判断支）</td>
+</tr>
+</tbody></table></div>
+<p><strong>For each:</strong> Read the absorbed SKILL.md files in full. Understand the logic, then write a single fused SKILL.md that:</p>
+<ol>
+<li>Starts by asking ONE question to determine the mode/branch</li>
+<li>Each branch has a self-contained process section</li>
+<li>Old logic is genuinely merged — not copy-pasted side by side</li>
+</ol>
+<hr>
+<h3>Phase 2: Test L1 + L2 + L3</h3>
+<h4>Step 2.1 — L2 Structural Tests (automated)</h4>
+<pre><code>cd ~/project/skill-factory
+
+# 35 old directories must NOT exist
+for dir in \
+  initiative-create initiative-edit initiative-activate initiative-deactivate \
+  initiative-list initiative-show initiative-remove \
+  analytics-create-db analytics-daemon analytics-dashboard analytics-import analytics-once \
+  project-add project-edit project-remove project-list project-show project-sync \
+  skill-create skill-edit skill-import skill-list \
+  devil-advocate contrarian-review work-review \
+  bug-hunt bug-report self-analyze self-heal \
+  doc-merge doc-organize \
+  session-memory knowledge-skill \
+  find-my-unknown; do
+  if [ -d &quot;walter-worker-skills/$dir&quot; ]; then
+    echo &quot;FAIL: walter-worker-skills/$dir still exists&quot;
+  else
+    echo &quot;PASS: walter-worker-skills/$dir removed&quot;
+  fi
+done
+
+# import-skills/tdd must NOT exist
+if [ -d &quot;import-skills/tdd&quot; ]; then
+  echo &quot;FAIL: import-skills/tdd still exists&quot;
+else
+  echo &quot;PASS: import-skills/tdd removed&quot;
+fi
+
+# 10 new directories must exist
+for skill in initiative dashboard project skill doc-review doc-organize bug knowledge auto-tdd research; do
+  if [ -f &quot;walter-worker-skills/$skill/SKILL.md&quot; ]; then
+    echo &quot;PASS: walter-worker-skills/$skill/SKILL.md exists&quot;
+  else
+    echo &quot;FAIL: walter-worker-skills/$skill/SKILL.md missing&quot;
+  fi
+done
+
+# 3 independent skills must exist
+for skill in english-grammar-fix multi-model-team status; do
+  if [ -f &quot;walter-worker-skills/$skill/SKILL.md&quot; ]; then
+    echo &quot;PASS: independent skill $skill exists&quot;
+  else
+    echo &quot;FAIL: independent skill $skill missing&quot;
+  fi
+done
+
+# 9 personal-skills must exist
+count=$(ls personal-skills/*/SKILL.md 2&gt;/dev/null | wc -l)
+if [ &quot;$count&quot; -eq 9 ]; then
+  echo &quot;PASS: personal-skills count = $count&quot;
+else
+  echo &quot;FAIL: personal-skills count = $count (expected 9)&quot;
+fi</code></pre>
+<h4>Step 2.2 — L1 Conventions Tests (automated)</h4>
+<pre><code>cd ~/project/skill-factory
+
+for skill in initiative dashboard project skill doc-review doc-organize bug knowledge auto-tdd research; do
+  file=&quot;walter-worker-skills/$skill/SKILL.md&quot;
+  echo &quot;=== $skill ===&quot;
+
+  # name field matches directory
+  name=$(sed -n &#x27;/^---$/,/^---$/p&#x27; &quot;$file&quot; | grep &#x27;^name:&#x27; | sed &#x27;s/name: *//&#x27;)
+  if [ &quot;$name&quot; = &quot;$skill&quot; ]; then
+    echo &quot;  PASS: name matches directory&quot;
+  else
+    echo &quot;  FAIL: name=&#x27;$name&#x27; expected=&#x27;$skill&#x27;&quot;
+  fi
+
+  # description starts with &quot;Use when&quot;
+  desc=$(sed -n &#x27;/^---$/,/^---$/p&#x27; &quot;$file&quot; | grep &#x27;^description:&#x27; | head -1)
+  if echo &quot;$desc&quot; | grep -q &quot;Use when&quot;; then
+    echo &quot;  PASS: description starts with &#x27;Use when&#x27;&quot;
+  else
+    echo &quot;  FAIL: description does not start with &#x27;Use when&#x27;&quot;
+  fi
+
+  # description ≤ 1024 chars
+  desc_len=$(echo &quot;$desc&quot; | wc -c)
+  if [ &quot;$desc_len&quot; -le 1024 ]; then
+    echo &quot;  PASS: description length = $desc_len (≤1024)&quot;
+  else
+    echo &quot;  FAIL: description length = $desc_len (&gt;1024)&quot;
+  fi
+
+  # license present
+  if grep -q &#x27;^license:&#x27; &quot;$file&quot;; then
+    echo &quot;  PASS: license field present&quot;
+  else
+    echo &quot;  FAIL: license field missing&quot;
+  fi
+
+  # required sections
+  for section in &quot;# $skill&quot; &quot;## When to Use&quot; &quot;## When NOT to Use&quot; &quot;## Process&quot;; do
+    if grep -q &quot;$section&quot; &quot;$file&quot;; then
+      echo &quot;  PASS: section &#x27;$section&#x27; present&quot;
+    else
+      echo &quot;  FAIL: section &#x27;$section&#x27; missing&quot;
+    fi
+  done
+
+  # prohibited content
+  if grep -qi &#x27;TODO\|TBD\|changelog&#x27; &quot;$file&quot;; then
+    echo &quot;  FAIL: prohibited content found (TODO/TBD/changelog)&quot;
+  else
+    echo &quot;  PASS: no prohibited content&quot;
+  fi
+
+  echo &quot;&quot;
+done</code></pre>
+<h4>Step 2.3 — L3 Content Review (manual, use the prompt below)</h4>
+<p>See the L3 Review Prompt section below. Run this with another model or as a separate review pass.</p>
+<hr>
+<h3>Phase 3: Fix Issues + L4 Deployment Test</h3>
+<h4>Step 3.1 — Fix issues from L1/L2/L3</h4>
+<p>Address all FAIL items.</p>
+<h4>Step 3.2 — Update coworker.yaml</h4>
+<p>Register the 10 new skills in <code>~/.coworker/coworker.yaml</code>, remove old 35 entries.</p>
+<h4>Step 3.3 — Sync</h4>
+<pre><code>coworker sync</code></pre>
+<h4>Step 3.4 — L4 Deployment Tests</h4>
+<pre><code># 10 new skills deployed
+cmd_count=$(ls ~/.claude/skills/ | grep -E &quot;^(initiative|dashboard|project|skill|doc-review|doc-organize|bug|knowledge|auto-tdd|research)$&quot; | wc -l)
+echo &quot;New skills deployed: $cmd_count (expected 10)&quot;
+
+# Old skills removed
+old_count=$(ls ~/.claude/skills/ | grep -E &quot;^(initiative-create|initiative-edit|devil-advocate|contrarian-review|bug-hunt|self-heal|find-my-unknown|analytics-dashboard|analytics-import|project-add|skill-create|doc-merge|session-memory)$&quot; | wc -l)
+echo &quot;Old skills remaining: $old_count (expected 0)&quot;
+
+# coworker status still works
+coworker status</code></pre>
+<hr>
+<h3>Phase 4: Delete Old Directories</h3>
+<p>Only after all tests pass:</p>
+<pre><code>cd ~/project/skill-factory
+
+# Category 3 — CRUD sets
+rm -rf walter-worker-skills/initiative-{create,edit,activate,deactivate,list,show,remove}
+rm -rf walter-worker-skills/analytics-{create-db,daemon,dashboard,import,once}
+rm -rf walter-worker-skills/project-{add,edit,remove,list,show,sync}
+rm -rf walter-worker-skills/skill-{create,edit,import,list}
+
+# Category 1/2 — merged
+rm -rf walter-worker-skills/{devil-advocate,contrarian-review,work-review}
+rm -rf walter-worker-skills/{bug-hunt,bug-report,self-analyze,self-heal}
+rm -rf walter-worker-skills/{doc-merge,doc-organize}
+rm -rf walter-worker-skills/{session-memory,knowledge-skill}
+rm -rf walter-worker-skills/find-my-unknown
+rm -rf import-skills/tdd</code></pre>
+<hr>
+<h3>Phase 5: L5 Functional Smoke Test</h3>
+<p>In a Claude Code session, invoke each merged skill:</p>
+<pre><code>/initiative list
+/dashboard start
+/project list
+/skill list
+/doc-review          ← should ask &quot;design review or work completion?&quot;
+/doc-organize        ← should auto-detect or ask
+/bug                 ← should ask &quot;hunt, report, or heal?&quot;
+/knowledge           ← should ask &quot;obsidian vault or sqlite analytics?&quot;
+/auto-tdd            ← should ask &quot;basic or auto?&quot;
+/research            ← should ask &quot;discover unknowns or design spec?&quot;
+/english-grammar-fix
+/multi-model-team
+/status</code></pre>
+<hr>
+<h3>L3 Content Review Prompt</h3>
+<p>Use this prompt with another model (or as a separate review pass) to verify that each merged skill correctly fuses the logic of its absorbed skills.</p>
+<pre><code>You are reviewing merged SKILL.md files in a skill-factory project. Each merged
+skill absorbs 2-7 previously-independent skills. Your job: verify that the
+merged version faithfully preserves the core logic of each absorbed skill
+without losing anything essential.
+
+## Review Rules
+
+For each merged skill, check:
+
+1. **Completeness** — Every absorbed skill&#x27;s core workflow/process is
+   represented in at least one branch of the merged skill.
+2. **Fusion quality** — Logic is genuinely fused, not copy-pasted side by side.
+   If two absorbed skills share similar steps, those steps should appear once,
+   not twice.
+3. **Branch clarity** — The merged skill starts by asking ONE clear question.
+   Each branch is self-contained and has a clear purpose.
+4. **No phantom references** — The merged skill must NOT reference old skill
+   names that no longer exist (e.g. no &quot;delegate to devil-advocate&quot; or
+   &quot;run bug-hunt&quot;).
+5. **Severity gate** — For doc-review only: a 5-point severity scale must be
+   defined, with explicit instruction that level 1-2 issues are skipped.
+6. **When to Use / When NOT to Use** — Covers the union of triggers from all
+   absorbed skills, not just one of them.
+7. **Conventions compliance** — No TBD/TODO, no decorative emoji in body,
+   description is third-person and starts with &quot;Use when&quot;.
+
+## Directory Layout
+
+All files are under `walter-worker-skills/`:
+
+### To review (merged skills):
+
+| Merged skill | Absorbed skills (read these OLD files for reference) |
+|---|---|
+| `initiative/SKILL.md` | initiative-create, initiative-edit, initiative-activate, initiative-deactivate, initiative-list, initiative-show, initiative-remove |
+| `dashboard/SKILL.md` | analytics-create-db, analytics-daemon, analytics-dashboard, analytics-import, analytics-once |
+| `project/SKILL.md` | project-add, project-edit, project-remove, project-list, project-show, project-sync |
+| `skill/SKILL.md` | skill-create, skill-edit, skill-import, skill-list |
+| `doc-review/SKILL.md` | devil-advocate, contrarian-review, work-review |
+| `doc-organize/SKILL.md` | doc-merge, doc-organize |
+| `bug/SKILL.md` | bug-hunt, bug-report, self-heal, self-analyze |
+| `knowledge/SKILL.md` | session-memory, knowledge-skill |
+| `auto-tdd/SKILL.md` | auto-tdd, ../import-skills/tdd |
+| `research/SKILL.md` | find-my-unknown, superpowers:brainstorming |
+
+### To verify unchanged (must NOT be modified):
+
+- english-grammar-fix/SKILL.md
+- multi-model-team/SKILL.md
+- status/SKILL.md
+
+## Process
+
+For each merged skill:
+1. Read the merged SKILL.md
+2. Read ALL the absorbed old SKILL.md files
+3. Compare: is every core workflow preserved? Is anything lost?
+4. Rate: PASS (all 7 rules pass) / MINOR (small issues) / FAIL (missing logic)
+
+## Output Format
+
+For each merged skill, output:
+</code></pre>
+<h4>&lt;skill-name&gt;</h4>
+<ul>
+<li>Completeness: PASS/MINOR/FAIL — &lt;one sentence why&gt;</li>
+<li>Fusion quality: PASS/MINOR/FAIL — &lt;one sentence why&gt;</li>
+<li>Branch clarity: PASS/MINOR/FAIL — &lt;one sentence why&gt;</li>
+<li>No phantom refs: PASS/FAIL — &lt;list any phantom references found&gt;</li>
+<li>Severity gate (doc-review only): PASS/FAIL</li>
+<li>When/When NOT: PASS/FAIL — &lt;what&#x27;s missing&gt;</li>
+<li>Conventions: PASS/FAIL — &lt;list violations&gt;</li>
+<li>Overall: PASS/MINOR/FAIL</li>
+</ul>
+<pre><code>
+Then list any specific issues that need fixing.
+
+## Independent skills check
+
+Run a separate pass: read english-grammar-fix/SKILL.md, multi-model-team/SKILL.md,
+status/SKILL.md — confirm they have NOT been modified from git HEAD.</code></pre>
+<hr>
+<h3>Execution Order Summary</h3>
+<pre><code>Phase 1: Create 10 merged SKILL.md (don&#x27;t delete old yet)
+   ↓
+Phase 2: Test L1 (conventions) + L2 (structural) + L3 (content review)
+   ↓
+Phase 3: Fix issues from tests + L4 (deployment test)
+   ↓
+Phase 4: Delete 35 old directories
+   ↓
+Phase 5: L5 (functional smoke test in Claude Code)
+   ↓
+Commit + push
+
+## Known Drift
+
+The document below was accurate when written and is kept as the record. These
+parts no longer match the repository, detected by reading the code against it on
+2026-09-25. Nothing here has been rewritten — decide each one before changing it.
+
+| Stated in this document | Current state | Evidence |
+|---|---|---|
+| Three skill directories: `walter-worker-skills/`, `import-skills/`, `personal-skills/` | Two: `skills/` and `personal-skills/` | commit `93d4a4a`, `8d451059` |
+| `walter-worker-` prefix on native skill names | Prefix removed | commit `bc4d6cc0` |
+| Five-field frontmatter with a `trigger` string | `name`, `description`, `license`, `compatibility`, `metadata` map | `CONVENTIONS.md` |
+| `skill-create`, `skill-edit`, `skill-import` as separate skills | Merged into one `skill` skill | commit `6086424` |
+| `devil-advocate`, `work-review`, `contrarian-review` skills | Removed or merged into `doc-review` | commit `6086424` |
+| Outputs under `docs/devil-advocate/`, `docs/work-review/` | Documents live under `docs/features/` | `doc-organize` standard |
+| `self-heal`, `self-analyze`, `tmux-setup` skills | No longer present | `coworker skill list` |
+
+## Change Log
+
+| Date | Change |
+|------|--------|
+| Version | Date | Description |
+| 0.1 | 2026-06-10 | Initial project bootstrap with skill-create foundation |
+| 0.2 | 2026-06-11 | Core skills (skill-edit, skill-import) and quality infrastructure |
+| 0.3 | 2026-06-11 | Directory restructure, naming conventions, first imports |
+| 0.4 | 2026-06-12 | Adversarial review skills (devil-advocate, work-review) |
+| 0.5 | 2026-06-18 | Contrarian-review and multi-agent frameworks |
+| 0.6 | 2026-06-23 | Skill consolidation, cleanup, and mega-migration |
+| 0.7 | 2026-07-01 | Specialized productivity skills (tmux, multi-model) |
+| 0.8 | 2026-07-14 | Document organization and knowledge management |
+| 0.9 | 2026-07-18 | Media processing skills (YouTube, OCR, transcription) |
+| 1.0 | 2026-07-22 | Pipeline skills (video workflow, event scouting) |
+| 2026-09-25 | Merged the companion document of the same type into this file; added frontmatter and the drift table |</code></pre>
+      </div>
+    </article>
+    <nav class="pager" aria-label="Previous and next"><a class="prev" href="../design/skill-factory-design.html"><span class="label">Previous</span>skill-factory Specification</a><a class="next" href="../test-plan/skill-factory-test-plan.html"><span class="label">Next</span>skill-factory Test Plan</a></nav>
+  </main>
+</div>
+<footer class="foot"><div class="foot-inner">Assembled from committed <code>.md</code>. The Markdown is authoritative; this page is a reading view.</div></footer>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>if(window.mermaid){mermaid.initialize({startOnLoad:false});}</script>
+<script src="../../assets/app.js"></script>
+</body>
+</html>

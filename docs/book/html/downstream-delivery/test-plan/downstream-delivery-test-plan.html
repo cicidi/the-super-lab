@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Downstream Delivery — Test Plan · test-plan · Spec Atlas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:400,400italic,500,500italic,700|Roboto+Mono:400,500,700|Noto+Sans+SC:400,500,700&display=swap">
+<link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><a href="../../index.html"><span class="brand-mark">SDD</span><span class="brand-name">Spec Atlas</span></a></div>
+  </div>
+</header>
+<div class="site">
+  <aside class="sidebar">
+  <nav aria-label="Directory">
+    <div class="tree-overview"><a class="tree-link" href="../../index.html"><span class="tree-link__num">00</span>All features</a></div>
+    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../prd/downstream-delivery-prd.html"><span class="tree-link__num">04</span>Delivery Pipeline Skills — PRD</a></li><li class="tree-leaf"><a class="tree-link" href="../design/downstream-delivery-design.html"><span class="tree-link__num">05</span>Delivery Pipeline Skills — Design</a></li><li class="tree-leaf"><a class="tree-link" href="downstream-delivery-test-plan.html" aria-current="page"><span class="tree-link__num">06</span>Downstream Delivery — Test Plan</a></li></ul>
+  </nav>
+</aside>
+  <main class="content">
+    <nav class="breadcrumbs"><a href="../../index.html">Docs</a> / <span>downstream-delivery</span> / <span>test-plan</span> / <span>Downstream Delivery — Test Plan</span></nav>
+    <article class="doc" data-doc="downstream-delivery/test-plan/downstream-delivery-test-plan">
+      <header class="doc-head">
+        <p class="eyebrow">downstream-delivery</p>
+        <h1>Downstream Delivery — Test Plan</h1>
+        <p class="source">Canonical: docs/features/downstream-delivery/test-plan/downstream-delivery-test-plan.md</p>
+      </header>
+      
+      <div class="doc-body">
+        <h2>Downstream Delivery — Test Plan</h2>
+<h3>Test Cases</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>ID</th>
+<th>Case</th>
+<th>Oracle</th>
+</tr></thead><tbody>
+<tr>
+<td><strong id="TST-A"><a href="#TST-A">TST-A</a></strong></td>
+<td>to-spec output passes spec-organize lint</td>
+<td>run_spec_checks on sample</td>
+</tr>
+<tr>
+<td><strong id="TST-B"><a href="#TST-B">TST-B</a></strong></td>
+<td>implement skill references verification-before-completion</td>
+<td>SKILL.md</td>
+</tr>
+<tr>
+<td><strong id="TST-C"><a href="#TST-C">TST-C</a></strong></td>
+<td>to-tickets emits ticket-sized chunks</td>
+<td>manual review</td>
+</tr>
+</tbody></table></div>
+<h3>Test Execution Order</h3>
+<ol>
+<li>Lint generated specs in fixture repo  </li>
+<li>Pipeline integration doc review  </li>
+</ol>
+<h3>Expected Pass Threshold</h3>
+<p>New specs from to-spec meet SPEC-STANDARD frontmatter + Change Log.</p>
+<h3>Change Log</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Version</th>
+<th>Date</th>
+<th>Description</th>
+</tr></thead><tbody>
+<tr>
+<td>0.1</td>
+<td>2026-11-04</td>
+<td>Initial</td>
+</tr>
+</tbody></table></div>
+      </div>
+    </article>
+    <nav class="pager" aria-label="Previous and next"><a class="prev" href="../design/downstream-delivery-design.html"><span class="label">Previous</span>Delivery Pipeline Skills — Design</a></nav>
+  </main>
+</div>
+<footer class="foot"><div class="foot-inner">Assembled from committed <code>.md</code>. The Markdown is authoritative; this page is a reading view.</div></footer>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>if(window.mermaid){mermaid.initialize({startOnLoad:false});}</script>
+<script src="../../assets/app.js"></script>
+</body>
+</html>

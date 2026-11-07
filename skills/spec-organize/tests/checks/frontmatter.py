@@ -11,6 +11,7 @@ VALID_TYPES = frozenset(
     {"prd", "design", "impl-plan", "test-plan", "decision-history", "how-to"}
 )
 VALID_STATE = frozenset({"draft", "final"})
+VALID_AUDIENCE = frozenset({"internal", "external"})
 
 
 @dataclass(frozen=True)
@@ -36,6 +37,9 @@ def _parse_frontmatter(text: str) -> dict[str, str] | None:
 
 
 def check_frontmatter(path: Path, text: str | None = None) -> list[Finding]:
+    # INDEX is a book, not a typed spec. Spec frontmatter does not apply.
+    if path.name in {"INDEX.md", "README.md", "CONTEXT.md"}:
+        return []
     raw = text if text is not None else path.read_text(encoding="utf-8")
     rel = str(path)
     fm = _parse_frontmatter(raw)
@@ -56,4 +60,9 @@ def check_frontmatter(path: Path, text: str | None = None) -> list[Finding]:
         findings.append(Finding("frontmatter", rel, f"invalid state: {st}"))
     if fm.get("state") == "final" and not fm.get("final_date"):
         findings.append(Finding("frontmatter", rel, "final state requires final_date"))
+    audience = fm.get("audience", "")
+    if audience and audience not in VALID_AUDIENCE:
+        findings.append(
+            Finding("frontmatter", rel, "audience must be internal or external")
+        )
     return findings

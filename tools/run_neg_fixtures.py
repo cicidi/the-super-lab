@@ -16,16 +16,32 @@ from checks.collision import check_collision  # noqa: E402
 from checks.decision_log import check_decision_log  # noqa: E402
 from checks.frontmatter import check_frontmatter  # noqa: E402
 from checks.ids import check_ids  # noqa: E402
+from checks.index_book import check_index_book  # noqa: E402
 from checks.no_commit import check_no_commit_tree  # noqa: E402
 from checks.paths import check_committed_path  # noqa: E402
 from checks.sections import check_sections  # noqa: E402
 from checks.parent_complete import check_parent_complete  # noqa: E402
 from checks.size import check_size  # noqa: E402
+from checks.paired_html import check_paired_html  # noqa: E402
+from checks.audience_authority import check_audience_authority  # noqa: E402
+from checks.open_questions import check_open_questions  # noqa: E402
+from checks.anchors import check_anchors  # noqa: E402
+from checks.code_citation_base import check_code_citation_base  # noqa: E402
+from checks.impl_tasks import check_impl_tasks  # noqa: E402
+from checks.translation_banner import check_translation_banner  # noqa: E402
+from checks.section_refs import check_section_refs  # noqa: E402
+from checks.counts import check_counts  # noqa: E402
+from checks.resolved_refs import check_resolved_refs  # noqa: E402
+from checks.diagram_steps import check_diagram_steps  # noqa: E402
 
 # neg folder name → (expected check id, runner)
 CASES: list[tuple[str, str, object]] = [
     ("missing-frontmatter", "frontmatter", check_frontmatter),
     ("bad-filename", "paths", check_committed_path),
+    ("bad-frontmatter-key", "frontmatter", check_frontmatter),
+    ("bad-index", "index_book", check_index_book),
+    ("bad-index-dead-link", "index_book", check_index_book),
+    ("no-commit-reference", "no_commit", check_no_commit_tree),
     ("bad-ids", "ids", check_ids),
     ("bad-decision-log", "decision_log", check_decision_log),
     ("bad-change-log", "change_log", check_change_log),
@@ -34,6 +50,17 @@ CASES: list[tuple[str, str, object]] = [
     ("bad-no-commit", "no_commit", check_no_commit_tree),
     ("collision-pair", "collision", check_collision),
     ("bad-parent-incomplete", "parent_complete", check_parent_complete),
+    ("paired-html-stale", "paired_html_stale", check_paired_html),
+    ("bad-audience", "audience_authority", check_audience_authority),
+    ("bad-open-questions", "open_questions", check_open_questions),
+    ("dead-anchor", "anchors", check_anchors),
+    ("unanchored-citation", "code_citation_base", check_code_citation_base),
+    ("impl-task-no-done", "impl_tasks", check_impl_tasks),
+    ("translation-no-banner", "translation_banner", check_translation_banner),
+    ("stale-section-ref", "section_refs", check_section_refs),
+    ("bad-tracker-counts", "counts", check_counts),
+    ("stale-question-status", "resolved_refs", check_resolved_refs),
+    ("diagram-step-mismatch", "diagram_steps", check_diagram_steps),
 ]
 
 
@@ -41,6 +68,12 @@ def _run_case(name: str, check: str, fn) -> list:
     base = FIX / name
     if not base.is_dir():
         return [f"missing fixture dir {name}"]
+    if fn is check_paired_html:
+        findings = fn(base)
+        return [] if any(f.check == check for f in findings) else [f"{name}: no {check} finding"]
+    if fn is check_index_book:
+        findings = fn(base)
+        return [] if any(f.check == check for f in findings) else [f"{name}: no {check} finding"]
     if fn is check_parent_complete:
         for feat in (base / "docs" / "features").iterdir():
             if feat.is_dir():
@@ -56,6 +89,8 @@ def _run_case(name: str, check: str, fn) -> list:
         return [] if any(f.check == check for f in findings) else [f"{name}: no {check} finding"]
     findings = []
     for path in base.rglob("*.md"):
+        if path.name.startswith("._"):
+            continue
         text = path.read_text(encoding="utf-8")
         findings.extend(fn(path, text) if fn is not check_committed_path else fn(path))
     if any(f.check == check for f in findings):

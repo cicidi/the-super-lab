@@ -1,0 +1,2576 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>skill-factory — Decision History · decision-history · Spec Atlas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:400,400italic,500,500italic,700|Roboto+Mono:400,500,700|Noto+Sans+SC:400,500,700&display=swap">
+<link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><a href="../../index.html"><span class="brand-mark">SDD</span><span class="brand-name">Spec Atlas</span></a></div>
+  </div>
+</header>
+<div class="site">
+  <aside class="sidebar">
+  <nav aria-label="Directory">
+    <div class="tree-overview"><a class="tree-link" href="../../index.html"><span class="tree-link__num">00</span>All features</a></div>
+    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../prd/skill-factory-prd.html"><span class="tree-link__num">10</span>skill-factory PRD</a></li><li class="tree-leaf"><a class="tree-link" href="../design/skill-factory-design.html"><span class="tree-link__num">11</span>skill-factory Specification</a></li><li class="tree-leaf"><a class="tree-link" href="../impl-plan/skill-factory-impl-plan.html"><span class="tree-link__num">12</span>skill-factory Implementation Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../test-plan/skill-factory-test-plan.html"><span class="tree-link__num">13</span>skill-factory Test Plan</a></li><li class="tree-leaf"><a class="tree-link" href="skill-factory-decision-history.html" aria-current="page"><span class="tree-link__num">14</span>skill-factory — Decision History</a></li></ul>
+  </nav>
+</aside>
+  <main class="content">
+    <nav class="breadcrumbs"><a href="../../index.html">Docs</a> / <span>skill-factory</span> / <span>decision-history</span> / <span>skill-factory — Decision History</span></nav>
+    <article class="doc" data-doc="skill-factory/decision-history/skill-factory-decision-history">
+      <header class="doc-head">
+        <p class="eyebrow">skill-factory</p>
+        <h1>skill-factory — Decision History</h1>
+        <p class="source">Canonical: docs/features/skill-factory/decision-history/skill-factory-decision-history.md</p>
+      </header>
+      
+      <div class="doc-body">
+        <h2>skill-factory — Decision History</h2>
+<p>Append-only. Superseded and wrong decisions stay in the log; a decision that is overturned gets a new numbered entry that supersedes it, never an edit. Entries 0001-0126 were consolidated from fourteen per-day records that were generated automatically from session analysis; no decision was dropped in the consolidation.</p>
+<h3>Decision Log</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>#</th>
+<th>Date</th>
+<th>Decision</th>
+<th>Status</th>
+<th>Supersedes</th>
+</tr></thead><tbody>
+<tr>
+<td>0001</td>
+<td>2026-06-10</td>
+<td>fix: skill-create quality gate improvements from round-01 review</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0002</td>
+<td>2026-06-10</td>
+<td>docs: round-01 agent-B evaluation — both skills PASS</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0003</td>
+<td>2026-06-10</td>
+<td>skill: add skill-edit and skill-import from round-01 Agent-A</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0004</td>
+<td>2026-06-10</td>
+<td>chore: remove ai-worker-skills, fix skill-create description and references</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0005</td>
+<td>2026-06-10</td>
+<td>docs: implementation plan for skill-factory bootstrap</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0006</td>
+<td>2026-06-10</td>
+<td>docs: add skill-factory bootstrap design spec</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0007</td>
+<td>2026-06-10</td>
+<td>refactor: move skills into walter-worker-skills namespace</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0008</td>
+<td>2026-06-10</td>
+<td>feat: initialize skill-factory project with skill-create</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0009</td>
+<td>2026-06-10</td>
+<td>Public open source repository</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0010</td>
+<td>2026-06-10</td>
+<td>Directory structure: ai-worker-skills/ for own skills, import/ for imported, personal/ for private</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0011</td>
+<td>2026-06-10</td>
+<td>Naming convention: ai-worker-skills get prefix &#x27;ai-worker-&#x27;, imports keep original name</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0012</td>
+<td>2026-06-10</td>
+<td>Use Claude Code local marketplace via extraKnownMarketplaces</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0013</td>
+<td>2026-06-10</td>
+<td>skill-import skill behavior: fetch, extract, write metadata, register in marketplace</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0014</td>
+<td>2026-06-10</td>
+<td>META.yaml schema with source, upstream_commit, license, imported_at, imported_by, note</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0015</td>
+<td>2026-06-10</td>
+<td>CI workflow to validate import metadata completeness</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0016</td>
+<td>2026-06-10</td>
+<td>Test flat vs nested SKILL.md structure</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0017</td>
+<td>2026-06-10</td>
+<td>OpenCode installation: git plugin + project-level symlink</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0018</td>
+<td>2026-06-10</td>
+<td>Personal skills symlinked directly, gitignored, not in marketplace</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0019</td>
+<td>2026-06-11</td>
+<td>skill: add walter-worker-devil-advocate — multi-agent adversarial review for specs and design docs</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0020</td>
+<td>2026-06-11</td>
+<td>skill: add 5 migrated coworker skills</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0021</td>
+<td>2026-06-11</td>
+<td>feat(skill-create): Phase 0 multi-source search — GitHub (&gt;=10 repos), web search, import-vs-inspire</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0022</td>
+<td>2026-06-11</td>
+<td>refactor: three-directory structure with walter-worker- prefix naming</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0023</td>
+<td>2026-06-11</td>
+<td>fix(skill-import): add author preservation, import/ subdirectory, and anti-pattern for lost authorsh</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0024</td>
+<td>2026-06-11</td>
+<td>docs: final verification logs and bootstrap summary</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0025</td>
+<td>2026-06-11</td>
+<td>fix(tdd): optimize description and overview per skill-factory conventions</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0026</td>
+<td>2026-06-11</td>
+<td>skill: import tdd from mattpocock/skills</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0027</td>
+<td>2026-06-12</td>
+<td>skill: add walter-worker-work-review — 2-agent gatekeeper for work acceptance sign-off</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0028</td>
+<td>2026-06-18</td>
+<td>skill: add walter-worker-contrarian-review — 5-agent adversarial document review</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0029</td>
+<td>2026-06-23</td>
+<td>chore: remove self-heal/self-analyze from personal-skills (in walter-worker-skills)</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0030</td>
+<td>2026-06-23</td>
+<td>chore: remove self-strain</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0031</td>
+<td>2026-06-23</td>
+<td>fix: add english-grammar-fix (was untracked)</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0032</td>
+<td>2026-06-23</td>
+<td>refactor: rename self-patch to english-grammar-fix</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0033</td>
+<td>2026-06-23</td>
+<td>chore: remove skills deleted from walter-worker (flow-*, connect-*, doc-review, bug-sleuth, bug-create</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0034</td>
+<td>2026-06-23</td>
+<td>chore: remove gate-* skills (not in walter-worker scope)</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0035</td>
+<td>2026-06-23</td>
+<td>chore: remove self-init (walter-worker skills/init/ is more current)</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0036</td>
+<td>2026-06-23</td>
+<td>feat: add self-heal and self-analyze skills</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0037</td>
+<td>2026-06-23</td>
+<td>chore: remove session-memory (moved to walter-worker)</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0038</td>
+<td>2026-06-23</td>
+<td>chore: remove initiative-create/edit (moved to walter-worker)</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0039</td>
+<td>2026-06-23</td>
+<td>refactor: rename skills to simplified naming, migrate 21 AI coworker skills</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0040</td>
+<td>2026-06-23</td>
+<td>chore: remove docs/superpowers from tracking, add to gitignore</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0041</td>
+<td>2026-06-23</td>
+<td>feat: add auto-tdd, session-memory, initiative-create/edit skills; add contrarian-review Mode 1</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0042</td>
+<td>2026-06-24</td>
+<td>fix: re-apply skill fixes lost during rebase (frontmatter + sections)</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0043</td>
+<td>2026-06-24</td>
+<td>chore: contrarian review overhaul — source repo enforcement, naming cleanup, tests, docs</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0044</td>
+<td>2026-07-01</td>
+<td>skill: add tmux-status-bar — tmux bar with project, git, and initiative context</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0045</td>
+<td>2026-07-02</td>
+<td>fix: remove walter-worker- prefix from 4 skill frontmatter names</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0046</td>
+<td>2026-07-14</td>
+<td>skill: add multi-model-team — GLM 5.2 architect + DeepSeek v4 Pro worker orchestration</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0047</td>
+<td>2026-07-17</td>
+<td>fix: knowledge-repo is separate repo at different path, not under project/</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0048</td>
+<td>2026-07-17</td>
+<td>docs: clarify knowledge-repo is separate repo, add CLAUDE.md reference example</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0049</td>
+<td>2026-07-17</td>
+<td>docs: add INDEX.md generation workflow + content summary column</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0050</td>
+<td>2026-07-17</td>
+<td>refactor: filename must include type suffix</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0051</td>
+<td>2026-07-17</td>
+<td>docs: add naming anti-pattern rule — no generic file names</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0052</td>
+<td>2026-07-17</td>
+<td>feat: add state type (10 types). state files: dated, overwrite not append</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0053</td>
+<td>2026-07-17</td>
+<td>fix: remove dates from suffix section examples</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0054</td>
+<td>2026-07-17</td>
+<td>refactor: no dates on any file with Change Log (all 8 main types)</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0055</td>
+<td>2026-07-17</td>
+<td>fix: split naming — dated vs dateless types</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0056</td>
+<td>2026-07-17</td>
+<td>feat: add 22 skills migrated from walter-worker</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0057</td>
+<td>2026-07-17</td>
+<td>feat: add doc-organize skill (9 doc types, 6 stages, INDEX.md)</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0058</td>
+<td>2026-07-18</td>
+<td>skill: add image review gate + scatterbrain design system to youtube-research-pipeline</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0059</td>
+<td>2026-07-18</td>
+<td>skill: add youtube-research-pipeline — end-to-end YouTube video research pipeline with 3-agent deep</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0060</td>
+<td>2026-07-18</td>
+<td>skill: add pic-to-txt — extract text from image folders using OCR + LLM refinement</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0061</td>
+<td>2026-07-18</td>
+<td>feat: add transcript refinement step using LLM + metadata + comments</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0062</td>
+<td>2026-07-18</td>
+<td>feat: add screenshot+OCR tier for burned-in subtitles</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0063</td>
+<td>2026-07-18</td>
+<td>feat: add full transcription pipeline to youtube-summarize skill</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0064</td>
+<td>2026-07-18</td>
+<td>feat: add youtube-summarize skill for summarizing YouTube video content</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0065</td>
+<td>2026-07-22</td>
+<td>skill: add transcribe-audio — local GPU Whisper audio-to-text</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0066</td>
+<td>2026-07-22</td>
+<td>skill: add create-video-workflow v3 — 7-phase human-in-the-loop content factory</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0067</td>
+<td>2026-07-22</td>
+<td>skill: enhance skill-create — add Phase 3 Precision &amp; Examples with legal-clause bounds and 2-3 exam</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0068</td>
+<td>2026-07-22</td>
+<td>docs: add orphan folder cleanup step to doc-organize reorganize workflow</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0069</td>
+<td>2026-07-23</td>
+<td>skill(luma-event-scout): add Robotics Reading Club to seed calendars</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0070</td>
+<td>2026-07-23</td>
+<td>skill(luma-event-scout): add form filling rules + verification gate</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0071</td>
+<td>2026-07-23</td>
+<td>skill(luma-event-scout): move personal info to ~/.person_info.md</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0072</td>
+<td>2026-07-23</td>
+<td>skill(luma-event-scout): replace scraping with public API, clean up failed approaches</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0073</td>
+<td>2026-07-23</td>
+<td>skill(luma-event-scout): note __NEXT_DATA__ 20-event limit, add Playwright scroll strategy</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0074</td>
+<td>2026-07-23</td>
+<td>skill(luma-event-scout): lower hackathon prize threshold to K+</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0075</td>
+<td>2026-07-23</td>
+<td>skill(luma-event-scout): add hackathon prize/host quality gates</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0076</td>
+<td>2026-07-23</td>
+<td>skill(luma-event-scout): clarify hackathons are acceptable with speaker gate</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0077</td>
+<td>2026-07-23</td>
+<td>skill(luma-event-scout): add __NEXT_DATA__ JSON extraction method</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0078</td>
+<td>2026-07-23</td>
+<td>skill(luma-event-scout): expand to entire Bay Area — SF + South Bay + Peninsula</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0079</td>
+<td>2026-07-23</td>
+<td>skill(luma-event-scout): add broad AI search, hard speaker gate, dual-list output</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0080</td>
+<td>unknown</td>
+<td>Add &#x27;variant&#x27;: &#x27;thinking-high&#x27; to the build agent in opencode config</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0081</td>
+<td>unknown</td>
+<td>重建三个平级的 skill 目录：walter-worker-skills、import-skills、personal-skills</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0082</td>
+<td>unknown</td>
+<td>walter-worker-skills 和 personal-skills 下的 skill 在 name 字段加 walter-worker- 前缀，文件夹名不改；import-skills 不加前缀；修</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0083</td>
+<td>unknown</td>
+<td>在 skill-create 的 Phase 0 增加 GitHub 搜索（≥10 repo）和 Web 搜索，并提供 import/吸收灵感/自建三种决策分支</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0084</td>
+<td>unknown</td>
+<td>在 ~/.claude/CLAUDE.md 添加规则：每次请求至少问1-3个 clarify 问题，除非置信度≥90%</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0085</td>
+<td>unknown</td>
+<td>为 skill-import 增加 metadata.source_author 和 metadata.source_url 字段，并在 Quality Gates 中验证</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0086</td>
+<td>unknown</td>
+<td>导入的 skill 放入独立的 import-skills/ 目录，而非 walter-worker-skills/import/</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0087</td>
+<td>unknown</td>
+<td>保留并修复 skill-create 作为自举起点，而非从头重建</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0088</td>
+<td>unknown</td>
+<td>Follow exact skill-create process phases (0-&gt;1-&gt;2-&gt;3-&gt;4) for skill-edit creation</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0089</td>
+<td>unknown</td>
+<td>Use provided requirements as user answers during interview (Phase 1)</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0090</td>
+<td>unknown</td>
+<td>Accept default factor weights (Accuracy 0.4, Edge cases 0.3, Readability 0.15, Speed 0.1, Tool integ</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0091</td>
+<td>unknown</td>
+<td>Build SKILL.md following opencode 5-field frontmatter format and CONVENTIONS.md body structure with</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0092</td>
+<td>unknown</td>
+<td>Include anti-patterns section in SKILL.md</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0093</td>
+<td>unknown</td>
+<td>Include quality gates section that blocks if violated (MUST gates)</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0094</td>
+<td>unknown</td>
+<td>Present diff summary and get user approval before editing (Step 4)</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0095</td>
+<td>unknown</td>
+<td>Use Edit tool for targeted changes, never Write on entire file, never create new file</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0096</td>
+<td>unknown</td>
+<td>Run quality gates before commit; MUST gates block publish</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0097</td>
+<td>unknown</td>
+<td>Use conventional commit message format: skill(&lt;name&gt;): &lt;imperative verb&gt; &lt;description&gt;</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0098</td>
+<td>unknown</td>
+<td>Output only final SKILL.md content at end, not actually create files or commit</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0099</td>
+<td>unknown</td>
+<td>Redirect to skill-create if target skill doesn&#x27;t exist or change is ≥80% rewrite</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0100</td>
+<td>unknown</td>
+<td>Skip interview phase and go directly to build with pre-specified requirements</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0101</td>
+<td>unknown</td>
+<td>Use webfetch (preferred) or curl to fetch source SKILL.md</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0102</td>
+<td>unknown</td>
+<td>Auto-convert frontmatter: map name to kebab-case, rewrite description to start with &#x27;Use when...&#x27;, d</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0103</td>
+<td>unknown</td>
+<td>Auto-adapt body sections: map Philosophy→overview, Anti-Pattern→Anti-Patterns, Workflow→Process, Che</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0104</td>
+<td>unknown</td>
+<td>Implement Ambiguity Triggers: ask user one question at a time only when mapping is ambiguous (no lic</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0105</td>
+<td>unknown</td>
+<td>Define Quality Gates as MUST (block commit) and NICE (warn only) checklists</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0106</td>
+<td>unknown</td>
+<td>Include Anti-Patterns section with four specific anti-patterns</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0107</td>
+<td>unknown</td>
+<td>Target &lt;150 lines but accept 186 lines due to required content (conversion table, gates, anti-patter</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0108</td>
+<td>unknown</td>
+<td>Tighten NICE gate &#x27;Body &lt; 500 lines&#x27; to &#x27;&lt; 150 lines&#x27; in skill-create</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0109</td>
+<td>unknown</td>
+<td>Add &#x27;Anti-Patterns section present&#x27; as NICE gate in skill-create</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0110</td>
+<td>unknown</td>
+<td>Add &#x27;Quality Gates section with MUST/NICE checkboxes&#x27; as NICE gate in skill-create</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0111</td>
+<td>unknown</td>
+<td>Add &#x27;Philosophy-driven overview&#x27; as NICE requirement in skill-create Phase 2</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0112</td>
+<td>unknown</td>
+<td>Add &#x27;No deploy/ concept&#x27; prohibition as MUST gate in skill-create</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0113</td>
+<td>unknown</td>
+<td>Add &#x27;description ≤ 500 chars&#x27; as NICE gate in skill-create</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0114</td>
+<td>unknown</td>
+<td>Accept Agent-B&#x27;s assessment that skill-edit and skill-import have zero MUST violations</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0115</td>
+<td>unknown</td>
+<td>Commit changes to skill-create and report with specific commit message</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0116</td>
+<td>unknown</td>
+<td>Use main agent orchestration with stateless subagents for each round (con, pro, judge) in devil-advo</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0117</td>
+<td>unknown</td>
+<td>Change output path for devil-advocate from project default to {project-path}/docs/devil-advocate/YYY</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0118</td>
+<td>unknown</td>
+<td>Create two output files for devil-advocate: discussion.md (full debate) and report.md (summary).</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0119</td>
+<td>unknown</td>
+<td>Limit debate to max 5 rounds, then fall back to 3-agent majority vote on unresolved points.</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0120</td>
+<td>unknown</td>
+<td>Use triggers &#x27;review spec&#x27;, &#x27;杠精&#x27;, &#x27;devil advocate&#x27;, &#x27;adversarial review&#x27; for devil-advocate skill.</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0121</td>
+<td>unknown</td>
+<td>Use sequential two-agent architecture (Collector then Reviewer) without auto-retry for work-review s</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0122</td>
+<td>unknown</td>
+<td>Agent 1 (Collector) writes a test plan (scenarios, types, steps) but no executable test code.</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0123</td>
+<td>unknown</td>
+<td>Agent 2 (Reviewer) executes the test plan by running existing UT/FT, writing Playwright for E2E, and</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0124</td>
+<td>unknown</td>
+<td>Output for work-review goes to {project-path}/docs/work-review/YYYY-MM-DD-&lt;topic&gt;/ with acceptance.m</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0125</td>
+<td>unknown</td>
+<td>Use triggers &#x27;work review&#x27;, &#x27;acceptance&#x27;, &#x27;sign off&#x27;, &#x27;verify work&#x27; for work-review skill.</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0127</td>
+<td>2026-09-25</td>
+<td>Consolidated fourteen per-day decision records into this single append-only history</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0128</td>
+<td>2026-09-25</td>
+<td>Folded the design/ directory into the spec&#x27;s Design sections; design is not one of the six types</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0129</td>
+<td>2026-09-25</td>
+<td>Marked the skill-factory documents stale rather than rewriting them to match the code</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0130</td>
+<td>2026-09-25</td>
+<td>Four documents keep their own section shapes instead of the standard template; reported, not forced</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>0126</td>
+<td>unknown</td>
+<td>Compress SKILL.md to under 150 lines to pass quality gate.</td>
+<td>accepted</td>
+<td>—</td>
+</tr>
+</tbody></table></div>
+<h3>Evidence Appendix</h3>
+<p>Each entry preserves the rationale exactly as it was recorded, including the alternatives that were rejected. Support content is kept verbatim.</p>
+<h4>0001 — fix: skill-create quality gate improvements from round-01 review</h4>
+<p>Status: accepted</p>
+<ol>
+<li>fix: skill-create quality gate improvements from round-01 review</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-06-10T23:59:31-07:00</li>
+<li><strong>Context</strong>: git commit 33e48d2e</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>33e48d2e</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0002 — docs: round-01 agent-B evaluation — both skills PASS</h4>
+<p>Status: accepted</p>
+<ol>
+<li>docs: round-01 agent-B evaluation — both skills PASS</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-06-10T23:55:57-07:00</li>
+<li><strong>Context</strong>: git commit d9baa432</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>d9baa432</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0003 — skill: add skill-edit and skill-import from round-01 Agent-A</h4>
+<p>Status: accepted</p>
+<ol>
+<li>skill: add skill-edit and skill-import from round-01 Agent-A</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-06-10T23:53:49-07:00</li>
+<li><strong>Context</strong>: git commit 1d7bb7ed</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>1d7bb7ed</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0004 — chore: remove ai-worker-skills, fix skill-create description and references</h4>
+<p>Status: accepted</p>
+<ol>
+<li>chore: remove ai-worker-skills, fix skill-create description and references</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-06-10T23:47:31-07:00</li>
+<li><strong>Context</strong>: git commit 8cb87bec</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>8cb87bec</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0005 — docs: implementation plan for skill-factory bootstrap</h4>
+<p>Status: accepted</p>
+<ol>
+<li>docs: implementation plan for skill-factory bootstrap</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-06-10T23:47:03-07:00</li>
+<li><strong>Context</strong>: git commit 8ce5ae73</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>8ce5ae73</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0006 — docs: add skill-factory bootstrap design spec</h4>
+<p>Status: accepted</p>
+<ol>
+<li>docs: add skill-factory bootstrap design spec</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-06-10T23:43:57-07:00</li>
+<li><strong>Context</strong>: git commit 5dcb52c7</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>5dcb52c7</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0007 — refactor: move skills into walter-worker-skills namespace</h4>
+<p>Status: accepted</p>
+<ol>
+<li>refactor: move skills into walter-worker-skills namespace</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-06-10T21:14:15-07:00</li>
+<li><strong>Context</strong>: git commit 54496dad</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>54496dad</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0008 — feat: initialize skill-factory project with skill-create</h4>
+<p>Status: accepted</p>
+<ol>
+<li>feat: initialize skill-factory project with skill-create</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-06-10T21:10:17-07:00</li>
+<li><strong>Context</strong>: git commit 5d9747e9</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>5d9747e9</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0009 — Public open source repository</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Public open source repository</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Timestamp</strong>: 2026-06-10</li>
+<li><strong>Context</strong>: User originally chose private local, but later changed to public open source.</li>
+<li><strong>Rationale</strong>: To share skills with the community and enable collaboration.</li>
+<li><strong>Alternatives rejected</strong>: Private local, Public + private hybrid</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0010 — Directory structure: ai-worker-skills/ for own skills, import/ for imported, personal/ for private</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Directory structure: ai-worker-skills/ for own skills, import/ for imported, personal/ for private</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Timestamp</strong>: 2026-06-10</li>
+<li><strong>Context</strong>: Need to organize skills by source and visibility.</li>
+<li><strong>Rationale</strong>: Clear separation; personal/ is gitignored for privacy; import/ has metadata for attribution.</li>
+<li><strong>Alternatives rejected</strong>: Flat all in one directory, Nested by author only</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0011 — Naming convention: ai-worker-skills get prefix &#x27;ai-worker-&#x27;, imports keep original name</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Naming convention: ai-worker-skills get prefix &#x27;ai-worker-&#x27;, imports keep original name</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Timestamp</strong>: 2026-06-10</li>
+<li><strong>Context</strong>: User wanted brand recognition for own skills and clarity.</li>
+<li><strong>Rationale</strong>: Easy to identify sources in tool UI; imports preserve upstream identity.</li>
+<li><strong>Alternatives rejected</strong>: Same prefix for all, No prefix</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0012 — Use Claude Code local marketplace via extraKnownMarketplaces</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Use Claude Code local marketplace via extraKnownMarketplaces</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Timestamp</strong>: 2026-06-10</li>
+<li><strong>Context</strong>: Need a standard way to install skills.</li>
+<li><strong>Rationale</strong>: Native support; no extra scripts for Claude; OpenCode uses separate symlink approach.</li>
+<li><strong>Alternatives rejected</strong>: Symlink-only, Custom install script for each tool</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0013 — skill-import skill behavior: fetch, extract, write metadata, register in marketplace</h4>
+<p>Status: accepted</p>
+<ol>
+<li>skill-import skill behavior: fetch, extract, write metadata, register in marketplace</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Timestamp</strong>: 2026-06-10</li>
+<li><strong>Context</strong>: Automate import of third-party skills with proper attribution.</li>
+<li><strong>Rationale</strong>: Ensure license compliance and traceability; reusable workflow.</li>
+<li><strong>Alternatives rejected</strong>: Manual copy-paste, Script without interactive prompts</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0014 — META.yaml schema with source, upstream_commit, license, imported_at, imported_by, note</h4>
+<p>Status: accepted</p>
+<ol>
+<li>META.yaml schema with source, upstream_commit, license, imported_at, imported_by, note</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Timestamp</strong>: 2026-06-10</li>
+<li><strong>Context</strong>: Need structured metadata for each import for compliance.</li>
+<li><strong>Rationale</strong>: Standard format; easy to validate in CI; human-readable.</li>
+<li><strong>Alternatives rejected</strong>: Only README note, JSON schema</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0015 — CI workflow to validate import metadata completeness</h4>
+<p>Status: accepted</p>
+<ol>
+<li>CI workflow to validate import metadata completeness</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Timestamp</strong>: 2026-06-10</li>
+<li><strong>Context</strong>: Ensure all imports meet attribution requirements.</li>
+<li><strong>Rationale</strong>: Automated enforcement; prevent incomplete contributions.</li>
+<li><strong>Alternatives rejected</strong>: Manual review only</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0016 — Test flat vs nested SKILL.md structure</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Test flat vs nested SKILL.md structure</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Timestamp</strong>: 2026-06-10</li>
+<li><strong>Context</strong>: User questioned deep nesting (skills/&lt;name&gt;/SKILL.md).</li>
+<li><strong>Rationale</strong>: Validate compatibility with Claude Code marketplace; both passed, so may adopt flat structure for simplicity.</li>
+<li><strong>Alternatives rejected</strong>: Assuming nested required</li>
+<li><strong>Confidence</strong>: medium</li>
+</ul>
+<h4>0017 — OpenCode installation: git plugin + project-level symlink</h4>
+<p>Status: accepted</p>
+<ol>
+<li>OpenCode installation: git plugin + project-level symlink</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Timestamp</strong>: 2026-06-10</li>
+<li><strong>Context</strong>: OpenCode does not support marketplace natively.</li>
+<li><strong>Rationale</strong>: Git plugin offers easy sharing; symlink for per-project control.</li>
+<li><strong>Alternatives rejected</strong>: Only symlink, Only git plugin</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0018 — Personal skills symlinked directly, gitignored, not in marketplace</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Personal skills symlinked directly, gitignored, not in marketplace</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Timestamp</strong>: 2026-06-10</li>
+<li><strong>Context</strong>: User wants private skills not exposed in public repo.</li>
+<li><strong>Rationale</strong>: Privacy; simplifies git management; still usable via symlink.</li>
+<li><strong>Alternatives rejected</strong>: Encrypted storage in repo, Separate private repo</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0019 — skill: add walter-worker-devil-advocate — multi-agent adversarial review for specs and design docs</h4>
+<p>Status: accepted</p>
+<ol>
+<li>skill: add walter-worker-devil-advocate — multi-agent adversarial review for specs and design docs</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-06-11T22:52:46-07:00</li>
+<li><strong>Context</strong>: git commit 70ccdc4a</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>70ccdc4a</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0020 — skill: add 5 migrated coworker skills</h4>
+<p>Status: accepted</p>
+<ol>
+<li>skill: add 5 migrated coworker skills</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-06-11T01:03:50-07:00</li>
+<li><strong>Context</strong>: git commit a5dcc4e9</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>a5dcc4e9</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0021 — feat(skill-create): Phase 0 multi-source search — GitHub (&gt;=10 repos), web search, import-vs-inspire</h4>
+<p>Status: accepted</p>
+<ol>
+<li>feat(skill-create): Phase 0 multi-source search — GitHub (&gt;=10 repos), web search, import-vs-inspire</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-06-11T00:19:02-07:00</li>
+<li><strong>Context</strong>: git commit d30f01c0</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>d30f01c0</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0022 — refactor: three-directory structure with walter-worker- prefix naming</h4>
+<p>Status: accepted</p>
+<ol>
+<li>refactor: three-directory structure with walter-worker- prefix naming</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-06-11T00:14:52-07:00</li>
+<li><strong>Context</strong>: git commit a2e47245</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>a2e47245</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0023 — fix(skill-import): add author preservation, import/ subdirectory, and anti-pattern for lost authorsh</h4>
+<p>Status: accepted</p>
+<ol>
+<li>fix(skill-import): add author preservation, import/ subdirectory, and anti-pattern for lost authorsh</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-06-11T00:05:11-07:00</li>
+<li><strong>Context</strong>: git commit 773594b9</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>773594b9</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0024 — docs: final verification logs and bootstrap summary</h4>
+<p>Status: accepted</p>
+<ol>
+<li>docs: final verification logs and bootstrap summary</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-06-11T00:01:52-07:00</li>
+<li><strong>Context</strong>: git commit 3c058b5e</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>3c058b5e</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0025 — fix(tdd): optimize description and overview per skill-factory conventions</h4>
+<p>Status: accepted</p>
+<ol>
+<li>fix(tdd): optimize description and overview per skill-factory conventions</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-06-11T00:01:21-07:00</li>
+<li><strong>Context</strong>: git commit d98ed8d3</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>d98ed8d3</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0026 — skill: import tdd from mattpocock/skills</h4>
+<p>Status: accepted</p>
+<ol>
+<li>skill: import tdd from mattpocock/skills</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-06-11T00:00:49-07:00</li>
+<li><strong>Context</strong>: git commit eed365ce</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>eed365ce</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0027 — skill: add walter-worker-work-review — 2-agent gatekeeper for work acceptance sign-off</h4>
+<p>Status: accepted</p>
+<ol>
+<li>skill: add walter-worker-work-review — 2-agent gatekeeper for work acceptance sign-off</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-06-12T01:31:08-07:00</li>
+<li><strong>Context</strong>: git commit 01f533c9</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>01f533c9</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0028 — skill: add walter-worker-contrarian-review — 5-agent adversarial document review</h4>
+<p>Status: accepted</p>
+<ol>
+<li>skill: add walter-worker-contrarian-review — 5-agent adversarial document review</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-06-18T21:26:45-07:00</li>
+<li><strong>Context</strong>: git commit 3a54ffc6</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>3a54ffc6</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0029 — chore: remove self-heal/self-analyze from personal-skills (in walter-worker-skills)</h4>
+<p>Status: accepted</p>
+<ol>
+<li>chore: remove self-heal/self-analyze from personal-skills (in walter-worker-skills)</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-06-23T23:29:10-07:00</li>
+<li><strong>Context</strong>: git commit bd9bb024</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>bd9bb024</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0030 — chore: remove self-strain</h4>
+<p>Status: accepted</p>
+<ol>
+<li>chore: remove self-strain</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-06-23T23:28:01-07:00</li>
+<li><strong>Context</strong>: git commit 06a4e020</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>06a4e020</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0031 — fix: add english-grammar-fix (was untracked)</h4>
+<p>Status: accepted</p>
+<ol>
+<li>fix: add english-grammar-fix (was untracked)</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-06-23T23:26:39-07:00</li>
+<li><strong>Context</strong>: git commit c329159c</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>c329159c</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0032 — refactor: rename self-patch to english-grammar-fix</h4>
+<p>Status: accepted</p>
+<ol>
+<li>refactor: rename self-patch to english-grammar-fix</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-06-23T23:26:27-07:00</li>
+<li><strong>Context</strong>: git commit 7226d537</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>7226d537</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0033 — chore: remove skills deleted from walter-worker (flow-*, connect-*, doc-review, bug-sleuth, bug-create</h4>
+<p>Status: accepted</p>
+<ol>
+<li>chore: remove skills deleted from walter-worker (flow-*, connect-*, doc-review, bug-sleuth, bug-create</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-06-23T23:25:08-07:00</li>
+<li><strong>Context</strong>: git commit 1b48039a</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>1b48039a</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0034 — chore: remove gate-* skills (not in walter-worker scope)</h4>
+<p>Status: accepted</p>
+<ol>
+<li>chore: remove gate-* skills (not in walter-worker scope)</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-06-23T23:24:43-07:00</li>
+<li><strong>Context</strong>: git commit 82c4563a</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>82c4563a</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0035 — chore: remove self-init (walter-worker skills/init/ is more current)</h4>
+<p>Status: accepted</p>
+<ol>
+<li>chore: remove self-init (walter-worker skills/init/ is more current)</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-06-23T23:23:30-07:00</li>
+<li><strong>Context</strong>: git commit 887a719b</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>887a719b</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0036 — feat: add self-heal and self-analyze skills</h4>
+<p>Status: accepted</p>
+<ol>
+<li>feat: add self-heal and self-analyze skills</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-06-23T23:11:04-07:00</li>
+<li><strong>Context</strong>: git commit dce0d79c</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>dce0d79c</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0037 — chore: remove session-memory (moved to walter-worker)</h4>
+<p>Status: accepted</p>
+<ol>
+<li>chore: remove session-memory (moved to walter-worker)</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-06-23T22:59:08-07:00</li>
+<li><strong>Context</strong>: git commit fca74392</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>fca74392</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0038 — chore: remove initiative-create/edit (moved to walter-worker)</h4>
+<p>Status: accepted</p>
+<ol>
+<li>chore: remove initiative-create/edit (moved to walter-worker)</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-06-23T22:58:43-07:00</li>
+<li><strong>Context</strong>: git commit 4d02f4cd</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>4d02f4cd</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0039 — refactor: rename skills to simplified naming, migrate 21 AI coworker skills</h4>
+<p>Status: accepted</p>
+<ol>
+<li>refactor: rename skills to simplified naming, migrate 21 AI coworker skills</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-06-23T22:18:22-07:00</li>
+<li><strong>Context</strong>: git commit 3395648c</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>3395648c</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0040 — chore: remove docs/superpowers from tracking, add to gitignore</h4>
+<p>Status: accepted</p>
+<ol>
+<li>chore: remove docs/superpowers from tracking, add to gitignore</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-06-23T21:38:41-07:00</li>
+<li><strong>Context</strong>: git commit add4f31e</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>add4f31e</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0041 — feat: add auto-tdd, session-memory, initiative-create/edit skills; add contrarian-review Mode 1</h4>
+<p>Status: accepted</p>
+<ol>
+<li>feat: add auto-tdd, session-memory, initiative-create/edit skills; add contrarian-review Mode 1</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-06-23T21:36:13-07:00</li>
+<li><strong>Context</strong>: git commit 7bfe010f</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>7bfe010f</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0042 — fix: re-apply skill fixes lost during rebase (frontmatter + sections)</h4>
+<p>Status: accepted</p>
+<ol>
+<li>fix: re-apply skill fixes lost during rebase (frontmatter + sections)</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-06-24T00:27:37-07:00</li>
+<li><strong>Context</strong>: git commit cca25cd5</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>cca25cd5</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0043 — chore: contrarian review overhaul — source repo enforcement, naming cleanup, tests, docs</h4>
+<p>Status: accepted</p>
+<ol>
+<li>chore: contrarian review overhaul — source repo enforcement, naming cleanup, tests, docs</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-06-24T00:26:28-07:00</li>
+<li><strong>Context</strong>: git commit 559834af</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>559834af</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0044 — skill: add tmux-status-bar — tmux bar with project, git, and initiative context</h4>
+<p>Status: accepted</p>
+<ol>
+<li>skill: add tmux-status-bar — tmux bar with project, git, and initiative context</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-01T22:05:37-07:00</li>
+<li><strong>Context</strong>: git commit 5cc3d4bc</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>5cc3d4bc</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0045 — fix: remove walter-worker- prefix from 4 skill frontmatter names</h4>
+<p>Status: accepted</p>
+<ol>
+<li>fix: remove walter-worker- prefix from 4 skill frontmatter names</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-02T12:22:15-07:00</li>
+<li><strong>Context</strong>: git commit bc4d6cc0</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>bc4d6cc0</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0046 — skill: add multi-model-team — GLM 5.2 architect + DeepSeek v4 Pro worker orchestration</h4>
+<p>Status: accepted</p>
+<ol>
+<li>skill: add multi-model-team — GLM 5.2 architect + DeepSeek v4 Pro worker orchestration</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-14T12:36:08-07:00</li>
+<li><strong>Context</strong>: git commit 56f3e001</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>56f3e001</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0047 — fix: knowledge-repo is separate repo at different path, not under project/</h4>
+<p>Status: accepted</p>
+<ol>
+<li>fix: knowledge-repo is separate repo at different path, not under project/</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-17T13:36:12-07:00</li>
+<li><strong>Context</strong>: git commit 9aa3483d</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>9aa3483d</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0048 — docs: clarify knowledge-repo is separate repo, add CLAUDE.md reference example</h4>
+<p>Status: accepted</p>
+<ol>
+<li>docs: clarify knowledge-repo is separate repo, add CLAUDE.md reference example</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-17T13:27:46-07:00</li>
+<li><strong>Context</strong>: git commit 6f4608e2</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>6f4608e2</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0049 — docs: add INDEX.md generation workflow + content summary column</h4>
+<p>Status: accepted</p>
+<ol>
+<li>docs: add INDEX.md generation workflow + content summary column</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-17T13:25:35-07:00</li>
+<li><strong>Context</strong>: git commit 3ee687d2</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>3ee687d2</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0050 — refactor: filename must include type suffix</h4>
+<p>Status: accepted</p>
+<ol>
+<li>refactor: filename must include type suffix</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-17T12:57:24-07:00</li>
+<li><strong>Context</strong>: git commit 8dc7afa9</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>8dc7afa9</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0051 — docs: add naming anti-pattern rule — no generic file names</h4>
+<p>Status: accepted</p>
+<ol>
+<li>docs: add naming anti-pattern rule — no generic file names</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-17T12:56:15-07:00</li>
+<li><strong>Context</strong>: git commit 004def01</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>004def01</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0052 — feat: add state type (10 types). state files: dated, overwrite not append</h4>
+<p>Status: accepted</p>
+<ol>
+<li>feat: add state type (10 types). state files: dated, overwrite not append</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-17T12:09:19-07:00</li>
+<li><strong>Context</strong>: git commit 46eaae74</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>46eaae74</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0053 — fix: remove dates from suffix section examples</h4>
+<p>Status: accepted</p>
+<ol>
+<li>fix: remove dates from suffix section examples</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-17T12:06:14-07:00</li>
+<li><strong>Context</strong>: git commit af1689db</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>af1689db</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0054 — refactor: no dates on any file with Change Log (all 8 main types)</h4>
+<p>Status: accepted</p>
+<ol>
+<li>refactor: no dates on any file with Change Log (all 8 main types)</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-17T12:06:05-07:00</li>
+<li><strong>Context</strong>: git commit 634494c5</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>634494c5</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0055 — fix: split naming — dated vs dateless types</h4>
+<p>Status: accepted</p>
+<ol>
+<li>fix: split naming — dated vs dateless types</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-17T12:01:07-07:00</li>
+<li><strong>Context</strong>: git commit 951491e8</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>951491e8</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0056 — feat: add 22 skills migrated from walter-worker</h4>
+<p>Status: accepted</p>
+<ol>
+<li>feat: add 22 skills migrated from walter-worker</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-17T09:51:05-07:00</li>
+<li><strong>Context</strong>: git commit aaa06765</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>aaa06765</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0057 — feat: add doc-organize skill (9 doc types, 6 stages, INDEX.md)</h4>
+<p>Status: accepted</p>
+<ol>
+<li>feat: add doc-organize skill (9 doc types, 6 stages, INDEX.md)</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-17T09:49:29-07:00</li>
+<li><strong>Context</strong>: git commit ee7c7087</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>ee7c7087</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0058 — skill: add image review gate + scatterbrain design system to youtube-research-pipeline</h4>
+<p>Status: accepted</p>
+<ol>
+<li>skill: add image review gate + scatterbrain design system to youtube-research-pipeline</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-18T23:31:53-07:00</li>
+<li><strong>Context</strong>: git commit 70959e94</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>70959e94</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0059 — skill: add youtube-research-pipeline — end-to-end YouTube video research pipeline with 3-agent deep</h4>
+<p>Status: accepted</p>
+<ol>
+<li>skill: add youtube-research-pipeline — end-to-end YouTube video research pipeline with 3-agent deep </li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-18T22:54:34-07:00</li>
+<li><strong>Context</strong>: git commit d7723a20</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>d7723a20</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0060 — skill: add pic-to-txt — extract text from image folders using OCR + LLM refinement</h4>
+<p>Status: accepted</p>
+<ol>
+<li>skill: add pic-to-txt — extract text from image folders using OCR + LLM refinement</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-18T22:27:50-07:00</li>
+<li><strong>Context</strong>: git commit 1e029ae5</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>1e029ae5</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0061 — feat: add transcript refinement step using LLM + metadata + comments</h4>
+<p>Status: accepted</p>
+<ol>
+<li>feat: add transcript refinement step using LLM + metadata + comments</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-18T22:04:58-07:00</li>
+<li><strong>Context</strong>: git commit d64e05c0</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>d64e05c0</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0062 — feat: add screenshot+OCR tier for burned-in subtitles</h4>
+<p>Status: accepted</p>
+<ol>
+<li>feat: add screenshot+OCR tier for burned-in subtitles</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-18T22:02:48-07:00</li>
+<li><strong>Context</strong>: git commit b04f00aa</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>b04f00aa</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0063 — feat: add full transcription pipeline to youtube-summarize skill</h4>
+<p>Status: accepted</p>
+<ol>
+<li>feat: add full transcription pipeline to youtube-summarize skill</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-18T22:01:38-07:00</li>
+<li><strong>Context</strong>: git commit cd0e658d</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>cd0e658d</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0064 — feat: add youtube-summarize skill for summarizing YouTube video content</h4>
+<p>Status: accepted</p>
+<ol>
+<li>feat: add youtube-summarize skill for summarizing YouTube video content</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-18T21:56:09-07:00</li>
+<li><strong>Context</strong>: git commit db0261dd</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>db0261dd</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0065 — skill: add transcribe-audio — local GPU Whisper audio-to-text</h4>
+<p>Status: accepted</p>
+<ol>
+<li>skill: add transcribe-audio — local GPU Whisper audio-to-text</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-22T23:42:53-07:00</li>
+<li><strong>Context</strong>: git commit ee5f3d5a</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>ee5f3d5a</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0066 — skill: add create-video-workflow v3 — 7-phase human-in-the-loop content factory</h4>
+<p>Status: accepted</p>
+<ol>
+<li>skill: add create-video-workflow v3 — 7-phase human-in-the-loop content factory</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-22T01:20:51-07:00</li>
+<li><strong>Context</strong>: git commit c4159a94</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>c4159a94</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0067 — skill: enhance skill-create — add Phase 3 Precision &amp; Examples with legal-clause bounds and 2-3 exam</h4>
+<p>Status: accepted</p>
+<ol>
+<li>skill: enhance skill-create — add Phase 3 Precision &amp; Examples with legal-clause bounds and 2-3 exam</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-22T00:56:39-07:00</li>
+<li><strong>Context</strong>: git commit a7f57de6</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>a7f57de6</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0068 — docs: add orphan folder cleanup step to doc-organize reorganize workflow</h4>
+<p>Status: accepted</p>
+<ol>
+<li>docs: add orphan folder cleanup step to doc-organize reorganize workflow</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-22T00:56:17-07:00</li>
+<li><strong>Context</strong>: git commit fe9d34e8</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>fe9d34e8</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0069 — skill(luma-event-scout): add Robotics Reading Club to seed calendars</h4>
+<p>Status: accepted</p>
+<ol>
+<li>skill(luma-event-scout): add Robotics Reading Club to seed calendars</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-23T23:18:39-07:00</li>
+<li><strong>Context</strong>: git commit 5bfdb57e</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>5bfdb57e</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0070 — skill(luma-event-scout): add form filling rules + verification gate</h4>
+<p>Status: accepted</p>
+<ol>
+<li>skill(luma-event-scout): add form filling rules + verification gate</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-23T22:41:17-07:00</li>
+<li><strong>Context</strong>: git commit 04eb9caf</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>04eb9caf</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0071 — skill(luma-event-scout): move personal info to ~/.person_info.md</h4>
+<p>Status: accepted</p>
+<ol>
+<li>skill(luma-event-scout): move personal info to ~/.person_info.md</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-23T22:32:38-07:00</li>
+<li><strong>Context</strong>: git commit e169832b</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>e169832b</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0072 — skill(luma-event-scout): replace scraping with public API, clean up failed approaches</h4>
+<p>Status: accepted</p>
+<ol>
+<li>skill(luma-event-scout): replace scraping with public API, clean up failed approaches</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-23T22:12:15-07:00</li>
+<li><strong>Context</strong>: git commit 24d42641</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>24d42641</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0073 — skill(luma-event-scout): note __NEXT_DATA__ 20-event limit, add Playwright scroll strategy</h4>
+<p>Status: accepted</p>
+<ol>
+<li>skill(luma-event-scout): note __NEXT_DATA__ 20-event limit, add Playwright scroll strategy</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-23T22:06:02-07:00</li>
+<li><strong>Context</strong>: git commit 9e4fb21e</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>9e4fb21e</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0074 — skill(luma-event-scout): lower hackathon prize threshold to K+</h4>
+<p>Status: accepted</p>
+<ol>
+<li>skill(luma-event-scout): lower hackathon prize threshold to K+</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-23T21:54:13-07:00</li>
+<li><strong>Context</strong>: git commit ff935e3f</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>ff935e3f</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0075 — skill(luma-event-scout): add hackathon prize/host quality gates</h4>
+<p>Status: accepted</p>
+<ol>
+<li>skill(luma-event-scout): add hackathon prize/host quality gates</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-23T21:52:48-07:00</li>
+<li><strong>Context</strong>: git commit 0308f521</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>0308f521</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0076 — skill(luma-event-scout): clarify hackathons are acceptable with speaker gate</h4>
+<p>Status: accepted</p>
+<ol>
+<li>skill(luma-event-scout): clarify hackathons are acceptable with speaker gate</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-23T21:50:49-07:00</li>
+<li><strong>Context</strong>: git commit c629b15c</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>c629b15c</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0077 — skill(luma-event-scout): add __NEXT_DATA__ JSON extraction method</h4>
+<p>Status: accepted</p>
+<ol>
+<li>skill(luma-event-scout): add __NEXT_DATA__ JSON extraction method</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-23T21:46:50-07:00</li>
+<li><strong>Context</strong>: git commit c4fe0ad5</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>c4fe0ad5</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0078 — skill(luma-event-scout): expand to entire Bay Area — SF + South Bay + Peninsula</h4>
+<p>Status: accepted</p>
+<ol>
+<li>skill(luma-event-scout): expand to entire Bay Area — SF + South Bay + Peninsula</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-23T21:43:01-07:00</li>
+<li><strong>Context</strong>: git commit 74e78bcb</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>74e78bcb</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0079 — skill(luma-event-scout): add broad AI search, hard speaker gate, dual-list output</h4>
+<p>Status: accepted</p>
+<ol>
+<li>skill(luma-event-scout): add broad AI search, hard speaker gate, dual-list output</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: git-commit</li>
+<li><strong>Timestamp</strong>: 2026-07-23T21:39:16-07:00</li>
+<li><strong>Context</strong>: git commit 0a50040c</li>
+<li><strong>Rationale</strong>: committed change</li>
+<li><strong>Commit</strong>: <code>0a50040c</code></li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0080 — Add &#x27;variant&#x27;: &#x27;thinking-high&#x27; to the build agent in opencode config</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Add &#x27;variant&#x27;: &#x27;thinking-high&#x27; to the build agent in opencode config</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: User requested to change thinking effort</li>
+<li><strong>Rationale</strong>: Thinking effort is controlled via variant field; existing config had no variant for build agent, so added thinking-high variant</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0081 — 重建三个平级的 skill 目录：walter-worker-skills、import-skills、personal-skills</h4>
+<p>Status: accepted</p>
+<ol>
+<li>重建三个平级的 skill 目录：walter-worker-skills、import-skills、personal-skills</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: 原仓库结构混乱，用户明确要求三个独立目录存放不同来源的技能</li>
+<li><strong>Rationale</strong>: 分离原生、导入和个人技能，便于管理和前缀规则实施</li>
+<li><strong>Alternatives rejected</strong>: 原先的 walter-worker-skills/import/ 子目录</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0082 — walter-worker-skills 和 personal-skills 下的 skill 在 name 字段加 walter-worker- 前缀，文件夹名不改；import-skills 不加前缀；修</h4>
+<p>Status: accepted</p>
+<ol>
+<li>walter-worker-skills 和 personal-skills 下的 skill 在 name 字段加 walter-worker- 前缀，文件夹名不改；import-skills 不加前缀；修</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: 用户要求所有自身技能显示前缀，但文件夹保持原名</li>
+<li><strong>Rationale</strong>: 满足显示需求同时避免大量文件夹重命名操作</li>
+<li><strong>Alternatives rejected</strong>: 文件夹也重命名, 仅在安装后修改显示名</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0083 — 在 skill-create 的 Phase 0 增加 GitHub 搜索（≥10 repo）和 Web 搜索，并提供 import/吸收灵感/自建三种决策分支</h4>
+<p>Status: accepted</p>
+<ol>
+<li>在 skill-create 的 Phase 0 增加 GitHub 搜索（≥10 repo）和 Web 搜索，并提供 import/吸收灵感/自建三种决策分支</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: 用户希望 skill-create 能从外部获取启发，支持复用或借鉴</li>
+<li><strong>Rationale</strong>: 增强技能创建时的外部参考能力，提升创建质量</li>
+<li><strong>Alternatives rejected</strong>: 仅限本地扫描</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0084 — 在 ~/.claude/CLAUDE.md 添加规则：每次请求至少问1-3个 clarify 问题，除非置信度≥90%</h4>
+<p>Status: accepted</p>
+<ol>
+<li>在 ~/.claude/CLAUDE.md 添加规则：每次请求至少问1-3个 clarify 问题，除非置信度≥90%</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: 用户要求在所有任务中强制澄清需求</li>
+<li><strong>Rationale</strong>: 减少误解，提高需求准确性；90%阈值避免过度打扰</li>
+<li><strong>Alternatives rejected</strong>: 总是提问不设阈值</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0085 — 为 skill-import 增加 metadata.source_author 和 metadata.source_url 字段，并在 Quality Gates 中验证</h4>
+<p>Status: accepted</p>
+<ol>
+<li>为 skill-import 增加 metadata.source_author 和 metadata.source_url 字段，并在 Quality Gates 中验证</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: 导入外部 skill 时需要保留原作者信息</li>
+<li><strong>Rationale</strong>: 保证知识溯源，符合 open-source 规范</li>
+<li><strong>Alternatives rejected</strong>: 不记录来源</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0086 — 导入的 skill 放入独立的 import-skills/ 目录，而非 walter-worker-skills/import/</h4>
+<p>Status: accepted</p>
+<ol>
+<li>导入的 skill 放入独立的 import-skills/ 目录，而非 walter-worker-skills/import/</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: 用户明确要求三个平级目录，导入 skill 不应混合在工厂原生目录内</li>
+<li><strong>Rationale</strong>: 保持目录职责清晰，避免混淆</li>
+<li><strong>Alternatives rejected</strong>: walter-worker-skills/import/ 子目录</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0087 — 保留并修复 skill-create 作为自举起点，而非从头重建</h4>
+<p>Status: accepted</p>
+<ol>
+<li>保留并修复 skill-create 作为自举起点，而非从头重建</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: skill-create 是创建其他技能的入口工具，需要先修复问题再使用</li>
+<li><strong>Rationale</strong>: 确保自举系统正确运行，避免重复工作</li>
+<li><strong>Alternatives rejected</strong>: 删除 skill-create 从零开始</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0088 — Follow exact skill-create process phases (0-&gt;1-&gt;2-&gt;3-&gt;4) for skill-edit creation</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Follow exact skill-create process phases (0-&gt;1-&gt;2-&gt;3-&gt;4) for skill-edit creation</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: User instructed to follow skill-create process exactly</li>
+<li><strong>Rationale</strong>: Ensures consistency and quality enforcement across all skills</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0089 — Use provided requirements as user answers during interview (Phase 1)</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Use provided requirements as user answers during interview (Phase 1)</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: User role simulated answers based on requirements</li>
+<li><strong>Rationale</strong>: Simulate realistic interview without actual human interaction</li>
+<li><strong>Alternatives rejected</strong>: Real-time human interview</li>
+<li><strong>Confidence</strong>: medium</li>
+</ul>
+<h4>0090 — Accept default factor weights (Accuracy 0.4, Edge cases 0.3, Readability 0.15, Speed 0.1, Tool integ</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Accept default factor weights (Accuracy 0.4, Edge cases 0.3, Readability 0.15, Speed 0.1, Tool integ</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: AI asked if user accepts defaults; user answered yes</li>
+<li><strong>Rationale</strong>: No need to customize</li>
+<li><strong>Alternatives rejected</strong>: Custom weights</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0091 — Build SKILL.md following opencode 5-field frontmatter format and CONVENTIONS.md body structure with</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Build SKILL.md following opencode 5-field frontmatter format and CONVENTIONS.md body structure with </li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: Phase 2 requirement</li>
+<li><strong>Rationale</strong>: Adhere to project conventions</li>
+<li><strong>Alternatives rejected</strong>: Different format or longer document</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0092 — Include anti-patterns section in SKILL.md</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Include anti-patterns section in SKILL.md</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: Phase 2, instruction to include anti-patterns section, philosophy-driven approach</li>
+<li><strong>Rationale</strong>: Prevent common mistakes</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0093 — Include quality gates section that blocks if violated (MUST gates)</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Include quality gates section that blocks if violated (MUST gates)</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: Phase 2, required by skill-create process</li>
+<li><strong>Rationale</strong>: Enforce quality</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0094 — Present diff summary and get user approval before editing (Step 4)</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Present diff summary and get user approval before editing (Step 4)</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: Workflow requirement</li>
+<li><strong>Rationale</strong>: Ensure user consent and review</li>
+<li><strong>Alternatives rejected</strong>: Editing without approval</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0095 — Use Edit tool for targeted changes, never Write on entire file, never create new file</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Use Edit tool for targeted changes, never Write on entire file, never create new file</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: Step 5 of process</li>
+<li><strong>Rationale</strong>: Prevent overwriting or creating new files (skill-create&#x27;s job)</li>
+<li><strong>Alternatives rejected</strong>: Using Write tool</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0096 — Run quality gates before commit; MUST gates block publish</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Run quality gates before commit; MUST gates block publish</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: Step 6 and Step 7</li>
+<li><strong>Rationale</strong>: Ensure quality</li>
+<li><strong>Alternatives rejected</strong>: Committing without verification</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0097 — Use conventional commit message format: skill(&lt;name&gt;): &lt;imperative verb&gt; &lt;description&gt;</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Use conventional commit message format: skill(&lt;name&gt;): &lt;imperative verb&gt; &lt;description&gt;</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: Publish step</li>
+<li><strong>Rationale</strong>: Standard for project</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0098 — Output only final SKILL.md content at end, not actually create files or commit</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Output only final SKILL.md content at end, not actually create files or commit</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: Instructions at end</li>
+<li><strong>Rationale</strong>: Avoid side effects in simulation</li>
+<li><strong>Alternatives rejected</strong>: Actually writing to files</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0099 — Redirect to skill-create if target skill doesn&#x27;t exist or change is ≥80% rewrite</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Redirect to skill-create if target skill doesn&#x27;t exist or change is ≥80% rewrite</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: Process Step 1 and Step 3</li>
+<li><strong>Rationale</strong>: Scope boundary</li>
+<li><strong>Alternatives rejected</strong>: Attempting to edit non-existent skill or full rewrite</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0100 — Skip interview phase and go directly to build with pre-specified requirements</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Skip interview phase and go directly to build with pre-specified requirements</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: User instructed to skip Phase 1 interview and proceed to Phase 2 build using provided requirements.</li>
+<li><strong>Rationale</strong>: Requirements were complete, no need for elicitation.</li>
+<li><strong>Alternatives rejected</strong>: Conducting the interview phase to gather more details</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0101 — Use webfetch (preferred) or curl to fetch source SKILL.md</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Use webfetch (preferred) or curl to fetch source SKILL.md</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: Workflow step 2: fetch source content.</li>
+<li><strong>Rationale</strong>: webfetch is more integrated; curl is fallback.</li>
+<li><strong>Alternatives rejected</strong>: Using only one tool, Manual copy-paste</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0102 — Auto-convert frontmatter: map name to kebab-case, rewrite description to start with &#x27;Use when...&#x27;, d</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Auto-convert frontmatter: map name to kebab-case, rewrite description to start with &#x27;Use when...&#x27;, d</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: Frontmatter mapping required by requirements.</li>
+<li><strong>Rationale</strong>: Standardize all skills to opencode 5-field format with consistent defaults.</li>
+<li><strong>Alternatives rejected</strong>: Keeping original description verbatim, Asking user for all fields</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0103 — Auto-adapt body sections: map Philosophy→overview, Anti-Pattern→Anti-Patterns, Workflow→Process, Che</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Auto-adapt body sections: map Philosophy→overview, Anti-Pattern→Anti-Patterns, Workflow→Process, Che</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: Body section mapping required to match CONVENTIONS.md structure.</li>
+<li><strong>Rationale</strong>: All imported skills must follow the same structure for consistency and AI readability.</li>
+<li><strong>Alternatives rejected</strong>: Keeping source section names, Adding more mappings without user input</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0104 — Implement Ambiguity Triggers: ask user one question at a time only when mapping is ambiguous (no lic</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Implement Ambiguity Triggers: ask user one question at a time only when mapping is ambiguous (no lic</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: User requirement: ask ONE QUESTION AT A TIME only when ambiguous.</li>
+<li><strong>Rationale</strong>: Minimize interruptions while ensuring correctness for edge cases.</li>
+<li><strong>Alternatives rejected</strong>: Ask user to fill all gaps upfront, Silently guess all values</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0105 — Define Quality Gates as MUST (block commit) and NICE (warn only) checklists</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Define Quality Gates as MUST (block commit) and NICE (warn only) checklists</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: Quality section required by build instructions.</li>
+<li><strong>Rationale</strong>: Ensure accuracy and compliance; separate blocking from non-blocking checks.</li>
+<li><strong>Alternatives rejected</strong>: Single list of all checks, No quality gates</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0106 — Include Anti-Patterns section with four specific anti-patterns</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Include Anti-Patterns section with four specific anti-patterns</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: Required by build instructions to have anti-patterns section.</li>
+<li><strong>Rationale</strong>: Prevent common mistakes during import (silent conversion, verbatim copy, skipped audit, write to existing dir).</li>
+<li><strong>Alternatives rejected</strong>: Generic anti-patterns, Omit section</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0107 — Target &lt;150 lines but accept 186 lines due to required content (conversion table, gates, anti-patter</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Target &lt;150 lines but accept 186 lines due to required content (conversion table, gates, anti-patter</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: User requirement &#x27;Target &lt; 150 lines&#x27;; output ended at 186.</li>
+<li><strong>Rationale</strong>: Content completeness prioritized over strict line count; line count is soft target.</li>
+<li><strong>Alternatives rejected</strong>: Cutting required sections to meet line target</li>
+<li><strong>Confidence</strong>: medium</li>
+</ul>
+<h4>0108 — Tighten NICE gate &#x27;Body &lt; 500 lines&#x27; to &#x27;&lt; 150 lines&#x27; in skill-create</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Tighten NICE gate &#x27;Body &lt; 500 lines&#x27; to &#x27;&lt; 150 lines&#x27; in skill-create</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: Diagnosis of skill-create revealed the body line limit was too loose per CONVENTIONS.md requirement.</li>
+<li><strong>Rationale</strong>: CONVENTIONS.md specifies body should be under 150 lines; the existing 500-line limit would allow overly long skills.</li>
+<li><strong>Alternatives rejected</strong>: Keeping the limit at 500 lines</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0109 — Add &#x27;Anti-Patterns section present&#x27; as NICE gate in skill-create</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Add &#x27;Anti-Patterns section present&#x27; as NICE gate in skill-create</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: skill-create lacked a requirement for an Anti-Patterns section, though downstream skills need it.</li>
+<li><strong>Rationale</strong>: Ensures generated skills include anti-patterns, aligning with CONVENTIONS.md.</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0110 — Add &#x27;Quality Gates section with MUST/NICE checkboxes&#x27; as NICE gate in skill-create</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Add &#x27;Quality Gates section with MUST/NICE checkboxes&#x27; as NICE gate in skill-create</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: skill-create did not require a Quality Gates section in generated skills.</li>
+<li><strong>Rationale</strong>: Makes quality criteria explicit and traceable, improving skill consistency.</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0111 — Add &#x27;Philosophy-driven overview&#x27; as NICE requirement in skill-create Phase 2</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Add &#x27;Philosophy-driven overview&#x27; as NICE requirement in skill-create Phase 2</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: Phase 2 instructions in skill-create were missing guidance to include a philosophy-driven overview.</li>
+<li><strong>Rationale</strong>: Philosophical framing improves skill cohesion and user understanding.</li>
+<li><strong>Confidence</strong>: medium</li>
+</ul>
+<h4>0112 — Add &#x27;No deploy/ concept&#x27; prohibition as MUST gate in skill-create</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Add &#x27;No deploy/ concept&#x27; prohibition as MUST gate in skill-create</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: CONVENTIONS.md prohibits deploy/ concept, but skill-create didn&#x27;t check for it.</li>
+<li><strong>Rationale</strong>: Prevents invalid skill structures from being created.</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0113 — Add &#x27;description ≤ 500 chars&#x27; as NICE gate in skill-create</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Add &#x27;description ≤ 500 chars&#x27; as NICE gate in skill-create</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: CONVENTIONS.md recommends description length ≤500 characters, but skill-create didn&#x27;t enforce it.</li>
+<li><strong>Rationale</strong>: Keeps descriptions succinct and readable.</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0114 — Accept Agent-B&#x27;s assessment that skill-edit and skill-import have zero MUST violations</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Accept Agent-B&#x27;s assessment that skill-edit and skill-import have zero MUST violations</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: Double-checked both skills against CONVENTIONS.md and found no issues.</li>
+<li><strong>Rationale</strong>: Both skills pass all quality gates; no additional issues found.</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0115 — Commit changes to skill-create and report with specific commit message</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Commit changes to skill-create and report with specific commit message</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: Changes required version control tracking.</li>
+<li><strong>Rationale</strong>: Follow standard development workflow for traceability.</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0116 — Use main agent orchestration with stateless subagents for each round (con, pro, judge) in devil-advo</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Use main agent orchestration with stateless subagents for each round (con, pro, judge) in devil-advo</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: During brainstorming for devil-advocate skill.</li>
+<li><strong>Rationale</strong>: Clear state management, debuggable, follows project&#x27;s existing pattern (Agent-A/B/C bootstrap).</li>
+<li><strong>Alternatives rejected</strong>: Persistent sessions with task_id for cross-round memory (Scheme B) - risk of state drift and debugging difficulty.</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0117 — Change output path for devil-advocate from project default to {project-path}/docs/devil-advocate/YYY</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Change output path for devil-advocate from project default to {project-path}/docs/devil-advocate/YYY</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: User requested a specific location (docs/devil-advocate) instead of docs/superpowers/devil-advocate.</li>
+<li><strong>Rationale</strong>: Direct user request.</li>
+<li><strong>Alternatives rejected</strong>: Staying at docs/superpowers/</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0118 — Create two output files for devil-advocate: discussion.md (full debate) and report.md (summary).</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Create two output files for devil-advocate: discussion.md (full debate) and report.md (summary).</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: User asked &#x27;有没有discussion.md&#x27; (is there a discussion.md?).</li>
+<li><strong>Rationale</strong>: Separate raw debate from human-readable summary.</li>
+<li><strong>Alternatives rejected</strong>: Single report.md containing everything.</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0119 — Limit debate to max 5 rounds, then fall back to 3-agent majority vote on unresolved points.</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Limit debate to max 5 rounds, then fall back to 3-agent majority vote on unresolved points.</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: Part of devil-advocate process design.</li>
+<li><strong>Rationale</strong>: Prevent infinite loops; voting provides tie-breaker.</li>
+<li><strong>Alternatives rejected</strong>: No limit or different round count.</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0120 — Use triggers &#x27;review spec&#x27;, &#x27;杠精&#x27;, &#x27;devil advocate&#x27;, &#x27;adversarial review&#x27; for devil-advocate skill.</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Use triggers &#x27;review spec&#x27;, &#x27;杠精&#x27;, &#x27;devil advocate&#x27;, &#x27;adversarial review&#x27; for devil-advocate skill.</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: Defining skill activation.</li>
+<li><strong>Rationale</strong>: Match user&#x27;s intended use cases.</li>
+<li><strong>Alternatives rejected</strong>: Single trigger only.</li>
+<li><strong>Confidence</strong>: medium</li>
+</ul>
+<h4>0121 — Use sequential two-agent architecture (Collector then Reviewer) without auto-retry for work-review s</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Use sequential two-agent architecture (Collector then Reviewer) without auto-retry for work-review s</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: During work-review brainstorming.</li>
+<li><strong>Rationale</strong>: Simple, clear separation of concerns; user manually re-triggers after fixes.</li>
+<li><strong>Alternatives rejected</strong>: Cyclic review with automatic re-check (Scheme B) - risk of infinite loop and skill responsibility creep.</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0122 — Agent 1 (Collector) writes a test plan (scenarios, types, steps) but no executable test code.</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Agent 1 (Collector) writes a test plan (scenarios, types, steps) but no executable test code.</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: User corrected that Agent 1 should not write test code, only test plan.</li>
+<li><strong>Rationale</strong>: Keep Agent 1&#x27;s role limited to analysis and specification; Agent 2 executes.</li>
+<li><strong>Alternatives rejected</strong>: Agent 1 writing actual test scripts.</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0123 — Agent 2 (Reviewer) executes the test plan by running existing UT/FT, writing Playwright for E2E, and</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Agent 2 (Reviewer) executes the test plan by running existing UT/FT, writing Playwright for E2E, and</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: User specified that Agent 2 should actually run tests, possibly write code, and use Playwright/dev&#x27;s tests.</li>
+<li><strong>Rationale</strong>: Agent 2 validates each acceptance criterion through real execution.</li>
+<li><strong>Alternatives rejected</strong>: Agent 2 only analyzing code without running tests.</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0124 — Output for work-review goes to {project-path}/docs/work-review/YYYY-MM-DD-&lt;topic&gt;/ with acceptance.m</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Output for work-review goes to {project-path}/docs/work-review/YYYY-MM-DD-&lt;topic&gt;/ with acceptance.m</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: During work-review output structure design.</li>
+<li><strong>Rationale</strong>: Consistent with devil-advocate pattern, easy to find.</li>
+<li><strong>Alternatives rejected</strong>: Output to default skill directory.</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0125 — Use triggers &#x27;work review&#x27;, &#x27;acceptance&#x27;, &#x27;sign off&#x27;, &#x27;verify work&#x27; for work-review skill.</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Use triggers &#x27;work review&#x27;, &#x27;acceptance&#x27;, &#x27;sign off&#x27;, &#x27;verify work&#x27; for work-review skill.</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: Defining skill activation.</li>
+<li><strong>Rationale</strong>: Aligns with typical developer terminology.</li>
+<li><strong>Alternatives rejected</strong>: Single or different triggers.</li>
+<li><strong>Confidence</strong>: medium</li>
+</ul>
+<h4>0126 — Compress SKILL.md to under 150 lines to pass quality gate.</h4>
+<p>Status: accepted</p>
+<ol>
+<li>Compress SKILL.md to under 150 lines to pass quality gate.</li>
+</ol>
+<ul>
+<li><strong>Source</strong>: opencode</li>
+<li><strong>Context</strong>: After writing devil-advocate SKILL.md, it was 271 lines, then reduced to 175, then 155.</li>
+<li><strong>Rationale</strong>: Line count limit (NICE: 150) enforced by project guidelines.</li>
+<li><strong>Alternatives rejected</strong>: Leaving as is and ignoring quality gate.</li>
+<li><strong>Confidence</strong>: high</li>
+</ul>
+<h4>0127 — Consolidated fourteen per-day decision records into this single append-only history</h4>
+<p>Status: accepted</p>
+<p>Date: 2026-09-25</p>
+<h4>0128 — Folded the design/ directory into the spec&#x27;s Design sections; design is not one of the six types</h4>
+<p>Status: accepted</p>
+<p>Date: 2026-09-25</p>
+<h4>0129 — Marked the skill-factory documents stale rather than rewriting them to match the code</h4>
+<p>Status: accepted</p>
+<p>Date: 2026-09-25</p>
+<h4>0130 — Four documents keep their own section shapes instead of the standard template; reported, not forced</h4>
+<p>Status: accepted</p>
+<p>Date: 2026-09-25</p>
+<h3>Change Log</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Date</th>
+<th>Change</th>
+</tr></thead><tbody>
+<tr>
+<td>2026-07-26</td>
+<td>Auto-generated from session analysis into fourteen per-day records</td>
+</tr>
+<tr>
+<td>2026-09-25</td>
+<td>Consolidated into this single append-only history; 126 decisions preserved in full</td>
+</tr>
+<tr>
+<td>2026-09-25</td>
+<td>Added 0127-0130 recording the docs/features consolidation</td>
+</tr>
+</tbody></table></div>
+<p>Consolidated from: <code>2026-06-10-fix-skill-create-quality-gate-improvements-from-r-decision.md</code>, <code>2026-06-11-skill-add-ai-coworker-devil-advocate--multi-agen-decision.md</code>, <code>2026-06-12-skill-add-ai-coworker-work-review--2-agent-gatek-decision.md</code>, <code>2026-06-18-skill-add-ai-coworker-contrarian-review--5-agent-decision.md</code>, <code>2026-06-23-chore-remove-self-healself-analyze-from-personal-decision.md</code>, <code>2026-06-24-fix-re-apply-skill-fixes-lost-during-rebase-fron-decision.md</code>, <code>2026-07-01-skill-add-tmux-status-bar--tmux-bar-with-project-decision.md</code>, <code>2026-07-02-fix-remove-ai-coworker--prefix-from-4-skill-front-decision.md</code>, <code>2026-07-14-skill-add-multi-model-team--glm-52-architect---decision.md</code>, <code>2026-07-17-fix-knowledge-repo-is-separate-repo-at-different--decision.md</code>, <code>2026-07-18-skill-add-image-review-gate--scatterbrain-design-decision.md</code>, <code>2026-07-22-skill-add-transcribe-audio--local-gpu-whisper-au-decision.md</code>, <code>2026-07-23-skillluma-event-scout-add-robotics-reading-club-decision.md</code>, <code>unknown-add-variant-thinking-high-to-the-build-agent--decision.md</code></p>
+      </div>
+    </article>
+    <nav class="pager" aria-label="Previous and next"><a class="prev" href="../test-plan/skill-factory-test-plan.html"><span class="label">Previous</span>skill-factory Test Plan</a></nav>
+  </main>
+</div>
+<footer class="foot"><div class="foot-inner">Assembled from committed <code>.md</code>. The Markdown is authoritative; this page is a reading view.</div></footer>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>if(window.mermaid){mermaid.initialize({startOnLoad:false});}</script>
+<script src="../../assets/app.js"></script>
+</body>
+</html>

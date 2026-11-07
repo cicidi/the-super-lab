@@ -7,7 +7,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-READER = ROOT / "docs/features/spec-driven-development/spec-driven-development-reader.html"
+READER = ROOT / "docs/book/html/spec-driven-development/spec-driven-development-reader.html"
 
 REQUIRED_PANELS = (
     "p-prd",
