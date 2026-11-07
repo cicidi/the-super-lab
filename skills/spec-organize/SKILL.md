@@ -1,11 +1,9 @@
 ---
 name: spec-organize
 description: |
-  Use when creating, moving, reorganizing, or merging documentation, when a
-  document needs checking against the project's doc standard, or when specs and
-  code have drifted apart. Use when deciding where a document belongs, how to
-  name it, which files to consolidate, or how to reconcile documents that
-  disagree.
+  Not an entry skill (ARD-AJ). Standards live in SPEC-STANDARD.md and
+  SPEC-PRESENTATION.md. Use spec-write to create or edit a spec. Use
+  spec-review to review one. This file keeps organize modes as reference.
 license: MIT
 compatibility: claude-code,opencode
 metadata:
@@ -32,6 +30,10 @@ metadata:
 ---
 
 # spec-organize
+
+**Not an entry skill (ARD-AJ).** Path, permission, scope, what to write, and evidence are in `SPEC-STANDARD.md`. Presentation is in `skills/spec-html-standard/SPEC-PRESENTATION.md`. To create or edit a spec, use **spec-write**. To review, use **spec-review**. The modes below are reference for those standards.
+
+Lint wired in `tools/run_spec_checks.py`: Stale paired HTML, audience, Dead anchors, Unanchored code citations, Open-question tracker, Step drift, Diagram/step drift, impl-plan task lines, translation banner, resolved refs, counts. Do not number a required heading. A part file only needs a link back to the design entry.
 
 Defines the project's documentation standard, then enforces it in four modes:
 place a document, lint the tree against the standard, consolidate sprawl into one

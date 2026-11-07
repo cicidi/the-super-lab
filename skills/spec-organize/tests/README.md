@@ -27,6 +27,7 @@ Runs: `run_spec_checks.py` (SDD tree), `must_registry_coverage.py`, `tst_a_ancho
 ## Tools (repo root)
 
 - `python3 tools/run_spec_checks.py docs/features/<f>/`
+- `python3 tools/run_gold_ref.py smb-balance` — TST-T; skip when `~/src/smb-balance` is absent
 - `python3 tools/run_neg_fixtures.py` — every `fixtures/neg/*` must fail its check
 - `python3 tools/run_pos_fixtures.py` — every `fixtures/pos/*` must pass per-file checks
 - CI: `.github/workflows/sdd-mechanical.yml`

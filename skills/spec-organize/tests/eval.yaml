@@ -4,6 +4,7 @@ judge:
   model: deepseek-flash
 gold:
   version: v1
+  models: [deepseek-flash]
   repeats: 3
   cases:
     iphone:

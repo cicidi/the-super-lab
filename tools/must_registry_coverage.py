@@ -27,6 +27,17 @@ IMPLEMENTED = {
     "publish_nav",
     "test_trace",
     "registry_provenance",
+    "paired_html",
+    "audience_authority",
+    "open_questions",
+    "anchors",
+    "code_citation_base",
+    "impl_tasks",
+    "translation_banner",
+    "section_refs",
+    "counts",
+    "resolved_refs",
+    "diagram_steps",
 }
 
 

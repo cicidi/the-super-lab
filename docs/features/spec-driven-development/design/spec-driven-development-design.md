@@ -25,7 +25,7 @@ last_verified: 2026-11-04
 
 ## Solution
 
-一套 artifact + skill 体系：PRD、decision-history、design 篇、impl-plan、test-plan 五篇；四个 skill 编排、书写、校验、审查。
+一套 artifact + skill 体系：PRD、decision-history、design 篇、impl-plan、test-plan 五篇；spec-write 书写，spec-review 审查（ARD-AJ）。
 
 ## User Stories
 
@@ -132,7 +132,7 @@ docs/features/
 | 通道 | 作用 |
 |---|---|
 | **`~/.claude/CLAUDE.md`** + 项目 **`CLAUDE.md` / `CLAUDE.local.md`** | 跨 session、跨 feature 的 **默认 agent 行为**（含 walter-worker **managed block**） |
-| **Skills**（**spec-organize** 主 skill、**spec-review**、**spec-write**） | 任务级 procedure、机械检查 |
+| **Skills**（**spec-write**、**spec-review**） | 任务级 procedure；标准在 SPEC-STANDARD.md 与 SPEC-PRESENTATION.md |
 
 Implement SDD / document-standard 时：**plan 必须含 skill 变更与 CLAUDE 层条目**（managed block 或等价），二者对齐同一 norm；条文细节在 sub **design 篇**，本 HLD 只定双通道原则。
 
@@ -142,13 +142,13 @@ Implement SDD / document-standard 时：**plan 必须含 skill 变更与 CLAUDE 
 
 | 项 | 约定 |
 |---|---|
-| **Deliverable** | 四个 skill（可装任意项目）：**spec-pipeline**（编排入口，PRD-J）、**spec-organize**（主/标准）、**spec-review**、**spec-write** |
-| **Standard 文件** | `skills/spec-organize/SPEC-STANDARD.md`（自 document-standard design 产出；见 **ARD-AB**） |
+| **Deliverable** | spec-write、spec-review，以及两份标准（可装任意项目；ARD-AJ） |
+| **Standard 文件** | `skills/spec-organize/SPEC-STANDARD.md` 与 `skills/spec-html-standard/SPEC-PRESENTATION.md`（ARD-AJ） |
 | **测试位置** | `skills/<skill>/tests/`；跨 skill 检查器、gold、报告在 `skills/spec-organize/tests/`（**ARD-Q**） |
 | **Test plan** | parent `test-plan/spec-driven-development-test-plan.md`；sub-feature 不另写 |
 | **Pipeline design** | `features/pipeline/design/pipeline-design.md`（spec-pipeline 行为） |
-| **Skill contracts** | `design/spec-driven-development-design-skill-contracts.md`（四个 skill 的输入/输出/边界） |
-| **Spec reader HTML** | `<parent>-reader.html`；规范 **`skills/spec-html-standard/SPEC-HTML-STANDARD.md`**（**DSGN-N**，非独立 skill） |
+| **Skill contracts** | `design/spec-driven-development-design-skill-contracts.md`（spec-write 与 spec-review 的输入/输出/边界） |
+| **Spec reader HTML** | `docs/book/html/<parent>/`，目录与 `docs/features/` 同构（ARD-BF）；规范 **`skills/spec-html-standard/SPEC-HTML-STANDARD.md`**（**DSGN-N**） |
 
 ## Out of Scope
 
@@ -185,3 +185,5 @@ Implement SDD / document-standard 时：**plan 必须含 skill 变更与 CLAUDE 
 | 2026-11-04 | 补齐 design 八章节；§7 增加 skill-contracts aspect design 指针 |
 | 2026-11-04 | Intro 允许 aspect design；§7 Standard 引用 ARD-AB |
 | 2026-11-04 | Out of Scope 收窄多人 decision 条款 |
+| 2026-11-07 | Solution 与 §7 Deliverable 改为 spec-write、spec-review 与两份标准（ARD-AJ） |
+| 2026-11-07 | §7 reader 改到 docs/book/html/（ARD-BF） |

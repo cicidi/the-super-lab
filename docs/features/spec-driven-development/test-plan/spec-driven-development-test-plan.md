@@ -10,13 +10,13 @@ last_verified: 2026-11-04
 
 # Spec-Driven Development — Test Plan
 
-Initiative 级 test plan。**被测对象** = **spec-organize**（主）、**spec-review**、**spec-write**（write 由 organize 覆盖）；**spec-pipeline** 编排 **Unverified**（PRD-I，暂无可执行测试）。**Oracle** = `skills/spec-organize/SPEC-STANDARD.md`（自 document-standard design）。Sub-feature 不另写 test-plan。
+Initiative 级 test plan。**被测对象** = **spec-write** 与 **spec-review**。**Oracle** = `SPEC-STANDARD.md` 与 `SPEC-PRESENTATION.md`。organize / pipeline 旧测试仍在；编排 **Unverified**。Sub-feature 不另写 test-plan。
 
-**验收：** 四个 skill 是产出。人不读 skill 正文；好不好用只看本计划的测试结果。
+**验收：** 两个 skill 加两份标准是产出。人不读 skill 正文；好不好用只看本计划的测试结果。
 
 ## Test Scope
 
-**In scope：** 上列三 skill 在「装进任意项目」场景下的行为；输入三类——本 repo `docs/features/`、外部 repo（`eval.yaml` 指定路径）、人工 fixture。**Out of scope / Unverified：** skill 正文改动（本 plan 只定义测什么）；设计合理性；merge 策略；**spec-pipeline 阶段编排**（Unverified，PRD-I）；单次编辑大小（PRD-C，Unverified）；可读性打分（PRD-M，在 spec-review 流程内，不作通过条件）；四套例子的 gold（PRD-K，放到别处；例子写进 skill 正文，由 TST-S 检查）。
+**In scope：** spec-write 与 spec-review 在「装进任意项目」场景下的行为；输入三类——本 repo `docs/features/`、外部 repo（`eval.yaml` 指定路径）、人工 fixture。**Out of scope / Unverified：** skill 正文改动（本 plan 只定义测什么）；设计合理性；merge 策略；**spec-pipeline 阶段编排**（Unverified，PRD-I）；单次编辑大小（PRD-C，Unverified）；可读性打分（PRD-M，在 spec-review 流程内，不作通过条件）；四套例子的 gold（PRD-K，放到别处；例子写进 skill 正文，由 TST-S 检查）。
 
 **Parent vs sub（spec-review）：** 审 **parent**（`docs/features/spec-driven-development/` 根，不含 `features/<sub>/`）时须核对五篇均在：`prd`、`design`、`decision-history`、`impl-plan`、`test-plan`（见 parent HLD §8）。**Sub-feature** 不要求齐全，只审已有文件。
 
@@ -134,11 +134,15 @@ Initiative 级 test plan。**被测对象** = **spec-organize**（主）、**spe
 
 ### TST-R — reader 新鲜度
 
-**目标：** reader 不落后于 source。**输入：** `spec-driven-development-reader.html` + 所有 source `.md`。**断言：** reader mtime ≥ 每个 source mtime；否则 fail。**判定：** Python。
+**目标：** reader 不落后于 source。**输入：** `docs/book/html/spec-driven-development/spec-driven-development-reader.html` + 所有 source `.md`。**断言：** reader mtime ≥ 每个 source mtime；否则 fail。**判定：** Python。
+
+### TST-T — 外部参照 gold
+
+**目标：** defect 快照上每条 expect 都被报出；gold 快照上除 allow 外 0 finding。源仓库不在本机时跳过。**输入：** `gold/refs/<slug>/manifest.yaml`（ARD-BD）。**判定：** Python。不把私有 spec 正文复制进本仓库。
 
 ### TST-S — skill 正文四例
 
-**目标：** 四个 skill 正文包含 PRD-Q 四例。**输入：** spec-pipeline / spec-organize / spec-review / spec-write 的 SKILL.md。**断言：** 每个 skill 至少提到 shed、北京旅游、数学题、股票；缺 fail。**判定：** Python（关键词）+ judge（是否只是点名）。
+**目标：** spec-write 与 spec-review 正文包含 PRD-Q 四例。**输入：** 这两份 SKILL.md。**断言：** 每个至少提到 shed、北京旅游、数学题、股票；缺 fail。**判定：** Python（关键词）+ judge（是否只是点名）。
 
 ## Test Execution Order
 
@@ -146,7 +150,7 @@ Initiative 级 test plan。**被测对象** = **spec-organize**（主）、**spe
 2. **TST-B**（检查器失效则停）
 3. **TST-O**、**TST-P**（设计覆盖/证据）
 4. **TST-C** → **TST-D**（首次或 gold 升版）
-5. **TST-G**、**TST-N**、**TST-R**、**TST-S**
+5. **TST-G**、**TST-N**、**TST-R**、**TST-S**、**TST-T**
 6. **TST-E**、**TST-F**
 7. **TST-H** → **TST-I**
 8. **TST-Q**（mock 执行）
@@ -162,6 +166,7 @@ Initiative 级 test plan。**被测对象** = **spec-organize**（主）、**spe
 | 设计完整 | TST-O 100%；TST-P 全过 |
 | 执行 mock | TST-Q log 存在且无真实副作用 |
 | reader / skill 正文 | TST-R 新鲜；TST-S 四例齐全 |
+| 外部 gold | TST-T：defect 的 expect 全报出；gold 除 allow 外 0 条；源不在本机则跳过 |
 | Gold v1 冻结 | TST-D：exemplar 分数 1 全过；annotations 人工认可 |
 | spec-organize 可发布 | TST-E 分数 1 全过、分数 2 不退步；TST-F 四变体全过；TST-G 零差异；TST-L 3/3 |
 | spec-review 可发布 | TST-H 检出 100%、误报 0；TST-I ≥ 上一次；TST-L 3/3 |
@@ -207,3 +212,6 @@ Initiative 级 test plan。**被测对象** = **spec-organize**（主）、**spe
 | 2026-11-04 | 新增 TST-O PRD→design、TST-P 归属/证据、TST-Q mock MCP、TST-R reader、TST-S 四例 |
 | 2026-11-04 | TST-D/TST-K 改为 3 次 run/checker；TST-H 改为 11 机械 + 5 语义案例 |
 | 2026-11-04 | 标注 gold 实际目录 v1 与目标 iphone/v1 的迁移 |
+| 2026-11-07 | 被测改为 spec-write 与 spec-review；TST-S 只查这两份（ARD-AJ） |
+| 2026-11-07 | TST-T：外部 gold 只留 manifest，不复制私有正文（ARD-BD） |
+| 2026-11-07 | TST-R 输入改为 docs/book/html/ 下的 reader（ARD-BF） |

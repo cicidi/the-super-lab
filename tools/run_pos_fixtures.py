@@ -11,23 +11,7 @@ POS = ROOT / "skills/spec-organize/tests/fixtures/pos"
 TESTS = ROOT / "skills/spec-organize/tests"
 sys.path.insert(0, str(TESTS))
 
-from checks.change_log import check_change_log  # noqa: E402
-from checks.decision_log import check_decision_log  # noqa: E402
-from checks.frontmatter import check_frontmatter  # noqa: E402
-from checks.ids import check_ids  # noqa: E402
-from checks.paths import check_committed_path  # noqa: E402
-from checks.sections import check_sections  # noqa: E402
-from checks.size import check_size  # noqa: E402
-
-RUNNERS = [
-    check_frontmatter,
-    check_committed_path,
-    check_sections,
-    check_ids,
-    check_size,
-    check_change_log,
-    check_decision_log,
-]
+from checks.runners import run_file  # noqa: E402
 
 
 def main() -> None:
@@ -48,9 +32,8 @@ def main() -> None:
             except UnicodeDecodeError:
                 errors.append(f"{path}: not utf-8")
                 continue
-            for fn in RUNNERS:
-                for f in fn(path, text):
-                    errors.append(f"{fixture.name}: {f.check} {f.path} — {f.message}")
+            for f in run_file(path, text):
+                errors.append(f"{fixture.name}: {f.check} {f.path} — {f.message}")
     if errors:
         for e in errors:
             print(e, file=sys.stderr)

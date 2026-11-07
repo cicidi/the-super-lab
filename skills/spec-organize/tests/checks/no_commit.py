@@ -51,6 +51,12 @@ def check_no_commit_tree(features_root: Path) -> list[Finding]:
                     "committed reference/ type is forbidden",
                 )
             )
+        if path.is_file() and path.suffix == ".md" and path.name.count(".") >= 2:
+            rel_to_top = path.relative_to(top).as_posix() if top else rel
+            if tracked is not None and rel_to_top in tracked:
+                findings.append(
+                    Finding("no_commit", rel, "tracked translation copy must not be committed")
+                )
         if path.is_file() and path.suffix == ".md" and "/raw/" in rel:
             # raw/ may exist locally; only *tracked* raw markdown is a violation.
             rel_to_top = path.relative_to(top).as_posix() if top else rel

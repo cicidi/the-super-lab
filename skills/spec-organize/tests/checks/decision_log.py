@@ -26,8 +26,19 @@ def check_decision_log(path: Path, text: str | None = None) -> list[Finding]:
     if "## Decision Log" not in raw:
         findings.append(Finding("decision_log", rel, "missing ## Decision Log section"))
         return findings
-    if not re.search(r"\|\s*ID\s*\|\s*Date\s*\|\s*Decision\s*\|", raw):
+    header = ""
+    for line in raw.splitlines():
+        if re.search(r"\|\s*ID\s*\|", line):
+            header = line
+            break
+    if not header or not re.search(r"\|\s*Date\s*\|", header) or not re.search(r"\|\s*Decision\s*\|", header):
         findings.append(
             Finding("decision_log", rel, "Decision Log table must have ID | Date | Decision")
         )
+        return findings
+    cells = [c.strip().lower() for c in header.strip().strip("|").split("|")]
+    if any(c in {"status", "supersedes"} for c in cells):
+        findings.append(Finding("decision_log", rel, "Status and Supersedes columns are forbidden"))
+    if len(cells) > 4 or (len(cells) == 4 and cells[3] != "ready"):
+        findings.append(Finding("decision_log", rel, "optional 4th column must be Ready"))
     return findings

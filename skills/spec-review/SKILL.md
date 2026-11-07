@@ -47,10 +47,10 @@ to avoid over-engineering.
 
 ## Skill Dependencies
 
-Judge a spec under review against `spec-organize`: its content levels
+Judge a spec under review against `SPEC-STANDARD.md` chapters 1–3 and
+`SPEC-PRESENTATION.md`. Also load content levels
 (`spec-organize/CONTENT-PRIORITY.md`), the authority model
-(`spec-organize/AUTHORITY-BY-CONCERN.md`), and the rule that a spec describes
-behavior rather than implementation (`spec-organize/SPEC-SCOPE.md`).
+(`spec-organize/AUTHORITY-BY-CONCERN.md`), and `spec-organize/SPEC-SCOPE.md`.
 
 Report as findings: L1 content that is missing, implementation detail that should
 not be there, and any claim about current implementation that the code does not
@@ -82,19 +82,17 @@ Illustrations, not gold. Report only. Do not edit the spec.
 
 ## Process
 
-### Step 0: Determine Review Type
+### Step 0: One choice at a time
 
-Ask the user ONE question:
+1. Read `SPEC-STANDARD.md` chapters 1–3 and `SPEC-PRESENTATION.md`.
+2. Decide whether the work is a new document or an edit. If an edit, name every document that states the same fact.
+3. Write findings at severity 3+ in this table. Do not edit the spec.
 
-> "Design review (stress-test a spec/design before building) or work
-> completion review (verify finished work against acceptance criteria)?"
+| # | 问题 | 严重度 | 选项 A | 选项 B | 建议 | 附加题 |
+|---|---|---|---|---|---|---|
 
-If the user chooses design review, let them know upfront: "After I collect
-findings, you can choose quick scan (a single gap report) or full adversarial
-review (two independent reviewers + debate on disagreements)."
-
-Then ask which documents to review. Present candidates from `docs/` if the
-user hasn't specified.
+4. Ask row 1 only. After the answer, ask the 附加题 when that cell is non-empty, then the next row.
+5. If the user did not name the documents, the first choice is which tree to review. Then fill the table.
 
 ---
 
@@ -121,13 +119,7 @@ prevents bikeshedding and keeps the design from becoming over-complicated.
 
 ### Choose Intensity
 
-After collecting findings, if ALL are level 2 or below → the doc passes,
-no changes needed. If any level 3+ findings exist, ask:
-
-> "Quick scan or full adversarial review?"
->
-> - Quick scan — I'll produce a gap report (GAPS.md) with all 3+ findings.
-> - Full review — two independent reviewers + debate on disagreements.
+Step 0 is the only way to ask. One table row at a time. Do not add a second menu that batches every finding into "quick scan or full review". If every finding is level 2 or below, say the doc passes and stop.
 
 ### Quick Scan
 

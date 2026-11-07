@@ -12,20 +12,16 @@ TESTS = ROOT / "skills/spec-organize/tests"
 sys.path.insert(0, str(TESTS))
 
 from checks.book import check_book  # noqa: E402
-from checks.change_log import check_change_log  # noqa: E402
-from checks.decision_log import check_decision_log  # noqa: E402
 from checks.publish_nav import check_publish_nav  # noqa: E402
 from checks.registry_provenance import check_registry_provenance  # noqa: E402
 from checks.test_trace import check_test_trace  # noqa: E402
-from checks.frontmatter import Finding, check_frontmatter  # noqa: E402
-from checks.ids import check_ids  # noqa: E402
-from checks.paths import check_committed_path  # noqa: E402
-from checks.sections import check_sections  # noqa: E402
+from checks.frontmatter import Finding  # noqa: E402
 from checks.collision import check_collision  # noqa: E402
 from checks.index_book import check_index_book  # noqa: E402
 from checks.no_commit import check_no_commit_tree  # noqa: E402
 from checks.parent_complete import check_parent_complete  # noqa: E402
-from checks.size import check_size  # noqa: E402
+from checks.paired_html import check_paired_html  # noqa: E402
+from checks.runners import run_file  # noqa: E402
 
 # No grandfathered paths: the standard applies to every committed document (IMPL-M).
 EXEMPT: set[Path] = set()
@@ -45,17 +41,6 @@ def _filter_collision(findings: list) -> list:
             continue
         out.append(f)
     return out
-
-RUNNERS = [
-    check_frontmatter,
-    check_committed_path,
-    check_sections,
-    check_decision_log,
-    check_change_log,
-    check_ids,
-    check_size,
-]
-
 
 def main() -> None:
     args = [a for a in sys.argv[1:] if not a.startswith("-")]
@@ -79,6 +64,7 @@ def main() -> None:
         findings.extend(check_index_book(ROOT))
         findings.extend(check_book(ROOT))
         findings.extend(check_publish_nav(ROOT))
+        findings.extend(check_paired_html(ROOT))
         findings.extend(check_test_trace(ROOT / "docs/features/spec-driven-development"))
         findings.extend(check_registry_provenance(ROOT))
     if target.is_dir() and target.name not in ("features", "docs") and "docs/features" in target.as_posix():
@@ -93,8 +79,7 @@ def main() -> None:
         except UnicodeDecodeError:
             findings.append(Finding("encoding", str(path), "not utf-8"))
             continue
-        for fn in RUNNERS:
-            findings.extend(fn(path, text))
+        findings.extend(run_file(path, text))
     if summary_only:
         print(len(findings))
     else:

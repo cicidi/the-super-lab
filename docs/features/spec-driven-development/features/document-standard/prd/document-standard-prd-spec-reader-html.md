@@ -26,7 +26,7 @@ Committed feature spec 以 `.md` 为 source of truth，但 parent initiative 往
 | **PRD-B** | **富 HTML，非 MD 预览** | 卡片、callout、表格、可选 flow；**禁止** 仅 `fetch` + `<pre>` 或整页粘贴 raw markdown |
 | **PRD-C** | **Parent + child 覆盖** | Parent：存在的五类 `prd` / `design` / `impl-plan` / `test-plan` / `decision-history` 各一 Tab（或等价分组）。Child：每个 `features/<sub>/` 至少纳入其 **design**；若另有 committed type 则一并纳入 |
 | **PRD-D** | **可追溯** | 每个 Tab（或 major section）底部 **`Canonical: <path-to.md>`**；页头声明：改 spec 先改 `.md`，再更新 HTML |
-| **PRD-E** | **位置与命名** | 输出 `docs/features/<parent>/<parent>-reader.html`（例：`spec-driven-development-reader.html`） |
+| **PRD-E** | **位置与命名** | 输出 `docs/book/html/<parent>/<parent>-reader.html`。其余 spec HTML 按 `docs/features/` 的相对路径放在 `docs/book/html/` 下（ARD-BF） |
 | **PRD-F** | **可演进** | v0 可手维；后续可有 **md→html 机械契约** 或工具；本篇 + **DSGN-N** 在自动化之前仍是 norm |
 
 ## User Stories
@@ -52,7 +52,7 @@ Committed feature spec 以 `.md` 为 source of truth，但 parent initiative 往
 
 ## Out of Scope
 
-- 替换 `docs/book/` 或 MkDocs 导航。
+- 替换 book 摘要或 MkDocs 导航。Reader HTML 放在 `docs/book/html/`（ARD-BF）。
 - 每次 git commit 自动 sync（v0 无 hook 要求）。
 - 用 reader HTML 作为 lint/oracle（oracle 仍是 `SPEC-STANDARD.md` 与 committed md）。
 
@@ -66,3 +66,4 @@ Committed feature spec 以 `.md` 为 source of truth，但 parent initiative 往
 |------|--------|
 | 2026-11-03 | Initial aspect PRD；强调禁止过度精简 |
 | 2026-11-03 | 实现改为 **spec-html-standard**（SPEC-HTML-STANDARD.md），非 spec-reader skill |
+| 2026-11-07 | PRD-E：HTML 放到 docs/book/html/，按 feature 树建目录（ARD-BF） |

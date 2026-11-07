@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>The Super Lab — AI Agent Skills</title>
+<style>
+:root{
+  --bg:#F6F7F4; --surface:#FFFFFF; --surface-2:#EEF1F0; --ink:#14202B; --muted:#55636F; --subtle:#7C8A96;
+  --line:#DCE2E6; --code:#F1F3F1;
+  --navy:#102D46; --navy-2:#173B5C;
+  --yellow:#F2C94C; --green:#5F8D4E; --orange:#D98A3A; --red:#B95547;
+  --soft-yellow:#FCF5DA; --soft-green:#EDF4E9; --soft-orange:#FBF0E4; --soft-red:#F8EBE9; --soft-blue:#E8F0F6;
+  --serif:Georgia,'Times New Roman','Noto Serif CJK SC',serif;
+  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'PingFang SC','Microsoft YaHei',sans-serif;
+  --mono:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;
+}
+[data-theme="dark"]{
+  --bg:#0B1824; --surface:#102434; --surface-2:#163044; --ink:#EAF0F4; --muted:#A9B8C4; --subtle:#7F93A3;
+  --line:#22394C; --code:#0E2130; --navy:#08131C; --navy-2:#0E2130;
+  --soft-yellow:#3A3418; --soft-green:#1B3222; --soft-orange:#3A2A1A; --soft-red:#3A2020; --soft-blue:#122A3D;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15.5px;line-height:1.65}
+a{color:var(--orange);text-decoration:none}
+a:hover{text-decoration:underline}
+code{font-family:var(--mono);font-size:.88em;background:var(--code);border:1px solid var(--line);padding:1.5px 6px;border-radius:4px}
+.sidebar{position:fixed;inset:0 auto 0 0;width:320px;background:var(--navy);color:#DCE7EF;display:flex;flex-direction:column;z-index:60}
+.sidebar-head{padding:26px 24px 18px;border-bottom:1px solid rgba(255,255,255,.10)}
+.kicker{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--yellow);margin-bottom:8px}
+.sidebar-title{font-family:var(--serif);font-size:21px;line-height:1.25;margin:0;color:#fff}
+.sidebar-sub{font-size:12px;color:#93A9BA;margin-top:8px;line-height:1.45}
+.tree{overflow-y:auto;padding:14px 10px 24px;flex:1}
+.tree-group{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#6F8CA0;margin:16px 12px 6px}
+.tree a{display:flex;gap:8px;align-items:baseline;padding:6px 12px;border-radius:8px;color:#C4D3DE;font-size:13.5px;border-left:3px solid transparent}
+.tree a:hover{background:rgba(255,255,255,.06);color:#fff;text-decoration:none}
+.tree a.active{background:rgba(242,201,76,.12);border-left-color:var(--yellow);color:#fff}
+.tree a .n{font-family:var(--mono);font-size:10px;color:#7E97A9;min-width:16px}
+.tree a.child{padding-left:30px;font-size:13px}
+.sidebar-foot{padding:14px 24px 22px;border-top:1px solid rgba(255,255,255,.10);display:flex;justify-content:space-between;align-items:center;gap:10px}
+.sidebar-foot span{font-family:var(--mono);font-size:10.5px;color:#7E97A9}
+.theme-btn{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border:1px solid rgba(255,255,255,.18);background:transparent;color:#C4D3DE;border-radius:999px;font-family:var(--mono);font-size:10.5px;cursor:pointer}
+.theme-btn:hover{border-color:var(--yellow);color:var(--yellow)}
+.theme-btn svg{width:12px;height:12px}
+.icon-moon{display:none}
+[data-theme="dark"] .icon-sun{display:none}
+[data-theme="dark"] .icon-moon{display:inline-block}
+.main{margin-left:320px;min-height:100vh}
+.page{max-width:1080px;margin:0 auto;padding:52px 56px 80px}
+.head{margin-bottom:36px;padding-bottom:26px;border-bottom:1px solid var(--line)}
+.eyebrow{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);margin-bottom:10px}
+h1{font-family:var(--serif);font-size:clamp(34px,4vw,50px);line-height:1.05;letter-spacing:-.02em;margin:0 0 12px}
+.deck{font-size:17px;color:var(--muted);max-width:76ch;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-family:var(--mono);font-size:10.5px;color:var(--muted);background:var(--surface);border:1px solid var(--line);padding:3px 9px;border-radius:999px}
+.chip b{color:var(--ink)}
+h2{font-size:21px;margin:40px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+h3{font-size:15.5px;margin:24px 0 8px}
+p{max-width:82ch;margin:0 0 13px}
+ul,ol{max-width:82ch;margin:0 0 15px;padding-left:22px}
+li{margin:4px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:18px 0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px;transition:.15s}
+.card:hover{border-color:var(--orange);transform:translateY(-1px)}
+.card h3{margin:0 0 8px;font-size:15px}
+.card p{margin:0;color:var(--muted);font-size:13.5px}
+.card .tag{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--orange);margin-bottom:8px}
+.card a{display:inline-block;margin-top:10px;font-family:var(--mono);font-size:11.5px}
+table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:13.5px;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--subtle);background:var(--surface-2)}
+tr:last-child td{border-bottom:0}
+tr:hover td{background:var(--surface-2)}
+.callout{background:var(--soft-blue);border:1px solid var(--line);border-left:4px solid var(--navy-2);border-radius:0 10px 10px 0;padding:14px 18px;margin:20px 0;font-size:14px;max-width:84ch}
+.callout .t{font-weight:600;margin:0 0 4px}
+.callout.yellow{background:var(--soft-yellow);border-left-color:var(--yellow)}
+.callout.green{background:var(--soft-green);border-left-color:var(--green)}
+.flow{display:flex;gap:0;margin:20px 0;flex-wrap:wrap}
+.node{flex:1;min-width:140px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:13px 14px}
+.node .n{font-family:var(--mono);font-size:9.5px;color:var(--subtle);letter-spacing:.08em}
+.node h4{margin:4px 0;font-size:14px;font-weight:600}
+.node p{margin:0;font-size:12.5px;color:var(--muted);line-height:1.45}
+.arrow{display:flex;align-items:center;justify-content:center;width:30px;color:var(--subtle);font-size:16px;flex:0 0 30px}
+.foot{margin-top:56px;padding-top:16px;border-top:1px dashed var(--line);font-family:var(--mono);font-size:10.5px;color:var(--subtle)}
+.tree-view{margin:22px 0;padding:18px 20px;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow-x:auto}
+.tree-view ul{list-style:none;margin:0;padding-left:22px}
+.tree-view > ul{padding-left:0}
+.tree-view li{position:relative;margin:0;padding:3px 0 3px 18px}
+.tree-view li::before{content:"";position:absolute;left:0;top:0;bottom:0;border-left:1.5px solid var(--line)}
+.tree-view li:last-child::before{height:20px;bottom:auto}
+.tree-view li::after{content:"";position:absolute;left:0;top:20px;width:12px;border-top:1.5px solid var(--line)}
+.tree-view > ul > li{padding-left:0}
+.tree-view > ul > li::before,.tree-view > ul > li::after{display:none}
+.tree-node{display:inline-flex;align-items:center;gap:8px;padding:4px 10px;border-radius:8px;border:1px solid var(--line);background:var(--surface-2);font-size:13.5px;color:var(--ink)}
+.tree-node:hover{border-color:var(--orange);text-decoration:none}
+.tree-node.root{background:var(--navy);color:#fff;border-color:var(--navy);font-family:var(--serif);font-size:16px;padding:6px 14px}
+.tree-node.feature{background:var(--soft-orange);border-color:var(--orange);font-weight:600}
+.tree-node.sub{background:var(--soft-blue);border-color:var(--line);font-weight:600}
+.tree-node.leaf{background:var(--surface);border-style:dashed;color:var(--muted);font-size:12.5px}
+.tree-node .kind{font-family:var(--mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--subtle)}
+.tree-view details{margin:2px 0}
+.tree-view summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;color:var(--muted);padding:4px 10px;border:1px dashed var(--line);border-radius:8px;display:inline-block}
+.tree-view summary:hover{color:var(--orange);border-color:var(--orange)}
+@media(max-width:1000px){
+  .sidebar{position:static;width:auto}
+  .sidebar-head{padding-bottom:8px}
+  .tree{display:flex;flex-wrap:wrap;gap:4px;padding:8px 16px 14px}
+  .tree-group{display:none}
+  .tree a{font-size:12px;padding:5px 8px;border-left:0;border-bottom:2px solid transparent}
+  .tree a.active{border-bottom-color:var(--yellow)}
+  .tree a.child{padding-left:8px}
+  .tree a .n{display:none}
+  .sidebar-foot{display:none}
+  .main{margin-left:0}
+  .page{padding:34px 22px 52px}
+  .flow{flex-direction:column}
+  .arrow{width:100%;height:24px;transform:rotate(90deg)}
+}
+@media print{.sidebar{display:none}.main{margin:0}.page{max-width:100%;padding:0 12px}}
+</style>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="sidebar-head">
+    <div class="kicker">Source repo · 2026-10-30</div>
+    <h1 class="sidebar-title">The Super Lab</h1>
+    <div class="sidebar-sub">A curated collection of AI agent skills. Features include Spec-Driven Development, Skill Factory, and each skill's design.</div>
+  </div>
+  <nav class="tree">
+    <div class="tree-group">Project</div>
+    <a href="the-super-lab.html" class="active"><span class="n">◆</span>The Super Lab</a>
+    <a class="child" href="#what-is-a-skill">What is a skill?</a>
+    <a class="child" href="#core-features">Core features</a>
+    <div class="tree-group">Core features</div>
+    <a href="spec-driven-development/spec-driven-development-reader.html"><span class="n">▸</span>Spec-Driven Development</a>
+    <a class="child" href="spec-driven-development/spec-driven-development-reader.html#requirement">Requirement</a>
+    <a class="child" href="spec-driven-development/spec-driven-development-reader.html#design">Design</a>
+    <a class="child" href="spec-driven-development/spec-driven-development-reader.html#impl">Impl</a>
+    <a class="child" href="spec-driven-development/spec-driven-development-reader.html#verify">Verify</a>
+    <a class="child" href="spec-driven-development/spec-driven-development-reader.html#decisions">Decision history</a>
+    <a class="child" href="spec-driven-development/features/pipeline/pipeline.html">Pipeline</a>
+    <a class="child" href="spec-driven-development/features/document-standard/document-standard.html">Document Standard</a>
+    <a class="child" href="../../features/spec-driven-development/features/wayfinder-import/wayfinder-import.html">Wayfinder Import</a>
+    <a href="skill-factory/skill-factory.html"><span class="n">▸</span>Skill Factory</a>
+    <div class="tree-group">Skill designs</div>
+    <a class="child" href="../../../skills/wayfinder/SKILL.md">wayfinder</a>
+    <a class="child" href="../../../skills/to-spec/SKILL.md">to-spec</a>
+    <a class="child" href="../../../skills/to-tickets/SKILL.md">to-tickets</a>
+    <a class="child" href="../../../skills/implement/SKILL.md">implement</a>
+    <a class="child" href="../../../skills/doc-organize/SKILL.md">doc-organize</a>
+    <a class="child" href="../../../skills/doc-review/SKILL.md">doc-review</a>
+    <a class="child" href="../../../skills/research/SKILL.md">research</a>
+    <a class="child" href="../../../skills/grill-with-docs/SKILL.md">grill-with-docs</a>
+    <a class="child" href="../../../skills/domain-modeling/SKILL.md">domain-modeling</a>
+    <a class="child" href="../../../skills/prototype/SKILL.md">prototype</a>
+    <a class="child" href="../../../skills/auto-tdd/SKILL.md">auto-tdd</a>
+    <a class="child" href="../../../skills/bug/SKILL.md">bug</a>
+    <a class="child" href="../../../skills/multi-model-team/SKILL.md">multi-model-team</a>
+    <a class="child" href="../../../skills/skill/SKILL.md">skill</a>
+    <a class="child" href="../../../skills/english-grammar-fix/SKILL.md">english-grammar-fix</a>
+    <div class="tree-group">Personal skills</div>
+    <a class="child" href="../../../personal-skills/luma-event-scout/SKILL.md">luma-event-scout</a>
+    <a class="child" href="../../../personal-skills/youtube-research-pipeline/SKILL.md">youtube-research-pipeline</a>
+    <a class="child" href="../../../personal-skills/youtube-summarize/SKILL.md">youtube-summarize</a>
+    <a class="child" href="../../../personal-skills/create-video-workflow/SKILL.md">create-video-workflow</a>
+    <a class="child" href="../../../personal-skills/video-production-pip-style/SKILL.md">video-production-pip-style</a>
+    <a class="child" href="../../../personal-skills/transcribe-audio/SKILL.md">transcribe-audio</a>
+    <a class="child" href="../../../personal-skills/pic-to-txt/SKILL.md">pic-to-txt</a>
+    <a class="child" href="../../../personal-skills/doc-protect/SKILL.md">doc-protect</a>
+    <a class="child" href="../../../personal-skills/tmux-status-bar/SKILL.md">tmux-status-bar</a>
+    <div class="tree-group">Views</div>
+    <a href="spec-driven-development/design/spec-driven-development-workflow.html"><span class="n">◇</span>As-is workflow map</a>
+    <a href="../../features/spec-driven-development/design/spec-driven-development-design-doc.html"><span class="n">◇</span>Legacy combined view (pre-split)</a>
+  </nav>
+  <div class="sidebar-foot">
+    <span>the-super-lab/</span>
+    <button class="theme-btn" onclick="toggleTheme()">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg>
+      theme
+    </button>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="page">
+    <header class="head">
+      <span class="eyebrow">Project home</span>
+      <h1>The Super Lab</h1>
+      <p class="deck">A curated collection of AI agent skills in <code>SKILL.md</code> format — framework-agnostic, opencode-native. Copy a skill, fork it, move it between projects; it just works.</p>
+      <div class="chips">
+        <span class="chip">general skills <b>15</b></span>
+        <span class="chip">personal skills <b>9</b></span>
+        <span class="chip">core features <b>2</b></span>
+        <span class="chip">source repo <b>the-super-lab</b></span>
+      </div>
+    </header>
+
+    <section id="what-is-a-skill">
+      <h2>What is a skill?</h2>
+      <p>A <strong>skill</strong> is a self-contained directory with a <code>SKILL.md</code> file. It packages "how to do X" so any SKILL.md-aware agent can execute it. The source lives in this repository; the deployed copies live in the IDE configs, and changes are made here first.</p>
+      <div class="callout yellow">
+        <p class="t">Source of truth</p>
+        <p>Edit skills in <code>~/project/the-super-lab/</code>, then deploy with walter-worker's install script or <code>coworker sync</code>. Never edit the deployed copies: they are overwritten.</p>
+      </div>
+    </section>
+
+    <section id="core-features">
+      <h2>Core features</h2>
+      <div class="grid">
+        <div class="card">
+          <span class="tag">Feature · 3 sub-features</span>
+          <h3>Spec-Driven Development</h3>
+          <p>A set of cooperating skills that carry one problem through five artifacts: PRD → decision history → spec → impl plan → test plan. Split into pipeline, document standard, and wayfinder import.</p>
+          <a href="spec-driven-development/spec-driven-development-reader.html">Open feature →</a>
+        </div>
+        <div class="card">
+          <span class="tag">Feature · Project foundation</span>
+          <h3>Skill Factory</h3>
+          <p>The platform for creating, editing, importing, and consolidating skills. PRD, specification, 7-phase implementation plan, test plan, and 126+ decisions.</p>
+          <a href="skill-factory/skill-factory.html">Open feature →</a>
+        </div>
+      </div>
+    </section>
+
+    <h2>General skill designs</h2>
+    <p class="small" style="color:var(--muted)">Each skill is a feature: its design is the SKILL.md, and the link goes to the source.</p>
+    <div class="grid">
+      <div class="card"><span class="tag">Decision layer</span><h3>wayfinder</h3><p>Plan work too large for one session via decision briefs on the issue tracker.</p><a href="../../../skills/wayfinder/SKILL.md">Read SKILL.md →</a></div>
+      <div class="card"><span class="tag">Writing layer</span><h3>to-spec</h3><p>Synthesize the current conversation into a spec (PRD) for the tracker.</p><a href="../../../skills/to-spec/SKILL.md">Read SKILL.md →</a></div>
+      <div class="card"><span class="tag">Decomposition</span><h3>to-tickets</h3><p>Break a plan into tracer-bullet tickets with declared blocking edges.</p><a href="../../../skills/to-tickets/SKILL.md">Read SKILL.md →</a></div>
+      <div class="card"><span class="tag">Build</span><h3>implement</h3><p>Implement from a spec or tickets with TDD, typechecking, and code review.</p><a href="../../../skills/implement/SKILL.md">Read SKILL.md →</a></div>
+      <div class="card"><span class="tag">Standard</span><h3>doc-organize</h3><p>Document placement, naming, INDEX.md, and the four enforcement modes.</p><a href="../../../skills/doc-organize/SKILL.md">Read SKILL.md →</a></div>
+      <div class="card"><span class="tag">Verification</span><h3>doc-review</h3><p>Adversarial design/spec review or work completion verification.</p><a href="../../../skills/doc-review/SKILL.md">Read SKILL.md →</a></div>
+      <div class="card"><span class="tag">Discovery</span><h3>research</h3><p>Surface unknowns before coding; go from vague idea to concrete design.</p><a href="../../../skills/research/SKILL.md">Read SKILL.md →</a></div>
+      <div class="card"><span class="tag">Interview</span><h3>grill-with-docs</h3><p>Relentless interview that writes ADRs and CONTEXT.md inline.</p><a href="../../../skills/grill-with-docs/SKILL.md">Read SKILL.md →</a></div>
+      <div class="card"><span class="tag">Model</span><h3>domain-modeling</h3><p>Build or sharpen the domain model with a glossary and ADRs.</p><a href="../../../skills/domain-modeling/SKILL.md">Read SKILL.md →</a></div>
+      <div class="card"><span class="tag">Prototype</span><h3>prototype</h3><p>Build throwaway artifacts to answer a design question.</p><a href="../../../skills/prototype/SKILL.md">Read SKILL.md →</a></div>
+      <div class="card"><span class="tag">TDD</span><h3>auto-tdd</h3><p>Red-green-refactor or a full multi-agent continuous TDD loop.</p><a href="../../../skills/auto-tdd/SKILL.md">Read SKILL.md →</a></div>
+      <div class="card"><span class="tag">Debug</span><h3>bug</h3><p>Debugging, bug reporting, and self-healing loop management.</p><a href="../../../skills/bug/SKILL.md">Read SKILL.md →</a></div>
+      <div class="card"><span class="tag">Orchestration</span><h3>multi-model-team</h3><p>Decompose large tasks into subtasks executed by specialized workers.</p><a href="../../../skills/multi-model-team/SKILL.md">Read SKILL.md →</a></div>
+      <div class="card"><span class="tag">Lifecycle</span><h3>skill</h3><p>Create, edit, import, and list skills in the-super-lab.</p><a href="../../../skills/skill/SKILL.md">Read SKILL.md →</a></div>
+      <div class="card"><span class="tag">Polish</span><h3>english-grammar-fix</h3><p>Auto-correct minor English grammar errors in AI responses.</p><a href="../../../skills/english-grammar-fix/SKILL.md">Read SKILL.md →</a></div>
+    </div>
+
+    <h2>Personal skill designs</h2>
+    <div class="grid">
+      <div class="card"><h3>luma-event-scout</h3><p>Scout AI/tech events on Luma in the Bay Area.</p><a href="../../../personal-skills/luma-event-scout/SKILL.md">Read SKILL.md →</a></div>
+      <div class="card"><h3>youtube-research-pipeline</h3><p>Turn a topic into a complete YouTube video package.</p><a href="../../../personal-skills/youtube-research-pipeline/SKILL.md">Read SKILL.md →</a></div>
+      <div class="card"><h3>youtube-summarize</h3><p>Download, transcribe, and summarize YouTube videos.</p><a href="../../../personal-skills/youtube-summarize/SKILL.md">Read SKILL.md →</a></div>
+      <div class="card"><h3>create-video-workflow</h3><p>Convert research into presentations, videos, and websites.</p><a href="../../../personal-skills/create-video-workflow/SKILL.md">Read SKILL.md →</a></div>
+      <div class="card"><h3>video-production-pip-style</h3><p>Replicate the Andrei Jikh PiP citation style.</p><a href="../../../personal-skills/video-production-pip-style/SKILL.md">Read SKILL.md →</a></div>
+      <div class="card"><h3>transcribe-audio</h3><p>Convert audio files to text with local Whisper on GPU.</p><a href="../../../personal-skills/transcribe-audio/SKILL.md">Read SKILL.md →</a></div>
+      <div class="card"><h3>pic-to-txt</h3><p>Convert a folder of screenshots into a clean text document via OCR.</p><a href="../../../personal-skills/pic-to-txt/SKILL.md">Read SKILL.md →</a></div>
+      <div class="card"><h3>doc-protect</h3><p>Protect sections of documents from AI edits.</p><a href="../../../personal-skills/doc-protect/SKILL.md">Read SKILL.md →</a></div>
+      <div class="card"><h3>tmux-status-bar</h3><p>Set up a tmux status bar with session, git, and feature info.</p><a href="../../../personal-skills/tmux-status-bar/SKILL.md">Read SKILL.md →</a></div>
+    </div>
+
+    <h2>Feature tree</h2>
+    <div class="tree-view">
+      <ul>
+        <li>
+          <a class="tree-node root" href="the-super-lab.html">The Super Lab</a>
+          <ul>
+            <li>
+              <a class="tree-node feature" href="skill-factory/skill-factory.html">Skill Factory</a>
+              <ul>
+                <li><a class="tree-node leaf" href="../../features/skill-factory/prd/skill-factory-prd.md">Requirement · PRD</a></li>
+                <li><a class="tree-node leaf" href="../../features/skill-factory/design/skill-factory-design.md">Design · Specification</a></li>
+                <li><a class="tree-node leaf" href="../../features/skill-factory/impl-plan/skill-factory-impl-plan.md">Impl · Implementation plan</a></li>
+                <li><a class="tree-node leaf" href="../../features/skill-factory/test-plan/skill-factory-test-plan.md">Verify · Test plan</a></li>
+                <li><a class="tree-node leaf" href="../../features/skill-factory/decision-history/skill-factory-decision-history.md">Decision history</a></li>
+              </ul>
+            </li>
+            <li>
+              <a class="tree-node feature" href="spec-driven-development/spec-driven-development-reader.html">Spec-Driven Development</a>
+              <ul>
+                <li><a class="tree-node leaf" href="../../features/spec-driven-development/prd/spec-driven-development-prd.md">Requirement · PRD</a></li>
+                <li><a class="tree-node leaf" href="../../features/spec-driven-development/design/spec-driven-development-design.md">Design · System design</a></li>
+                <li><a class="tree-node leaf" href="../../features/spec-driven-development/decision-history/spec-driven-development-decision-history.md">Decision history</a></li>
+                <li>
+                  <a class="tree-node sub" href="spec-driven-development/features/pipeline/pipeline.html">Pipeline</a>
+                  <ul>
+                    <li><a class="tree-node leaf" href="../../features/spec-driven-development/features/pipeline/design/pipeline-design.md">Design · pipeline-design.md</a></li>
+                    <li><a class="tree-node leaf" href="../../features/spec-driven-development/prd/spec-driven-development-prd.md">Requirement · parent PRD</a></li>
+                    <li><a class="tree-node leaf" href="../../features/spec-driven-development/decision-history/spec-driven-development-decision-history.md">Decision history · parent</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a class="tree-node sub" href="spec-driven-development/features/document-standard/document-standard.html">Document Standard</a>
+                  <ul>
+                    <li><a class="tree-node leaf" href="../../features/spec-driven-development/features/document-standard/design/document-standard-design.md">Design · document-standard-design.md</a></li>
+                    <li><a class="tree-node leaf" href="../../../skills/doc-organize/SKILL.md">Impl · doc-organize</a></li>
+                    <li><a class="tree-node leaf" href="../../features/spec-driven-development/features/document-standard/design/document-standard-design.md">Verify · Lint</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a class="tree-node sub" href="../../features/spec-driven-development/features/wayfinder-import/wayfinder-import.html">Wayfinder Import</a>
+                  <ul>
+                    <li><a class="tree-node leaf" href="../../features/spec-driven-development/features/wayfinder-import/design/wayfinder-import-design.md">Design · spec</a></li>
+                    <li><a class="tree-node leaf" href="../../features/spec-driven-development/features/wayfinder-import/impl-plan/wayfinder-import-impl-plan.md">Impl · implementation plan</a></li>
+                    <li><a class="tree-node leaf" href="../../features/spec-driven-development/features/wayfinder-import/test-plan/wayfinder-import-test-plan.md">Verify · test plan</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <details open>
+                <summary>Skill designs · 15 general</summary>
+                <ul>
+                  <li><a class="tree-node leaf" href="../../../skills/wayfinder/SKILL.md">wayfinder</a></li>
+                  <li><a class="tree-node leaf" href="../../../skills/to-spec/SKILL.md">to-spec</a></li>
+                  <li><a class="tree-node leaf" href="../../../skills/to-tickets/SKILL.md">to-tickets</a></li>
+                  <li><a class="tree-node leaf" href="../../../skills/implement/SKILL.md">implement</a></li>
+                  <li><a class="tree-node leaf" href="../../../skills/doc-organize/SKILL.md">doc-organize</a></li>
+                  <li><a class="tree-node leaf" href="../../../skills/doc-review/SKILL.md">doc-review</a></li>
+                  <li><a class="tree-node leaf" href="../../../skills/research/SKILL.md">research</a></li>
+                  <li><a class="tree-node leaf" href="../../../skills/grill-with-docs/SKILL.md">grill-with-docs</a></li>
+                  <li><a class="tree-node leaf" href="../../../skills/domain-modeling/SKILL.md">domain-modeling</a></li>
+                  <li><a class="tree-node leaf" href="../../../skills/prototype/SKILL.md">prototype</a></li>
+                  <li><a class="tree-node leaf" href="../../../skills/auto-tdd/SKILL.md">auto-tdd</a></li>
+                  <li><a class="tree-node leaf" href="../../../skills/bug/SKILL.md">bug</a></li>
+                  <li><a class="tree-node leaf" href="../../../skills/multi-model-team/SKILL.md">multi-model-team</a></li>
+                  <li><a class="tree-node leaf" href="../../../skills/skill/SKILL.md">skill</a></li>
+                  <li><a class="tree-node leaf" href="../../../skills/english-grammar-fix/SKILL.md">english-grammar-fix</a></li>
+                </ul>
+              </details>
+            </li>
+            <li>
+              <details>
+                <summary>Personal skill designs · 9</summary>
+                <ul>
+                  <li><a class="tree-node leaf" href="../../../personal-skills/luma-event-scout/SKILL.md">luma-event-scout</a></li>
+                  <li><a class="tree-node leaf" href="../../../personal-skills/youtube-research-pipeline/SKILL.md">youtube-research-pipeline</a></li>
+                  <li><a class="tree-node leaf" href="../../../personal-skills/youtube-summarize/SKILL.md">youtube-summarize</a></li>
+                  <li><a class="tree-node leaf" href="../../../personal-skills/create-video-workflow/SKILL.md">create-video-workflow</a></li>
+                  <li><a class="tree-node leaf" href="../../../personal-skills/video-production-pip-style/SKILL.md">video-production-pip-style</a></li>
+                  <li><a class="tree-node leaf" href="../../../personal-skills/transcribe-audio/SKILL.md">transcribe-audio</a></li>
+                  <li><a class="tree-node leaf" href="../../../personal-skills/pic-to-txt/SKILL.md">pic-to-txt</a></li>
+                  <li><a class="tree-node leaf" href="../../../personal-skills/doc-protect/SKILL.md">doc-protect</a></li>
+                  <li><a class="tree-node leaf" href="../../../personal-skills/tmux-status-bar/SKILL.md">tmux-status-bar</a></li>
+                </ul>
+              </details>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <h2>How skills are deployed</h2>
+    <div class="flow">
+      <div class="node"><div class="n">SOURCE</div><h4>the-super-lab</h4><p>Skills are edited here first.</p></div><div class="arrow">→</div>
+      <div class="node"><div class="n">DEPLOY</div><h4>walter-worker</h4><p><code>setup/install.sh</code> or <code>coworker sync</code>.</p></div><div class="arrow">→</div>
+      <div class="node"><div class="n">RUNTIME</div><h4>IDE configs</h4><p>Claude Code, OpenCode, Cursor.</p></div><div class="arrow">→</div>
+      <div class="node"><div class="n">AGENT</div><h4>Skill invocation</h4><p>The harness discovers and invokes the skill.</p></div>
+    </div>
+
+    <div class="foot">The Super Lab project home · Source: <code>README.md</code>, <code>skills/</code>, <code>personal-skills/</code>, and <code>docs/features/</code> · Markdown remains the source of truth.</div>
+  </div>
+</main>
+
+<script>
+(function(){
+  try { var t=localStorage.getItem('project-docs-theme'); if(t) document.documentElement.setAttribute('data-theme', t); } catch(e){}
+  window.toggleTheme=function(){
+    var r=document.documentElement, n=r.getAttribute('data-theme')==='dark'?'light':'dark';
+    r.setAttribute('data-theme',n);
+    try{localStorage.setItem('project-docs-theme',n);}catch(e){}
+  };
+})();
+</script>
+</body>
+</html>

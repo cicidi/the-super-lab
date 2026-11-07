@@ -37,3 +37,17 @@ flowchart TB
 ```
 
 Copy into **design** or **pipeline** prose only when user approves **spec** edits; otherwise embed in HTML reader assembly from this file.
+
+## Numbered sequence with a state note (ARD-BE)
+
+One flow, one diagram. `autonumber` matches the heading's step range. A Note names the decision or question that blocks a step. Participants stay at or under 9.
+
+```mermaid
+sequenceDiagram
+  autonumber
+  participant C as Client
+  participant G as Gate
+  C->>G: open
+  Note over G: blocked by ARD-AN until the partner delivers
+  G-->>C: ready
+```

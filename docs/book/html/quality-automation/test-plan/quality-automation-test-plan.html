@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quality Automation — Test Plan · test-plan · Spec Atlas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:400,400italic,500,500italic,700|Roboto+Mono:400,500,700|Noto+Sans+SC:400,500,700&display=swap">
+<link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><a href="../../index.html"><span class="brand-mark">SDD</span><span class="brand-name">Spec Atlas</span></a></div>
+  </div>
+</header>
+<div class="site">
+  <aside class="sidebar">
+  <nav aria-label="Directory">
+    <div class="tree-overview"><a class="tree-link" href="../../index.html"><span class="tree-link__num">00</span>All features</a></div>
+    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../prd/quality-automation-prd.html"><span class="tree-link__num">07</span>Quality Automation Skills — PRD</a></li><li class="tree-leaf"><a class="tree-link" href="../design/quality-automation-design.html"><span class="tree-link__num">08</span>Quality Automation Skills — Design</a></li><li class="tree-leaf"><a class="tree-link" href="quality-automation-test-plan.html" aria-current="page"><span class="tree-link__num">09</span>Quality Automation — Test Plan</a></li></ul>
+  </nav>
+</aside>
+  <main class="content">
+    <nav class="breadcrumbs"><a href="../../index.html">Docs</a> / <span>quality-automation</span> / <span>test-plan</span> / <span>Quality Automation — Test Plan</span></nav>
+    <article class="doc" data-doc="quality-automation/test-plan/quality-automation-test-plan">
+      <header class="doc-head">
+        <p class="eyebrow">quality-automation</p>
+        <h1>Quality Automation — Test Plan</h1>
+        <p class="source">Canonical: docs/features/quality-automation/test-plan/quality-automation-test-plan.md</p>
+      </header>
+      
+      <div class="doc-body">
+        <h2>Quality Automation — Test Plan</h2>
+<h3>Test Cases</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>ID</th>
+<th>Case</th>
+<th>Oracle</th>
+</tr></thead><tbody>
+<tr>
+<td><strong id="TST-A"><a href="#TST-A">TST-A</a></strong></td>
+<td><code>run_spec_checks.py</code> exit 0 on docs/features</td>
+<td>CI/manual</td>
+</tr>
+<tr>
+<td><strong id="TST-B"><a href="#TST-B">TST-B</a></strong></td>
+<td>spec-organize test_checks pytest</td>
+<td><code>tests/test_checks.py</code></td>
+</tr>
+<tr>
+<td><strong id="TST-C"><a href="#TST-C">TST-C</a></strong></td>
+<td>auto-tdd + bug SKILL smoke</td>
+<td>project tests</td>
+</tr>
+</tbody></table></div>
+<h3>Test Execution Order</h3>
+<ol>
+<li><code>python3 tools/run_spec_checks.py</code>  </li>
+<li>pytest spec-organize tests  </li>
+</ol>
+<h3>Expected Pass Threshold</h3>
+<p>Zero mechanical spec findings on committed tree.</p>
+<h3>Change Log</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Version</th>
+<th>Date</th>
+<th>Description</th>
+</tr></thead><tbody>
+<tr>
+<td>0.1</td>
+<td>2026-11-04</td>
+<td>Initial</td>
+</tr>
+</tbody></table></div>
+      </div>
+    </article>
+    <nav class="pager" aria-label="Previous and next"><a class="prev" href="../design/quality-automation-design.html"><span class="label">Previous</span>Quality Automation Skills — Design</a></nav>
+  </main>
+</div>
+<footer class="foot"><div class="foot-inner">Assembled from committed <code>.md</code>. The Markdown is authoritative; this page is a reading view.</div></footer>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>if(window.mermaid){mermaid.initialize({startOnLoad:false});}</script>
+<script src="../../assets/app.js"></script>
+</body>
+</html>

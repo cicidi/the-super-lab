@@ -1,0 +1,793 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Document Standard — 文档标准（待 Review） · design · Spec Atlas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:400,400italic,500,500italic,700|Roboto+Mono:400,500,700|Noto+Sans+SC:400,500,700&display=swap">
+<link rel="stylesheet" href="../../../../assets/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><a href="../../../../index.html"><span class="brand-mark">SDD</span><span class="brand-name">Spec Atlas</span></a></div>
+  </div>
+</header>
+<div class="site">
+  <aside class="sidebar">
+  <nav aria-label="Directory">
+    <div class="tree-overview"><a class="tree-link" href="../../../../index.html"><span class="tree-link__num">00</span>All features</a></div>
+    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../../prd/spec-driven-development-prd.html"><span class="tree-link__num">16</span>Spec-Driven Development — PRD</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../../design/spec-driven-development-design.html"><span class="tree-link__num">18</span>Spec-Driven Development — HLD</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../../design/spec-driven-development-design-skill-contracts.html"><span class="tree-link__num">17</span>Spec-Driven Development — Skill Contracts</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="document-standard-design.html">document-standard</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../prd/document-standard-prd-spec-reader-html.html"><span class="tree-link__num">15</span>Document Standard — Spec Reader HTML（PRD）</a></li><li class="tree-leaf"><a class="tree-link" href="document-standard-design-spec-reader-html.html"><span class="tree-link__num">19</span>Document Standard — Spec Reader HTML（Design）</a></li><li class="tree-leaf"><a class="tree-link" href="document-standard-design.html" aria-current="page"><span class="tree-link__num">20</span>Document Standard — 文档标准（待 Review）</a></li></ul></details></li><li class="tree-leaf"><a class="tree-link" href="../../../spec-driven-development-reader.html">spec-driven-development — Reader</a></li></ul></details></li><li class="tree-leaf"><a class="tree-link" href="../../../impl-plan/spec-driven-development-impl-plan.html"><span class="tree-link__num">21</span>Spec-Driven Development — Implementation Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../../../test-plan/spec-driven-development-test-plan.html"><span class="tree-link__num">22</span>Spec-Driven Development — Test Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../../../decision-history/spec-driven-development-decision-history.html"><span class="tree-link__num">23</span>Spec-Driven Development — Decision History</a></li></ul>
+  </nav>
+</aside>
+  <main class="content">
+    <nav class="breadcrumbs"><a href="../../../../index.html">Docs</a> / <span>spec-driven-development</span> / <span>features</span> / <span>document-standard</span> / <span>design</span> / <span>Document Standard — 文档标准（待 Review）</span></nav>
+    <article class="doc" data-doc="spec-driven-development/features/document-standard/design/document-standard-design">
+      <header class="doc-head">
+        <p class="eyebrow">spec-driven-development</p>
+        <h1>Document Standard — 文档标准（待 Review）</h1>
+        <p class="source">Canonical: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md</p>
+      </header>
+      
+      <div class="doc-body">
+        <h2>Document Standard — 文档标准（待 Review）</h2>
+<p>本文件定义 <strong><code>docs/features/</code> 下 feature 文档</strong> 的类型、路径、命名、体量、格式、authority、health 与 enforcement。<strong>不</strong> 规定 agent skill 拆几个文件、如何加载 — 那是 <strong>implementation</strong> 另文对齐。</p>
+<p>相关：<strong>pipeline</strong> 见 <code>../pipeline/design/pipeline-design.md</code>；<strong>测试</strong> 见 parent <a href="../../../test-plan/spec-driven-development-test-plan.html"><code>../../../test-plan/spec-driven-development-test-plan.md</code></a>（被测 = spec-write / spec-review；本篇 MUST 进其 registry）。</p>
+<h4>术语（避免与 SDD「spec-driven」混淆）</h4>
+<div class="table-wrap"><table><thead><tr>
+<th>术语</th>
+<th>含义</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>Feature spec</strong></td>
+<td>一个 feature 的 <strong>committed 文稿合称</strong>：<code>prd</code> + <strong><code>design</code></strong> + <code>impl-plan</code> + <code>test-plan</code> + <code>decision-history</code>（+ 可选 <code>how-to</code>）。口语「维护 spec」常指 <strong>这一套</strong>，不是单指某一文件。</td>
+</tr>
+<tr>
+<td><strong><code>design</code>（type）</strong></td>
+<td>合称中的 <strong>技术设计篇</strong>：目录 <code>design/</code>，文件 <code>&lt;f&gt;-design.md</code>，frontmatter <code>type: design</code>。SDD 循环里与 PRD、decision-history 互磨的 <strong>设计正文</strong> 指此。</td>
+</tr>
+<tr>
+<td><strong>SDD</strong></td>
+<td>Spec-driven development — 方法名不变；与 <strong><code>type: design</code></strong> 文件夹无关。</td>
+</tr>
+</tbody></table></div>
+<p><strong>DSGN 索引</strong></p>
+<div class="table-wrap"><table><thead><tr>
+<th>节</th>
+<th>内容</th>
+</tr></thead><tbody>
+<tr>
+<td><a href="#DSGN-A">DSGN-A</a></td>
+<td>Contract（类型、路径、size、non-commit、INDEX/book、格式、条目 ID）</td>
+</tr>
+<tr>
+<td><a href="#DSGN-G">DSGN-G</a></td>
+<td>Authority by concern</td>
+</tr>
+<tr>
+<td><a href="#DSGN-H">DSGN-H</a></td>
+<td><code>design</code> 篇写什么 / agent context</td>
+</tr>
+<tr>
+<td><a href="#DSGN-I">DSGN-I</a></td>
+<td>Content priority（L1–L4）</td>
+</tr>
+<tr>
+<td><a href="#DSGN-J">DSGN-J</a></td>
+<td>Decision history 语义</td>
+</tr>
+<tr>
+<td><a href="#DSGN-K">DSGN-K</a></td>
+<td>命名冲突处置</td>
+</tr>
+<tr>
+<td><a href="#DSGN-L">DSGN-L</a></td>
+<td>Enforcement modes</td>
+</tr>
+<tr>
+<td><a href="#DSGN-M">DSGN-M</a></td>
+<td>Quality gates（MUST / NICE）</td>
+</tr>
+<tr>
+<td><a href="document-standard-design-spec-reader-html.html#DSGN-N">DSGN-N</a></td>
+<td>Spec reader HTML（aspect 篇 + <strong>SPEC-HTML-STANDARD</strong>）</td>
+</tr>
+</tbody></table></div>
+<h3>Problem Statement</h3>
+<p>Feature 文档多时，缺少统一 standard 会导致：无 authoritative artifact 时的 silent overwrite、路径混乱、stale 与 wrong 不分、同一 fact 多处 drift。</p>
+<h3>Solution</h3>
+<p><strong><a href="#DSGN-A">DSGN-A</a> = 契约</strong>（MUST 主要来自 <strong><a href="#DSGN-A">DSGN-A</a></strong>（含 <strong><a href="#DSGN-B">DSGN-B</a>–F</strong>）与 <strong><a href="#DSGN-M">DSGN-M</a></strong>）。<strong><a href="#DSGN-G">DSGN-G</a>–<a href="#DSGN-L">DSGN-L</a></strong> = 语义与流程补充。</p>
+<hr>
+<h3>User Stories</h3>
+<ul>
+<li>作为写 spec 的人，我希望知道文档放哪、叫什么、多大、谁是权威。</li>
+<li>作为 reviewer，我希望机械 MUST 能被脚本检查，语义问题只报告不静默改。</li>
+<li>作为 agent，我希望 frontmatter、ID、Change Log 规则明确，不用猜。</li>
+</ul>
+<h3>Implementation Decisions</h3>
+<ul>
+<li>可执行摘要在 SPEC-STANDARD.md 与 SPEC-PRESENTATION.md。机械 MUST 由检查脚本执行；semantic 由 <strong>spec-review</strong> 报告。入口是 spec-write 与 spec-review（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-AJ">ARD-AJ</a>）。</li>
+<li><code>how-to</code> 暂不机械检查；其余五类按 <a href="#DSGN-E">DSGN-E</a> 执行。</li>
+<li>存量不合规文档不迁移，只报告（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-AF">ARD-AF</a>）。</li>
+</ul>
+<h3>Design</h3>
+<h4 id="DSGN-A"><a href="#DSGN-A">DSGN-A</a> — Document Contract</h4>
+<h5 id="DSGN-B"><a href="#DSGN-B">DSGN-B</a> — 类型 · 目录 · 文件名 · size · split（一表）</h5>
+<p><code>&lt;f&gt;</code> = kebab-case slug，<strong>与 committed 文件名中的 feature 段一致</strong>。</p>
+<div class="table-wrap"><table><thead><tr>
+<th>形态</th>
+<th>根目录</th>
+<th>表内 <code>&lt;f&gt;</code> / frontmatter <code>feature</code></th>
+</tr></thead><tbody>
+<tr>
+<td>Flat</td>
+<td><code>docs/features/&lt;f&gt;/</code></td>
+<td><code>&lt;f&gt;</code></td>
+</tr>
+<tr>
+<td>Sub-feature</td>
+<td><code>docs/features/&lt;parent&gt;/features/&lt;sub&gt;/</code></td>
+<td><strong><code>&lt;sub&gt;</code></strong></td>
+</tr>
+</tbody></table></div>
+<p><strong>Sub 示例</strong>（parent <code>spec-driven-development</code>，sub <code>document-standard</code>）：   <code>.../document-standard/design/document-standard-design.md</code>；part <code>document-standard-design-&lt;aspect&gt;.md</code>；   <code>.../document-standard/raw/research/&lt;topic&gt;.md</code>；<code>.../raw/state/state-&lt;YYYY-MM-DD&gt;.md</code>。   Sibling：<code>.../pipeline/design/pipeline-design.md</code>。<strong>待 review：</strong> tooling 是否完全支持 sub 树与 <code>raw/</code>。</p>
+<p>Committed：<strong>目录 + 文件名</strong>；文件名 <strong>必须</strong> <code>&lt;f&gt;-&lt;type&gt;…</code>（<code>raw/</code> 除外）。Supporting：<code>docs/features/&lt;f&gt;/&lt;type&gt;/&lt;source-name&gt;.md</code>（硬 cap 同 parent type）。<strong>禁止</strong> 单独 <code>reference/</code> type（外链材料放在 supporting 或 <code>raw/</code>）。</p>
+<p><strong>Split / size（<a href="../prd/document-standard-prd-spec-reader-html.html#PRD-D">PRD-D</a>；目录/文件名关系见 <a href="../prd/document-standard-prd-spec-reader-html.html#PRD-E">PRD-E</a>）：</strong> 六种 type 均可 part；<code>行数 &gt; 硬 cap</code> → MUST fail；按 bounded context / domain / ownership / lifecycle / 时间线 拆（不机械切行数）。可先 <strong><a href="#DSGN-I">DSGN-I</a></strong> trim（<code>decision-history</code> 不 trim entry，只拆 part）。Entry 文件可链 part。<strong>Collision</strong> → <strong><a href="#DSGN-K">DSGN-K</a></strong>。硬 cap 含 frontmatter 与 Change Log；<strong>删 L1 凑 cap = defect</strong>。</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Type</th>
+<th>内容</th>
+<th>Commit</th>
+<th>目录</th>
+<th>文件名（entry）</th>
+<th>文件名（part）</th>
+<th>目标行</th>
+<th>硬 cap</th>
+</tr></thead><tbody>
+<tr>
+<td><code>prd</code></td>
+<td>做什么、为什么</td>
+<td>yes</td>
+<td><code>docs/features/&lt;f&gt;/prd/</code></td>
+<td><code>&lt;f&gt;-prd.md</code></td>
+<td><code>&lt;f&gt;-prd-&lt;aspect&gt;.md</code></td>
+<td>150–400</td>
+<td>800</td>
+</tr>
+<tr>
+<td><code>design</code></td>
+<td>技术设计（怎么做）</td>
+<td>yes</td>
+<td><code>docs/features/&lt;f&gt;/design/</code></td>
+<td><code>&lt;f&gt;-design.md</code></td>
+<td><code>&lt;f&gt;-design-&lt;aspect&gt;.md</code></td>
+<td>200–500；架构 500–900</td>
+<td>1,000</td>
+</tr>
+<tr>
+<td><code>impl-plan</code></td>
+<td>task 分解</td>
+<td>yes</td>
+<td><code>docs/features/&lt;f&gt;/impl-plan/</code></td>
+<td><code>&lt;f&gt;-impl-plan.md</code></td>
+<td><code>&lt;f&gt;-impl-plan-&lt;NN&gt;-&lt;phase&gt;.md</code></td>
+<td>100–500</td>
+<td>1,000</td>
+</tr>
+<tr>
+<td><code>test-plan</code></td>
+<td>验证</td>
+<td>yes</td>
+<td><code>docs/features/&lt;f&gt;/test-plan/</code></td>
+<td><code>&lt;f&gt;-test-plan.md</code></td>
+<td><code>&lt;f&gt;-test-plan-&lt;area&gt;.md</code></td>
+<td>200–600</td>
+<td>800</td>
+</tr>
+<tr>
+<td><code>decision-history</code></td>
+<td>全部 decision</td>
+<td>yes</td>
+<td><code>docs/features/&lt;f&gt;/decision-history/</code></td>
+<td><code>&lt;f&gt;-decision-history.md</code></td>
+<td><code>&lt;f&gt;-decision-history-&lt;NN&gt;-&lt;period&gt;.md</code></td>
+<td>—</td>
+<td>不设</td>
+</tr>
+<tr>
+<td><code>how-to</code></td>
+<td>使用/运维</td>
+<td>yes</td>
+<td><code>docs/features/&lt;f&gt;/how-to/</code></td>
+<td><code>&lt;f&gt;-how-to.md</code></td>
+<td><code>&lt;f&gt;-how-to-&lt;scenario&gt;.md</code></td>
+<td>100–350</td>
+<td>600</td>
+</tr>
+<tr>
+<td><code>raw</code></td>
+<td>非 commit 原始区</td>
+<td>no</td>
+<td><code>docs/features/&lt;f&gt;/raw/&lt;subdir&gt;/</code></td>
+<td>见下表</td>
+<td>—</td>
+<td>宜 ≤2,000</td>
+<td>—</td>
+</tr>
+</tbody></table></div>
+<p><strong><code>raw/</code></strong>（gitignore <code>docs/features/*/raw/</code>；无 frontmatter / Change Log / INDEX；升格事实 <strong>link</strong> 不 restate）：</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Subdir</th>
+<th>放什么</th>
+<th>文件名</th>
+</tr></thead><tbody>
+<tr>
+<td><code>raw/research/</code></td>
+<td>调研原始输出</td>
+<td><code>&lt;topic&gt;.md</code></td>
+</tr>
+<tr>
+<td><code>raw/review/</code></td>
+<td>agent 短时 review</td>
+<td><code>&lt;YYYY-MM-DD&gt;-&lt;reviewer&gt;-&lt;subject&gt;.md</code></td>
+</tr>
+<tr>
+<td><code>raw/design/</code></td>
+<td>未并入 <strong><code>design/</code> 正文</strong> 的草稿（≠ committed <code>design/</code> 目录）</td>
+<td><code>&lt;YYYY-MM-DD&gt;-&lt;subject&gt;.md</code></td>
+</tr>
+<tr>
+<td><code>raw/evidence/</code></td>
+<td>evidence / 工具输出</td>
+<td><code>&lt;YYYY-MM-DD&gt;-&lt;slug&gt;.md</code></td>
+</tr>
+<tr>
+<td><code>raw/discussion/</code></td>
+<td>讨论串（可选）</td>
+<td><code>&lt;topic&gt;.md</code></td>
+</tr>
+<tr>
+<td><code>raw/state/</code></td>
+<td>compaction 快照</td>
+<td><code>state-&lt;YYYY-MM-DD&gt;.md</code>（硬 cap 400）</td>
+</tr>
+</tbody></table></div>
+<p>Part 命名：<code>prd</code>/<code>design</code>/<code>test-plan</code>/<code>how-to</code> 用名词；<code>impl-plan</code>/<code>decision-history</code> 用 <code>&lt;NN&gt;</code>+phase/period。Legacy 顶层 <code>state/</code>、<code>research/</code>、<code>discussion/</code> → 迁入 <code>raw/</code>。Ticket：<code>.scratch/&lt;feature-slug&gt;/</code>（同样 <strong>不得 commit</strong>）。</p>
+<p><strong>Commit 列：</strong> <code>yes</code> = 纳入版本库的标准 feature 文档；<code>no</code> = <strong>不得</strong> 进入 git（本地可存在）。<code>no</code> 路径须 <code>.gitignore</code> 或等价策略；误 commit 视为 <strong><a href="#DSGN-M">DSGN-M</a> MUST</strong> 违规。</p>
+<h5 id="DSGN-C"><a href="#DSGN-C">DSGN-C</a> — 不得 commit（<code>Commit = no</code>）</h5>
+<div class="table-wrap"><table><thead><tr>
+<th>路径</th>
+<th>说明</th>
+</tr></thead><tbody>
+<tr>
+<td><code>docs/features/&lt;f&gt;/raw/**</code></td>
+<td>原始区全树（含 <code>raw/state/</code>）</td>
+</tr>
+<tr>
+<td><code>.scratch/&lt;feature-slug&gt;/</code></td>
+<td>ticket 等 ephemeral（不在 <code>docs/features/</code> 但同属 non-commit）</td>
+</tr>
+</tbody></table></div>
+<p>不得要求 frontmatter、Change Log、INDEX 条目。升格进 committed type 时 <strong>link</strong>，不把 raw 当 authoritative home。</p>
+<h5 id="DSGN-D"><a href="#DSGN-D">DSGN-D</a> — INDEX 与 book（派生层）</h5>
+<p><code>docs/features/</code> 里的 committed 文档是 <strong>source of truth</strong>。INDEX 与 book 都是 <strong>派生层</strong>，不用 <strong><a href="#DSGN-E">DSGN-E</a></strong> frontmatter / Change Log，<strong>不写</strong> 新 decision：</p>
+<div class="table-wrap"><table><thead><tr>
+<th></th>
+<th><strong>INDEX</strong></th>
+<th><strong>book</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>回答的问题</td>
+<td><strong>在哪</strong>（路径、type、initiative 结构）</td>
+<td><strong>干了什么</strong>（短摘要，便于 AI/人决定要不要打开全文）</td>
+</tr>
+<tr>
+<td>典型粒度</td>
+<td>一行链接 + 标题（可带一句 summary）</td>
+<td>每篇或每组 source 文档一段 <strong>组装摘要</strong>，链回 canonical 路径</td>
+</tr>
+</tbody></table></div>
+<hr>
+<p><strong><a href="../../../../../../INDEX.md"><code>docs/INDEX.md</code></a> — 干什么</strong></p>
+<div class="table-wrap"><table><thead><tr>
+<th></th>
+<th></th>
+</tr></thead><tbody>
+<tr>
+<td><strong>目的</strong></td>
+<td>全库 <strong>feature spec</strong> 各篇的 <strong>地图</strong>：哪个 initiative 下有哪些 PRD、design、plan，路径是什么。</td>
+</tr>
+<tr>
+<td><strong>给谁用</strong></td>
+<td>人、agent、脚本 <strong>发现文档</strong> 时先查 INDEX，再打开 <code>docs/features/...</code> 里的正文。</td>
+</tr>
+<tr>
+<td><strong>不是什么</strong></td>
+<td>不是 design 正文；在 INDEX 里改标题/链接 <strong>不等于</strong> 改 requirement；INDEX 里 <strong>不写</strong> 设计结论。</td>
+</tr>
+<tr>
+<td><strong>与 feature 树</strong></td>
+<td>每个 listed 链接必须指向 <strong>Commit = yes</strong> 的标准路径；tree 变了 INDEX 必须跟着变。</td>
+</tr>
+</tbody></table></div>
+<p><strong>INDEX 怎么维护</strong></p>
+<ul>
+<li><strong>生成物</strong>：整文件 <strong>regenerate</strong>（改 generator/template，不长期手改一行行条目）。</li>
+<li><strong>何时 regenerate</strong>：任一 committed 文档 <strong>create / move / rename / delete</strong> 之后；与 book 一样，<strong>push 到 GitHub 前/时</strong> 应与 <code>docs/features/</code> 变更 <strong>同批同步</strong>（见 book 应然）。</li>
+<li><strong>收录范围</strong>：只列 committed 文档（含 sub-feature）；<strong>不</strong>列 <code>raw/</code>、<code>.scratch/</code>。</li>
+<li><strong>结构</strong>：按 <strong>feature（initiative）</strong> 分块，块内按 <strong>type</strong> 顺序（<code>prd</code> → <code>design</code> → … → <code>decision-history</code>）；链接相对 <code>docs/</code>。</li>
+<li><strong>质量（<a href="#DSGN-M">DSGN-M</a> MUST）</strong>：disk 有文件但未 listed → <strong>orphan</strong>；listed 但文件不存在 → <strong>dead link</strong>。</li>
+</ul>
+<hr>
+<p><strong><code>docs/book/</strong></code> — 干什么**</p>
+<p>（与历史 <strong>doc-organize</strong> 一致：*Assembled output, built from documents that are already <code>final</code>。* — 此处 <strong>final</strong> 指 feature 侧已接受的 committed 正文，不是 book 自己定稿。）</p>
+<div class="table-wrap"><table><thead><tr>
+<th></th>
+<th></th>
+</tr></thead><tbody>
+<tr>
+<td><strong>目的</strong></td>
+<td>由 feature spec 各篇 <strong>组装</strong> 的 <strong>摘要层</strong>：用短说明写清每份 PRD/design/plan <strong>覆盖什么、得出什么、该去哪读全文</strong> — 主要给 <strong>AI 检索与选篇</strong>。</td>
+</tr>
+<tr>
+<td><strong>给谁用</strong></td>
+<td>Agent / 人 <strong>先扫 book 再打开</strong> <code>docs/features/...</code>；不是在此写第一版 design 或新 decision。</td>
+</tr>
+<tr>
+<td><strong>不是什么</strong></td>
+<td><strong>不是</strong> source of truth；<strong>不是</strong> design 全文拷贝；<strong>不能</strong> 与 feature 正文 <strong>手维护两份相同 fact</strong>。</td>
+</tr>
+<tr>
+<td><strong>与 INDEX</strong></td>
+<td>INDEX = 目录；book = <strong>内容摘要</strong>。二者互补，通常 <strong>一起</strong> 更新。</td>
+</tr>
+</tbody></table></div>
+<p><strong>book 写什么（摘要契约）</strong></p>
+<ul>
+<li>每条摘要 <strong>必须</strong> 链到对应 <strong>canonical 路径</strong>（<code>docs/features/...</code>）。</li>
+<li>写 <strong>scope + 主要结论/状态</strong>（例如：document-standard 的 design 篇定 <a href="#DSGN-A">DSGN-A</a> 契约；pending review 项），<strong>不</strong> 展开 L1 全文。</li>
+<li>新增/变更 decision 只改 feature / <code>decision-history</code>，再 <strong>重生成</strong> book 摘要，禁止只在 book 改口径。</li>
+</ul>
+<p><strong>book 什么时候更新（应然）</strong></p>
+<ul>
+<li>凡 <strong><code>docs/features/</code> 下 committed 文档</strong> 有变更并 <strong>push 到 GitHub</strong>，<strong>同一 push（或紧邻的前序 commit）中应已 regenerate 对应的 book</strong>（及 INDEX）。  </li>
+</ul>
+<p>  *实现*（pre-push hook、CI、bot、手动）属 <strong>impl</strong>；本 standard 要求 <strong>远端可见的 docs 与 book/INDEX 同步</strong>，避免 AI 在 GitHub 上读到新 spec 却仍是旧摘要。</p>
+<ul>
+<li>源文档 <strong><code>state: draft</code></strong> 时可暂不更新对应摘要；<strong><code>final</code> 或已 merge 的 committed 变更</strong> 必须反映到 book。</li>
+</ul>
+<p><strong>其它</strong></p>
+<ul>
+<li>路径：<code>docs/book/<strong></code>；无 </strong><a href="#DSGN-E">DSGN-E</a><strong> frontmatter；Lint 查 </strong>link 有效**、摘要指向的文件存在。</li>
+<li>HTML：<code>docs/book/html/</code> 镜像 <code>docs/features/</code>。摘要仍在 book 其他路径；HTML 不是 source of truth（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-BF">ARD-BF</a>）。</li>
+<li>可 <strong>额外</strong> 用于 MkDocs / Pages 发布；发布 nav 属 impl，不得与 feature 树、INDEX 矛盾。</li>
+</ul>
+<hr>
+<p><strong>其它豁免路径</strong>（同样不是 feature 文档，无 <strong><a href="#DSGN-E">DSGN-E</a></strong> frontmatter；Lint 只查 link）：<code>CONTEXT.md</code>（domain glossary）、<a href="../../../../../../../README.md"><code>README.md</code></a>（repo 导向）。</p>
+<h5 id="DSGN-E"><a href="#DSGN-E">DSGN-E</a> — 格式（committed 文档）</h5>
+<pre><code>---
+feature: &lt;feature-name&gt;
+type: prd | design | impl-plan | test-plan | decision-history | how-to
+state: draft | final
+final_date: YYYY-MM-DD   # final 时必填
+---</code></pre>
+<p>可选（NICE）：<code>spec_id</code>, <code>version</code>, <code>health</code>（<code>active</code>|<code>stale</code>|<code>deprecated</code>），<code>owner</code>, <code>last_verified</code> — 用 <strong><code>health</code></strong> 不用 <code>status</code>。</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Type</th>
+<th>Required sections（可 add，不可 rename/drop）</th>
+</tr></thead><tbody>
+<tr>
+<td><code>prd</code></td>
+<td>Overview, Goals and Success Metrics, User Stories, Functional Requirements, Out of Scope, Resources Needed</td>
+</tr>
+<tr>
+<td><code>design</code></td>
+<td>Problem Statement, Solution, User Stories, Implementation Decisions, Design, Testing Decisions, Out of Scope, Further Notes, Alternatives Considered, Drawbacks, Risks and Mitigations, Open Questions, Reversibility</td>
+</tr>
+<tr>
+<td><code>impl-plan</code></td>
+<td>Global Constraints, Acceptance Criteria, IMPL-* tasks</td>
+</tr>
+<tr>
+<td><code>test-plan</code></td>
+<td>Test Cases, Test Execution Order, Expected Pass Threshold</td>
+</tr>
+<tr>
+<td><code>decision-history</code></td>
+<td>Decision Log, Evidence Appendix</td>
+</tr>
+<tr>
+<td><code>how-to</code></td>
+<td>Overview, Prerequisites, Steps, Verification</td>
+</tr>
+</tbody></table></div>
+<p><strong>检查范围：</strong> <code>how-to</code> 暂不机械检查；其余五类按本表执行。</p>
+<p><strong>impl-plan 正文（MUST，spec-write 执行）：</strong> 每条 <code>IMPL-*</code> 写依赖谁、挡住谁。<code>Execution order</code> 把被挡住的排后面（先改库，再改 API）。优先级高且没被挡住的先做；没被挡住的可以同时做。</p>
+<p>新增节承自 KEP / Rust RFC：<code>Alternatives Considered</code>、<code>Drawbacks</code>、<code>Risks and Mitigations</code>、 <code>Open Questions</code> 为通用节;<code>Acceptance Criteria</code>(= Graduation Criteria)、<code>Reversibility</code> (= Upgrade/Downgrade)、<code>Resources Needed</code>(= Infrastructure Needed)为改名后的通用语义。 版本偏移、发布签核、运维就绪问卷<strong>不采纳</strong>(集群/运维形状,违反 <a href="../../../prd/spec-driven-development-prd.html#PRD-Q">PRD-Q</a>)。Decision Log 表头：<code>ID \| Date \| Decision</code>（<strong>无</strong> <code>Status</code> / <code>Supersedes</code> 列）。<strong>倒序</strong>：新 entry 在表顶。Change Log：<strong>最后一节</strong>，只 append。PROTECTED 块任何 mode 不改。INDEX：文档增删移后 regenerate。</p>
+<h5 id="DSGN-F"><a href="#DSGN-F">DSGN-F</a> — 条目 ID（type 前缀 + 字母）</h5>
+<p>各 type 内可追溯条目用 <strong><code>{前缀}-{字母}</code></strong>，字母序同 Excel 列（<code>A</code>–<code>Z</code> → <code>AA</code>–<code>AZ</code> → <code>BA</code>–…）。可在已有条目之间 <strong>插入</strong> 新 ID（大方向顺序，见 <strong><a href="#DSGN-J">DSGN-J</a></strong>）。</p>
+<p><strong>ID immutable（MUST）：</strong> 某 ID <strong>一旦写入</strong> feature spec（表、标题、正文、外链），该字符串 <strong>终身固定</strong> — <strong>禁止</strong> 改字母、改前缀、拼写「修正」、重编号、把 <code>PRD-A</code> 合并进 <code>PRD-B</code>。<strong>禁止复用</strong> 已出现过的 ID（即使 entry 被 strike / 整段作废）。口径变了 → <strong>新 ID</strong> + 旧处 strike / link（<strong><a href="#DSGN-J">DSGN-J</a></strong>）；<strong>不得</strong> 改旧 ID 本身。</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Type</th>
+<th>前缀</th>
+<th>例</th>
+</tr></thead><tbody>
+<tr>
+<td><code>prd</code></td>
+<td><code>PRD</code></td>
+<td><code>PRD-A</code>, <code>PRD-B</code>, <code>PRD-AA</code></td>
+</tr>
+<tr>
+<td><code>design</code></td>
+<td><code>DSGN</code></td>
+<td><code>DSGN-A</code>, <code>DSGN-B</code></td>
+</tr>
+<tr>
+<td><code>decision-history</code></td>
+<td><code>ARD</code></td>
+<td><code>ARD-A</code>, <code>ARD-AA</code></td>
+</tr>
+<tr>
+<td><code>impl-plan</code></td>
+<td><code>IMPL</code></td>
+<td><code>IMPL-A</code>, <code>IMPL-B</code></td>
+</tr>
+<tr>
+<td><code>test-plan</code></td>
+<td><code>TST</code></td>
+<td><code>TST-A</code>, <code>TST-B</code></td>
+</tr>
+<tr>
+<td>question（Open Questions）</td>
+<td><code>QUES</code></td>
+<td><code>QUES-A</code>, <code>QUES-B</code></td>
+</tr>
+</tbody></table></div>
+<p>跨文档引用 <strong>写全 ID</strong>（如 <code>PRD-A</code>、<code>ARD-F</code>）。<code>how-to</code> 无强制 letter ID。</p>
+<p><strong>作用域（MUST）：</strong> ID 在 <strong>feature + type</strong> 内唯一；跨 feature 引用写 <code>&lt;feature&gt;/&lt;ID&gt;</code>（如 <code>document-standard/PRD-K</code>）。裸 ID 只在本 feature 内有意义。</p>
+<p><strong>HLD 例外：</strong> 父 HLD 的 System Context / Logical Architecture 等 <strong>架构章节</strong> 不要求 <code>DSGN-*</code> ID；只有可追溯的规则小节才要 ID。</p>
+<p><strong>凡有序号即 ID（MUST）：</strong> ADR、requirement、design 规则小节、impl task、test case、defer/open question 等 <strong>一切</strong> 可追溯条目 — <strong>必须</strong> 用上表 <code>{前缀}-{字母}</code>。<strong>禁止</strong> 裸数字（<code>0001</code>）、<code>PRD-1</code>/<code>DH-1</code>/<code>FR-3</code>/<code>OQ-1</code>/<code>QUES-1</code>/<code>D1</code> 等作永久 ID。Open Questions 的条目用 <code>QUES-A</code>。本 design 篇小节即 <strong><a href="#DSGN-A">DSGN-A</a></strong> 起（见索引）。</p>
+<p><strong>检查：</strong> <code>ids.py</code> 按 type 强制标题模式（<code>PRD-*</code> / <code>DSGN-*</code> / <code>IMPL-*</code> / <code>TST-*</code> / <code>ARD-*</code> / <code>QUES-*</code>），缺 ID 或裸数字即 fail。</p>
+<p><strong>AI 单次 edit 粒度</strong>（≤10 行 / ≤200 字）属 SDD parent HLD <strong>§4</strong>，不在本 document-standard；impl 目标：<strong>spec-write</strong> 等书写 skill。</p>
+<hr>
+<h4 id="DSGN-G"><a href="#DSGN-G">DSGN-G</a> — Authority by Concern</h4>
+<p>不要 global single source of truth — <strong>按 concern 各认一个 authoritative artifact</strong>；不一致时 <strong>Detect → Report → Ask</strong>（禁止 silent 改一侧；禁止默认 <code>design</code> 篇 &gt; code）。</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Concern</th>
+<th>Authoritative artifact</th>
+</tr></thead><tbody>
+<tr>
+<td>Intended behavior</td>
+<td>feature <strong><code>design</code> 文档</strong></td>
+</tr>
+<tr>
+<td>API contract</td>
+<td>OpenAPI / protobuf / GraphQL / JSON Schema 等</td>
+</tr>
+<tr>
+<td>Database structure</td>
+<td>migrations / schema</td>
+</tr>
+<tr>
+<td>Current implementation</td>
+<td>code</td>
+</tr>
+<tr>
+<td>Executable verification</td>
+<td>tests</td>
+</tr>
+</tbody></table></div>
+<p><strong><code>design</code> 篇</strong> 权威 intended behavior；code 权威当前实现与内部结构。Machine-readable contract <strong>不要</strong>在 Markdown 里手抄全文 — link 或 generate。Tests 是 verification，不是 requirement 替身。<code>final</code> 后 maintain，不整篇 rewrite。</p>
+<hr>
+<h4 id="DSGN-H"><a href="#DSGN-H">DSGN-H</a> — Design 文档 Scope（<code>type: design</code> 正文）</h4>
+<p><strong>写：</strong> behavior、contract、invariant、constraint、error、state transition、外部交互、架构边界（含 diagram 类）。   <strong>不写：</strong> class 结构、private method、framework 内部细节（见 <strong><a href="#DSGN-I">DSGN-I</a></strong> trim 时也应 absent）。   <strong>测试句：</strong> 可改 implementation 而不改 externally observable behavior → 不应改 <strong>design 篇</strong>。</p>
+<p><strong>Agent 加载顺序：</strong> Global rules → Domain <strong>design</strong> → Architecture → Contract → Examples/tests → Code。窄问题却要整篇 design → re-cut boundary。</p>
+<p>体量与 split：<strong><a href="#DSGN-B">DSGN-B</a></strong>。篇内设计决策 / 小节锚点用 <strong><code>DSGN-A</code></strong> 等（<strong><a href="#DSGN-F">DSGN-F</a></strong>）。</p>
+<hr>
+<h4 id="DSGN-I"><a href="#DSGN-I">DSGN-I</a> — Content Priority</h4>
+<p>Trim 顺序 L4 → L3 → 压 L2；<strong>L1 永不删</strong>。仍 <code>&gt; 硬 cap</code> → <strong><a href="#DSGN-B">DSGN-B</a></strong> split。</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Level</th>
+<th>Trim</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>L1</strong></td>
+<td>behavior、contract、invariant、error、security、boundary、out of scope、assumption、compatibility、open question — <strong>never</strong></td>
+</tr>
+<tr>
+<td><strong>L2</strong></td>
+<td>rationale — 压缩</td>
+</tr>
+<tr>
+<td><strong>L3</strong></td>
+<td>alternatives — 先删</td>
+</tr>
+<tr>
+<td><strong>L4</strong></td>
+<td>引用、raw output — 先删；重复 fact 只能是 <strong>link</strong></td>
+</tr>
+</tbody></table></div>
+<hr>
+<h4 id="DSGN-J"><a href="#DSGN-J">DSGN-J</a> — Decision History — 语义</h4>
+<p><strong>文件角色：</strong> 决策 <strong>索引 + 正文</strong>（Decision Log / <code>### &lt;ID&gt;</code> 小节，格式 <strong><a href="#DSGN-E">DSGN-E</a></strong>）。<strong>不是</strong> PRD / <strong>design 篇</strong> 的摘要。</p>
+<p><strong>书写顺序：</strong> <strong>倒序</strong> — 每加一条，写在 Decision Log <strong>最上面</strong>（最新在上，越往下越早）。</p>
+<p><strong>Decision ID：</strong> 格式 <strong><code>ARD-{字母}</code></strong>（<strong><a href="#DSGN-F">DSGN-F</a></strong>，分配后 <strong>不可改</strong>）。Log 表 / <code>### ARD-A — …</code> 与 ID 一致。</p>
+<p><strong>推翻旧 decision：</strong> 旧 entry <strong>不删行</strong>；正文 <del>删除线</del>；旁 <strong>link 到新 ID</strong>（如 <code>→ <a href="#ard-f--…">ARD-F</a></code>）。新口径用 <strong>新 ARD ID</strong> 写满一条，倒序 <strong>插 Log 顶</strong>。旧 entry 仅 strike + 指链（<strong><a href="#DSGN-I">DSGN-I</a></strong> 不 trim 被 strike 字句）。</p>
+<p><strong>拆 part（超 </strong><a href="#DSGN-B">DSGN-B</a><strong> 硬 cap）：</strong> ID <strong>全 feature 唯一</strong>；新 entry 写入 <strong>当前 part</strong> Log 顶部；旧 part 保留；part 间 link 即可。</p>
+<p><strong>什么时候加一条（agent 写 spec 时）：</strong> 细则表见 parent HLD <strong>§5</strong>。简记：</p>
+<div class="table-wrap"><table><thead><tr>
+<th>加</th>
+<th>不加</th>
+</tr></thead><tbody>
+<tr>
+<td>别人定下来的口径（review、结对、stakeholder），团队要能看到</td>
+<td>仅在你脑子里、还没写进 <strong>design 篇</strong>、也 <strong>没动代码</strong> 的试探</td>
+</tr>
+<tr>
+<td>你的转向会 <strong>改已有代码或对外契约</strong>（breaking behavior、路径/rename、谁才是 authority）</td>
+<td>只在 <strong>design 篇</strong> 改几句就能说清的推敲；「想过又改主意」不必每条都 log</td>
+</tr>
+<tr>
+<td>rename / 撞名等流程要求记入的（<strong><a href="#DSGN-K">DSGN-K</a></strong>）</td>
+<td>agent <strong>默认不</strong> 自动批量 append；不确定问 human</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h4 id="DSGN-K"><a href="#DSGN-K">DSGN-K</a> — Paths and Names — 冲突处置</h4>
+<p>新 feature / 新文件名 <strong>必须</strong> 对照已有名称；命中任一 <strong>collision signal</strong> 即视为冲突：</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Signal</th>
+<th>例</th>
+</tr></thead><tbody>
+<tr>
+<td>normalize 后相同</td>
+<td><code>Payment</code> vs <code>payment</code></td>
+</tr>
+<tr>
+<td>token 子集</td>
+<td><code>auth</code> vs <code>auth-service</code></td>
+</tr>
+<tr>
+<td>单复数 / 常见缩写</td>
+<td><code>doc</code> vs <code>docs</code></td>
+</tr>
+<tr>
+<td>edit distance ≤ 2</td>
+<td><code>payment-api</code> vs <code>payments-api</code></td>
+</tr>
+</tbody></table></div>
+<p>处置：同一 bounded context → <strong>merge</strong> 再按 aspect split <strong><code>design</code></strong>。不同 context 易混 → <strong>rename</strong> 双方并记入 <code>decision-history</code>。同 feature 内文件撞名 → 拉开 aspect 或 rename feature。<strong>Rename = decision</strong>，更新 inbound link，禁止 silent。</p>
+<hr>
+<h4 id="DSGN-L"><a href="#DSGN-L">DSGN-L</a> — Enforcement Modes</h4>
+<div class="table-wrap"><table><thead><tr>
+<th>Mode</th>
+<th>行为</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>Organize</strong></td>
+<td>feature/type → collision → 路径/文件名 → frontmatter + sections → Change Log → INDEX</td>
+</tr>
+<tr>
+<td><strong>Lint</strong></td>
+<td>walk <code>docs/features/</code>；MUST 机械 fix；semantic <strong>report</strong></td>
+</tr>
+<tr>
+<td><strong>Consolidate</strong></td>
+<td>propose → 批准；decision 全保留；<code>raw/</code> legacy  cite 或删</td>
+</tr>
+<tr>
+<td><strong>Sync</strong></td>
+<td>drift；按 <strong><a href="#DSGN-G">DSGN-G</a></strong> authority；semantic conflict <strong>report</strong></td>
+</tr>
+<tr>
+<td><strong>Review</strong>（spec-review）</td>
+<td>同 Lint 的 detect（机械 MUST + semantic）；<strong>不</strong> fix，输出带 severity 的修改建议</td>
+</tr>
+</tbody></table></div>
+<p>内容质量（设计是否成立）由 <strong>Review</strong> 的 semantic 部分处理，不属本 standard 的 MUST。</p>
+<hr>
+<h4 id="DSGN-M"><a href="#DSGN-M">DSGN-M</a> — Quality Gates</h4>
+<p><strong>MUST：</strong> <strong><a href="#DSGN-A">DSGN-A</a></strong> 全满足（含 <strong><a href="#DSGN-F">DSGN-F</a></strong> ID 不可改、不可复用）；<strong><a href="#DSGN-G">DSGN-G</a></strong> 冲突不 silent；<strong><a href="#DSGN-I">DSGN-I</a></strong> 不删 L1；consolidation 不丢 decision；<strong>Commit = no</strong> 路径未 commit；INDEX 无 orphan/dead link；含 <code>docs/features/</code> 变更的 <strong>push</strong> 时 INDEX/book 已与源同步；collision 已查。</p>
+<p><strong>NICE：</strong> heading 不跳级；link 有效；CONTEXT 术语一致；<code>last_verified</code> 新鲜；context boundary 合理。</p>
+<hr>
+<h3>Testing Decisions</h3>
+<p>验证见 parent <strong><a href="../../../test-plan/spec-driven-development-test-plan.html"><code>../../../test-plan/spec-driven-development-test-plan.md</code></a></strong>：被测对象是 <strong>spec-organize / spec-review</strong>，不是本篇；本篇全部 <strong>MUST / 禁止</strong> 由 <strong><a href="../../../test-plan/spec-driven-development-test-plan.html#TST-A">TST-A</a></strong> 扫入 <code>must_registry.yaml</code>，机械项 Python 判、其余 LLM judge 判。</p>
+<h3>Out of Scope</h3>
+<ul>
+<li>Pipeline 阶段编排（见 pipeline spec）。</li>
+<li>存量 tree 一次性 migrate（incremental 合规即可）。</li>
+<li>CI / skill <strong>如何实现</strong> enforcement（文件数、prompt、hook）。</li>
+<li>自动 drift detection 产品化。</li>
+</ul>
+<h3>Further Notes</h3>
+<ul>
+<li>已知历史偏离例：<code>skill-factory/design/</code> 等 — migrate 时按 <a href="#DSGN-M">DSGN-M</a> 逐项清。</li>
+<li><strong>待一起 review：</strong> <strong><a href="#DSGN-B">DSGN-B</a></strong> 硬 cap 数字、sub-feature 是否正式 MUST、<code>raw/</code> 子目录是否够用。AI edit 上限见 parent HLD §4；agent 全局 norm（含 §5 decision-history、§6 CLAUDE+skill）见 parent HLD。</li>
+<li><strong><a href="#DSGN-E">DSGN-E</a></strong> 代码引用须带 commit（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-AQ">ARD-AQ</a>）。每个 <code>IMPL-*</code> 有完成判据；先读后写；未上线的合作方接口写 mock（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-AT">ARD-AT</a>）。</li>
+<li><strong><a href="#DSGN-E">DSGN-E</a></strong> design 拆篇时，13 个必需节只要求入口 <code>&lt;f&gt;-design.md</code>；part 链回入口，只写本 aspect（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-AV">ARD-AV</a>）。</li>
+<li><strong><a href="#DSGN-E">DSGN-E</a></strong> 必需节用英文、不编号、不翻译。有序流程另加的节可以编号（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-AW">ARD-AW</a>）。Decision Log 可加 Ready 列，仍禁止 Status 与 Supersedes（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-AX">ARD-AX</a>）。</li>
+<li><strong><a href="#DSGN-E">DSGN-E</a></strong> 一份问题 tracker 用 <code>QUES-</code> 字母号，正文有 Question、Answer、Owner（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-AO">ARD-AO</a>）。<code>all N questions</code> 等于行数（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-BB">ARD-BB</a>）。引用处的状态与 tracker 一致（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-BC">ARD-BC</a>）。</li>
+<li><strong><a href="#DSGN-F">DSGN-F</a></strong> 步骤号是位置，不是永久 ID（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-AM">ARD-AM</a>）。迁入旧编号留对照表；改标题保留旧锚点（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-AP">ARD-AP</a>）。<code>§N</code> 落到 N 或其上下级；步骤段不重叠（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-AZ">ARD-AZ</a>）。</li>
+<li><strong><a href="#DSGN-G">DSGN-G</a></strong> 面向不同读者的篇，开头写明本篇对哪些事实有权威、不一致时先改哪篇（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-AL">ARD-AL</a>）。</li>
+<li><strong><a href="#DSGN-H">DSGN-H</a></strong> 不变量写成表（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-AR">ARD-AR</a>）。图只解释散文说不清的流程；状态用表；一节一张时序图，消息数等于步骤段（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-BE">ARD-BE</a>）。</li>
+<li><strong><a href="#DSGN-J">DSGN-J</a></strong> 就绪度可写在条目内；条目可就地修订；未决项按负责人分组（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-AN">ARD-AN</a>）。正文废弃旧口径时指向新 ARD（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-AS">ARD-AS</a>）。</li>
+<li><strong><a href="#DSGN-C">DSGN-C</a></strong> 本地翻译副本不提交；开头写明以原文为准；标题可翻译（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-AU">ARD-AU</a>）。</li>
+</ul>
+<h3>Alternatives Considered</h3>
+<ul>
+<li>单一 <code>spec</code> 类型装全部内容 → 拒:体积失控,无法按 concern 分篇(<strong><a href="#DSGN-B">DSGN-B</a></strong>)。</li>
+<li>目录按 initiative 而非 feature 组织 → 拒:与 <code>docs/features/</code> 既有树冲突。</li>
+<li>frontmatter 用 <code>status</code> 而非 <code>health</code> → 拒(<strong><a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-D">ARD-D</a></strong>)。</li>
+</ul>
+<h3>Drawbacks</h3>
+<ul>
+<li>类型与必填节偏多,小 feature 也要写全;靠 sub-feature 豁免(parent HLD §8)缓解。</li>
+<li>机械检查只验结构,验不了内容质量。</li>
+</ul>
+<h3>Risks and Mitigations</h3>
+<ul>
+<li>风险:规则膨胀,agent 与人都会跳过检查 → <code>must_registry.yaml</code> + <code>run_spec_checks.py</code> 强制。</li>
+<li>风险:标准与实现漂移 → SPEC-STANDARD 与 DSGN 同批改,<code>registry_provenance</code> 检查来源。</li>
+</ul>
+<h3>Open Questions</h3>
+<ul>
+<li>sub-feature 的 <code>raw/</code> 是否全工具支持(待 tooling)。</li>
+<li>硬 cap 是否按 feature 规模分档。</li>
+</ul>
+<h3>Reversibility</h3>
+<ul>
+<li>必填节可回退:改 <a href="#DSGN-E">DSGN-E</a> + SPEC-STANDARD + <code>sections.py</code> 三处,旧文档补节即可,无数据迁移。</li>
+<li>重命名节属新规则;旧文档留旧名会被 <code>sections</code> 报错,须同批改。</li>
+</ul>
+<h3>Change Log</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Date</th>
+<th>Change</th>
+</tr></thead><tbody>
+<tr>
+<td>2026-09-25</td>
+<td>Initial English spec + doc-organize adoption</td>
+</tr>
+<tr>
+<td>2026-10-31</td>
+<td>中文重写；SDD sub 路径与小改动（Unverified）</td>
+</tr>
+<tr>
+<td>2026-11-03</td>
+<td><a href="#DSGN-A">DSGN-A</a> 契约表（含 sub/raw/size/split）；D2–D9 精简；state 在 <code>raw/state/</code></td>
+</tr>
+<tr>
+<td>2026-11-03</td>
+<td>全文去重精简（保留契约与非重复补充）</td>
+</tr>
+<tr>
+<td>2026-11-03</td>
+<td>Spec 独立化：去掉 doc-organize 倒推表述与 skill 文件映射；impl 出 scope</td>
+</tr>
+<tr>
+<td>2026-11-03</td>
+<td><a href="#DSGN-C">DSGN-C</a> Commit=no 不得入 git；D1-3 INDEX.md 与 docs/book 规范</td>
+</tr>
+<tr>
+<td>2026-11-03</td>
+<td><a href="#DSGN-D">DSGN-D</a> 重写：INDEX / book 目的、读者、与 source of truth 关系</td>
+</tr>
+<tr>
+<td>2026-11-03</td>
+<td><a href="#DSGN-D">DSGN-D</a> book：AI 摘要层、push 应更新；对齐 doc-organize「assembled from final」</td>
+</tr>
+<tr>
+<td>2026-11-03</td>
+<td>AI edit 约束移至 parent HLD §4；本 spec 仅 pointer</td>
+</tr>
+<tr>
+<td>2026-11-03</td>
+<td>术语：feature spec 合称；技术设计 type/folder 改为 <code>design</code>（原 <code>spec/</code>）</td>
+</tr>
+<tr>
+<td>2026-11-03</td>
+<td>D5：何时 append → parent HLD §5</td>
+</tr>
+<tr>
+<td>2026-11-03</td>
+<td>移除原 D4 Spec Health；D5–D9 重编号为 D4–D8</td>
+</tr>
+<tr>
+<td>2026-11-03</td>
+<td>D5：decision-history 角色 / split / 何时 append 改写</td>
+</tr>
+<tr>
+<td>2026-11-03</td>
+<td>D5/D1-4：字母 ID、倒序、supersede=strike+链；去 Supersedes 列</td>
+</tr>
+<tr>
+<td>2026-11-03</td>
+<td>D1-5：PRD/DSGN/ARD/IMPL/TST 前缀 ID</td>
+</tr>
+<tr>
+<td>2026-11-03</td>
+<td>前缀 <code>Design</code>→<code>DSGN</code>，<code>TEST</code>→<code>TST</code></td>
+</tr>
+<tr>
+<td>2026-11-03</td>
+<td>D1-5：ID immutable；D8 MUST 引用</td>
+</tr>
+<tr>
+<td>2026-11-03</td>
+<td>D1-5：凡有序号即前缀 ID；禁裸数字/伪前缀</td>
+</tr>
+<tr>
+<td>2026-11-06</td>
+<td>Open Questions 的 ID 前缀为 <code>QUES</code>（<code>QUES-A</code>，禁止 <code>QUES-1</code> / <code>OQ-1</code>）</td>
+</tr>
+<tr>
+<td>2026-11-03</td>
+<td>本篇 <code>D1</code>–<code>D8</code>/<code>D1-*</code> 重命名为 <strong><a href="#DSGN-A">DSGN-A</a></strong>–<strong><a href="#DSGN-M">DSGN-M</a></strong></td>
+</tr>
+<tr>
+<td>2026-11-03</td>
+<td>Testing Decisions → <code>../test-plan/document-standard-test-plan.md</code></td>
+</tr>
+<tr>
+<td>2026-11-03</td>
+<td>Feature 级 test plan（parent 仅 harness）</td>
+</tr>
+<tr>
+<td>2026-11-03</td>
+<td>Testing Decisions → parent test plan（被测 = skill）；<a href="#DSGN-L">DSGN-L</a> 加 Review 行；doc-write → spec-write</td>
+</tr>
+<tr>
+<td>2026-11-03</td>
+<td><strong><a href="document-standard-design-spec-reader-html.html#DSGN-N">DSGN-N</a></strong> spec reader HTML → aspect design + <code>skills/spec-html-standard/</code></td>
+</tr>
+<tr>
+<td>2026-11-04</td>
+<td><a href="#DSGN-E">DSGN-E</a> PRD 去掉 NFR；how-to 标未检查；<a href="#DSGN-F">DSGN-F</a> ID 作用域、HLD 例外、标题检查</td>
+</tr>
+<tr>
+<td>2026-11-04</td>
+<td><a href="#DSGN-E">DSGN-E</a> impl-plan 改为 IMPL-* tasks</td>
+</tr>
+<tr>
+<td>2026-11-04</td>
+<td>design 补 User Stories / Implementation Decisions 章节</td>
+</tr>
+<tr>
+<td>2026-11-04</td>
+<td>decision-history 硬 cap 改为不设，与 <a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-E">ARD-E</a> 一致</td>
+</tr>
+<tr>
+<td>2026-11-04</td>
+<td>decision-history 去掉「宜 ≤600 行」，目标行数也不设</td>
+</tr>
+<tr>
+<td>2026-11-06</td>
+<td>impl-plan 正文：依赖、挡住谁、Execution order</td>
+</tr>
+<tr>
+<td>2026-11-07</td>
+<td>入口改为 spec-write 与 spec-review；标准见两份摘要（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-AJ">ARD-AJ</a>）</td>
+</tr>
+<tr>
+<td>2026-11-07</td>
+<td>开篇被测改为 spec-write / spec-review，与 test-plan 一致</td>
+</tr>
+<tr>
+<td>2026-11-07</td>
+<td>Further Notes 写入 <a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-AM">ARD-AM</a>–BE 的 <a href="#DSGN-C">DSGN-C</a>/E/F/G/H/J 规则</td>
+</tr>
+<tr>
+<td>2026-11-07</td>
+<td><a href="#DSGN-D">DSGN-D</a>：book/html 镜像 features 树（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-BF">ARD-BF</a>）</td>
+</tr>
+</tbody></table></div>
+      </div>
+    </article>
+    <nav class="pager" aria-label="Previous and next"><a class="prev" href="document-standard-design-spec-reader-html.html"><span class="label">Previous</span>Document Standard — Spec Reader HTML（Design）</a><a class="next" href="../../../impl-plan/spec-driven-development-impl-plan.html"><span class="label">Next</span>Spec-Driven Development — Implementation Plan</a></nav>
+  </main>
+</div>
+<footer class="foot"><div class="foot-inner">Assembled from committed <code>.md</code>. The Markdown is authoritative; this page is a reading view.</div></footer>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>if(window.mermaid){mermaid.initialize({startOnLoad:false});}</script>
+<script src="../../../../assets/app.js"></script>
+</body>
+</html>

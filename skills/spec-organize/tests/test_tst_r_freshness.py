@@ -4,7 +4,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
 SDD = ROOT / "docs/features/spec-driven-development"
-READER = SDD / "spec-driven-development-reader.html"
+READER = ROOT / "docs/book/html/spec-driven-development/spec-driven-development-reader.html"
 
 
 def test_reader_is_not_stale():

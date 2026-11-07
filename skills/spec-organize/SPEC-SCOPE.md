@@ -1,5 +1,7 @@
 # Spec Scope, Size, and Context
 
+Path, permission, and evidence: `SPEC-STANDARD.md` chapters 1–3. Expression: `skills/spec-html-standard/SPEC-PRESENTATION.md`.
+
 ## What a spec is for
 
 A healthy spec is not a complete description of the code. It is a precise
@@ -46,12 +48,12 @@ does not, the spec SHOULD NOT change.
 
 | Document | Typical range |
 |---|---|
-| Feature / change spec | 500-1,500 lines |
-| Architecture / design spec | 1,000-3,000 lines |
+| Feature / change spec | at or under the hard cap |
+| Architecture / design spec | at or under 1,000 lines |
 | A single implementation task | 100-500 lines |
 | Spec context one agent task needs | roughly 5-10k tokens |
 
-These are guidelines, not hard limits. Split on boundaries, not on line counts:
+`design` and `impl-plan` stay at or under the 1,000-line hard cap in `SPEC-STANDARD.md`. `decision-history` is exempt. Split on boundaries, not on line counts:
 
 - bounded context
 - domain boundary
@@ -77,3 +79,11 @@ and stop as soon as the task is answerable:
 
 If an agent routinely needs most of a spec to answer a narrow question, the spec
 boundary is wrong. Re-cut it rather than raising the context budget.
+
+## Invariants as data
+
+Write an invariant as a table: the record that exists after a step, or a state that must not occur, with why it is impossible and who guarantees that. A slogan is not an invariant (ARD-AR).
+
+## Diagrams for what prose cannot carry
+
+Use a sequence diagram for an interaction, one flow per diagram. State combinations go in a table. Sample records go in a table. A heading that names steps a–b and contains a sequence diagram has b−a+1 messages. The diagram does not add a fact the prose does not state (ARD-BE).

@@ -27,20 +27,16 @@ TESTS = ROOT / "skills/spec-organize/tests"
 sys.path.insert(0, str(TESTS))
 
 from checks.book import check_book  # noqa: E402
-from checks.change_log import check_change_log  # noqa: E402
 from checks.collision import check_collision  # noqa: E402
 from checks.publish_nav import check_publish_nav  # noqa: E402
 from checks.registry_provenance import check_registry_provenance  # noqa: E402
 from checks.test_trace import check_test_trace  # noqa: E402
-from checks.decision_log import check_decision_log  # noqa: E402
-from checks.frontmatter import Finding, check_frontmatter  # noqa: E402
-from checks.ids import check_ids  # noqa: E402
+from checks.frontmatter import Finding  # noqa: E402
 from checks.index_book import check_index_book  # noqa: E402
 from checks.no_commit import check_no_commit_tree  # noqa: E402
 from checks.parent_complete import check_parent_complete  # noqa: E402
-from checks.paths import check_committed_path  # noqa: E402
-from checks.sections import check_sections  # noqa: E402
-from checks.size import check_size  # noqa: E402
+from checks.paired_html import check_paired_html  # noqa: E402
+from checks.runners import run_file  # noqa: E402
 
 REGISTRY = TESTS / "must_registry.yaml"
 JUDGMENTS = TESTS / "judgments" / "v1.yaml"
@@ -50,15 +46,6 @@ ANNOT_VERDICTS = TESTS / "judgments" / "annotations-v1-deepseek-flash.yaml"
 DEFAULT_FEATURE = ROOT / "docs/features/spec-driven-development"
 
 EXEMPT: set[Path] = set()  # no grandfathered paths (IMPL-M)
-FILE_CHECKS = [
-    check_frontmatter,
-    check_committed_path,
-    check_sections,
-    check_decision_log,
-    check_change_log,
-    check_ids,
-    check_size,
-]
 
 
 def md_files(base: Path) -> list[Path]:
@@ -82,6 +69,7 @@ def collect(feature: Path) -> dict[str, list[Finding]]:
         findings += check_index_book(ROOT)
         findings += check_book(ROOT)
         findings += check_publish_nav(ROOT)
+        findings += check_paired_html(ROOT)
         findings += check_test_trace(feature)
         findings += check_registry_provenance(ROOT)
     if feature.is_dir() and feature.parent.name == "features":
@@ -90,8 +78,7 @@ def collect(feature: Path) -> dict[str, list[Finding]]:
         if path.resolve() in EXEMPT:
             continue
         text = path.read_text(encoding="utf-8")
-        for fn in FILE_CHECKS:
-            findings += fn(path, text)
+        findings += run_file(path, text)
     grouped: dict[str, list[Finding]] = {}
     for f in findings:
         grouped.setdefault(f.check, []).append(f)
