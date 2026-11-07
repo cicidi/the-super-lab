@@ -40,6 +40,8 @@ def main() -> None:
         if not fixture.is_dir():
             continue
         for path in sorted(fixture.rglob("*.md")):
+            if path.name.startswith("._"):
+                continue
             count += 1
             try:
                 text = path.read_text(encoding="utf-8")

@@ -36,6 +36,9 @@ def _parse_frontmatter(text: str) -> dict[str, str] | None:
 
 
 def check_frontmatter(path: Path, text: str | None = None) -> list[Finding]:
+    # INDEX is a book, not a typed spec. Spec frontmatter does not apply.
+    if path.name == "INDEX.md":
+        return []
     raw = text if text is not None else path.read_text(encoding="utf-8")
     rel = str(path)
     fm = _parse_frontmatter(raw)

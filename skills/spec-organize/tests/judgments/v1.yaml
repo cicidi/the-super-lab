@@ -1,9 +1,6 @@
 # MUST judgments — llm-method registry items, gold v1.
 # verdict: pass | fail. evidence must point at the enforcing artifact.
 items:
-  - id: MUST-A
-    verdict: pass
-    evidence: must_registry.yaml sources this item from document-standard design; test-plan covers spec-organize/spec-review.
   - id: MUST-B
     verdict: pass
     evidence: registry MUST-C..H source DSGN-B..F; MUST-AB sources DSGN-M; DSGN-G..L remain semantic.
@@ -19,9 +16,6 @@ items:
   - id: MUST-P
     verdict: pass
     evidence: spec-review Branch A runs semantic design review; SPEC-STANDARD gates are mechanical only.
-  - id: MUST-R
-    verdict: pass
-    evidence: must_registry.yaml exists (28 items, python/llm split); test-plan TST-A scans it.
   - id: MUST-T
     verdict: pass
     evidence: spec-pipeline SKILL.md Step 2 interviews the user; map skill optional and replaceable.

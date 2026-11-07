@@ -43,10 +43,12 @@ Design: `docs/features/spec-driven-development/features/pipeline/design/pipeline
 
 ## Example Domains
 
-Phases are domain-agnostic. The same Create → Map → Converge → Downstream flow
-must carry the four PRD-Q examples: **盖 shed** (garden shed), **北京旅游**
-(Beijing trip), **数学题** (math problem), **股票** (stock analysis). They are
-illustrations, not gold cases; gold lives outside this repo.
+Illustrations, not gold. `blocking: true` stops Downstream. `blocking: false` does not.
+
+- **盖 shed**: Map interviews permit versus cost. Converge the PRD and design before any plan. Downstream writes impl-plan and test-plan together only when no open item is `blocking: true`.
+- **北京旅游**: Create keeps the trip in `CLAUDE.local.md` until the slug exists, then in `raw/state/`. An undecided hotel is an open item with `blocking: false` unless the user says the trip cannot be planned without it.
+- **数学题**: Map asks which theorem. A definition still `UNKNOWN` and marked `blocking: true` stays in Converge.
+- **股票**: Map separates facts to look up from decisions the human makes. Downstream does not start while a `blocking: true` item is open.
 
 ## Process
 

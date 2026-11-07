@@ -35,28 +35,32 @@ SDD skill map: `skills/SDD-DELIVERABLES.md`.
 
 ## Example Domains
 
-Prose rules are domain-agnostic. The same edit rules apply to the four PRD-Q
-examples: **盖 shed** (garden shed), **北京旅游** (Beijing trip), **数学题**
-(math problem), **股票** (stock analysis). They are illustrations, not gold
-cases; gold lives outside this repo.
+Illustrations, not gold. Each edit stays within 10 lines or 200 characters.
+
+- **盖 shed**: one edit adds `PRD-A` for the permit limit. The design ownership row is `许可 | 人决定 | ARD-A`. If the setback distance was not looked up, write `UNKNOWN`.
+- **北京旅游**: add the budget requirement. Evidence is a URL. Do not invent a hotel price.
+- **数学题**: cite the definition's source. A lemma with no source is `UNKNOWN`.
+- **股票**: the design `子问题归属` row cites the filing URL. No URL means `UNKNOWN`, not a guessed number.
 
 ## Process
 
 1. Confirm `<f>`, type, and phase via **spec-pipeline** or user (see **spec-pipeline/INTEGRATIONS.md** and **PHASE-CHECKLISTS.md**).
 2. Load `skills/spec-organize/SPEC-STANDARD.md` + `CONTENT-PRIORITY.md` / `SPEC-SCOPE.md` when trimming.
 3. Edit with **≤10 lines or ≤200 characters per edit** (parent HLD §4); split or ask for `restructure`.
-4. Use letter-prefix IDs only (**PRD-A**, **DSGN-B**, **ARD-C**, **IMPL-A**, **TST-A**).
+4. Use letter-prefix IDs only (**PRD-A**, **DSGN-B**, **ARD-C**, **IMPL-A**, **TST-A**, **QUES-A**). An Open Questions entry is `QUES-A`, not `OQ-1` or `QUES-1`.
 5. After create/move: **spec-organize** Organize/Lint; regenerate INDEX when tree changes.
 6. Cross-check before finishing: every `PRD-*` id appears in the design; every `TST-*` case names the requirement it covers.
+7. On a design with sub-problems, write `子问题归属`: `| 子问题 | 归属 | 依据 |`. Owner is `AI 查`, `人决定`, or `AI 查完人决定`. 依据 is a `raw/` path, a URL, or an `ARD-*` id. If the fact was not found, write `UNKNOWN`. Do not guess.
+8. A pure standard or orchestration design may say the ownership table does not apply.
 
 ### By type (quick)
 
 | Type | Focus |
 |---|---|
 | **prd** | Problem, goals, requirements with **PRD-*** IDs; deferrals → **ARD-** in decision-history |
-| **design** | Behavior, contracts, boundaries — not class-level code (**SPEC-SCOPE.md**) |
+| **design** | Behavior, contracts, boundaries, ownership table, evidence or `UNKNOWN` — not class-level code (**SPEC-SCOPE.md**) |
 | **decision-history** | New **ARD-*** row at **top** of Log; supersede = ~~strike~~ + link |
-| **impl-plan** | Tasks **IMPL-A…** (letter ids — `IMPL-1` is a violation); Global Constraints first |
+| **impl-plan** | Each **IMPL-*** names who it depends on and who it blocks. **Execution order**: blocked work later (DB before the API). High-priority unblocked work first; unblocked work can proceed in parallel. Letter ids only |
 | **test-plan** | **TST-*** cases; execution order; pass threshold |
 
 After substantive spec edits on an initiative parent, **spec-pipeline** may run `python3 tools/build_sdd_reader.py` (no spec change in HTML itself).
@@ -76,6 +80,8 @@ added; a required one is never dropped or renamed.
 - [ ] Change Log last section; append only
 - [ ] Decision-history: newest-first; supersede via strike + link
 - [ ] No L1 deletion to meet size cap
+- [ ] Sub-problem design has `子问题归属`; missing facts are `UNKNOWN`, not guesses
+- [ ] impl-plan: every `IMPL-*` names its dependency and who it blocks; `Execution order` does blocked work later
 
 ### NICE
 

@@ -26,6 +26,8 @@ rename, or drop a required heading (`## 1. 概述` is a violation).
 | `prd` | Overview, Goals and Success Metrics, User Stories, Functional Requirements, Out of Scope, Resources Needed |
 | `design` | Problem Statement, Solution, User Stories, Implementation Decisions, Design, Testing Decisions, Out of Scope, Further Notes, Alternatives Considered, Drawbacks, Risks and Mitigations, Open Questions, Reversibility |
 | `impl-plan` | Global Constraints, Acceptance Criteria |
+
+Each `IMPL-*` names what it depends on and what it blocks. `Execution order` puts blocked work later (change the DB before the API that uses it). High-priority unblocked work goes first. Unblocked work can proceed in parallel. spec-write enforces this when drafting.
 | `test-plan` | Test Cases, Test Execution Order, Expected Pass Threshold |
 | `decision-history` | Decision Log, Evidence Appendix |
 
@@ -39,7 +41,7 @@ unresolved items with an owner. `Reversibility` covers undo/return/rollback.
 
 ## IDs (MUST)
 
-Prefix-letter IDs: `PRD-`, `DSGN-`, `ARD-`, `IMPL-`, `TST-`. No bare numeric permanent IDs — `IMPL-1`, `TST-3`, `PRD-2` are violations; use letters (`IMPL-A`, `TST-C`). IDs immutable, no reuse.
+Prefix-letter IDs: `PRD-`, `DSGN-`, `ARD-`, `IMPL-`, `TST-`, `QUES-`. Open questions use `QUES-A`, not `OQ-1` or `QUES-1`. No bare numeric permanent IDs — `IMPL-1`, `TST-3`, `PRD-2` are violations; use letters (`IMPL-A`, `TST-C`, `QUES-A`). IDs immutable, no reuse.
 Every `PRD-*` id must be anchored in at least one design clause (TST-O).
 
 ## Sub-problem ownership (MUST, PRD-L / PIPE-L)

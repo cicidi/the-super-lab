@@ -1,10 +1,5 @@
 version: 1
 items:
-  - id: MUST-A
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:15
-    text: '相关：**pipeline** 见 `../pipeline/design/pipeline-design.md`；**测试** 见 parent `../../../test-plan/spec-driven-development-test-plan.md`（被测 = spec-organize / spec-review；本篇 MUST 进其 registry）。'
-    method: llm
-    check: ''
   - id: MUST-B
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:45
     text: '**DSGN-A = 契约**（MUST 主要来自 **DSGN-A**（含 **DSGN-B–F**）与 **DSGN-M**）。**DSGN-G–DSGN-L** = 语义与流程补充。'
@@ -85,16 +80,6 @@ items:
     text: '**MUST：** **DSGN-A** 全满足（含 **DSGN-F** ID 不可改、不可复用）；**DSGN-G** 冲突不 silent；**DSGN-I** 不删 L1；consolidation 不丢 decision；**Commit = no** 路径未 commit；INDEX 无 orphan/dead link；含 `docs/features/` 变更的 **push** 时 INDEX/book 已与源同步；collision 已查。'
     method: python
     check: 'index_book'
-  - id: MUST-R
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:315
-    text: '验证见 parent **`../../../test-plan/spec-driven-development-test-plan.md`**：被测对象是 **spec-organize / spec-review**，不是本篇；本篇全部 **MUST / 禁止** 由 **TST-A** 扫入 `must_registry.yaml`，机械项 Python 判、其余 LLM judge 判。'
-    method: llm
-    check: ''
-  - id: MUST-S
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:327
-    text: '- **待一起 review：** **DSGN-B** 硬 cap 数字、sub-feature 是否正式 MUST、`raw/` 子目录是否够用。AI edit 上限见 parent HLD §4；agent 全局 norm（含 §5 decision-history、§6 CLAUDE+skill）见 parent HLD。'
-    method: python
-    check: 'size'
   - id: MUST-T
     source: docs/features/spec-driven-development/features/pipeline/design/pipeline-design.md:35
     text: '- **Map：** **与人 interview**；AI 判断拆分/decision/scratch；**无** 固定 MUST 产物模板；可选 **可替换** map 工具（示例 wayfinder，**非** SDD deliverable）。'

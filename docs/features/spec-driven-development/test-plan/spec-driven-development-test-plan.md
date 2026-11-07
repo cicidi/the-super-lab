@@ -171,8 +171,8 @@ Initiative 级 test plan。**被测对象** = **spec-organize**（主）、**spe
 
 | PRD | Covered by |
 |---|---|
-| PRD-A | TST-A；pipeline 编排 Unverified（PRD-I） |
-| PRD-B | TST-A；TST-S |
+| PRD-A | Unverified |
+| PRD-B | Unverified |
 | PRD-D | TST-B（size cap） |
 | PRD-E | TST-B（paths） |
 | PRD-F | TST-B（decision_log） |
@@ -181,6 +181,13 @@ Initiative 级 test plan。**被测对象** = **spec-organize**（主）、**spe
 | PRD-L | TST-P |
 | PRD-O | TST-Q |
 | PRD-P | TST-S；Expected Pass Threshold 表 |
+| PRD-C | Unverified |
+| PRD-G | Unverified（ARD-N） |
+| PRD-I | Unverified |
+| PRD-K | Unverified |
+| PRD-M | Unverified |
+| PRD-N | Unverified |
+| PRD-Q | Unverified |
 
 ## Change Log
 

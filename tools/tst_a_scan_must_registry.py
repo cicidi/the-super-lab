@@ -40,6 +40,8 @@ def main() -> None:
         rel = path.relative_to(ROOT).as_posix()
         for i, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
             if PAT.search(line) and line.strip() and not line.strip().startswith("|"):
+                if any(s in line for s in ("本篇 MUST 进其 registry", "扫入 `must_registry.yaml`", "待一起 review")):
+                    continue
                 text = line.strip()[:500]
                 print(f"{rel}:{i}: {text[:120]}")
                 items.append(

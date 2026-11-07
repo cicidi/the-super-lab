@@ -9,8 +9,8 @@ from pathlib import Path
 # Bare numeric or pseudo-prefix permanent IDs (sample patterns)
 # Permanent requirement-style IDs with numeric suffix (not norm examples in prose).
 BAD = re.compile(
-    r"^\s*(?:[-*]|\d+\.)?\s*\*\*(?:PRD|DSGN|ARD|IMPL|TST)-\d+\*\*"
-    r"|^\s*\|\s*(?:PRD|DSGN|ARD|IMPL|TST)-\d+\s*\|"
+    r"^\s*(?:[-*]|\d+\.)?\s*\*\*(?:PRD|DSGN|ARD|IMPL|TST|QUES|OQ)-\d+\*\*"
+    r"|^\s*\|\s*(?:PRD|DSGN|ARD|IMPL|TST|QUES|OQ)-\d+\s*\|"
 )
 
 

@@ -105,7 +105,7 @@ Create → Map → Converge ⇄ (PRD ↔ design ↔ decision-history) → Downst
 
 - **test-plan** 与 **impl-plan** **并行**启动；**互不** 串行依赖；均从 **design 篇** 总结。
 - **test-plan：** 每项任务 **完成检查** + **regression guard**（PIPE-F1）。
-- **impl-plan：** 有序 task + 准备项（PIPE-F2；task 粒度 **下一轮 impl 讨论**）。
+- **impl-plan：** 每条任务写依赖与挡住谁；被挡住的后做，没被挡住的先做（PIPE-F2）。
 
 ### PIPE-G — Skill 推荐（接口）
 
@@ -238,3 +238,4 @@ Create → Map → Converge ⇄ (PRD ↔ design ↔ decision-history) → Downst
 | 2026-11-04 | PIPE-D 第 7 点：子问题标归属，AI 必须提出人没问的风险 |
 | 2026-11-04 | PIPE-K 非软件五篇映射；PIPE-L 归属与证据；spec-pipeline 标 Unverified |
 | 2026-11-04 | PIPE-E1 加 blocking 字段；PIPE-L 标注纯标准/编排 design 可 not apply |
+| 2026-11-06 | PIPE-F2：impl 写依赖与挡住谁；被挡住的后做 |

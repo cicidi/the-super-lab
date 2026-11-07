@@ -200,6 +200,8 @@ final_date: YYYY-MM-DD   # final 时必填
 
 **检查范围：** `how-to` 暂不机械检查；其余五类按本表执行。
 
+**impl-plan 正文（MUST，spec-write 执行）：** 每条 `IMPL-*` 写依赖谁、挡住谁。`Execution order` 把被挡住的排后面（先改库，再改 API）。优先级高且没被挡住的先做；没被挡住的可以同时做。
+
 新增节承自 KEP / Rust RFC：`Alternatives Considered`、`Drawbacks`、`Risks and Mitigations`、
 `Open Questions` 为通用节;`Acceptance Criteria`(= Graduation Criteria)、`Reversibility`
 (= Upgrade/Downgrade)、`Resources Needed`(= Infrastructure Needed)为改名后的通用语义。
@@ -218,6 +220,7 @@ final_date: YYYY-MM-DD   # final 时必填
 | `decision-history` | `ARD` | `ARD-A`, `ARD-AA` |
 | `impl-plan` | `IMPL` | `IMPL-A`, `IMPL-B` |
 | `test-plan` | `TST` | `TST-A`, `TST-B` |
+| question（Open Questions） | `QUES` | `QUES-A`, `QUES-B` |
 
 跨文档引用 **写全 ID**（如 `PRD-A`、`ARD-F`）。`how-to` 无强制 letter ID。
 
@@ -225,9 +228,9 @@ final_date: YYYY-MM-DD   # final 时必填
 
 **HLD 例外：** 父 HLD 的 System Context / Logical Architecture 等 **架构章节** 不要求 `DSGN-*` ID；只有可追溯的规则小节才要 ID。
 
-**凡有序号即 ID（MUST）：** ADR、requirement、design 规则小节、impl task、test case、defer/open question 等 **一切** 可追溯条目 — **必须** 用上表 `{前缀}-{字母}`。**禁止** 裸数字（`0001`）、`PRD-1`/`DH-1`/`FR-3`/`OQ-1`/`D1` 等作永久 ID。本 design 篇小节即 **DSGN-A** 起（见索引）。
+**凡有序号即 ID（MUST）：** ADR、requirement、design 规则小节、impl task、test case、defer/open question 等 **一切** 可追溯条目 — **必须** 用上表 `{前缀}-{字母}`。**禁止** 裸数字（`0001`）、`PRD-1`/`DH-1`/`FR-3`/`OQ-1`/`QUES-1`/`D1` 等作永久 ID。Open Questions 的条目用 `QUES-A`。本 design 篇小节即 **DSGN-A** 起（见索引）。
 
-**检查：** `ids.py` 按 type 强制标题模式（`PRD-*` / `DSGN-*` / `IMPL-*` / `TST-*` / `ARD-*`），缺 ID 或裸数字即 fail。
+**检查：** `ids.py` 按 type 强制标题模式（`PRD-*` / `DSGN-*` / `IMPL-*` / `TST-*` / `ARD-*` / `QUES-*`），缺 ID 或裸数字即 fail。
 
 **AI 单次 edit 粒度**（≤10 行 / ≤200 字）属 SDD parent HLD **§4**，不在本 document-standard；impl 目标：**spec-write** 等书写 skill。
 
@@ -397,6 +400,7 @@ Trim 顺序 L4 → L3 → 压 L2；**L1 永不删**。仍 `> 硬 cap` → **DSGN
 | 2026-11-03 | 前缀 `Design`→`DSGN`，`TEST`→`TST` |
 | 2026-11-03 | D1-5：ID immutable；D8 MUST 引用 |
 | 2026-11-03 | D1-5：凡有序号即前缀 ID；禁裸数字/伪前缀 |
+| 2026-11-06 | Open Questions 的 ID 前缀为 `QUES`（`QUES-A`，禁止 `QUES-1` / `OQ-1`） |
 | 2026-11-03 | 本篇 `D1`–`D8`/`D1-*` 重命名为 **DSGN-A**–**DSGN-M** |
 | 2026-11-03 | Testing Decisions → `../test-plan/document-standard-test-plan.md` |
 | 2026-11-03 | Feature 级 test plan（parent 仅 harness） |
@@ -407,3 +411,4 @@ Trim 顺序 L4 → L3 → 压 L2；**L1 永不删**。仍 `> 硬 cap` → **DSGN
 | 2026-11-04 | design 补 User Stories / Implementation Decisions 章节 |
 | 2026-11-04 | decision-history 硬 cap 改为不设，与 ARD-E 一致 |
 | 2026-11-04 | decision-history 去掉「宜 ≤600 行」，目标行数也不设 |
+| 2026-11-06 | impl-plan 正文：依赖、挡住谁、Execution order |
