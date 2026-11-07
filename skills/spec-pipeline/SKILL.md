@@ -27,7 +27,7 @@ metadata:
 Orchestrates spec-driven development: **Create → Map → Converge → Downstream**.
 Entry point before **spec-organize** / **spec-write**; prompts for **spec-review** before commit.
 
-Design: `docs/features/spec-driven-development/features/pipeline/design/pipeline-design.md` (**PIPE-***). Ops index: **`INDEX.md`**; routing: **`INTEGRATIONS.md`**; commands: **`PIPE-OPERATIONS.md`**; external SDD map: **`EXTERNAL-SDD-MAP.md`**; flows: **`SEQUENCE.md`**; checklists: **`PHASE-CHECKLISTS.md`** (this directory).
+Design: `docs/features/spec-driven-development/features/pipeline/design/pipeline-design.md` (**PIPE-***). Ops index: **`INDEX.md`**; routing: **`INTEGRATIONS.md`**; commands: **`PIPE-OPERATIONS.md`**; external SDD map: **`EXTERNAL-SDD-MAP.md`**; flows: **`SEQUENCE.md`**; checklists: **`PHASE-CHECKLISTS.md`** (this directory). Registry coverage: `python3 tools/must_registry_coverage.py`.
 
 ## When to Use
 
@@ -40,6 +40,13 @@ Design: `docs/features/spec-driven-development/features/pipeline/design/pipeline
 - Pure code implementation with no spec impact
 - Lint-only pass — invoke **spec-organize** Mode B directly
 - Adversarial design review only — invoke **spec-review** directly
+
+## Example Domains
+
+Phases are domain-agnostic. The same Create → Map → Converge → Downstream flow
+must carry the four PRD-Q examples: **盖 shed** (garden shed), **北京旅游**
+(Beijing trip), **数学题** (math problem), **股票** (stock analysis). They are
+illustrations, not gold cases; gold lives outside this repo.
 
 ## Process
 

@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design (Skill contracts) · Spec Atlas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:400,400italic,500,500italic,700|Roboto+Mono:400,500,700|Noto+Sans+SC:400,500,700&display=swap">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><a href="index.html"><span class="brand-mark">SDD</span><span class="brand-name">Spec Atlas</span></a></div>
+  </div>
+</header>
+<div class="site">
+  <aside class="sidebar">
+  <details class="tree-drawer" open>
+    <summary>Browse the spec tree</summary>
+    <nav aria-label="Spec tree">
+      <div class="tree-overview"><a class="tree-link" href="index.html"><span class="tree-link__num">00</span>Overview</a></div>
+      <ul class="tree"><li class="tree-branch"><details open><summary>Spec-driven development</summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="sdd-prd.html"><span class="tree-link__num">01</span>PRD</a></li><li class="tree-leaf"><a class="tree-link" href="sdd-design.html"><span class="tree-link__num">02</span>Design (HLD)</a></li><li class="tree-leaf"><a class="tree-link" href="sdd-skill-contracts.html" aria-current="page"><span class="tree-link__num">03</span>Design (Skill contracts)</a></li><li class="tree-leaf"><a class="tree-link" href="sdd-impl-plan.html"><span class="tree-link__num">04</span>Implementation plan</a></li><li class="tree-leaf"><a class="tree-link" href="sdd-test-plan.html"><span class="tree-link__num">05</span>Test plan</a></li><li class="tree-leaf"><a class="tree-link" href="sdd-decision-history.html"><span class="tree-link__num">06</span>Decision history</a></li><li class="tree-branch"><details open><summary>Children</summary><ul class="tree"><li class="tree-branch"><details open><summary>Pipeline</summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="pipeline-design.html"><span class="tree-link__num">07</span>Design</a></li></ul></details></li><li class="tree-branch"><details open><summary>Document standard</summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="ds-prd.html"><span class="tree-link__num">08</span>PRD — spec reader HTML</a></li><li class="tree-leaf"><a class="tree-link" href="ds-design.html"><span class="tree-link__num">09</span>Design</a></li><li class="tree-leaf"><a class="tree-link" href="ds-design-aspect.html"><span class="tree-link__num">10</span>Design — spec reader HTML</a></li></ul></details></li></ul></details></li></ul></details></li><li class="tree-branch"><details open><summary>Skill factory</summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="sf-prd.html"><span class="tree-link__num">11</span>PRD</a></li><li class="tree-leaf"><a class="tree-link" href="sf-design.html"><span class="tree-link__num">12</span>Design</a></li><li class="tree-leaf"><a class="tree-link" href="sf-impl-plan.html"><span class="tree-link__num">13</span>Implementation plan</a></li><li class="tree-leaf"><a class="tree-link" href="sf-test-plan.html"><span class="tree-link__num">14</span>Test plan</a></li><li class="tree-leaf"><a class="tree-link" href="sf-decision-history.html"><span class="tree-link__num">15</span>Decision history</a></li></ul></details></li></ul>
+    </nav>
+  </details>
+</aside>
+  <main class="content">
+    <nav class="breadcrumbs"><a href="index.html">Docs</a> / <span>Spec-driven development</span> / <span>Design (Skill contracts)</span></nav>
+    <article class="doc" data-doc="sdd-skill-contracts">
+      <header class="doc-head">
+        <p class="eyebrow">Parent · spec-driven-development</p>
+        <h1>Design (Skill contracts)</h1>
+        <p class="source">Canonical: design/spec-driven-development-design-skill-contracts.md</p>
+      </header>
+      <nav class="related" aria-label="Related pages"><span class="related__label">Related</span><a href="sdd-design.html">Design (HLD)</a><a href="pipeline-design.html">Pipeline design</a><a href="ds-design.html">Document standard design</a></nav>
+      <div class="doc-body">
+        <h2>Spec-Driven Development — Skill Contracts</h2>
+<h3>Problem Statement</h3>
+<p>四个 skill 各自的输入、输出和边界没有单独一篇设计承载。结果是 <code>SKILL.md</code> 成了事实权威，pipeline、organize、review、write 之间容易重叠或漏责；PRD-B / PRD-P / PRD-Q 无法被 review 和测试直接检查。</p>
+<h3>Solution</h3>
+<p>本篇定义四个 skill 的<strong>行为契约</strong>；<code>SKILL.md</code> 只是实现。规则细节仍以 <code>document-standard</code> 的 <code>DSGN-*</code> 和 <code>pipeline</code> 的 <code>PIPE-*</code> 为准，本篇只定接口与边界。</p>
+<h3>User Stories</h3>
+<ul>
+<li>作为调用方，我希望知道每个 skill 在什么阶段被调用、需要给什么、会产出什么。</li>
+<li>作为 reviewer，我希望四个 skill 的责任不重叠，缺一条能找到唯一负责的 skill。</li>
+<li>作为维护者，我希望改 <code>SKILL.md</code> 时不改变契约；契约变了要先改本篇。</li>
+</ul>
+<h3>Implementation Decisions</h3>
+<ul>
+<li><strong>Authority：</strong> 契约以本篇为准；<code>SKILL.md</code> 与正文冲突时，先改契约再改正文（<code>DSGN-G</code>）。</li>
+<li><strong>不定义：</strong> 失败策略、版本/迁移、来源可信度分级、数据清理（<code>ARD-AF</code>）。</li>
+<li><strong>四例：</strong> 四个 skill 正文都要点名 shed、北京旅游、数学题、股票（PRD-Q）；它们是<strong>说明性例子</strong>，不是本仓库 gold。</li>
+<li><strong>Unverified：</strong> pipeline 编排、单次编辑大小、可读性打分、跨模型偏差按 PRD-I 标 <code>Unverified</code>。</li>
+</ul>
+<h3>Design</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Skill</th>
+<th>阶段</th>
+<th>输入</th>
+<th>输出</th>
+<th>边界</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>spec-pipeline</strong></td>
+<td>任意入口</td>
+<td>用户请求、<code>CLAUDE.local</code> / <code>raw/state</code>、PRD/design/decision</td>
+<td>phase、recap、state、review 询问</td>
+<td>不写正文；不 silent 改上游；不自行宣布收敛</td>
+</tr>
+<tr>
+<td><strong>spec-organize</strong></td>
+<td>create / move / merge / lint</td>
+<td>feature 树、<code>SPEC-STANDARD.md</code></td>
+<td>路径/格式修正、findings</td>
+<td>机械 MUST 可 fix；semantic 只 report</td>
+</tr>
+<tr>
+<td><strong>spec-review</strong></td>
+<td>提交前 / 设计审查</td>
+<td>diff 或树、PRD/design/test-plan</td>
+<td>带 severity 的 findings + 修改建议</td>
+<td>不 fix、不改写；可读性 gate 在此流程内跑，但不作通过条件</td>
+</tr>
+<tr>
+<td><strong>spec-write</strong></td>
+<td>Converge / Downstream</td>
+<td>已确认的修改意图</td>
+<td>改后的文稿</td>
+<td>默认 ≤10 行/200 字符；restructure 需 human 授权；不 silent 改上游</td>
+</tr>
+</tbody></table></div>
+<p><strong>共享能力落点：</strong></p>
+<ul>
+<li>子问题归属表（PRD-L / PIPE-L）写在每个 feature 的 <code>design</code> 篇。</li>
+<li>证据与 <code>UNKNOWN</code>（PRD-N）由 <code>spec-write</code> 写、<code>spec-review</code> 查。</li>
+<li>mock MCP client/server（PRD-O）放在 <code>skills/spec-organize/tests/mock-mcp/</code>；pipeline 在 Downstream 后调用。</li>
+<li>四个例子（PRD-Q）写进四个 <code>SKILL.md</code> 正文；由 TST-S 检查。</li>
+</ul>
+<h3>Testing Decisions</h3>
+<ul>
+<li><strong>TST-S：</strong> 四个 <code>SKILL.md</code> 都包含四例。</li>
+<li><strong>TST-O / TST-P：</strong> PRD → design 追溯；归属/证据/UNKNOWN。</li>
+<li><strong>TST-Q：</strong> mock MCP call 打出 log，且无真实副作用。</li>
+<li><strong>Unverified：</strong> spec-pipeline 编排（PIPE-A4/A5/H）、单次编辑大小（PRD-C）、可读性打分（PRD-M）、跨模型偏差（ARD-AD）。</li>
+</ul>
+<h3>Out of Scope</h3>
+<ul>
+<li>失败策略、版本/迁移、来源可信度分级、数据清理（<code>ARD-AF</code>）。</li>
+<li>存量不合规文档的迁移。</li>
+<li>各 skill 的具体 prompt 文案；由 <code>SKILL.md</code> 实现。</li>
+</ul>
+<h3>Further Notes</h3>
+<ul>
+<li>新增 skill 时先补本表，再写 <code>SKILL.md</code>。</li>
+<li>契约变更需同步 <code>document-standard</code> / <code>pipeline</code> 的对应 <code>DSGN-*</code> / <code>PIPE-*</code>。</li>
+</ul>
+<h3>Reversibility</h3>
+<ul>
+<li>契约变更可回退:改本篇 + <code>SKILL.md</code>,无数据迁移。</li>
+<li>新增 skill 只需追加一行;移除 skill 须同批改 pipeline 与 test plan。</li>
+</ul>
+<h3>Alternatives Considered</h3>
+<ul>
+<li>四个 skill 合成一个 → 拒:职责重叠,review 无法独立。</li>
+<li>契约直接写进 <code>SKILL.md</code> → 拒:正文变权威,契约失去独立地址(<strong>ARD-AB</strong> / <strong>DSGN-G</strong>)。</li>
+</ul>
+<h3>Drawbacks</h3>
+<ul>
+<li>多一层间接:改行为要同时动契约与正文。</li>
+</ul>
+<h3>Risks and Mitigations</h3>
+<ul>
+<li>风险:正文与契约漂移 → 冲突时契约优先,<code>spec-review</code> 检查引用。</li>
+</ul>
+<h3>Open Questions</h3>
+<ul>
+<li>新 skill(如可替换的 map 工具)是否要进契约表。</li>
+</ul>
+<h3>Change Log</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Date</th>
+<th>Change</th>
+</tr></thead><tbody>
+<tr>
+<td>2026-11-04</td>
+<td>Initial creation; four skill contracts, shared capabilities, testing pointers</td>
+</tr>
+</tbody></table></div>
+      </div>
+    </article>
+    <nav class="pager" aria-label="Previous and next"><a class="prev" href="sdd-design.html"><span class="label">Previous</span>Design (HLD)</a><a class="next" href="sdd-impl-plan.html"><span class="label">Next</span>Implementation plan</a></nav>
+  </main>
+</div>
+<footer class="foot"><div class="foot-inner">Assembled from committed <code>.md</code>. The Markdown is authoritative; this page is a reading view.</div></footer>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>if(window.mermaid){mermaid.initialize({startOnLoad:false});}</script>
+<script src="assets/app.js"></script>
+</body>
+</html>

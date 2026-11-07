@@ -8,7 +8,7 @@ from pathlib import Path
 
 from checks.frontmatter import _parse_frontmatter
 
-HEADING = re.compile(r"^## +(.+)$", re.MULTILINE)
+HEADING = re.compile(r"^## +(?:\d+(?:\.\d+)*[.)]? +)?(.+)$", re.MULTILINE)
 
 
 @dataclass(frozen=True)

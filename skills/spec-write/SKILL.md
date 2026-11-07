@@ -33,6 +33,13 @@ Writes and edits **committed** feature spec prose. Standard and paths: **spec-or
 
 SDD skill map: `skills/SDD-DELIVERABLES.md`.
 
+## Example Domains
+
+Prose rules are domain-agnostic. The same edit rules apply to the four PRD-Q
+examples: **盖 shed** (garden shed), **北京旅游** (Beijing trip), **数学题**
+(math problem), **股票** (stock analysis). They are illustrations, not gold
+cases; gold lives outside this repo.
+
 ## Process
 
 1. Confirm `<f>`, type, and phase via **spec-pipeline** or user (see **spec-pipeline/INTEGRATIONS.md** and **PHASE-CHECKLISTS.md**).
@@ -40,6 +47,7 @@ SDD skill map: `skills/SDD-DELIVERABLES.md`.
 3. Edit with **≤10 lines or ≤200 characters per edit** (parent HLD §4); split or ask for `restructure`.
 4. Use letter-prefix IDs only (**PRD-A**, **DSGN-B**, **ARD-C**, **IMPL-A**, **TST-A**).
 5. After create/move: **spec-organize** Organize/Lint; regenerate INDEX when tree changes.
+6. Cross-check before finishing: every `PRD-*` id appears in the design; every `TST-*` case names the requirement it covers.
 
 ### By type (quick)
 
@@ -48,10 +56,17 @@ SDD skill map: `skills/SDD-DELIVERABLES.md`.
 | **prd** | Problem, goals, requirements with **PRD-*** IDs; deferrals → **ARD-** in decision-history |
 | **design** | Behavior, contracts, boundaries — not class-level code (**SPEC-SCOPE.md**) |
 | **decision-history** | New **ARD-*** row at **top** of Log; supersede = ~~strike~~ + link |
-| **impl-plan** | Numbered tasks **IMPL-***; Global Constraints first |
+| **impl-plan** | Tasks **IMPL-A…** (letter ids — `IMPL-1` is a violation); Global Constraints first |
 | **test-plan** | **TST-*** cases; execution order; pass threshold |
 
 After substantive spec edits on an initiative parent, **spec-pipeline** may run `python3 tools/build_sdd_reader.py` (no spec change in HTML itself).
+
+### Section headings (MUST)
+
+Use the standard's exact English heading text, unnumbered: `## Overview`,
+`## Goals and Success Metrics`, `## Test Cases`, … Never translate, rename, or
+prefix a heading with a number — `## 1. 概述` is a violation. Sections may be
+added; a required one is never dropped or renamed.
 
 ## Quality Gates
 

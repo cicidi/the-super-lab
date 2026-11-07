@@ -21,7 +21,13 @@ PANELS: list[tuple[str, str, list[tuple[str, Path]]]] = [
     (
         "p-design",
         "Design (HLD)",
-        [("design/spec-driven-development-design.md", SDD / "design/spec-driven-development-design.md")],
+        [
+            ("design/spec-driven-development-design.md", SDD / "design/spec-driven-development-design.md"),
+            (
+                "design/spec-driven-development-design-skill-contracts.md",
+                SDD / "design/spec-driven-development-design-skill-contracts.md",
+            ),
+        ],
     ),
     (
         "p-impl",

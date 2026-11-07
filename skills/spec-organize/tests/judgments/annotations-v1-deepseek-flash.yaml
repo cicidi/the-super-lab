@@ -1,0 +1,95 @@
+model: deepseek-flash
+runs: 3
+target: gold
+corpus_sha: b3e6be1ad9a8be2b
+items:
+- id: GOOD-A
+  verdict: pass
+  votes:
+  - pass
+  - pass
+  - pass
+  evidence: docs/features/spec-driven-development/decision-history/spec-driven-development-decision-history.md
+    uses ARD-A…ARD-AI; impl-plan IMPL-A…O and test-plan TST-A…S use letter prefixes.
+  confidence: 0.95
+- id: GOOD-B
+  verdict: pass
+  votes:
+  - pass
+  - pass
+  - pass
+  evidence: 'Design docs anchor parent PRD ids: HLD §4/§6/§7, pipeline PIPE-A/PIPE-K,
+    doc-standard DSGN-B, skill contracts PRD-B/P/Q.'
+  confidence: 0.82
+- id: GOOD-C
+  verdict: pass
+  votes:
+  - pass
+  - pass
+  - pass
+  evidence: docs/features/spec-driven-development/ has prd, design, decision-history,
+    impl-plan, test-plan entries, e.g. decision-history/spec-driven-development-decision-history.md.
+  confidence: 0.95
+- id: GOOD-D
+  verdict: pass
+  votes:
+  - pass
+  - pass
+  - pass
+  evidence: 'docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md
+    ends with ## Change Log; all SDD docs do.'
+  confidence: 0.95
+- id: GOOD-E
+  verdict: pass
+  votes:
+  - pass
+  - pass
+  - pass
+  evidence: docs/features/spec-driven-development/design/spec-driven-development-design.md
+    §3.3 子问题归属 has allowed owners and ARD-AF/ARD-T/ARD-AD evidence.
+  confidence: 0.95
+- id: GOOD-F
+  verdict: pass
+  votes:
+  - pass
+  - pass
+  - pass
+  evidence: skills/spec-pipeline/SKILL.md, spec-organize, spec-review, spec-write
+    Example Domains all list 盖 shed, 北京旅游, 数学题, 股票.
+  confidence: 0.95
+- id: BAD-A
+  verdict: pass
+  votes:
+  - pass
+  - pass
+  - pass
+  evidence: docs/INDEX.md lists all SDD entries (parent five types, pipeline, document-standard
+    aspects); links resolve.
+  confidence: 0.9
+- id: BAD-B
+  verdict: pass
+  votes:
+  - pass
+  - pass
+  - pass
+  evidence: No SDD committed doc exceeds caps; document-standard-design.md is under
+    1,000 and decision-history is exempt per DSGN-B.
+  confidence: 0.85
+- id: BAD-C
+  verdict: pass
+  votes:
+  - pass
+  - pass
+  - pass
+  evidence: skills/spec-review/SKILL.md cites spec-driven-development-design-skill-contracts.md
+    and states the contract wins on conflict.
+  confidence: 0.98
+- id: BAD-D
+  verdict: pass
+  votes:
+  - pass
+  - pass
+  - pass
+  evidence: docs/features/spec-driven-development/decision-history/spec-driven-development-decision-history.md
+    Log starts ARD-AI 2026-11-04 and descends to ARD-A 2026-09-25.
+  confidence: 0.95

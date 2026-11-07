@@ -57,6 +57,8 @@ Create → Map → Converge ⇄ (PRD ↔ design ↔ decision-history) → Downst
 
 ### PIPE-A — spec-pipeline 职责（MUST）
 
+**来源：PRD-A**（在既有 pipeline 上改进，不另造编排）。
+
 - **PIPE-A1** 任意「写/改 spec」任务 **经 spec-pipeline 进入**（除非 human 显式跳过并记入 state/recap）。
 - **PIPE-A2** 调用 **spec-organize** 执行标准、Lint、Organize（路径/格式以 organize 为准）。
 - **PIPE-A3** 调用 **spec-write** 执行文稿增删改（含 parent HLD §4 小步编辑 norm）。
@@ -95,7 +97,7 @@ Create → Map → Converge ⇄ (PRD ↔ design ↔ decision-history) → Downst
 
 **收敛条件（MUST 全满足才进 Downstream）：**
 
-- **PIPE-E1** 无 **未命名** 的 blocking open decision（仍 open 的须在 design 中 **点名**）。
+- **PIPE-E1** 无未关闭的 blocking open decision；每条 open item 带 `blocking: true|false`，仍 open 的须在 design 中点名。`blocking: true` 不得进 Downstream（ARD-AG）。
 - **PIPE-E2** PRD 写清 limitation、preference、timeline、resource、tool；没有的注明 not apply。design 篇与 decision history 都在，才进 Downstream。
 - **PIPE-E3** design 篇列出 **依赖的 decision** 与 **仍 open** 项；含 implementation 所需的 contract/边界决策（impl 任务细节 **下一轮** 再定）。
 
@@ -144,19 +146,44 @@ Create → Map → Converge ⇄ (PRD ↔ design ↔ decision-history) → Downst
 | 收敛条件、Downstream 并行 | map/research **skill 正文** |
 | 轻量 state | 重 task/BMAD/GSD 框架 |
 
+### PIPE-K — 非软件问题的五篇映射
+
+**PRD-K / PRD-Q。** 非软件难题走同一套五篇；不新增文档类型。
+
+| 内容 | 落点 |
+|---|---|
+| 调研、学习笔记、原始资料 | `raw/research/<topic>.md`（不 commit、不作权威） |
+| 决策 | `decision-history`（`ARD-*`） |
+| 方案、执行步骤 | `design` 篇；需要排序的执行步骤进 `impl-plan` |
+| 验证 | `test-plan` |
+
+`raw/` 结论升格进 committed 文档时只 link，不 restate。四个例子（shed、北京旅游、数学题、股票）写进 skill 正文，不在本仓库建 gold。
+
+### PIPE-L — 子问题归属与证据
+
+有子问题的 feature，其 **design 篇** 必须有「子问题归属」表；纯标准/编排 design 可注明 not apply。
+
+| 子问题 | 归属 | 依据 |
+|---|---|---|
+| <问题> | `AI 查` / `人决定` / `AI 查完人决定` | `raw/` 路径、URL 或 `ARD-*` |
+
+- 归属只取三值；人没问到的盲区与风险，AI 必须主动补行。
+- 依据必须可追溯；查不到写 `UNKNOWN`，不得写推测。
+- **spec-review** 检查「有结论但无依据」与「该标 UNKNOWN 却写了事实」。
+
 ## Testing Decisions
 
 验证见 parent **`../../../test-plan/spec-driven-development-test-plan.md`**。本篇至少覆盖：
 
-- **spec-pipeline：** 进门、recap、提交前 review 询问、state 从 CLAUDE.local 切换到 `raw/state/` 的时机。
+- **spec-pipeline：** 进门、recap、提交前 review 询问、state 切换 — **Unverified**（暂无可执行测试；PRD-I）。
 - **PRD：** limitation、preference、timeline、resource、tool 均写明或注明 not apply。
 - **decision-history：** 产品方向 decision 有 **ARD-** ID；supersede = strike + link（**DSGN-J**）。
 - **design 篇：** 依赖 decision；open decision 已命名。
 - **test-plan / impl-plan：** 并行存在；test 含 completion + regression guard。
-- **Cross-artifact：** 测试可追溯到 PRD 要求（由 parent test plan / MUST registry 扫入）。
+- **Cross-artifact：** 测试可追溯到 PRD 要求（TST-O 新增）。
 - **PRD-N：** 正式 spec 结论链到事实；本 harness 评测答案只来自 context 包。
 - **PRD-O：** 一个共用 mock MCP server，call 打出 log 即通过。
-- **PRD-M：** 可读性打分测试验不了。
+- **PRD-M：** 可读性打分在 spec-review 流程内，不作为测试通过条件。
 
 ## Out of Scope
 
@@ -171,6 +198,32 @@ Create → Map → Converge ⇄ (PRD ↔ design ↔ decision-history) → Downst
 - As-is 技能安装图：`../../../design/spec-driven-development-workflow.html`（对照，非 target pipeline 唯一来源）。
 - Open：plug-in task skill；收敛条件自动化检查。Map 拆分见 **PIPE-D** 第 6 点。
 
+## Alternatives Considered
+
+- 把 wayfinder-import 作为 sub-feature 固化 → 拒(**ARD-T**):map 工具须可替换。
+- 每阶段一个 skill → 拒:四个 skill 已覆盖(ARD-AB),按阶段拆会重复职责。
+- 固定五阶段瀑布、跳过 Map → 拒:未知多的题目会漏拆。
+
+## Drawbacks
+
+- Interview 贵且慢,小改动也要走一遍。
+- Map 的产物不可机械验证,只能靠人确认。
+
+## Risks and Mitigations
+
+- 风险:AI 未经确认创建 `docs/features/<f>/` → Step 2 强制 confirm + 反模式清单。
+- 风险:相位判断错 → 读 `raw/state/state-<date>.md` 与 CLAUDE.local,以文件为准。
+
+## Open Questions
+
+- 阶段编排本身无执行测试(**PRD-I**,Unverified)。
+- recap 模板是否所有项目都适用。
+
+## Reversibility
+
+- 阶段是叠加的:去掉 Map 不影响 Create/Converge/Downstream。
+- state 文件可弃用,回到 CLAUDE.local 记录。
+
 ## Change Log
 
 | Date | Change |
@@ -183,3 +236,5 @@ Create → Map → Converge ⇄ (PRD ↔ design ↔ decision-history) → Downst
 | 2026-11-04 | PIPE-E2：PRD 写清五项，没有则 not apply；design 与 decision history 都在才进 Downstream |
 | 2026-11-04 | PIPE-I：多人 decision 按 history 时间，否则问用户，AI 不猜测 |
 | 2026-11-04 | PIPE-D 第 7 点：子问题标归属，AI 必须提出人没问的风险 |
+| 2026-11-04 | PIPE-K 非软件五篇映射；PIPE-L 归属与证据；spec-pipeline 标 Unverified |
+| 2026-11-04 | PIPE-E1 加 blocking 字段；PIPE-L 标注纯标准/编排 design 可 not apply |

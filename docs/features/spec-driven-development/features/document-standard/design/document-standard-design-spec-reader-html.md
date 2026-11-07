@@ -48,7 +48,7 @@ last_verified: 2026-11-03
 | **L3** | Alternatives 等 **可压缩** 为 bullet +「详见 canonical md」 |
 | **L4** | 可省略正文，**MUST** footer/link 指向 md |
 
-**条目 ID（DSGN-F）：** HTML 中 **MUST** 保留可见 ID 字符串（`PRD-A`、`DSGN-B`、`ARD-C`、`IMPL-3`/`IMPL-C`、`TST-A` 等 — 以 md 为准），便于与 review / registry 对齐。
+**条目 ID（DSGN-F）：** HTML 中 **MUST** 保留可见 ID 字符串（`PRD-A`、`DSGN-B`、`ARD-C`、`IMPL-C`、`TST-A` 等 — 以 md 为准），便于与 review / registry 对齐。
 
 **禁止（MUST NOT）：**
 
@@ -127,6 +127,28 @@ Initiative test plan 暂不单独为 reader 开 TST；**NICE：** spec-review �
 
 - **反例：** 当前 `spec-driven-development-reader.html` 多处 child/parent design 仅留 slogan — regenerate 时按 **DSGN-N-B** 补全。
 - Parent HLD 已指 reader 路径；deliverable skills 仍为四个；HTML 规范在 **spec-html-standard**。
+
+## Alternatives Considered
+
+- 直接嵌 `.md` 做预览 → 拒:**DSGN-N** 要求可读汇编,不是 markdown viewer。
+- 每个 aspect 单独一个 HTML → 拒:读者要跨文档跳转。
+
+## Drawbacks
+
+- 汇编层与源文档会漂移,需 TST-R 新鲜度检查兜底。
+
+## Risks and Mitigations
+
+- 风险:HTML 被当成 source of truth → 每页标注 canonical 路径。
+- 风险:ID 在排版中丢失 → **DSGN-N-B** 要求可见 ID 原样保留。
+
+## Open Questions
+
+- 图(mermaid)在 reader 中的渲染资格是否统一。
+
+## Reversibility
+
+- HTML 是派生物,删掉不影响 spec;重建即可。
 
 ## Change Log
 

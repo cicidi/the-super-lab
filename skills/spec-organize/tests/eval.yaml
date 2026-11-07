@@ -1,14 +1,20 @@
-# SDD eval configuration — see parent test-plan
+# SDD eval configuration — see parent test-plan (Test Assets, TST-J/TST-L)
 # Copy to local overrides only; do not commit API secrets.
 judge:
-  model: "" # required before TST-E+: provider/model id
+  model: deepseek-flash
 gold:
-  version: v1 # bump when annotations.yaml grows
-  models: [] # three provider slugs for TST-C parallel runs
+  version: v1
+  repeats: 3
+  cases:
+    iphone:
+      version: v1
+      path: gold/v1
 target:
-  repo: .
+  repo: ../the-super-lab-eval # SDD_EVAL_REPO overrides
   feature: iphone-purchase
 grill:
-  skills: [] # baseline: empty
+  skills: [] # baseline: no extra skill
 checkers:
-  models: [] # three for TST-L
+  models: [deepseek-flash]
+  repeats: 3
+single_provider: true

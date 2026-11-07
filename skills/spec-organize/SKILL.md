@@ -54,6 +54,13 @@ file per type, and sync documents with each other and with the code.
 - Deciding which of two conflicting decisions is correct — this skill reports
   the conflict, a human rules on it
 
+## Example Domains
+
+Placement rules are domain-agnostic. The same paths, IDs, and size caps apply to
+the four PRD-Q examples: **盖 shed** (garden shed), **北京旅游** (Beijing trip),
+**数学题** (math problem), **股票** (stock analysis). They are illustrations, not
+gold cases; gold lives outside this repo.
+
 ## Authority by Concern
 
 No single artifact is the source of truth for everything. Each concern has one
@@ -249,25 +256,24 @@ The `decision-history` file is a tracking history, not a curated summary. It
 keeps every decision ever made for the feature, including ones later superseded
 and ones that turned out wrong. Nothing is deleted.
 
-The Decision Log is a table:
+The Decision Log is a table, newest first:
 
 ```markdown
-| # | Date | Decision | Status | Supersedes |
-|---|------|----------|--------|------------|
-| 0001 | 2026-07-14 | Adopt kebab-case for feature directories | accepted | — |
-| 0002 | 2026-07-22 | Store state per feature, not per project | superseded by 0007 | — |
+| ID | Date | Decision |
+|----|------|----------|
+| ARD-B | 2026-07-22 | Store state per feature, not per project |
+| ARD-A | 2026-07-14 | Adopt kebab-case for feature directories |
 ```
 
-`Status` uses the vocabulary `proposed`, `accepted`, `deprecated`, or
-`superseded by <NNNN>`. A superseded decision stays in the log and keeps its
-evidence entry. When a decision is overwritten, add a new numbered entry that
-supersedes the old one rather than editing the old one.
+A superseded decision stays in the log and keeps its evidence entry: strike the
+old row and link the entry that replaces it. There is no Status or Supersedes
+column, no bare numeric id, and an id is never reused.
 
 The Evidence Appendix holds one numbered entry per decision, preserving the
 original rationale and supporting content:
 
 ```markdown
-### 0001 — Adopt kebab-case for feature directories
+### ARD-A — Adopt kebab-case for feature directories
 
 Status: accepted
 

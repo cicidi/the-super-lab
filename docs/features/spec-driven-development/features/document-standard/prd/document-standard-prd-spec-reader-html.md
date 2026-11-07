@@ -56,6 +56,10 @@ Committed feature spec 以 `.md` 为 source of truth，但 parent initiative 往
 - 每次 git commit 自动 sync（v0 无 hook 要求）。
 - 用 reader HTML 作为 lint/oracle（oracle 仍是 `SPEC-STANDARD.md` 与 committed md）。
 
+## Resources Needed
+
+- 一个静态 HTML 构建脚本 + 一个本地静态服务器;无后端、无数据库。
+
 ## Change Log
 
 | Date | Change |

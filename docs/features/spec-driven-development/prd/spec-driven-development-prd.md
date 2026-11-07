@@ -1,4 +1,17 @@
+---
+feature: spec-driven-development
+type: prd
+state: draft
+health: active
+owner: cicidi
+last_verified: 2026-11-04
+---
+
 # Spec-Driven Development — PRD
+
+## Overview
+
+本 PRD 定义 spec-driven development：用 PRD、decision-history、design 篇、impl-plan、test-plan 五篇，把有门槛的问题分析清楚，并交给四个 skill（spec-pipeline、spec-organize、spec-review、spec-write）执行。
 
 ## Problem Statement
 
@@ -66,27 +79,39 @@
 
 AI 要把大问题拆成小的：能查的 AI 自己查（合规、财报、交通），要选的人来选（预算、偏好、风险），人想不到的 AI 主动问。spec 既是学习笔记，也是决策记录，最后交给 AI 执行。
 
+## Goals and Success Metrics
+
+- 目标：任何有门槛的难题都能拆成可查、可决策、可执行的小问题。
+- 验收：四个 skill 的测试结果（test-plan）；这不是产品 success metric。
+- PRD-G 的产品级 success metric 与 baseline 仍 deferred（ARD-N）。
+
+## User Stories
+
+- 作为写 spec 的人，我希望先被 interview，把已知/未知/盲区问出来。
+- 作为 reviewer，我希望机械 MUST 和语义缺陷都能检出，且建议可执行。
+- 作为执行者，我希望 spec 能落到 design/impl-plan，并有 mock 执行与可追溯证据。
+
 ## Solution
 
 **Spec-driven development**
 
 我们不重复什么是 spec-driven。这里要做的是开发一些 skill；这些 skill 会在一起工作，而不是单个 skill。这些 skill 的目标是：通过一组 skill，把具体问题分析清楚。
 
-**PRD、decision history、spec 是互相打磨的循环**，不是只走一遍的直线；循环收敛到「够稳」后，**impl plan** 与 **test plan** 各自独立：都从 **spec** 总结出来，彼此不串行依赖。
+**PRD、decision history、design 篇 是互相打磨的循环**，不是只走一遍的直线；循环收敛到「够稳」后，**impl plan** 与 **test plan** 各自独立：都从 **design 篇** 总结出来，彼此不串行依赖。
 
-1. **PRD** — 我们到底要做什么、解决什么；当前的 limitation 是什么；preference 是什么；timeline、各种 resource、tool 都有什么。spec 或 decision 暴露缺口时，回到 PRD 改 requirement。
+1. **PRD** — 我们到底要做什么、解决什么；当前的 limitation 是什么；preference 是什么；timeline、各种 resource、tool 都有什么。design 篇 或 decision 暴露缺口时，回到 PRD 改 requirement。
 2. **Decision history** — 基于 PRD 作出 decision；任何跟产品方向相关的 decision 先 update decision history（约 50% AI、50% 人）。新 decision 可能改 PRD 范围；spec 里的 trade-off 也可能要求补 decision。
-3. **Spec** — 与 PRD、decision 并行迭代：写设计（技术方案、contract、tool 等；HLD/LLD 不在此展开）。设计问清 problem、或发现 decision 不够，回到 1/2 继续磨。
-4. **Impl plan** — 从 spec 总结实现：先做什么、后做什么；各个 task 的细节、准备工作等（不依赖 test plan 先写完）。
-5. **Test plan** — 从 spec 总结验证：任务完成标准、可用性检查、regression guard（不依赖 impl plan 先写完）。
+3. **Design 篇** — 与 PRD、decision 并行迭代：写设计（技术方案、contract、tool 等；HLD/LLD 不在此展开）。设计问清 problem、或发现 decision 不够，回到 1/2 继续磨。
+4. **Impl plan** — 从 design 篇 总结实现：先做什么、后做什么；各个 task 的细节、准备工作等（不依赖 test plan 先写完）。
+5. **Test plan** — 从 design 篇 总结验证：任务完成标准、可用性检查、regression guard（不依赖 impl plan 先写完）。
 
-## Requirements
+## Functional Requirements
 
 **PRD-A** — 做一个 pipeline，基于现在现有的 pipeline 做一些改进。
 
 **PRD-B** — 做一些 skill；这些 skill 其实就是优质 prompt，或其他 popular 的 prompt，引导 AI 怎么工作：完成 spec 的书写、命名、校验、更新。
 
-**PRD-C** — 保证每次改动都很小，不要超过 10 行、200 个字左右。改动太大，会导致崩溃。
+**PRD-C** — 每次改动不超过 **10 行** **或** **200 字符**；超出拆多次，restructure 需 human 授权。
 
 **PRD-D** — 文档大小限制在 1000 行；太大几乎没法 maintain。
 
@@ -96,7 +121,7 @@ Additional constraints:
 
 **PRD-F** — 多人 decision 冲突时，以 decision history 里时间较晚的那条为准。看不出先后就问用户。AI 不猜测谁为准。
 
-**PRD-G** — （open）success metric 度量与 baseline — deferred，见 **ARD-N**。
+**PRD-G** — （open）产品级 success metric 与 baseline — deferred，见 **ARD-N**。test-plan 的分数是 eval 指标，不是产品 success metric。
 
 **PRD-H** — Spec-driven development 的 workflow 尽量使用 popular skill，不要自己重新发明。
 
@@ -118,6 +143,19 @@ Additional constraints:
 
 **PRD-Q** — 书写、命名、校验、更新，以及 PRD-K 到 PRD-O，都是需求。四个 skill 不限于这几件事，以后的新题也要能做。skill 正文要写出四个例子：盖 shed、北京旅游、数学题、股票。好不好用只看测试。
 
+## Out of Scope
+
+- 真实下单、订票、交易；执行只到 mock MCP log。
+- 多人 decision 的仲裁细则；按 decision-history 时间，仍看不出则问用户。
+- 本仓库不建非软件四例的 gold；例子写进 skill 正文，gold 放到别处。
+- 存量不合规文档的批量迁移。
+- skill / spec 的版本与迁移策略。
+
+## Resources Needed
+
+- 四个 skill + 一份 test plan;无外部服务、无数据库。
+- 评测需 `deepseek-flash` API 与 3 次 run 的预算;runs/reports 不入库(ARD-AD)。
+
 ## Change Log
 
 | Date | Change |
@@ -132,3 +170,5 @@ Additional constraints:
 | 2026-11-04 | 新增 PRD-Q：skill 不绑定具体题目，以后的新题也要能做；正文是否点名例子未定，验收只看测试 |
 | 2026-11-04 | PRD-F 关闭延期：按 decision history 时间较晚者；看不出先后则问用户；AI 不猜测 |
 | 2026-11-04 | 选择题：G/H/J 维持；I 验不了的不进测试；K 的 gold 放到别处；M 测不了；N 评测只用 context；O 共用一个 mock server；Q 正文写出四个例子 |
+| 2026-11-04 | 补 frontmatter、Overview、Goals and Success Metrics、User Stories、Out of Scope；Requirements → Functional Requirements |
+| 2026-11-04 | PRD-C 改为硬上限 10 行或 200 字符；PRD-G 区分 eval 分数与产品 metric；Solution 术语改 design 篇 |

@@ -2,24 +2,20 @@
 feature: demo
 type: prd
 state: draft
-final_date: 2026-11-04
-health: active
-owner: test
-last_verified: 2026-11-04
 ---
 
 # Demo PRD
 
-## Goals
+## Problem
 
-Minimal PRD for change_log neg fixture.
+Something.
 
 ## Change Log
 
 | Date | Change |
-|---|---|
-| 2026-11-04 | init |
+|------|--------|
+| 2026-11-05 | Initial |
 
-## Extra (invalid)
+## Appendix
 
-Change Log must be last ## section.
+Change Log is not the last section.

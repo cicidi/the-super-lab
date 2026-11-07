@@ -5,7 +5,7 @@ state: draft
 final_date: 2026-11-03
 health: active
 owner: cicidi
-last_verified: 2026-11-03
+last_verified: 2026-11-04
 ---
 
 # Spec-Driven Development — Implementation Plan
@@ -16,8 +16,10 @@ last_verified: 2026-11-03
 - **Skills:** Use `skill create` / `skill edit` (`skills/skill/SKILL.md`) for SKILL.md bodies; this plan defines order only.
 - **Tests:** Parent `test-plan/spec-driven-development-test-plan.md`; assets under `skills/spec-organize/tests/`.
 - **No wayfinder-import** sub-feature (ARD-T).
+- **Eval:** deepseek-flash, 3 runs; runs/reports not committed (ARD-AD).
+- **No legacy migration** (ARD-AF); only the SDD tree is fixed.
 
-## Task 1 — Skill directory migration (DONE baseline)
+## IMPL-A — Skill directory migration (DONE baseline)
 
 **Goal:** `doc-organize` → `spec-organize`, `doc-review` → `spec-review`.
 
@@ -25,7 +27,7 @@ last_verified: 2026-11-03
 
 **Verify:** `ls skills/spec-organize skills/spec-review`; triggers resolve.
 
-## Task 2 — New skills: spec-pipeline, spec-write
+## IMPL-B — New skills: spec-pipeline, spec-write
 
 **Goal:** SKILL.md stubs aligned with pipeline design and HLD §7.
 
@@ -33,7 +35,7 @@ last_verified: 2026-11-03
 
 **Verify:** Description starts with "Use when"; MUST gates present.
 
-## Task 3 — SPEC-STANDARD.md
+## IMPL-C — SPEC-STANDARD.md
 
 **Goal:** Enforceable summary in `skills/spec-organize/SPEC-STANDARD.md`; full rules stay in document-standard design.
 
@@ -41,20 +43,20 @@ last_verified: 2026-11-03
 
 **Verify:** spec-organize Lint references SPEC-STANDARD.
 
-## Task 4 — Test skeleton & iPhone gold inputs
+## IMPL-D — Test skeleton & iPhone gold inputs
 
 **Goal:** `skills/spec-organize/tests/` per parent test plan.
 
 **Deliverables:**
 
 - `eval.yaml`, `must_registry.yaml` (populate via TST-A scan)
-- `gold/v1/requirement.md`, `gold/v1/context.md`
+- `gold/iphone/v1/requirement.md`, `gold/iphone/v1/context.md`
 - `fixtures/neg/`, `fixtures/pos/` (grow with TST-B)
 - `checks/` Python package (implement TST-B)
 
 **Verify:** Run TST-B when checks exist; gold inputs present.
 
-## Task 5 — Self-run eval (agent)
+## IMPL-E — Self-run eval (agent)
 
 **Goal:** Baseline eval: `grill.skills: []`, spec-organize only, iPhone requirement + context.
 
@@ -62,7 +64,7 @@ last_verified: 2026-11-03
 
 **Verify:** HTML report; scores per test plan.
 
-## Task 6 — Tabbed reader HTML
+## IMPL-F — Tabbed reader HTML
 
 **Goal:** `spec-driven-development-reader.html` — **human-readable** HTML (cards, tables, flows), not a markdown viewer. Tabs: parent (PRD, design, impl, test, decision history) + children (pipeline, document-standard).
 
@@ -70,7 +72,7 @@ last_verified: 2026-11-03
 
 **Verify:** Open file in browser; all canonical paths exist.
 
-## Task 7 — CLAUDE.local / managed block
+## IMPL-G — CLAUDE.local / managed block
 
 **Goal:** Pipeline Create/Map progress before `<f>` exists (PIPE-H).
 
@@ -78,15 +80,15 @@ last_verified: 2026-11-03
 
 **Verify:** spec-pipeline Step 0 reads block.
 
-## Task 8 — Docs hygiene
+## IMPL-H — Docs hygiene
 
-**Goal:** INDEX lists parent impl-plan; fix SDD HTML dead links where touched.
+**Goal:** INDEX lists parent impl-plan and new aspect design; delete legacy summary HTML.
 
-**Steps:** Regenerate or hand-update `docs/INDEX.md`; pipeline.html / spec-driven-development.html consistent with two sub-features.
+**Steps:** Regenerate or hand-update `docs/INDEX.md`; delete `spec-driven-development.html`; keep `spec-driven-development-reader.html` only.
 
-**Verify:** No links to removed wayfinder-import paths under SDD.
+**Verify:** No links to removed summary HTML or wayfinder-import paths under SDD.
 
-## Task 9 — spec-review mechanical MUST alignment
+## IMPL-I — spec-review mechanical MUST alignment
 
 **Goal:** SKILL matches test plan (detect MUST violations + suggestions).
 
@@ -94,9 +96,51 @@ last_verified: 2026-11-03
 
 **Verify:** TST-H fixtures pass when implemented.
 
+## IMPL-J — Eval config & schema test
+
+**Goal:** `eval.yaml` runnable with `deepseek-flash`; 3 runs; target repo env override; `test_eval_config.py` fails on missing config.
+
+**Verify:** `pytest test_eval_config.py`; `eval.yaml` has all required keys.
+
+## IMPL-K — Fixtures & review cases
+
+**Goal:** 11 neg + pos fixtures; 16 spec-review cases (11 mechanical + 5 semantic).
+
+**Verify:** TST-B green; TST-H/I assets present.
+
+## IMPL-L — Eval report script
+
+**Goal:** `tools/render_eval_report.py` generates a single HTML with score 1/2 and run metadata.
+
+**Verify:** TST-K on a sample run.
+
+## IMPL-M — Checker updates
+
+**Goal:** `sections.py` checks 5 types; `ids.py` enforces title patterns; remove exemptions.
+
+**Verify:** TST-B; `run_spec_checks.py` on SDD tree.
+
+## IMPL-N — Skill contracts & four examples
+
+**Goal:** `design/spec-driven-development-design-skill-contracts.md`; each skill body names shed / 北京旅游 / 数学题 / 股票 (PRD-Q).
+
+**Verify:** TST-S; spec-review reads contracts.
+
+## IMPL-O — Reader freshness & summary removal
+
+**Goal:** regenerate reader after spec changes; delete `spec-driven-development.html`.
+
+**Verify:** TST-R; no dead links.
+
 ## Execution order
 
-1 → 2 → 3 → 4 → 6 → 7 → 8 → 5 → 9 (eval after readable spec + skeleton).
+IMPL-A → B → C → D → J → K → M → N → F → G → H → O → E → I (eval after readable spec + skeleton).
+
+## Acceptance Criteria
+
+- score 1 = `total/total`,且 judge 3/3 一致。
+- score 2 ≥ 6,annotations v1。
+- 可执行的 TST-A–S 全绿;`run_spec_checks.py` 0 findings。
 
 ## Change Log
 
@@ -104,3 +148,5 @@ last_verified: 2026-11-03
 |------|--------|
 | 2026-11-03 | Initial parent impl-plan; tasks 1–9 |
 | 2026-11-03 | Task 6：Reader 改为富格式汇编，非 MD fetch |
+| 2026-11-04 | Task 1–9 → IMPL-A–I；新增 IMPL-J–O：eval 配置、fixtures/cases、报告、检查器、skill 契约、reader |
+| 2026-11-04 | Global Constraints 加 eval/no-migration；IMPL-D gold 路径改 iphone/v1 |

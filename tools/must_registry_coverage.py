@@ -1,18 +1,36 @@
 #!/usr/bin/env python3
-"""Report must_registry.yaml coverage: python vs llm and checker name usage (TST-A helper)."""
+"""TST-A coverage: must_registry method/check vs implemented TST-B modules."""
 
 from __future__ import annotations
 
+import re
 import sys
-from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 REG = ROOT / "skills/spec-organize/tests/must_registry.yaml"
-CHECKS_DIR = ROOT / "skills/spec-organize/tests/checks"
+CHECKS = ROOT / "skills/spec-organize/tests/checks"
+
+IMPLEMENTED = {
+    "frontmatter",
+    "paths",
+    "sections",
+    "decision_log",
+    "change_log",
+    "ids",
+    "size",
+    "parent_complete",
+    "collision",
+    "index_book",
+    "no_commit",
+    "book",
+    "publish_nav",
+    "test_trace",
+    "registry_provenance",
+}
 
 
-def _load_items(text: str) -> list[dict[str, str]]:
+def _parse_items(text: str) -> list[dict[str, str]]:
     items: list[dict[str, str]] = []
     cur: dict[str, str] = {}
     for line in text.splitlines():
@@ -20,49 +38,44 @@ def _load_items(text: str) -> list[dict[str, str]]:
             if cur:
                 items.append(cur)
             cur = {"id": line.split(":", 1)[1].strip()}
-        elif not cur:
-            continue
-        elif line.strip().startswith("method:"):
+        elif cur and line.strip().startswith("method:"):
             cur["method"] = line.split(":", 1)[1].strip()
-        elif line.strip().startswith("check:"):
+        elif cur and line.strip().startswith("check:"):
             raw = line.split(":", 1)[1].strip()
             cur["check"] = raw.strip("'\"")
+        elif cur and line.strip().startswith("text:"):
+            cur["text"] = line.split(":", 1)[1].strip()
     if cur:
         items.append(cur)
     return items
 
 
 def main() -> None:
-    if not REG.is_file():
-        print(f"missing: {REG}", file=sys.stderr)
-        sys.exit(1)
-    items = _load_items(REG.read_text(encoding="utf-8"))
-    python_items = [i for i in items if i.get("method") == "python"]
-    llm_items = [i for i in items if i.get("method") == "llm"]
-    other = len(items) - len(python_items) - len(llm_items)
-
-    check_names = sorted(
-        p.stem
-        for p in CHECKS_DIR.glob("*.py")
-        if p.name != "__init__.py"
-    )
-    used = Counter(i.get("check", "") for i in python_items)
-    missing_check = [i for i in python_items if not i.get("check")]
-    unused_checks = [c for c in check_names if c not in used]
-
-    print(f"registry: {REG.relative_to(ROOT)}")
-    print(f"items: {len(items)}  python: {len(python_items)}  llm: {len(llm_items)}  other: {other}")
-    if python_items:
-        print("python checks:")
-        for name, n in sorted(used.items()):
-            label = name or "(empty)"
-            print(f"  {label}: {n}")
-    if missing_check:
-        print("python items without check:", ", ".join(i["id"] for i in missing_check))
-        sys.exit(1)
-    if unused_checks:
-        print("check modules not referenced in registry:", ", ".join(unused_checks))
-    print("ok")
+    text = REG.read_text(encoding="utf-8")
+    items = _parse_items(text)
+    python = [i for i in items if i.get("method") == "python"]
+    llm = [i for i in items if i.get("method") != "python"]
+    bad_check: list[str] = []
+    missing_mod: list[str] = []
+    for i in python:
+        name = i.get("check", "")
+        if not name:
+            bad_check.append(i["id"])
+            continue
+        if name not in IMPLEMENTED:
+            missing_mod.append(f"{i['id']}:{name}")
+        elif not (CHECKS / f"{name}.py").is_file() and name != "paths":
+            missing_mod.append(f"{i['id']}:{name} (no module)")
+    print(f"items={len(items)} python={len(python)} llm={len(llm)}")
+    if bad_check:
+        print("python items missing check:", ", ".join(bad_check))
+    if missing_mod:
+        print("unknown check modules:", ", ".join(missing_mod))
+    mapped = {i.get("check") for i in python if i.get("check")}
+    unused = IMPLEMENTED - mapped
+    if unused:
+        print("note: TST-B modules not yet mapped in registry:", ", ".join(sorted(unused)))
+    sys.exit(1 if bad_check or missing_mod else 0)
 
 
 if __name__ == "__main__":

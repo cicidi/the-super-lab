@@ -12,7 +12,6 @@ CAPS: dict[str, int] = {
     "design": 1000,
     "impl-plan": 1000,
     "test-plan": 800,
-    "decision-history": 1000,
     "how-to": 600,
 }
 

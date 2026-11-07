@@ -5,7 +5,7 @@ state: final
 final_date: 2026-09-25
 health: active
 owner: cicidi
-last_verified: 2026-09-25
+last_verified: 2026-11-04
 ---
 
 # Spec-Driven Development — Decision History
@@ -16,20 +16,29 @@ Decision Log uses **`ARD-{letter}`** IDs (document-standard **DSGN-F**, **DSGN-J
 
 | ID | Date | Decision |
 |---|------|----------|
+| ARD-AI | 2026-11-04 | This spec consolidation is an explicitly authorized restructure; larger-than-10-line edits are allowed for this batch |
+| ARD-AH | 2026-11-04 | The human-readable reader is the only HTML deliverable; the legacy summary HTML is deleted |
+| ARD-AG | 2026-11-04 | Convergence is auto-decided: open decisions must carry a structured `blocking` flag; AI does not self-declare "stable" |
+| ARD-AF | 2026-11-04 | Deliberately undefined: failure policy, skill/spec versioning, source-trust grading, data cleanup; no legacy migration |
+| ARD-AE | 2026-11-04 | Non-software problems map to the same five artifacts; design carries the ownership table; evidence is mandatory and unknowns are marked UNKNOWN |
+| ARD-AD | 2026-11-04 | Eval uses deepseek-flash with 3 independent runs; gold has case/version/exemplar/annotations; runs and reports are not committed; four examples are skill-doc examples, not repo gold |
+| ARD-AC | 2026-11-04 | PRD required sections drop NFR; IDs are scoped feature+type and cross-feature references use feature/ID; how-to stays unchecked |
+| ARD-AB | 2026-11-04 | Four deliverables: spec-pipeline, spec-organize, spec-review, spec-write |
+| ARD-AA | 2026-11-04 | Multi-participant decisions use the latest decision-history entry; if order is unclear, ask the user; AI never guesses |
 | ARD-Z | 2026-11-04 | Downstream waits until the PRD states limitation, preference, timeline, resource, and tool, each filled or marked not apply, and design plus decision history both exist |
 | ARD-Y | 2026-11-04 | Map split: AI offers options; ≤20 hours for one person is one feature spec; over that, split into peer or sub-feature; AI estimates and judges |
 | ARD-X | 2026-11-04 | Execution delivery is a mock MCP client call to a mock server; a printed log is success; no live booking or orders |
 | ARD-W | 2026-11-04 | Readability is scored by an LLM playing a bachelor's-level programmer; pass means it understands |
-| ARD-V | 2026-11-04 | Hard non-software problems stay in this PRD and use the same five artifacts; four gold examples |
+| ~~ARD-V~~ | 2026-11-04 | ~~Hard non-software problems stay in this PRD and use the same five artifacts; four gold examples~~ → [ARD-AD](#ard-ad--eval-uses-deepseek-flash-with-3-independent-runs) |
 | ARD-U | 2026-11-03 | Pipeline deliverable is **spec-pipeline** orchestrator; Map is interview-led with AI-judged outputs; state CLAUDE.local then `raw/state/` |
 | ARD-T | 2026-11-03 | wayfinder-import is not an SDD sub-feature; its tree under `features/wayfinder-import/` is removed |
 | ARD-S | 2026-11-03 | Gold set grows in both directions and is versioned; scores compare only within one gold version |
 | ARD-R | 2026-11-03 | Two eval scores: MUST `x/total` must be full; exemplar score `(plus−minus)×10/total` must not regress |
 | ARD-Q | 2026-11-03 | Tests live in `skills/<skill>/tests/`; cross-skill checks, gold, and reports in `spec-organize` |
 | ARD-P | 2026-11-03 | `spec-review` detects mechanical MUST violations too; it outputs suggestions, never fixes |
-| ARD-O | 2026-11-03 | Skills are `spec-organize` (main), `spec-review`, `spec-write`; the standard file is `spec-organize/SPEC-STANDARD.md` |
+| ~~ARD-O~~ | 2026-11-03 | ~~Skills are `spec-organize` (main), `spec-review`, `spec-write`; the standard file is `spec-organize/SPEC-STANDARD.md`~~ → [ARD-AB](#ard-ab--four-skills-including-spec-pipeline) |
 | ARD-N | 2026-10-30 | Success-metric measurement and baseline are deferred to PRD-G |
-| ARD-M | 2026-10-30 | Multi-participant decision authority is deferred to PRD-F |
+| ~~ARD-M~~ | 2026-10-30 | ~~Multi-participant decision authority is deferred to PRD-F~~ → [ARD-AA](#ard-aa--multi-participant-decisions-use-the-latest-history-entry-otherwise-ask) |
 | ARD-L | 2026-10-30 | Blind spots are surfaced by existing skills, not a new mechanism |
 | ARD-K | 2026-10-30 | Every AI edit to a `.md` under `docs/` is ≤10 lines or ≤200 characters; larger changes split |
 | ARD-J | 2026-10-30 | Five stages plus an optional `how-to`; `how-to` is not a stage |
@@ -265,6 +274,42 @@ New good and bad examples from runs append to `annotations.yaml`; `gold.version`
 increments. Scores compare only within one version. Rejected: frozen gold — no
 accumulation of review findings.
 
+### ARD-AA — Multi-participant decisions use the latest history entry, otherwise ask
+
+PRD-F is closed. When two decisions conflict, the later entry in decision-history wins; if the order cannot be established, ask the user. The AI never guesses who is authoritative. Supersedes ~~ARD-M~~.
+
+### ARD-AB — Four skills including spec-pipeline
+
+The deliverable is four skills: spec-pipeline (orchestrator), spec-organize (standard/lint), spec-review (findings), spec-write (edits). Supersedes ~~ARD-O~~, which listed three.
+
+### ARD-AC — PRD and document standard changes
+
+PRD required sections drop Non-Functional Requirements; the parent PRD fills Overview, Goals and Success Metrics, User Stories, Functional Requirements, and Out of Scope. IDs are scoped to feature + type; cross-feature references use `<feature>/<ID>`. HLD architecture sections do not require DSGN IDs; `how-to` stays defined but unchecked.
+
+### ARD-AD — Eval uses deepseek-flash with 3 independent runs
+
+Only the DeepSeek API is available, so gold generation and checker verdicts use three independent runs of `deepseek-flash`; cross-model bias is Unverified. Gold uses four terms: gold case, gold version, exemplar, annotations. `runs/` and `reports/` are not committed. The four non-software examples (shed, Beijing, math, stock) are skill-doc examples; their gold lives elsewhere. Supersedes the gold-example part of ~~ARD-V~~.
+
+### ARD-AE — Non-software mapping, ownership, evidence, and UNKNOWN
+
+Non-software problems use the same five artifacts: research in `raw/research/`, decisions in decision-history, execution in design/impl-plan, verification in test-plan. Each feature design carries a sub-question ownership table (AI查 / 人决定 / AI查完人决定); every claim cites a source; unknowns are marked `UNKNOWN`. Unverified items use `Unverified: <reason> (<condition>)`.
+
+### ARD-AF — Deliberately undefined areas
+
+Failure policy, skill/spec versioning, source-trust grading, and data cleanup are intentionally not defined. Existing non-compliant features are not migrated; only the SDD tree is fixed.
+
+### ARD-AG — Convergence is auto-decided
+
+PIPE-E1–E3 are checked automatically; every open decision must carry a structured `blocking` flag. The AI does not self-declare the spec "stable": the automatic check passes only when no blocking item remains.
+
+### ARD-AH — Reader is the only HTML deliverable
+
+`spec-driven-development-reader.html` is the human-readable deliverable. The legacy `spec-driven-development.html` summary is deleted; references point to the reader.
+
+### ARD-AI — This consolidation is an authorized restructure
+
+The human explicitly authorized a one-shot consolidation of the SDD spec docs. Edits larger than the normal 10-line / 200-character cap are allowed for this batch; the normal cap resumes afterward.
+
 ## Path Update — 2026-10-30
 
 The feature was restructured into sub-features. The paths referenced in the
@@ -284,7 +329,7 @@ pointer. No decision was changed.
 | 2026-09-25 | Initial creation; records the SDD standard's adoption and the two-spec exception |
 | 2026-10-30 | Added a path-update note after the feature was split into sub-features |
 | 2026-10-30 | Added decisions ARD-J–ARD-N from the PRD revision: five stages, small edits, existing-skill blind spots, two deferrals |
-| 2026-11-03 | IDs `0001–0014` → `ARD-A`–`ARD-N`; Log 倒序；格式对齐 document-standard **DSGN-E**/**DSGN-J** |
+| 2026-11-03 | 旧数字 ID → `ARD-A`–`ARD-N`; Log 倒序；格式对齐 document-standard **DSGN-E**/**DSGN-J** |
 | 2026-11-03 | ARD-O–ARD-S：skill 命名、review 边界、测试位置、eval 评分与门槛、gold 版本化 |
 | 2026-11-03 | ARD-T：移除 wayfinder-import sub-feature 树 |
 | 2026-11-03 | ARD-U：spec-pipeline 编排；Map interview；state 两阶段 |
@@ -292,3 +337,4 @@ pointer. No decision was changed.
 | 2026-11-04 | ARD-Y：Map 拆分以一人 20 小时为界，估算和评判由 AI 做 |
 | 2026-11-04 | ARD-Z：PRD 五项写明或 not apply；design 与 decision history 都在才进 Downstream |
 | 2026-11-04 | PRD-F 关闭 ARD-M 的延期：按 history 时间，否则问用户。无新 ARD（A–Z 已用完） |
+| 2026-11-04 | ARD-AA–AI：PRD-F 关闭、4 skill、文档标准、eval、非软件映射、未定义项、自动收敛、reader、restructure 授权 |

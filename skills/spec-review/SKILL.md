@@ -66,6 +66,17 @@ missing any of prd, design, decision-history, impl-plan, test-plan → severity 
 
 **Mechanical pass:** run `python3 tools/run_spec_checks.py docs/features/<f>/` (or review tree); cite each finding with `check` id + path — **suggest fixes only**. Harness cases: `python3 skills/spec-review/tests/run_case_checks.py` (`cases/README.md`). SDD map: `skills/SDD-DELIVERABLES.md`.
 
+**Contract authority:** `docs/features/spec-driven-development/design/spec-driven-development-design-skill-contracts.md`
+defines this skill's inputs, outputs, and boundary. If this body and the contract
+disagree, the contract wins (`DSGN-G`); change the contract first.
+
+## Example Domains
+
+Review criteria are domain-agnostic. The same severity gate applies to the four
+PRD-Q examples: **盖 shed** (garden shed), **北京旅游** (Beijing trip), **数学题**
+(math problem), **股票** (stock analysis). They are illustrations, not gold
+cases; gold lives outside this repo.
+
 ## Process
 
 ### Step 0: Determine Review Type

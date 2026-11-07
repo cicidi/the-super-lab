@@ -5,7 +5,7 @@ state: draft
 final_date: 2026-10-30
 health: active
 owner: cicidi
-last_verified: 2026-10-30
+last_verified: 2026-11-04
 ---
 
 # Document Standard — 文档标准（待 Review）
@@ -46,6 +46,18 @@ Feature 文档多时，缺少统一 standard 会导致：无 authoritative artif
 
 ---
 
+## User Stories
+
+- 作为写 spec 的人，我希望知道文档放哪、叫什么、多大、谁是权威。
+- 作为 reviewer，我希望机械 MUST 能被脚本检查，语义问题只报告不静默改。
+- 作为 agent，我希望 frontmatter、ID、Change Log 规则明确，不用猜。
+
+## Implementation Decisions
+
+- 本标准的 MUST 由 **spec-organize** 的 Lint 执行；semantic 由 **spec-review** 报告（DSGN-L）。
+- `how-to` 暂不机械检查；其余五类按 DSGN-E 执行。
+- 存量不合规文档不迁移，只报告（ARD-AF）。
+
 ## Design
 
 ### DSGN-A — Document Contract
@@ -66,7 +78,7 @@ Sibling：`.../pipeline/design/pipeline-design.md`。**待 review：** tooling �
 
 Committed：**目录 + 文件名**；文件名 **必须** `<f>-<type>…`（`raw/` 除外）。Supporting：`docs/features/<f>/<type>/<source-name>.md`（硬 cap 同 parent type）。**禁止** 单独 `reference/` type（外链材料放在 supporting 或 `raw/`）。
 
-**Split / size：** 六种 type 均可 part；`行数 > 硬 cap` → MUST fail；按 bounded context / domain / ownership / lifecycle / 时间线 拆（不机械切行数）。可先 **DSGN-I** trim（`decision-history` 不 trim entry，只拆 part）。Entry 文件可链 part。**Collision** → **DSGN-K**。硬 cap 含 frontmatter 与 Change Log；**删 L1 凑 cap = defect**。
+**Split / size（PRD-D；目录/文件名关系见 PRD-E）：** 六种 type 均可 part；`行数 > 硬 cap` → MUST fail；按 bounded context / domain / ownership / lifecycle / 时间线 拆（不机械切行数）。可先 **DSGN-I** trim（`decision-history` 不 trim entry，只拆 part）。Entry 文件可链 part。**Collision** → **DSGN-K**。硬 cap 含 frontmatter 与 Change Log；**删 L1 凑 cap = defect**。
 
 | Type | 内容 | Commit | 目录 | 文件名（entry） | 文件名（part） | 目标行 | 硬 cap |
 |---|---|---|---|---|---|---|---|
@@ -179,14 +191,19 @@ final_date: YYYY-MM-DD   # final 时必填
 
 | Type | Required sections（可 add，不可 rename/drop） |
 |---|---|
-| `prd` | Overview, Goals and Success Metrics, User Stories, Functional Requirements, Non-Functional Requirements, Out of Scope |
-| `design` | Problem Statement, Solution, User Stories, Implementation Decisions, Design, Testing Decisions, Out of Scope, Further Notes |
-| `impl-plan` | Global Constraints, numbered Tasks |
+| `prd` | Overview, Goals and Success Metrics, User Stories, Functional Requirements, Out of Scope, Resources Needed |
+| `design` | Problem Statement, Solution, User Stories, Implementation Decisions, Design, Testing Decisions, Out of Scope, Further Notes, Alternatives Considered, Drawbacks, Risks and Mitigations, Open Questions, Reversibility |
+| `impl-plan` | Global Constraints, Acceptance Criteria, IMPL-* tasks |
 | `test-plan` | Test Cases, Test Execution Order, Expected Pass Threshold |
 | `decision-history` | Decision Log, Evidence Appendix |
 | `how-to` | Overview, Prerequisites, Steps, Verification |
 
-`design` 可选 `Alternatives Considered`（L3）。Decision Log 表头：`ID \| Date \| Decision`（**无** `Status` / `Supersedes` 列）。**倒序**：新 entry 在表顶。Change Log：**最后一节**，只 append。PROTECTED 块任何 mode 不改。INDEX：文档增删移后 regenerate。
+**检查范围：** `how-to` 暂不机械检查；其余五类按本表执行。
+
+新增节承自 KEP / Rust RFC：`Alternatives Considered`、`Drawbacks`、`Risks and Mitigations`、
+`Open Questions` 为通用节;`Acceptance Criteria`(= Graduation Criteria)、`Reversibility`
+(= Upgrade/Downgrade)、`Resources Needed`(= Infrastructure Needed)为改名后的通用语义。
+版本偏移、发布签核、运维就绪问卷**不采纳**(集群/运维形状,违反 PRD-Q)。Decision Log 表头：`ID \| Date \| Decision`（**无** `Status` / `Supersedes` 列）。**倒序**：新 entry 在表顶。Change Log：**最后一节**，只 append。PROTECTED 块任何 mode 不改。INDEX：文档增删移后 regenerate。
 
 #### DSGN-F — 条目 ID（type 前缀 + 字母）
 
@@ -204,7 +221,13 @@ final_date: YYYY-MM-DD   # final 时必填
 
 跨文档引用 **写全 ID**（如 `PRD-A`、`ARD-F`）。`how-to` 无强制 letter ID。
 
+**作用域（MUST）：** ID 在 **feature + type** 内唯一；跨 feature 引用写 `<feature>/<ID>`（如 `document-standard/PRD-K`）。裸 ID 只在本 feature 内有意义。
+
+**HLD 例外：** 父 HLD 的 System Context / Logical Architecture 等 **架构章节** 不要求 `DSGN-*` ID；只有可追溯的规则小节才要 ID。
+
 **凡有序号即 ID（MUST）：** ADR、requirement、design 规则小节、impl task、test case、defer/open question 等 **一切** 可追溯条目 — **必须** 用上表 `{前缀}-{字母}`。**禁止** 裸数字（`0001`）、`PRD-1`/`DH-1`/`FR-3`/`OQ-1`/`D1` 等作永久 ID。本 design 篇小节即 **DSGN-A** 起（见索引）。
+
+**检查：** `ids.py` 按 type 强制标题模式（`PRD-*` / `DSGN-*` / `IMPL-*` / `TST-*` / `ARD-*`），缺 ID 或裸数字即 fail。
 
 **AI 单次 edit 粒度**（≤10 行 / ≤200 字）属 SDD parent HLD **§4**，不在本 document-standard；impl 目标：**spec-write** 等书写 skill。
 
@@ -326,6 +349,32 @@ Trim 顺序 L4 → L3 → 压 L2；**L1 永不删**。仍 `> 硬 cap` → **DSGN
 - 已知历史偏离例：`skill-factory/design/` 等 — migrate 时按 DSGN-M 逐项清。
 - **待一起 review：** **DSGN-B** 硬 cap 数字、sub-feature 是否正式 MUST、`raw/` 子目录是否够用。AI edit 上限见 parent HLD §4；agent 全局 norm（含 §5 decision-history、§6 CLAUDE+skill）见 parent HLD。
 
+## Alternatives Considered
+
+- 单一 `spec` 类型装全部内容 → 拒:体积失控,无法按 concern 分篇(**DSGN-B**)。
+- 目录按 initiative 而非 feature 组织 → 拒:与 `docs/features/` 既有树冲突。
+- frontmatter 用 `status` 而非 `health` → 拒(**ARD-D**)。
+
+## Drawbacks
+
+- 类型与必填节偏多,小 feature 也要写全;靠 sub-feature 豁免(parent HLD §8)缓解。
+- 机械检查只验结构,验不了内容质量。
+
+## Risks and Mitigations
+
+- 风险:规则膨胀,agent 与人都会跳过检查 → `must_registry.yaml` + `run_spec_checks.py` 强制。
+- 风险:标准与实现漂移 → SPEC-STANDARD 与 DSGN 同批改,`registry_provenance` 检查来源。
+
+## Open Questions
+
+- sub-feature 的 `raw/` 是否全工具支持(待 tooling)。
+- 硬 cap 是否按 feature 规模分档。
+
+## Reversibility
+
+- 必填节可回退:改 DSGN-E + SPEC-STANDARD + `sections.py` 三处,旧文档补节即可,无数据迁移。
+- 重命名节属新规则;旧文档留旧名会被 `sections` 报错,须同批改。
+
 ## Change Log
 
 | Date | Change |
@@ -353,5 +402,8 @@ Trim 顺序 L4 → L3 → 压 L2；**L1 永不删**。仍 `> 硬 cap` → **DSGN
 | 2026-11-03 | Feature 级 test plan（parent 仅 harness） |
 | 2026-11-03 | Testing Decisions → parent test plan（被测 = skill）；DSGN-L 加 Review 行；doc-write → spec-write |
 | 2026-11-03 | **DSGN-N** spec reader HTML → aspect design + `skills/spec-html-standard/` |
+| 2026-11-04 | DSGN-E PRD 去掉 NFR；how-to 标未检查；DSGN-F ID 作用域、HLD 例外、标题检查 |
+| 2026-11-04 | DSGN-E impl-plan 改为 IMPL-* tasks |
+| 2026-11-04 | design 补 User Stories / Implementation Decisions 章节 |
 | 2026-11-04 | decision-history 硬 cap 改为不设，与 ARD-E 一致 |
 | 2026-11-04 | decision-history 去掉「宜 ≤600 行」，目标行数也不设 |

@@ -1,0 +1,48 @@
+# MUST judgments — llm-method registry items, gold v1.
+# verdict: pass | fail. evidence must point at the enforcing artifact.
+items:
+  - id: MUST-A
+    verdict: pass
+    evidence: must_registry.yaml sources this item from document-standard design; test-plan covers spec-organize/spec-review.
+  - id: MUST-B
+    verdict: pass
+    evidence: registry MUST-C..H source DSGN-B..F; MUST-AB sources DSGN-M; DSGN-G..L remain semantic.
+  - id: MUST-J
+    verdict: pass
+    evidence: SPEC-STANDARD.md "INDEX / book" requires regenerating INDEX/book after committed tree change; book is not authoritative.
+  - id: MUST-K
+    verdict: pass
+    evidence: SPEC-STANDARD.md "INDEX / book" requires publish nav not to contradict the feature tree or INDEX (DSGN-D).
+  - id: MUST-N
+    verdict: pass
+    evidence: spec-organize/SKILL.md "Authority by Concern" table; conflicts Detect -> Report -> Ask.
+  - id: MUST-P
+    verdict: pass
+    evidence: spec-review Branch A runs semantic design review; SPEC-STANDARD gates are mechanical only.
+  - id: MUST-R
+    verdict: pass
+    evidence: must_registry.yaml exists (28 items, python/llm split); test-plan TST-A scans it.
+  - id: MUST-T
+    verdict: pass
+    evidence: spec-pipeline SKILL.md Step 2 interviews the user; map skill optional and replaceable.
+  - id: MUST-U
+    verdict: pass
+    evidence: spec-pipeline MUST gate "No silent rewrite of upstream artifacts (PIPE-I)".
+  - id: MUST-V
+    verdict: pass
+    evidence: pipeline-design PIPE-A defines spec-pipeline responsibilities and the skill body mirrors them.
+  - id: MUST-W
+    verdict: pass
+    evidence: spec-pipeline Step 2 - AI judges splits/decisions/scratch, confirms before creating paths.
+  - id: MUST-X
+    verdict: pass
+    evidence: Step 2 keeps the interview required and the map skill optional.
+  - id: MUST-Y
+    verdict: pass
+    evidence: Step 2 confirm-before-create plus anti-pattern "Creating feature directories without human confirmation".
+  - id: MUST-Z
+    verdict: pass
+    evidence: spec-pipeline Step 3 gates Downstream on PIPE-E convergence.
+  - id: MUST-AA
+    verdict: pass
+    evidence: test-plan TST-O maps every parent PRD id to a design anchor; implemented in test_tst_o_trace.py.
