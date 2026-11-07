@@ -2,7 +2,7 @@
 name: tmux-status-bar
 description: |
   Use when setting up or customizing the tmux status bar to display session name,
-  project folder, git branch, git status, and active initiative from coworker.
+  project folder, git branch, git status, and active feature from coworker.
   Triggered by phrases like "tmux bar", "tmux status", "customize tmux",
   "setup tmux display".
 license: MIT
@@ -17,7 +17,7 @@ metadata:
     - configure tmux
   when_to_use: |
     When the user wants to customize their tmux status bar to show project context,
-    git information, and coworker initiative. Use this skill to create or update
+    git information, and coworker feature. Use this skill to create or update
     the status bar configuration.
   when_not_to_use: |
     For general tmux configuration (keybinds, plugins, colors) — those are
@@ -27,14 +27,14 @@ metadata:
 # tmux-status-bar
 
 Customize the tmux status bar with project-aware context: session name,
-project folder, git branch + status, and active coworker initiative.
+project folder, git branch + status, and active coworker feature.
 
 ## When to Use
 
-- User wants to see project/git/initiative info in their tmux bar
+- User wants to see project/git/feature info in their tmux bar
 - Setting up tmux status bar from scratch
 - Updating an existing tmux bar to show more context
-- User asks to "show git branch in tmux" or "add initiative to tmux"
+- User asks to "show git branch in tmux" or "add feature to tmux"
 
 ## When NOT to Use
 
@@ -50,7 +50,7 @@ Create `~/.tmux/scripts/status_info.sh`:
 
 ```sh
 #!/bin/sh
-# tmux status bar: session | project | branch | git status | initiative
+# tmux status bar: session | project | branch | git status | feature
 
 SESSION=$(tmux display-message -p '#{session_name}' 2>/dev/null)
 PANE_PATH=$(tmux display-message -p -F '#{pane_current_path}' 2>/dev/null)
@@ -98,15 +98,15 @@ if [ -n "$BRANCH" ]; then
     [ "$DIRTY" -eq 1 ] && printf "#[fg=yellow]*" || printf "#[fg=green]✓"
 fi
 
-INITIATIVE=""
+FEATURE=""
 for DIR in "$PANE_PATH" "$PROJECT_DIR" "$HOME"; do
-    if [ -n "$DIR" ] && [ -f "$DIR/.coworker/initiatives/.active" ]; then
-        INITIATIVE=$(cat "$DIR/.coworker/initiatives/.active" 2>/dev/null)
+    if [ -n "$DIR" ] && [ -f "$DIR/.coworker/features/.active" ]; then
+        FEATURE=$(cat "$DIR/.coworker/features/.active" 2>/dev/null)
         break
     fi
 done
-if [ -n "$INITIATIVE" ]; then
-    printf " #[fg=colour240]| initiative:#[fg=magenta]%s" "$INITIATIVE"
+if [ -n "$FEATURE" ]; then
+    printf " #[fg=colour240]| feature:#[fg=magenta]%s" "$FEATURE"
 fi
 ```
 
@@ -149,7 +149,7 @@ If the script produces no output, check:
 ## Status Bar Layout
 
 ```
- 2026-07-01 06:45:23   [tmux:opencode | project:opencode | branch:dev status:↑1 ✓ | initiative:claude-md-design]  [1:zsh]
+ 2026-07-01 06:45:23   [tmux:opencode | project:opencode | branch:dev status:↑1 ✓ | feature:claude-md-design]  [1:zsh]
 ```
 
 | Field | Color | Meaning |
@@ -158,10 +158,10 @@ If the script produces no output, check:
 | `project:NAME` | white | Git repo top-level basename |
 | `branch:NAME` | cyan | Current git branch |
 | `status:↑N ↓N +N ?N ✓/*` | yellow/red/green/magenta | Ahead, behind, staged, untracked, clean/dirty |
-| `initiative:NAME` | magenta | Active coworker initiative (from `.coworker/initiatives/.active`) |
+| `feature:NAME` | magenta | Active coworker feature (from `.coworker/features/.active`) |
 
 ## Sources
 
 - Script design: confidence high — verified working on Linux with tmux 3.x
 - Color codes: tmux standard `fg=colourN` format, works with truecolor terminals
-- Initiative detection: walks up from pane path to find `.coworker/initiatives/.active`
+- Feature detection: walks up from pane path to find `.coworker/features/.active`

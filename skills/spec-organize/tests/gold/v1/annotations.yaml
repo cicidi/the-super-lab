@@ -1,0 +1,19 @@
+# Gold annotations (TST-D). Grow after TST-C runs; compare runs only within same gold.version.
+version: v1
+annotations:
+  - id: GOOD-A
+    kind: good
+    where: requirement.md
+    text: Eval requirement states a fixed iPhone purchase scenario with clear out-of-scope boundary.
+    added_in: v1
+  - id: GOOD-B
+    kind: good
+    where: context.md
+    text: Context pack defines budget conflict (wife cap vs father quote) for interviewer grounding.
+    added_in: v1
+  - id: BAD-A
+    kind: bad
+    where: exemplar/ (TST-D)
+    text: Permanent requirement ID uses numeric suffix (e.g. PRD-1) instead of letter ID.
+    expected_fix: Renumber to PRD-A style per DSGN-F; strike+link if superseding.
+    added_in: v1

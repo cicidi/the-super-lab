@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Implementation plan · Spec Atlas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:400,400italic,500,500italic,700|Roboto+Mono:400,500,700|Noto+Sans+SC:400,500,700&display=swap">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><a href="index.html"><span class="brand-mark">SDD</span><span class="brand-name">Spec Atlas</span></a></div>
+  </div>
+</header>
+<div class="site">
+  <aside class="sidebar">
+  <details class="tree-drawer" open>
+    <summary>Browse the spec tree</summary>
+    <nav aria-label="Spec tree">
+      <div class="tree-overview"><a class="tree-link" href="index.html"><span class="tree-link__num">00</span>Overview</a></div>
+      <ul class="tree"><li class="tree-branch"><details open><summary>Spec-driven development</summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="sdd-prd.html"><span class="tree-link__num">01</span>PRD</a></li><li class="tree-leaf"><a class="tree-link" href="sdd-design.html"><span class="tree-link__num">02</span>Design (HLD)</a></li><li class="tree-leaf"><a class="tree-link" href="sdd-skill-contracts.html"><span class="tree-link__num">03</span>Design (Skill contracts)</a></li><li class="tree-leaf"><a class="tree-link" href="sdd-impl-plan.html" aria-current="page"><span class="tree-link__num">04</span>Implementation plan</a></li><li class="tree-leaf"><a class="tree-link" href="sdd-test-plan.html"><span class="tree-link__num">05</span>Test plan</a></li><li class="tree-leaf"><a class="tree-link" href="sdd-decision-history.html"><span class="tree-link__num">06</span>Decision history</a></li><li class="tree-branch"><details open><summary>Children</summary><ul class="tree"><li class="tree-branch"><details open><summary>Pipeline</summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="pipeline-design.html"><span class="tree-link__num">07</span>Design</a></li></ul></details></li><li class="tree-branch"><details open><summary>Document standard</summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="ds-prd.html"><span class="tree-link__num">08</span>PRD — spec reader HTML</a></li><li class="tree-leaf"><a class="tree-link" href="ds-design.html"><span class="tree-link__num">09</span>Design</a></li><li class="tree-leaf"><a class="tree-link" href="ds-design-aspect.html"><span class="tree-link__num">10</span>Design — spec reader HTML</a></li></ul></details></li></ul></details></li></ul></details></li><li class="tree-branch"><details open><summary>Skill factory</summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="sf-prd.html"><span class="tree-link__num">11</span>PRD</a></li><li class="tree-leaf"><a class="tree-link" href="sf-design.html"><span class="tree-link__num">12</span>Design</a></li><li class="tree-leaf"><a class="tree-link" href="sf-impl-plan.html"><span class="tree-link__num">13</span>Implementation plan</a></li><li class="tree-leaf"><a class="tree-link" href="sf-test-plan.html"><span class="tree-link__num">14</span>Test plan</a></li><li class="tree-leaf"><a class="tree-link" href="sf-decision-history.html"><span class="tree-link__num">15</span>Decision history</a></li></ul></details></li></ul>
+    </nav>
+  </details>
+</aside>
+  <main class="content">
+    <nav class="breadcrumbs"><a href="index.html">Docs</a> / <span>Spec-driven development</span> / <span>Implementation plan</span></nav>
+    <article class="doc" data-doc="sdd-impl-plan">
+      <header class="doc-head">
+        <p class="eyebrow">Parent · spec-driven-development</p>
+        <h1>Implementation plan</h1>
+        <p class="source">Canonical: impl-plan/spec-driven-development-impl-plan.md</p>
+      </header>
+      <nav class="related" aria-label="Related pages"><span class="related__label">Related</span><a href="sdd-prd.html">PRD</a><a href="sdd-design.html">Design (HLD)</a><a href="sdd-test-plan.html">Test plan</a></nav>
+      <div class="doc-body">
+        <h2>Spec-Driven Development — Implementation Plan</h2>
+<h3>Global Constraints</h3>
+<ul>
+<li><strong>Spec before skill:</strong> If spec error blocks work, <strong>ask human</strong> → update spec → then skills/tests.</li>
+<li><strong>Skills:</strong> Use <code>skill create</code> / <code>skill edit</code> (<code>skills/skill/SKILL.md</code>) for SKILL.md bodies; this plan defines order only.</li>
+<li><strong>Tests:</strong> Parent <code>test-plan/spec-driven-development-test-plan.md</code>; assets under <code>skills/spec-organize/tests/</code>.</li>
+<li><strong>No wayfinder-import</strong> sub-feature (ARD-T).</li>
+<li><strong>Eval:</strong> deepseek-flash, 3 runs; runs/reports not committed (ARD-AD).</li>
+<li><strong>No legacy migration</strong> (ARD-AF); only the SDD tree is fixed.</li>
+</ul>
+<h3 class="impl-step"><span class="impl-id">IMPL-A</span><span class="impl-title">Skill directory migration (DONE baseline)</span></h3>
+<p class="impl-goal"><strong>Goal:</strong> <code>doc-organize</code> → <code>spec-organize</code>, <code>doc-review</code> → <code>spec-review</code>.</p>
+<p class="impl-steps"><strong>Steps:</strong> <code>git mv</code> directories; update <code>name:</code> and cross-refs in SKILL.md; update <code>~/.coworker/project.yaml</code> skill list when deploying.</p>
+<p class="impl-verify"><strong>Verify:</strong> <code>ls skills/spec-organize skills/spec-review</code>; triggers resolve.</p>
+<h3 class="impl-step"><span class="impl-id">IMPL-B</span><span class="impl-title">New skills: spec-pipeline, spec-write</span></h3>
+<p class="impl-goal"><strong>Goal:</strong> SKILL.md stubs aligned with pipeline design and HLD §7.</p>
+<p class="impl-steps"><strong>Steps:</strong> Refine via <code>skill create</code> / <code>skill edit</code> if process changes; keep in sync with <code>features/pipeline/design/pipeline-design.md</code>.</p>
+<p class="impl-verify"><strong>Verify:</strong> Description starts with &quot;Use when&quot;; MUST gates present.</p>
+<h3 class="impl-step"><span class="impl-id">IMPL-C</span><span class="impl-title">SPEC-STANDARD.md</span></h3>
+<p class="impl-goal"><strong>Goal:</strong> Enforceable summary in <code>skills/spec-organize/SPEC-STANDARD.md</code>; full rules stay in document-standard design.</p>
+<p class="impl-steps"><strong>Steps:</strong> On DSGN change, update summary in same PR as design diff.</p>
+<p class="impl-verify"><strong>Verify:</strong> spec-organize Lint references SPEC-STANDARD.</p>
+<h3 class="impl-step"><span class="impl-id">IMPL-D</span><span class="impl-title">Test skeleton &amp; iPhone gold inputs</span></h3>
+<p class="impl-goal"><strong>Goal:</strong> <code>skills/spec-organize/tests/</code> per parent test plan.</p>
+<p><strong>Deliverables:</strong></p>
+<ul>
+<li><code>eval.yaml</code>, <code>must_registry.yaml</code> (populate via TST-A scan)</li>
+<li><code>gold/iphone/v1/requirement.md</code>, <code>gold/iphone/v1/context.md</code></li>
+<li><code>fixtures/neg/</code>, <code>fixtures/pos/</code> (grow with TST-B)</li>
+<li><code>checks/</code> Python package (implement TST-B)</li>
+</ul>
+<p class="impl-verify"><strong>Verify:</strong> Run TST-B when checks exist; gold inputs present.</p>
+<h3 class="impl-step"><span class="impl-id">IMPL-E</span><span class="impl-title">Self-run eval (agent)</span></h3>
+<p class="impl-goal"><strong>Goal:</strong> Baseline eval: <code>grill.skills: []</code>, spec-organize only, iPhone requirement + context.</p>
+<p class="impl-steps"><strong>Steps:</strong> New branch <code>eval/v1/&lt;run_id&gt;</code>; run spec-pipeline → write feature spec; TST-E/F/K; fix <strong>spec first</strong> on failure.</p>
+<p class="impl-verify"><strong>Verify:</strong> HTML report; scores per test plan.</p>
+<h3 class="impl-step"><span class="impl-id">IMPL-F</span><span class="impl-title">Tabbed reader HTML</span></h3>
+<p class="impl-goal"><strong>Goal:</strong> <code>spec-driven-development-reader.html</code> — <strong>human-readable</strong> HTML (cards, tables, flows), not a markdown viewer. Tabs: parent (PRD, design, impl, test, decision history) + children (pipeline, document-standard).</p>
+<p class="impl-steps"><strong>Steps:</strong> Rewrite prose when canonical <code>.md</code> changes; each panel links to source path in footer.</p>
+<p class="impl-verify"><strong>Verify:</strong> Open file in browser; all canonical paths exist.</p>
+<h3 class="impl-step"><span class="impl-id">IMPL-G</span><span class="impl-title">CLAUDE.local / managed block</span></h3>
+<p class="impl-goal"><strong>Goal:</strong> Pipeline Create/Map progress before <code>&lt;f&gt;</code> exists (PIPE-H).</p>
+<p class="impl-steps"><strong>Steps:</strong> Add SDD block to project <code>CLAUDE.local.md</code>: phase, rough PRD pointer, link to reader HTML.</p>
+<p class="impl-verify"><strong>Verify:</strong> spec-pipeline Step 0 reads block.</p>
+<h3 class="impl-step"><span class="impl-id">IMPL-H</span><span class="impl-title">Docs hygiene</span></h3>
+<p class="impl-goal"><strong>Goal:</strong> INDEX lists parent impl-plan and new aspect design; delete legacy summary HTML.</p>
+<p class="impl-steps"><strong>Steps:</strong> Regenerate or hand-update <code>docs/INDEX.md</code>; delete <code>spec-driven-development.html</code>; keep <code>spec-driven-development-reader.html</code> only.</p>
+<p class="impl-verify"><strong>Verify:</strong> No links to removed summary HTML or wayfinder-import paths under SDD.</p>
+<h3 class="impl-step"><span class="impl-id">IMPL-I</span><span class="impl-title">spec-review mechanical MUST alignment</span></h3>
+<p class="impl-goal"><strong>Goal:</strong> SKILL matches test plan (detect MUST violations + suggestions).</p>
+<p class="impl-steps"><strong>Steps:</strong> Edit <code>skills/spec-review/SKILL.md</code> after spec-review section in document-standard / test plan stable.</p>
+<p class="impl-verify"><strong>Verify:</strong> TST-H fixtures pass when implemented.</p>
+<h3 class="impl-step"><span class="impl-id">IMPL-J</span><span class="impl-title">Eval config &amp; schema test</span></h3>
+<p class="impl-goal"><strong>Goal:</strong> <code>eval.yaml</code> runnable with <code>deepseek-flash</code>; 3 runs; target repo env override; <code>test_eval_config.py</code> fails on missing config.</p>
+<p class="impl-verify"><strong>Verify:</strong> <code>pytest test_eval_config.py</code>; <code>eval.yaml</code> has all required keys.</p>
+<h3 class="impl-step"><span class="impl-id">IMPL-K</span><span class="impl-title">Fixtures &amp; review cases</span></h3>
+<p class="impl-goal"><strong>Goal:</strong> 11 neg + pos fixtures; 16 spec-review cases (11 mechanical + 5 semantic).</p>
+<p class="impl-verify"><strong>Verify:</strong> TST-B green; TST-H/I assets present.</p>
+<h3 class="impl-step"><span class="impl-id">IMPL-L</span><span class="impl-title">Eval report script</span></h3>
+<p class="impl-goal"><strong>Goal:</strong> <code>tools/render_eval_report.py</code> generates a single HTML with score 1/2 and run metadata.</p>
+<p class="impl-verify"><strong>Verify:</strong> TST-K on a sample run.</p>
+<h3 class="impl-step"><span class="impl-id">IMPL-M</span><span class="impl-title">Checker updates</span></h3>
+<p class="impl-goal"><strong>Goal:</strong> <code>sections.py</code> checks 5 types; <code>ids.py</code> enforces title patterns; remove exemptions.</p>
+<p class="impl-verify"><strong>Verify:</strong> TST-B; <code>run_spec_checks.py</code> on SDD tree.</p>
+<h3 class="impl-step"><span class="impl-id">IMPL-N</span><span class="impl-title">Skill contracts &amp; four examples</span></h3>
+<p class="impl-goal"><strong>Goal:</strong> <code>design/spec-driven-development-design-skill-contracts.md</code>; each skill body names shed / 北京旅游 / 数学题 / 股票 (PRD-Q).</p>
+<p class="impl-verify"><strong>Verify:</strong> TST-S; spec-review reads contracts.</p>
+<h3 class="impl-step"><span class="impl-id">IMPL-O</span><span class="impl-title">Reader freshness &amp; summary removal</span></h3>
+<p class="impl-goal"><strong>Goal:</strong> regenerate reader after spec changes; delete <code>spec-driven-development.html</code>.</p>
+<p class="impl-verify"><strong>Verify:</strong> TST-R; no dead links.</p>
+<h3>Execution order</h3>
+<p>IMPL-A → B → C → D → J → K → M → N → F → G → H → O → E → I (eval after readable spec + skeleton).</p>
+<h3>Acceptance Criteria</h3>
+<ul>
+<li>score 1 = <code>total/total</code>,且 judge 3/3 一致。</li>
+<li>score 2 ≥ 6,annotations v1。</li>
+<li>可执行的 TST-A–S 全绿;<code>run_spec_checks.py</code> 0 findings。</li>
+</ul>
+<h3>Change Log</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Date</th>
+<th>Change</th>
+</tr></thead><tbody>
+<tr>
+<td>2026-11-03</td>
+<td>Initial parent impl-plan; tasks 1–9</td>
+</tr>
+<tr>
+<td>2026-11-03</td>
+<td>Task 6：Reader 改为富格式汇编，非 MD fetch</td>
+</tr>
+<tr>
+<td>2026-11-04</td>
+<td>Task 1–9 → IMPL-A–I；新增 IMPL-J–O：eval 配置、fixtures/cases、报告、检查器、skill 契约、reader</td>
+</tr>
+<tr>
+<td>2026-11-04</td>
+<td>Global Constraints 加 eval/no-migration；IMPL-D gold 路径改 iphone/v1</td>
+</tr>
+</tbody></table></div>
+      </div>
+    </article>
+    <nav class="pager" aria-label="Previous and next"><a class="prev" href="sdd-skill-contracts.html"><span class="label">Previous</span>Design (Skill contracts)</a><a class="next" href="sdd-test-plan.html"><span class="label">Next</span>Test plan</a></nav>
+  </main>
+</div>
+<footer class="foot"><div class="foot-inner">Assembled from committed <code>.md</code>. The Markdown is authoritative; this page is a reading view.</div></footer>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>if(window.mermaid){mermaid.initialize({startOnLoad:false});}</script>
+<script src="assets/app.js"></script>
+</body>
+</html>

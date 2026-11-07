@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Decision history · Spec Atlas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:400,400italic,500,500italic,700|Roboto+Mono:400,500,700|Noto+Sans+SC:400,500,700&display=swap">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><a href="index.html"><span class="brand-mark">SDD</span><span class="brand-name">Spec Atlas</span></a></div>
+  </div>
+</header>
+<div class="site">
+  <aside class="sidebar">
+  <details class="tree-drawer" open>
+    <summary>Browse the spec tree</summary>
+    <nav aria-label="Spec tree">
+      <div class="tree-overview"><a class="tree-link" href="index.html"><span class="tree-link__num">00</span>Overview</a></div>
+      <ul class="tree"><li class="tree-branch"><details open><summary>Spec-driven development</summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="sdd-prd.html"><span class="tree-link__num">01</span>PRD</a></li><li class="tree-leaf"><a class="tree-link" href="sdd-design.html"><span class="tree-link__num">02</span>Design (HLD)</a></li><li class="tree-leaf"><a class="tree-link" href="sdd-skill-contracts.html"><span class="tree-link__num">03</span>Design (Skill contracts)</a></li><li class="tree-leaf"><a class="tree-link" href="sdd-impl-plan.html"><span class="tree-link__num">04</span>Implementation plan</a></li><li class="tree-leaf"><a class="tree-link" href="sdd-test-plan.html"><span class="tree-link__num">05</span>Test plan</a></li><li class="tree-leaf"><a class="tree-link" href="sdd-decision-history.html" aria-current="page"><span class="tree-link__num">06</span>Decision history</a></li><li class="tree-branch"><details open><summary>Children</summary><ul class="tree"><li class="tree-branch"><details open><summary>Pipeline</summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="pipeline-design.html"><span class="tree-link__num">07</span>Design</a></li></ul></details></li><li class="tree-branch"><details open><summary>Document standard</summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="ds-prd.html"><span class="tree-link__num">08</span>PRD — spec reader HTML</a></li><li class="tree-leaf"><a class="tree-link" href="ds-design.html"><span class="tree-link__num">09</span>Design</a></li><li class="tree-leaf"><a class="tree-link" href="ds-design-aspect.html"><span class="tree-link__num">10</span>Design — spec reader HTML</a></li></ul></details></li></ul></details></li></ul></details></li><li class="tree-branch"><details open><summary>Skill factory</summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="sf-prd.html"><span class="tree-link__num">11</span>PRD</a></li><li class="tree-leaf"><a class="tree-link" href="sf-design.html"><span class="tree-link__num">12</span>Design</a></li><li class="tree-leaf"><a class="tree-link" href="sf-impl-plan.html"><span class="tree-link__num">13</span>Implementation plan</a></li><li class="tree-leaf"><a class="tree-link" href="sf-test-plan.html"><span class="tree-link__num">14</span>Test plan</a></li><li class="tree-leaf"><a class="tree-link" href="sf-decision-history.html"><span class="tree-link__num">15</span>Decision history</a></li></ul></details></li></ul>
+    </nav>
+  </details>
+</aside>
+  <main class="content">
+    <nav class="breadcrumbs"><a href="index.html">Docs</a> / <span>Spec-driven development</span> / <span>Decision history</span></nav>
+    <article class="doc" data-doc="sdd-decision-history">
+      <header class="doc-head">
+        <p class="eyebrow">Parent · spec-driven-development</p>
+        <h1>Decision history</h1>
+        <p class="source">Canonical: decision-history/spec-driven-development-decision-history.md</p>
+      </header>
+      <nav class="related" aria-label="Related pages"><span class="related__label">Related</span><a href="sdd-prd.html">PRD</a><a href="sdd-design.html">Design (HLD)</a><a href="sdd-test-plan.html">Test plan</a></nav>
+      <div class="doc-body">
+        <h2>Spec-Driven Development — Decision History</h2>
+<p>Decision Log uses <strong><code>ARD-{letter}</code></strong> IDs (document-standard <strong>DSGN-F</strong>, <strong>DSGN-J</strong>): newest entry <strong>first</strong>; supersede = <del>strikethrough</del> + link to the replacing <strong>ARD</strong> ID.</p>
+<h3>Decision Log</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>ID</th>
+<th>Date</th>
+<th>Decision</th>
+</tr></thead><tbody>
+<tr>
+<td>ARD-AI</td>
+<td>2026-11-04</td>
+<td>This spec consolidation is an explicitly authorized restructure; larger-than-10-line edits are allowed for this batch</td>
+</tr>
+<tr>
+<td>ARD-AH</td>
+<td>2026-11-04</td>
+<td>The human-readable reader is the only HTML deliverable; the legacy summary HTML is deleted</td>
+</tr>
+<tr>
+<td>ARD-AG</td>
+<td>2026-11-04</td>
+<td>Convergence is auto-decided: open decisions must carry a structured <code>blocking</code> flag; AI does not self-declare &quot;stable&quot;</td>
+</tr>
+<tr>
+<td>ARD-AF</td>
+<td>2026-11-04</td>
+<td>Deliberately undefined: failure policy, skill/spec versioning, source-trust grading, data cleanup; no legacy migration</td>
+</tr>
+<tr>
+<td>ARD-AE</td>
+<td>2026-11-04</td>
+<td>Non-software problems map to the same five artifacts; design carries the ownership table; evidence is mandatory and unknowns are marked UNKNOWN</td>
+</tr>
+<tr>
+<td>ARD-AD</td>
+<td>2026-11-04</td>
+<td>Eval uses deepseek-flash with 3 independent runs; gold has case/version/exemplar/annotations; runs and reports are not committed; four examples are skill-doc examples, not repo gold</td>
+</tr>
+<tr>
+<td>ARD-AC</td>
+<td>2026-11-04</td>
+<td>PRD required sections drop NFR; IDs are scoped feature+type and cross-feature references use feature/ID; how-to stays unchecked</td>
+</tr>
+<tr>
+<td>ARD-AB</td>
+<td>2026-11-04</td>
+<td>Four deliverables: spec-pipeline, spec-organize, spec-review, spec-write</td>
+</tr>
+<tr>
+<td>ARD-AA</td>
+<td>2026-11-04</td>
+<td>Multi-participant decisions use the latest decision-history entry; if order is unclear, ask the user; AI never guesses</td>
+</tr>
+<tr>
+<td>ARD-Z</td>
+<td>2026-11-04</td>
+<td>Downstream waits until the PRD states limitation, preference, timeline, resource, and tool, each filled or marked not apply, and design plus decision history both exist</td>
+</tr>
+<tr>
+<td>ARD-Y</td>
+<td>2026-11-04</td>
+<td>Map split: AI offers options; ≤20 hours for one person is one feature spec; over that, split into peer or sub-feature; AI estimates and judges</td>
+</tr>
+<tr>
+<td>ARD-X</td>
+<td>2026-11-04</td>
+<td>Execution delivery is a mock MCP client call to a mock server; a printed log is success; no live booking or orders</td>
+</tr>
+<tr>
+<td>ARD-W</td>
+<td>2026-11-04</td>
+<td>Readability is scored by an LLM playing a bachelor&#x27;s-level programmer; pass means it understands</td>
+</tr>
+<tr>
+<td><del>ARD-V</del></td>
+<td>2026-11-04</td>
+<td><del>Hard non-software problems stay in this PRD and use the same five artifacts; four gold examples</del> → <a href="#ard-ad--eval-uses-deepseek-flash-with-3-independent-runs">ARD-AD</a></td>
+</tr>
+<tr>
+<td>ARD-U</td>
+<td>2026-11-03</td>
+<td>Pipeline deliverable is <strong>spec-pipeline</strong> orchestrator; Map is interview-led with AI-judged outputs; state CLAUDE.local then <code>raw/state/</code></td>
+</tr>
+<tr>
+<td>ARD-T</td>
+<td>2026-11-03</td>
+<td>wayfinder-import is not an SDD sub-feature; its tree under <code>features/wayfinder-import/</code> is removed</td>
+</tr>
+<tr>
+<td>ARD-S</td>
+<td>2026-11-03</td>
+<td>Gold set grows in both directions and is versioned; scores compare only within one gold version</td>
+</tr>
+<tr>
+<td>ARD-R</td>
+<td>2026-11-03</td>
+<td>Two eval scores: MUST <code>x/total</code> must be full; exemplar score <code>(plus−minus)×10/total</code> must not regress</td>
+</tr>
+<tr>
+<td>ARD-Q</td>
+<td>2026-11-03</td>
+<td>Tests live in <code>skills/&lt;skill&gt;/tests/</code>; cross-skill checks, gold, and reports in <code>spec-organize</code></td>
+</tr>
+<tr>
+<td>ARD-P</td>
+<td>2026-11-03</td>
+<td><code>spec-review</code> detects mechanical MUST violations too; it outputs suggestions, never fixes</td>
+</tr>
+<tr>
+<td><del>ARD-O</del></td>
+<td>2026-11-03</td>
+<td><del>Skills are <code>spec-organize</code> (main), <code>spec-review</code>, <code>spec-write</code>; the standard file is <code>spec-organize/SPEC-STANDARD.md</code></del> → <a href="#ard-ab--four-skills-including-spec-pipeline">ARD-AB</a></td>
+</tr>
+<tr>
+<td>ARD-N</td>
+<td>2026-10-30</td>
+<td>Success-metric measurement and baseline are deferred to PRD-G</td>
+</tr>
+<tr>
+<td><del>ARD-M</del></td>
+<td>2026-10-30</td>
+<td><del>Multi-participant decision authority is deferred to PRD-F</del> → <a href="#ard-aa--multi-participant-decisions-use-the-latest-history-entry-otherwise-ask">ARD-AA</a></td>
+</tr>
+<tr>
+<td>ARD-L</td>
+<td>2026-10-30</td>
+<td>Blind spots are surfaced by existing skills, not a new mechanism</td>
+</tr>
+<tr>
+<td>ARD-K</td>
+<td>2026-10-30</td>
+<td>Every AI edit to a <code>.md</code> under <code>docs/</code> is ≤10 lines or ≤200 characters; larger changes split</td>
+</tr>
+<tr>
+<td>ARD-J</td>
+<td>2026-10-30</td>
+<td>Five stages plus an optional <code>how-to</code>; <code>how-to</code> is not a stage</td>
+</tr>
+<tr>
+<td>ARD-I</td>
+<td>2026-09-25</td>
+<td>This feature carries two <code>spec</code> documents, against the one-per-type rule</td>
+</tr>
+<tr>
+<td>ARD-H</td>
+<td>2026-09-25</td>
+<td>Four content priority levels; L1 is never deleted</td>
+</tr>
+<tr>
+<td>ARD-G</td>
+<td>2026-09-25</td>
+<td>Spec parts take an aspect noun, plan parts take a number plus phase</td>
+</tr>
+<tr>
+<td>ARD-F</td>
+<td>2026-09-25</td>
+<td>A feature folder may hold more than one <code>design</code> or <code>impl-plan</code></td>
+</tr>
+<tr>
+<td>ARD-E</td>
+<td>2026-09-25</td>
+<td><code>design</code> and <code>impl-plan</code> cap at 1,000 lines; <code>decision-history</code> is exempt</td>
+</tr>
+<tr>
+<td>ARD-D</td>
+<td>2026-09-25</td>
+<td>The health field is named <code>health</code>, not <code>status</code></td>
+</tr>
+<tr>
+<td>ARD-C</td>
+<td>2026-09-25</td>
+<td>Detail is carried in sibling files, not inline in <code>SKILL.md</code></td>
+</tr>
+<tr>
+<td>ARD-B</td>
+<td>2026-09-25</td>
+<td>The standard lives in <del><code>doc-organize</code></del> <code>spec-organize</code> (→ <a href="#ard-o--skills-are-spec-organize-main-spec-review-spec-write-the-standard-file-is-spec-organizespec-standardmd">ARD-O</a>), not a new skill</td>
+</tr>
+<tr>
+<td>ARD-A</td>
+<td>2026-09-25</td>
+<td>Authority by concern replaces a single global source of truth</td>
+</tr>
+</tbody></table></div>
+<h3>Evidence Appendix</h3>
+<h4>ARD-A — Authority by concern replaces a single global source of truth</h4>
+<p>The previous rule was &quot;code is the source of truth&quot;, stated in three places in <code>doc-organize</code>. It resolves every conflict in one direction and leaves a spec unable to protect intended behavior: under it, a spec that states a retry count of 3 while the code retries 5 is simply wrong, even when 3 was the requirement.</p>
+<p>Considered and rejected:</p>
+<ul>
+<li>*Keep &quot;code is the source of truth&quot;* — rejected because it makes the spec</li>
+</ul>
+<p>  unenforceable precisely where enforcement matters, and because a passing test   would then also count as a requirement.</p>
+<ul>
+<li>*Declare &quot;spec is the source of truth&quot;* — rejected for the mirror reason: a</li>
+</ul>
+<p>  spec cannot answer what the code currently does, and treating it as   authoritative for implementation would force spec edits for every refactor.</p>
+<ul>
+<li>*Single source with an exception list* — rejected as an unmaintainable middle</li>
+</ul>
+<p>  ground that still names one winner by default.</p>
+<p>Adopted instead: authority by concern. Intended behavior belongs to the spec, current implementation to the code, contracts to the machine-readable artifact, database structure to migrations, and executable verification to the tests.</p>
+<h4>ARD-B — The standard lives in <code>doc-organize</code>, not a new skill</h4>
+<p>Placement, linting, and consolidation already belong to <code>doc-organize</code>, and its Sync mode is where drift is detected. A separate skill would have to duplicate the document standard to know what a spec is.</p>
+<p>Considered and rejected: a new <code>spec-driven-development</code> skill with <code>doc-organize</code> keeping only a pointer. Rejected because the two would share the type list, the frontmatter contract, and the required sections, and the copy would drift.</p>
+<h4>ARD-C — Detail is carried in sibling files, not inline in <code>SKILL.md</code></h4>
+<p>The material is seventeen sections. Inline it would have taken <code>SKILL.md</code> past 700 lines, and a skill that must be read in one pass cannot afford that.</p>
+<p>Follows the existing pattern: <code>domain-modeling/ADR-FORMAT.md</code> and <code>domain-modeling/CONTEXT-FORMAT.md</code>. Sibling files travel with the directory, so the skill stays portable — it must not point at this repository&#x27;s <code>docs/</code>, which does not exist in the projects the skill is deployed to.</p>
+<h4>ARD-D — The health field is named <code>health</code>, not <code>status</code></h4>
+<p><code>state</code> already tracks the authoring state (<code>draft</code> or <code>final</code>). A second field named <code>status</code> would be read as the same concept, and it accepted an overlapping vocabulary (<code>draft</code>, <code>active</code>, <code>stale</code>, <code>deprecated</code>) that made the overlap worse.</p>
+<p>Considered and rejected: replacing <code>state</code>&#x27;s vocabulary with <code>draft | active | stale | deprecated</code>. Rejected because it would invalidate every existing document to gain a distinction that a second field provides for free.</p>
+<h4>ARD-E — <code>design</code> and <code>impl-plan</code> cap at 1,000 lines; <code>decision-history</code> is exempt</h4>
+<p>The earlier guideline said feature specs run 500-1,500 lines, which contradicts a 1,000-line ceiling. The ceiling wins; the guideline is removed.</p>
+<p><code>decision-history</code> is exempt because it is append-only history. Trimming it would destroy the record that is its entire purpose. Exempting it also means the cap never creates pressure to delete a superseded decision.</p>
+<h4>ARD-F — A feature folder may hold more than one <code>design</code> or <code>impl-plan</code></h4>
+<p>Supersedes the earlier rule &quot;one file per type per feature&quot; for these two types only, and removes the anti-pattern that forbade a second spec file.</p>
+<p><code>prd</code>, <code>test-plan</code>, <code>decision-history</code>, and <code>how-to</code> stay single-file: none of them grows without bound. <code>design</code> and <code>impl-plan</code> do, and capping them at 1,000 lines without allowing a second file would have made the cap unmeetable.</p>
+<h4>ARD-G — Spec parts take an aspect noun, plan parts take a number plus phase</h4>
+<pre><code>payment-design-authorization.md        aspect noun, unordered
+payment-impl-plan-01-schema.md       number plus phase, ordered</code></pre>
+<p>Considered and rejected: numbering both (<code>payment-design-01.md</code>). A number says nothing about the contents, and inserting a part forces a renumber across the set. A plan is genuinely ordered, so a number carries meaning there; a spec is cut by bounded context, so a noun carries meaning there.</p>
+<h4>ARD-H — Four content priority levels; L1 is never deleted</h4>
+<p>L1 decisive (behavior, contracts, invariants, constraints, error semantics, security rules, architecture boundaries, out of scope, assumptions, compatibility constraints, open questions), L2 rationale, L3 alternatives, L4 support. Trim L4, then L3, then compress L2. Never delete L1.</p>
+<p><code>out of scope</code>, <code>assumptions</code>, <code>compatibility constraints</code>, and <code>open questions</code> are filed at L1 rather than L2 because dropping any of them breaks the implementation in the same way as dropping a stated requirement.</p>
+<p>A fact whose authoritative home is another document is L4 as a link, never a restated copy. This connects the level model to the duplication rule: restating a fact is a defect, not a level.</p>
+<h4>ARD-I — This feature carries two <code>spec</code> documents</h4>
+<p>Deliberate exception to decision ARD-F&#x27;s one-<code>spec</code>-per-feature default, recorded here because the rule requires a logged reason rather than a silent breach.</p>
+<p>This feature is named for the standard itself, so the standard&#x27;s own spec belongs to it. <code>wayfinder-import-design.md</code> already occupied <code>spec-driven-development/design/</code>, and the wayfinder import is a distinct effort with its own lifecycle.</p>
+<p>Considered and rejected:</p>
+<ul>
+<li>*Rename the feature* — rejected because the initiative name is established in</li>
+</ul>
+<p>  the project&#x27;s working context.</p>
+<ul>
+<li>*Put the standard&#x27;s spec in its own feature* — rejected because the standard</li>
+</ul>
+<p>  and the import are the same initiative; splitting them into two features would   misrepresent the work.</p>
+<ul>
+<li>*Fold the standard into <code>wayfinder-import-design.md</code>* — rejected as a</li>
+</ul>
+<p>  restatement: two unrelated documents in one file.</p>
+<p>The two files are distinguished by name, following decision ARD-G&#x27;s aspect rule: <code>spec-driven-development-design.md</code> for the standard, <code>wayfinder-import-design.md</code> for the import.</p>
+<h4>ARD-J — Five stages plus an optional <code>how-to</code></h4>
+<p>The PRD said six artifacts; <code>pipeline-design.md</code> and the document standard said five. The pipeline spec is right about stages: <code>how-to</code> is an output for the case where a human must operate the result, not a step every feature runs.</p>
+<p>Considered and rejected: keeping six to match the PRD — rejected because it invents a stage most features never execute.</p>
+<h4>ARD-K — Every AI edit to a docs file is small</h4>
+<p>A large edit lands unreviewed and is hard to attribute when it breaks something. The limit is 10 lines or 200 characters; satisfying either is enough. A larger change is split into sequential edits. A restructure needs explicit human instruction, which is how this PRD&#x27;s own revision was applied.</p>
+<p>Considered and rejected: hard rejection of oversized edits — rejected because it blocks a legitimate restructure; warning only — rejected because nothing stops the edit.</p>
+<h4>ARD-L — Blind spots come from existing skills</h4>
+<p><code>research</code> already has a Discover Unknowns branch and <code>grill-with-docs</code> already runs an adversarial interview. P4 says to use the current tools first.</p>
+<p>Considered and rejected: a new dedicated skill — rejected while the existing mechanism works. A future skill may replace them without changing the requirement that the step runs.</p>
+<h4>ARD-Z — Five PRD fields, then design and decision history</h4>
+<p>Replaces the undefined six inputs in PIPE-E2. The PRD must state limitation, preference, timeline, resource, and tool. A missing one is marked not apply, not left blank. Downstream starts only after that PRD, the design, and the decision history all exist. Rejected: the word building, and a pointer at PIPE-F for a definition PIPE-F does not hold.</p>
+<h4>ARD-Y — Map split uses a 20-hour estimate</h4>
+<p>Provisional rule (PIPE-D item 6). AI shows several split options. One person able to understand the work within 20 hours stays one feature spec. AI estimates above 20 hours, so it splits into a peer or a sub-feature. AI both estimates and judges. Creating directories still waits for human confirmation (PIPE-D item 5).</p>
+<h4>ARD-X — Execution delivery is a mock MCP log</h4>
+<p>No live booking or trading. A mock MCP client calls a mock MCP server; the printed call log is success (PRD-O). Rejected: real side effects.</p>
+<h4>ARD-W — Readability judge is an undergraduate programmer</h4>
+<p>A second LLM plays a bachelor&#x27;s-level programmer. Pass only if it understands; otherwise not delivery (PRD-M). ISO 24495-1 was found and not used as the score.</p>
+<h4>ARD-V — Hard problems stay on the same five artifacts</h4>
+<p>Shed, Beijing, a famous math problem, and a stock stay in this PRD (PRD-K) on the same five artifacts. Sub-problems name who acts; claims cite a found fact (PRD-L, PRD-N). Rejected: a new feature.</p>
+<h4>ARD-U — spec-pipeline orchestrator and Map/state model</h4>
+<p>SDD adds <strong>spec-pipeline</strong> as the entry skill that calls spec-organize and spec-write and prompts for spec-review before commit. <strong>Map</strong> relies on human interview; outputs (split, decision, scratch) are <strong>AI-judged</strong>, not a fixed file template. <strong>State</strong> lives in CLAUDE.local until feature create sets <code>&lt;f&gt;</code>, then in <code>docs/features/&lt;f&gt;/raw/state/</code>. Rejected: rigid Map MUST artifacts and repo-root BMAD-style state trees.</p>
+<h4>ARD-T — wayfinder-import is not an SDD sub-feature</h4>
+<p>Wayfinder import is a separate skill-factory / import effort, not part of the SDD deliverable (spec-organize, spec-review, spec-write). The nested tree under <code>spec-driven-development/features/wayfinder-import/</code> is removed; wayfinder work continues elsewhere if needed. ARD-I&#x27;s multi-spec exception remains historical.</p>
+<h4>ARD-O — Skills are spec-organize (main), spec-review, spec-write</h4>
+<p>Deliverable skills use the <code>spec-</code> prefix because they serve spec-driven development, not generic document editing. The standard file stays inside the main skill as <code>SPEC-STANDARD.md</code>, continuing ARD-B&#x27;s placement rule. Rejected: a separate <code>spec-standard</code> skill — three consumers, one extra copy to drift.</p>
+<h4>ARD-P — spec-review detects mechanical MUST violations too</h4>
+<p>Review outputs modification suggestions, not fixes. Mechanical MUST gaps must appear in that list or the user gets an incomplete review. Organize Lint may fix; review detects and suggests. Rejected: semantic-only review — gold-based eval cannot score review against the same MUST set as organize.</p>
+<h4>ARD-Q — Tests live under skills/&lt;skill&gt;/tests/</h4>
+<p>Skills ship to arbitrary projects; tests must travel with them. Cross-skill checks, gold, and HTML reports live under <code>spec-organize</code> as the main skill. Rejected: repo-root <code>tests/sdd/</code> — assets would not deploy with the skill bundle.</p>
+<h4>ARD-R — Two eval scores and gates</h4>
+<p>MUST compliance is a hard floor (<code>x/total</code> full pass). Exemplar comparison uses <code>(plus−minus)×10/total</code> and must not regress within one gold version. Rejected: a fixed exemplar cutoff — gold version bumps change the denominator.</p>
+<h4>ARD-S — Gold set grows and is versioned</h4>
+<p>New good and bad examples from runs append to <code>annotations.yaml</code>; <code>gold.version</code> increments. Scores compare only within one version. Rejected: frozen gold — no accumulation of review findings.</p>
+<h4>ARD-AA — Multi-participant decisions use the latest history entry, otherwise ask</h4>
+<p>PRD-F is closed. When two decisions conflict, the later entry in decision-history wins; if the order cannot be established, ask the user. The AI never guesses who is authoritative. Supersedes <del>ARD-M</del>.</p>
+<h4>ARD-AB — Four skills including spec-pipeline</h4>
+<p>The deliverable is four skills: spec-pipeline (orchestrator), spec-organize (standard/lint), spec-review (findings), spec-write (edits). Supersedes <del>ARD-O</del>, which listed three.</p>
+<h4>ARD-AC — PRD and document standard changes</h4>
+<p>PRD required sections drop Non-Functional Requirements; the parent PRD fills Overview, Goals and Success Metrics, User Stories, Functional Requirements, and Out of Scope. IDs are scoped to feature + type; cross-feature references use <code>&lt;feature&gt;/&lt;ID&gt;</code>. HLD architecture sections do not require DSGN IDs; <code>how-to</code> stays defined but unchecked.</p>
+<h4>ARD-AD — Eval uses deepseek-flash with 3 independent runs</h4>
+<p>Only the DeepSeek API is available, so gold generation and checker verdicts use three independent runs of <code>deepseek-flash</code>; cross-model bias is Unverified. Gold uses four terms: gold case, gold version, exemplar, annotations. <code>runs/</code> and <code>reports/</code> are not committed. The four non-software examples (shed, Beijing, math, stock) are skill-doc examples; their gold lives elsewhere. Supersedes the gold-example part of <del>ARD-V</del>.</p>
+<h4>ARD-AE — Non-software mapping, ownership, evidence, and UNKNOWN</h4>
+<p>Non-software problems use the same five artifacts: research in <code>raw/research/</code>, decisions in decision-history, execution in design/impl-plan, verification in test-plan. Each feature design carries a sub-question ownership table (AI查 / 人决定 / AI查完人决定); every claim cites a source; unknowns are marked <code>UNKNOWN</code>. Unverified items use <code>Unverified: &lt;reason&gt; (&lt;condition&gt;)</code>.</p>
+<h4>ARD-AF — Deliberately undefined areas</h4>
+<p>Failure policy, skill/spec versioning, source-trust grading, and data cleanup are intentionally not defined. Existing non-compliant features are not migrated; only the SDD tree is fixed.</p>
+<h4>ARD-AG — Convergence is auto-decided</h4>
+<p>PIPE-E1–E3 are checked automatically; every open decision must carry a structured <code>blocking</code> flag. The AI does not self-declare the spec &quot;stable&quot;: the automatic check passes only when no blocking item remains.</p>
+<h4>ARD-AH — Reader is the only HTML deliverable</h4>
+<p><code>spec-driven-development-reader.html</code> is the human-readable deliverable. The legacy <code>spec-driven-development.html</code> summary is deleted; references point to the reader.</p>
+<h4>ARD-AI — This consolidation is an authorized restructure</h4>
+<p>The human explicitly authorized a one-shot consolidation of the SDD spec docs. Edits larger than the normal 10-line / 200-character cap are allowed for this batch; the normal cap resumes afterward.</p>
+<h3>Path Update — 2026-10-30</h3>
+<p>The feature was restructured into sub-features. The paths referenced in the historical entries now resolve as follows:</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Old path</th>
+<th>New path</th>
+</tr></thead><tbody>
+<tr>
+<td><code>spec-driven-development-design.md</code></td>
+<td><code>features/pipeline/design/pipeline-design.md</code></td>
+</tr>
+</tbody></table></div>
+<p>The historical entries are preserved as written; this note is the current pointer. No decision was changed.</p>
+<h3>Change Log</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Date</th>
+<th>Change</th>
+</tr></thead><tbody>
+<tr>
+<td>2026-09-25</td>
+<td>Initial creation; records the SDD standard&#x27;s adoption and the two-spec exception</td>
+</tr>
+<tr>
+<td>2026-10-30</td>
+<td>Added a path-update note after the feature was split into sub-features</td>
+</tr>
+<tr>
+<td>2026-10-30</td>
+<td>Added decisions ARD-J–ARD-N from the PRD revision: five stages, small edits, existing-skill blind spots, two deferrals</td>
+</tr>
+<tr>
+<td>2026-11-03</td>
+<td>旧数字 ID → <code>ARD-A</code>–<code>ARD-N</code>; Log 倒序；格式对齐 document-standard <strong>DSGN-E</strong>/<strong>DSGN-J</strong></td>
+</tr>
+<tr>
+<td>2026-11-03</td>
+<td>ARD-O–ARD-S：skill 命名、review 边界、测试位置、eval 评分与门槛、gold 版本化</td>
+</tr>
+<tr>
+<td>2026-11-03</td>
+<td>ARD-T：移除 wayfinder-import sub-feature 树</td>
+</tr>
+<tr>
+<td>2026-11-03</td>
+<td>ARD-U：spec-pipeline 编排；Map interview；state 两阶段</td>
+</tr>
+<tr>
+<td>2026-11-04</td>
+<td>ARD-V–ARD-X：非软件难题留在本 PRD；可读性由本科程序员 LLM 打分；执行以 mock MCP log 为交付</td>
+</tr>
+<tr>
+<td>2026-11-04</td>
+<td>ARD-Y：Map 拆分以一人 20 小时为界，估算和评判由 AI 做</td>
+</tr>
+<tr>
+<td>2026-11-04</td>
+<td>ARD-Z：PRD 五项写明或 not apply；design 与 decision history 都在才进 Downstream</td>
+</tr>
+<tr>
+<td>2026-11-04</td>
+<td>PRD-F 关闭 ARD-M 的延期：按 history 时间，否则问用户。无新 ARD（A–Z 已用完）</td>
+</tr>
+<tr>
+<td>2026-11-04</td>
+<td>ARD-AA–AI：PRD-F 关闭、4 skill、文档标准、eval、非软件映射、未定义项、自动收敛、reader、restructure 授权</td>
+</tr>
+</tbody></table></div>
+      </div>
+    </article>
+    <nav class="pager" aria-label="Previous and next"><a class="prev" href="sdd-test-plan.html"><span class="label">Previous</span>Test plan</a><a class="next" href="pipeline-design.html"><span class="label">Next</span>Design</a></nav>
+  </main>
+</div>
+<footer class="foot"><div class="foot-inner">Assembled from committed <code>.md</code>. The Markdown is authoritative; this page is a reading view.</div></footer>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>if(window.mermaid){mermaid.initialize({startOnLoad:false});}</script>
+<script src="assets/app.js"></script>
+</body>
+</html>

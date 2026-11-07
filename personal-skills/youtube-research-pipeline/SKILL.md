@@ -286,7 +286,7 @@ All data visualizations use Chart.js with the Zilla Slab font family for labels.
 Create INDEX.md entry and ensure all files follow the structure:
 
 ```
-docs/initiatives/<topic>/
+docs/features/<topic>/
 ├── raw/
 │   ├── agent-academic-output.md
 │   ├── agent-industry-output.md

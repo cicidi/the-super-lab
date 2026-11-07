@@ -1,0 +1,4 @@
+# TST-H scaffold: clean tree must not trigger per-file mechanical findings.
+case: mechanical-clean-pos
+mechanical:
+  max_findings: 0

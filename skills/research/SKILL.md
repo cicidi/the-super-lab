@@ -133,7 +133,7 @@ data flow, error handling, testing. Get user approval section by section.
 
 ### Phase B5: Write Spec
 
-Write to `docs/<initiative>/spec/<topic>-spec.md` with: purpose, design
+Write to `docs/features/<feature>/design/<topic>-design.md` with: purpose, design
 decisions, architecture diagram, interface definitions, error handling,
 testing strategy.
 

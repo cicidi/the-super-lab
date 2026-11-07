@@ -37,7 +37,7 @@ analyze patterns for prevention).
 
 ## When NOT to Use
 
-- Feature requests or enhancement proposals → use /initiative
+- Feature requests or enhancement proposals → use /feature
 - Code review of working code → use /doc-review design
 - General questions about how something works → just ask
 

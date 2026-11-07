@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Pipeline — Feature Summary</title>
+<style>
+:root{--bg:#F6F7F4;--surface:#fff;--surface-2:#EEF1F0;--ink:#14202B;--muted:#55636F;--subtle:#7C8A96;--line:#DCE2E6;--code:#F1F3F1;--navy:#102D46;--navy-2:#173B5C;--yellow:#F2C94C;--green:#5F8D4E;--orange:#D98A3A;--red:#B95547;--soft-yellow:#FCF5DA;--soft-green:#EDF4E9;--soft-orange:#FBF0E4;--soft-red:#F8EBE9;--soft-blue:#E8F0F6;--serif:Georgia,'Times New Roman','Noto Serif CJK SC',serif;--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'PingFang SC','Microsoft YaHei',sans-serif;--mono:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace}
+[data-theme="dark"]{--bg:#0B1824;--surface:#102434;--surface-2:#163044;--ink:#EAF0F4;--muted:#A9B8C4;--subtle:#7F93A3;--line:#22394C;--code:#0E2130;--navy:#08131C;--navy-2:#0E2130;--soft-yellow:#3A3418;--soft-green:#1B3222;--soft-orange:#3A2A1A;--soft-red:#3A2020;--soft-blue:#122A3D}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15.5px;line-height:1.65}a{color:var(--orange);text-decoration:none}a:hover{text-decoration:underline}
+code{font-family:var(--mono);font-size:.88em;background:var(--code);border:1px solid var(--line);padding:1.5px 6px;border-radius:4px}
+.top{position:sticky;top:0;z-index:50;background:var(--navy);color:#DCE7EF;display:flex;align-items:center;justify-content:space-between;padding:12px 28px;gap:16px}
+.crumbs{font-family:var(--mono);font-size:11px;color:#9CB0C0;display:flex;gap:8px;flex-wrap:wrap;align-items:center}.crumbs a{color:#DCE7EF}.crumbs a:hover{color:var(--yellow)}
+.theme-btn{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border:1px solid rgba(255,255,255,.18);background:transparent;color:#C4D3DE;border-radius:999px;font-family:var(--mono);font-size:10.5px;cursor:pointer}.theme-btn:hover{border-color:var(--yellow);color:var(--yellow)}.theme-btn svg{width:12px;height:12px}.icon-moon{display:none}[data-theme="dark"] .icon-sun{display:none}[data-theme="dark"] .icon-moon{display:inline-block}
+.wrap{max-width:1040px;margin:0 auto;padding:46px 56px 80px}
+.hero{padding-bottom:26px;margin-bottom:10px;border-bottom:1px solid var(--line)}.eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--orange)}
+h1{font-family:var(--serif);font-size:clamp(30px,3.4vw,42px);line-height:1.1;margin:10px 0 12px;letter-spacing:-.015em}
+.deck{font-size:16.5px;color:var(--muted);max-width:76ch;margin:0 0 16px}.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{font-family:var(--mono);font-size:10.5px;color:var(--muted);background:var(--surface);border:1px solid var(--line);padding:3px 9px;border-radius:999px}.chip b{color:var(--ink)}
+.partnav{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 6px}.partnav a{font-family:var(--mono);font-size:11px;padding:6px 12px;border:1px solid var(--line);background:var(--surface);border-radius:999px;color:var(--muted)}.partnav a:hover{border-color:var(--orange);color:var(--orange);text-decoration:none}
+h2{font-size:21px;margin:36px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line)}h3{font-size:15.5px;margin:22px 0 8px}
+p{max-width:80ch;margin:0 0 13px}ul,ol{max-width:82ch;margin:0 0 15px;padding-left:22px}li{margin:4px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:18px 0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px}.card h3{margin:0 0 8px;font-size:15px}.card p{margin:0;color:var(--muted);font-size:13.5px}.card .tag{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--orange);display:inline-block;margin-bottom:8px}
+table{width:100%;border-collapse:collapse;margin:16px 0 22px;font-size:13.5px;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}th{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--subtle);background:var(--surface-2)}tr:last-child td{border-bottom:0}tr:hover td{background:var(--surface-2)}
+.callout{background:var(--soft-blue);border:1px solid var(--line);border-left:4px solid var(--navy-2);border-radius:0 10px 10px 0;padding:14px 18px;margin:20px 0;font-size:14px;max-width:82ch}.callout .t{font-weight:600;margin:0 0 4px}.callout.yellow{background:var(--soft-yellow);border-left-color:var(--yellow)}.callout.green{background:var(--soft-green);border-left-color:var(--green)}.callout.red{background:var(--soft-red);border-left-color:var(--red)}
+.flow{display:flex;margin:20px 0;flex-wrap:wrap}.node{flex:1;min-width:140px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:13px 14px}.node .n{font-family:var(--mono);font-size:9.5px;color:var(--subtle)}.node h4{margin:4px 0;font-size:14px}.node p{margin:0;font-size:12.5px;color:var(--muted);line-height:1.45}.arrow{display:flex;align-items:center;justify-content:center;width:30px;color:var(--subtle);font-size:16px;flex:0 0 30px}
+.foot{margin-top:52px;padding-top:16px;border-top:1px dashed var(--line);font-family:var(--mono);font-size:10.5px;color:var(--subtle)}
+@media(max-width:700px){.wrap{padding:30px 20px 60px}.flow{flex-direction:column}.arrow{width:100%;height:24px;transform:rotate(90deg)}}@media print{.top{display:none}.wrap{max-width:100%;padding:0 12px}}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="crumbs"><a href="../../../../index.html">The Super Lab</a><span>/</span><a href="../../spec-driven-development.html">Spec-Driven Development</a><span>/</span><span>Pipeline</span></div>
+  <button class="theme-btn" onclick="toggleTheme()"><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></svg><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg>theme</button>
+</div>
+<div class="wrap">
+  <header class="hero">
+    <span class="eyebrow">Sub-feature · Design</span>
+    <h1>Pipeline</h1>
+    <p class="deck">The five artifacts that carry a problem from requirement to regression-safe verification: PRD → decision history → spec → impl plan → test plan.</p>
+    <div class="chips"><span class="chip">state <b>draft</b></span><span class="chip">spec <b>296 lines</b></span><span class="chip">rules <b>24</b></span><span class="chip">parent <b>spec-driven-development</b></span></div>
+    <nav class="partnav"><a href="#requirement">01 · Requirement</a><a href="#design">02 · Design</a><a href="#impl">03 · Impl</a><a href="#verify">04 · Verify</a><a href="#decisions">05 · Decision history</a></nav>
+  </header>
+
+  <section id="requirement"><h2>01 · Requirement</h2>
+    <p>The pipeline inherits the parent requirement: define the problem, record decisions before acting, start design when decisions are settled enough, order the implementation, and make the test plan catch regressions. Its own requirement is one rule: the five artifacts are produced in order, by cooperating skills, and no later stage silently rewrites an earlier artifact.</p>
+    <p><a href="../../prd/spec-driven-development-prd.md">Read the parent PRD →</a></p>
+  </section>
+
+  <section id="design"><h2>02 · Design</h2>
+    <figure class="flow">
+      <div class="node"><div class="n">01</div><h4>PRD</h4><p>Problem, limits, preferences, timeline, resources, tools.</p></div><div class="arrow">→</div>
+      <div class="node"><div class="n">02</div><h4>Decision history</h4><p>Record before acting; append-only; 50/50.</p></div><div class="arrow">→</div>
+      <div class="node"><div class="n">03</div><h4>Spec</h4><p>Design when decisions are settled enough.</p></div><div class="arrow">→</div>
+      <div class="node"><div class="n">04</div><h4>Impl plan</h4><p>Ordered tasks, details, preparation.</p></div><div class="arrow">→</div>
+      <div class="node"><div class="n">05</div><h4>Test plan</h4><p>Done now, safe later.</p></div>
+    </figure>
+    <div class="grid">
+      <div class="card"><span class="tag">D1</span><h3>PRD</h3><p>Every later decision is checked against it. A requirement/decision conflict is resolved by a human.</p></div>
+      <div class="card"><span class="tag">D2</span><h3>Decision history</h3><p>Append-only; a superseded decision stays and a new entry supersedes it. AI drafts; human confirms.</p></div>
+      <div class="card"><span class="tag">D3</span><h3>Spec</h3><p>Starts when decisions are settled or settled enough; names the open ones. HLD/LLD split deferred.</p></div>
+      <div class="card"><span class="tag">D4</span><h3>Impl plan</h3><p>Sequence, task detail, and preparation.</p></div>
+      <div class="card"><span class="tag">D5</span><h3>Test plan</h3><p>Completion check plus regression guard.</p></div>
+      <div class="card"><span class="tag">D6–D8</span><h3>Cooperation</h3><p>Read the previous artifact; no silent rewrite; human adjudication; lineage and supersede.</p></div>
+    </div>
+    <div class="callout yellow"><p class="t">The core rule</p><p>A later stage that disagrees with an earlier artifact reports the conflict and asks. It never silently rewrites the earlier artifact.</p></div>
+    <p><a href="spec/pipeline-design.md">Read the pipeline design (296 lines) →</a></p>
+  </section>
+
+  <section id="impl"><h2>03 · Impl</h2>
+    <p>This sub-feature has no standalone impl plan. The pipeline is implemented by the skills that own each stage; the concrete skill names are out of scope for this spec.</p>
+    <div class="callout"><p class="t">Where impl lives</p><p>Pipeline stages are implemented by the SDD skills (spec-organize, spec-review, spec-write). Concrete skill bodies live under <code>skills/</code>, not in this docs tree.</p></div>
+  </section>
+
+  <section id="verify"><h2>04 · Verify</h2>
+    <p>Verification is at the artifact boundaries, not by reading the skills:</p>
+    <ul>
+      <li>PRD contains the six required inputs; a decision can cite the section it relies on.</li>
+      <li>Decision history is append-only; every product-direction decision has an entry.</li>
+      <li>Spec names the decisions it depends on and any still open.</li>
+      <li>Impl plan is ordered and each task names its preparation.</li>
+      <li>Test plan has a completion check and a regression guard.</li>
+      <li>A test can be traced back to the requirement it verifies.</li>
+    </ul>
+  </section>
+
+  <section id="decisions"><h2>05 · Decision history</h2>
+    <p>Pipeline decisions use the parent's append-only history. The decisions that affect this sub-feature are 0006 (more than one spec/impl-plan), 0007 (aspect naming), and 0008 (L1 never deleted).</p>
+    <p><a href="../../decision-history/spec-driven-development-decision-history.md">Read the decision history →</a></p>
+  </section>
+
+  <div class="foot">Pipeline summary · Source: <code>spec/pipeline-design.md</code> · Parent: <a href="../../spec-driven-development.html">spec-driven-development</a></div>
+</div>
+<script>(function(){try{var t=localStorage.getItem('project-docs-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}window.toggleTheme=function(){var r=document.documentElement,n=r.getAttribute('data-theme')==='dark'?'light':'dark';r.setAttribute('data-theme',n);try{localStorage.setItem('project-docs-theme',n);}catch(e){}};})();</script>
+</body>
+</html>

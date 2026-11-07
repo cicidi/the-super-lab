@@ -1,0 +1,5 @@
+case: mechanical-bad-change-log
+mechanical:
+  min_findings: 1
+  checks:
+    - change_log

@@ -1,0 +1,31 @@
+name: SDD mechanical
+
+on:
+  push:
+    branches: [main, master, "refactor/**"]
+    paths:
+      - "skills/**"
+      - "tools/**"
+      - "docs/features/**"
+      - "docs/INDEX.md"
+      - ".github/workflows/sdd-mechanical.yml"
+  pull_request:
+    paths:
+      - "skills/**"
+      - "tools/**"
+      - "docs/features/**"
+      - "docs/INDEX.md"
+      - ".github/workflows/sdd-mechanical.yml"
+
+jobs:
+  mechanical:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pytest
+        run: pip install pytest
+      - name: SDD mechanical gate
+        run: ./tools/run_sdd_mechanical.sh

@@ -9,3 +9,23 @@ CLAUDE.local.md
 CONVENTIONS.md
 CHANGELOG.md
 .idea/
+
+# doc-organize: scratch and state are working material, never committed
+docs/features/*/research/
+docs/features/*/discussion/
+docs/features/*/state/
+docs/state/
+
+# SDD eval harness (generated)
+skills/spec-organize/tests/reports/*.html
+skills/spec-organize/tests/runs/
+skills/spec-organize/tests/gold/v1/runs/*
+!skills/spec-organize/tests/gold/v1/runs/README.md
+!skills/spec-organize/tests/gold/v1/runs/_template/
+
+# local-only drafts (DSGN-C)
+docs/features/*/raw/
+
+# python bytecode
+__pycache__/
+*.pyc

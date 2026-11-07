@@ -1,0 +1,20 @@
+# SDD eval configuration — see parent test-plan (Test Assets, TST-J/TST-L)
+# Copy to local overrides only; do not commit API secrets.
+judge:
+  model: deepseek-flash
+gold:
+  version: v1
+  repeats: 3
+  cases:
+    iphone:
+      version: v1
+      path: gold/v1
+target:
+  repo: ../the-super-lab-eval # SDD_EVAL_REPO overrides
+  feature: iphone-purchase
+grill:
+  skills: [] # baseline: no extra skill
+checkers:
+  models: [deepseek-flash]
+  repeats: 3
+single_provider: true

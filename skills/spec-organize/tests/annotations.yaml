@@ -1,0 +1,58 @@
+# Gold v1 annotations — behavioral rules over a produced feature spec.
+# good: +1 when the behavior holds. bad: -1 when the bad behavior is committed.
+# score = (good hits - bad violations) * 10 / total.
+# With 6 good and 4 bad, a perfect run scores 6/10 — the maximum for this mix,
+# not 60% quality. Rebalance when gold grows (ARD-S).
+# `detail` is the operational definition the judge must apply.
+gold_version: v1
+annotations:
+  - id: GOOD-A
+    kind: good
+    check: letter_ids
+    text: Every requirement/decision/plan/test id uses a letter prefix; no bare numeric ids.
+    detail: An id is a token such as PRD-A, DSGN-B, ARD-A, IMPL-A, PIPE-A, or TST-A used as a heading, table key, or reference. A token shaped PRD-1, ARD-2, IMPL-3, or 0001 used as a document id is a violation. Text that merely mentions such tokens as forbidden examples still counts as a violation only if it defines one.
+  - id: GOOD-B
+    kind: good
+    check: prd_anchor
+    text: Every parent PRD id is anchored in at least one design document.
+    detail: For each PRD-<letter> defined in the parent PRD, at least one design document in the same feature must state what it is realized by (a DSGN/PIPE clause, an HLD section, or an explicit "来源 PRD-x"). Incidental mention as an example string does not count.
+  - id: GOOD-C
+    kind: good
+    check: five_types
+    text: The parent initiative carries prd, design, decision-history, impl-plan, and test-plan.
+    detail: All five directories exist under the parent feature and each holds at least one committed .md entry.
+  - id: GOOD-D
+    kind: good
+    check: change_log_last
+    text: Change Log is the last section of every committed document.
+    detail: In every committed feature document, the last level-2 heading is "Change Log".
+  - id: GOOD-E
+    kind: good
+    check: ownership
+    text: The design carries a sub-problem ownership table with traceable evidence.
+    detail: A design document contains a section titled 子问题归属 (sub-problem ownership) with a table whose rows name a sub-problem, an owner from {AI 查, 人决定, AI 查完人决定}, and evidence pointing at raw/, a URL, or an ARD id.
+  - id: GOOD-F
+    kind: good
+    check: skill_examples
+    text: All four skill bodies name the PRD-Q examples (shed, Beijing trip, math, stocks).
+    detail: Each of spec-pipeline, spec-organize, spec-review, spec-write has a SKILL.md that mentions 盖 shed, 北京旅游, 数学题, and 股票.
+  - id: BAD-A
+    kind: bad
+    check: index_complete
+    text: Committed document missing from INDEX.md.
+    detail: Every committed feature entry file under docs/features/ appears as a link in docs/INDEX.md, and every INDEX link resolves.
+  - id: BAD-B
+    kind: bad
+    check: no_size_overflow
+    text: A committed document exceeds its hard line cap.
+    detail: prd 800, design and impl-plan 1000, test-plan 800, how-to 600 lines including frontmatter and Change Log; decision-history is exempt.
+  - id: BAD-C
+    kind: bad
+    check: contract_cited
+    text: spec-review does not read the skill contracts authority.
+    detail: spec-review/SKILL.md must reference docs/features/spec-driven-development/design/spec-driven-development-design-skill-contracts.md and state that the contract wins on conflict.
+  - id: BAD-D
+    kind: bad
+    check: dh_newest_first
+    text: Decision history is not newest-first.
+    detail: In the Decision Log table the ARD rows are ordered by date descending, newest at the top.
