@@ -1,0 +1,558 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%A8%3C/text%3E%3C/svg%3E">
+<title>Spec 样式画廊 · 20 种 GitHub 高星 CSS</title>
+<style>
+:root{
+  --bg:#0b1c2c;--bg2:#102D46;--panel:#132f4a;--panel2:#173a5a;
+  --ink:#eaf0f6;--muted:#9db0c3;--line:rgba(255,255,255,.12);
+  --orange:#D98A3A;--yellow:#F2C94C;--green:#5F8D4E;--red:#B95547;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:
+  radial-gradient(1100px 520px at 12% -8%,rgba(217,138,58,.16),transparent 60%),
+  radial-gradient(900px 480px at 90% 0%,rgba(95,141,78,.13),transparent 55%),
+  var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans SC",sans-serif;line-height:1.6}
+#prog{position:fixed;top:0;left:0;height:3px;width:0;z-index:99;
+  background:linear-gradient(90deg,var(--orange),var(--yellow),var(--green))}
+.wrap{max-width:1280px;margin:0 auto;padding:0 24px 80px}
+header.hero{padding:64px 0 30px;max-width:900px}
+.kicker{font-size:.72rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--yellow)}
+h1{font-size:clamp(2.1rem,5vw,3.7rem);line-height:1.06;letter-spacing:-.03em;margin:.2em 0 .28em}
+.lede{font-size:1.06rem;color:var(--muted);max-width:70ch;margin:0 0 22px}
+.statline{display:flex;flex-wrap:wrap;gap:10px}
+.statline span{border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:999px;
+  padding:5px 12px;font-size:.8rem;color:var(--muted)}
+.statline b{color:var(--ink)}
+.hint{font-size:.8rem;color:var(--muted);margin:14px 0 0}
+.featured{display:grid;grid-template-columns:220px 1fr auto;gap:18px;align-items:center;
+  margin:0 0 26px;padding:14px;border-radius:20px;border:1px solid rgba(138,180,248,.4);
+  background:linear-gradient(120deg,#E8F0FE,#D2E3FC);color:#202124;text-decoration:none;
+  box-shadow:0 14px 36px rgba(66,133,244,.18);transition:transform .2s,box-shadow .2s}
+.featured:hover{transform:translateY(-2px);box-shadow:0 20px 48px rgba(66,133,244,.26);color:#202124}
+.featured img{width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top left;
+  border-radius:12px;border:1px solid rgba(60,64,67,.14)}
+.featured__copy{padding:2px 0}
+.featured__kicker{font-size:.66rem;font-weight:900;letter-spacing:.1em;color:#1967D2}
+.featured h2{margin:5px 0 4px;font-size:1.22rem;letter-spacing:-.02em;color:#202124}
+.featured p{margin:0;font-size:.83rem;color:#5F6368}
+.featured__cta{background:#4285F4;color:#fff;border-radius:999px;padding:9px 15px;
+  font-size:.8rem;font-weight:800;white-space:nowrap}
+.tag.chosen{background:rgba(66,133,244,.18);border-color:rgba(66,133,244,.5);color:#AECBFA}
+.featured-note{margin:-14px 0 24px;font-size:.82rem;color:var(--muted)}
+.featured-note a{color:#AECBFA;font-weight:800;text-decoration:underline;text-underline-offset:2px}
+.featured-note a:hover{color:#D2E3FC}
+.alllinks{margin:-8px 0 22px;border:1px solid var(--line);border-radius:12px;
+  background:rgba(255,255,255,.03);padding:0 14px}
+.alllinks summary{cursor:pointer;padding:10px 0;font-size:.82rem;color:var(--muted)}
+.alllinks__grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+  gap:6px 16px;padding:4px 0 14px}
+.alllinks a{color:var(--ink);text-decoration:none;font-size:.82rem}
+.alllinks a:hover{color:var(--orange)}
+.toolbar{position:sticky;top:0;z-index:50;display:flex;flex-wrap:wrap;align-items:center;gap:8px;
+  padding:14px 0;margin:18px 0 26px;background:color-mix(in srgb,var(--bg) 84%,transparent);
+  backdrop-filter:blur(10px);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.toolbar__label{font-size:.76rem;color:var(--muted);margin-right:6px}
+.fbtn{background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--muted);
+  border-radius:999px;padding:6px 13px;font:inherit;font-size:.8rem;cursor:pointer;transition:.18s}
+.fbtn:hover{color:var(--ink);border-color:rgba(255,255,255,.3)}
+.fbtn.is-active{background:var(--orange);border-color:var(--orange);color:#1b1206;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+.card{background:linear-gradient(180deg,var(--panel),#102a43);border:1px solid var(--line);
+  border-radius:16px;overflow:hidden;display:flex;flex-direction:column;
+  transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
+@keyframes cardIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: no-preference){.card{animation:cardIn .5s ease both}}
+.card:hover{transform:translateY(-4px);border-color:rgba(217,138,58,.65);
+  box-shadow:0 18px 44px rgba(0,0,0,.42)}
+.preview{position:relative;display:block;aspect-ratio:16/10;overflow:hidden;
+  background:linear-gradient(135deg,#173a5a,#0b1c2c);border-bottom:1px solid var(--line)}
+.preview img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  object-position:top left;display:block;transition:transform .35s ease}
+.card:hover .preview img{transform:scale(1.025)}
+.preview__fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  color:var(--muted);font-size:.9rem;padding:20px;text-align:center}
+.preview::after{content:"打开完整页面 →";position:absolute;right:10px;bottom:10px;
+  background:rgba(11,28,44,.88);color:#fff;font-size:.7rem;padding:4px 9px;border-radius:999px;
+  opacity:0;transition:.2s}
+.card:hover .preview::after{opacity:1}
+.rank{position:absolute;left:10px;top:10px;z-index:2;background:rgba(11,28,44,.9);
+  color:var(--yellow);font-size:.68rem;font-weight:800;letter-spacing:.06em;
+  padding:3px 8px;border-radius:999px}
+.card__body{padding:15px 16px 17px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card__top{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.card__name{margin:0;font-size:1.08rem;letter-spacing:-.01em}
+.card__stars{margin-left:auto;font-size:.78rem;color:var(--yellow);font-weight:700}
+.card__repo{font-size:.7rem;color:var(--muted);font-family:ui-monospace,Menlo,monospace}
+.card__desc{font-size:.84rem;color:var(--muted);margin:0;flex:1}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:.66rem;border:1px solid var(--line);border-radius:999px;padding:2px 8px;color:var(--muted)}
+.tag.real{color:#b8d9a8;border-color:rgba(95,141,78,.6)}
+.tag.fake{color:#e8c49a;border-color:rgba(217,138,58,.6)}
+.tag.api{color:#a9c8e8;border-color:rgba(70,130,180,.6)}
+.open{font-size:.78rem;color:var(--orange);text-decoration:none;font-weight:700}
+.filtered-out{display:none}
+footer{margin-top:44px;padding-top:22px;border-top:1px solid var(--line);
+  color:var(--muted);font-size:.8rem;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
+@media(max-width:760px){
+  .featured{grid-template-columns:1fr}
+  .featured img{aspect-ratio:16/7}
+  .featured__cta{justify-self:start}
+}
+@media(max-width:520px){
+  .wrap{padding:0 16px 56px}
+  .grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div class="wrap">
+  <header class="hero">
+    <p class="kicker">Spec-Driven Development · Style Picker</p>
+    <h1>20 种写法，<br>同一个 spec。</h1>
+    <p class="lede">全部取自 GitHub ≥1k stars 的 CSS 主题或文档站，按星数排序。
+      每个样本使用完全相同的中文内容切片，方便横向比较排版、表格、代码、图与动画。</p>
+    <div class="statline">
+      <span><b>20</b> 个样式</span>
+      <span><b>14</b> 个真实 CSS</span>
+      <span><b>6</b> 个仿制主题</span>
+      <span><b>1</b> 份固定内容</span>
+    </div>
+    <p class="hint">缩略图为静态截图；点缩略图在新标签页打开，点「查看完整样本」在当前页打开。</p>
+  </header>
+  <a class="featured" href="16-sakura-google.html">
+    <img src="thumbs/16-sakura-google.jpg" alt="Sakura · Google 浅蓝精修版缩略图">
+    <div class="featured__copy">
+      <span class="featured__kicker">已选 · 16 · SAKURA</span>
+      <h2>Google 浅蓝精修版</h2>
+      <p>5 张图表 + 滚动触发动效 + 更丰富的插图；原 16 保留对照。</p>
+    </div>
+    <span class="featured__cta">打开精修版 →</span>
+  </a>
+  <p class="featured-note">精修版用于挑样式；<a href="../spec-driven-development/spec-driven-development-reader-google.html">查看按此风格生成的完整 spec 文档 →</a></p>
+  <div class="toolbar">
+    <span class="toolbar__label">筛选</span>
+    <button class="fbtn is-active" data-filter="all">全部 20</button><button class="fbtn" data-filter="real">真实 CSS 14</button><button class="fbtn" data-filter="fake">仿制 6</button><button class="fbtn" data-filter="api">API 文档 3</button><button class="fbtn" data-filter="minimal">极简 11</button><button class="fbtn" data-filter="framework">框架 7</button>
+  </div>
+  <details class="alllinks">
+    <summary>全部样本链接（缩略图不显示时用）</summary>
+    <div class="alllinks__grid"><a href="01-bootstrap.html">01 · Bootstrap</a><a href="02-docusaurus.html">02 · Docusaurus</a><a href="03-bulma.html">03 · Bulma</a><a href="04-slate.html">04 · Slate</a><a href="05-docsify.html">05 · Docsify</a><a href="06-swagger.html">06 · Swagger UI</a><a href="07-mkdocs.html">07 · MkDocs Material</a><a href="08-redoc.html">08 · Redoc</a><a href="09-pico.html">09 · Pico CSS</a><a href="10-primer.html">10 · Primer CSS</a><a href="11-github-markdown.html">11 · GitHub Markdown CSS</a><a href="12-water.html">12 · Water.css</a><a href="13-tufte.html">13 · Tufte CSS</a><a href="14-mvp.html">14 · MVP.css</a><a href="15-simple.html">15 · Simple.css</a><a href="16-sakura.html">16 · Sakura</a><a href="17-new.html">17 · new.css</a><a href="18-latex.html">18 · LaTeX.css</a><a href="19-tacit.html">19 · Tacit</a><a href="20-chota.html">20 · Chota</a></div>
+  </details>
+  <main class="grid">
+    
+<article class="card" data-tags="real framework">
+  <a class="preview" href="01-bootstrap.html" target="_blank" rel="noopener"
+     aria-label="在新标签页打开 Bootstrap 样本">
+    <span class="rank">01 / 20</span>
+    <span class="preview__fallback">Bootstrap · 点击打开完整样本</span>
+    <img src="thumbs/01-bootstrap.jpg" alt="Bootstrap 样本缩略图"
+         width="1280" height="800" onerror="this.style.display='none'">
+  </a>
+  <div class="card__body">
+    <div class="card__top">
+      <h2 class="card__name">Bootstrap</h2>
+      <span class="card__stars">★ 175k</span>
+    </div>
+    <div class="card__repo">twbs/bootstrap</div>
+    <p class="card__desc">最流行的响应式 CSS 框架；组件齐全，适合做正式文档站。</p>
+    <div class="tags"><span class="tag real">真 CSS</span><span class="tag ">框架</span><span class="tag">真实 CSS · v5.3.3</span></div>
+    <a class="open" href="01-bootstrap.html">查看完整样本 →</a>
+  </div>
+</article>
+<article class="card" data-tags="fake framework">
+  <a class="preview" href="02-docusaurus.html" target="_blank" rel="noopener"
+     aria-label="在新标签页打开 Docusaurus 样本">
+    <span class="rank">02 / 20</span>
+    <span class="preview__fallback">Docusaurus · 点击打开完整样本</span>
+    <img src="thumbs/02-docusaurus.jpg" alt="Docusaurus 样本缩略图"
+         width="1280" height="800" onerror="this.style.display='none'">
+  </a>
+  <div class="card__body">
+    <div class="card__top">
+      <h2 class="card__name">Docusaurus</h2>
+      <span class="card__stars">★ 66.7k</span>
+    </div>
+    <div class="card__repo">meta/docusaurus</div>
+    <p class="card__desc">Meta 的文档站框架；三栏布局、admonition、暗色代码块。</p>
+    <div class="tags"><span class="tag fake">仿制</span><span class="tag ">框架</span><span class="tag">仿制主题 · Infima</span></div>
+    <a class="open" href="02-docusaurus.html">查看完整样本 →</a>
+  </div>
+</article>
+<article class="card" data-tags="real framework">
+  <a class="preview" href="03-bulma.html" target="_blank" rel="noopener"
+     aria-label="在新标签页打开 Bulma 样本">
+    <span class="rank">03 / 20</span>
+    <span class="preview__fallback">Bulma · 点击打开完整样本</span>
+    <img src="thumbs/03-bulma.jpg" alt="Bulma 样本缩略图"
+         width="1280" height="800" onerror="this.style.display='none'">
+  </a>
+  <div class="card__body">
+    <div class="card__top">
+      <h2 class="card__name">Bulma</h2>
+      <span class="card__stars">★ 50k</span>
+    </div>
+    <div class="card__repo">jgthms/bulma</div>
+    <p class="card__desc">纯 CSS、基于 Flexbox；类名语义化，文档排版干净。</p>
+    <div class="tags"><span class="tag real">真 CSS</span><span class="tag ">框架</span><span class="tag">真实 CSS · v1.0.2</span></div>
+    <a class="open" href="03-bulma.html">查看完整样本 →</a>
+  </div>
+</article>
+<article class="card" data-tags="fake api">
+  <a class="preview" href="04-slate.html" target="_blank" rel="noopener"
+     aria-label="在新标签页打开 Slate 样本">
+    <span class="rank">04 / 20</span>
+    <span class="preview__fallback">Slate · 点击打开完整样本</span>
+    <img src="thumbs/04-slate.jpg" alt="Slate 样本缩略图"
+         width="1280" height="800" onerror="this.style.display='none'">
+  </a>
+  <div class="card__body">
+    <div class="card__top">
+      <h2 class="card__name">Slate</h2>
+      <span class="card__stars">★ 36k</span>
+    </div>
+    <div class="card__repo">slatedocs/slate</div>
+    <p class="card__desc">经典 API 文档三栏布局；深色界面 + 右侧请求示例。</p>
+    <div class="tags"><span class="tag fake">仿制</span><span class="tag api">API 文档</span><span class="tag">仿制主题 · API 文档</span></div>
+    <a class="open" href="04-slate.html">查看完整样本 →</a>
+  </div>
+</article>
+<article class="card" data-tags="fake framework">
+  <a class="preview" href="05-docsify.html" target="_blank" rel="noopener"
+     aria-label="在新标签页打开 Docsify 样本">
+    <span class="rank">05 / 20</span>
+    <span class="preview__fallback">Docsify · 点击打开完整样本</span>
+    <img src="thumbs/05-docsify.jpg" alt="Docsify 样本缩略图"
+         width="1280" height="800" onerror="this.style.display='none'">
+  </a>
+  <div class="card__body">
+    <div class="card__top">
+      <h2 class="card__name">Docsify</h2>
+      <span class="card__stars">★ 31.6k</span>
+    </div>
+    <div class="card__repo">docsifyjs/docsify</div>
+    <p class="card__desc">运行时渲染 Markdown；左侧目录 + 简洁正文。</p>
+    <div class="tags"><span class="tag fake">仿制</span><span class="tag ">框架</span><span class="tag">仿制主题 · 文档站</span></div>
+    <a class="open" href="05-docsify.html">查看完整样本 →</a>
+  </div>
+</article>
+<article class="card" data-tags="fake api">
+  <a class="preview" href="06-swagger.html" target="_blank" rel="noopener"
+     aria-label="在新标签页打开 Swagger UI 样本">
+    <span class="rank">06 / 20</span>
+    <span class="preview__fallback">Swagger UI · 点击打开完整样本</span>
+    <img src="thumbs/06-swagger.jpg" alt="Swagger UI 样本缩略图"
+         width="1280" height="800" onerror="this.style.display='none'">
+  </a>
+  <div class="card__body">
+    <div class="card__top">
+      <h2 class="card__name">Swagger UI</h2>
+      <span class="card__stars">★ 29.1k</span>
+    </div>
+    <div class="card__repo">swagger-api/swagger-ui</div>
+    <p class="card__desc">OpenAPI 交互式文档；operation 卡片、参数与响应表。</p>
+    <div class="tags"><span class="tag fake">仿制</span><span class="tag api">API 文档</span><span class="tag">仿制主题 · OpenAPI</span></div>
+    <a class="open" href="06-swagger.html">查看完整样本 →</a>
+  </div>
+</article>
+<article class="card" data-tags="fake framework">
+  <a class="preview" href="07-mkdocs.html" target="_blank" rel="noopener"
+     aria-label="在新标签页打开 MkDocs Material 样本">
+    <span class="rank">07 / 20</span>
+    <span class="preview__fallback">MkDocs Material · 点击打开完整样本</span>
+    <img src="thumbs/07-mkdocs.jpg" alt="MkDocs Material 样本缩略图"
+         width="1280" height="800" onerror="this.style.display='none'">
+  </a>
+  <div class="card__body">
+    <div class="card__top">
+      <h2 class="card__name">MkDocs Material</h2>
+      <span class="card__stars">★ 27.6k</span>
+    </div>
+    <div class="card__repo">squidfunk/mkdocs-material</div>
+    <p class="card__desc">Material Design 文档站；靛蓝顶栏、admonition、tabs、搜索。</p>
+    <div class="tags"><span class="tag fake">仿制</span><span class="tag ">框架</span><span class="tag">仿制主题 · Material</span></div>
+    <a class="open" href="07-mkdocs.html">查看完整样本 →</a>
+  </div>
+</article>
+<article class="card" data-tags="fake api">
+  <a class="preview" href="08-redoc.html" target="_blank" rel="noopener"
+     aria-label="在新标签页打开 Redoc 样本">
+    <span class="rank">08 / 20</span>
+    <span class="preview__fallback">Redoc · 点击打开完整样本</span>
+    <img src="thumbs/08-redoc.jpg" alt="Redoc 样本缩略图"
+         width="1280" height="800" onerror="this.style.display='none'">
+  </a>
+  <div class="card__body">
+    <div class="card__top">
+      <h2 class="card__name">Redoc</h2>
+      <span class="card__stars">★ 26k</span>
+    </div>
+    <div class="card__repo">Redocly/redoc</div>
+    <p class="card__desc">OpenAPI 参考文档；左侧导航 + 右侧深色示例面板。</p>
+    <div class="tags"><span class="tag fake">仿制</span><span class="tag api">API 文档</span><span class="tag">仿制主题 · OpenAPI</span></div>
+    <a class="open" href="08-redoc.html">查看完整样本 →</a>
+  </div>
+</article>
+<article class="card" data-tags="real minimal">
+  <a class="preview" href="09-pico.html" target="_blank" rel="noopener"
+     aria-label="在新标签页打开 Pico CSS 样本">
+    <span class="rank">09 / 20</span>
+    <span class="preview__fallback">Pico CSS · 点击打开完整样本</span>
+    <img src="thumbs/09-pico.jpg" alt="Pico CSS 样本缩略图"
+         width="1280" height="800" onerror="this.style.display='none'">
+  </a>
+  <div class="card__body">
+    <div class="card__top">
+      <h2 class="card__name">Pico CSS</h2>
+      <span class="card__stars">★ 16.8k</span>
+    </div>
+    <div class="card__repo">picocss/pico</div>
+    <p class="card__desc">语义化优先的极简框架；几乎不用 class。</p>
+    <div class="tags"><span class="tag real">真 CSS</span><span class="tag ">极简</span><span class="tag">真实 CSS · v2.0.6</span></div>
+    <a class="open" href="09-pico.html">查看完整样本 →</a>
+  </div>
+</article>
+<article class="card" data-tags="real framework">
+  <a class="preview" href="10-primer.html" target="_blank" rel="noopener"
+     aria-label="在新标签页打开 Primer CSS 样本">
+    <span class="rank">10 / 20</span>
+    <span class="preview__fallback">Primer CSS · 点击打开完整样本</span>
+    <img src="thumbs/10-primer.jpg" alt="Primer CSS 样本缩略图"
+         width="1280" height="800" onerror="this.style.display='none'">
+  </a>
+  <div class="card__body">
+    <div class="card__top">
+      <h2 class="card__name">Primer CSS</h2>
+      <span class="card__stars">★ 13k</span>
+    </div>
+    <div class="card__repo">primer/css</div>
+    <p class="card__desc">GitHub 设计系统；代码、表格、Markdown 渲染质感强。</p>
+    <div class="tags"><span class="tag real">真 CSS</span><span class="tag ">框架</span><span class="tag">真实 CSS · v21.0.8</span></div>
+    <a class="open" href="10-primer.html">查看完整样本 →</a>
+  </div>
+</article>
+<article class="card" data-tags="real minimal">
+  <a class="preview" href="11-github-markdown.html" target="_blank" rel="noopener"
+     aria-label="在新标签页打开 GitHub Markdown CSS 样本">
+    <span class="rank">11 / 20</span>
+    <span class="preview__fallback">GitHub Markdown CSS · 点击打开完整样本</span>
+    <img src="thumbs/11-github-markdown.jpg" alt="GitHub Markdown CSS 样本缩略图"
+         width="1280" height="800" onerror="this.style.display='none'">
+  </a>
+  <div class="card__body">
+    <div class="card__top">
+      <h2 class="card__name">GitHub Markdown CSS</h2>
+      <span class="card__stars">★ 8.9k</span>
+    </div>
+    <div class="card__repo">sindresorhus/github-markdown-css</div>
+    <p class="card__desc">复刻 GitHub Markdown 视觉；最适合 AI 生成的文档。</p>
+    <div class="tags"><span class="tag real">真 CSS</span><span class="tag ">极简</span><span class="tag">真实 CSS · v5.6.1</span></div>
+    <a class="open" href="11-github-markdown.html">查看完整样本 →</a>
+  </div>
+</article>
+<article class="card" data-tags="real minimal">
+  <a class="preview" href="12-water.html" target="_blank" rel="noopener"
+     aria-label="在新标签页打开 Water.css 样本">
+    <span class="rank">12 / 20</span>
+    <span class="preview__fallback">Water.css · 点击打开完整样本</span>
+    <img src="thumbs/12-water.jpg" alt="Water.css 样本缩略图"
+         width="1280" height="800" onerror="this.style.display='none'">
+  </a>
+  <div class="card__body">
+    <div class="card__top">
+      <h2 class="card__name">Water.css</h2>
+      <span class="card__stars">★ 8.7k</span>
+    </div>
+    <div class="card__repo">kognise/water.css</div>
+    <p class="card__desc">drop-in 极简样式；自动深浅色，适合快速可读。</p>
+    <div class="tags"><span class="tag real">真 CSS</span><span class="tag ">极简</span><span class="tag">真实 CSS · v2.1.1</span></div>
+    <a class="open" href="12-water.html">查看完整样本 →</a>
+  </div>
+</article>
+<article class="card" data-tags="real minimal">
+  <a class="preview" href="13-tufte.html" target="_blank" rel="noopener"
+     aria-label="在新标签页打开 Tufte CSS 样本">
+    <span class="rank">13 / 20</span>
+    <span class="preview__fallback">Tufte CSS · 点击打开完整样本</span>
+    <img src="thumbs/13-tufte.jpg" alt="Tufte CSS 样本缩略图"
+         width="1280" height="800" onerror="this.style.display='none'">
+  </a>
+  <div class="card__body">
+    <div class="card__top">
+      <h2 class="card__name">Tufte CSS</h2>
+      <span class="card__stars">★ 6.6k</span>
+    </div>
+    <div class="card__repo">edwardtufte/tufte-css</div>
+    <p class="card__desc">Edward Tufte 讲义风；旁注、宽图、长文阅读极佳。</p>
+    <div class="tags"><span class="tag real">真 CSS</span><span class="tag ">极简</span><span class="tag">真实 CSS · v1.8.0</span></div>
+    <a class="open" href="13-tufte.html">查看完整样本 →</a>
+  </div>
+</article>
+<article class="card" data-tags="real minimal">
+  <a class="preview" href="14-mvp.html" target="_blank" rel="noopener"
+     aria-label="在新标签页打开 MVP.css 样本">
+    <span class="rank">14 / 20</span>
+    <span class="preview__fallback">MVP.css · 点击打开完整样本</span>
+    <img src="thumbs/14-mvp.jpg" alt="MVP.css 样本缩略图"
+         width="1280" height="800" onerror="this.style.display='none'">
+  </a>
+  <div class="card__body">
+    <div class="card__top">
+      <h2 class="card__name">MVP.css</h2>
+      <span class="card__stars">★ 5.1k</span>
+    </div>
+    <div class="card__repo">andybrewer/mvp</div>
+    <p class="card__desc">极简 classless；黑白分明，几乎零配置。</p>
+    <div class="tags"><span class="tag real">真 CSS</span><span class="tag ">极简</span><span class="tag">真实 CSS · commit 629ba5e</span></div>
+    <a class="open" href="14-mvp.html">查看完整样本 →</a>
+  </div>
+</article>
+<article class="card" data-tags="real minimal">
+  <a class="preview" href="15-simple.html" target="_blank" rel="noopener"
+     aria-label="在新标签页打开 Simple.css 样本">
+    <span class="rank">15 / 20</span>
+    <span class="preview__fallback">Simple.css · 点击打开完整样本</span>
+    <img src="thumbs/15-simple.jpg" alt="Simple.css 样本缩略图"
+         width="1280" height="800" onerror="this.style.display='none'">
+  </a>
+  <div class="card__body">
+    <div class="card__top">
+      <h2 class="card__name">Simple.css</h2>
+      <span class="card__stars">★ 5k</span>
+    </div>
+    <div class="card__repo">kevquirk/simple.css</div>
+    <p class="card__desc">Simple.css；默认排版舒适，自带深色模式。</p>
+    <div class="tags"><span class="tag real">真 CSS</span><span class="tag ">极简</span><span class="tag">真实 CSS · commit b6eab64</span></div>
+    <a class="open" href="15-simple.html">查看完整样本 →</a>
+  </div>
+</article>
+<article class="card" data-tags="real minimal">
+  <a class="preview" href="16-sakura.html" target="_blank" rel="noopener"
+     aria-label="在新标签页打开 Sakura 样本">
+    <span class="rank">16 / 20</span>
+    <span class="preview__fallback">Sakura · 点击打开完整样本</span>
+    <img src="thumbs/16-sakura.jpg" alt="Sakura 样本缩略图"
+         width="1280" height="800" onerror="this.style.display='none'">
+  </a>
+  <div class="card__body">
+    <div class="card__top">
+      <h2 class="card__name">Sakura</h2>
+      <span class="card__stars">★ 4.4k</span>
+    </div>
+    <div class="card__repo">oxalorg/sakura</div>
+    <p class="card__desc">樱花极简主题；柔和、轻盈、适合短文档。</p>
+    <div class="tags"><span class="tag real">真 CSS</span><span class="tag ">极简</span><span class="tag chosen">已选</span><span class="tag">真实 CSS · v1.5.1</span></div>
+    <a class="open" href="16-sakura.html">查看完整样本 →</a>
+  </div>
+</article>
+<article class="card" data-tags="real minimal">
+  <a class="preview" href="17-new.html" target="_blank" rel="noopener"
+     aria-label="在新标签页打开 new.css 样本">
+    <span class="rank">17 / 20</span>
+    <span class="preview__fallback">new.css · 点击打开完整样本</span>
+    <img src="thumbs/17-new.jpg" alt="new.css 样本缩略图"
+         width="1280" height="800" onerror="this.style.display='none'">
+  </a>
+  <div class="card__body">
+    <div class="card__top">
+      <h2 class="card__name">new.css</h2>
+      <span class="card__stars">★ 4k</span>
+    </div>
+    <div class="card__repo">xz/new.css</div>
+    <p class="card__desc">classless 现代样式；干净、紧凑。</p>
+    <div class="tags"><span class="tag real">真 CSS</span><span class="tag ">极简</span><span class="tag">真实 CSS · commit 375a937</span></div>
+    <a class="open" href="17-new.html">查看完整样本 →</a>
+  </div>
+</article>
+<article class="card" data-tags="real minimal">
+  <a class="preview" href="18-latex.html" target="_blank" rel="noopener"
+     aria-label="在新标签页打开 LaTeX.css 样本">
+    <span class="rank">18 / 20</span>
+    <span class="preview__fallback">LaTeX.css · 点击打开完整样本</span>
+    <img src="thumbs/18-latex.jpg" alt="LaTeX.css 样本缩略图"
+         width="1280" height="800" onerror="this.style.display='none'">
+  </a>
+  <div class="card__body">
+    <div class="card__top">
+      <h2 class="card__name">LaTeX.css</h2>
+      <span class="card__stars">★ 3.5k</span>
+    </div>
+    <div class="card__repo">vincentdoerig/latex-css</div>
+    <p class="card__desc">LaTeX 论文风；章节编号、衬线排版，学术感强。</p>
+    <div class="tags"><span class="tag real">真 CSS</span><span class="tag ">极简</span><span class="tag">真实 CSS · v1.11.0</span></div>
+    <a class="open" href="18-latex.html">查看完整样本 →</a>
+  </div>
+</article>
+<article class="card" data-tags="real minimal">
+  <a class="preview" href="19-tacit.html" target="_blank" rel="noopener"
+     aria-label="在新标签页打开 Tacit 样本">
+    <span class="rank">19 / 20</span>
+    <span class="preview__fallback">Tacit · 点击打开完整样本</span>
+    <img src="thumbs/19-tacit.jpg" alt="Tacit 样本缩略图"
+         width="1280" height="800" onerror="this.style.display='none'">
+  </a>
+  <div class="card__body">
+    <div class="card__top">
+      <h2 class="card__name">Tacit</h2>
+      <span class="card__stars">★ 1.9k</span>
+    </div>
+    <div class="card__repo">yegor256/tacit</div>
+    <p class="card__desc">无 class 的极简框架；适合技术说明。</p>
+    <div class="tags"><span class="tag real">真 CSS</span><span class="tag ">极简</span><span class="tag">真实 CSS · v1.9.7</span></div>
+    <a class="open" href="19-tacit.html">查看完整样本 →</a>
+  </div>
+</article>
+<article class="card" data-tags="real minimal">
+  <a class="preview" href="20-chota.html" target="_blank" rel="noopener"
+     aria-label="在新标签页打开 Chota 样本">
+    <span class="rank">20 / 20</span>
+    <span class="preview__fallback">Chota · 点击打开完整样本</span>
+    <img src="thumbs/20-chota.jpg" alt="Chota 样本缩略图"
+         width="1280" height="800" onerror="this.style.display='none'">
+  </a>
+  <div class="card__body">
+    <div class="card__top">
+      <h2 class="card__name">Chota</h2>
+      <span class="card__stars">★ 1.5k</span>
+    </div>
+    <div class="card__repo">jenil/chota</div>
+    <p class="card__desc">3KB 微型框架；轻量、可组合。</p>
+    <div class="tags"><span class="tag real">真 CSS</span><span class="tag ">极简</span><span class="tag">真实 CSS · v0.9.2</span></div>
+    <a class="open" href="20-chota.html">查看完整样本 →</a>
+  </div>
+</article>
+  </main>
+  <footer>
+    <span>真 CSS = 直接引入原项目固定版本；仿制 = 手写复刻，仅用于视觉比较。</span>
+    <span>内容切片：spec-driven-development PRD · 2026-11-04</span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var p=document.getElementById('prog');
+  addEventListener('scroll',function(){
+    var h=document.documentElement,max=h.scrollHeight-h.clientHeight;
+    p.style.width=(max>0?(h.scrollTop/max)*100:0)+'%';
+  },{passive:true});
+  document.querySelectorAll('.card').forEach(function(c,i){
+    c.style.animationDelay=Math.min(i*28,420)+'ms';
+  });
+  var btns=document.querySelectorAll('.fbtn');
+  btns.forEach(function(b){b.addEventListener('click',function(){
+    btns.forEach(function(x){x.classList.remove('is-active');});b.classList.add('is-active');
+    var f=b.dataset.filter;
+    document.querySelectorAll('.card').forEach(function(c){
+      var tags=c.dataset.tags||'';
+      c.classList.toggle('filtered-out', f!=='all' && tags.indexOf(f)===-1);
+    });
+  });});
+})();
+</script>
+</body>
+</html>

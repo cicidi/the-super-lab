@@ -11,13 +11,14 @@
 <header class="topbar">
   <div class="topbar-inner">
     <div class="brand"><a href="../../../../index.html"><span class="brand-mark">SDD</span><span class="brand-name">Spec Atlas</span></a></div>
+    <button class="strike-btn" type="button" onclick="var r=document.documentElement;var off=r.dataset.strike!=='off';r.dataset.strike=off?'off':'on';this.textContent=off?'显示删除线':'隐藏删除线'">隐藏删除线</button>
   </div>
 </header>
 <div class="site">
   <aside class="sidebar">
   <nav aria-label="Directory">
     <div class="tree-overview"><a class="tree-link" href="../../../../index.html"><span class="tree-link__num">00</span>All features</a></div>
-    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../../prd/spec-driven-development-prd.html"><span class="tree-link__num">16</span>Spec-Driven Development — PRD</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../../design/spec-driven-development-design.html"><span class="tree-link__num">18</span>Spec-Driven Development — HLD</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../../design/spec-driven-development-design-skill-contracts.html"><span class="tree-link__num">17</span>Spec-Driven Development — Skill Contracts</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="document-standard-design.html">document-standard</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../prd/document-standard-prd-spec-reader-html.html"><span class="tree-link__num">15</span>Document Standard — Spec Reader HTML（PRD）</a></li><li class="tree-leaf"><a class="tree-link" href="document-standard-design-spec-reader-html.html" aria-current="page"><span class="tree-link__num">19</span>Document Standard — Spec Reader HTML（Design）</a></li><li class="tree-leaf"><a class="tree-link" href="document-standard-design.html"><span class="tree-link__num">20</span>Document Standard — 文档标准（待 Review）</a></li></ul></details></li><li class="tree-leaf"><a class="tree-link" href="../../../spec-driven-development-reader.html">spec-driven-development — Reader</a></li></ul></details></li><li class="tree-leaf"><a class="tree-link" href="../../../impl-plan/spec-driven-development-impl-plan.html"><span class="tree-link__num">21</span>Spec-Driven Development — Implementation Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../../../test-plan/spec-driven-development-test-plan.html"><span class="tree-link__num">22</span>Spec-Driven Development — Test Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../../../decision-history/spec-driven-development-decision-history.html"><span class="tree-link__num">23</span>Spec-Driven Development — Decision History</a></li></ul>
+    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../../prd/spec-driven-development-prd.html"><span class="tree-ord">1</span>Spec-Driven Development — PRD</a></li><li class="tree-leaf"><a class="tree-link" href="../../../decision-history/spec-driven-development-decision-history.html"><span class="tree-ord">2</span>Spec-Driven Development — Decision History</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../../design/spec-driven-development-design.html"><span class="tree-ord">3</span>Spec-Driven Development — HLD</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../../design/spec-driven-development-design-skill-contracts.html">Spec-Driven Development — Skill Contracts</a></li><li class="tree-leaf"><a class="tree-link" href="../../../spec-driven-development-reader.html">spec-driven-development — Reader</a></li></ul></details></li><li class="tree-leaf"><a class="tree-link" href="../../../impl-plan/spec-driven-development-impl-plan.html"><span class="tree-ord">4</span>Spec-Driven Development — Implementation Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../../../test-plan/spec-driven-development-test-plan.html"><span class="tree-ord">5</span>Spec-Driven Development — Test Plan</a></li><li class="tree-branch"><details open><summary><span class="tree-link"><span class="tree-ord">10</span>sub-feature</span></summary><ul class="tree"><li class="tree-branch"><details open><summary><a class="tree-link" href="document-standard-design.html">document-standard</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../prd/document-standard-prd-spec-reader-html.html"><span class="tree-ord">1</span>Document Standard — Spec Reader HTML（PRD）</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="document-standard-design-spec-reader-html.html" aria-current="page"><span class="tree-ord">3</span>Document Standard — Spec Reader HTML（Design）</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="document-standard-design.html">Document Standard — 文档标准（待 Review）</a></li></ul></details></li></ul></details></li></ul></details></li></ul>
   </nav>
 </aside>
   <main class="content">
@@ -63,7 +64,7 @@
 </tr>
 </tbody></table></div>
 <h5 id="DSGN-N-H"><a href="#DSGN-N-H">DSGN-N-H</a> — 单篇阅读视图</h5>
-<p>.md 是 source，HTML 是派生物。<code>&lt;!-- html-skip --&gt;</code> 与已 strike 的历史可省略；不许用它们包住 L1。生成稿带 <code>spec-source-sha256</code>；手写稿带 <code>spec-paired=hand-maintained</code>。hash 不一致则重新生成。手写 changelog 对 md Change Log 的每个日期都有一行（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-BA">ARD-BA</a>）。</p>
+<p>.md 是 source，HTML 是派生物。<code>&lt;!-- html-skip --&gt;</code> 可省略，不许包住 L1。已 strike 的句子留在 HTML；一个按钮切换「显示删除线」和「隐藏删除线」。生成稿带 <code>spec-source-sha256</code>；手写稿带 <code>spec-paired=hand-maintained</code>。hash 不一致则重新生成。手写 changelog 对 md Change Log 的每个日期都有一行（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-BA">ARD-BA</a>）。</p>
 <p>| <strong>参考</strong> | <a href="../../../spec-driven-development-reader.html"><code>docs/book/html/spec-driven-development/spec-driven-development-reader.html</code></a> — 由 <a href="../../../../../../../tools/build_sdd_reader.py"><code>tools/build_sdd_reader.py</code></a> 自 canonical <code>.md</code> 生成（<strong><a href="#DSGN-N-B">DSGN-N-B</a></strong>，<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-BF">ARD-BF</a>） |</p>
 <h5 id="DSGN-N-B"><a href="#DSGN-N-B">DSGN-N-B</a> — 保真（MUST — 回应「不要精简这么多」）</h5>
 <p>映射 <strong><a href="document-standard-design.html#DSGN-I">DSGN-I</a></strong> 到 HTML 汇编：</p>
@@ -111,13 +112,14 @@
 <h5 id="DSGN-N-K"><a href="#DSGN-N-K">DSGN-N-K</a> — 正文链接</h5>
 <p>条目号 <code>PRD-</code> <code>DSGN-</code> <code>ARD-</code> <code>IMPL-</code> <code>TST-</code> <code>PIPE-</code> <code>QUES-</code> 链到本 feature 的定义；子 feature 没有该号则链到 parent。<code>docs/features/</code> 下的 <code>.md</code> 链到 <code>docs/book/html/</code> 同路径 HTML；其他现存文件链到该文件。</p>
 <h5 id="DSGN-N-L"><a href="#DSGN-N-L">DSGN-N-L</a> — 左侧五篇</h5>
-<p>feature 左侧只列五篇入口：prd、design、impl-plan、test-plan、decision-history。design part 与 reader 展开在 design 下。子 feature 在这一层占一行，再展开自己的页面。pipeline 不生成 HTML。</p>
+<p><del>feature 左侧只列五篇入口：prd、design、impl-plan、test-plan、decision-history。</del> 左侧栏露出层次和序号：1 prd、2 decision-history、3 design、4 impl plan、5 test plan、6 how to、10 sub-feature（<a href="../../../decision-history/spec-driven-development-decision-history.html#ard-bi--left-sidebar-numbers-and-hierarchy">ARD-BI</a>）。design 的 part 与 reader 展开在 3 下。sub-feature 单独成组再展开。pipeline 不生成 HTML。</p>
 <h5 id="DSGN-N-D"><a href="#DSGN-N-D">DSGN-N-D</a> — 视觉与 HTML 技术</h5>
 <ul>
-<li><strong>SHOULD</strong> 复用 initiative 已有 CSS 模式（参考 <code>spec-driven-development.html</code>、<a href="../document-standard.html"><code>document-standard.html</code></a>：layout、chip、card、callout）。</li>
+<li><strong>SHOULD</strong> 复用 initiative 已有 CSS 模式（参考 <code>spec-driven-development.html</code>、<code>document-standard.html</code>：layout、chip、card、callout）。</li>
 <li><strong>SHOULD</strong> 单文件自包含 CSS（v0），便于 <code>file://</code> 或静态托管。</li>
 <li><strong>MAY</strong> 内联 Mermaid（若 initiative 已有先例）；否则 ASCII flow。</li>
 <li><strong>MUST NOT</strong> 依赖运行时 fetch 加载 <code>.md</code> 作为主内容（可 fetch 仅作 debug，非交付形态）。</li>
+<li><strong>MUST</strong> 标题、节、小节、条目各用不同字号、字重和形态。段落序号不用 a–z，也不用 1、2、3。</li>
 </ul>
 <h5 id="DSGN-N-E"><a href="#DSGN-N-E">DSGN-N-E</a> — 流程与标准边界</h5>
 <div class="table-wrap"><table><thead><tr>
@@ -180,8 +182,8 @@
 </ul>
 <h3>Further Notes</h3>
 <ul>
-<li><strong>反例：</strong> 当前 <a href="../../../spec-driven-development-reader.html"><code>spec-driven-development-reader.html</code></a> 多处 child/parent design 仅留 slogan — regenerate 时按 <strong><a href="#DSGN-N-B">DSGN-N-B</a></strong> 补全。</li>
-<li>Parent HLD 已指 reader 路径；deliverable skills 仍为四个；HTML 规范在 <strong>spec-html-standard</strong>。</li>
+<li><strong>反例：</strong> 当前 <code>spec-driven-development-reader.html</code> 多处 child/parent design 仅留 slogan — regenerate 时按 <strong><a href="#DSGN-N-B">DSGN-N-B</a></strong> 补全。</li>
+<li>Parent HLD 已指 reader 路径；<del>deliverable skills 仍为四个</del> 交付只有 spec-write 与 spec-review（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-BH">ARD-BH</a>）；HTML 规范在 <strong>spec-html-standard</strong>。</li>
 </ul>
 <h3>Alternatives Considered</h3>
 <ul>
@@ -253,6 +255,22 @@
 <tr>
 <td>2026-11-07</td>
 <td><a href="#DSGN-N-L">DSGN-N-L</a>：子 feature 在 design 下一层占一行，再展开自己的页面</td>
+</tr>
+<tr>
+<td>2026-11-18</td>
+<td>页顶按钮切换显示或隐藏删除线</td>
+</tr>
+<tr>
+<td>2026-11-18</td>
+<td>层级靠字号和样式分开，段落不用 a–z 或数字序号</td>
+</tr>
+<tr>
+<td>2026-11-18</td>
+<td>交付 skill 改为 spec-write 与 spec-review（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-BH">ARD-BH</a>）</td>
+</tr>
+<tr>
+<td>2026-11-18</td>
+<td>左侧栏序号 1–6 与 10 sub-feature（<a href="../../../decision-history/spec-driven-development-decision-history.html#ARD-BI">ARD-BI</a>）</td>
 </tr>
 </tbody></table></div>
       </div>

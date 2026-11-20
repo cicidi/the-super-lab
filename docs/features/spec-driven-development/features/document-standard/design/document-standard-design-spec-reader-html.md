@@ -40,7 +40,7 @@ last_verified: 2026-11-03
 
 #### DSGN-N-H — 单篇阅读视图
 
-.md 是 source，HTML 是派生物。`<!-- html-skip -->` 与已 strike 的历史可省略；不许用它们包住 L1。生成稿带 `spec-source-sha256`；手写稿带 `spec-paired=hand-maintained`。hash 不一致则重新生成。手写 changelog 对 md Change Log 的每个日期都有一行（ARD-BA）。
+.md 是 source，HTML 是派生物。`<!-- html-skip -->` 可省略，不许包住 L1。已 strike 的句子留在 HTML；一个按钮切换「显示删除线」和「隐藏删除线」。生成稿带 `spec-source-sha256`；手写稿带 `spec-paired=hand-maintained`。hash 不一致则重新生成。手写 changelog 对 md Change Log 的每个日期都有一行（ARD-BA）。
 | **参考** | `docs/book/html/spec-driven-development/spec-driven-development-reader.html` — 由 `tools/build_sdd_reader.py` 自 canonical `.md` 生成（**DSGN-N-B**，ARD-BF） |
 
 #### DSGN-N-B — 保真（MUST — 回应「不要精简这么多」）
@@ -88,7 +88,7 @@ last_verified: 2026-11-03
 
 #### DSGN-N-L — 左侧五篇
 
-feature 左侧只列五篇入口：prd、design、impl-plan、test-plan、decision-history。design part 与 reader 展开在 design 下。子 feature 在这一层占一行，再展开自己的页面。pipeline 不生成 HTML。
+~~feature 左侧只列五篇入口：prd、design、impl-plan、test-plan、decision-history。~~ 左侧栏露出层次和序号：1 prd、2 decision-history、3 design、4 impl plan、5 test plan、6 how to、10 sub-feature（[ARD-BI](../../../decision-history/spec-driven-development-decision-history.md#ard-bi--left-sidebar-numbers-and-hierarchy)）。design 的 part 与 reader 展开在 3 下。sub-feature 单独成组再展开。pipeline 不生成 HTML。
 
 #### DSGN-N-D — 视觉与 HTML 技术
 
@@ -96,6 +96,7 @@ feature 左侧只列五篇入口：prd、design、impl-plan、test-plan、decisi
 - **SHOULD** 单文件自包含 CSS（v0），便于 `file://` 或静态托管。
 - **MAY** 内联 Mermaid（若 initiative 已有先例）；否则 ASCII flow。
 - **MUST NOT** 依赖运行时 fetch 加载 `.md` 作为主内容（可 fetch 仅作 debug，非交付形态）。
+- **MUST** 标题、节、小节、条目各用不同字号、字重和形态。段落序号不用 a–z，也不用 1、2、3。
 
 #### DSGN-N-E — 流程与标准边界
 
@@ -144,7 +145,7 @@ Initiative test plan 暂不单独为 reader 开 TST；**NICE：** spec-review �
 ## Further Notes
 
 - **反例：** 当前 `spec-driven-development-reader.html` 多处 child/parent design 仅留 slogan — regenerate 时按 **DSGN-N-B** 补全。
-- Parent HLD 已指 reader 路径；deliverable skills 仍为四个；HTML 规范在 **spec-html-standard**。
+- Parent HLD 已指 reader 路径；~~deliverable skills 仍为四个~~ 交付只有 spec-write 与 spec-review（ARD-BH）；HTML 规范在 **spec-html-standard**。
 
 ## Alternatives Considered
 
@@ -183,3 +184,7 @@ Initiative test plan 暂不单独为 reader 开 TST；**NICE：** spec-review �
 | 2026-11-07 | DSGN-N-K：正文条目号与路径必须是可用链接 |
 | 2026-11-07 | DSGN-N-L：左侧只列五篇；其余展开在 design 下；pipeline 无 HTML |
 | 2026-11-07 | DSGN-N-L：子 feature 在 design 下一层占一行，再展开自己的页面 |
+| 2026-11-18 | 页顶按钮切换显示或隐藏删除线 |
+| 2026-11-18 | 层级靠字号和样式分开，段落不用 a–z 或数字序号 |
+| 2026-11-18 | 交付 skill 改为 spec-write 与 spec-review（ARD-BH） |
+| 2026-11-18 | 左侧栏序号 1–6 与 10 sub-feature（ARD-BI） |

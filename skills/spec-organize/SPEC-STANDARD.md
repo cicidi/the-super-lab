@@ -44,6 +44,10 @@ unresolved items with an owner. `Reversibility` covers undo/return/rollback.
 Prefix-letter IDs: `PRD-`, `DSGN-`, `ARD-`, `IMPL-`, `TST-`, `QUES-`. Open questions use `QUES-A`, not `OQ-1` or `QUES-1`. No bare numeric permanent IDs — `IMPL-1`, `TST-3`, `PRD-2` are violations; use letters (`IMPL-A`, `TST-C`, `QUES-A`). IDs immutable, no reuse.
 Every `PRD-*` id must be anchored in at least one design clause (TST-O).
 
+## Edits to existing prose (MUST)
+
+Do not delete an old sentence. Strike it (`~~old~~`), write the new sentence beside it, and add a ref for why (`ARD-*` or a link to that decision). spec-write does this. A typo may still be edited in place.
+
 ## Sub-problem ownership (MUST, PRD-L / PIPE-L)
 
 A design for a feature with sub-problems carries a `子问题归属` table:

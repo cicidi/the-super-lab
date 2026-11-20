@@ -11,13 +11,14 @@
 <header class="topbar">
   <div class="topbar-inner">
     <div class="brand"><a href="../../index.html"><span class="brand-mark">SDD</span><span class="brand-name">Spec Atlas</span></a></div>
+    <button class="strike-btn" type="button" onclick="var r=document.documentElement;var off=r.dataset.strike!=='off';r.dataset.strike=off?'off':'on';this.textContent=off?'显示删除线':'隐藏删除线'">隐藏删除线</button>
   </div>
 </header>
 <div class="site">
   <aside class="sidebar">
   <nav aria-label="Directory">
     <div class="tree-overview"><a class="tree-link" href="../../index.html"><span class="tree-link__num">00</span>All features</a></div>
-    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="spec-driven-development-prd.html" aria-current="page"><span class="tree-link__num">16</span>Spec-Driven Development — PRD</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../design/spec-driven-development-design.html"><span class="tree-link__num">18</span>Spec-Driven Development — HLD</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../design/spec-driven-development-design-skill-contracts.html"><span class="tree-link__num">17</span>Spec-Driven Development — Skill Contracts</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/document-standard/design/document-standard-design.html">document-standard</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/document-standard/prd/document-standard-prd-spec-reader-html.html"><span class="tree-link__num">15</span>Document Standard — Spec Reader HTML（PRD）</a></li><li class="tree-leaf"><a class="tree-link" href="../features/document-standard/design/document-standard-design-spec-reader-html.html"><span class="tree-link__num">19</span>Document Standard — Spec Reader HTML（Design）</a></li><li class="tree-leaf"><a class="tree-link" href="../features/document-standard/design/document-standard-design.html"><span class="tree-link__num">20</span>Document Standard — 文档标准（待 Review）</a></li></ul></details></li><li class="tree-leaf"><a class="tree-link" href="../spec-driven-development-reader.html">spec-driven-development — Reader</a></li></ul></details></li><li class="tree-leaf"><a class="tree-link" href="../impl-plan/spec-driven-development-impl-plan.html"><span class="tree-link__num">21</span>Spec-Driven Development — Implementation Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../test-plan/spec-driven-development-test-plan.html"><span class="tree-link__num">22</span>Spec-Driven Development — Test Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../decision-history/spec-driven-development-decision-history.html"><span class="tree-link__num">23</span>Spec-Driven Development — Decision History</a></li></ul>
+    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="spec-driven-development-prd.html" aria-current="page"><span class="tree-ord">1</span>Spec-Driven Development — PRD</a></li><li class="tree-leaf"><a class="tree-link" href="../decision-history/spec-driven-development-decision-history.html"><span class="tree-ord">2</span>Spec-Driven Development — Decision History</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../design/spec-driven-development-design.html"><span class="tree-ord">3</span>Spec-Driven Development — HLD</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../design/spec-driven-development-design-skill-contracts.html">Spec-Driven Development — Skill Contracts</a></li><li class="tree-leaf"><a class="tree-link" href="../spec-driven-development-reader.html">spec-driven-development — Reader</a></li></ul></details></li><li class="tree-leaf"><a class="tree-link" href="../impl-plan/spec-driven-development-impl-plan.html"><span class="tree-ord">4</span>Spec-Driven Development — Implementation Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../test-plan/spec-driven-development-test-plan.html"><span class="tree-ord">5</span>Spec-Driven Development — Test Plan</a></li><li class="tree-branch"><details open><summary><span class="tree-link"><span class="tree-ord">10</span>sub-feature</span></summary><ul class="tree"><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/document-standard/design/document-standard-design.html">document-standard</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/document-standard/prd/document-standard-prd-spec-reader-html.html"><span class="tree-ord">1</span>Document Standard — Spec Reader HTML（PRD）</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/document-standard/design/document-standard-design-spec-reader-html.html"><span class="tree-ord">3</span>Document Standard — Spec Reader HTML（Design）</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/document-standard/design/document-standard-design.html">Document Standard — 文档标准（待 Review）</a></li></ul></details></li></ul></details></li></ul></details></li></ul>
   </nav>
 </aside>
   <main class="content">
@@ -106,7 +107,7 @@
 <div class="req" id="PRD-M"><span class="req-id"><a href="#PRD-M">PRD-M</a></span><span class="req-text">把人讲明白是硬需求。交付前由一个 LLM 打分：它假设自己是一个本科水平的程序员真人，只按能不能看懂来判；看不懂不算交付。测试验不了，不作为通过条件。</span></div>
 <div class="req" id="PRD-N"><span class="req-id"><a href="#PRD-N">PRD-N</a></span><span class="req-text">正式 spec 的结论必须能追溯到查到的事实（合规条文、财报、新闻、定义），不靠猜；查不到的标成未知。评测时答案只能来自 context 包。</span></div>
 <div class="req" id="PRD-O"><span class="req-id"><a href="#PRD-O">PRD-O</a></span><span class="req-text">执行不真下单、不订票。一个共用 mock MCP server，若干固定工具；client call 打出 log 即算交付成功。</span></div>
-<div class="req" id="PRD-P"><span class="req-id"><a href="#PRD-P">PRD-P</a></span><span class="req-text">最终交付是 spec-write、spec-review，以及 SPEC-STANDARD.md 与 SPEC-PRESENTATION.md（<a href="../decision-history/spec-driven-development-decision-history.html#ARD-AJ">ARD-AJ</a>）。写出的 spec 满足 <a href="#PRD-K">PRD-K</a> 到 <a href="#PRD-O">PRD-O</a>。</span></div>
+<div class="req" id="PRD-P"><span class="req-id"><a href="#PRD-P">PRD-P</a></span><span class="req-text"><del>最终交付是 spec-write、spec-review，以及 SPEC-STANDARD.md 与 SPEC-PRESENTATION.md（<a href="../decision-history/spec-driven-development-decision-history.html#ARD-AJ">ARD-AJ</a>）。</del> 最终交付只有 spec-write 与 spec-review（→ <a href="../decision-history/spec-driven-development-decision-history.html#ard-bh--deliverable-is-only-spec-write-and-spec-review">ARD-BH</a>）。写出的 spec 满足 <a href="#PRD-K">PRD-K</a> 到 <a href="#PRD-O">PRD-O</a>。</span></div>
 <div class="req" id="PRD-Q"><span class="req-id"><a href="#PRD-Q">PRD-Q</a></span><span class="req-text">书写、命名、校验、更新，以及 <a href="#PRD-K">PRD-K</a> 到 <a href="#PRD-O">PRD-O</a>，都是需求。spec-write 与 spec-review 不限于这几件事。两份 skill 正文写出四个例子：盖 shed、北京旅游、数学题、股票。好不好用只看测试。</span></div>
 <h3>Out of Scope</h3>
 <ul>
@@ -182,10 +183,14 @@
 <td>2026-11-07</td>
 <td>Overview 与 Goals 验收改为 spec-write 与 spec-review（<a href="../decision-history/spec-driven-development-decision-history.html#ARD-AJ">ARD-AJ</a>）</td>
 </tr>
+<tr>
+<td>2026-11-18</td>
+<td><a href="#PRD-P">PRD-P</a>：交付只有 spec-write 与 spec-review（<a href="../decision-history/spec-driven-development-decision-history.html#ARD-BH">ARD-BH</a>）</td>
+</tr>
 </tbody></table></div>
       </div>
     </article>
-    <nav class="pager" aria-label="Previous and next"><span></span><a class="next" href="../design/spec-driven-development-design.html"><span class="label">Next</span>Spec-Driven Development — HLD</a></nav>
+    <nav class="pager" aria-label="Previous and next"><span></span><a class="next" href="../decision-history/spec-driven-development-decision-history.html"><span class="label">Next</span>Spec-Driven Development — Decision History</a></nav>
   </main>
 </div>
 <footer class="foot"><div class="foot-inner">Assembled from committed <code>.md</code>. The Markdown is authoritative; this page is a reading view.</div></footer>

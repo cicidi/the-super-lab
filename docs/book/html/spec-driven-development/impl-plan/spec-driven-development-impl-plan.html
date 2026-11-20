@@ -11,13 +11,14 @@
 <header class="topbar">
   <div class="topbar-inner">
     <div class="brand"><a href="../../index.html"><span class="brand-mark">SDD</span><span class="brand-name">Spec Atlas</span></a></div>
+    <button class="strike-btn" type="button" onclick="var r=document.documentElement;var off=r.dataset.strike!=='off';r.dataset.strike=off?'off':'on';this.textContent=off?'显示删除线':'隐藏删除线'">隐藏删除线</button>
   </div>
 </header>
 <div class="site">
   <aside class="sidebar">
   <nav aria-label="Directory">
     <div class="tree-overview"><a class="tree-link" href="../../index.html"><span class="tree-link__num">00</span>All features</a></div>
-    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../prd/spec-driven-development-prd.html"><span class="tree-link__num">16</span>Spec-Driven Development — PRD</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../design/spec-driven-development-design.html"><span class="tree-link__num">18</span>Spec-Driven Development — HLD</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../design/spec-driven-development-design-skill-contracts.html"><span class="tree-link__num">17</span>Spec-Driven Development — Skill Contracts</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/document-standard/design/document-standard-design.html">document-standard</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/document-standard/prd/document-standard-prd-spec-reader-html.html"><span class="tree-link__num">15</span>Document Standard — Spec Reader HTML（PRD）</a></li><li class="tree-leaf"><a class="tree-link" href="../features/document-standard/design/document-standard-design-spec-reader-html.html"><span class="tree-link__num">19</span>Document Standard — Spec Reader HTML（Design）</a></li><li class="tree-leaf"><a class="tree-link" href="../features/document-standard/design/document-standard-design.html"><span class="tree-link__num">20</span>Document Standard — 文档标准（待 Review）</a></li></ul></details></li><li class="tree-leaf"><a class="tree-link" href="../spec-driven-development-reader.html">spec-driven-development — Reader</a></li></ul></details></li><li class="tree-leaf"><a class="tree-link" href="spec-driven-development-impl-plan.html" aria-current="page"><span class="tree-link__num">21</span>Spec-Driven Development — Implementation Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../test-plan/spec-driven-development-test-plan.html"><span class="tree-link__num">22</span>Spec-Driven Development — Test Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../decision-history/spec-driven-development-decision-history.html"><span class="tree-link__num">23</span>Spec-Driven Development — Decision History</a></li></ul>
+    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../prd/spec-driven-development-prd.html"><span class="tree-ord">1</span>Spec-Driven Development — PRD</a></li><li class="tree-leaf"><a class="tree-link" href="../decision-history/spec-driven-development-decision-history.html"><span class="tree-ord">2</span>Spec-Driven Development — Decision History</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../design/spec-driven-development-design.html"><span class="tree-ord">3</span>Spec-Driven Development — HLD</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../design/spec-driven-development-design-skill-contracts.html">Spec-Driven Development — Skill Contracts</a></li><li class="tree-leaf"><a class="tree-link" href="../spec-driven-development-reader.html">spec-driven-development — Reader</a></li></ul></details></li><li class="tree-leaf"><a class="tree-link" href="spec-driven-development-impl-plan.html" aria-current="page"><span class="tree-ord">4</span>Spec-Driven Development — Implementation Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../test-plan/spec-driven-development-test-plan.html"><span class="tree-ord">5</span>Spec-Driven Development — Test Plan</a></li><li class="tree-branch"><details open><summary><span class="tree-link"><span class="tree-ord">10</span>sub-feature</span></summary><ul class="tree"><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/document-standard/design/document-standard-design.html">document-standard</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/document-standard/prd/document-standard-prd-spec-reader-html.html"><span class="tree-ord">1</span>Document Standard — Spec Reader HTML（PRD）</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/document-standard/design/document-standard-design-spec-reader-html.html"><span class="tree-ord">3</span>Document Standard — Spec Reader HTML（Design）</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/document-standard/design/document-standard-design.html">Document Standard — 文档标准（待 Review）</a></li></ul></details></li></ul></details></li></ul></details></li></ul>
   </nav>
 </aside>
   <main class="content">
@@ -57,17 +58,17 @@
 <p><strong>Deliverables:</strong></p>
 <ul>
 <li><code>eval.yaml</code>, <code>must_registry.yaml</code> (populate via <a href="../test-plan/spec-driven-development-test-plan.html#TST-A">TST-A</a> scan)</li>
-<li><code>gold/iphone/v1/requirement.md</code>, <code>gold/iphone/v1/context.md</code></li>
+<li><del><code>gold/iphone/v1/requirement.md</code>, <code>gold/iphone/v1/context.md</code></del> gold spec 是 <code>docs/features/spec-driven-development/</code>（<a href="../decision-history/spec-driven-development-decision-history.html#ARD-BJ">ARD-BJ</a>）。<code>gold/v1/</code> 只是练习案例</li>
 <li><code>fixtures/neg/</code>, <code>fixtures/pos/</code> (grow with <a href="../test-plan/spec-driven-development-test-plan.html#TST-B">TST-B</a>)</li>
 <li><code>checks/</code> Python package (implement <a href="../test-plan/spec-driven-development-test-plan.html#TST-B">TST-B</a>)</li>
 </ul>
 <p class="impl-verify"><strong>Verify:</strong> Run <a href="../test-plan/spec-driven-development-test-plan.html#TST-B">TST-B</a> when checks exist; gold inputs present.</p>
 <h3 id="IMPL-E"><a href="#IMPL-E">IMPL-E</a> — Self-run eval (agent)</h3>
-<p class="impl-goal"><strong>Goal:</strong> Baseline eval: <code>grill.skills: []</code>, spec-organize only, iPhone requirement + context.</p>
+<p class="impl-goal"><strong>Goal:</strong> <del>Baseline eval: <code>grill.skills: []</code>, spec-organize only, iPhone requirement + context.</del> <code>grill.skills: []</code>，gold spec 是这套 spec-driven-development（<a href="../decision-history/spec-driven-development-decision-history.html#ARD-BJ">ARD-BJ</a>）。</p>
 <p class="impl-steps"><strong>Steps:</strong> New branch <code>eval/v1/&lt;run_id&gt;</code>; run spec-pipeline → write feature spec; <a href="../test-plan/spec-driven-development-test-plan.html#TST-E">TST-E</a>/F/K; fix <strong>spec first</strong> on failure.</p>
 <p class="impl-verify"><strong>Verify:</strong> HTML report; scores per test plan.</p>
 <h3 id="IMPL-F"><a href="#IMPL-F">IMPL-F</a> — Tabbed reader HTML</h3>
-<p class="impl-goal"><strong>Goal:</strong> <a href="../spec-driven-development-reader.html"><code>spec-driven-development-reader.html</code></a> — <strong>human-readable</strong> HTML (cards, tables, flows), not a markdown viewer. Tabs: parent (PRD, design, impl, test, decision history) + children (pipeline, document-standard).</p>
+<p class="impl-goal"><strong>Goal:</strong> <code>spec-driven-development-reader.html</code> — <strong>human-readable</strong> HTML (cards, tables, flows), not a markdown viewer. Tabs: parent (PRD, design, impl, test, decision history) + children (pipeline, document-standard).</p>
 <p class="impl-steps"><strong>Steps:</strong> Rewrite prose when canonical <code>.md</code> changes; each panel links to source path in footer.</p>
 <p class="impl-verify"><strong>Verify:</strong> Open file in browser; all canonical paths exist.</p>
 <h3 id="IMPL-G"><a href="#IMPL-G">IMPL-G</a> — CLAUDE.local / managed block</h3>
@@ -76,7 +77,7 @@
 <p class="impl-verify"><strong>Verify:</strong> spec-pipeline Step 0 reads block.</p>
 <h3 id="IMPL-H"><a href="#IMPL-H">IMPL-H</a> — Docs hygiene</h3>
 <p class="impl-goal"><strong>Goal:</strong> INDEX lists parent impl-plan and new aspect design; delete legacy summary HTML.</p>
-<p class="impl-steps"><strong>Steps:</strong> Regenerate or hand-update <a href="../../../../INDEX.md"><code>docs/INDEX.md</code></a>; delete <code>spec-driven-development.html</code>; keep <a href="../spec-driven-development-reader.html"><code>spec-driven-development-reader.html</code></a> only.</p>
+<p class="impl-steps"><strong>Steps:</strong> Regenerate or hand-update <a href="../../../../INDEX.md"><code>docs/INDEX.md</code></a>; delete <code>spec-driven-development.html</code>; keep <code>spec-driven-development-reader.html</code> only.</p>
 <p class="impl-verify"><strong>Verify:</strong> No links to removed summary HTML or wayfinder-import paths under SDD.</p>
 <h3 id="IMPL-I"><a href="#IMPL-I">IMPL-I</a> — spec-review mechanical MUST alignment</h3>
 <p class="impl-goal"><strong>Goal:</strong> SKILL matches test plan (detect MUST violations + suggestions).</p>
@@ -129,10 +130,14 @@
 <td>2026-11-04</td>
 <td>Global Constraints 加 eval/no-migration；<a href="#IMPL-D">IMPL-D</a> gold 路径改 iphone/v1</td>
 </tr>
+<tr>
+<td>2026-11-18</td>
+<td><a href="#IMPL-D">IMPL-D</a> / <a href="#IMPL-E">IMPL-E</a>：gold spec 改为这套 spec-driven-development（<a href="../decision-history/spec-driven-development-decision-history.html#ARD-BJ">ARD-BJ</a>）</td>
+</tr>
 </tbody></table></div>
       </div>
     </article>
-    <nav class="pager" aria-label="Previous and next"><a class="prev" href="../features/document-standard/design/document-standard-design.html"><span class="label">Previous</span>Document Standard — 文档标准（待 Review）</a><a class="next" href="../test-plan/spec-driven-development-test-plan.html"><span class="label">Next</span>Spec-Driven Development — Test Plan</a></nav>
+    <nav class="pager" aria-label="Previous and next"><a class="prev" href="../design/spec-driven-development-design-skill-contracts.html"><span class="label">Previous</span>Spec-Driven Development — Skill Contracts</a><a class="next" href="../test-plan/spec-driven-development-test-plan.html"><span class="label">Next</span>Spec-Driven Development — Test Plan</a></nav>
   </main>
 </div>
 <footer class="foot"><div class="foot-inner">Assembled from committed <code>.md</code>. The Markdown is authoritative; this page is a reading view.</div></footer>

@@ -16,6 +16,9 @@ Decision Log uses **`ARD-{letter}`** IDs (document-standard **DSGN-F**, **DSGN-J
 
 | ID | Date | Decision |
 |---|------|----------|
+| ARD-BJ | 2026-11-18 | The gold spec is this spec-driven-development tree. The iPhone gold/v1 case is not the gold spec |
+| ARD-BI | 2026-11-18 | The left sidebar shows hierarchy and numbers: 1 prd, 2 decision-history, 3 design, 4 impl plan, 5 test plan, 6 how to, 10 sub-feature |
+| ARD-BH | 2026-11-18 | The only deliverable skills are spec-write and spec-review. The two standard files stay as documents those skills read; they are not deliverables |
 | ARD-BG | 2026-11-07 | One site at docs/book/html/index.html. Each spec page is one directory line. The directory opens a feature. Inside a feature the left side is that feature's directory and the right side is the page |
 | ARD-BF | 2026-11-07 | Spec HTML lives under docs/book/html/ and mirrors docs/features/. Parent and sub-feature HTML both go there. Markdown stays in the feature tree |
 | ARD-BE | 2026-11-07 | A diagram explains a flow prose cannot. One flow, one diagram. A steps a–b heading that contains a sequence diagram has b−a+1 messages |
@@ -433,6 +436,18 @@ One flow, one diagram. A heading that says steps a–b and contains a sequence d
 
 `docs/book/html/index.html` lists every feature. Each spec page is one line in that directory. Opening a feature shows that feature's pages on the left and the page body on the right.
 
+### ARD-BH — Deliverable is only spec-write and spec-review
+
+The product ships two skills: spec-write and spec-review. `SPEC-STANDARD.md` and `SPEC-PRESENTATION.md` remain the files those skills read. They are not deliverables. spec-organize and spec-pipeline stay out of the deliverable. Supersedes the deliverable wording that listed the two standards beside the two skills in [ARD-AJ](#ard-aj--entry-skills-are-spec-write-and-spec-review).
+
+### ARD-BI — Left sidebar numbers and hierarchy
+
+The feature sidebar is a hierarchy, and the numbers are visible. The order is 1 prd, 2 decision-history, 3 design, 4 impl plan, 5 test plan, 6 how to. Sub-features are not under design. They are group 10, and each sub-feature expands beneath that group. Design parts and the reader stay under 3 design. Pipeline has no HTML page.
+
+### ARD-BJ — Gold spec is this spec
+
+The gold test spec is `docs/features/spec-driven-development/`. A passing run is this tree, not a generated iPhone purchase spec. `skills/spec-organize/tests/gold/v1/` stays a practice case. It is not the gold spec.
+
 ## Path Update — 2026-10-30
 
 The feature was restructured into sub-features. The paths referenced in the
@@ -469,3 +484,6 @@ pointer. No decision was changed.
 | 2026-11-07 | 保留 ARD-O 旧锚点（ARD-AP） |
 | 2026-11-07 | ARD-BF：spec HTML 统一放 docs/book/html/，目录与 features 同构 |
 | 2026-11-07 | ARD-BG：全站一份目录；feature 页左目录右正文 |
+| 2026-11-18 | ARD-BH：交付只有 spec-write 与 spec-review |
+| 2026-11-18 | ARD-BI：左侧栏 1–6 加 10 sub-feature |
+| 2026-11-18 | ARD-BJ：gold spec 就是这套 spec-driven-development |

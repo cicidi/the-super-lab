@@ -11,13 +11,14 @@
 <header class="topbar">
   <div class="topbar-inner">
     <div class="brand"><a href="../../index.html"><span class="brand-mark">SDD</span><span class="brand-name">Spec Atlas</span></a></div>
+    <button class="strike-btn" type="button" onclick="var r=document.documentElement;var off=r.dataset.strike!=='off';r.dataset.strike=off?'off':'on';this.textContent=off?'显示删除线':'隐藏删除线'">隐藏删除线</button>
   </div>
 </header>
 <div class="site">
   <aside class="sidebar">
   <nav aria-label="Directory">
     <div class="tree-overview"><a class="tree-link" href="../../index.html"><span class="tree-link__num">00</span>All features</a></div>
-    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../prd/spec-driven-development-prd.html"><span class="tree-link__num">16</span>Spec-Driven Development — PRD</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../design/spec-driven-development-design.html"><span class="tree-link__num">18</span>Spec-Driven Development — HLD</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../design/spec-driven-development-design-skill-contracts.html"><span class="tree-link__num">17</span>Spec-Driven Development — Skill Contracts</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/document-standard/design/document-standard-design.html">document-standard</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/document-standard/prd/document-standard-prd-spec-reader-html.html"><span class="tree-link__num">15</span>Document Standard — Spec Reader HTML（PRD）</a></li><li class="tree-leaf"><a class="tree-link" href="../features/document-standard/design/document-standard-design-spec-reader-html.html"><span class="tree-link__num">19</span>Document Standard — Spec Reader HTML（Design）</a></li><li class="tree-leaf"><a class="tree-link" href="../features/document-standard/design/document-standard-design.html"><span class="tree-link__num">20</span>Document Standard — 文档标准（待 Review）</a></li></ul></details></li><li class="tree-leaf"><a class="tree-link" href="../spec-driven-development-reader.html">spec-driven-development — Reader</a></li></ul></details></li><li class="tree-leaf"><a class="tree-link" href="../impl-plan/spec-driven-development-impl-plan.html"><span class="tree-link__num">21</span>Spec-Driven Development — Implementation Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../test-plan/spec-driven-development-test-plan.html"><span class="tree-link__num">22</span>Spec-Driven Development — Test Plan</a></li><li class="tree-leaf"><a class="tree-link" href="spec-driven-development-decision-history.html" aria-current="page"><span class="tree-link__num">23</span>Spec-Driven Development — Decision History</a></li></ul>
+    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../prd/spec-driven-development-prd.html"><span class="tree-ord">1</span>Spec-Driven Development — PRD</a></li><li class="tree-leaf"><a class="tree-link" href="spec-driven-development-decision-history.html" aria-current="page"><span class="tree-ord">2</span>Spec-Driven Development — Decision History</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../design/spec-driven-development-design.html"><span class="tree-ord">3</span>Spec-Driven Development — HLD</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../design/spec-driven-development-design-skill-contracts.html">Spec-Driven Development — Skill Contracts</a></li><li class="tree-leaf"><a class="tree-link" href="../spec-driven-development-reader.html">spec-driven-development — Reader</a></li></ul></details></li><li class="tree-leaf"><a class="tree-link" href="../impl-plan/spec-driven-development-impl-plan.html"><span class="tree-ord">4</span>Spec-Driven Development — Implementation Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../test-plan/spec-driven-development-test-plan.html"><span class="tree-ord">5</span>Spec-Driven Development — Test Plan</a></li><li class="tree-branch"><details open><summary><span class="tree-link"><span class="tree-ord">10</span>sub-feature</span></summary><ul class="tree"><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/document-standard/design/document-standard-design.html">document-standard</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/document-standard/prd/document-standard-prd-spec-reader-html.html"><span class="tree-ord">1</span>Document Standard — Spec Reader HTML（PRD）</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/document-standard/design/document-standard-design-spec-reader-html.html"><span class="tree-ord">3</span>Document Standard — Spec Reader HTML（Design）</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/document-standard/design/document-standard-design.html">Document Standard — 文档标准（待 Review）</a></li></ul></details></li></ul></details></li></ul></details></li></ul>
   </nav>
 </aside>
   <main class="content">
@@ -38,6 +39,21 @@
 <th>Date</th>
 <th>Decision</th>
 </tr></thead><tbody>
+<tr>
+<td><a href="#ARD-BJ">ARD-BJ</a></td>
+<td>2026-11-18</td>
+<td>The gold spec is this spec-driven-development tree. The iPhone gold/v1 case is not the gold spec</td>
+</tr>
+<tr>
+<td><a href="#ARD-BI">ARD-BI</a></td>
+<td>2026-11-18</td>
+<td>The left sidebar shows hierarchy and numbers: 1 prd, 2 decision-history, 3 design, 4 impl plan, 5 test plan, 6 how to, 10 sub-feature</td>
+</tr>
+<tr>
+<td><a href="#ARD-BH">ARD-BH</a></td>
+<td>2026-11-18</td>
+<td>The only deliverable skills are spec-write and spec-review. The two standard files stay as documents those skills read; they are not deliverables</td>
+</tr>
 <tr>
 <td><a href="#ARD-BG">ARD-BG</a></td>
 <td>2026-11-07</td>
@@ -392,7 +408,7 @@ payment-impl-plan-01-schema.md       number plus phase, ordered</code></pre>
 <p>  restatement: two unrelated documents in one file.</p>
 <p>The two files are distinguished by name, following decision <a href="#ARD-G">ARD-G</a>&#x27;s aspect rule: <a href="../design/spec-driven-development-design.html"><code>spec-driven-development-design.md</code></a> for the standard, <code>wayfinder-import-design.md</code> for the import.</p>
 <h4 id="ARD-J"><a href="#ARD-J">ARD-J</a> — Five stages plus an optional <code>how-to</code></h4>
-<p>The PRD said six artifacts; <a href="../../../../features/spec-driven-development/features/pipeline/design/pipeline-design.md"><code>pipeline-design.md</code></a> and the document standard said five. The pipeline spec is right about stages: <code>how-to</code> is an output for the case where a human must operate the result, not a step every feature runs.</p>
+<p>The PRD said six artifacts; <code>pipeline-design.md</code> and the document standard said five. The pipeline spec is right about stages: <code>how-to</code> is an output for the case where a human must operate the result, not a step every feature runs.</p>
 <p>Considered and rejected: keeping six to match the PRD — rejected because it invents a stage most features never execute.</p>
 <h4 id="ARD-K"><a href="#ARD-K">ARD-K</a> — Every AI edit to a docs file is small</h4>
 <p>A large edit lands unreviewed and is hard to attribute when it breaks something. The limit is 10 lines or 200 characters; satisfying either is enough. A larger change is split into sequential edits. A restructure needs explicit human instruction, which is how this PRD&#x27;s own revision was applied.</p>
@@ -440,7 +456,7 @@ payment-impl-plan-01-schema.md       number plus phase, ordered</code></pre>
 <h4 id="ARD-AG"><a href="#ARD-AG">ARD-AG</a> — Convergence is auto-decided</h4>
 <p>PIPE-E1–E3 are checked automatically; every open decision must carry a structured <code>blocking</code> flag. The AI does not self-declare the spec &quot;stable&quot;: the automatic check passes only when no blocking item remains.</p>
 <h4 id="ARD-AH"><a href="#ARD-AH">ARD-AH</a> — Reader is the only HTML deliverable</h4>
-<p><a href="../spec-driven-development-reader.html"><code>spec-driven-development-reader.html</code></a> is the human-readable deliverable. The legacy <code>spec-driven-development.html</code> summary is deleted; references point to the reader.</p>
+<p><code>spec-driven-development-reader.html</code> is the human-readable deliverable. The legacy <code>spec-driven-development.html</code> summary is deleted; references point to the reader.</p>
 <h4 id="ARD-AI"><a href="#ARD-AI">ARD-AI</a> — This consolidation is an authorized restructure</h4>
 <p>The human explicitly authorized a one-shot consolidation of the SDD spec docs. Edits larger than the normal 10-line / 200-character cap are allowed for this batch; the normal cap resumes afterward.</p>
 <h4 id="ARD-AJ"><a href="#ARD-AJ">ARD-AJ</a> — Entry skills are spec-write and spec-review</h4>
@@ -491,6 +507,12 @@ payment-impl-plan-01-schema.md       number plus phase, ordered</code></pre>
 <p><code>docs/book/html/</code> repeats the <code>docs/features/</code> tree. A parent reader is <code>docs/book/html/&lt;parent&gt;/&lt;parent&gt;-reader.html</code>. Other spec HTML uses that same relative path with a <code>.html</code> suffix. Markdown stays in <code>docs/features/</code>.</p>
 <h4 id="ARD-BG"><a href="#ARD-BG">ARD-BG</a> — One site, feature directory on the left</h4>
 <p><a href="../../index.html"><code>docs/book/html/index.html</code></a> lists every feature. Each spec page is one line in that directory. Opening a feature shows that feature&#x27;s pages on the left and the page body on the right.</p>
+<h4 id="ARD-BH"><a href="#ARD-BH">ARD-BH</a> — Deliverable is only spec-write and spec-review</h4>
+<p>The product ships two skills: spec-write and spec-review. <a href="../../../../../skills/spec-organize/SPEC-STANDARD.md"><code>SPEC-STANDARD.md</code></a> and <a href="../../../../../skills/spec-html-standard/SPEC-PRESENTATION.md"><code>SPEC-PRESENTATION.md</code></a> remain the files those skills read. They are not deliverables. spec-organize and spec-pipeline stay out of the deliverable. Supersedes the deliverable wording that listed the two standards beside the two skills in <a href="#ard-aj--entry-skills-are-spec-write-and-spec-review">ARD-AJ</a>.</p>
+<h4 id="ARD-BI"><a href="#ARD-BI">ARD-BI</a> — Left sidebar numbers and hierarchy</h4>
+<p>The feature sidebar is a hierarchy, and the numbers are visible. The order is 1 prd, 2 decision-history, 3 design, 4 impl plan, 5 test plan, 6 how to. Sub-features are not under design. They are group 10, and each sub-feature expands beneath that group. Design parts and the reader stay under 3 design. Pipeline has no HTML page.</p>
+<h4 id="ARD-BJ"><a href="#ARD-BJ">ARD-BJ</a> — Gold spec is this spec</h4>
+<p>The gold test spec is <code>docs/features/spec-driven-development/</code>. A passing run is this tree, not a generated iPhone purchase spec. <code>skills/spec-organize/tests/gold/v1/</code> stays a practice case. It is not the gold spec.</p>
 <h3>Path Update — 2026-10-30</h3>
 <p>The feature was restructured into sub-features. The paths referenced in the historical entries now resolve as follows:</p>
 <div class="table-wrap"><table><thead><tr>
@@ -588,10 +610,22 @@ payment-impl-plan-01-schema.md       number plus phase, ordered</code></pre>
 <td>2026-11-07</td>
 <td><a href="#ARD-BG">ARD-BG</a>：全站一份目录；feature 页左目录右正文</td>
 </tr>
+<tr>
+<td>2026-11-18</td>
+<td><a href="#ARD-BH">ARD-BH</a>：交付只有 spec-write 与 spec-review</td>
+</tr>
+<tr>
+<td>2026-11-18</td>
+<td><a href="#ARD-BI">ARD-BI</a>：左侧栏 1–6 加 10 sub-feature</td>
+</tr>
+<tr>
+<td>2026-11-18</td>
+<td><a href="#ARD-BJ">ARD-BJ</a>：gold spec 就是这套 spec-driven-development</td>
+</tr>
 </tbody></table></div>
       </div>
     </article>
-    <nav class="pager" aria-label="Previous and next"><a class="prev" href="../test-plan/spec-driven-development-test-plan.html"><span class="label">Previous</span>Spec-Driven Development — Test Plan</a></nav>
+    <nav class="pager" aria-label="Previous and next"><a class="prev" href="../prd/spec-driven-development-prd.html"><span class="label">Previous</span>Spec-Driven Development — PRD</a><a class="next" href="../design/spec-driven-development-design.html"><span class="label">Next</span>Spec-Driven Development — HLD</a></nav>
   </main>
 </div>
 <footer class="foot"><div class="foot-inner">Assembled from committed <code>.md</code>. The Markdown is authoritative; this page is a reading view.</div></footer>

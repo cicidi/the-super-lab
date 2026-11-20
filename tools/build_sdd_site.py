@@ -19,6 +19,8 @@ OUT = ROOT / "docs/book/html"
 ASSETS = OUT / "assets"
 
 TYPE_RANK = {"prd": 0, "design": 1, "impl-plan": 2, "test-plan": 3, "decision-history": 4, "how-to": 5}
+NAV_ORDER = ("prd", "decision-history", "design", "impl-plan", "test-plan", "how-to")
+NAV_NUM = {"prd": "1", "decision-history": "2", "design": "3", "impl-plan": "4", "test-plan": "5", "how-to": "6"}
 
 
 def _title(path: Path) -> str:
@@ -162,41 +164,74 @@ def _lookup_id(page_file: str, token: str) -> str | None:
     return None
 
 
+_NAME_INDEX: dict[str, list[Path]] | None = None
+
+
+def _files_named(name: str) -> list[Path]:
+    global _NAME_INDEX
+    if _NAME_INDEX is None:
+        index: dict[str, list[Path]] = {}
+
+        def add(path: Path) -> None:
+            if not path.name.startswith("._"):
+                index.setdefault(path.name, []).append(path)
+
+        for doc in DOCS:
+            add(doc["source"][1])
+        skills = ROOT / "skills"
+        if skills.is_dir():
+            for path in skills.rglob("*.md"):
+                add(path)
+        _NAME_INDEX = index
+    return _NAME_INDEX.get(name, [])
+
+
+def _repo_rel(path: Path) -> str | None:
+    norm = os.path.normpath(str(path))
+    root = str(ROOT)
+    if norm == root:
+        return ""
+    prefix = root + os.sep
+    if not norm.startswith(prefix):
+        return None
+    return Path(norm[len(prefix) :]).as_posix()
+
+
+_KNOWN_MD = {doc["source"][0]: OUT / doc["file"] for doc in DOCS}
+
+
 def _dest_for_mention(raw: str, md_path: Path) -> Path | None:
     raw = html.unescape(raw).strip()
     if not raw or any(ch in raw for ch in "<>*| "):
         return None
     if raw.startswith(("http://", "https://", "mailto:")):
         return None
-    candidates: list[Path] = []
+    looks_like_file = "/" in raw or raw.endswith((".md", ".html", ".py", ".yaml", ".yml", ".sh"))
+    if not looks_like_file:
+        return None
+    rels: list[str] = []
     if raw.startswith(("./", "../")) or "/" in raw:
-        candidates.append((md_path.parent / raw).resolve())
+        rel = _repo_rel(md_path.parent / raw)
+        if rel:
+            rels.append(rel)
     if not raw.startswith(("/", ".", "..")):
-        candidates.append((ROOT / raw).resolve())
+        rels.append(raw.lstrip("/"))
     if raw.startswith("docs/features/") and raw.endswith(".html"):
-        candidates.append((OUT / raw[len("docs/features/") :]).resolve())
+        rels.append("docs/book/html/" + raw[len("docs/features/") :])
     if "/" not in raw and raw.endswith((".md", ".html")):
-        roots = (FEATURES, ROOT / "skills", OUT)
-        hits = [p for root in roots if root.is_dir() for p in root.rglob(raw) if p.is_file()]
+        hits = _files_named(Path(raw).name)
         if len(hits) == 1:
-            candidates.append(hits[0].resolve())
-    for target in candidates:
-        try:
-            target.relative_to(ROOT)
-        except ValueError:
+            rel = _repo_rel(hits[0])
+            if rel:
+                rels.append(rel)
+    for rel in rels:
+        if rel in _KNOWN_MD:
+            return _KNOWN_MD[rel]
+        if rel.startswith("docs/features/") and rel.endswith(".md"):
             continue
-        if not target.is_file() and not (
-            target.suffix == ".html" and target.is_relative_to(OUT)
-        ):
-            continue
-        try:
-            rel_feat = target.relative_to(FEATURES.resolve())
-        except ValueError:
-            rel_feat = None
-        if rel_feat is not None and target.suffix == ".md" and (FEATURES / rel_feat).is_file() and not _omitted(rel_feat):
-            return (OUT / rel_feat).with_suffix(".html")
-        if target.suffix == ".html" and target.is_relative_to(OUT):
-            return target
+        if rel.startswith("docs/book/html/") and rel.endswith(".html"):
+            return OUT / rel[len("docs/book/html/") :]
+        target = ROOT / rel
         if target.is_file():
             return target
     return None
@@ -305,6 +340,7 @@ def topbar(from_file: str) -> str:
     return f'''<header class="topbar">
   <div class="topbar-inner">
     <div class="brand"><a href="{home}"><span class="brand-mark">SDD</span><span class="brand-name">Spec Atlas</span></a></div>
+    <button class="strike-btn" type="button" onclick="var r=document.documentElement;var off=r.dataset.strike!=='off';r.dataset.strike=off?'off':'on';this.textContent=off?'显示删除线':'隐藏删除线'">隐藏删除线</button>
   </div>
 </header>'''
 
@@ -387,14 +423,35 @@ def _grouped(feature: str) -> tuple[dict[str, dict], dict[str, list[dict]], dict
     return entries, children, subs
 
 
-def _leaf(doc: dict, current: str, from_file: str) -> str:
+def _leaf(doc: dict, current: str, from_file: str, num: str = "") -> str:
     attr = ' aria-current="page"' if doc["slug"] == current else ""
-    num = NUM.get(doc["slug"], "")
-    num_html = f'<span class="tree-link__num">{num}</span>' if num else ""
+    num_html = f'<span class="tree-ord">{html.escape(num)}</span>' if num else ""
     return (
         f'<li class="tree-leaf"><a class="tree-link" href="{rel_href(from_file, doc["file"])}"{attr}>'
         f'{num_html}{html.escape(doc["title"])}</a></li>'
     )
+
+
+def _numbered_docs(pages: list[dict], current: str, from_file: str) -> str:
+    by_kind: dict[str, list[dict]] = {}
+    for doc in pages:
+        kind = doc["kind"] if doc["kind"] in NAV_NUM else "design"
+        by_kind.setdefault(kind, []).append(doc)
+    chunks: list[str] = []
+    for kind in NAV_ORDER:
+        docs = by_kind.get(kind, [])
+        if not docs:
+            continue
+        first, rest = docs[0], docs[1:]
+        if rest:
+            link = _leaf(first, current, from_file, NAV_NUM[kind]).removeprefix('<li class="tree-leaf">').removesuffix("</li>")
+            inner = "".join(_leaf(doc, current, from_file) for doc in rest)
+            chunks.append(
+                f'<li class="tree-branch"><details open><summary>{link}</summary><ul class="tree">{inner}</ul></details></li>'
+            )
+        else:
+            chunks.append(_leaf(first, current, from_file, NAV_NUM[kind]))
+    return "".join(chunks)
 
 
 def _sub_branch(name: str, pages: list[dict], current: str, from_file: str) -> str:
@@ -403,7 +460,7 @@ def _sub_branch(name: str, pages: list[dict], current: str, from_file: str) -> s
         '<li class="tree-branch"><details open><summary>'
         f'<a class="tree-link" href="{rel_href(from_file, home["file"])}">{html.escape(name)}</a>'
         '</summary><ul class="tree">'
-        + "".join(_leaf(doc, current, from_file) for doc in pages)
+        + _numbered_docs(pages, current, from_file)
         + "</ul></details></li>"
     )
 
@@ -422,23 +479,30 @@ def _layer(kind: str, kids: list[dict], subs: dict[str, list[dict]], current: st
 def _feature_tree(feature: str, current: str, from_file: str) -> str:
     entries, children, subs = _grouped(feature)
     parts = ['<ul class="tree">']
-    for kind in TYPE_RANK:
+    for kind in NAV_ORDER:
         entry = entries.get(kind)
         kids = children[kind]
-        extra = subs if kind == "design" else {}
-        if entry is None and not kids and not extra:
+        if entry is None and not kids:
             continue
-        inner = _layer(kind, kids, extra, current, from_file)
+        inner = _layer(kind, kids, {}, current, from_file)
+        num = NAV_NUM[kind]
         if entry is not None and inner:
+            link = _leaf(entry, current, from_file, num).removeprefix('<li class="tree-leaf">').removesuffix("</li>")
             parts.append(
-                '<li class="tree-branch"><details open><summary>'
-                + _leaf(entry, current, from_file).removeprefix('<li class="tree-leaf">').removesuffix("</li>")
-                + f'</summary><ul class="tree">{inner}</ul></details></li>'
+                f'<li class="tree-branch"><details open><summary>{link}</summary>'
+                f'<ul class="tree">{inner}</ul></details></li>'
             )
         elif entry is not None:
-            parts.append(_leaf(entry, current, from_file))
+            parts.append(_leaf(entry, current, from_file, num))
         else:
             parts.append(inner)
+    if subs:
+        inner = "".join(_sub_branch(name, pages, current, from_file) for name, pages in subs.items())
+        parts.append(
+            '<li class="tree-branch"><details open><summary>'
+            '<span class="tree-link"><span class="tree-ord">10</span>sub-feature</span>'
+            f'</summary><ul class="tree">{inner}</ul></details></li>'
+        )
     parts.append("</ul>")
     return "".join(parts)
 
@@ -446,13 +510,12 @@ def _feature_tree(feature: str, current: str, from_file: str) -> str:
 def _reading_order(feature: str) -> list[dict]:
     entries, children, subs = _grouped(feature)
     order = []
-    for kind in TYPE_RANK:
+    for kind in NAV_ORDER:
         if kind in entries:
             order.append(entries[kind])
         order.extend(doc for doc in children[kind] if doc["slug"] in BY_SLUG)
-        if kind == "design":
-            for pages in subs.values():
-                order.extend(doc for doc in pages if doc["slug"] in BY_SLUG)
+    for pages in subs.values():
+        order.extend(doc for doc in pages if doc["slug"] in BY_SLUG)
     return order
 
 
@@ -463,33 +526,36 @@ def _index_feature(feature: str) -> str:
         return f'<li><a href="{rel_href("index.html", doc["file"])}">{html.escape(doc["title"])}</a></li>'
 
     items: list[str] = []
-    for kind in TYPE_RANK:
+    for kind in NAV_ORDER:
         entry = entries.get(kind)
         kids = children[kind]
-        extra = subs if kind == "design" else {}
-        if entry is None and not kids and not extra:
+        if entry is None and not kids:
             continue
         nested_bits: list[str] = []
         if kind == "design":
             readers = [doc for doc in kids if doc["slug"].endswith("/reader")]
             nested_bits.extend(link(doc) for doc in kids if doc not in readers)
-            for name, pages in extra.items():
-                home = _sub_home(pages, name)
-                nested_bits.append(
-                    f'<li><a href="{rel_href("index.html", home["file"])}">{html.escape(name)}</a><ul>'
-                    + "".join(link(doc) for doc in pages)
-                    + "</ul></li>"
-                )
             nested_bits.extend(link(doc) for doc in readers)
         else:
             nested_bits.extend(link(doc) for doc in kids)
         nested = "<ul>" + "".join(nested_bits) + "</ul>" if nested_bits else ""
+        num = NAV_NUM[kind]
         if entry is not None:
             items.append(
-                f'<li><a href="{rel_href("index.html", entry["file"])}">{html.escape(entry["title"])}</a>{nested}</li>'
+                f'<li><a href="{rel_href("index.html", entry["file"])}">{num} {html.escape(entry["title"])}</a>{nested}</li>'
             )
         else:
             items.extend(nested_bits)
+    if subs:
+        bits: list[str] = []
+        for name, pages in subs.items():
+            home = _sub_home(pages, name)
+            bits.append(
+                f'<li><a href="{rel_href("index.html", home["file"])}">{html.escape(name)}</a><ul>'
+                + "".join(link(doc) for doc in pages)
+                + "</ul></li>"
+            )
+        items.append("<li>10 sub-feature<ul>" + "".join(bits) + "</ul></li>")
     home = feature_home(feature)
     return (
         '<section class="doc-group"><h3><a href="'
@@ -753,12 +819,15 @@ button { font: inherit; }
   padding: 12px 24px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 12px;
 }
 .brand a { display: inline-flex; align-items: center; gap: 8px; color: var(--fg); text-decoration: none; }
 .brand a:hover { text-decoration: none; }
 .brand-mark { color: var(--link); font-family: var(--font-display); font-weight: 500; font-size: 18px; letter-spacing: .2px; }
 .brand-name { font-family: var(--font-display); font-size: 18px; font-weight: 500; color: var(--fg); }
+.strike-btn { font-family: ui-monospace, monospace; font-size: 12px; padding: 4px 10px; border: 1px solid var(--border); background: transparent; color: var(--fg); border-radius: 999px; cursor: pointer; }
+html[data-strike="off"] del { display: none; }
 
 /* layout: full-height left nav rail + content */
 .site {
@@ -797,6 +866,8 @@ button { font: inherit; }
 .tree-link:hover { background: var(--bg-3); color: var(--fg); text-decoration: none; }
 .tree-link[aria-current="page"] { background: var(--blue-soft); color: var(--link-hover); font-weight: 500; }
 .tree-link__num { display: none; }
+.tree-ord { flex: 0 0 auto; min-width: 1.4rem; font-variant-numeric: tabular-nums; color: var(--muted); font-size: 12px; }
+.tree-branch > details > summary > .tree-link { display: flex; align-items: baseline; gap: 8px; }
 .tree-branch > details > summary {
   display: flex;
   align-items: center;
@@ -905,23 +976,43 @@ button { font: inherit; }
 .doc-body { max-width: var(--measure); min-width: 0; }
 .doc-body > h2:first-child { margin-top: 0; }
 .doc-body h2 {
-  margin: 32px 0 12px;
+  margin: 36px 0 14px;
   font-family: var(--font-display);
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 32px;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 1.2;
   color: var(--fg);
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--fg);
 }
 .doc-body h3 {
-  margin: 26px 0 10px;
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 28px;
+  margin: 28px 0 10px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.3;
   color: var(--fg);
 }
-.doc-body h4 { margin: 20px 0 8px; font-family: var(--font-display); font-weight: 500; font-size: 16px; color: var(--fg); }
-.doc-body p { margin: 0 0 12px; }
+.doc-body h4 {
+  margin: 22px 0 8px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 1.4;
+  color: var(--fg);
+  padding-left: 10px;
+  border-left: 3px solid var(--link);
+}
+.doc-body h5 {
+  margin: 18px 0 6px;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+.doc-body p { margin: 0 0 14px; font-size: 16px; line-height: 1.7; }
 .doc-body ul, .doc-body ol { padding-left: 26px; margin: 0 0 12px; }
 .doc-body li { margin: 4px 0; }
 .doc-body li::marker { color: var(--fg); }

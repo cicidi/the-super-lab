@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%84%3C/text%3E%3C/svg%3E">
+<title>Bulma · Spec-Driven Development 样式样本</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+<style>
+:root{
+  --sds-accent:#D98A3A;
+  --sds-accent-2:#5F8D4E;
+  --sds-danger:#B95547;
+  --sds-ink:#1f2328;
+  --sds-ink: color-mix(in srgb, CanvasText 90%, transparent);
+  --sds-muted:#69707a;
+  --sds-muted: color-mix(in srgb, CanvasText 58%, transparent);
+  --sds-line:#e4e6e8;
+  --sds-line: color-mix(in srgb, CanvasText 15%, transparent);
+  --sds-panel:#f6f7f5;
+  --sds-panel: color-mix(in srgb, CanvasText 5%, Canvas);
+  --sds-radius:14px;
+  --sds-max:1080px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .sds-entrance{animation:none !important;opacity:1 !important;transform:none !important}
+}
+body{-webkit-font-smoothing:antialiased;margin:0}
+#sds-progress{position:fixed;inset:0 auto auto 0;height:3px;width:0;z-index:9999;
+  background:linear-gradient(90deg,var(--sds-accent),var(--sds-accent-2));transition:width .08s linear}
+.sample-bar{position:sticky;top:0;z-index:900;display:flex;align-items:center;gap:10px;
+  padding:9px 18px;font-size:12.5px;line-height:1.3;
+  background:color-mix(in srgb,Canvas 86%,transparent);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--sds-line);color:var(--sds-muted)}
+.sample-bar a{color:inherit;text-decoration:none;font-weight:600}
+.sample-bar a:hover{color:var(--sds-accent)}
+.sample-bar__meta{font-weight:700;color:var(--sds-ink)}
+.sample-bar__spacer{flex:1}
+.sample-pill{border:1px solid var(--sds-line);border-radius:999px;padding:2px 9px;
+  white-space:nowrap;font-size:11.5px;color:var(--sds-muted);background:var(--sds-panel);
+  max-width:200px;overflow:hidden;text-overflow:ellipsis;flex:0 1 auto;min-width:0}
+.sample-bar__meta{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:0 1 auto}
+.sds-wrap,.doc-wrap{max-width:var(--sds-max);margin:0 auto;padding:0 22px 68px}
+blockquote{margin:20px 0;padding:12px 18px;border-left:3px solid var(--sds-accent);
+  border-radius:0 10px 10px 0;background:var(--sds-panel);color:var(--sds-muted);font-size:.96rem}
+.sds-hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:34px;
+  align-items:center;padding:46px 0 22px}
+.sds-hero h1{font-size:clamp(2rem,4.4vw,3.35rem);line-height:1.07;letter-spacing:-.025em;
+  margin:.18em 0 .38em}
+.sds-eyebrow{text-transform:uppercase;letter-spacing:.15em;font-size:.7rem;font-weight:800;
+  color:var(--sds-accent);margin:0}
+.sds-lede{font-size:1.06rem;line-height:1.7;color:var(--sds-muted);max-width:58ch;margin:0}
+.sds-lede code{font-size:.9em}
+.sds-hero-art{width:100%;height:auto;max-height:270px}
+.sds-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.sds-chip{display:inline-flex;align-items:baseline;gap:6px;border:1px solid var(--sds-line);
+  border-radius:999px;padding:4px 10px;font-size:.76rem;color:var(--sds-muted);background:var(--sds-panel)}
+.sds-chip b{color:var(--sds-ink);font-size:.66rem;text-transform:uppercase;letter-spacing:.05em}
+.sds-toc{display:flex;flex-wrap:wrap;gap:6px 20px;padding:13px 0 20px;margin:8px 0;
+  border-top:1px solid var(--sds-line);border-bottom:1px solid var(--sds-line);font-size:.87rem}
+.sds-toc a{color:var(--sds-muted);text-decoration:none}
+.sds-toc a:hover{color:var(--sds-accent)}
+section{padding:24px 0}
+section h2{margin-top:0}
+.sds-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:22px 0 4px}
+.sds-stat{border:1px solid var(--sds-line);border-radius:12px;padding:14px 16px;background:var(--sds-panel)}
+.sds-stat b{display:block;font-size:1.7rem;line-height:1;color:var(--sds-accent)}
+.sds-stat span{display:block;margin-top:8px;font-size:.76rem;color:var(--sds-muted)}
+.sds-figure{margin:26px 0;padding:14px;border:1px solid var(--sds-line);
+  border-radius:var(--sds-radius);background:var(--sds-panel);overflow-x:auto}
+.sds-figure-art{display:block;width:100%;height:auto}
+.sds-figure figcaption{margin-top:10px;font-size:.78rem;line-height:1.5;color:var(--sds-muted);text-align:center}
+.sds-svg-strong{fill:var(--sds-ink);font-weight:700;font-size:15px;font-family:inherit}
+.sds-svg-muted{fill:var(--sds-muted);font-size:12px;font-family:inherit}
+.sds-svg-accent{fill:var(--sds-accent);font-weight:800;font-size:18px;font-family:inherit}
+.sds-svg-num{fill:var(--sds-accent);font-weight:800;font-size:11px;font-family:inherit}
+.sds-card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:14px;margin-top:18px}
+.sds-card{border:1px solid var(--sds-line);border-radius:14px;padding:18px;background:var(--sds-panel);
+  transition:transform .18s ease,box-shadow .18s ease}
+.sds-card:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.08)}
+.sds-card__tag{font-size:.65rem;font-weight:800;letter-spacing:.13em;color:var(--sds-accent-2)}
+.sds-card h3{font-size:1.01rem;line-height:1.35;margin:.45em 0 .5em}
+.sds-card p{font-size:.87rem;line-height:1.6;color:var(--sds-muted);margin:0}
+.sds-table-wrap{overflow-x:auto;margin:18px 0}
+.sds-table{width:100%;min-width:560px;border-collapse:collapse;font-size:.86rem}
+.sds-table th{text-align:left;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--sds-muted);border-bottom:1px solid var(--sds-line);padding:9px 12px}
+.sds-table td{padding:10px 12px;border-bottom:1px solid var(--sds-line);vertical-align:top}
+.sds-table td:first-child{white-space:nowrap}
+.sds-callout{border-left:4px solid var(--sds-accent);border-radius:10px;padding:12px 16px;
+  margin:16px 0;background:var(--sds-panel)}
+.sds-callout strong{display:block;font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;
+  margin-bottom:4px;color:var(--sds-accent)}
+.sds-callout p{margin:0;font-size:.89rem;line-height:1.65}
+.sds-callout--tip{border-left-color:var(--sds-accent-2)}
+.sds-callout--tip strong{color:var(--sds-accent-2)}
+.sds-callout--warn{border-left-color:#c9971e}
+.sds-callout--warn strong{color:#a97b12}
+.sds-callout--danger{border-left-color:var(--sds-danger)}
+.sds-callout--danger strong{color:var(--sds-danger)}
+.sds-code{border:1px solid rgba(148,163,184,.25);border-radius:12px;overflow:hidden;
+  margin:16px 0;background:#0f172a}
+.sds-code__bar{display:flex;align-items:center;gap:8px;padding:8px 12px;background:#1e293b;
+  color:#cbd5e1;font-size:.73rem}
+.sds-code__dots{display:inline-flex;gap:5px;margin-right:4px}
+.sds-code__dots i{width:9px;height:9px;border-radius:50%;background:#B95547;display:block}
+.sds-code__dots i:nth-child(2){background:#F2C94C}
+.sds-code__dots i:nth-child(3){background:#5F8D4E}
+.sds-code__title{flex:1;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.sds-code__copy{background:none;border:0;color:#94a3b8;cursor:pointer;font-size:.71rem;padding:2px 4px}
+.sds-code__copy:hover{color:#e2e8f0}
+.sds-code pre{margin:0;padding:16px;overflow:auto;background:transparent;color:#e2e8f0;
+  font-size:.81rem;line-height:1.65;border:0}
+.sds-code code{background:transparent;color:inherit;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:inherit;padding:0}
+.hljs-keyword,.hljs-selector-tag,.hljs-literal{color:#c792ea}
+.hljs-string,.hljs-attr,.hljs-template-tag{color:#a5d6a7}
+.hljs-number,.hljs-symbol{color:#f2c94c}
+.hljs-comment{color:#7c8a99;font-style:italic}
+.hljs-title,.hljs-section,.hljs-name{color:#82aaff}
+.hljs-built_in,.hljs-type,.hljs-bullet{color:#ffcb6b}
+.hljs-variable,.hljs-template-variable{color:#f78c6c}
+.hljs-meta{color:#89ddff}
+.sds-tabs{margin:16px 0}
+.sds-tabs__nav{display:flex;gap:4px;border-bottom:1px solid var(--sds-line)}
+.sds-tabs__nav button{background:none;border:0;border-bottom:2px solid transparent;padding:8px 12px;
+  cursor:pointer;color:var(--sds-muted);font:inherit;font-size:.82rem}
+.sds-tabs__nav button.is-active{color:var(--sds-accent);border-bottom-color:var(--sds-accent)}
+.sds-tabs__panel{display:none}
+.sds-tabs__panel.is-active{display:block}
+.sds-pager{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:44px 0 0;
+  padding-top:24px;border-top:1px solid var(--sds-line)}
+.sds-pager__item{border:1px solid var(--sds-line);border-radius:12px;padding:13px 16px;
+  text-decoration:none;color:var(--sds-ink);display:block}
+.sds-pager__item span{display:block;font-size:.71rem;color:var(--sds-muted)}
+.sds-pager__item b{display:block;margin-top:3px;font-size:.9rem}
+.sds-pager__item--next{text-align:right}
+.sds-pager__item:hover{border-color:var(--sds-accent)}
+@keyframes sdsIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: no-preference){.sds-entrance{animation:sdsIn .5s ease both}}
+@media print{.sds-entrance{animation:none !important;opacity:1 !important;transform:none !important}}
+.sds-skip{position:absolute;left:-9999px;top:0;background:Canvas;color:CanvasText;padding:8px 12px;z-index:99999}
+.sds-skip:focus{left:8px;top:8px}
+.sds-footnote{font-size:.76rem;color:var(--sds-muted);text-align:center;margin:28px 0 0}
+@media (max-width:860px){
+  .sds-hero{grid-template-columns:1fr;padding-top:30px}
+  .sds-hero-art{max-height:210px}
+  .sds-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .sds-wrap,.doc-wrap{padding:0 16px 48px}
+  .sample-bar{padding:8px 10px;gap:6px}
+  .sample-bar a{white-space:nowrap}
+  .sample-pill--kind,.sample-pill--repo{display:none}
+  .sample-bar__meta{max-width:46vw}
+  .sds-figure-art{min-width:560px}
+  .sds-figure figcaption{min-width:0}
+  .sds-toc{gap:6px 14px;font-size:.8rem}
+  .sds-pager{grid-template-columns:1fr}
+  .sds-pager__item--next{text-align:left}
+}
+</style>
+<style>body{max-width:none !important;margin:0 !important;padding:0 !important;width:auto !important}:root{--sds-accent:#00d1b2;--sds-accent-2:#485fc7}.doc-wrap.content{max-width:1080px}</style>
+</head>
+<body class="theme-bulma">
+<a class="sds-skip" href="#sds-main">跳到正文</a>
+<div id="sds-progress" aria-hidden="true"></div>
+<div class="sample-bar">
+  <a href="index.html">← 返回画廊</a>
+  <span class="sample-bar__meta">03 / 20 · Bulma</span>
+  <span class="sample-bar__spacer"></span>
+  <span class="sample-pill sample-pill--kind">真实 CSS · v1.0.2</span>
+  <span class="sample-pill sample-pill--stars">★ 50k</span>
+  <span class="sample-pill sample-pill--repo">jgthms/bulma</span>
+</div>
+<main id="sds-main" class="doc-wrap content">
+<header class="sds-hero">
+  <div class="sds-hero__text">
+    <p class="sds-eyebrow">SPEC-DRIVEN DEVELOPMENT · PRD</p>
+    <h1>把有门槛的问题，<br>先分析清楚</h1>
+    <p class="sds-lede">用 PRD、decision-history、design、impl-plan、test-plan 五篇，
+      把有门槛的问题分析清楚，并由 <code>spec-write</code> 与 <code>spec-review</code> 执行（ARD-AJ）。</p>
+    <div class="sds-chips"><span class="sds-chip"><b>feature</b> spec-driven-development</span><span class="sds-chip"><b>type</b> prd</span><span class="sds-chip"><b>state</b> draft</span><span class="sds-chip"><b>owner</b> cicidi</span><span class="sds-chip"><b>last_verified</b> 2026-11-04</span></div>
+  </div>
+  
+<svg class="sds-hero-art" viewBox="0 0 520 240" role="img" aria-label="五篇规范文档与审查回路示意图">
+  <defs>
+    <linearGradient id="heroA" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="var(--sds-accent)" stop-opacity=".85"/>
+      <stop offset="1" stop-color="var(--sds-accent-2)" stop-opacity=".55"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" stroke="var(--sds-line)" stroke-width="1.5">
+    <rect x="150" y="34" width="230" height="150" rx="14" fill="var(--sds-panel)"/>
+    <rect x="172" y="54" width="186" height="150" rx="14" fill="var(--sds-panel)"/>
+    <rect x="194" y="74" width="142" height="150" rx="14" fill="url(#heroA)" opacity=".16"/>
+  </g>
+  <g fill="var(--sds-ink)" opacity=".82">
+    <rect x="214" y="96" width="72" height="7" rx="3.5"/>
+    <rect x="214" y="114" width="102" height="5" rx="2.5" opacity=".5"/>
+    <rect x="214" y="128" width="88" height="5" rx="2.5" opacity=".5"/>
+    <rect x="214" y="142" width="96" height="5" rx="2.5" opacity=".5"/>
+    <rect x="214" y="168" width="54" height="18" rx="9" fill="var(--sds-accent)" opacity=".9"/>
+  </g>
+  <g fill="none" stroke="var(--sds-accent)" stroke-width="2">
+    <circle cx="396" cy="176" r="34" opacity=".9"/>
+    <path d="M420 200 L446 226" stroke-linecap="round"/>
+  </g>
+  <g fill="var(--sds-accent-2)">
+    <circle cx="86" cy="60" r="4"/>
+    <circle cx="62" cy="128" r="3"/>
+    <circle cx="92" cy="196" r="5"/>
+    <circle cx="470" cy="58" r="3"/>
+  </g>
+  <g stroke="var(--sds-line)" stroke-width="1" stroke-dasharray="4 6">
+    <path d="M92 60 L150 74"/>
+    <path d="M66 128 L150 122"/>
+    <path d="M98 196 L172 176"/>
+    <path d="M470 58 L430 132"/>
+  </g>
+</svg>
+</header><nav class="sds-toc" aria-label="本页目录"><a href="#overview">Overview</a><a href="#problem">Problem Statement</a><a href="#goals">Goals & Non-goals</a><a href="#requirements">Functional Requirements</a><a href="#pipeline">Pipeline</a><a href="#usage">Usage</a><a href="#callouts">Review Notes</a></nav>
+<section id="overview">
+  <h2>Overview</h2>
+  <p>本 PRD 定义 spec-driven development：用 PRD、decision-history、design、impl-plan、test-plan 五篇，
+    把有门槛的问题分析清楚，并由 <code>spec-write</code> 与 <code>spec-review</code> 执行（ARD-AJ）。</p>
+  <div class="sds-stats">
+    <div class="sds-stat"><b>5</b><span>篇规范文档</span></div>
+    <div class="sds-stat"><b>2</b><span>个执行 skill</span></div>
+    <div class="sds-stat"><b>1</b><span>条审查回路</span></div>
+    <div class="sds-stat"><b>0</b><span>个未定义的问题</span></div>
+  </div>
+</section>
+<section id="problem">
+  <h2>Problem Statement</h2>
+  <p>今天，AI 模型的能力已经非常强大。它们可以阅读、搜索最新、最前沿的技术，帮助我们解决问题。</p>
+  <p><strong>但是，问题是什么？</strong></p>
+  <blockquote>嘿，AI，我买 iPhone 18 Duo 还是 iPhone 18 基础版？</blockquote>
+  <p>看似是一个简单的问题，但实际上，我们并没有告诉 AI 我们的真实需求。</p>
+  <p>比如：我们买新的 iPhone 是用来做什么的？我们的 budget 是多少？我们之前是否一直使用 iPhone？
+    我们喜欢 iPhone 的哪些优点，又有哪些缺点？</p>
+  <figure class="sds-figure">
+    
+<svg class="sds-figure-art" viewBox="0 0 660 250" role="img" aria-label="用户上下文与 AI 知识之间的 unknown 区域">
+  <circle cx="238" cy="125" r="96" fill="var(--sds-panel)" stroke="var(--sds-line)" stroke-width="1.5"/>
+  <circle cx="422" cy="125" r="96" fill="var(--sds-panel)" stroke="var(--sds-line)" stroke-width="1.5"/>
+  <path d="M330 60 A96 96 0 0 1 330 190 A96 96 0 0 1 330 60 Z"
+        fill="var(--sds-accent)" opacity=".14"/>
+  <text x="196" y="120" text-anchor="middle" class="sds-svg-strong">用户的 context</text>
+  <text x="196" y="142" text-anchor="middle" class="sds-svg-muted">目标 · 预算 · 偏好</text>
+  <text x="464" y="120" text-anchor="middle" class="sds-svg-strong">AI 的知识</text>
+  <text x="464" y="142" text-anchor="middle" class="sds-svg-muted">模型 · 检索 · 推理</text>
+  <text x="330" y="132" text-anchor="middle" class="sds-svg-accent">unknown</text>
+</svg>
+    <figcaption>图 1 · 问题没有被定义清楚时，用户上下文与 AI 知识之间存在一片 unknown。</figcaption>
+  </figure>
+  <h3>1. Problem 经常没有被定义清楚，更何谈解决</h3>
+  <p>这些 context，AI 并不知道，因此 AI 的推荐肯定不会准确。这正是很多人抱怨 AI 不好用的原因。
+    事实上，对于我们自己来说，这看似是一个清楚的问题，但实际上，可能不是 AI 不好用，而是人没有把 problem 定义好。</p>
+  <h3>2. AI 真正赋予我们的 superpower，是帮助我们发现 unknown</h3>
+  <p>在我们把问题问清楚以后，AI 也提供了一些思路，甚至 solution。但是，由于人的能力有限，
+    我们可能根本没有见过某些解决方法或方案。我们利用已知的信息，找到我们不知道自己知道的信息，
+    同时学习我们知道自己不知道的知识，最后把我们不知道、甚至不知道自己不知道的 blind spot 发掘出来。</p>
+  <p>这才是 AI 真正赋予我们超能力的地方。</p>
+</section><section id="goals"><h2>Goals &amp; Non-goals</h2><div class="sds-card-grid"><article class="sds-card"><span class="sds-card__tag">GOAL 01</span><h3>把 problem 定义清楚</h3><p>先回答 What / Why / Who / Not，再谈 solution。</p></article><article class="sds-card"><span class="sds-card__tag">GOAL 02</span><h3>发现 unknown</h3><p>用提问把 blind spot 摊开，而不是让模型猜。</p></article><article class="sds-card"><span class="sds-card__tag">GOAL 03</span><h3>五篇可执行</h3><p>PRD、decision-history、design、impl-plan、test-plan 互相咬合。</p></article><article class="sds-card"><span class="sds-card__tag">NON-GOAL</span><h3>不替代人的判断</h3><p>规范负责暴露问题，最终取舍仍然由人决定。</p></article><article class="sds-card"><span class="sds-card__tag">NON-GOAL</span><h3>不追求一次写对</h3><p>允许 review 回路反复修正，直到验收可测。</p></article><article class="sds-card"><span class="sds-card__tag">NON-GOAL</span><h3>不做重型流程</h3><p>文档为问题服务，不为流程本身服务。</p></article></div></section>
+<section id="requirements">
+  <h2>Functional Requirements</h2>
+  <p>每条需求都必须能被审查：ID 稳定、描述单一、验收可测。</p>
+  <div class="sds-table-wrap">
+    <table class="sds-table table">
+      <thead><tr><th>ID</th><th>Requirement</th><th>Acceptance</th></tr></thead>
+      <tbody><tr><td><code>FR-01</code></td><td>PRD 必须先回答 What / Why / Who / Not</td><td>Overview 与 Problem Statement 不得为空</td></tr><tr><td><code>FR-02</code></td><td>五篇文档齐备且互相引用</td><td>PRD / decision-history / design / impl-plan / test-plan 均存在</td></tr><tr><td><code>FR-03</code></td><td>spec-write 可按模板执行</td><td>产出通过模板校验，字段完整</td></tr><tr><td><code>FR-04</code></td><td>spec-review 可逐条追踪</td><td>每条 FR 映射到设计决策或验收用例</td></tr><tr><td><code>FR-05</code></td><td>文档可发布为 HTML</td><td>mkdocs-ready，导航与交叉链接可用</td></tr></tbody>
+    </table>
+  </div>
+  <div class="sds-callout sds-callout--note">
+    <strong>QUES</strong>
+    <p>QUES-01 问题是否被定义清楚？ QUES-02 unknown 是否被发掘？ QUES-03 验收是否可测？</p>
+  </div>
+</section>
+<section id="pipeline">
+  <h2>Pipeline</h2>
+  <p>五篇文档不是五个孤岛：前一篇的输出是后一篇的输入，review 回路把偏差送回起点。</p>
+  <figure class="sds-figure sds-figure--wide">
+    
+<svg class="sds-figure-art" viewBox="0 0 980 270" role="img" aria-label="五篇规范文档流水线">
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+    <path d="M0 0 L10 5 L0 10 z" fill="var(--sds-accent)"/></marker></defs>
+  <g><rect x="40" y="52" width="152" height="86" rx="12" fill="var(--sds-panel)" stroke="var(--sds-line)" stroke-width="1.5"/><text x="56" y="78" class="sds-svg-num">01</text><text x="56" y="104" class="sds-svg-strong">PRD</text><text x="56" y="124" class="sds-svg-muted">What / Why</text></g><path d="M196 95 L220 95" stroke="var(--sds-accent)" stroke-width="2" marker-end="url(#arrow)"/><g><rect x="224" y="52" width="152" height="86" rx="12" fill="var(--sds-panel)" stroke="var(--sds-line)" stroke-width="1.5"/><text x="240" y="78" class="sds-svg-num">02</text><text x="240" y="104" class="sds-svg-strong">DECISION</text><text x="240" y="124" class="sds-svg-muted">取舍与理由</text></g><path d="M380 95 L404 95" stroke="var(--sds-accent)" stroke-width="2" marker-end="url(#arrow)"/><g><rect x="408" y="52" width="152" height="86" rx="12" fill="var(--sds-panel)" stroke="var(--sds-line)" stroke-width="1.5"/><text x="424" y="78" class="sds-svg-num">03</text><text x="424" y="104" class="sds-svg-strong">DESIGN</text><text x="424" y="124" class="sds-svg-muted">结构与接口</text></g><path d="M564 95 L588 95" stroke="var(--sds-accent)" stroke-width="2" marker-end="url(#arrow)"/><g><rect x="592" y="52" width="152" height="86" rx="12" fill="var(--sds-panel)" stroke="var(--sds-line)" stroke-width="1.5"/><text x="608" y="78" class="sds-svg-num">04</text><text x="608" y="104" class="sds-svg-strong">IMPL-PLAN</text><text x="608" y="124" class="sds-svg-muted">依赖与顺序</text></g><path d="M748 95 L772 95" stroke="var(--sds-accent)" stroke-width="2" marker-end="url(#arrow)"/><g><rect x="776" y="52" width="152" height="86" rx="12" fill="var(--sds-panel)" stroke="var(--sds-line)" stroke-width="1.5"/><text x="792" y="78" class="sds-svg-num">05</text><text x="792" y="104" class="sds-svg-strong">TEST-PLAN</text><text x="792" y="124" class="sds-svg-muted">验收与回归</text></g>
+  <rect x="250" y="178" width="200" height="54" rx="27" fill="var(--sds-accent)" opacity=".14"
+        stroke="var(--sds-accent)" stroke-width="1.5"/>
+  <text x="350" y="211" text-anchor="middle" class="sds-svg-strong">spec-write</text>
+  <rect x="530" y="178" width="200" height="54" rx="27" fill="var(--sds-accent-2)" opacity=".14"
+        stroke="var(--sds-accent-2)" stroke-width="1.5"/>
+  <text x="630" y="211" text-anchor="middle" class="sds-svg-strong">spec-review</text>
+  <path d="M450 205 L525 205" stroke="var(--sds-accent)" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M630 232 C630 258 350 258 350 236" fill="none" stroke="var(--sds-accent-2)"
+        stroke-width="1.5" stroke-dasharray="5 5" marker-end="url(#arrow)"/>
+</svg>
+    <figcaption>图 2 · PRD → decision-history → design → impl-plan → test-plan，spec-write 与 spec-review 闭环。</figcaption>
+  </figure>
+</section>
+<section id="usage">
+  <h2>Usage</h2>
+  <p>先写 frontmatter，再让 skill 按类型执行；审查时只看 ID 与验收，不凭感觉。</p>
+  <div class="sds-tabs" data-tabs>
+    <div class="sds-tabs__nav" role="tablist">
+      <button class="is-active" data-tab="yaml" role="tab">spec.prd.yaml</button>
+      <button data-tab="cli" role="tab">CLI</button>
+    </div>
+    <div class="sds-tabs__panel is-active" data-panel="yaml">
+<div class="sds-code">
+  <div class="sds-code__bar">
+    <span class="sds-code__dots"><i></i><i></i><i></i></span>
+    <span class="sds-code__title">spec.prd.yaml</span>
+    <button class="sds-code__copy" data-copy>复制</button>
+  </div>
+  <pre><code class="language-yaml">feature: spec-driven-development
+type: prd
+state: draft
+health: active
+owner: cicidi
+last_verified: 2026-11-04</code></pre>
+</div></div>
+    <div class="sds-tabs__panel" data-panel="cli">
+<div class="sds-code">
+  <div class="sds-code__bar">
+    <span class="sds-code__dots"><i></i><i></i><i></i></span>
+    <span class="sds-code__title">terminal</span>
+    <button class="sds-code__copy" data-copy>复制</button>
+  </div>
+  <pre><code class="language-bash"># 生成并校验 PRD
+spec-write --feature spec-driven-development --type prd
+
+# 逐条审查需求与验收
+spec-review --feature spec-driven-development --strict
+
+# 五个问题必须在文档中出现
+grep -n "QUES-0[1-3]" docs/features/spec-driven-development/prd/*.md</code></pre>
+</div></div>
+  </div>
+</section>
+<section id="callouts">
+  <h2>Review Notes</h2>
+  <div class="sds-callout sds-callout--tip">
+    <strong>提示</strong>
+    <p>写 PRD 前先回答一个问题：<em>这个问题不解决，会怎样？</em> 如果答不上来，说明问题还没有门槛。</p>
+  </div>
+  <div class="sds-callout sds-callout--warn">
+    <strong>警告</strong>
+    <p>没有验收标准的 FR 不是需求，是愿望。愿望无法 review，也无法回归。</p>
+  </div>
+  <div class="sds-callout sds-callout--danger">
+    <strong>注意</strong>
+    <p>仿制主题页仅用于样式对比，不代表原项目的官方实现；真实 CSS 页使用固定版本 CDN。</p>
+  </div>
+</section><nav class="sds-pager" aria-label="样式翻页"><a class="sds-pager__item" href="02-docusaurus.html"><span>← 上一款</span><b>Docusaurus</b></a><a class="sds-pager__item sds-pager__item--next" href="04-slate.html"><span>下一款 →</span><b>Slate</b></a></nav></main>
+<p class="sds-footnote">样式样本 · 内容切片来自 spec-driven-development PRD · <a href="index.html">返回画廊</a></p>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+<script>
+(function(){
+  var p=document.getElementById('sds-progress');
+  function onScroll(){
+    var h=document.documentElement, max=h.scrollHeight-h.clientHeight;
+    p.style.width=(max>0?(h.scrollTop/max)*100:0)+'%';
+  }
+  document.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+  var targets=[].slice.call(document.querySelectorAll('main section, .sds-card, .sds-figure'));
+  targets.forEach(function(el,i){
+    el.classList.add('sds-entrance');
+    el.style.animationDelay=Math.min(i*30,220)+'ms';
+  });
+
+  document.querySelectorAll('[data-tabs]').forEach(function(box){
+    var buttons=box.querySelectorAll('[data-tab]');
+    buttons.forEach(function(btn){
+      btn.addEventListener('click',function(){
+        buttons.forEach(function(b){b.classList.remove('is-active');});
+        box.querySelectorAll('[data-panel]').forEach(function(pn){pn.classList.remove('is-active');});
+        btn.classList.add('is-active');
+        var panel=box.querySelector('[data-panel="'+btn.dataset.tab+'"]');
+        if(panel) panel.classList.add('is-active');
+      });
+    });
+  });
+
+  document.querySelectorAll('[data-copy]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var code=btn.closest('.sds-code').querySelector('code');
+      if(!code) return;
+      var text=code.innerText;
+      if(navigator.clipboard){navigator.clipboard.writeText(text).then(function(){
+        var t=btn.textContent;btn.textContent='已复制';setTimeout(function(){btn.textContent=t;},1400);
+      });}
+    });
+  });
+
+  if(window.hljs){ try{ hljs.highlightAll(); }catch(e){} }
+})();
+</script>
+</body>
+</html>

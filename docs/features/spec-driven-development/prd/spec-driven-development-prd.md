@@ -139,7 +139,7 @@ Additional constraints:
 
 **PRD-O** — 执行不真下单、不订票。一个共用 mock MCP server，若干固定工具；client call 打出 log 即算交付成功。
 
-**PRD-P** — 最终交付是 spec-write、spec-review，以及 SPEC-STANDARD.md 与 SPEC-PRESENTATION.md（ARD-AJ）。写出的 spec 满足 PRD-K 到 PRD-O。
+**PRD-P** — ~~最终交付是 spec-write、spec-review，以及 SPEC-STANDARD.md 与 SPEC-PRESENTATION.md（ARD-AJ）。~~ 最终交付只有 spec-write 与 spec-review（→ [ARD-BH](../decision-history/spec-driven-development-decision-history.md#ard-bh--deliverable-is-only-spec-write-and-spec-review)）。写出的 spec 满足 PRD-K 到 PRD-O。
 
 **PRD-Q** — 书写、命名、校验、更新，以及 PRD-K 到 PRD-O，都是需求。spec-write 与 spec-review 不限于这几件事。两份 skill 正文写出四个例子：盖 shed、北京旅游、数学题、股票。好不好用只看测试。
 
@@ -174,3 +174,4 @@ Additional constraints:
 | 2026-11-04 | PRD-C 改为硬上限 10 行或 200 字符；PRD-G 区分 eval 分数与产品 metric；Solution 术语改 design 篇 |
 | 2026-11-07 | PRD-J/P/Q 与 Resources：入口为 spec-write 与 spec-review（ARD-AJ） |
 | 2026-11-07 | Overview 与 Goals 验收改为 spec-write 与 spec-review（ARD-AJ） |
+| 2026-11-18 | PRD-P：交付只有 spec-write 与 spec-review（ARD-BH） |

@@ -1,4 +1,4 @@
-<!-- SDD reader · source .md · git 35de73e -->
+<!-- SDD reader · source .md · git f33e536 -->
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light">
 <head>
@@ -28,6 +28,8 @@ code{font-family:var(--mono);font-size:.88em;background:var(--code);border:1px s
 .crumbs{font-family:var(--mono);font-size:11px;color:#9CB0C0;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .crumbs a{color:#DCE7EF}.crumbs a:hover{color:var(--yellow)}
 .theme-btn{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border:1px solid rgba(255,255,255,.18);background:transparent;color:#C4D3DE;border-radius:999px;font-family:var(--mono);font-size:10.5px;cursor:pointer}
+.top-actions{display:flex;gap:8px;align-items:center}
+html[data-strike="off"] del{display:none}
 .wrap{max-width:1040px;margin:0 auto;padding:32px 56px 80px}
 .hero{padding-bottom:20px;margin-bottom:16px;border-bottom:1px solid var(--line)}
 .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--orange)}
@@ -52,9 +54,11 @@ tr:last-child td{border-bottom:0}
 @media(max-width:700px){.wrap{padding:24px 18px 60px}}
 
 .panel-label{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--orange);margin:0 0 8px}
-.md-body h2{font-size:21px;margin:24px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--line)}
-.md-body h3{font-size:16px;margin:18px 0 8px}
-.md-body h4{font-size:14.5px;margin:14px 0 6px;color:var(--muted)}
+.md-body h2{font-family:var(--serif);font-size:32px;font-weight:500;line-height:1.2;margin:32px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--ink)}
+.md-body h3{font-family:var(--sans);font-size:22px;font-weight:700;line-height:1.3;margin:26px 0 10px}
+.md-body h4{font-family:var(--sans);font-size:17px;font-weight:600;line-height:1.4;margin:20px 0 8px;padding-left:10px;border-left:3px solid var(--orange)}
+.md-body h5{font-family:var(--sans);font-size:15px;font-style:italic;font-weight:500;line-height:1.45;margin:16px 0 6px;color:var(--muted)}
+.md-body p{font-size:16.5px;line-height:1.75}
 .md-body pre{background:var(--code);border:1px solid var(--line);border-radius:8px;padding:12px 14px;overflow-x:auto;font-size:12px;line-height:1.45;max-width:100%}
 .md-body pre.mermaid{background:var(--surface);border:1px solid var(--line);text-align:center}
 .md-body blockquote{margin:12px 0;padding:8px 14px;border-left:3px solid var(--line);color:var(--muted);background:var(--surface-2);border-radius:0 8px 8px 0}
@@ -65,7 +69,10 @@ tr:last-child td{border-bottom:0}
 <body>
 <div class="top">
   <div class="crumbs"><a href="../index.html">Spec Atlas</a><span>/</span><a href="prd/spec-driven-development-prd.html">SDD</a><span>/</span><span>Reader</span></div>
-  <button class="theme-btn" type="button" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark'">theme</button>
+  <div class="top-actions">
+    <button class="theme-btn" type="button" onclick="var r=document.documentElement;var off=r.dataset.strike!=='off';r.dataset.strike=off?'off':'on';this.textContent=off?'显示删除线':'隐藏删除线'">隐藏删除线</button>
+    <button class="theme-btn" type="button" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark'">theme</button>
+  </div>
 </div>
 <div class="wrap">
   <header class="hero">
@@ -174,7 +181,7 @@ tr:last-child td{border-bottom:0}
 <p><strong>PRD-M</strong> — 把人讲明白是硬需求。交付前由一个 LLM 打分：它假设自己是一个本科水平的程序员真人，只按能不能看懂来判；看不懂不算交付。测试验不了，不作为通过条件。</p>
 <p><strong>PRD-N</strong> — 正式 spec 的结论必须能追溯到查到的事实（合规条文、财报、新闻、定义），不靠猜；查不到的标成未知。评测时答案只能来自 context 包。</p>
 <p><strong>PRD-O</strong> — 执行不真下单、不订票。一个共用 mock MCP server，若干固定工具；client call 打出 log 即算交付成功。</p>
-<p><strong>PRD-P</strong> — 最终交付是 spec-write、spec-review，以及 SPEC-STANDARD.md 与 SPEC-PRESENTATION.md（ARD-AJ）。写出的 spec 满足 PRD-K 到 PRD-O。</p>
+<p><strong>PRD-P</strong> — <del>最终交付是 spec-write、spec-review，以及 SPEC-STANDARD.md 与 SPEC-PRESENTATION.md（ARD-AJ）。</del> 最终交付只有 spec-write 与 spec-review（→ <a href="../decision-history/spec-driven-development-decision-history.md#ard-bh--deliverable-is-only-spec-write-and-spec-review">ARD-BH</a>）。写出的 spec 满足 PRD-K 到 PRD-O。</p>
 <p><strong>PRD-Q</strong> — 书写、命名、校验、更新，以及 PRD-K 到 PRD-O，都是需求。spec-write 与 spec-review 不限于这几件事。两份 skill 正文写出四个例子：盖 shed、北京旅游、数学题、股票。好不好用只看测试。</p>
 <h3>Out of Scope</h3>
 <ul>
@@ -249,6 +256,10 @@ tr:last-child td{border-bottom:0}
 <tr>
 <td>2026-11-07</td>
 <td>Overview 与 Goals 验收改为 spec-write 与 spec-review（ARD-AJ）</td>
+</tr>
+<tr>
+<td>2026-11-18</td>
+<td>PRD-P：交付只有 spec-write 与 spec-review（ARD-BH）</td>
 </tr>
 </tbody></table>
 </div>
@@ -452,7 +463,7 @@ tr:last-child td{border-bottom:0}
 </tr></thead><tbody>
 <tr>
 <td><strong>Deliverable</strong></td>
-<td>spec-write、spec-review，以及两份标准（可装任意项目；ARD-AJ）</td>
+<td><del>spec-write、spec-review，以及两份标准（ARD-AJ）</del> 只有 spec-write 与 spec-review（<a href="../decision-history/spec-driven-development-decision-history.md#ard-bh--deliverable-is-only-spec-write-and-spec-review">ARD-BH</a>）</td>
 </tr>
 <tr>
 <td><strong>Standard 文件</strong></td>
@@ -563,6 +574,10 @@ tr:last-child td{border-bottom:0}
 <tr>
 <td>2026-11-07</td>
 <td>§7 reader 改到 docs/book/html/（ARD-BF）</td>
+</tr>
+<tr>
+<td>2026-11-18</td>
+<td>§7 Deliverable 只留 spec-write 与 spec-review（ARD-BH）</td>
 </tr>
 </tbody></table>
 <hr><p class="src-inline">Source: <code>design/spec-driven-development-design-skill-contracts.md</code></p>
@@ -690,64 +705,64 @@ tr:last-child td{border-bottom:0}
 <li><strong>Eval:</strong> deepseek-flash, 3 runs; runs/reports not committed (ARD-AD).</li>
 <li><strong>No legacy migration</strong> (ARD-AF); only the SDD tree is fixed.</li>
 </ul>
-<h3>IMPL-A — Skill directory migration (DONE baseline)</h3>
+<h3 id="IMPL-A">IMPL-A — Skill directory migration (DONE baseline)</h3>
 <p><strong>Goal:</strong> <code>doc-organize</code> → <code>spec-organize</code>, <code>doc-review</code> → <code>spec-review</code>.</p>
 <p><strong>Steps:</strong> <code>git mv</code> directories; update <code>name:</code> and cross-refs in SKILL.md; update <code>~/.coworker/project.yaml</code> skill list when deploying.</p>
 <p><strong>Verify:</strong> <code>ls skills/spec-organize skills/spec-review</code>; triggers resolve.</p>
-<h3>IMPL-B — New skills: spec-pipeline, spec-write</h3>
+<h3 id="IMPL-B">IMPL-B — New skills: spec-pipeline, spec-write</h3>
 <p><strong>Goal:</strong> SKILL.md stubs aligned with pipeline design and HLD §7.</p>
 <p><strong>Steps:</strong> Refine via <code>skill create</code> / <code>skill edit</code> if process changes; keep in sync with <code>features/pipeline/design/pipeline-design.md</code>.</p>
 <p><strong>Verify:</strong> Description starts with &quot;Use when&quot;; MUST gates present.</p>
-<h3>IMPL-C — SPEC-STANDARD.md</h3>
+<h3 id="IMPL-C">IMPL-C — SPEC-STANDARD.md</h3>
 <p><strong>Goal:</strong> Enforceable summary in <code>skills/spec-organize/SPEC-STANDARD.md</code>; full rules stay in document-standard design.</p>
 <p><strong>Steps:</strong> On DSGN change, update summary in same PR as design diff.</p>
 <p><strong>Verify:</strong> spec-organize Lint references SPEC-STANDARD.</p>
-<h3>IMPL-D — Test skeleton &amp; iPhone gold inputs</h3>
+<h3 id="IMPL-D">IMPL-D — Test skeleton &amp; iPhone gold inputs</h3>
 <p><strong>Goal:</strong> <code>skills/spec-organize/tests/</code> per parent test plan.</p>
 <p><strong>Deliverables:</strong></p>
 <ul>
 <li><code>eval.yaml</code>, <code>must_registry.yaml</code> (populate via TST-A scan)</li>
-<li><code>gold/iphone/v1/requirement.md</code>, <code>gold/iphone/v1/context.md</code></li>
+<li><del><code>gold/iphone/v1/requirement.md</code>, <code>gold/iphone/v1/context.md</code></del> gold spec 是 <code>docs/features/spec-driven-development/</code>（ARD-BJ）。<code>gold/v1/</code> 只是练习案例</li>
 <li><code>fixtures/neg/</code>, <code>fixtures/pos/</code> (grow with TST-B)</li>
 <li><code>checks/</code> Python package (implement TST-B)</li>
 </ul>
 <p><strong>Verify:</strong> Run TST-B when checks exist; gold inputs present.</p>
-<h3>IMPL-E — Self-run eval (agent)</h3>
-<p><strong>Goal:</strong> Baseline eval: <code>grill.skills: []</code>, spec-organize only, iPhone requirement + context.</p>
+<h3 id="IMPL-E">IMPL-E — Self-run eval (agent)</h3>
+<p><strong>Goal:</strong> <del>Baseline eval: <code>grill.skills: []</code>, spec-organize only, iPhone requirement + context.</del> <code>grill.skills: []</code>，gold spec 是这套 spec-driven-development（ARD-BJ）。</p>
 <p><strong>Steps:</strong> New branch <code>eval/v1/&lt;run_id&gt;</code>; run spec-pipeline → write feature spec; TST-E/F/K; fix <strong>spec first</strong> on failure.</p>
 <p><strong>Verify:</strong> HTML report; scores per test plan.</p>
-<h3>IMPL-F — Tabbed reader HTML</h3>
+<h3 id="IMPL-F">IMPL-F — Tabbed reader HTML</h3>
 <p><strong>Goal:</strong> <code>spec-driven-development-reader.html</code> — <strong>human-readable</strong> HTML (cards, tables, flows), not a markdown viewer. Tabs: parent (PRD, design, impl, test, decision history) + children (pipeline, document-standard).</p>
 <p><strong>Steps:</strong> Rewrite prose when canonical <code>.md</code> changes; each panel links to source path in footer.</p>
 <p><strong>Verify:</strong> Open file in browser; all canonical paths exist.</p>
-<h3>IMPL-G — CLAUDE.local / managed block</h3>
+<h3 id="IMPL-G">IMPL-G — CLAUDE.local / managed block</h3>
 <p><strong>Goal:</strong> Pipeline Create/Map progress before <code>&lt;f&gt;</code> exists (PIPE-H).</p>
 <p><strong>Steps:</strong> Add SDD block to project <code>CLAUDE.local.md</code>: phase, rough PRD pointer, link to reader HTML.</p>
 <p><strong>Verify:</strong> spec-pipeline Step 0 reads block.</p>
-<h3>IMPL-H — Docs hygiene</h3>
+<h3 id="IMPL-H">IMPL-H — Docs hygiene</h3>
 <p><strong>Goal:</strong> INDEX lists parent impl-plan and new aspect design; delete legacy summary HTML.</p>
 <p><strong>Steps:</strong> Regenerate or hand-update <code>docs/INDEX.md</code>; delete <code>spec-driven-development.html</code>; keep <code>spec-driven-development-reader.html</code> only.</p>
 <p><strong>Verify:</strong> No links to removed summary HTML or wayfinder-import paths under SDD.</p>
-<h3>IMPL-I — spec-review mechanical MUST alignment</h3>
+<h3 id="IMPL-I">IMPL-I — spec-review mechanical MUST alignment</h3>
 <p><strong>Goal:</strong> SKILL matches test plan (detect MUST violations + suggestions).</p>
 <p><strong>Steps:</strong> Edit <code>skills/spec-review/SKILL.md</code> after spec-review section in document-standard / test plan stable.</p>
 <p><strong>Verify:</strong> TST-H fixtures pass when implemented.</p>
-<h3>IMPL-J — Eval config &amp; schema test</h3>
+<h3 id="IMPL-J">IMPL-J — Eval config &amp; schema test</h3>
 <p><strong>Goal:</strong> <code>eval.yaml</code> runnable with <code>deepseek-flash</code>; 3 runs; target repo env override; <code>test_eval_config.py</code> fails on missing config.</p>
 <p><strong>Verify:</strong> <code>pytest test_eval_config.py</code>; <code>eval.yaml</code> has all required keys.</p>
-<h3>IMPL-K — Fixtures &amp; review cases</h3>
+<h3 id="IMPL-K">IMPL-K — Fixtures &amp; review cases</h3>
 <p><strong>Goal:</strong> 11 neg + pos fixtures; 16 spec-review cases (11 mechanical + 5 semantic).</p>
 <p><strong>Verify:</strong> TST-B green; TST-H/I assets present.</p>
-<h3>IMPL-L — Eval report script</h3>
+<h3 id="IMPL-L">IMPL-L — Eval report script</h3>
 <p><strong>Goal:</strong> <code>tools/render_eval_report.py</code> generates a single HTML with score 1/2 and run metadata.</p>
 <p><strong>Verify:</strong> TST-K on a sample run.</p>
-<h3>IMPL-M — Checker updates</h3>
+<h3 id="IMPL-M">IMPL-M — Checker updates</h3>
 <p><strong>Goal:</strong> <code>sections.py</code> checks 5 types; <code>ids.py</code> enforces title patterns; remove exemptions.</p>
 <p><strong>Verify:</strong> TST-B; <code>run_spec_checks.py</code> on SDD tree.</p>
-<h3>IMPL-N — Skill contracts &amp; four examples</h3>
+<h3 id="IMPL-N">IMPL-N — Skill contracts &amp; four examples</h3>
 <p><strong>Goal:</strong> <code>design/spec-driven-development-design-skill-contracts.md</code>; each skill body names shed / 北京旅游 / 数学题 / 股票 (PRD-Q).</p>
 <p><strong>Verify:</strong> TST-S; spec-review reads contracts.</p>
-<h3>IMPL-O — Reader freshness &amp; summary removal</h3>
+<h3 id="IMPL-O">IMPL-O — Reader freshness &amp; summary removal</h3>
 <p><strong>Goal:</strong> regenerate reader after spec changes; delete <code>spec-driven-development.html</code>.</p>
 <p><strong>Verify:</strong> TST-R; no dead links.</p>
 <h3>Execution order</h3>
@@ -779,6 +794,10 @@ tr:last-child td{border-bottom:0}
 <td>2026-11-04</td>
 <td>Global Constraints 加 eval/no-migration；IMPL-D gold 路径改 iphone/v1</td>
 </tr>
+<tr>
+<td>2026-11-18</td>
+<td>IMPL-D / IMPL-E：gold spec 改为这套 spec-driven-development（ARD-BJ）</td>
+</tr>
 </tbody></table>
 </div>
 <p class="src">Canonical: <code>impl-plan/spec-driven-development-impl-plan.md</code></p>
@@ -789,7 +808,7 @@ tr:last-child td{border-bottom:0}
 <div class="md-body">
 <h2>Spec-Driven Development — Test Plan</h2>
 <p>Initiative 级 test plan。<strong>被测对象</strong> = <strong>spec-write</strong> 与 <strong>spec-review</strong>。<strong>Oracle</strong> = <code>SPEC-STANDARD.md</code> 与 <code>SPEC-PRESENTATION.md</code>。organize / pipeline 旧测试仍在；编排 <strong>Unverified</strong>。Sub-feature 不另写 test-plan。</p>
-<p><strong>验收：</strong> 两个 skill 加两份标准是产出。人不读 skill 正文；好不好用只看本计划的测试结果。</p>
+<p><strong>验收：</strong> <del>两个 skill 加两份标准是产出。</del> 产出只有 spec-write 与 spec-review（ARD-BH）。人不读 skill 正文；好不好用只看本计划的测试结果。</p>
 <h3>Test Scope</h3>
 <p><strong>In scope：</strong> spec-write 与 spec-review 在「装进任意项目」场景下的行为；输入三类——本 repo <code>docs/features/</code>、外部 repo（<code>eval.yaml</code> 指定路径）、人工 fixture。<strong>Out of scope / Unverified：</strong> skill 正文改动（本 plan 只定义测什么）；设计合理性；merge 策略；<strong>spec-pipeline 阶段编排</strong>（Unverified，PRD-I）；单次编辑大小（PRD-C，Unverified）；可读性打分（PRD-M，在 spec-review 流程内，不作通过条件）；四套例子的 gold（PRD-K，放到别处；例子写进 skill 正文，由 TST-S 检查）。</p>
 <p><strong>Parent vs sub（spec-review）：</strong> 审 <strong>parent</strong>（<code>docs/features/spec-driven-development/</code> 根，不含 <code>features/&lt;sub&gt;/</code>）时须核对五篇均在：<code>prd</code>、<code>design</code>、<code>decision-history</code>、<code>impl-plan</code>、<code>test-plan</code>（见 parent HLD §8）。<strong>Sub-feature</strong> 不要求齐全，只审已有文件。</p>
@@ -841,7 +860,7 @@ tr:last-child td{border-bottom:0}
 </tr></thead><tbody>
 <tr>
 <td><code>skills/spec-organize/tests/eval.yaml</code></td>
-<td><code>judge.model: deepseek-flash</code>；<code>gold.cases.iphone.version: v1</code>；<code>gold.repeats: 3</code>；<code>grill.skills</code>（基线 <code>[]</code>）；<code>target.repo</code>（默认 <code>../the-super-lab-eval</code>，<code>SDD_EVAL_REPO</code> 覆盖）；<code>checkers.models: [deepseek-flash]</code>；<code>checkers.repeats: 3</code>；<code>single_provider: true</code></td>
+<td><code>judge.model: deepseek-flash</code>；<del><code>gold.cases.iphone.version: v1</code></del> <code>gold.cases.spec-driven-development</code>（version: current，ARD-BJ）；<code>gold.repeats: 3</code>；<code>grill.skills</code>（基线 <code>[]</code>）；<del><code>target.repo</code> 默认 <code>../the-super-lab-eval</code></del> <code>target.repo: .</code>（<code>SDD_EVAL_REPO</code> 覆盖）；<code>checkers.models: [deepseek-flash]</code>；<code>checkers.repeats: 3</code>；<code>single_provider: true</code></td>
 </tr>
 <tr>
 <td><code>skills/spec-organize/tests/checks/</code></td>
@@ -865,16 +884,16 @@ tr:last-child td{border-bottom:0}
 <td><code>llm</code>）、<code>check</code></td>
 </tr>
 <tr>
-<td><code>skills/spec-organize/tests/gold/iphone/v1/</code></td>
-<td><code>requirement.md</code>、<code>context.md</code>、<code>context-variants/&lt;slug&gt;.md</code>、<code>runs/deepseek-flash/</code>（3 次产出 + <code>interview.md</code>）、<code>exemplar/</code>、<code>annotations.yaml</code>；PRD-K 四例的 gold 放到别处</td>
+<td><del><code>skills/spec-organize/tests/gold/iphone/v1/</code></del> <code>skills/spec-organize/tests/gold/v1/</code></td>
+<td>练习案例，不是 gold spec（ARD-BJ）：<code>requirement.md</code>、<code>context.md</code>、<code>context-variants/&lt;slug&gt;.md</code>、<code>annotations.yaml</code></td>
 </tr>
 <tr>
-<td><code>skills/spec-organize/tests/gold/iphone/v1/annotations.yaml</code></td>
+<td><del><code>skills/spec-organize/tests/gold/iphone/v1/annotations.yaml</code></del> <code>skills/spec-organize/tests/gold/v1/annotations.yaml</code></td>
 <td><code>GOOD-*</code> / <code>BAD-*</code>；<code>where</code>、<code>text</code>；BAD 含 <code>expected_fix</code>；<code>added_in</code>（gold 版本）</td>
 </tr>
 <tr>
-<td><strong>当前状态</strong></td>
-<td>gold 实际目录仍是 <code>gold/v1/</code>；IMPL-D 迁移到 <code>gold/iphone/v1/</code></td>
+<td><strong>Gold spec</strong></td>
+<td><del>iPhone <code>gold/v1</code></del> <code>docs/features/spec-driven-development/</code> 这套 spec 本身（ARD-BJ）。<code>gold/v1</code> 只是练习案例</td>
 </tr>
 <tr>
 <td><code>skills/spec-organize/tests/reports/&lt;run_id&gt;.html</code></td>
@@ -893,53 +912,55 @@ tr:last-child td{border-bottom:0}
 <p><strong>指标边界：</strong> 分数 1/2 是 <strong>eval 指标</strong>，不是产品 success metric（PRD-G / ARD-N）。</p>
 <p><strong>Gold 增长：</strong> run 中发现新 good/bad → 追加 <code>annotations.yaml</code>，<code>gold.version</code> +1，<code>added_in</code> 标版本；报告须标 gold 版本。</p>
 <h3>Test Cases</h3>
-<h4>TST-A — MUST registry 构建</h4>
+<h4 id="TST-A">TST-A — MUST registry 构建</h4>
 <p><strong>目标：</strong> 扫描 document-standard design、pipeline design、parent HLD §4–§5 全部 MUST/禁止/必须 → <code>must_registry.yaml</code>；spec 定稿后重扫。<strong>输入：</strong> 三篇 design。<strong>断言：</strong> 覆盖率 100%；每条标 <code>python</code> 或 <code>llm</code>。<strong>判定：</strong> 锚点比对脚本。</p>
-<h4>TST-B — 机械检查器 + 负向 fixture</h4>
+<h4 id="TST-B">TST-B — 机械检查器 + 负向 fixture</h4>
 <p><strong>目标：</strong> 检查器有效。<strong>输入：</strong> <code>fixtures/neg/*</code>、<code>fixtures/pos/*</code>。<strong>断言：</strong> neg 必 fail；pos 必 pass。<strong>判定：</strong> pytest。</p>
-<h4>TST-C — Gold 生成（3 次 run）</h4>
-<p><strong>目标：</strong> 基线下 3 次 iPhone feature spec。<strong>输入：</strong> <code>gold/iphone/v1/requirement.md</code> + <code>context.md</code>；<code>grill.skills: []</code>；只装 spec-organize；<code>deepseek-flash</code>。<strong>断言：</strong> 每次含 prd/design/decision-history/impl-plan/test-plan；<code>interview.md</code> 中模拟人回答均出自 context 或「未提供」。<strong>判定：</strong> Python（文件）+ judge（出处）。跨模型偏差 <strong>Unverified</strong>。</p>
-<h4>TST-D — Gold 提炼</h4>
+<h4 id="TST-C">TST-C — Gold 生成（3 次 run）</h4>
+<p><strong>目标：</strong> <del>基线下 3 次 iPhone feature spec。</del> 通过的 gold 是这套 spec-driven-development（ARD-BJ）。<strong>输入：</strong> <del><code>gold/iphone/v1/requirement.md</code> + <code>context.md</code></del> <code>docs/features/spec-driven-development/</code>；<code>grill.skills: []</code>；<code>deepseek-flash</code>。<strong>断言：</strong> 含 prd、design、decision-history、impl-plan、test-plan。<strong>判定：</strong> Python（文件）+ judge。跨模型偏差 <strong>Unverified</strong>。</p>
+<h4 id="TST-D">TST-D — Gold 提炼</h4>
 <p><strong>目标：</strong> 3 次 run → <code>exemplar/</code> + <code>annotations.yaml</code> v1。<strong>输入：</strong> TST-C 产出。<strong>断言：</strong> exemplar 过 TST-B、分数 1 全过；annotation 有 <code>where</code>/<code>text</code>；BAD 有 <code>expected_fix</code>。<strong>判定：</strong> Python + 人工认可（Change Log 记录）。</p>
-<h4>TST-E — spec-organize happy path</h4>
+<h4 id="TST-E">TST-E — spec-organize happy path</h4>
 <p><strong>目标：</strong> 改 skill 后同需求重跑。<strong>输入：</strong> 同 TST-C。<strong>断言：</strong> 分数 1 全过；分数 2 不退步。<strong>判定：</strong> Python + judge。</p>
-<h4>TST-F — spec-organize unhappy（输入侧）</h4>
+<h4 id="TST-F">TST-F — spec-organize unhappy（输入侧）</h4>
 <p><strong>目标：</strong> context 带坑时不自猜。<strong>输入：</strong> <code>context-variants/</code>：<code>budget-conflict</code>、<code>family-disagree</code>、<code>missing-info</code>、<code>midway-change</code>。<strong>断言：</strong> 须 report/ask；budget/family 已有 decision history 先后则取较晚者，否则问用户，不得猜；midway-change 须新 ARD + strike+link；missing-info 不得编造。<strong>判定：</strong> judge + Python（ARD 结构）。</p>
-<h4>TST-G — 真实树 Lint</h4>
+<h4 id="TST-G">TST-G — 真实树 Lint</h4>
 <p><strong>目标：</strong> 别人写的 spec 是否合规。<strong>输入：</strong> 本 repo <code>docs/features/</code>；外部 repo 路径。<strong>断言：</strong> spec-organize Lint 与 <code>checks/</code> 一致；豁免不报。<strong>判定：</strong> Python 对比。</p>
-<h4>TST-H — spec-review 检出率</h4>
+<h4 id="TST-H">TST-H — spec-review 检出率</h4>
 <p><strong>目标：</strong> 找全缺陷、不误报。<strong>输入：</strong> 11 个机械检查案例 + 5 个语义案例；干净 exemplar。<strong>断言：</strong> 植入项均检出并引用 DSGN/MUST id；干净零 3+ 发现；1–2 不进讨论。<strong>判定：</strong> id 集合比对。</p>
-<h4>TST-I — spec-review 建议质量</h4>
+<h4 id="TST-I">TST-I — spec-review 建议质量</h4>
 <p><strong>目标：</strong> 修改建议正确。<strong>输入：</strong> TST-H 检出项。<strong>断言：</strong> 建议 vs <code>expected_fix</code>：照改后缺陷消除且无新 MUST 违规。<strong>判定：</strong> judge；报 <code>x / 检出数</code>。</p>
-<h4>TST-J — Eval 配置矩阵</h4>
+<h4 id="TST-J">TST-J — Eval 配置矩阵</h4>
 <p><strong>目标：</strong> 不同 grill 组合。<strong>输入：</strong> <code>grill.skills</code>: <code>[]</code>、<code>[wayfinder]</code>、<code>[grill-with-docs]</code>、两者。<strong>断言：</strong> 每配置一份报告；基线先跑；只报分不设门槛。<strong>判定：</strong> 同 TST-E。</p>
-<h4>TST-K — 报告</h4>
+<h4 id="TST-K">TST-K — 报告</h4>
 <p><strong>目标：</strong> 单 HTML。<strong>输入：</strong> 任一 run。<strong>断言：</strong> run_id、分支、gold 版本、eval 配置、分数 1 逐条（python/llm）、分数 2 ±、TST-F 变体、3 次 checker。<strong>判定：</strong> 生成 + schema。</p>
-<h4>TST-L — 3 次独立裁决</h4>
+<h4 id="TST-L">TST-L — 3 次独立裁决</h4>
 <p><strong>目标：</strong> 最终 PASS/FAIL。<strong>输入：</strong> HTML + diff。<strong>断言：</strong> 3/3；不推翻 python；同一 <code>deepseek-flash</code> 的 3 次独立 run。<strong>判定：</strong> 3 次；跨模型偏差 <strong>Unverified</strong>。</p>
-<h4>TST-M — 变更联动</h4>
+<h4 id="TST-M">TST-M — 变更联动</h4>
 <p><strong>目标：</strong> 标准或 gold 变更后测试同步。<strong>输入：</strong> 改 SPEC-STANDARD / design；或 run 中新 good/bad。<strong>断言：</strong> design 改 → TST-A + registry/fixtures 同批；新标注 → gold.version +1。<strong>判定：</strong> 流程 + 覆盖率。</p>
-<h4>TST-N — Parent 齐备 / sub 豁免</h4>
+<h4 id="TST-N">TST-N — Parent 齐备 / sub 豁免</h4>
 <p><strong>目标：</strong> parent 五篇齐全；sub 不因缺篇 fail。<strong>输入：</strong> SDD parent 根 + <code>features/pipeline/</code>、<code>features/document-standard/</code>。<strong>断言：</strong> parent 缺任一篇 → spec-review ≥3；sub 仅 design 等仍 pass。<strong>判定：</strong> Python（路径）+ spec-review 报告。</p>
-<h4>TST-O — PRD → design 追溯</h4>
+<h4 id="TST-O">TST-O — PRD → design 追溯</h4>
 <p><strong>目标：</strong> 每条 PRD 需求都有 design 锚点。<strong>输入：</strong> 父 PRD、parent HLD、pipeline/document-standard design。<strong>断言：</strong> 每个 <code>PRD-*</code> ID 映射到至少一个 <code>DSGN-*</code> / <code>PIPE-*</code>；未映射 fail。<strong>判定：</strong> Python（ID 集合比对）。</p>
-<h4>TST-P — 归属 / 证据 / UNKNOWN</h4>
+<h4 id="TST-P">TST-P — 归属 / 证据 / UNKNOWN</h4>
 <p><strong>目标：</strong> design 篇有「子问题归属」表且结论可追溯。<strong>输入：</strong> 含归属表的 design；无依据结论；UNKNOWN 样例。<strong>断言：</strong> 缺表 fail；有结论无依据 fail；UNKNOWN 当事实 fail。<strong>判定：</strong> Python（表结构）+ judge（依据质量）。</p>
-<h4>TST-Q — mock MCP log</h4>
+<h4 id="TST-Q">TST-Q — mock MCP log</h4>
 <p><strong>目标：</strong> 执行只到 mock。<strong>输入：</strong> <code>skills/spec-organize/tests/mock-mcp/</code> 的 client/server。<strong>断言：</strong> call 打出 stdout log（tool/args/result）；无真实下单/订票。<strong>判定：</strong> Python（log 存在 + 无真实副作用）。</p>
-<h4>TST-R — reader 新鲜度</h4>
+<h4 id="TST-R">TST-R — reader 新鲜度</h4>
 <p><strong>目标：</strong> reader 不落后于 source。<strong>输入：</strong> <code>docs/book/html/spec-driven-development/spec-driven-development-reader.html</code> + 所有 source <code>.md</code>。<strong>断言：</strong> reader mtime ≥ 每个 source mtime；否则 fail。<strong>判定：</strong> Python。</p>
-<h4>TST-T — 外部参照 gold</h4>
+<h4 id="TST-T">TST-T — 外部参照 gold</h4>
 <p><strong>目标：</strong> defect 快照上每条 expect 都被报出；gold 快照上除 allow 外 0 finding。源仓库不在本机时跳过。<strong>输入：</strong> <code>gold/refs/&lt;slug&gt;/manifest.yaml</code>（ARD-BD）。<strong>判定：</strong> Python。不把私有 spec 正文复制进本仓库。</p>
-<h4>TST-S — skill 正文四例</h4>
+<h4 id="TST-S">TST-S — skill 正文四例</h4>
 <p><strong>目标：</strong> spec-write 与 spec-review 正文包含 PRD-Q 四例。<strong>输入：</strong> 这两份 SKILL.md。<strong>断言：</strong> 每个至少提到 shed、北京旅游、数学题、股票；缺 fail。<strong>判定：</strong> Python（关键词）+ judge（是否只是点名）。</p>
+<h4 id="TST-U">TST-U — QUES、impl 依赖、删除线、字号</h4>
+<p><strong>目标：</strong> skill 与 gold 跟上现行标准。<strong>输入：</strong> 四份 SKILL.md、<code>gold/v1/annotations.yaml</code>、reader。<strong>断言：</strong> spec-write 含 <code>QUES-A</code>、impl 依赖与 <code><del>old</del></code>；gold 有 BAD：<code>QUES-1</code>、无依赖的 impl、删旧句不划线；reader 有「隐藏删除线」，h2 大于 h3。<strong>判定：</strong> Python。</p>
 <h3>Test Execution Order</h3>
 <ol>
 <li><strong>TST-A</strong>（registry 不足 100% 则停）</li>
 <li><strong>TST-B</strong>（检查器失效则停）</li>
 <li><strong>TST-O</strong>、<strong>TST-P</strong>（设计覆盖/证据）</li>
 <li><strong>TST-C</strong> → <strong>TST-D</strong>（首次或 gold 升版）</li>
-<li><strong>TST-G</strong>、<strong>TST-N</strong>、<strong>TST-R</strong>、<strong>TST-S</strong>、<strong>TST-T</strong></li>
+<li><strong>TST-G</strong>、<strong>TST-N</strong>、<strong>TST-R</strong>、<strong>TST-S</strong>、<strong>TST-T</strong>、<strong>TST-U</strong></li>
 <li><strong>TST-E</strong>、<strong>TST-F</strong></li>
 <li><strong>TST-H</strong> → <strong>TST-I</strong></li>
 <li><strong>TST-Q</strong>（mock 执行）</li>
@@ -966,7 +987,7 @@ tr:last-child td{border-bottom:0}
 </tr>
 <tr>
 <td>reader / skill 正文</td>
-<td>TST-R 新鲜；TST-S 四例齐全</td>
+<td>TST-R 新鲜；TST-S 四例齐全；TST-U 通过</td>
 </tr>
 <tr>
 <td>外部 gold</td>
@@ -1136,6 +1157,22 @@ tr:last-child td{border-bottom:0}
 <td>2026-11-07</td>
 <td>TST-R 输入改为 docs/book/html/ 下的 reader（ARD-BF）</td>
 </tr>
+<tr>
+<td>2026-11-18</td>
+<td>TST-U：QUES、impl 依赖、删除线、字号</td>
+</tr>
+<tr>
+<td>2026-11-18</td>
+<td>验收：产出只有 spec-write 与 spec-review（ARD-BH）</td>
+</tr>
+<tr>
+<td>2026-11-18</td>
+<td>Gold spec 改为这套 spec-driven-development（ARD-BJ）</td>
+</tr>
+<tr>
+<td>2026-11-18</td>
+<td>资产表与 TST-C 改指这套 spec；<code>gold/v1</code> 只是练习案例（ARD-BJ）</td>
+</tr>
 </tbody></table>
 </div>
 <p class="src">Canonical: <code>test-plan/spec-driven-development-test-plan.md</code></p>
@@ -1152,6 +1189,26 @@ tr:last-child td{border-bottom:0}
 <th>Date</th>
 <th>Decision</th>
 </tr></thead><tbody>
+<tr>
+<td>ARD-BJ</td>
+<td>2026-11-18</td>
+<td>The gold spec is this spec-driven-development tree. The iPhone gold/v1 case is not the gold spec</td>
+</tr>
+<tr>
+<td>ARD-BI</td>
+<td>2026-11-18</td>
+<td>The left sidebar shows hierarchy and numbers: 1 prd, 2 decision-history, 3 design, 4 impl plan, 5 test plan, 6 how to, 10 sub-feature</td>
+</tr>
+<tr>
+<td>ARD-BH</td>
+<td>2026-11-18</td>
+<td>The only deliverable skills are spec-write and spec-review. The two standard files stay as documents those skills read; they are not deliverables</td>
+</tr>
+<tr>
+<td>ARD-BG</td>
+<td>2026-11-07</td>
+<td>One site at docs/book/html/index.html. Each spec page is one directory line. The directory opens a feature. Inside a feature the left side is that feature&#x27;s directory and the right side is the page</td>
+</tr>
 <tr>
 <td>ARD-BF</td>
 <td>2026-11-07</td>
@@ -1444,7 +1501,7 @@ tr:last-child td{border-bottom:0}
 </tr>
 </tbody></table>
 <h3>Evidence Appendix</h3>
-<h4>ARD-A — Authority by concern replaces a single global source of truth</h4>
+<h4 id="ARD-A">ARD-A — Authority by concern replaces a single global source of truth</h4>
 <p>The previous rule was &quot;code is the source of truth&quot;, stated in three places in <code>doc-organize</code>. It resolves every conflict in one direction and leaves a spec unable to protect intended behavior: under it, a spec that states a retry count of 3 while the code retries 5 is simply wrong, even when 3 was the requirement.</p>
 <p>Considered and rejected:</p>
 <ul>
@@ -1460,30 +1517,30 @@ tr:last-child td{border-bottom:0}
 </ul>
 <p>  ground that still names one winner by default.</p>
 <p>Adopted instead: authority by concern. Intended behavior belongs to the spec, current implementation to the code, contracts to the machine-readable artifact, database structure to migrations, and executable verification to the tests.</p>
-<h4>ARD-B — The standard lives in <code>doc-organize</code>, not a new skill</h4>
+<h4 id="ARD-B">ARD-B — The standard lives in <code>doc-organize</code>, not a new skill</h4>
 <p>Placement, linting, and consolidation already belong to <code>doc-organize</code>, and its Sync mode is where drift is detected. A separate skill would have to duplicate the document standard to know what a spec is.</p>
 <p>Considered and rejected: a new <code>spec-driven-development</code> skill with <code>doc-organize</code> keeping only a pointer. Rejected because the two would share the type list, the frontmatter contract, and the required sections, and the copy would drift.</p>
-<h4>ARD-C — Detail is carried in sibling files, not inline in <code>SKILL.md</code></h4>
+<h4 id="ARD-C">ARD-C — Detail is carried in sibling files, not inline in <code>SKILL.md</code></h4>
 <p>The material is seventeen sections. Inline it would have taken <code>SKILL.md</code> past 700 lines, and a skill that must be read in one pass cannot afford that.</p>
 <p>Follows the existing pattern: <code>domain-modeling/ADR-FORMAT.md</code> and <code>domain-modeling/CONTEXT-FORMAT.md</code>. Sibling files travel with the directory, so the skill stays portable — it must not point at this repository&#x27;s <code>docs/</code>, which does not exist in the projects the skill is deployed to.</p>
-<h4>ARD-D — The health field is named <code>health</code>, not <code>status</code></h4>
+<h4 id="ARD-D">ARD-D — The health field is named <code>health</code>, not <code>status</code></h4>
 <p><code>state</code> already tracks the authoring state (<code>draft</code> or <code>final</code>). A second field named <code>status</code> would be read as the same concept, and it accepted an overlapping vocabulary (<code>draft</code>, <code>active</code>, <code>stale</code>, <code>deprecated</code>) that made the overlap worse.</p>
 <p>Considered and rejected: replacing <code>state</code>&#x27;s vocabulary with <code>draft | active | stale | deprecated</code>. Rejected because it would invalidate every existing document to gain a distinction that a second field provides for free.</p>
-<h4>ARD-E — <code>design</code> and <code>impl-plan</code> cap at 1,000 lines; <code>decision-history</code> is exempt</h4>
+<h4 id="ARD-E">ARD-E — <code>design</code> and <code>impl-plan</code> cap at 1,000 lines; <code>decision-history</code> is exempt</h4>
 <p>The earlier guideline said feature specs run 500-1,500 lines, which contradicts a 1,000-line ceiling. The ceiling wins; the guideline is removed.</p>
 <p><code>decision-history</code> is exempt because it is append-only history. Trimming it would destroy the record that is its entire purpose. Exempting it also means the cap never creates pressure to delete a superseded decision.</p>
-<h4>ARD-F — A feature folder may hold more than one <code>design</code> or <code>impl-plan</code></h4>
+<h4 id="ARD-F">ARD-F — A feature folder may hold more than one <code>design</code> or <code>impl-plan</code></h4>
 <p>Supersedes the earlier rule &quot;one file per type per feature&quot; for these two types only, and removes the anti-pattern that forbade a second spec file.</p>
 <p><code>prd</code>, <code>test-plan</code>, <code>decision-history</code>, and <code>how-to</code> stay single-file: none of them grows without bound. <code>design</code> and <code>impl-plan</code> do, and capping them at 1,000 lines without allowing a second file would have made the cap unmeetable.</p>
-<h4>ARD-G — Spec parts take an aspect noun, plan parts take a number plus phase</h4>
+<h4 id="ARD-G">ARD-G — Spec parts take an aspect noun, plan parts take a number plus phase</h4>
 <pre><code>payment-design-authorization.md        aspect noun, unordered
 payment-impl-plan-01-schema.md       number plus phase, ordered</code></pre>
 <p>Considered and rejected: numbering both (<code>payment-design-01.md</code>). A number says nothing about the contents, and inserting a part forces a renumber across the set. A plan is genuinely ordered, so a number carries meaning there; a spec is cut by bounded context, so a noun carries meaning there.</p>
-<h4>ARD-H — Four content priority levels; L1 is never deleted</h4>
+<h4 id="ARD-H">ARD-H — Four content priority levels; L1 is never deleted</h4>
 <p>L1 decisive (behavior, contracts, invariants, constraints, error semantics, security rules, architecture boundaries, out of scope, assumptions, compatibility constraints, open questions), L2 rationale, L3 alternatives, L4 support. Trim L4, then L3, then compress L2. Never delete L1.</p>
 <p><code>out of scope</code>, <code>assumptions</code>, <code>compatibility constraints</code>, and <code>open questions</code> are filed at L1 rather than L2 because dropping any of them breaks the implementation in the same way as dropping a stated requirement.</p>
 <p>A fact whose authoritative home is another document is L4 as a link, never a restated copy. This connects the level model to the duplication rule: restating a fact is a defect, not a level.</p>
-<h4>ARD-I — This feature carries two <code>spec</code> documents</h4>
+<h4 id="ARD-I">ARD-I — This feature carries two <code>spec</code> documents</h4>
 <p>Deliberate exception to decision ARD-F&#x27;s one-<code>spec</code>-per-feature default, recorded here because the rule requires a logged reason rather than a silent breach.</p>
 <p>This feature is named for the standard itself, so the standard&#x27;s own spec belongs to it. <code>wayfinder-import-design.md</code> already occupied <code>spec-driven-development/design/</code>, and the wayfinder import is a distinct effort with its own lifecycle.</p>
 <p>Considered and rejected:</p>
@@ -1500,104 +1557,112 @@ payment-impl-plan-01-schema.md       number plus phase, ordered</code></pre>
 </ul>
 <p>  restatement: two unrelated documents in one file.</p>
 <p>The two files are distinguished by name, following decision ARD-G&#x27;s aspect rule: <code>spec-driven-development-design.md</code> for the standard, <code>wayfinder-import-design.md</code> for the import.</p>
-<h4>ARD-J — Five stages plus an optional <code>how-to</code></h4>
+<h4 id="ARD-J">ARD-J — Five stages plus an optional <code>how-to</code></h4>
 <p>The PRD said six artifacts; <code>pipeline-design.md</code> and the document standard said five. The pipeline spec is right about stages: <code>how-to</code> is an output for the case where a human must operate the result, not a step every feature runs.</p>
 <p>Considered and rejected: keeping six to match the PRD — rejected because it invents a stage most features never execute.</p>
-<h4>ARD-K — Every AI edit to a docs file is small</h4>
+<h4 id="ARD-K">ARD-K — Every AI edit to a docs file is small</h4>
 <p>A large edit lands unreviewed and is hard to attribute when it breaks something. The limit is 10 lines or 200 characters; satisfying either is enough. A larger change is split into sequential edits. A restructure needs explicit human instruction, which is how this PRD&#x27;s own revision was applied.</p>
 <p>Considered and rejected: hard rejection of oversized edits — rejected because it blocks a legitimate restructure; warning only — rejected because nothing stops the edit.</p>
-<h4>ARD-L — Blind spots come from existing skills</h4>
+<h4 id="ARD-L">ARD-L — Blind spots come from existing skills</h4>
 <p><code>research</code> already has a Discover Unknowns branch and <code>grill-with-docs</code> already runs an adversarial interview. P4 says to use the current tools first.</p>
 <p>Considered and rejected: a new dedicated skill — rejected while the existing mechanism works. A future skill may replace them without changing the requirement that the step runs.</p>
-<h4>ARD-Z — Five PRD fields, then design and decision history</h4>
+<h4 id="ARD-Z">ARD-Z — Five PRD fields, then design and decision history</h4>
 <p>Replaces the undefined six inputs in PIPE-E2. The PRD must state limitation, preference, timeline, resource, and tool. A missing one is marked not apply, not left blank. Downstream starts only after that PRD, the design, and the decision history all exist. Rejected: the word building, and a pointer at PIPE-F for a definition PIPE-F does not hold.</p>
-<h4>ARD-Y — Map split uses a 20-hour estimate</h4>
+<h4 id="ARD-Y">ARD-Y — Map split uses a 20-hour estimate</h4>
 <p>Provisional rule (PIPE-D item 6). AI shows several split options. One person able to understand the work within 20 hours stays one feature spec. AI estimates above 20 hours, so it splits into a peer or a sub-feature. AI both estimates and judges. Creating directories still waits for human confirmation (PIPE-D item 5).</p>
-<h4>ARD-X — Execution delivery is a mock MCP log</h4>
+<h4 id="ARD-X">ARD-X — Execution delivery is a mock MCP log</h4>
 <p>No live booking or trading. A mock MCP client calls a mock MCP server; the printed call log is success (PRD-O). Rejected: real side effects.</p>
-<h4>ARD-W — Readability judge is an undergraduate programmer</h4>
+<h4 id="ARD-W">ARD-W — Readability judge is an undergraduate programmer</h4>
 <p>A second LLM plays a bachelor&#x27;s-level programmer. Pass only if it understands; otherwise not delivery (PRD-M). ISO 24495-1 was found and not used as the score.</p>
-<h4>ARD-V — Hard problems stay on the same five artifacts</h4>
+<h4 id="ARD-V">ARD-V — Hard problems stay on the same five artifacts</h4>
 <p>Shed, Beijing, a famous math problem, and a stock stay in this PRD (PRD-K) on the same five artifacts. Sub-problems name who acts; claims cite a found fact (PRD-L, PRD-N). Rejected: a new feature.</p>
-<h4>ARD-U — spec-pipeline orchestrator and Map/state model</h4>
+<h4 id="ARD-U">ARD-U — spec-pipeline orchestrator and Map/state model</h4>
 <p>SDD adds <strong>spec-pipeline</strong> as the entry skill that calls spec-organize and spec-write and prompts for spec-review before commit. <strong>Map</strong> relies on human interview; outputs (split, decision, scratch) are <strong>AI-judged</strong>, not a fixed file template. <strong>State</strong> lives in CLAUDE.local until feature create sets <code>&lt;f&gt;</code>, then in <code>docs/features/&lt;f&gt;/raw/state/</code>. Rejected: rigid Map MUST artifacts and repo-root BMAD-style state trees. Superseded as an entry skill by ARD-AJ. Create, Map, Converge, and Downstream stay in pipeline-design as reference steps.</p>
-<h4>ARD-T — wayfinder-import is not an SDD sub-feature</h4>
+<h4 id="ARD-T">ARD-T — wayfinder-import is not an SDD sub-feature</h4>
 <p>Wayfinder import is a separate skill-factory / import effort, not part of the SDD deliverable (spec-organize, spec-review, spec-write). The nested tree under <code>spec-driven-development/features/wayfinder-import/</code> is removed; wayfinder work continues elsewhere if needed. ARD-I&#x27;s multi-spec exception remains historical.</p>
 <p>&lt;a id=&quot;ard-o--skills-are-spec-organize-main-spec-review-spec-write-the-standard-file-is-spec-organizespec-standardmd&quot;&gt;&lt;/a&gt;</p>
-<h4>ARD-O — Skills are spec-organize (main), spec-review, spec-write</h4>
+<h4 id="ARD-O">ARD-O — Skills are spec-organize (main), spec-review, spec-write</h4>
 <p>Deliverable skills use the <code>spec-</code> prefix because they serve spec-driven development, not generic document editing. The standard file stays inside the main skill as <code>SPEC-STANDARD.md</code>, continuing ARD-B&#x27;s placement rule. Rejected: a separate <code>spec-standard</code> skill — three consumers, one extra copy to drift.</p>
-<h4>ARD-P — spec-review detects mechanical MUST violations too</h4>
+<h4 id="ARD-P">ARD-P — spec-review detects mechanical MUST violations too</h4>
 <p>Review outputs modification suggestions, not fixes. Mechanical MUST gaps must appear in that list or the user gets an incomplete review. Organize Lint may fix; review detects and suggests. Rejected: semantic-only review — gold-based eval cannot score review against the same MUST set as organize.</p>
-<h4>ARD-Q — Tests live under skills/&lt;skill&gt;/tests/</h4>
+<h4 id="ARD-Q">ARD-Q — Tests live under skills/&lt;skill&gt;/tests/</h4>
 <p>Skills ship to arbitrary projects; tests must travel with them. Cross-skill checks, gold, and HTML reports live under <code>spec-organize</code> as the main skill. Rejected: repo-root <code>tests/sdd/</code> — assets would not deploy with the skill bundle.</p>
-<h4>ARD-R — Two eval scores and gates</h4>
+<h4 id="ARD-R">ARD-R — Two eval scores and gates</h4>
 <p>MUST compliance is a hard floor (<code>x/total</code> full pass). Exemplar comparison uses <code>(plus−minus)×10/total</code> and must not regress within one gold version. Rejected: a fixed exemplar cutoff — gold version bumps change the denominator.</p>
-<h4>ARD-S — Gold set grows and is versioned</h4>
+<h4 id="ARD-S">ARD-S — Gold set grows and is versioned</h4>
 <p>New good and bad examples from runs append to <code>annotations.yaml</code>; <code>gold.version</code> increments. Scores compare only within one version. Rejected: frozen gold — no accumulation of review findings.</p>
-<h4>ARD-AA — Multi-participant decisions use the latest history entry, otherwise ask</h4>
+<h4 id="ARD-AA">ARD-AA — Multi-participant decisions use the latest history entry, otherwise ask</h4>
 <p>PRD-F is closed. When two decisions conflict, the later entry in decision-history wins; if the order cannot be established, ask the user. The AI never guesses who is authoritative. Supersedes <del>ARD-M</del>.</p>
-<h4>ARD-AB — Four skills including spec-pipeline</h4>
+<h4 id="ARD-AB">ARD-AB — Four skills including spec-pipeline</h4>
 <p>The deliverable is four skills: spec-pipeline (orchestrator), spec-organize (standard/lint), spec-review (findings), spec-write (edits). Supersedes <del>ARD-O</del>, which listed three.</p>
-<h4>ARD-AC — PRD and document standard changes</h4>
+<h4 id="ARD-AC">ARD-AC — PRD and document standard changes</h4>
 <p>PRD required sections drop Non-Functional Requirements; the parent PRD fills Overview, Goals and Success Metrics, User Stories, Functional Requirements, and Out of Scope. IDs are scoped to feature + type; cross-feature references use <code>&lt;feature&gt;/&lt;ID&gt;</code>. HLD architecture sections do not require DSGN IDs; <code>how-to</code> stays defined but unchecked.</p>
-<h4>ARD-AD — Eval uses deepseek-flash with 3 independent runs</h4>
+<h4 id="ARD-AD">ARD-AD — Eval uses deepseek-flash with 3 independent runs</h4>
 <p>Only the DeepSeek API is available, so gold generation and checker verdicts use three independent runs of <code>deepseek-flash</code>; cross-model bias is Unverified. Gold uses four terms: gold case, gold version, exemplar, annotations. <code>runs/</code> and <code>reports/</code> are not committed. The four non-software examples (shed, Beijing, math, stock) are skill-doc examples; their gold lives elsewhere. Supersedes the gold-example part of <del>ARD-V</del>.</p>
-<h4>ARD-AE — Non-software mapping, ownership, evidence, and UNKNOWN</h4>
+<h4 id="ARD-AE">ARD-AE — Non-software mapping, ownership, evidence, and UNKNOWN</h4>
 <p>Non-software problems use the same five artifacts: research in <code>raw/research/</code>, decisions in decision-history, execution in design/impl-plan, verification in test-plan. Each feature design carries a sub-question ownership table (AI查 / 人决定 / AI查完人决定); every claim cites a source; unknowns are marked <code>UNKNOWN</code>. Unverified items use <code>Unverified: &lt;reason&gt; (&lt;condition&gt;)</code>.</p>
-<h4>ARD-AF — Deliberately undefined areas</h4>
+<h4 id="ARD-AF">ARD-AF — Deliberately undefined areas</h4>
 <p>Failure policy, skill/spec versioning, source-trust grading, and data cleanup are intentionally not defined. Existing non-compliant features are not migrated; only the SDD tree is fixed.</p>
-<h4>ARD-AG — Convergence is auto-decided</h4>
+<h4 id="ARD-AG">ARD-AG — Convergence is auto-decided</h4>
 <p>PIPE-E1–E3 are checked automatically; every open decision must carry a structured <code>blocking</code> flag. The AI does not self-declare the spec &quot;stable&quot;: the automatic check passes only when no blocking item remains.</p>
-<h4>ARD-AH — Reader is the only HTML deliverable</h4>
+<h4 id="ARD-AH">ARD-AH — Reader is the only HTML deliverable</h4>
 <p><code>spec-driven-development-reader.html</code> is the human-readable deliverable. The legacy <code>spec-driven-development.html</code> summary is deleted; references point to the reader.</p>
-<h4>ARD-AI — This consolidation is an authorized restructure</h4>
+<h4 id="ARD-AI">ARD-AI — This consolidation is an authorized restructure</h4>
 <p>The human explicitly authorized a one-shot consolidation of the SDD spec docs. Edits larger than the normal 10-line / 200-character cap are allowed for this batch; the normal cap resumes afterward.</p>
-<h4>ARD-AJ — Entry skills are spec-write and spec-review</h4>
+<h4 id="ARD-AJ">ARD-AJ — Entry skills are spec-write and spec-review</h4>
 <p>Entry skills are spec-write and spec-review. Path, permission, scope, what to write, and evidence live in <code>skills/spec-organize/SPEC-STANDARD.md</code>. Prose, format, style, tables, and icons live in <code>skills/spec-html-standard/SPEC-PRESENTATION.md</code>. spec-organize and spec-pipeline are not entry skills. Supersedes <del>ARD-AB</del>.</p>
-<h4>ARD-AK — Markdown is the full text</h4>
+<h4 id="ARD-AK">ARD-AK — Markdown is the full text</h4>
 <p>A generated reader is rebuilt from markdown and carries no <code>spec-paired</code> meta. A hand-maintained HTML file names its markdown in <code>spec-source</code> and stores <code>spec-source-sha256</code>. If the hash differs, check <code>paired_html_stale</code> fails.</p>
-<h4>ARD-AL — Audience and per-section authority</h4>
+<h4 id="ARD-AL">ARD-AL — Audience and per-section authority</h4>
 <p><code>audience</code> may be <code>internal</code> or <code>external</code>. A missing key is not a failure, so existing documents stay valid. Any other value fails <code>frontmatter</code>. A section states which artifact owns its facts. A partner design may use different section ids.</p>
-<h4>ARD-AM — Step numbers are positions</h4>
+<h4 id="ARD-AM">ARD-AM — Step numbers are positions</h4>
 <p>A step number locates a procedure. It is not a permanent id. Inserting a step renumbers that section and the citations of it.</p>
-<h4>ARD-AN — Readiness and in-place revision</h4>
+<h4 id="ARD-AN">ARD-AN — Readiness and in-place revision</h4>
 <p>A decision may say it is settled here and waiting on another team. Wording may be revised in the same row. Open items are grouped by owner.</p>
-<h4>ARD-AO — One question tracker</h4>
+<h4 id="ARD-AO">ARD-AO — One question tracker</h4>
 <p>When many docs cite the same questions, one tracker holds them. Other docs link. A tracker entry is <code>QUES-</code> plus a letter, with Question, Answer, and Owner.</p>
-<h4>ARD-AP — Old anchors stay</h4>
+<h4 id="ARD-AP">ARD-AP — Old anchors stay</h4>
 <p>An id migration keeps an old-to-new table. A renamed heading keeps the previous anchor.</p>
-<h4>ARD-AQ — Cite the commit</h4>
+<h4 id="ARD-AQ">ARD-AQ — Cite the commit</h4>
 <p>A <code>file:line</code> citation in design or impl-plan names the commit it was read against.</p>
-<h4>ARD-AR — Invariants as data</h4>
+<h4 id="ARD-AR">ARD-AR — Invariants as data</h4>
 <p>An invariant is a table of stored records, or of states that must not occur, with who guarantees each row.</p>
-<h4>ARD-AS — Point at the new decision</h4>
+<h4 id="ARD-AS">ARD-AS — Point at the new decision</h4>
 <p>Prose that drops an old claim points at the replacing ARD. A typo may be edited in place. Strike-through stays the decision-history form.</p>
-<h4>ARD-AT — Done line, order, mock</h4>
+<h4 id="ARD-AT">ARD-AT — Done line, order, mock</h4>
 <p>Each <code>IMPL-*</code> has a done line. Work that reads runs before work that writes. A partner port that is not live has a mock.</p>
-<h4>ARD-AU — Translation is a local copy</h4>
+<h4 id="ARD-AU">ARD-AU — Translation is a local copy</h4>
 <p>A <code>&lt;name&gt;.&lt;lang&gt;.md</code> copy is not committed. Its opening names <code>&lt;name&gt;.md</code> as the source. Headings in the copy may be translated.</p>
-<h4>ARD-AV — Required sections on the entry</h4>
+<h4 id="ARD-AV">ARD-AV — Required sections on the entry</h4>
 <p>A design split into parts requires the full section list only on <code>&lt;f&gt;-design.md</code>. A part links back and writes only its aspect.</p>
-<h4>ARD-AW — Number only a procedure</h4>
+<h4 id="ARD-AW">ARD-AW — Number only a procedure</h4>
 <p>Required headings stay the English text, unnumbered. A section that exists to hold an ordered procedure may carry a number.</p>
-<h4>ARD-AX — Optional Ready column</h4>
+<h4 id="ARD-AX">ARD-AX — Optional Ready column</h4>
 <p>The Decision Log may add Ready. It still has no Status column and no Supersedes column.</p>
-<h4>ARD-AY — Tracker may replace the ownership table</h4>
+<h4 id="ARD-AY">ARD-AY — Tracker may replace the ownership table</h4>
 <p>If every tracker row has Owner and Evidence, the design may link to that tracker instead of copying the ownership table.</p>
-<h4>ARD-AZ — Section links and step ranges</h4>
+<h4 id="ARD-AZ">ARD-AZ — Section links and step ranges</h4>
 <p>A link written as §N lands on heading N or on its parent or child. Step ranges in one document do not overlap.</p>
-<h4>ARD-BA — HTML changelog covers each md date</h4>
+<h4 id="ARD-BA">ARD-BA — HTML changelog covers each md date</h4>
 <p>A hand-maintained reader has a changelog row for every date in the markdown Change Log.</p>
-<h4>ARD-BB — Tracker counts match</h4>
+<h4 id="ARD-BB">ARD-BB — Tracker counts match</h4>
 <p><code>all N questions</code> equals the number of tracker rows. A status tally equals the rows that carry that status.</p>
-<h4>ARD-BC — Cited status matches the tracker</h4>
+<h4 id="ARD-BC">ARD-BC — Cited status matches the tracker</h4>
 <p>The status next to a QUES link matches the tracker row. A closed row is not described as still open.</p>
-<h4>ARD-BD — External gold stays outside</h4>
+<h4 id="ARD-BD">ARD-BD — External gold stays outside</h4>
 <p>The manifest stores the repo path, the defect commit, the gold commit, expected findings, and allowed misses. The private spec text is not copied here.</p>
-<h4>ARD-BE — Diagrams carry the flow</h4>
+<h4 id="ARD-BE">ARD-BE — Diagrams carry the flow</h4>
 <p>One flow, one diagram. A heading that says steps a–b and contains a sequence diagram has b−a+1 messages. State lives in a table. The diagram adds no fact the prose lacks.</p>
-<h4>ARD-BF — Spec HTML under book</h4>
+<h4 id="ARD-BF">ARD-BF — Spec HTML under book</h4>
 <p><code>docs/book/html/</code> repeats the <code>docs/features/</code> tree. A parent reader is <code>docs/book/html/&lt;parent&gt;/&lt;parent&gt;-reader.html</code>. Other spec HTML uses that same relative path with a <code>.html</code> suffix. Markdown stays in <code>docs/features/</code>.</p>
+<h4 id="ARD-BG">ARD-BG — One site, feature directory on the left</h4>
+<p><code>docs/book/html/index.html</code> lists every feature. Each spec page is one line in that directory. Opening a feature shows that feature&#x27;s pages on the left and the page body on the right.</p>
+<h4 id="ARD-BH">ARD-BH — Deliverable is only spec-write and spec-review</h4>
+<p>The product ships two skills: spec-write and spec-review. <code>SPEC-STANDARD.md</code> and <code>SPEC-PRESENTATION.md</code> remain the files those skills read. They are not deliverables. spec-organize and spec-pipeline stay out of the deliverable. Supersedes the deliverable wording that listed the two standards beside the two skills in <a href="#ard-aj--entry-skills-are-spec-write-and-spec-review">ARD-AJ</a>.</p>
+<h4 id="ARD-BI">ARD-BI — Left sidebar numbers and hierarchy</h4>
+<p>The feature sidebar is a hierarchy, and the numbers are visible. The order is 1 prd, 2 decision-history, 3 design, 4 impl plan, 5 test plan, 6 how to. Sub-features are not under design. They are group 10, and each sub-feature expands beneath that group. Design parts and the reader stay under 3 design. Pipeline has no HTML page.</p>
+<h4 id="ARD-BJ">ARD-BJ — Gold spec is this spec</h4>
+<p>The gold test spec is <code>docs/features/spec-driven-development/</code>. A passing run is this tree, not a generated iPhone purchase spec. <code>skills/spec-organize/tests/gold/v1/</code> stays a practice case. It is not the gold spec.</p>
 <h3>Path Update — 2026-10-30</h3>
 <p>The feature was restructured into sub-features. The paths referenced in the historical entries now resolve as follows:</p>
 <table><thead><tr>
@@ -1691,6 +1756,22 @@ payment-impl-plan-01-schema.md       number plus phase, ordered</code></pre>
 <td>2026-11-07</td>
 <td>ARD-BF：spec HTML 统一放 docs/book/html/，目录与 features 同构</td>
 </tr>
+<tr>
+<td>2026-11-07</td>
+<td>ARD-BG：全站一份目录；feature 页左目录右正文</td>
+</tr>
+<tr>
+<td>2026-11-18</td>
+<td>ARD-BH：交付只有 spec-write 与 spec-review</td>
+</tr>
+<tr>
+<td>2026-11-18</td>
+<td>ARD-BI：左侧栏 1–6 加 10 sub-feature</td>
+</tr>
+<tr>
+<td>2026-11-18</td>
+<td>ARD-BJ：gold spec 就是这套 spec-driven-development</td>
+</tr>
 </tbody></table>
 </div>
 <p class="src">Canonical: <code>decision-history/spec-driven-development-decision-history.md</code></p>
@@ -1737,7 +1818,7 @@ payment-impl-plan-01-schema.md       number plus phase, ordered</code></pre>
 <li>本篇设计条目 ID 前缀 **<code>PIPE-*</code><strong>；</strong>不<strong> 用 </strong>DSGN-*** 作 pipeline 内锚点（DSGN 保留给 document-standard）。</li>
 </ul>
 <h3>Design</h3>
-<h4>PIPE-A — spec-pipeline 职责（MUST）</h4>
+<h4 id="PIPE-A">PIPE-A — spec-pipeline 职责（MUST）</h4>
 <p><strong>来源：PRD-A</strong>（在既有 pipeline 上改进，不另造编排）。</p>
 <ul>
 <li><strong>PIPE-A1</strong> 任意「写/改 spec」任务从 <strong>spec-write</strong> 进入，并先按 SPEC-STANDARD 判断新建或改哪些文（ARD-AJ）。</li>
@@ -1747,7 +1828,7 @@ payment-impl-plan-01-schema.md       number plus phase, ordered</code></pre>
 <li><strong>PIPE-A5</strong> 用户请求或会话丢失时 <strong>recap</strong>：已做、当前 state、待做、建议下一步（list）。</li>
 <li><strong>PIPE-A6</strong> 维护/读取 <strong>PIPE-H</strong> 定义的 state；推荐 <strong>PIPE-G</strong> 表中的 skill。</li>
 </ul>
-<h4>PIPE-B — 四阶段总览</h4>
+<h4 id="PIPE-B">PIPE-B — 四阶段总览</h4>
 <table><thead><tr>
 <th>阶段</th>
 <th>目的</th>
@@ -1774,13 +1855,13 @@ payment-impl-plan-01-schema.md       number plus phase, ordered</code></pre>
 <td>只写 test 无 regression，或 impl 无顺序</td>
 </tr>
 </tbody></table>
-<h4>PIPE-C — Create</h4>
+<h4 id="PIPE-C">PIPE-C — Create</h4>
 <ol>
 <li><strong>feature create</strong>（walter-worker）建立或选定 <strong><code>&lt;f&gt;</code></strong> / initiative 根（peer vs nested 见 parent HLD §3.1）。</li>
 <li><strong>粗 PRD</strong>（示例：「推荐 iPhone 并协助购买」)— 可 draft，不要求一次写齐六要素。</li>
 <li><strong>搜索/调研</strong> → 已知 context 写入 <strong><code>CLAUDE.local.md</code></strong>（或项目 CLAUDE 层）；<strong>不</strong> 替代 committed PRD。</li>
 </ol>
-<h4>PIPE-D — Map</h4>
+<h4 id="PIPE-D">PIPE-D — Map</h4>
 <ol>
 <li><strong>Interview</strong> 用户（及 context 包）；AI 归纳已知/未知。</li>
 <li><strong>AI 判断</strong>（无固定 MUST 文件类型）：是否建议 <strong>新 feature</strong>、是否写 <strong>decision</strong>、是否在 <strong>scratch</strong> 留 task 线索、或 <strong>暂不拆</strong> 进入 Converge。</li>
@@ -1790,7 +1871,7 @@ payment-impl-plan-01-schema.md       number plus phase, ordered</code></pre>
 <li><strong>拆分标准（暂时）：</strong> AI 先给几个拆法推荐。一个人 20 小时以内能搞清楚的，算一个 feature spec；AI 估算超过 20 小时的，拆成 peer 或 sub-feature。小时估算和拆不拆的评判都由 AI 做。</li>
 <li><strong>子问题（PRD-L）：</strong> 每个子问题标成 AI 查、人决定、或 AI 查完后人决定。人没问到的盲区和风险，AI 必须提出。</li>
 </ol>
-<h4>PIPE-E — Converge</h4>
+<h4 id="PIPE-E">PIPE-E — Converge</h4>
 <p><strong>循环：</strong> PRD ↔ <strong>design 篇</strong> ↔ decision-history（parent PRD Solution）。</p>
 <p><strong>收敛条件（MUST 全满足才进 Downstream）：</strong></p>
 <ul>
@@ -1798,13 +1879,13 @@ payment-impl-plan-01-schema.md       number plus phase, ordered</code></pre>
 <li><strong>PIPE-E2</strong> PRD 写清 limitation、preference、timeline、resource、tool；没有的注明 not apply。design 篇与 decision history 都在，才进 Downstream。</li>
 <li><strong>PIPE-E3</strong> design 篇列出 <strong>依赖的 decision</strong> 与 <strong>仍 open</strong> 项；含 implementation 所需的 contract/边界决策（impl 任务细节 <strong>下一轮</strong> 再定）。</li>
 </ul>
-<h4>PIPE-F — Downstream</h4>
+<h4 id="PIPE-F">PIPE-F — Downstream</h4>
 <ul>
 <li><strong>test-plan</strong> 与 <strong>impl-plan</strong> <strong>并行</strong>启动；<strong>互不</strong> 串行依赖；均从 <strong>design 篇</strong> 总结。</li>
 <li><strong>test-plan：</strong> 每项任务 <strong>完成检查</strong> + <strong>regression guard</strong>（PIPE-F1）。</li>
 <li><strong>impl-plan：</strong> 每条任务写依赖与挡住谁；被挡住的后做，没被挡住的先做（PIPE-F2）。</li>
 </ul>
-<h4>PIPE-G — Skill 推荐（接口）</h4>
+<h4 id="PIPE-G">PIPE-G — Skill 推荐（接口）</h4>
 <table><thead><tr>
 <th>阶段</th>
 <th>场景</th>
@@ -1855,7 +1936,7 @@ payment-impl-plan-01-schema.md       number plus phase, ordered</code></pre>
 </tr>
 </tbody></table>
 <p>*wayfinder 等 map 工具 <strong>可替换</strong>，<strong>非</strong> SDD 必装 deliverable。*</p>
-<h4>PIPE-H — State</h4>
+<h4 id="PIPE-H">PIPE-H — State</h4>
 <table><thead><tr>
 <th>时段</th>
 <th>存储</th>
@@ -1876,14 +1957,14 @@ payment-impl-plan-01-schema.md       number plus phase, ordered</code></pre>
 <li><strong>Recap</strong> 读取 state + committed 树；输出发给用户，<strong>默认不 commit</strong> recap 本身。</li>
 <li>方向性结论 <strong>升格</strong> 进 decision-history / PRD / design，<strong>不</strong> 长期只留在 state。</li>
 </ul>
-<h4>PIPE-I — 协作、血缘、齐备度</h4>
+<h4 id="PIPE-I">PIPE-I — 协作、血缘、齐备度</h4>
 <ul>
 <li><strong>读上游、不 silent 改</strong>；分歧 <strong>report + ask</strong>（<strong>DSGN-G</strong>）。</li>
 <li><strong>多人 decision：</strong> 以 decision history 时间较晚的为准；看不出先后则问用户。AI 不猜测（<strong>PRD-F</strong>）。</li>
 <li><strong>decision 变更</strong> → 点名需 review 的下游 artifact（PRD、design、impl-plan、test-plan）。</li>
 <li><strong>Parent vs sub 齐备：</strong> parent initiative review 见 parent HLD <strong>§8</strong>；<strong>sub-feature</strong> 不要求五篇齐全 — <strong>spec-review</strong> 执行，pipeline <strong>转发</strong> 到 review，不 duplicate 规则。</li>
 </ul>
-<h4>PIPE-J — 边界</h4>
+<h4 id="PIPE-J">PIPE-J — 边界</h4>
 <table><thead><tr>
 <th>本篇管</th>
 <th>不管</th>
@@ -1901,7 +1982,7 @@ payment-impl-plan-01-schema.md       number plus phase, ordered</code></pre>
 <td>重 task/BMAD/GSD 框架</td>
 </tr>
 </tbody></table>
-<h4>PIPE-K — 非软件问题的五篇映射</h4>
+<h4 id="PIPE-K">PIPE-K — 非软件问题的五篇映射</h4>
 <p><strong>PRD-K / PRD-Q。</strong> 非软件难题走同一套五篇；不新增文档类型。</p>
 <table><thead><tr>
 <th>内容</th>
@@ -1925,7 +2006,7 @@ payment-impl-plan-01-schema.md       number plus phase, ordered</code></pre>
 </tr>
 </tbody></table>
 <p><code>raw/</code> 结论升格进 committed 文档时只 link，不 restate。四个例子（shed、北京旅游、数学题、股票）写进 skill 正文，不在本仓库建 gold。</p>
-<h4>PIPE-L — 子问题归属与证据</h4>
+<h4 id="PIPE-L">PIPE-L — 子问题归属与证据</h4>
 <p>有子问题的 feature，其 <strong>design 篇</strong> 必须有「子问题归属」表；纯标准/编排 design 可注明 not apply。</p>
 <table><thead><tr>
 <th>子问题</th>
@@ -2146,8 +2227,8 @@ payment-impl-plan-01-schema.md       number plus phase, ordered</code></pre>
 <li>存量不合规文档不迁移，只报告（ARD-AF）。</li>
 </ul>
 <h3>Design</h3>
-<h4>DSGN-A — Document Contract</h4>
-<h5>DSGN-B — 类型 · 目录 · 文件名 · size · split（一表）</h5>
+<h4 id="DSGN-A">DSGN-A — Document Contract</h4>
+<h5 id="DSGN-B">DSGN-B — 类型 · 目录 · 文件名 · size · split（一表）</h5>
 <p><code>&lt;f&gt;</code> = kebab-case slug，<strong>与 committed 文件名中的 feature 段一致</strong>。</p>
 <table><thead><tr>
 <th>形态</th>
@@ -2288,7 +2369,7 @@ payment-impl-plan-01-schema.md       number plus phase, ordered</code></pre>
 </tbody></table>
 <p>Part 命名：<code>prd</code>/<code>design</code>/<code>test-plan</code>/<code>how-to</code> 用名词；<code>impl-plan</code>/<code>decision-history</code> 用 <code>&lt;NN&gt;</code>+phase/period。Legacy 顶层 <code>state/</code>、<code>research/</code>、<code>discussion/</code> → 迁入 <code>raw/</code>。Ticket：<code>.scratch/&lt;feature-slug&gt;/</code>（同样 <strong>不得 commit</strong>）。</p>
 <p><strong>Commit 列：</strong> <code>yes</code> = 纳入版本库的标准 feature 文档；<code>no</code> = <strong>不得</strong> 进入 git（本地可存在）。<code>no</code> 路径须 <code>.gitignore</code> 或等价策略；误 commit 视为 <strong>DSGN-M MUST</strong> 违规。</p>
-<h5>DSGN-C — 不得 commit（<code>Commit = no</code>）</h5>
+<h5 id="DSGN-C">DSGN-C — 不得 commit（<code>Commit = no</code>）</h5>
 <table><thead><tr>
 <th>路径</th>
 <th>说明</th>
@@ -2303,7 +2384,7 @@ payment-impl-plan-01-schema.md       number plus phase, ordered</code></pre>
 </tr>
 </tbody></table>
 <p>不得要求 frontmatter、Change Log、INDEX 条目。升格进 committed type 时 <strong>link</strong>，不把 raw 当 authoritative home。</p>
-<h5>DSGN-D — INDEX 与 book（派生层）</h5>
+<h5 id="DSGN-D">DSGN-D — INDEX 与 book（派生层）</h5>
 <p><code>docs/features/</code> 里的 committed 文档是 <strong>source of truth</strong>。INDEX 与 book 都是 <strong>派生层</strong>，不用 <strong>DSGN-E</strong> frontmatter / Change Log，<strong>不写</strong> 新 decision：</p>
 <table><thead><tr>
 <th></th>
@@ -2398,7 +2479,7 @@ payment-impl-plan-01-schema.md       number plus phase, ordered</code></pre>
 </ul>
 <hr>
 <p><strong>其它豁免路径</strong>（同样不是 feature 文档，无 <strong>DSGN-E</strong> frontmatter；Lint 只查 link）：<code>CONTEXT.md</code>（domain glossary）、<code>README.md</code>（repo 导向）。</p>
-<h5>DSGN-E — 格式（committed 文档）</h5>
+<h5 id="DSGN-E">DSGN-E — 格式（committed 文档）</h5>
 <pre><code>---
 feature: &lt;feature-name&gt;
 type: prd | design | impl-plan | test-plan | decision-history | how-to
@@ -2438,7 +2519,7 @@ final_date: YYYY-MM-DD   # final 时必填
 <p><strong>检查范围：</strong> <code>how-to</code> 暂不机械检查；其余五类按本表执行。</p>
 <p><strong>impl-plan 正文（MUST，spec-write 执行）：</strong> 每条 <code>IMPL-*</code> 写依赖谁、挡住谁。<code>Execution order</code> 把被挡住的排后面（先改库，再改 API）。优先级高且没被挡住的先做；没被挡住的可以同时做。</p>
 <p>新增节承自 KEP / Rust RFC：<code>Alternatives Considered</code>、<code>Drawbacks</code>、<code>Risks and Mitigations</code>、 <code>Open Questions</code> 为通用节;<code>Acceptance Criteria</code>(= Graduation Criteria)、<code>Reversibility</code> (= Upgrade/Downgrade)、<code>Resources Needed</code>(= Infrastructure Needed)为改名后的通用语义。 版本偏移、发布签核、运维就绪问卷<strong>不采纳</strong>(集群/运维形状,违反 PRD-Q)。Decision Log 表头：<code>ID \| Date \| Decision</code>（<strong>无</strong> <code>Status</code> / <code>Supersedes</code> 列）。<strong>倒序</strong>：新 entry 在表顶。Change Log：<strong>最后一节</strong>，只 append。PROTECTED 块任何 mode 不改。INDEX：文档增删移后 regenerate。</p>
-<h5>DSGN-F — 条目 ID（type 前缀 + 字母）</h5>
+<h5 id="DSGN-F">DSGN-F — 条目 ID（type 前缀 + 字母）</h5>
 <p>各 type 内可追溯条目用 <strong><code>{前缀}-{字母}</code></strong>，字母序同 Excel 列（<code>A</code>–<code>Z</code> → <code>AA</code>–<code>AZ</code> → <code>BA</code>–…）。可在已有条目之间 <strong>插入</strong> 新 ID（大方向顺序，见 <strong>DSGN-J</strong>）。</p>
 <p><strong>ID immutable（MUST）：</strong> 某 ID <strong>一旦写入</strong> feature spec（表、标题、正文、外链），该字符串 <strong>终身固定</strong> — <strong>禁止</strong> 改字母、改前缀、拼写「修正」、重编号、把 <code>PRD-A</code> 合并进 <code>PRD-B</code>。<strong>禁止复用</strong> 已出现过的 ID（即使 entry 被 strike / 整段作废）。口径变了 → <strong>新 ID</strong> + 旧处 strike / link（<strong>DSGN-J</strong>）；<strong>不得</strong> 改旧 ID 本身。</p>
 <table><thead><tr>
@@ -2483,8 +2564,9 @@ final_date: YYYY-MM-DD   # final 时必填
 <p><strong>凡有序号即 ID（MUST）：</strong> ADR、requirement、design 规则小节、impl task、test case、defer/open question 等 <strong>一切</strong> 可追溯条目 — <strong>必须</strong> 用上表 <code>{前缀}-{字母}</code>。<strong>禁止</strong> 裸数字（<code>0001</code>）、<code>PRD-1</code>/<code>DH-1</code>/<code>FR-3</code>/<code>OQ-1</code>/<code>QUES-1</code>/<code>D1</code> 等作永久 ID。Open Questions 的条目用 <code>QUES-A</code>。本 design 篇小节即 <strong>DSGN-A</strong> 起（见索引）。</p>
 <p><strong>检查：</strong> <code>ids.py</code> 按 type 强制标题模式（<code>PRD-*</code> / <code>DSGN-*</code> / <code>IMPL-*</code> / <code>TST-*</code> / <code>ARD-*</code> / <code>QUES-*</code>），缺 ID 或裸数字即 fail。</p>
 <p><strong>AI 单次 edit 粒度</strong>（≤10 行 / ≤200 字）属 SDD parent HLD <strong>§4</strong>，不在本 document-standard；impl 目标：<strong>spec-write</strong> 等书写 skill。</p>
+<p><strong>改已有正文（MUST，spec-write 执行）：</strong> 不删旧句。旧句用 <code><del>删除线</del></code>，新句写在旁边，并加 ref 说明为什么改（<code>ARD-*</code> 或链到该 decision）。</p>
 <hr>
-<h4>DSGN-G — Authority by Concern</h4>
+<h4 id="DSGN-G">DSGN-G — Authority by Concern</h4>
 <p>不要 global single source of truth — <strong>按 concern 各认一个 authoritative artifact</strong>；不一致时 <strong>Detect → Report → Ask</strong>（禁止 silent 改一侧；禁止默认 <code>design</code> 篇 &gt; code）。</p>
 <table><thead><tr>
 <th>Concern</th>
@@ -2513,12 +2595,12 @@ final_date: YYYY-MM-DD   # final 时必填
 </tbody></table>
 <p><strong><code>design</code> 篇</strong> 权威 intended behavior；code 权威当前实现与内部结构。Machine-readable contract <strong>不要</strong>在 Markdown 里手抄全文 — link 或 generate。Tests 是 verification，不是 requirement 替身。<code>final</code> 后 maintain，不整篇 rewrite。</p>
 <hr>
-<h4>DSGN-H — Design 文档 Scope（<code>type: design</code> 正文）</h4>
+<h4 id="DSGN-H">DSGN-H — Design 文档 Scope（<code>type: design</code> 正文）</h4>
 <p><strong>写：</strong> behavior、contract、invariant、constraint、error、state transition、外部交互、架构边界（含 diagram 类）。   <strong>不写：</strong> class 结构、private method、framework 内部细节（见 <strong>DSGN-I</strong> trim 时也应 absent）。   <strong>测试句：</strong> 可改 implementation 而不改 externally observable behavior → 不应改 <strong>design 篇</strong>。</p>
 <p><strong>Agent 加载顺序：</strong> Global rules → Domain <strong>design</strong> → Architecture → Contract → Examples/tests → Code。窄问题却要整篇 design → re-cut boundary。</p>
 <p>体量与 split：<strong>DSGN-B</strong>。篇内设计决策 / 小节锚点用 <strong><code>DSGN-A</code></strong> 等（<strong>DSGN-F</strong>）。</p>
 <hr>
-<h4>DSGN-I — Content Priority</h4>
+<h4 id="DSGN-I">DSGN-I — Content Priority</h4>
 <p>Trim 顺序 L4 → L3 → 压 L2；<strong>L1 永不删</strong>。仍 <code>&gt; 硬 cap</code> → <strong>DSGN-B</strong> split。</p>
 <table><thead><tr>
 <th>Level</th>
@@ -2542,7 +2624,7 @@ final_date: YYYY-MM-DD   # final 时必填
 </tr>
 </tbody></table>
 <hr>
-<h4>DSGN-J — Decision History — 语义</h4>
+<h4 id="DSGN-J">DSGN-J — Decision History — 语义</h4>
 <p><strong>文件角色：</strong> 决策 <strong>索引 + 正文</strong>（Decision Log / <code>### &lt;ID&gt;</code> 小节，格式 <strong>DSGN-E</strong>）。<strong>不是</strong> PRD / <strong>design 篇</strong> 的摘要。</p>
 <p><strong>书写顺序：</strong> <strong>倒序</strong> — 每加一条，写在 Decision Log <strong>最上面</strong>（最新在上，越往下越早）。</p>
 <p><strong>Decision ID：</strong> 格式 <strong><code>ARD-{字母}</code></strong>（<strong>DSGN-F</strong>，分配后 <strong>不可改</strong>）。Log 表 / <code>### ARD-A — …</code> 与 ID 一致。</p>
@@ -2567,7 +2649,7 @@ final_date: YYYY-MM-DD   # final 时必填
 </tr>
 </tbody></table>
 <hr>
-<h4>DSGN-K — Paths and Names — 冲突处置</h4>
+<h4 id="DSGN-K">DSGN-K — Paths and Names — 冲突处置</h4>
 <p>新 feature / 新文件名 <strong>必须</strong> 对照已有名称；命中任一 <strong>collision signal</strong> 即视为冲突：</p>
 <table><thead><tr>
 <th>Signal</th>
@@ -2592,7 +2674,7 @@ final_date: YYYY-MM-DD   # final 时必填
 </tbody></table>
 <p>处置：同一 bounded context → <strong>merge</strong> 再按 aspect split <strong><code>design</code></strong>。不同 context 易混 → <strong>rename</strong> 双方并记入 <code>decision-history</code>。同 feature 内文件撞名 → 拉开 aspect 或 rename feature。<strong>Rename = decision</strong>，更新 inbound link，禁止 silent。</p>
 <hr>
-<h4>DSGN-L — Enforcement Modes</h4>
+<h4 id="DSGN-L">DSGN-L — Enforcement Modes</h4>
 <table><thead><tr>
 <th>Mode</th>
 <th>行为</th>
@@ -2620,7 +2702,7 @@ final_date: YYYY-MM-DD   # final 时必填
 </tbody></table>
 <p>内容质量（设计是否成立）由 <strong>Review</strong> 的 semantic 部分处理，不属本 standard 的 MUST。</p>
 <hr>
-<h4>DSGN-M — Quality Gates</h4>
+<h4 id="DSGN-M">DSGN-M — Quality Gates</h4>
 <p><strong>MUST：</strong> <strong>DSGN-A</strong> 全满足（含 <strong>DSGN-F</strong> ID 不可改、不可复用）；<strong>DSGN-G</strong> 冲突不 silent；<strong>DSGN-I</strong> 不删 L1；consolidation 不丢 decision；<strong>Commit = no</strong> 路径未 commit；INDEX 无 orphan/dead link；含 <code>docs/features/</code> 变更的 <strong>push</strong> 时 INDEX/book 已与源同步；collision 已查。</p>
 <p><strong>NICE：</strong> heading 不跳级；link 有效；CONTEXT 术语一致；<code>last_verified</code> 新鲜；context boundary 合理。</p>
 <hr>
@@ -2799,6 +2881,10 @@ final_date: YYYY-MM-DD   # final 时必填
 <td>impl-plan 正文：依赖、挡住谁、Execution order</td>
 </tr>
 <tr>
+<td>2026-11-18</td>
+<td>改已有正文：删除线留旧句，旁边写新句和 ref</td>
+</tr>
+<tr>
 <td>2026-11-07</td>
 <td>入口改为 spec-write 与 spec-review；标准见两份摘要（ARD-AJ）</td>
 </tr>
@@ -2829,8 +2915,8 @@ final_date: YYYY-MM-DD   # final 时必填
 <p>定义 <strong>Spec Reader HTML</strong> 产物：单文件、Tab 化、富排版、<strong>保真优先</strong> 的 derived view；canonical 永远是 committed <code>.md</code>。</p>
 <hr>
 <h3>Design</h3>
-<h4>DSGN-N — Spec Reader HTML 契约</h4>
-<h5>DSGN-N-A — 产物与路径</h5>
+<h4 id="DSGN-N">DSGN-N — Spec Reader HTML 契约</h4>
+<h5 id="DSGN-N-A">DSGN-N-A — 产物与路径</h5>
 <table><thead><tr>
 <th>项</th>
 <th>Rule</th>
@@ -2848,10 +2934,10 @@ final_date: YYYY-MM-DD   # final 时必填
 <td>各 Tab 对应的一篇或多篇 committed <code>.md</code>；HTML <strong>derived</strong>。手写稿须带 <code>spec-source</code> 与 sha256（ARD-AK）</td>
 </tr>
 </tbody></table>
-<h5>DSGN-N-H — 单篇阅读视图</h5>
-<p>.md 是 source，HTML 是派生物。<code>&lt;!-- html-skip --&gt;</code> 与已 strike 的历史可省略；不许用它们包住 L1。生成稿带 <code>spec-source-sha256</code>；手写稿带 <code>spec-paired=hand-maintained</code>。hash 不一致则重新生成。手写 changelog 对 md Change Log 的每个日期都有一行（ARD-BA）。</p>
+<h5 id="DSGN-N-H">DSGN-N-H — 单篇阅读视图</h5>
+<p>.md 是 source，HTML 是派生物。<code>&lt;!-- html-skip --&gt;</code> 可省略，不许包住 L1。已 strike 的句子留在 HTML；一个按钮切换「显示删除线」和「隐藏删除线」。生成稿带 <code>spec-source-sha256</code>；手写稿带 <code>spec-paired=hand-maintained</code>。hash 不一致则重新生成。手写 changelog 对 md Change Log 的每个日期都有一行（ARD-BA）。</p>
 <p>| <strong>参考</strong> | <code>docs/book/html/spec-driven-development/spec-driven-development-reader.html</code> — 由 <code>tools/build_sdd_reader.py</code> 自 canonical <code>.md</code> 生成（<strong>DSGN-N-B</strong>，ARD-BF） |</p>
-<h5>DSGN-N-B — 保真（MUST — 回应「不要精简这么多」）</h5>
+<h5 id="DSGN-N-B">DSGN-N-B — 保真（MUST — 回应「不要精简这么多」）</h5>
 <p>映射 <strong>DSGN-I</strong> 到 HTML 汇编：</p>
 <table><thead><tr>
 <th>Level</th>
@@ -2887,19 +2973,26 @@ final_date: YYYY-MM-DD   # final 时必填
 <li>把长 prose <strong>分段</strong>、加 callout、加 mini flow（Mermaid 或 ASCII），<strong>不减少</strong> L1 断言数量。</li>
 <li>同一 type 多 part 文件 → 同一 Tab 内 <strong>按 part 分 <code>&lt;section&gt;</code></strong> 或子 Tab。</li>
 </ul>
-<h5>DSGN-N-C — 结构与 Tab</h5>
+<h5 id="DSGN-N-C">DSGN-N-C — 结构与 Tab</h5>
 <p><strong>Page header（MUST）：</strong> 说明本页为 <strong>阅读用汇编</strong>；权威修改在 <code>.md</code>；列出 parent slug。</p>
 <p><strong>Tab 组 1 — Parent：</strong> 每存在一类 committed 文档一个 Tab：<code>PRD</code> | <code>Design</code> | <code>Impl plan</code> | <code>Test plan</code> | <code>Decision history</code>（<code>how-to</code> 可选 Tab）。</p>
 <p><strong>Tab 组 2+ — Children：</strong> 每个 <code>docs/features/&lt;parent&gt;/features/&lt;sub&gt;/</code> 一组 Tab（或一组内 section per type）。<strong>至少</strong> 纳入 <code>&lt;sub&gt;</code> 的 <code>design/&lt;sub&gt;-design.md</code> 及 design part 文件。</p>
 <p><strong>每 Tab footer（MUST）：</strong> <code>Canonical:</code> + 相对 repo 路径；多 part 时 <strong>列出全部</strong> part 路径。</p>
-<h5>DSGN-N-D — 视觉与 HTML 技术</h5>
+<h5 id="DSGN-N-I">DSGN-N-I — 全站目录（ARD-BG）</h5>
+<p>全项目一份网站，入口 <code>docs/book/html/index.html</code>。每一篇 spec HTML 是目录里的一条。目录先进入 feature。进入 feature 后，左侧是该 feature 的目录，右侧是正文。</p>
+<h5 id="DSGN-N-K">DSGN-N-K — 正文链接</h5>
+<p>条目号 <code>PRD-</code> <code>DSGN-</code> <code>ARD-</code> <code>IMPL-</code> <code>TST-</code> <code>PIPE-</code> <code>QUES-</code> 链到本 feature 的定义；子 feature 没有该号则链到 parent。<code>docs/features/</code> 下的 <code>.md</code> 链到 <code>docs/book/html/</code> 同路径 HTML；其他现存文件链到该文件。</p>
+<h5 id="DSGN-N-L">DSGN-N-L — 左侧五篇</h5>
+<p><del>feature 左侧只列五篇入口：prd、design、impl-plan、test-plan、decision-history。</del> 左侧栏露出层次和序号：1 prd、2 decision-history、3 design、4 impl plan、5 test plan、6 how to、10 sub-feature（<a href="../../../decision-history/spec-driven-development-decision-history.md#ard-bi--left-sidebar-numbers-and-hierarchy">ARD-BI</a>）。design 的 part 与 reader 展开在 3 下。sub-feature 单独成组再展开。pipeline 不生成 HTML。</p>
+<h5 id="DSGN-N-D">DSGN-N-D — 视觉与 HTML 技术</h5>
 <ul>
 <li><strong>SHOULD</strong> 复用 initiative 已有 CSS 模式（参考 <code>spec-driven-development.html</code>、<code>document-standard.html</code>：layout、chip、card、callout）。</li>
 <li><strong>SHOULD</strong> 单文件自包含 CSS（v0），便于 <code>file://</code> 或静态托管。</li>
 <li><strong>MAY</strong> 内联 Mermaid（若 initiative 已有先例）；否则 ASCII flow。</li>
 <li><strong>MUST NOT</strong> 依赖运行时 fetch 加载 <code>.md</code> 作为主内容（可 fetch 仅作 debug，非交付形态）。</li>
+<li><strong>MUST</strong> 标题、节、小节、条目各用不同字号、字重和形态。段落序号不用 a–z，也不用 1、2、3。</li>
 </ul>
-<h5>DSGN-N-E — 流程与标准边界</h5>
+<h5 id="DSGN-N-E">DSGN-N-E — 流程与标准边界</h5>
 <table><thead><tr>
 <th>角色</th>
 <th>职责</th>
@@ -2922,13 +3015,13 @@ final_date: YYYY-MM-DD   # final 时必填
 </tr>
 </tbody></table>
 <p><strong>spec-pipeline <code>SPEC-READER.md</code>（若仍存在）：</strong> 仅 pointer 至本篇 + <strong>SPEC-HTML-STANDARD</strong>，避免双契约。</p>
-<h5>DSGN-N-F — 何时更新 reader</h5>
+<h5 id="DSGN-N-F">DSGN-N-F — 何时更新 reader</h5>
 <ul>
 <li>Parent 或 child 任一 committed spec <strong>实质变更</strong>（尤其 L1/L2）后 <strong>SHOULD</strong> 更新 reader。</li>
 <li>用户显式：「生成 reader」「human html」「spec 汇编」「reader 太简了补全」。</li>
 <li><strong>不必</strong> 每次 typo 级 commit 都 regenerate（NICE）。</li>
 </ul>
-<h5>DSGN-N-G — 未来 md→html</h5>
+<h5 id="DSGN-N-G">DSGN-N-G — 未来 md→html</h5>
 <p>可增 <strong>mechanical contract</strong>（例如 design part <code>document-standard-design-md-to-html.md</code>）：映射 md AST → HTML 组件。自动化 <strong>仍 MUST</strong> 满足 <strong>DSGN-N-B</strong>；本篇 + <strong>SPEC-HTML-STANDARD</strong> 为 semantic norm。</p>
 <hr>
 <h3>User Stories</h3>
@@ -2961,7 +3054,7 @@ final_date: YYYY-MM-DD   # final 时必填
 <h3>Further Notes</h3>
 <ul>
 <li><strong>反例：</strong> 当前 <code>spec-driven-development-reader.html</code> 多处 child/parent design 仅留 slogan — regenerate 时按 <strong>DSGN-N-B</strong> 补全。</li>
-<li>Parent HLD 已指 reader 路径；deliverable skills 仍为四个；HTML 规范在 <strong>spec-html-standard</strong>。</li>
+<li>Parent HLD 已指 reader 路径；<del>deliverable skills 仍为四个</del> 交付只有 spec-write 与 spec-review（ARD-BH）；HTML 规范在 <strong>spec-html-standard</strong>。</li>
 </ul>
 <h3>Alternatives Considered</h3>
 <ul>
@@ -3017,6 +3110,38 @@ final_date: YYYY-MM-DD   # final 时必填
 <tr>
 <td>2026-11-07</td>
 <td>HTML 改到 docs/book/html/，目录与 features 同构（ARD-BF）</td>
+</tr>
+<tr>
+<td>2026-11-07</td>
+<td>DSGN-N-I：全站一份目录；feature 页左目录右正文（ARD-BG）</td>
+</tr>
+<tr>
+<td>2026-11-07</td>
+<td>DSGN-N-K：正文条目号与路径必须是可用链接</td>
+</tr>
+<tr>
+<td>2026-11-07</td>
+<td>DSGN-N-L：左侧只列五篇；其余展开在 design 下；pipeline 无 HTML</td>
+</tr>
+<tr>
+<td>2026-11-07</td>
+<td>DSGN-N-L：子 feature 在 design 下一层占一行，再展开自己的页面</td>
+</tr>
+<tr>
+<td>2026-11-18</td>
+<td>页顶按钮切换显示或隐藏删除线</td>
+</tr>
+<tr>
+<td>2026-11-18</td>
+<td>层级靠字号和样式分开，段落不用 a–z 或数字序号</td>
+</tr>
+<tr>
+<td>2026-11-18</td>
+<td>交付 skill 改为 spec-write 与 spec-review（ARD-BH）</td>
+</tr>
+<tr>
+<td>2026-11-18</td>
+<td>左侧栏序号 1–6 与 10 sub-feature（ARD-BI）</td>
 </tr>
 </tbody></table>
 <hr><p class="src-inline">Source: <code>features/document-standard/prd/document-standard-prd-spec-reader-html.md</code></p>

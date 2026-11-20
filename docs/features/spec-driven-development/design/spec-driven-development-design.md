@@ -142,7 +142,7 @@ Implement SDD / document-standard 时：**plan 必须含 skill 变更与 CLAUDE 
 
 | 项 | 约定 |
 |---|---|
-| **Deliverable** | spec-write、spec-review，以及两份标准（可装任意项目；ARD-AJ） |
+| **Deliverable** | ~~spec-write、spec-review，以及两份标准（ARD-AJ）~~ 只有 spec-write 与 spec-review（[ARD-BH](../decision-history/spec-driven-development-decision-history.md#ard-bh--deliverable-is-only-spec-write-and-spec-review)） |
 | **Standard 文件** | `skills/spec-organize/SPEC-STANDARD.md` 与 `skills/spec-html-standard/SPEC-PRESENTATION.md`（ARD-AJ） |
 | **测试位置** | `skills/<skill>/tests/`；跨 skill 检查器、gold、报告在 `skills/spec-organize/tests/`（**ARD-Q**） |
 | **Test plan** | parent `test-plan/spec-driven-development-test-plan.md`；sub-feature 不另写 |
@@ -187,3 +187,4 @@ Implement SDD / document-standard 时：**plan 必须含 skill 变更与 CLAUDE 
 | 2026-11-04 | Out of Scope 收窄多人 decision 条款 |
 | 2026-11-07 | Solution 与 §7 Deliverable 改为 spec-write、spec-review 与两份标准（ARD-AJ） |
 | 2026-11-07 | §7 reader 改到 docs/book/html/（ARD-BF） |
+| 2026-11-18 | §7 Deliverable 只留 spec-write 与 spec-review（ARD-BH） |

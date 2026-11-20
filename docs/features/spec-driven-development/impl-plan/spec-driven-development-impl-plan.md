@@ -50,7 +50,7 @@ last_verified: 2026-11-04
 **Deliverables:**
 
 - `eval.yaml`, `must_registry.yaml` (populate via TST-A scan)
-- `gold/iphone/v1/requirement.md`, `gold/iphone/v1/context.md`
+- ~~`gold/iphone/v1/requirement.md`, `gold/iphone/v1/context.md`~~ gold spec 是 `docs/features/spec-driven-development/`（ARD-BJ）。`gold/v1/` 只是练习案例
 - `fixtures/neg/`, `fixtures/pos/` (grow with TST-B)
 - `checks/` Python package (implement TST-B)
 
@@ -58,7 +58,7 @@ last_verified: 2026-11-04
 
 ## IMPL-E — Self-run eval (agent)
 
-**Goal:** Baseline eval: `grill.skills: []`, spec-organize only, iPhone requirement + context.
+**Goal:** ~~Baseline eval: `grill.skills: []`, spec-organize only, iPhone requirement + context.~~ `grill.skills: []`，gold spec 是这套 spec-driven-development（ARD-BJ）。
 
 **Steps:** New branch `eval/v1/<run_id>`; run spec-pipeline → write feature spec; TST-E/F/K; fix **spec first** on failure.
 
@@ -150,3 +150,4 @@ IMPL-A → B → C → D → J → K → M → N → F → G → H → O → E �
 | 2026-11-03 | Task 6：Reader 改为富格式汇编，非 MD fetch |
 | 2026-11-04 | Task 1–9 → IMPL-A–I；新增 IMPL-J–O：eval 配置、fixtures/cases、报告、检查器、skill 契约、reader |
 | 2026-11-04 | Global Constraints 加 eval/no-migration；IMPL-D gold 路径改 iphone/v1 |
+| 2026-11-18 | IMPL-D / IMPL-E：gold spec 改为这套 spec-driven-development（ARD-BJ） |

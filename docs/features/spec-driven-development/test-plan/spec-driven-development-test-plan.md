@@ -12,7 +12,7 @@ last_verified: 2026-11-04
 
 Initiative 级 test plan。**被测对象** = **spec-write** 与 **spec-review**。**Oracle** = `SPEC-STANDARD.md` 与 `SPEC-PRESENTATION.md`。organize / pipeline 旧测试仍在；编排 **Unverified**。Sub-feature 不另写 test-plan。
 
-**验收：** 两个 skill 加两份标准是产出。人不读 skill 正文；好不好用只看本计划的测试结果。
+**验收：** ~~两个 skill 加两份标准是产出。~~ 产出只有 spec-write 与 spec-review（ARD-BH）。人不读 skill 正文；好不好用只看本计划的测试结果。
 
 ## Test Scope
 
@@ -36,15 +36,15 @@ Initiative 级 test plan。**被测对象** = **spec-write** 与 **spec-review**
 
 | 路径 | 内容 |
 |---|---|
-| `skills/spec-organize/tests/eval.yaml` | `judge.model: deepseek-flash`；`gold.cases.iphone.version: v1`；`gold.repeats: 3`；`grill.skills`（基线 `[]`）；`target.repo`（默认 `../the-super-lab-eval`，`SDD_EVAL_REPO` 覆盖）；`checkers.models: [deepseek-flash]`；`checkers.repeats: 3`；`single_provider: true` |
+| `skills/spec-organize/tests/eval.yaml` | `judge.model: deepseek-flash`；~~`gold.cases.iphone.version: v1`~~ `gold.cases.spec-driven-development`（version: current，ARD-BJ）；`gold.repeats: 3`；`grill.skills`（基线 `[]`）；~~`target.repo` 默认 `../the-super-lab-eval`~~ `target.repo: .`（`SDD_EVAL_REPO` 覆盖）；`checkers.models: [deepseek-flash]`；`checkers.repeats: 3`；`single_provider: true` |
 | `skills/spec-organize/tests/checks/` | Python：`paths` `size` `frontmatter` `sections` `ids` `decision_log` `change_log` `index_book` `collision` `no_commit` |
 | `skills/spec-organize/tests/mock-mcp/` | 共用一个 mock MCP client/server；固定工具；call 打出 stdout log，不真下单 |
 | `skills/spec-organize/tests/fixtures/neg/<check>/` | 每检查 ≥1 最小违规树 |
 | `skills/spec-organize/tests/fixtures/pos/` | 不得误报：ID 缺口、豁免路径、raw 无 frontmatter |
 | `skills/spec-organize/tests/must_registry.yaml` | 每条 MUST：`id`（`MUST-{字母}`）、`source`、`text`、`method`（`python` \| `llm`）、`check` |
-| `skills/spec-organize/tests/gold/iphone/v1/` | `requirement.md`、`context.md`、`context-variants/<slug>.md`、`runs/deepseek-flash/`（3 次产出 + `interview.md`）、`exemplar/`、`annotations.yaml`；PRD-K 四例的 gold 放到别处 |
-| `skills/spec-organize/tests/gold/iphone/v1/annotations.yaml` | `GOOD-*` / `BAD-*`；`where`、`text`；BAD 含 `expected_fix`；`added_in`（gold 版本） |
-| **当前状态** | gold 实际目录仍是 `gold/v1/`；IMPL-D 迁移到 `gold/iphone/v1/` |
+| ~~`skills/spec-organize/tests/gold/iphone/v1/`~~ `skills/spec-organize/tests/gold/v1/` | 练习案例，不是 gold spec（ARD-BJ）：`requirement.md`、`context.md`、`context-variants/<slug>.md`、`annotations.yaml` |
+| ~~`skills/spec-organize/tests/gold/iphone/v1/annotations.yaml`~~ `skills/spec-organize/tests/gold/v1/annotations.yaml` | `GOOD-*` / `BAD-*`；`where`、`text`；BAD 含 `expected_fix`；`added_in`（gold 版本） |
+| **Gold spec** | ~~iPhone `gold/v1`~~ `docs/features/spec-driven-development/` 这套 spec 本身（ARD-BJ）。`gold/v1` 只是练习案例 |
 | `skills/spec-organize/tests/reports/<run_id>.html` | 单 HTML；`run_id = <YYYY-MM-DD>-<branch>`；`tools/render_eval_report.py` 生成；不入库 |
 | `skills/spec-review/tests/cases/<slug>/` | `input/`（植入缺陷）、`expected.yaml`（应检出 id、应忽略 severity 1–2）；11 机械 + 5 语义 |
 
@@ -74,7 +74,7 @@ Initiative 级 test plan。**被测对象** = **spec-write** 与 **spec-review**
 
 ### TST-C — Gold 生成（3 次 run）
 
-**目标：** 基线下 3 次 iPhone feature spec。**输入：** `gold/iphone/v1/requirement.md` + `context.md`；`grill.skills: []`；只装 spec-organize；`deepseek-flash`。**断言：** 每次含 prd/design/decision-history/impl-plan/test-plan；`interview.md` 中模拟人回答均出自 context 或「未提供」。**判定：** Python（文件）+ judge（出处）。跨模型偏差 **Unverified**。
+**目标：** ~~基线下 3 次 iPhone feature spec。~~ 通过的 gold 是这套 spec-driven-development（ARD-BJ）。**输入：** ~~`gold/iphone/v1/requirement.md` + `context.md`~~ `docs/features/spec-driven-development/`；`grill.skills: []`；`deepseek-flash`。**断言：** 含 prd、design、decision-history、impl-plan、test-plan。**判定：** Python（文件）+ judge。跨模型偏差 **Unverified**。
 
 ### TST-D — Gold 提炼
 
@@ -144,13 +144,17 @@ Initiative 级 test plan。**被测对象** = **spec-write** 与 **spec-review**
 
 **目标：** spec-write 与 spec-review 正文包含 PRD-Q 四例。**输入：** 这两份 SKILL.md。**断言：** 每个至少提到 shed、北京旅游、数学题、股票；缺 fail。**判定：** Python（关键词）+ judge（是否只是点名）。
 
+### TST-U — QUES、impl 依赖、删除线、字号
+
+**目标：** skill 与 gold 跟上现行标准。**输入：** 四份 SKILL.md、`gold/v1/annotations.yaml`、reader。**断言：** spec-write 含 `QUES-A`、impl 依赖与 `~~old~~`；gold 有 BAD：`QUES-1`、无依赖的 impl、删旧句不划线；reader 有「隐藏删除线」，h2 大于 h3。**判定：** Python。
+
 ## Test Execution Order
 
 1. **TST-A**（registry 不足 100% 则停）
 2. **TST-B**（检查器失效则停）
 3. **TST-O**、**TST-P**（设计覆盖/证据）
 4. **TST-C** → **TST-D**（首次或 gold 升版）
-5. **TST-G**、**TST-N**、**TST-R**、**TST-S**、**TST-T**
+5. **TST-G**、**TST-N**、**TST-R**、**TST-S**、**TST-T**、**TST-U**
 6. **TST-E**、**TST-F**
 7. **TST-H** → **TST-I**
 8. **TST-Q**（mock 执行）
@@ -165,7 +169,7 @@ Initiative 级 test plan。**被测对象** = **spec-write** 与 **spec-review**
 | 测试框架可用 | TST-A 100%；TST-B 全过 |
 | 设计完整 | TST-O 100%；TST-P 全过 |
 | 执行 mock | TST-Q log 存在且无真实副作用 |
-| reader / skill 正文 | TST-R 新鲜；TST-S 四例齐全 |
+| reader / skill 正文 | TST-R 新鲜；TST-S 四例齐全；TST-U 通过 |
 | 外部 gold | TST-T：defect 的 expect 全报出；gold 除 allow 外 0 条；源不在本机则跳过 |
 | Gold v1 冻结 | TST-D：exemplar 分数 1 全过；annotations 人工认可 |
 | spec-organize 可发布 | TST-E 分数 1 全过、分数 2 不退步；TST-F 四变体全过；TST-G 零差异；TST-L 3/3 |
@@ -215,3 +219,7 @@ Initiative 级 test plan。**被测对象** = **spec-write** 与 **spec-review**
 | 2026-11-07 | 被测改为 spec-write 与 spec-review；TST-S 只查这两份（ARD-AJ） |
 | 2026-11-07 | TST-T：外部 gold 只留 manifest，不复制私有正文（ARD-BD） |
 | 2026-11-07 | TST-R 输入改为 docs/book/html/ 下的 reader（ARD-BF） |
+| 2026-11-18 | TST-U：QUES、impl 依赖、删除线、字号 |
+| 2026-11-18 | 验收：产出只有 spec-write 与 spec-review（ARD-BH） |
+| 2026-11-18 | Gold spec 改为这套 spec-driven-development（ARD-BJ） |
+| 2026-11-18 | 资产表与 TST-C 改指这套 spec；`gold/v1` 只是练习案例（ARD-BJ） |

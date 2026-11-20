@@ -12,6 +12,8 @@ Use prose for a single claim, a reason, or a sequence that is not a procedure. O
 
 Required headings stay the English text in SPEC-STANDARD, unnumbered. Number a heading only when the section is an ordered procedure (steps). A step reference names the step id. The count of steps in a citation matches the procedure.
 
+The title, a section, a subsection, and a clause each use a different size, weight, and shape. Body text stays one size. Do not mark those paragraphs with a, b, c or 1, 2, 3.
+
 ## Style
 
 The markdown source is the authority for wording. The reader HTML may add layout. It may not drop an L1 row or replace a section with a summary. Status words in prose match the tracker row they cite.

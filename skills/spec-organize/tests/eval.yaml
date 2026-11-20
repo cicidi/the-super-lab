@@ -7,12 +7,12 @@ gold:
   models: [deepseek-flash]
   repeats: 3
   cases:
-    iphone:
-      version: v1
-      path: gold/v1
+    spec-driven-development:
+      version: current
+      path: docs/features/spec-driven-development
 target:
-  repo: ../the-super-lab-eval # SDD_EVAL_REPO overrides
-  feature: iphone-purchase
+  repo: . # this repo; SDD_EVAL_REPO overrides
+  feature: spec-driven-development
 grill:
   skills: [] # baseline: no extra skill
 checkers:

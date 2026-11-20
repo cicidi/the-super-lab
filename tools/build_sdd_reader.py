@@ -255,9 +255,11 @@ def panel_html(panel_id: str, title: str, sources: list[tuple[str, Path]]) -> st
 
 CSS_EXTRA = """
 .panel-label{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--orange);margin:0 0 8px}
-.md-body h2{font-size:21px;margin:24px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--line)}
-.md-body h3{font-size:16px;margin:18px 0 8px}
-.md-body h4{font-size:14.5px;margin:14px 0 6px;color:var(--muted)}
+.md-body h2{font-family:var(--serif);font-size:32px;font-weight:500;line-height:1.2;margin:32px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--ink)}
+.md-body h3{font-family:var(--sans);font-size:22px;font-weight:700;line-height:1.3;margin:26px 0 10px}
+.md-body h4{font-family:var(--sans);font-size:17px;font-weight:600;line-height:1.4;margin:20px 0 8px;padding-left:10px;border-left:3px solid var(--orange)}
+.md-body h5{font-family:var(--sans);font-size:15px;font-style:italic;font-weight:500;line-height:1.45;margin:16px 0 6px;color:var(--muted)}
+.md-body p{font-size:16.5px;line-height:1.75}
 .md-body pre{background:var(--code);border:1px solid var(--line);border-radius:8px;padding:12px 14px;overflow-x:auto;font-size:12px;line-height:1.45;max-width:100%}
 .md-body pre.mermaid{background:var(--surface);border:1px solid var(--line);text-align:center}
 .md-body blockquote{margin:12px 0;padding:8px 14px;border-left:3px solid var(--line);color:var(--muted);background:var(--surface-2);border-radius:0 8px 8px 0}
@@ -293,6 +295,8 @@ code{font-family:var(--mono);font-size:.88em;background:var(--code);border:1px s
 .crumbs{font-family:var(--mono);font-size:11px;color:#9CB0C0;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .crumbs a{color:#DCE7EF}.crumbs a:hover{color:var(--yellow)}
 .theme-btn{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border:1px solid rgba(255,255,255,.18);background:transparent;color:#C4D3DE;border-radius:999px;font-family:var(--mono);font-size:10.5px;cursor:pointer}
+.top-actions{display:flex;gap:8px;align-items:center}
+html[data-strike="off"] del{display:none}
 .wrap{max-width:1040px;margin:0 auto;padding:32px 56px 80px}
 .hero{padding-bottom:20px;margin-bottom:16px;border-bottom:1px solid var(--line)}
 .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--orange)}
@@ -323,7 +327,10 @@ SHELL_MID = """
 <body>
 <div class="top">
   <div class="crumbs"><a href="../index.html">Spec Atlas</a><span>/</span><a href="prd/spec-driven-development-prd.html">SDD</a><span>/</span><span>Reader</span></div>
-  <button class="theme-btn" type="button" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark'">theme</button>
+  <div class="top-actions">
+    <button class="theme-btn" type="button" onclick="var r=document.documentElement;var off=r.dataset.strike!=='off';r.dataset.strike=off?'off':'on';this.textContent=off?'显示删除线':'隐藏删除线'">隐藏删除线</button>
+    <button class="theme-btn" type="button" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark'">theme</button>
+  </div>
 </div>
 <div class="wrap">
   <header class="hero">

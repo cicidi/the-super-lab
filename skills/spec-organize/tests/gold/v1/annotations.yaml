@@ -17,3 +17,21 @@ annotations:
     text: Permanent requirement ID uses numeric suffix (e.g. PRD-1) instead of letter ID.
     expected_fix: Renumber to PRD-A style per DSGN-F; strike+link if superseding.
     added_in: v1
+  - id: BAD-B
+    kind: bad
+    where: exemplar/ (TST-D)
+    text: An open question uses QUES-1 or OQ-1 instead of QUES-A.
+    expected_fix: Use QUES-A. Strike the old id and link the new one.
+    added_in: v1
+  - id: BAD-C
+    kind: bad
+    where: exemplar/ (TST-D)
+    text: An IMPL task names no dependency and names nobody it blocks.
+    expected_fix: Name what it depends on and what it blocks, then put blocked work later in Execution order.
+    added_in: v1
+  - id: BAD-D
+    kind: bad
+    where: exemplar/ (TST-D)
+    text: An existing sentence was deleted instead of struck, with no ref for why.
+    expected_fix: Keep ~~the old sentence~~, write the new sentence beside it, and cite an ARD or a link.
+    added_in: v1

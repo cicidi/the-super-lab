@@ -1,6 +1,6 @@
 # Spec-Driven Development — skill deliverables
 
-Initiative spec (frozen paths): `docs/features/spec-driven-development/`. **Do not** edit committed spec here unless the user approves.
+Initiative spec: `docs/features/spec-driven-development/`. Deliverable skills are only spec-write and spec-review (ARD-BH). The other rows are supporting files, not the deliverable.
 
 | Skill | Role |
 |---|---|

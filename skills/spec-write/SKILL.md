@@ -67,7 +67,7 @@ Illustrations, not gold. Each edit stays within 10 lines or 200 characters.
 | **design** | Behavior, contracts, boundaries, ownership table or a link to the question tracker, evidence or `UNKNOWN`. Invariants as a table. One flow, one diagram |
 | **decision-history** | New **ARD-*** row at **top** of Log; supersede = ~~strike~~ + link. Readiness in the row. Revise in place. Open items by owner |
 | **impl-plan** | Each **IMPL-*** names its dependency, who it blocks, the step range, and a done line. Read side before write side. Mock a partner port that is not live |
-| **any** | Dropping an old claim points at the new ARD. A typo may be edited in place. A translation is a local copy and names its source |
+| **any** | Changing an existing sentence strikes the old words (`~~old~~`), writes the new words beside them, and adds a ref for why (`ARD-*` or a link). A typo may be edited in place |
 | **test-plan** | **TST-*** cases; execution order; pass threshold |
 
 After substantive spec edits, rebuild the site with `python3 tools/build_sdd_site.py`. The reader assembly, when needed, is `python3 tools/build_sdd_reader.py`. HTML does not change the spec.
@@ -89,6 +89,7 @@ added; a required one is never dropped or renamed.
 - [ ] No L1 deletion to meet size cap
 - [ ] Sub-problem design has `子问题归属`; missing facts are `UNKNOWN`, not guesses
 - [ ] impl-plan: every `IMPL-*` names its dependency and who it blocks; `Execution order` does blocked work later
+- [ ] An edit to existing prose strikes the old sentence, writes the new one beside it, and cites why
 
 ### NICE
 

@@ -252,7 +252,8 @@ rationale — not class structure, private methods, or internal algorithms. See
 On `design`, `Alternatives Considered` lists rejected approaches and why each
 lost. `Drawbacks` is what is bad about the chosen design. `Risks and
 Mitigations` is what can go wrong in use. `Open Questions` lists unresolved
-items with an owner. `Reversibility` covers undo, return, and rollback.
+items with an owner. Each item is `QUES-A`, not `QUES-1`. An `IMPL-*` names
+what it depends on and what it blocks. `Reversibility` covers undo, return, and rollback.
 
 ### Decision history
 

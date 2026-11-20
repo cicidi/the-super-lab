@@ -60,6 +60,8 @@ Also load `skills/spec-organize/SPEC-STANDARD.md` for **mechanical MUST** checks
 (**ARD-P**): path/filename, frontmatter, letter IDs, decision-log shape, size caps,
 INDEX/dead links, collision signals. `reference/` is not a committed type; `raw/` may exist locally and must not be committed — **suggest fixes only**, never apply edits.
 
+Severity **≥3** when an open question is not `QUES-A`, an `IMPL-*` names no dependency and no one it blocks, or an edit deletes an old sentence instead of `~~strike~~` plus a ref. Reader HTML fails the same bar when the strike toggle is missing, or when the section, subsection, and clause share one size.
+
 **Parent initiative** (`docs/features/<parent>/` root, not `features/<sub>/`):
 missing any of prd, design, decision-history, impl-plan, test-plan → severity **≥3**
 (parent HLD §8, **TST-N**).

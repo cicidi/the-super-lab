@@ -235,6 +235,8 @@ final_date: YYYY-MM-DD   # final 时必填
 
 **AI 单次 edit 粒度**（≤10 行 / ≤200 字）属 SDD parent HLD **§4**，不在本 document-standard；impl 目标：**spec-write** 等书写 skill。
 
+**改已有正文（MUST，spec-write 执行）：** 不删旧句。旧句用 `~~删除线~~`，新句写在旁边，并加 ref 说明为什么改（`ARD-*` 或链到该 decision）。
+
 ---
 
 ### DSGN-G — Authority by Concern
@@ -422,6 +424,7 @@ Trim 顺序 L4 → L3 → 压 L2；**L1 永不删**。仍 `> 硬 cap` → **DSGN
 | 2026-11-04 | decision-history 硬 cap 改为不设，与 ARD-E 一致 |
 | 2026-11-04 | decision-history 去掉「宜 ≤600 行」，目标行数也不设 |
 | 2026-11-06 | impl-plan 正文：依赖、挡住谁、Execution order |
+| 2026-11-18 | 改已有正文：删除线留旧句，旁边写新句和 ref |
 | 2026-11-07 | 入口改为 spec-write 与 spec-review；标准见两份摘要（ARD-AJ） |
 | 2026-11-07 | 开篇被测改为 spec-write / spec-review，与 test-plan 一致 |
 | 2026-11-07 | Further Notes 写入 ARD-AM–BE 的 DSGN-C/E/F/G/H/J 规则 |

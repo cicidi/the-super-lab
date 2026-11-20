@@ -11,13 +11,14 @@
 <header class="topbar">
   <div class="topbar-inner">
     <div class="brand"><a href="../../index.html"><span class="brand-mark">SDD</span><span class="brand-name">Spec Atlas</span></a></div>
+    <button class="strike-btn" type="button" onclick="var r=document.documentElement;var off=r.dataset.strike!=='off';r.dataset.strike=off?'off':'on';this.textContent=off?'显示删除线':'隐藏删除线'">隐藏删除线</button>
   </div>
 </header>
 <div class="site">
   <aside class="sidebar">
   <nav aria-label="Directory">
     <div class="tree-overview"><a class="tree-link" href="../../index.html"><span class="tree-link__num">00</span>All features</a></div>
-    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../prd/spec-driven-development-prd.html"><span class="tree-link__num">16</span>Spec-Driven Development — PRD</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../design/spec-driven-development-design.html"><span class="tree-link__num">18</span>Spec-Driven Development — HLD</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../design/spec-driven-development-design-skill-contracts.html"><span class="tree-link__num">17</span>Spec-Driven Development — Skill Contracts</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/document-standard/design/document-standard-design.html">document-standard</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/document-standard/prd/document-standard-prd-spec-reader-html.html"><span class="tree-link__num">15</span>Document Standard — Spec Reader HTML（PRD）</a></li><li class="tree-leaf"><a class="tree-link" href="../features/document-standard/design/document-standard-design-spec-reader-html.html"><span class="tree-link__num">19</span>Document Standard — Spec Reader HTML（Design）</a></li><li class="tree-leaf"><a class="tree-link" href="../features/document-standard/design/document-standard-design.html"><span class="tree-link__num">20</span>Document Standard — 文档标准（待 Review）</a></li></ul></details></li><li class="tree-leaf"><a class="tree-link" href="../spec-driven-development-reader.html">spec-driven-development — Reader</a></li></ul></details></li><li class="tree-leaf"><a class="tree-link" href="../impl-plan/spec-driven-development-impl-plan.html"><span class="tree-link__num">21</span>Spec-Driven Development — Implementation Plan</a></li><li class="tree-leaf"><a class="tree-link" href="spec-driven-development-test-plan.html" aria-current="page"><span class="tree-link__num">22</span>Spec-Driven Development — Test Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../decision-history/spec-driven-development-decision-history.html"><span class="tree-link__num">23</span>Spec-Driven Development — Decision History</a></li></ul>
+    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../prd/spec-driven-development-prd.html"><span class="tree-ord">1</span>Spec-Driven Development — PRD</a></li><li class="tree-leaf"><a class="tree-link" href="../decision-history/spec-driven-development-decision-history.html"><span class="tree-ord">2</span>Spec-Driven Development — Decision History</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../design/spec-driven-development-design.html"><span class="tree-ord">3</span>Spec-Driven Development — HLD</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../design/spec-driven-development-design-skill-contracts.html">Spec-Driven Development — Skill Contracts</a></li><li class="tree-leaf"><a class="tree-link" href="../spec-driven-development-reader.html">spec-driven-development — Reader</a></li></ul></details></li><li class="tree-leaf"><a class="tree-link" href="../impl-plan/spec-driven-development-impl-plan.html"><span class="tree-ord">4</span>Spec-Driven Development — Implementation Plan</a></li><li class="tree-leaf"><a class="tree-link" href="spec-driven-development-test-plan.html" aria-current="page"><span class="tree-ord">5</span>Spec-Driven Development — Test Plan</a></li><li class="tree-branch"><details open><summary><span class="tree-link"><span class="tree-ord">10</span>sub-feature</span></summary><ul class="tree"><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/document-standard/design/document-standard-design.html">document-standard</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/document-standard/prd/document-standard-prd-spec-reader-html.html"><span class="tree-ord">1</span>Document Standard — Spec Reader HTML（PRD）</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/document-standard/design/document-standard-design-spec-reader-html.html"><span class="tree-ord">3</span>Document Standard — Spec Reader HTML（Design）</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/document-standard/design/document-standard-design.html">Document Standard — 文档标准（待 Review）</a></li></ul></details></li></ul></details></li></ul></details></li></ul>
   </nav>
 </aside>
   <main class="content">
@@ -32,7 +33,7 @@
       <div class="doc-body">
         <h2>Spec-Driven Development — Test Plan</h2>
 <p>Initiative 级 test plan。<strong>被测对象</strong> = <strong>spec-write</strong> 与 <strong>spec-review</strong>。<strong>Oracle</strong> = <a href="../../../../../skills/spec-organize/SPEC-STANDARD.md"><code>SPEC-STANDARD.md</code></a> 与 <a href="../../../../../skills/spec-html-standard/SPEC-PRESENTATION.md"><code>SPEC-PRESENTATION.md</code></a>。organize / pipeline 旧测试仍在；编排 <strong>Unverified</strong>。Sub-feature 不另写 test-plan。</p>
-<p><strong>验收：</strong> 两个 skill 加两份标准是产出。人不读 skill 正文；好不好用只看本计划的测试结果。</p>
+<p><strong>验收：</strong> <del>两个 skill 加两份标准是产出。</del> 产出只有 spec-write 与 spec-review（<a href="../decision-history/spec-driven-development-decision-history.html#ARD-BH">ARD-BH</a>）。人不读 skill 正文；好不好用只看本计划的测试结果。</p>
 <h3>Test Scope</h3>
 <p><strong>In scope：</strong> spec-write 与 spec-review 在「装进任意项目」场景下的行为；输入三类——本 repo <code>docs/features/</code>、外部 repo（<code>eval.yaml</code> 指定路径）、人工 fixture。<strong>Out of scope / Unverified：</strong> skill 正文改动（本 plan 只定义测什么）；设计合理性；merge 策略；<strong>spec-pipeline 阶段编排</strong>（Unverified，<a href="../prd/spec-driven-development-prd.html#PRD-I">PRD-I</a>）；单次编辑大小（<a href="../prd/spec-driven-development-prd.html#PRD-C">PRD-C</a>，Unverified）；可读性打分（<a href="../prd/spec-driven-development-prd.html#PRD-M">PRD-M</a>，在 spec-review 流程内，不作通过条件）；四套例子的 gold（<a href="../prd/spec-driven-development-prd.html#PRD-K">PRD-K</a>，放到别处；例子写进 skill 正文，由 <a href="#TST-S">TST-S</a> 检查）。</p>
 <p><strong>Parent vs sub（spec-review）：</strong> 审 <strong>parent</strong>（<code>docs/features/spec-driven-development/</code> 根，不含 <code>features/&lt;sub&gt;/</code>）时须核对五篇均在：<code>prd</code>、<code>design</code>、<code>decision-history</code>、<code>impl-plan</code>、<code>test-plan</code>（见 parent HLD §8）。<strong>Sub-feature</strong> 不要求齐全，只审已有文件。</p>
@@ -84,7 +85,7 @@
 </tr></thead><tbody>
 <tr>
 <td><a href="../../../../../skills/spec-organize/tests/eval.yaml"><code>skills/spec-organize/tests/eval.yaml</code></a></td>
-<td><code>judge.model: deepseek-flash</code>；<code>gold.cases.iphone.version: v1</code>；<code>gold.repeats: 3</code>；<code>grill.skills</code>（基线 <code>[]</code>）；<code>target.repo</code>（默认 <code>../the-super-lab-eval</code>，<code>SDD_EVAL_REPO</code> 覆盖）；<code>checkers.models: [deepseek-flash]</code>；<code>checkers.repeats: 3</code>；<code>single_provider: true</code></td>
+<td><code>judge.model: deepseek-flash</code>；<del><code>gold.cases.iphone.version: v1</code></del> <code>gold.cases.spec-driven-development</code>（version: current，<a href="../decision-history/spec-driven-development-decision-history.html#ARD-BJ">ARD-BJ</a>）；<code>gold.repeats: 3</code>；<code>grill.skills</code>（基线 <code>[]</code>）；<del><code>target.repo</code> 默认 <code>../the-super-lab-eval</code></del> <code>target.repo: .</code>（<code>SDD_EVAL_REPO</code> 覆盖）；<code>checkers.models: [deepseek-flash]</code>；<code>checkers.repeats: 3</code>；<code>single_provider: true</code></td>
 </tr>
 <tr>
 <td><code>skills/spec-organize/tests/checks/</code></td>
@@ -108,16 +109,16 @@
 <td><code>llm</code>）、<code>check</code></td>
 </tr>
 <tr>
-<td><code>skills/spec-organize/tests/gold/iphone/v1/</code></td>
-<td><a href="../../../../../skills/spec-organize/tests/gold/v1/requirement.md"><code>requirement.md</code></a>、<a href="../../../../../skills/spec-organize/tests/gold/v1/context.md"><code>context.md</code></a>、<code>context-variants/&lt;slug&gt;.md</code>、<code>runs/deepseek-flash/</code>（3 次产出 + <a href="../../../../../skills/spec-organize/tests/gold/v1/runs/_template/interview.md"><code>interview.md</code></a>）、<code>exemplar/</code>、<code>annotations.yaml</code>；<a href="../prd/spec-driven-development-prd.html#PRD-K">PRD-K</a> 四例的 gold 放到别处</td>
+<td><del><code>skills/spec-organize/tests/gold/iphone/v1/</code></del> <code>skills/spec-organize/tests/gold/v1/</code></td>
+<td>练习案例，不是 gold spec（<a href="../decision-history/spec-driven-development-decision-history.html#ARD-BJ">ARD-BJ</a>）：<a href="../../../../../skills/spec-organize/tests/gold/v1/requirement.md"><code>requirement.md</code></a>、<a href="../../../../../skills/spec-organize/tests/gold/v1/context.md"><code>context.md</code></a>、<code>context-variants/&lt;slug&gt;.md</code>、<code>annotations.yaml</code></td>
 </tr>
 <tr>
-<td><code>skills/spec-organize/tests/gold/iphone/v1/annotations.yaml</code></td>
+<td><del><code>skills/spec-organize/tests/gold/iphone/v1/annotations.yaml</code></del> <a href="../../../../../skills/spec-organize/tests/gold/v1/annotations.yaml"><code>skills/spec-organize/tests/gold/v1/annotations.yaml</code></a></td>
 <td><code>GOOD-*</code> / <code>BAD-*</code>；<code>where</code>、<code>text</code>；BAD 含 <code>expected_fix</code>；<code>added_in</code>（gold 版本）</td>
 </tr>
 <tr>
-<td><strong>当前状态</strong></td>
-<td>gold 实际目录仍是 <code>gold/v1/</code>；<a href="../impl-plan/spec-driven-development-impl-plan.html#IMPL-D">IMPL-D</a> 迁移到 <code>gold/iphone/v1/</code></td>
+<td><strong>Gold spec</strong></td>
+<td><del>iPhone <code>gold/v1</code></del> <code>docs/features/spec-driven-development/</code> 这套 spec 本身（<a href="../decision-history/spec-driven-development-decision-history.html#ARD-BJ">ARD-BJ</a>）。<code>gold/v1</code> 只是练习案例</td>
 </tr>
 <tr>
 <td><code>skills/spec-organize/tests/reports/&lt;run_id&gt;.html</code></td>
@@ -141,7 +142,7 @@
 <h4 id="TST-B"><a href="#TST-B">TST-B</a> — 机械检查器 + 负向 fixture</h4>
 <p><strong>目标：</strong> 检查器有效。<strong>输入：</strong> <code>fixtures/neg/*</code>、<code>fixtures/pos/*</code>。<strong>断言：</strong> neg 必 fail；pos 必 pass。<strong>判定：</strong> pytest。</p>
 <h4 id="TST-C"><a href="#TST-C">TST-C</a> — Gold 生成（3 次 run）</h4>
-<p><strong>目标：</strong> 基线下 3 次 iPhone feature spec。<strong>输入：</strong> <code>gold/iphone/v1/requirement.md</code> + <a href="../../../../../skills/spec-organize/tests/gold/v1/context.md"><code>context.md</code></a>；<code>grill.skills: []</code>；只装 spec-organize；<code>deepseek-flash</code>。<strong>断言：</strong> 每次含 prd/design/decision-history/impl-plan/test-plan；<a href="../../../../../skills/spec-organize/tests/gold/v1/runs/_template/interview.md"><code>interview.md</code></a> 中模拟人回答均出自 context 或「未提供」。<strong>判定：</strong> Python（文件）+ judge（出处）。跨模型偏差 <strong>Unverified</strong>。</p>
+<p><strong>目标：</strong> <del>基线下 3 次 iPhone feature spec。</del> 通过的 gold 是这套 spec-driven-development（<a href="../decision-history/spec-driven-development-decision-history.html#ARD-BJ">ARD-BJ</a>）。<strong>输入：</strong> <del><code>gold/iphone/v1/requirement.md</code> + <a href="../../../../../skills/spec-organize/tests/gold/v1/context.md"><code>context.md</code></a></del> <code>docs/features/spec-driven-development/</code>；<code>grill.skills: []</code>；<code>deepseek-flash</code>。<strong>断言：</strong> 含 prd、design、decision-history、impl-plan、test-plan。<strong>判定：</strong> Python（文件）+ judge。跨模型偏差 <strong>Unverified</strong>。</p>
 <h4 id="TST-D"><a href="#TST-D">TST-D</a> — Gold 提炼</h4>
 <p><strong>目标：</strong> 3 次 run → <code>exemplar/</code> + <code>annotations.yaml</code> v1。<strong>输入：</strong> <a href="#TST-C">TST-C</a> 产出。<strong>断言：</strong> exemplar 过 <a href="#TST-B">TST-B</a>、分数 1 全过；annotation 有 <code>where</code>/<code>text</code>；BAD 有 <code>expected_fix</code>。<strong>判定：</strong> Python + 人工认可（Change Log 记录）。</p>
 <h4 id="TST-E"><a href="#TST-E">TST-E</a> — spec-organize happy path</h4>
@@ -176,13 +177,15 @@
 <p><strong>目标：</strong> defect 快照上每条 expect 都被报出；gold 快照上除 allow 外 0 finding。源仓库不在本机时跳过。<strong>输入：</strong> <code>gold/refs/&lt;slug&gt;/manifest.yaml</code>（<a href="../decision-history/spec-driven-development-decision-history.html#ARD-BD">ARD-BD</a>）。<strong>判定：</strong> Python。不把私有 spec 正文复制进本仓库。</p>
 <h4 id="TST-S"><a href="#TST-S">TST-S</a> — skill 正文四例</h4>
 <p><strong>目标：</strong> spec-write 与 spec-review 正文包含 <a href="../prd/spec-driven-development-prd.html#PRD-Q">PRD-Q</a> 四例。<strong>输入：</strong> 这两份 SKILL.md。<strong>断言：</strong> 每个至少提到 shed、北京旅游、数学题、股票；缺 fail。<strong>判定：</strong> Python（关键词）+ judge（是否只是点名）。</p>
+<h4 id="TST-U"><a href="#TST-U">TST-U</a> — QUES、impl 依赖、删除线、字号</h4>
+<p><strong>目标：</strong> skill 与 gold 跟上现行标准。<strong>输入：</strong> 四份 SKILL.md、<code>gold/v1/annotations.yaml</code>、reader。<strong>断言：</strong> spec-write 含 <code>QUES-A</code>、impl 依赖与 <code><del>old</del></code>；gold 有 BAD：<code>QUES-1</code>、无依赖的 impl、删旧句不划线；reader 有「隐藏删除线」，h2 大于 h3。<strong>判定：</strong> Python。</p>
 <h3>Test Execution Order</h3>
 <ol>
 <li><strong><a href="#TST-A">TST-A</a></strong>（registry 不足 100% 则停）</li>
 <li><strong><a href="#TST-B">TST-B</a></strong>（检查器失效则停）</li>
 <li><strong><a href="#TST-O">TST-O</a></strong>、<strong><a href="#TST-P">TST-P</a></strong>（设计覆盖/证据）</li>
 <li><strong><a href="#TST-C">TST-C</a></strong> → <strong><a href="#TST-D">TST-D</a></strong>（首次或 gold 升版）</li>
-<li><strong><a href="#TST-G">TST-G</a></strong>、<strong><a href="#TST-N">TST-N</a></strong>、<strong><a href="#TST-R">TST-R</a></strong>、<strong><a href="#TST-S">TST-S</a></strong>、<strong><a href="#TST-T">TST-T</a></strong></li>
+<li><strong><a href="#TST-G">TST-G</a></strong>、<strong><a href="#TST-N">TST-N</a></strong>、<strong><a href="#TST-R">TST-R</a></strong>、<strong><a href="#TST-S">TST-S</a></strong>、<strong><a href="#TST-T">TST-T</a></strong>、<strong><a href="#TST-U">TST-U</a></strong></li>
 <li><strong><a href="#TST-E">TST-E</a></strong>、<strong><a href="#TST-F">TST-F</a></strong></li>
 <li><strong><a href="#TST-H">TST-H</a></strong> → <strong><a href="#TST-I">TST-I</a></strong></li>
 <li><strong><a href="#TST-Q">TST-Q</a></strong>（mock 执行）</li>
@@ -209,7 +212,7 @@
 </tr>
 <tr>
 <td>reader / skill 正文</td>
-<td><a href="#TST-R">TST-R</a> 新鲜；<a href="#TST-S">TST-S</a> 四例齐全</td>
+<td><a href="#TST-R">TST-R</a> 新鲜；<a href="#TST-S">TST-S</a> 四例齐全；<a href="#TST-U">TST-U</a> 通过</td>
 </tr>
 <tr>
 <td>外部 gold</td>
@@ -379,10 +382,26 @@
 <td>2026-11-07</td>
 <td><a href="#TST-R">TST-R</a> 输入改为 docs/book/html/ 下的 reader（<a href="../decision-history/spec-driven-development-decision-history.html#ARD-BF">ARD-BF</a>）</td>
 </tr>
+<tr>
+<td>2026-11-18</td>
+<td><a href="#TST-U">TST-U</a>：QUES、impl 依赖、删除线、字号</td>
+</tr>
+<tr>
+<td>2026-11-18</td>
+<td>验收：产出只有 spec-write 与 spec-review（<a href="../decision-history/spec-driven-development-decision-history.html#ARD-BH">ARD-BH</a>）</td>
+</tr>
+<tr>
+<td>2026-11-18</td>
+<td>Gold spec 改为这套 spec-driven-development（<a href="../decision-history/spec-driven-development-decision-history.html#ARD-BJ">ARD-BJ</a>）</td>
+</tr>
+<tr>
+<td>2026-11-18</td>
+<td>资产表与 <a href="#TST-C">TST-C</a> 改指这套 spec；<code>gold/v1</code> 只是练习案例（<a href="../decision-history/spec-driven-development-decision-history.html#ARD-BJ">ARD-BJ</a>）</td>
+</tr>
 </tbody></table></div>
       </div>
     </article>
-    <nav class="pager" aria-label="Previous and next"><a class="prev" href="../impl-plan/spec-driven-development-impl-plan.html"><span class="label">Previous</span>Spec-Driven Development — Implementation Plan</a><a class="next" href="../decision-history/spec-driven-development-decision-history.html"><span class="label">Next</span>Spec-Driven Development — Decision History</a></nav>
+    <nav class="pager" aria-label="Previous and next"><a class="prev" href="../impl-plan/spec-driven-development-impl-plan.html"><span class="label">Previous</span>Spec-Driven Development — Implementation Plan</a><a class="next" href="../features/document-standard/prd/document-standard-prd-spec-reader-html.html"><span class="label">Next</span>Document Standard — Spec Reader HTML（PRD）</a></nav>
   </main>
 </div>
 <footer class="foot"><div class="foot-inner">Assembled from committed <code>.md</code>. The Markdown is authoritative; this page is a reading view.</div></footer>

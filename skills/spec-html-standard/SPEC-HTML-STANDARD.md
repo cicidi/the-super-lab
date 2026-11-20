@@ -4,7 +4,7 @@
 
 **Not a skill.** Expression rules: `SPEC-PRESENTATION.md`. Agents assemble reader HTML from this standard. spec-write edits markdown; spec-review checks fidelity. No separate `spec-reader` skill.
 
-Hand-maintained HTML (ARD-AK) sets `spec-paired` to `hand-maintained`, `spec-source` to the repo path of the markdown, and `spec-source-sha256` to that file's hash. A mismatch fails `paired_html_stale`. Generated readers omit this meta and are rebuilt. Its changelog has one row for every date in the markdown Change Log (ARD-BA). `<!-- html-skip -->` may wrap L4 or struck history, not L1.
+Hand-maintained HTML (ARD-AK) sets `spec-paired` to `hand-maintained`, `spec-source` to the repo path of the markdown, and `spec-source-sha256` to that file's hash. A mismatch fails `paired_html_stale`. Generated readers omit this meta and are rebuilt. Its changelog has one row for every date in the markdown Change Log (ARD-BA). `<!-- html-skip -->` may wrap L4, not L1 or a struck sentence. Struck sentences stay in the HTML. One button switches between showing the strikethrough and hiding it.
 
 ## Output (MUST)
 
@@ -42,7 +42,7 @@ One website for the whole project. Entry: `docs/book/html/index.html`.
 - Each spec HTML page is one line in the directory.
 - The directory opens a feature. It does not dump every feature's pages into one flat list with no feature.
 - Inside a feature, the left column is that feature's directory. The right column is the page.
-- The left directory lists only the five entry pages: prd, design, impl-plan, test-plan, decision-history. Design parts and the reader expand under design. A sub-feature is one line in that layer, and its own pages expand under that line (DSGN-N-L). Pipeline has no HTML page.
+- The left directory shows hierarchy and numbers: 1 prd, 2 decision-history, 3 design, 4 impl plan, 5 test plan, 6 how to, 10 sub-feature (ARD-BI). Design parts and the reader expand under 3. Sub-features expand under 10. Pipeline has no HTML page.
 - spec-write rebuilds this site after a spec edit. It does not invent a second layout.
 
 Rebuild: `python3 tools/build_sdd_site.py`
