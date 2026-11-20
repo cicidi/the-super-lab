@@ -17,15 +17,15 @@ spec-write 和 spec-review 是仅有的两个交付物（[ARD-BH](../decision-hi
 
 ## Solution
 
-本篇是两个 skill 行为的权威来源，`SKILL.md` 只是它的实现。两者不一致时，以本篇为准：先改本篇，再改 `SKILL.md`。具体的写作规则不在本篇重复，以 `SPEC-STANDARD.md` 和 `SPEC-PRESENTATION.md` 为准（[ARD-AJ](../decision-history/spec-driven-development-decision-history.md#ard-aj)）。
+本篇是两个 skill 行为的权威来源，`SKILL.md` 只是它的实现。两者不一致时，以本篇为准：先改本篇，再改 `SKILL.md`。具体的写作规则不在本篇重复，以三份标准文件 `SPEC-STANDARD.md`、`SPEC-PRESENTATION.md`、`SPEC-HTML-STANDARD.md` 为准（[ARD-AJ](../decision-history/spec-driven-development-decision-history.md#ard-aj)、[ARD-BX](../decision-history/spec-driven-development-decision-history.md#ard-bx)）。
 
 ## Design
 
 | Skill | 什么时候用 | 输入 | 产出 | 不能做的事 |
 |---|---|---|---|---|
-| spec-write | 新建或修改 spec 文档 | 用户的意图；两份标准文件 | 改好的文档 | 动笔前没判断「新建哪篇、还是改哪几篇」；一次改动超过 10 行或 200 字符而没有授权（parent design 的 DSGN-A）；悄悄改动上游文档 |
-| spec-review | 提交前；或者有人要求审查设计 | 要审的文档目录或改动；两份标准文件 | 一张问题表，每个问题有严重度和修改建议；一次只问用户一个问题 | 直接改文档；改写别人的结论；讨论严重度 1 或 2 的小问题 |
-| spec-organize（内部工具，不交付） | 检查或整理路径、格式、INDEX（document-standard 的 DSGN-L） | 文档目录 | 格式问题的修正，或一份问题清单 | 改动文档的内容；当作交付物或入口（[ARD-BH](../decision-history/spec-driven-development-decision-history.md#ard-bh)） |
+| spec-write | 新建或修改 spec 文档 | 用户的意图；三份标准文件 | 改好的文档 | 动笔前没判断「新建哪篇、还是改哪几篇」；一次改动超过 10 行或超过 200 字符而没有授权（parent design 的 DSGN-A）；悄悄改动上游文档 |
+| spec-review | 提交前；或者有人要求审查设计 | 要审的文档目录或改动；三份标准文件 | 一张问题表，每个问题有严重度和修改建议；一次只问用户一个问题 | 直接改文档；改写别人的结论；讨论严重度 1 或 2 的小问题 |
+| spec-organize（内部工具，不交付） | 检查或整理路径、格式、INDEX（document-standard 的 DSGN-L） | 文档目录 | 格式问题的修正（受 parent design 的 DSGN-A 改动上限约束，[ARD-BV](../decision-history/spec-driven-development-decision-history.md#ard-bv)），或一份问题清单 | 改动文档的内容；当作交付物或入口（[ARD-BH](../decision-history/spec-driven-development-decision-history.md#ard-bh)） |
 
 几项能力落在哪里：
 
@@ -100,3 +100,4 @@ spec-write 和 spec-review 是仅有的两个交付物（[ARD-BH](../decision-hi
 | 2026-11-07 | part 链回 spec-driven-development-design.md（ARD-AV） |
 | 2026-11-20 | 全文改写为完整句子；Problem Statement 写明为什么需要契约；Alternatives 不再引用已推翻的 ARD-AB；Open Questions 链到 parent 的唯一问题清单；加入可读性的落点与 TST-V（ARD-BK、ARD-BO） |
 | 2026-11-20 | 第 1 轮审查后：契约表加 spec-organize 一行，写明它是内部工具、不交付；PIPE 子条款编号改为字母（ARD-BR） |
+| 2026-11-20 | 第 2 轮审查后：标准文件改为三份（ARD-BX）；spec-organize 修格式同样受改动上限约束（ARD-BV）；改动上限写成「超过 10 行或超过 200 字符」都算超 |

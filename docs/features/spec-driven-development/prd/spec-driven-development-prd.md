@@ -155,7 +155,7 @@ AI 要把大问题拆成小的：能查的 AI 自己查（合规、财报、交�
 
 ## Resources Needed
 
-- spec-write、spec-review 两个 skill，以及它们要读的两份标准文件和一份 test-plan。不需要外部服务，也不需要数据库。
+- spec-write、spec-review 两个 skill，以及它们要读的三份标准文件（[ARD-BX](../decision-history/spec-driven-development-decision-history.md#ard-bx)）和一份 test-plan。不需要外部服务，也不需要数据库。
 - 评测需要 `deepseek-flash` 的 API，以及每次评测跑 3 次的费用。跑分结果和报告不提交（[ARD-AD](../decision-history/spec-driven-development-decision-history.md#ard-ad)）。
 
 ## Change Log

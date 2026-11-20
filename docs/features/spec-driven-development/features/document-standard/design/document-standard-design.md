@@ -126,9 +126,9 @@ sub-feature 的例子（parent 是 `spec-driven-development`，sub-feature 是 `
 
 1. 先按 DSGN-I 删减：从 L4 开始删，L1 永远不删。为了凑行数删掉 L1，本身就是错误。decision-history 不删条目，只能拆分篇。
 2. 删减后仍然超过，就拆成分篇。按业务边界、领域、负责人、生命周期或时间段来拆，不要按行数机械地切。
-3. 入口文件可以链到各分篇。拆分时如果名字撞车，见 DSGN-K。
+3. 入口文件必须链到各分篇（ARD-BQ）。拆分时如果名字撞车，见 DSGN-K。
 
-**`raw/` 目录。** `raw/` 放本地草稿，在 `.gitignore` 里用 `docs/features/*/raw/` 排除。这里的文件不需要 frontmatter、Change Log，也不进 INDEX。草稿里的结论要正式写进文档时，在正式文档里写结论并链到草稿，不能把草稿当成权威出处。
+**`raw/` 目录。** `raw/` 放本地草稿，在 `.gitignore` 里用 `docs/features/**/raw/` 排除；两个星号表示任意层级，sub-feature 下的 `raw/` 也被排除。这里的文件不需要 frontmatter、Change Log，也不进 INDEX。草稿里的结论要正式写进文档时，在正式文档里写结论并链到草稿。草稿可以作为依据，即使其他读者打不开（[ARD-BW](../../../decision-history/spec-driven-development-decision-history.md#ard-bw)）；但它不是权威出处，权威的是写进正式文档的那句结论。
 
 | 子目录 | 放什么 | 文件名 |
 |---|---|---|
@@ -242,7 +242,7 @@ KEP 里的版本偏移、发布签核、运维就绪问卷不采用：它们是�
 
 **未决问题清单（MUST）。** 每个 feature 只有一份未决问题清单，一般是 design 的 `## Open Questions`；其他文档链过去，不抄一份。每个条目编号是 `QUES-` 加字母，写明问题、目前答案、负责人，以及是否阻塞（[ARD-AO](../../../decision-history/spec-driven-development-decision-history.md#ard-ao)、[ARD-AG](../../../decision-history/spec-driven-development-decision-history.md#ard-ag)）。在别处提到某个问题时，写的「未决」或「已决」要和清单一致（[ARD-BC](../../../decision-history/spec-driven-development-decision-history.md#ard-bc)）。
 
-**可读性（MUST）。** 来源：parent PRD 的 PRD-M。一个本科水平的程序员，只读这一篇和术语表，就要能读懂（[ARD-BO](../../../decision-history/spec-driven-development-decision-history.md#ard-bo)，由 TST-V 检查）。具体要求：
+**可读性（MUST）。** 来源：parent PRD 的 PRD-M。一个本科水平的程序员，只读这一篇和术语表，就要能读懂（[ARD-BO](../../../decision-history/spec-driven-development-decision-history.md#ard-bo)，由 parent test-plan 的 TST-V 检查）。具体要求：
 
 - 写完整的句子。关键词串、`A → B → 失败` 这样的箭头链、塞满缩写的表格格子，都不算句子。
 - 每个术语和缩写，第一次出现时解释，或者链到术语表。整套 spec 只有一份术语表，在 [parent design 的附录](../../../design/spec-driven-development-design.md#glossary)；新术语加到那里。
@@ -253,7 +253,7 @@ KEP 里的版本偏移、发布签核、运维就绪问卷不采用：它们是�
 
 **Change Log（MUST）。** 每篇文档的最后一节，只往末尾追加，不改旧行。
 
-**其他：** 标为 PROTECTED 的段落，任何工具在任何模式下都不能改。文档新建、删除、移动后，重新生成 INDEX。
+**其他：** 夹在 `<!-- PROTECTED -->` 和 `<!-- END PROTECTED -->` 两行注释之间的段落是受保护的，任何工具在任何模式下都不能改。文档新建、删除、移动后，重新生成 INDEX。
 
 #### DSGN-F — 编号，以及怎么改已有正文
 
@@ -339,17 +339,11 @@ design 管「想要怎样」，代码管「现在怎样」和内部结构。机�
 
 **编号。** `ARD-` 加字母（DSGN-F），分配后不能改。表格里的编号和 `### ARD-A — …` 小节标题里的编号一致。
 
-**推翻旧决定。** 旧行不删，用删除线划掉，后面链到新决定，例如：被划掉的旧说法，后面跟一个指向新决定的链接。新说法用一个新编号完整写一条，放在 Log 最上面。按 DSGN-I 删减时，不删被划掉的文字。这是整套 spec 里唯一使用删除线的地方（[ARD-BM](../../../decision-history/spec-driven-development-decision-history.md#ard-bm)）。
+**推翻旧决定。** 旧行不删，用删除线划掉，后面链到新决定，例如：被划掉的旧说法，后面跟一个指向新决定的链接。新说法用一个新编号完整写一条，放在 Log 最上面。按 DSGN-I 删减时，不删被划掉的文字。只推翻旧决定的一部分时，也划掉整行，并在新决定里重述仍然有效的部分（例如 [ARD-BT](../../../decision-history/spec-driven-development-decision-history.md#ard-bt)）。这是整套 spec 里唯一使用删除线的地方（[ARD-BM](../../../decision-history/spec-driven-development-decision-history.md#ard-bm)）。
 
 **拆分篇。** decision-history 不设行数上限，但也可以拆分篇。拆了之后编号在整个 feature 内唯一；新决定写在当前那篇的 Log 最上面；旧篇保留，篇与篇之间用链接连起来。
 
-**什么时候加一条。** 详细规则见 parent design 的 DSGN-B，简单说：
-
-| 要加 | 不加 |
-|---|---|
-| 别人定下来的说法（评审、结对、利益相关方），团队需要看到 | 还只在自己脑子里、没写进 design、也没改代码的试探 |
-| 自己的转向会改已有代码或对外约定（不兼容的行为变化、路径或改名、谁说了算） | design 里改几句话就能说清的推敲；「想过又改主意」不用每次都记 |
-| 改名、撞名等流程要求记录的事（DSGN-K） | AI 默认不自动批量加条目；拿不准就问人 |
+**什么时候加一条。** 规则只写在一处：[parent design 的 DSGN-B](../../../design/spec-driven-development-design.md#dsgn-b)。另外，改名、撞名这类流程要求记录的事（DSGN-K）也要加一条。
 
 ---
 
@@ -397,29 +391,29 @@ design 管「想要怎样」，代码管「现在怎样」和内部结构。机�
 - 不删 L1（DSGN-I）。
 - 合并文档时不丢任何决定。
 - 不能提交的路径没有被提交（DSGN-C）。
-- INDEX 没有孤立文档和死链；文档里的链接和锚点都能打开（[ARD-AP](../../../decision-history/spec-driven-development-decision-history.md#ard-ap)）。
+- INDEX 没有孤立文档和死链；文档里的链接和锚点都能打开（[ARD-AP](../../../decision-history/spec-driven-development-decision-history.md#ard-ap)）。指向 `raw/` 的链接不算死链（[ARD-BW](../../../decision-history/spec-driven-development-decision-history.md#ard-bw)）。
 - 推送 `docs/features/` 的改动时，INDEX 和 book 已经同步。
 - 新名字已经检查过撞车（DSGN-K）。
 - 正文改动遵守 DSGN-F 的「改已有正文」规则。
 - 结论有依据，查不到写 `UNKNOWN`（pipeline design 的 PIPE-L）。
-- DSGN-E 的 impl-plan 正文、引用代码、未决问题清单、可读性四条。
+- DSGN-E 里标了 MUST 的四条都满足：impl-plan 的任务写明依赖、挡住和完成标准；引用代码写明 commit；每个 feature 只有一份未决问题清单；文档能让本科程序员读懂。
 - 本地翻译副本不提交（DSGN-C）；改编号时留对照表和旧锚点（DSGN-F）；每条 ARD 都有说明（DSGN-J）。
 
-**NICE，做不到只提醒（[ARD-BN](../../../decision-history/spec-driven-development-decision-history.md#ard-bn)）：**
+**NICE，做不到只提醒（[ARD-BN](../../../decision-history/spec-driven-development-decision-history.md#ard-bn)；下面的 ARD 都在 parent 的 decision-history 里）：**
 
 - 标题层级不跳级；术语和 `CONTEXT.md` 一致；`last_verified` 不要太旧；文档边界划得合理。
 - 每节写明哪份文档对这些事实有权威（ARD-AL 的后半句）。
 - 步骤编号只表示位置（ARD-AM）。
-- 就绪程度、原地修订、按负责人分组（ARD-AN）。
-- 不变量写成表格（ARD-AR）。
-- §N 链接落点、步骤范围不重叠（ARD-AZ）。
-- HTML 更新记录覆盖每个日期（ARD-BA）。
-- 问题清单的数量统计对得上（ARD-BB）。
-- 图的规则（ARD-BE）。
+- 决定的就绪程度可以写在条目里，同一行可以原地修订，未决事项按负责人分组（ARD-AN）。
+- 不变量写成表格，不写成口号（ARD-AR）。
+- 写成「§N」的链接落在第 N 节或它的上下级；同一篇里的步骤范围不重叠（ARD-AZ）。
+- 手工维护的 HTML 更新记录，覆盖 markdown Change Log 里的每个日期（ARD-BA）。
+- 问题清单里写的总数和各状态的数量，等于实际行数（ARD-BB）。
+- 图只画文字说不清的流程，一个流程只画一张图（ARD-BE）。
 
 ## Testing Decisions
 
-测试见 parent 的 [test-plan](../../../test-plan/spec-driven-development-test-plan.md)。被测的是 spec-write 和 spec-review 两个 skill，不是本篇。本篇所有的 MUST 和禁止事项，由 TST-A 扫描收进 `must_registry.yaml`：格式类的由 Python 脚本判断，其余由判分模型判断。
+测试见 parent 的 [test-plan](../../../test-plan/spec-driven-development-test-plan.md)。被测的是 spec-write 和 spec-review 两个 skill，不是本篇。本篇所有的 MUST 和禁止事项，由 parent test-plan 的 TST-A 扫描收进 `must_registry.yaml`：格式类的由 Python 脚本判断，其余由判分模型判断。
 
 ## Out of Scope
 
@@ -451,8 +445,8 @@ design 管「想要怎样」，代码管「现在怎样」和内部结构。机�
 | 风险 | 应对 |
 |---|---|
 | 规则越来越多，人和 AI 都开始跳过检查 | 规则分 MUST 和 NICE，只有 MUST 算失败（[ARD-BN](../../../decision-history/spec-driven-development-decision-history.md#ard-bn)）；MUST 由 `must_registry.yaml` 和 `run_spec_checks.py` 强制检查 |
-| 标准和检查脚本慢慢对不上 | `SPEC-STANDARD.md` 和本篇同一批修改；`registry_provenance` 检查每条 MUST 的出处 |
-| 检查脚本有漏洞，不合规的文档也能通过 | 每个检查都配有必须报错的反例（TST-B）；发现漏洞记进 impl-plan 的 IMPL-P |
+| 标准和检查脚本慢慢对不上 | `SPEC-STANDARD.md` 和本篇同一批修改；出处比对脚本 `registry_provenance` 检查 MUST 清单里每条规则是否真的出自本篇的规则小节 |
+| 检查脚本有漏洞，不合规的文档也能通过 | 每个检查都配有必须报错的反例（parent test-plan 的 TST-B）；发现漏洞记进 parent impl-plan 的 IMPL-P |
 
 ## Open Questions
 
@@ -460,7 +454,7 @@ design 管「想要怎样」，代码管「现在怎样」和内部结构。机�
 
 | ID | 问题 | 目前答案 | 负责人 | 阻塞 |
 |---|---|---|---|---|
-| QUES-A | 所有工具是否都支持 sub-feature 目录和 sub-feature 下的 `raw/` | 未确认，等工具这边核实 | AI 查完人决定 | 否 |
+| QUES-A | 所有工具是否都支持 sub-feature 目录和 sub-feature 下的 `raw/` | 部分已查：`.gitignore` 原来的 `docs/features/*/raw/` 漏掉了 sub-feature 下的 `raw/`，改成 `**` 由 parent impl-plan 的 IMPL-P 做；其他工具未核实 | AI 查完人决定 | 否 |
 | QUES-B | 行数上限要不要按 feature 的规模分档 | 未定 | 人决定 | 否 |
 | QUES-C | DSGN-B 的具体数字（800、1,000、600）是否合适 | 沿用现值 | 人决定 | 否 |
 | QUES-D | `raw/` 的六个子目录够不够用 | 目前够用 | 人决定 | 否 |
@@ -469,7 +463,7 @@ design 管「想要怎样」，代码管「现在怎样」和内部结构。机�
 ## Reversibility
 
 - 必需章节可以撤回：同时改 DSGN-E、`SPEC-STANDARD.md` 和 `sections.py` 三处，旧文档补上章节即可，没有数据要迁移。
-- 给必需章节改名属于新规则：旧文档还用旧名字，`sections` 检查会报错，所以要同一批修改所有文档。
+- 给必需章节改名属于新规则：旧文档还用旧名字，检查必需章节的脚本 `sections.py` 会报错，所以要同一批修改所有文档。
 - MUST 和 NICE 的划分可以调整：改 DSGN-M 和 ARD-BN，再同步检查脚本。
 
 ## Change Log
@@ -513,3 +507,4 @@ design 管「想要怎样」，代码管「现在怎样」和内部结构。机�
 | 2026-11-18 | 改已有正文：删除线留旧句，旁边写新句和 ref |
 | 2026-11-20 | 全文改写为完整句子；术语表改为链到 parent design；标题去掉「待 Review」；DSGN-B 大表拆成「路径」和「行数」两张；DSGN-F 改已有正文改为只写现行规则、删除线只在 decision-history（ARD-BM）；DSGN-M 分 MUST 与 NICE（ARD-BN）；Testing Decisions 被测改为 spec-write 与 spec-review；Open Questions 改为 QUES 清单；补写子问题归属不适用的说明（ARD-BK） |
 | 2026-11-20 | 第 1 轮审查后：DSGN-E 加入可读性、未决问题清单、引用代码、impl 依赖两头对得上（ARD-BO、ARD-BS）；DSGN-C 加翻译副本、DSGN-F 加对照表和旧锚点、DSGN-J 加每条 ARD 都有说明，原来只在 Further Notes 里的规则移进正文；DSGN-B 六种文档都可拆分篇并需入口文件（ARD-BQ），写明辅助文件例外；跨 feature 的编号写明出处 |
+| 2026-11-20 | 第 2 轮审查后：`.gitignore` 规则改为 `docs/features/**/raw/`；raw/ 草稿可作依据、指向 raw/ 的链接不算死链（ARD-BW）；DSGN-J 删去和 parent DSGN-B 重复的表，只留链接；DSGN-M 的条目改写成完整句子；PROTECTED、`sections.py`、`registry_provenance` 第一次出现时解释；指向 parent test-plan、impl-plan 的编号写明出处 |

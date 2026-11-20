@@ -49,7 +49,7 @@ Rebuild: `python3 tools/build_sdd_site.py`
 
 ## Links (MUST, DSGN-N-K)
 
-- An ID (`PRD-`, `DSGN-`, `ARD-`, `IMPL-`, `TST-`, `PIPE-`, `QUES-`) links to its definition in the same feature. If a sub-feature does not define that ID, the link goes to the parent.
+- An ID (`PRD-`, `DSGN-`, `ARD-`, `IMPL-`, `TST-`, `PIPE-`, `QUES-`) links to its definition. If the text names the owning feature ("parent design 的 DSGN-A", or `<feature>/<id>`), link there. Only an unqualified ID resolves in the same feature first, then the parent.
 - A path written in the body is a link. A `.md` under `docs/features/` links to the same path under `docs/book/html/` with `.html`. Any other file that exists links to that file.
 
 ## Visual (SHOULD)

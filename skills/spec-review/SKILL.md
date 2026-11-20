@@ -48,7 +48,8 @@ to avoid over-engineering.
 ## Skill Dependencies
 
 Judge a spec under review against `SPEC-STANDARD.md` chapters 1–3 and
-`SPEC-PRESENTATION.md`. Also load content levels
+`SPEC-PRESENTATION.md`; when HTML pages are in scope, also
+`skills/spec-html-standard/SPEC-HTML-STANDARD.md` (three standard files, ARD-BX). Also load content levels
 (`spec-organize/CONTENT-PRIORITY.md`), the authority model
 (`spec-organize/AUTHORITY-BY-CONCERN.md`), and `spec-organize/SPEC-SCOPE.md`.
 
@@ -64,7 +65,7 @@ Severity **≥3** when a MUST rule in SPEC-STANDARD is broken, for example: an o
 
 **Readability** (PRD-M, ARD-BO): read each document as an undergraduate programmer who has only that document and the glossary in the parent design's appendix. A term or abbreviation used without explanation and absent from the glossary, or a section written as keyword strings or arrow chains that such a reader cannot follow, is severity **3**. Quote the sentence and propose the plain rewrite.
 
-**Self-consistency:** treat the spec's own rules as the standard and check the spec against itself — a rule it states but breaks, a required section it lacks, a decision that the body still contradicts after it was superseded. Each is severity ≥3.
+**Self-consistency:** treat the spec's own rules as the standard and check the spec against itself — a rule it states but breaks, a required section it lacks, a decision that the body still contradicts after it was superseded, a decision-log row whose text was partly overturned but is not struck, an ID from another feature cited without naming that feature, or a stage order where a later step forbids what an earlier step does. Each is severity ≥3.
 
 **Parent initiative** (`docs/features/<parent>/` root, not `features/<sub>/`):
 missing any of prd, design, decision-history, impl-plan, test-plan → severity **≥3**
@@ -90,7 +91,7 @@ Illustrations, not gold. Report only. Do not edit the spec.
 
 ### Step 0: One choice at a time
 
-1. Read `SPEC-STANDARD.md` chapters 1–3 and `SPEC-PRESENTATION.md`.
+1. Read `SPEC-STANDARD.md` chapters 1–3 and `SPEC-PRESENTATION.md`; add `SPEC-HTML-STANDARD.md` when reviewing HTML.
 2. Decide whether the work is a new document or an edit. If an edit, name every document that states the same fact.
 3. Write findings at severity 3+ in this table. Do not edit the spec.
 

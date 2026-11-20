@@ -12,7 +12,7 @@ last_verified: 2026-11-20
 
 本篇是 [document-standard-design.md](document-standard-design.md) 的分篇，规则编号 DSGN-N。需求见 [reader PRD](../prd/document-standard-prd-spec-reader-html.md)（PRD-A 到 PRD-P）。路径规则和 DSGN-B 一致，内容优先级和 DSGN-I 一致，编号和 DSGN-F 一致。术语见 [parent design 的术语表](../../../design/spec-driven-development-design.md#glossary)。
 
-生成网页时要遵守的规则摘要在 `SPEC-HTML-STANDARD.md` 和 `SPEC-PRESENTATION.md`。markdown 是全文，HTML 只是方便阅读的视图。spec-write 只改 markdown；spec-review 检查 HTML 有没有丢内容（[ARD-AJ](../../../decision-history/spec-driven-development-decision-history.md#ard-aj)）。
+生成网页时要遵守的规则摘要在 `SPEC-HTML-STANDARD.md` 和 `SPEC-PRESENTATION.md`，它们是两个 skill 要读的三份标准文件中的两份（[ARD-BX](../../../decision-history/spec-driven-development-decision-history.md#ard-bx)）。markdown 是全文，HTML 只是方便阅读的视图。spec-write 只改 markdown；spec-review 检查 HTML 有没有丢内容（[ARD-AJ](../../../decision-history/spec-driven-development-decision-history.md#ard-aj)）。
 
 ## Problem Statement
 
@@ -32,6 +32,8 @@ last_verified: 2026-11-20
 
 #### DSGN-N-A — 产物和路径
 
+来源：reader PRD 的 PRD-E、PRD-F。
+
 | 项 | 规则 |
 |---|---|
 | 文件名 | parent 的汇编页是 `<parent>/<parent>-reader.html`。其他页面和对应的 `.md` 在 `docs/features/` 下的相对路径相同，只把扩展名改成 `.html` |
@@ -41,13 +43,17 @@ last_verified: 2026-11-20
 
 #### DSGN-N-H — 单篇页面
 
+来源：reader PRD 的 PRD-F、PRD-J。
+
 - markdown 是源头，HTML 是派生物。
 - markdown 里用 `<!-- html-skip -->` 包住的内容可以不显示，但不能用它包住 L1 内容。
 - decision-history 里被划掉的句子在 HTML 里也保留。页面上有一个按钮，可以切换「显示删除线」和「隐藏删除线」。
 - 脚本生成的页面每次从 markdown 重新生成，不带 `spec-paired` 标记。手工维护的页面要带三个标记：`spec-paired=hand-maintained`、`spec-source`（源 markdown 的路径）、`spec-source-sha256`（源文件的哈希）。源文件变了而页面没变，哈希就对不上，检查会报「过期」（[ARD-AK](../../../decision-history/spec-driven-development-decision-history.md#ard-ak)）。
-- 手工维护的页面如果有更新记录，要覆盖 markdown Change Log 里的每个日期（ARD-BA，NICE）。
+- 手工维护的页面如果有更新记录，要覆盖 markdown Change Log 里的每个日期（[ARD-BA](../../../decision-history/spec-driven-development-decision-history.md#ard-ba)，NICE）。
 
 #### DSGN-N-B — 内容不丢（MUST）
+
+来源：reader PRD 的 PRD-A、PRD-G、PRD-J、PRD-K。
 
 把 DSGN-I 的四个优先级对应到 HTML：
 
@@ -74,6 +80,8 @@ last_verified: 2026-11-20
 
 #### DSGN-N-C — 汇编页的结构
 
+来源：reader PRD 的 PRD-C、PRD-D。
+
 parent 的汇编页（reader）把 parent 和各个 sub-feature 的文档放在一页里，方便从头读到尾。它是全站的一页，在左侧目录的「3 design」下面（[ARD-BI](../../../decision-history/spec-driven-development-decision-history.md#ard-bi)）。
 
 - **页面顶部（MUST）：** 说明这是方便阅读的汇编页，要改内容去改 `.md`；写明 parent 的名字。
@@ -85,27 +93,38 @@ parent 的汇编页（reader）把 parent 和各个 sub-feature 的文档放在�
 
 #### DSGN-N-I — 全站目录
 
+来源：reader PRD 的 PRD-C。
+
 全项目只有一个网站，入口是 `docs/book/html/index.html`。每篇 spec 的 HTML 是目录里的一行。先在目录里选 feature；进入后，左边是这个 feature 的目录，右边是正文（[ARD-BG](../../../decision-history/spec-driven-development-decision-history.md#ard-bg)）。
 
 #### DSGN-N-K — 正文里的链接
 
-- 正文里出现的编号（`PRD-`、`DSGN-`、`ARD-`、`IMPL-`、`TST-`、`PIPE-`、`QUES-`）要链到它在本 feature 里的定义；sub-feature 里找不到这个编号，就链到 parent。
+来源：reader PRD 的 PRD-D、PRD-H。
+
+- 正文里出现的编号（`PRD-`、`DSGN-`、`ARD-`、`IMPL-`、`TST-`、`PIPE-`、`QUES-`）要链到它的定义。编号前面写明了出处（例如「parent design 的 DSGN-A」或 `<feature>/<编号>`），就链到那个 feature。没写出处，才先找本 feature；本 feature 里没有，再链到 parent。
 - 指向 `docs/features/` 下 `.md` 的链接，改成指向 `docs/book/html/` 下同路径的 HTML。
 - 指向其他已存在文件的链接，直接链到那个文件。
 
 #### DSGN-N-L — 左侧目录的序号和层级
 
+来源：reader PRD 的 PRD-C。
+
 左侧目录显示层级和序号：1 prd、2 decision-history、3 design、4 impl plan、5 test plan、6 how to、10 sub-feature。design 的分篇和汇编页放在 3 下面。sub-feature 单独成一组，在 10 下面逐个展开。pipeline 在左侧目录里没有单独的页面，它的内容收在汇编页里（[ARD-BI](../../../decision-history/spec-driven-development-decision-history.md#ard-bi)）。
 
 #### DSGN-N-D — 视觉和技术要求
 
-- 全站用同一套样式：页面布局、编号标签、卡片、提示框（NICE）。
+来源：reader PRD 的 PRD-B、PRD-H、PRD-L、PRD-O、PRD-P。
+
+- 全站用同一套样式：页面布局、编号标签、卡片、提示框（NICE，[ARD-BY](../../../decision-history/spec-driven-development-decision-history.md#ard-by)）。
 - 把 CSS 写在页面里，用浏览器直接打开文件也能正常显示（NICE）。
-- 允许内嵌 Mermaid 流程图；没有先例时用文字画的流程图。
+- 允许内嵌 Mermaid 流程图（Mermaid 是一种用文字描述、由浏览器画成图的格式）；没有先例时用文字画的流程图。
+- 页面里不能有密钥，也不能有 `raw/` 里给机器用的评测原文；需要的话只放路径（MUST）。
 - 不能在运行时读取 `.md` 文件来显示主要内容；只有调试时可以（MUST）。
 - 页面标题、节、小节、条目的字号、粗细、样式各不相同；段落前面不加 a、b、c 或 1、2、3 这类序号（MUST）。
 
 #### DSGN-N-E — 谁负责什么
+
+来源：reader PRD 的 PRD-I、PRD-M、PRD-N。
 
 | 角色 | 负责 |
 |---|---|
@@ -117,6 +136,8 @@ parent 的汇编页（reader）把 parent 和各个 sub-feature 的文档放在�
 spec-pipeline 里的 `SPEC-READER.md` 如果还在，只能是指向本篇和 `SPEC-HTML-STANDARD.md` 的链接，避免出现两份规则。
 
 #### DSGN-N-F — 什么时候重新生成
+
+来源：reader PRD 的 PRD-M。
 
 - parent 或任何 sub-feature 的已提交文档有实质修改（尤其是 L1、L2）之后，重新生成（NICE；网页过期由 TST-R 检查）。
 - 用户明确要求时，例如「生成 reader」「生成网页」「reader 太简略了，补全」。
@@ -140,7 +161,7 @@ spec-pipeline 里的 `SPEC-READER.md` 如果还在，只能是指向本篇和 `S
 | DSGN-N-N | 最初的网页是手工维护的，所以先把「内容不丢」写进规则，防止 AI 再做出过度精简的页面。现在已改为脚本生成（DSGN-N-A） |
 | DSGN-N-J | 可执行的规则放在 `skills/spec-html-standard/SPEC-HTML-STANDARD.md`；document-standard 入口文件的编号表链到本篇；不新建 reader skill |
 
-**编号对照（[ARD-AP](../../../decision-history/spec-driven-development-decision-history.md#ard-ap)）：** 本表原来的 DSGN-N-H 和 DSGN-N-I，和后来加的两个小节（单篇页面、全站目录）用了同样的编号，违反了「编号不复用」（DSGN-F）。小节保留原编号，本表改为 DSGN-N-M 和 DSGN-N-N：
+**编号对照（[ARD-AP](../../../decision-history/spec-driven-development-decision-history.md#ard-ap)、[ARD-BZ](../../../decision-history/spec-driven-development-decision-history.md#ard-bz)）：** 本表原来的 DSGN-N-H 和 DSGN-N-I，和后来加的两个小节（单篇页面、全站目录）用了同样的编号，违反了「编号不复用」（DSGN-F）。小节保留原编号，本表改为 DSGN-N-M 和 DSGN-N-N：
 
 | 旧 | 新 |
 |---|---|
@@ -149,8 +170,8 @@ spec-pipeline 里的 `SPEC-READER.md` 如果还在，只能是指向本篇和 `S
 
 ## Testing Decisions
 
-- TST-R：网页不能比 markdown 旧。
-- TST-U：网页有「隐藏删除线」按钮，二级标题比三级标题大。
+- parent test-plan 的 TST-R：网页不能比 markdown 旧。
+- parent test-plan 的 TST-U：网页有「隐藏删除线」按钮，二级标题比三级标题大。
 - 可选（NICE）：spec-review 抽查网页里是否包含 markdown 中所有的 PRD、DSGN、TST 编号。
 
 ## Out of Scope
@@ -208,3 +229,4 @@ spec-pipeline 里的 `SPEC-READER.md` 如果还在，只能是指向本篇和 `S
 | 2026-11-18 | 左侧栏序号 1–6 与 10 sub-feature（ARD-BI） |
 | 2026-11-20 | DSGN-N-H 的生成稿与手写稿标记改为与 ARD-AK 一致；「参考」行并回 DSGN-N-A 的表；Implementation Decisions 的重复编号改为 DSGN-N-M、DSGN-N-N 并留对照表；DSGN-N-C 从 Tab 改为全站目录加汇编页（ARD-BG）；DSGN-N-D、DSGN-N-E 去掉已删除的旧 HTML 和 spec-pipeline；Testing Decisions 改指 TST-R、TST-U；全文改写为完整句子（ARD-BK） |
 | 2026-11-20 | 第 1 轮审查后：DSGN-N-D、DSGN-N-F 的 SHOULD、MAY 改为 NICE 或「允许」；DSGN-N-L 写明 pipeline 没有单独页面、内容在汇编页里 |
+| 2026-11-20 | 第 2 轮审查后：每个 DSGN-N 小节写明来源的 reader PRD 编号；DSGN-N-D 加上 PRD-P 的「不放密钥」，样式统一链到 ARD-BY；DSGN-N-K 先按编号前写明的出处链接；对照表链到 ARD-BZ；TST-R、TST-U 写明属于 parent test-plan |

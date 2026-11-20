@@ -58,7 +58,7 @@ Every `PRD-*` id must be anchored in at least one design clause (TST-O).
 
 Body text states the current rule only. When a sentence no longer holds, rewrite it and link the ARD that changed it. Strikethrough appears **only** in decision-history (a superseded row, struck and linked to the new ARD). Older body wording lives in git history. A typo is fixed in place (ARD-BM, ARD-AS).
 
-Edit size for AI edits under `docs/`: at most 10 lines **and** at most 200 characters per edit, both limits at once (ARD-BP); a larger change needs explicit human authorization recorded as an ARD (parent design DSGN-A).
+Edit size for AI edits under `docs/`: at most 10 lines **and** at most 200 characters per edit, both limits at once (ARD-BP); a larger change needs explicit human authorization recorded as an ARD (parent design DSGN-A). Content edits go through spec-write; spec-organize Lint may fix format-class MUST violations directly, under the same cap (ARD-BV).
 
 ## Readability (MUST)
 
@@ -83,7 +83,7 @@ If every tracker row has Owner and Evidence, the design may link the tracker ins
 
 ## Decision history (MUST)
 
-Log: `ID | Date | Decision` (optional 4th column `Ready`; no Status, no Supersedes column), newest first. Each ARD has an Evidence Appendix entry with its reason and rejected options. Supersede: ~~strike~~ the old row + link to the new **ARD**; old rows stay.
+Log: `ID | Date | Decision` (optional 4th column `Ready`; no Status, no Supersedes column), newest first. Each ARD has an Evidence Appendix entry with its reason and rejected options. Supersede: ~~strike~~ the old row + link to the new **ARD**; old rows stay. When only part of an old decision is overturned, still strike the whole row, and restate the parts that still hold in the new ARD (ARD-BT).
 
 ## Size (MUST)
 
@@ -91,7 +91,7 @@ Hard caps per **DSGN-B** table (prd 800, design 1000, impl-plan 1000, test-plan 
 
 ## INDEX / book (MUST)
 
-Committed tree changes → regenerate INDEX; no orphan, no dead link, no dead anchor (**DSGN-D**, ARD-AP).
+When the committed tree changes, regenerate INDEX. No orphan, no dead link, no dead anchor (**DSGN-D**, ARD-AP). A link into `raw/` is not a dead link, even though `raw/` is never committed (ARD-BW).
 MkDocs / Pages nav is implementation; it must not contradict the feature tree or INDEX (**DSGN-D**).
 
 ## Conflicts (MUST)
@@ -110,11 +110,11 @@ A translation copy `<name>.<lang>.md` is local only and names the source (ARD-AU
 
 ## Chapter 3 — Evidence, citation, reference, commit
 
-A conclusion cites a `raw/` path, a URL, an `ARD-*` id, or a commit. If the fact was not found, write `UNKNOWN`. Do not guess. A `file:line` citation names the commit (ARD-AQ). An external gold is a manifest only, never a copy of someone else's spec (ARD-BD).
+A conclusion is stated in the committed document and cites a `raw/` path, a URL, an `ARD-*` id, or a commit. A `raw/` path alone is valid evidence, even though other readers cannot open it (ARD-BW). If the fact was not found, write `UNKNOWN`. Do not guess. A `file:line` citation names the commit (ARD-AQ). An external gold is a manifest only, never a copy of someone else's spec (ARD-BD).
 
 ## Before create or edit (MUST)
 
-1. Read this file and SPEC-PRESENTATION.md.
+1. Read this file and SPEC-PRESENTATION.md; for HTML pages, also `skills/spec-html-standard/SPEC-HTML-STANDARD.md` (three standard files, ARD-BX).
 2. Decide: new document from the path rules, or edit existing documents.
 3. If editing, name every document that states the same fact. Edit the authority document. Replace the other copies with links.
 4. Classify the edit as prose, format, style, table, or icon, then apply SPEC-PRESENTATION.md.

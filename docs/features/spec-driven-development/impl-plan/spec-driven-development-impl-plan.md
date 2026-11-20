@@ -33,21 +33,21 @@ last_verified: 2026-11-20
 
 ## IMPL-B — spec-write 和 spec-review 的 SKILL.md
 
-**目标：** 两个交付的 skill 的 `SKILL.md` 和 [skill 契约](../design/spec-driven-development-design-skill-contracts.md)一致（[ARD-AJ](../decision-history/spec-driven-development-decision-history.md#ard-aj)、[ARD-BH](../decision-history/spec-driven-development-decision-history.md#ard-bh)）。
+**目标：** 两个交付的 skill 的 `SKILL.md` 和 [skill 契约](../design/spec-driven-development-design-skill-contracts.md)一致（[ARD-AJ](../decision-history/spec-driven-development-decision-history.md#ard-aj)、[ARD-BX](../decision-history/spec-driven-development-decision-history.md#ard-bx)）。
 
 **步骤：** 契约或标准改了，就用 `skill edit` 同步修改两份 `SKILL.md`。
 
 **依赖：** IMPL-A、IMPL-C。**挡住：** IMPL-E、IMPL-I、IMPL-N。
 
-**Verify:** description 以「Use when」开头；`SKILL.md` 里有 MUST 门槛；职责和契约表一致。
+**Verify:** `SKILL.md` 开头的 description（一句话说明什么时候用这个 skill）以「Use when」开头；`SKILL.md` 里有 MUST 门槛；职责和契约表一致。
 
-## IMPL-C — 两份标准摘要
+## IMPL-C — 三份标准摘要
 
-**目标：** `skills/spec-organize/SPEC-STANDARD.md` 和 `skills/spec-html-standard/SPEC-PRESENTATION.md` 是可执行的规则摘要；完整规则仍在 document-standard design。
+**目标：** `skills/spec-organize/SPEC-STANDARD.md`、`skills/spec-html-standard/SPEC-PRESENTATION.md` 和 `skills/spec-html-standard/SPEC-HTML-STANDARD.md` 是可执行的规则摘要；完整规则仍在 document-standard design 和 reader design（[ARD-BX](../decision-history/spec-driven-development-decision-history.md#ard-bx)）。
 
 **步骤：** 每次 DSGN 规则改动，同一批修改摘要。
 
-**依赖：** IMPL-A。**挡住：** IMPL-B、IMPL-F、IMPL-M。
+**依赖：** IMPL-A。**挡住：** IMPL-B、IMPL-F、IMPL-M、IMPL-R。
 
 **Verify:** 摘要里的每条 MUST 都能在 document-standard design 里找到出处；没有和 design 矛盾的说法。
 
@@ -88,7 +88,7 @@ last_verified: 2026-11-20
 
 ## IMPL-G — CLAUDE.local 里的 SDD 段落
 
-**目标：** feature 名字还没定的时候，Create 和 Map 阶段的进度记在这里（PIPE-H）。
+**目标：** feature 名字还没定的时候，Create 和 Map 阶段的进度和暂定名记在这里（pipeline design 的 PIPE-H；[ARD-BU](../decision-history/spec-driven-development-decision-history.md#ard-bu)）。
 
 **步骤：** 在项目的 `CLAUDE.local.md` 里加一段 SDD：当前阶段、粗略 PRD 的位置、reader 网页的链接。
 
@@ -171,8 +171,10 @@ last_verified: 2026-11-20
 | 文件 | 要改什么 | 依据 |
 |---|---|---|
 | `skills/spec-organize/tests/eval.yaml` | `gold.cases` 改回 iPhone 案例 `gold/v1`，不再指向 SDD 目录 | [ARD-BL](../decision-history/spec-driven-development-decision-history.md#ard-bl) |
-| `skills/spec-organize/tests/must_registry.yaml` | 重新扫描（TST-A）。document-standard design 已改写，原来按行号记的出处都错位了，`registry_provenance` 现在报「只有 14/32 条出自契约小节」；去掉「正文改动要留删除线」这条 MUST；标出改为 NICE 的规则 | TST-A、TST-M、[ARD-BM](../decision-history/spec-driven-development-decision-history.md#ard-bm)、[ARD-BN](../decision-history/spec-driven-development-decision-history.md#ard-bn) |
-| `skills/spec-organize/tests/checks/sections.py` | 去掉「有 System Context 标题就跳过检查」的豁免；parent design 现在已有 13 个必需章节 | DSGN-E |
+| `skills/spec-organize/tests/must_registry.yaml` | 重新扫描（TST-A）。document-standard design 已改写，原来按行号记的出处都错位了，出处比对脚本 `registry_provenance` 现在报「只有 15/32 条出自契约小节」；把 reader design 的 MUST 也收进来（TST-A）；去掉「正文改动要留删除线」这条 MUST；标出改为 NICE 的规则 | TST-A、TST-M、[ARD-BM](../decision-history/spec-driven-development-decision-history.md#ard-bm)、[ARD-BN](../decision-history/spec-driven-development-decision-history.md#ard-bn) |
+| `skills/spec-organize/tests/checks/sections.py` | 这个脚本检查必需章节。去掉一条旧豁免：以前 design 只要有「System Context」标题，就不检查必需章节；parent design 现在已有 13 个必需章节，不再需要这条豁免 | document-standard 的 DSGN-E |
+| `.gitignore` | `docs/features/*/raw/` 改为 `docs/features/**/raw/`，把 sub-feature 下的 `raw/` 也排除 | document-standard 的 DSGN-B |
+| `skills/spec-organize/tests/checks/` 里检查链接的脚本 | 指向 `raw/` 的链接不算死链 | [ARD-BW](../decision-history/spec-driven-development-decision-history.md#ard-bw) |
 | `checks/section_refs.py`、`counts.py`、`diagram_steps.py` | 对应的规则已改为 NICE，报出的问题改为提醒，不算失败 | [ARD-BN](../decision-history/spec-driven-development-decision-history.md#ard-bn) |
 | `skills/spec-organize/tests/gold/v1/annotations.yaml` | 去掉「改旧句没划线」这条坏例子，改为「正文里出现删除线」 | [ARD-BM](../decision-history/spec-driven-development-decision-history.md#ard-bm) |
 | `docs/book/html/` 下的网页 | 用 `tools/build_sdd_site.py` 重新生成 | TST-R |
@@ -191,13 +193,23 @@ last_verified: 2026-11-20
 
 **Verify:** 对 SDD 的每篇已提交文档跑 TST-V，并在报告里列出每篇的答对率和没解释的术语。
 
+## IMPL-R — CLAUDE 层和 skill 的规则同步
+
+**目标：** parent design 的 DSGN-C 要求 CLAUDE 层（`CLAUDE.md`、`CLAUDE.local.md`）和 skill 里的规则一致。DSGN-A 的改动上限和 DSGN-B 的「什么时候记 ARD」要同时写进两处。
+
+**步骤：** 标准文件改了之后，检查 CLAUDE 层里有没有对应的旧说法，一起改掉。2026-11-20 已改：`CLAUDE.local.md` 的改动上限从「10 行或 200 字符」改为「10 行并且 200 字符」，需求编号从不存在的 FR-12 改为 PRD-C（[ARD-BP](../decision-history/spec-driven-development-decision-history.md#ard-bp)）。
+
+**依赖：** IMPL-C。**挡住：** 无。
+
+**Verify:** CLAUDE 层里关于改动上限的句子写的是「并且」，并引用 PRD-C；没有引用 `FR-` 这类已禁止的编号。
+
 ## Execution order
 
 先做不依赖别人的任务，被挡住的后做：
 
 1. IMPL-A、IMPL-D、IMPL-G、IMPL-H（互不依赖，可以同时做）
 2. IMPL-C
-3. IMPL-B、IMPL-F、IMPL-J、IMPL-K、IMPL-L、IMPL-M
+3. IMPL-B、IMPL-F、IMPL-J、IMPL-K、IMPL-L、IMPL-M、IMPL-R
 4. IMPL-N、IMPL-O、IMPL-P
 5. IMPL-Q
 6. IMPL-E（评测要等 spec 可读、测试骨架齐全、gold 改回 iPhone 之后再跑）
@@ -220,3 +232,4 @@ last_verified: 2026-11-20
 | 2026-11-18 | IMPL-D / IMPL-E：gold spec 改为这套 spec-driven-development（ARD-BJ） |
 | 2026-11-20 | 每个 IMPL 写明依赖和挡住谁，执行顺序改为分组；IMPL-B 改为 spec-write 和 spec-review；IMPL-D、IMPL-E 改回 iPhone gold（ARD-BL）；IMPL-F 改为全站网页（ARD-BG）；验收的分数 2 从「不低于 6」改为「不低于上一次」，和 ARD-R、test-plan 一致；新增 IMPL-P（markdown 以外的欠账）和 IMPL-Q（可读性测试）；全文改为中文（ARD-BK） |
 | 2026-11-20 | 第 1 轮审查后：依赖和挡住两头对齐（C 挡住 F；D 挡住 L；J 挡住 Q；E 依赖 J、L、Q；I 依赖 E） |
+| 2026-11-20 | 第 2 轮审查后：IMPL-C 改为三份标准摘要（ARD-BX）；IMPL-P 加上 `.gitignore` 和 raw/ 链接两项，数字改为 15/32，解释 System Context 豁免；新增 IMPL-R（CLAUDE 层同步）；IMPL-G 写明暂定名也记在 CLAUDE.local.md（ARD-BU） |

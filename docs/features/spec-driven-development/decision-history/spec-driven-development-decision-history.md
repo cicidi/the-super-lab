@@ -24,6 +24,12 @@ last_verified: 2026-11-20
 
 | ID | Date | Decision |
 |---|------|----------|
+| ARD-BZ | 2026-11-20 | 补记两次编号迁移：parent design 的 §4 到 §8 改为 DSGN-A 到 DSGN-E；reader design 里重号的 DSGN-N-H、DSGN-N-I 改为 DSGN-N-M、DSGN-N-N |
+| ARD-BY | 2026-11-20 | reader PRD 的 PRD-L（全站样式统一）降为 NICE，和 reader design 的 DSGN-N-D 一致 |
+| ARD-BX | 2026-11-20 | 交付物只有 spec-write 和 spec-review 两个 skill。它们读三份标准文件：SPEC-STANDARD.md、SPEC-PRESENTATION.md，以及讲 HTML 页面的 SPEC-HTML-STANDARD.md；标准文件不算交付物 |
+| ARD-BW | 2026-11-20 | `raw/` 里的文件可以单独作为证据，即使其他读者打不开；链接检查不把指向 `raw/` 的链接算作死链 |
+| ARD-BV | 2026-11-20 | 内容改动由 spec-write 做；格式类 MUST 可以由整理工具的 Lint 模式直接修，同样受 ARD-BP 的改动上限约束 |
+| ARD-BU | 2026-11-20 | feature 目录要等人在 Map 阶段确认后才建；Create 阶段只把暂定名记在 CLAUDE.local.md |
 | ARD-BT | 2026-11-20 | 重申 ARD-U、ARD-V 里仍然有效的部分：Map 阶段以访谈为主；进度在 feature 名字定之前记在 CLAUDE.local.md，定了以后记在 raw/state/；非软件难题留在本 PRD，用同样五篇文档 |
 | ARD-BS | 2026-11-20 | 正文可以中英文混合，只要读着通顺；英文术语第一次出现时要解释，或者收进术语表。Problem Statement 可以保留作者原话，包括原来的编号标题 |
 | ARD-BR | 2026-11-20 | pipeline design 的子条款改用字母：PIPE-A1 改为 PIPE-A-A，PIPE-E1 改为 PIPE-E-A，依此类推；pipeline design 里留新旧对照表 |
@@ -33,10 +39,10 @@ last_verified: 2026-11-20
 | ARD-BN | 2026-11-20 | 规则分两级：MUST 是违反后 spec 会出错或丢信息的规则；NICE 是格式偏好。八条纯格式规则降为 NICE |
 | ARD-BM | 2026-11-20 | 删除线只用在 decision-history。正文只写现行规则，并链到推翻旧说法的 ARD；正文的旧版本交给 git |
 | ARD-BL | 2026-11-20 | 用来打分的 gold 是 iPhone 购买案例。这套 SDD spec 是写法样板，由 spec-review 审查，不用来打分 |
-| ARD-BK | 2026-11-20 | 本次整理是人明确授权的大改：正文统一为中文，可以大段重写，术语表放在 parent design 附录；单次改动上限在这一批暂停 |
+| ~~ARD-BK~~ | 2026-11-20 | ~~本次整理是人明确授权的大改：正文统一为中文，可以大段重写，术语表放在 parent design 附录；单次改动上限在这一批暂停~~ → [ARD-BS](#ard-bs) |
 | ~~ARD-BJ~~ | 2026-11-18 | ~~gold spec 就是这套 spec-driven-development，iPhone gold/v1 不是 gold~~ → [ARD-BL](#ard-bl) |
 | ARD-BI | 2026-11-18 | 左侧栏显示层级和序号：1 prd、2 decision-history、3 design、4 impl plan、5 test plan、6 how to、10 sub-feature |
-| ARD-BH | 2026-11-18 | 交付物只有 spec-write 和 spec-review 两个 skill。两份标准文件是这两个 skill 要读的文档，不算交付物 |
+| ~~ARD-BH~~ | 2026-11-18 | ~~交付物只有 spec-write 和 spec-review 两个 skill。两份标准文件是这两个 skill 要读的文档，不算交付物~~ → [ARD-BX](#ard-bx) |
 | ARD-BG | 2026-11-07 | 全站只有一个网站，入口是 docs/book/html/index.html。进入一个 feature 后，左边是这个 feature 的目录，右边是正文 |
 | ARD-BF | 2026-11-07 | spec 的 HTML 放在 docs/book/html/，目录结构和 docs/features/ 一样；markdown 留在 feature 目录 |
 | ARD-BE | 2026-11-07 | 图只用来画文字说不清的流程，一个流程一张图 |
@@ -99,6 +105,64 @@ last_verified: 2026-11-20
 
 ## Evidence Appendix
 
+<a id="ard-bz"></a>
+
+### ARD-BZ — 补记两次编号迁移
+
+**原因。** document-standard 的 DSGN-F 规定：确实要改编号时，要记一条 ARD。2026-11-20 有两次改编号只引用了通用规则 ARD-AP，没有自己的 ARD。
+
+**规则。** parent design 的规则小节 §4 到 §8 改为 DSGN-A 到 DSGN-E，因为编号不能用纯数字。reader design 里 Implementation Decisions 表的 DSGN-N-H、DSGN-N-I 和同名小节重号，表里的改为 DSGN-N-M、DSGN-N-N。两处的对照表都留在原文件里。
+
+<a id="ard-by"></a>
+
+### ARD-BY — 全站样式统一降为 NICE
+
+**原因。** reader PRD 的 PRD-L 把全站样式统一写成功能需求，reader design 的 DSGN-N-D 却标为 NICE，两处不一致。
+
+**规则。** 人选择降级：PRD-L 改为 NICE。样式不统一时只提醒，不算失败。页面能不能读懂由其他 MUST 保证（编号可见、标题层级可分、不在运行时读 `.md`）。
+
+**放弃的方案。** 改回 MUST：样式统一很难用脚本判定，容易误报。
+
+<a id="ard-bx"></a>
+
+### ARD-BX — 标准文件是三份
+
+**原因。** parent design、skill 契约和 PRD 只列了两份标准文件，但 reader design 和 spec-write 的 SKILL.md 还读第三份 `skills/spec-html-standard/SPEC-HTML-STANDARD.md`。spec-review 要审 HTML 页面，也需要这一份。
+
+**规则。** 两个 skill 读三份标准文件：`SPEC-STANDARD.md` 讲路径、权限、写什么和证据；`SPEC-PRESENTATION.md` 讲文字、格式和表格；`SPEC-HTML-STANDARD.md` 讲 HTML 页面。推翻 ARD-BH 里「两份标准文件」的说法；ARD-BH 其余部分仍然有效，在此重述：交付物只有 spec-write 和 spec-review 两个 skill；三份标准文件是它们的输入，不算交付物；spec-organize 和 spec-pipeline 也不是交付物。
+
+**放弃的方案。** 把 HTML 规则并进 SPEC-PRESENTATION.md：要改非 spec 文件，而且 markdown 和 HTML 的规则混在一起不好找。
+
+<a id="ard-bw"></a>
+
+### ARD-BW — raw/ 文件可以单独作为证据
+
+**原因。** `raw/` 不提交，别人点开是死链；但 pipeline design 的 PIPE-L、SPEC-STANDARD 和 ARD-AE 都接受 `raw/` 路径作证据。规则互相矛盾。
+
+**规则。** 人选择接受：结论写进正式文档，证据可以只是一个 `raw/` 路径，即使其他读者打不开。链接检查不把指向 `raw/` 的链接算作死链。
+
+**放弃的方案。** 证据必须有 URL、ARD 或 commit，`raw/` 只能作额外指引：更严谨，但调研阶段的大量笔记就没法引用。
+
+<a id="ard-bv"></a>
+
+### ARD-BV — 格式修正可以由 Lint 直接做
+
+**原因。** pipeline design 的 PIPE-A-C 说所有修改都由 spec-write 做；但 document-standard 的 DSGN-L、skill 契约和 ARD-P 都允许整理工具直接修格式问题。
+
+**规则。** 内容的增删改由 spec-write 做。格式类 MUST（例如标题写法、frontmatter 字段）可以由整理工具的 Lint 模式直接修。两者都受 ARD-BP 的改动上限约束。
+
+**放弃的方案。** Lint 只报告不改：每个小格式问题都要绕一次 spec-write，太慢。
+
+<a id="ard-bu"></a>
+
+### ARD-BU — 人确认后才建 feature 目录
+
+**原因。** pipeline design 里，Create 阶段（PIPE-C、PIPE-G）说要用 feature create 命令建目录，但 PIPE-D 和 Implementation Decisions 说人在 Map 阶段确认后才建。Map 在 Create 之后，两者矛盾。
+
+**规则。** Create 阶段只把暂定的 feature 名字和进度记在 `CLAUDE.local.md`（ARD-BT）。人在 Map 阶段确认拆法和名字之后，才用 feature create 命令建 `docs/features/<f>/`。
+
+**放弃的方案。** Create 就建目录：名字还没定就建，事后改名会留下死链。
+
 <a id="ard-bt"></a>
 
 ### ARD-BT — 重申 ARD-U、ARD-V 仍然有效的部分
@@ -113,7 +177,7 @@ last_verified: 2026-11-20
 
 **原因。** ARD-BK 要求正文统一为中文。审查时发现 PRD 的 Problem Statement 是作者原话，中英文混写，标题带 1 到 5 的编号。人决定保留原样：读着通顺比形式统一更重要。
 
-**规则。** 正文可以中英文混合，只要读着通顺。英文术语第一次出现时要解释，或者收进术语表。Problem Statement 可以保留作者原话，包括原来的编号标题。修改 ARD-BK 里「正文统一为中文」的说法。
+**规则。** 正文可以中英文混合，只要读着通顺。英文术语第一次出现时要解释，或者收进术语表。Problem Statement 可以保留作者原话，包括原来的编号标题。推翻 ARD-BK 里「正文统一为中文」的说法。ARD-BK 其余部分仍然有效，在此重述：2026-11-20 这次整理是人明确授权的大改，可以大段重写；术语表放在 parent design 附录；单次改动上限在这一批暂停。
 
 <a id="ard-br"></a>
 
@@ -220,7 +284,7 @@ ARD-AX 和 ARD-AY 本来就是「允许」，不是要求，不受影响。其�
 
 ### ARD-BH — 交付物只有 spec-write 和 spec-review
 
-对外交付的只有两个 skill：spec-write 负责写，spec-review 负责审。`SPEC-STANDARD.md` 和 `SPEC-PRESENTATION.md` 是这两个 skill 要读的文件，不单独算交付物。spec-organize 和 spec-pipeline 也不在交付物里。推翻 ARD-AJ 里「两份标准也是交付物」的说法。原因：使用者只调用 skill；标准文件单独交付没有用处。
+对外交付的只有两个 skill：spec-write 负责写，spec-review 负责审。`SPEC-STANDARD.md` 和 `SPEC-PRESENTATION.md` 是这两个 skill 要读的文件，不单独算交付物。spec-organize 和 spec-pipeline 也不在交付物里。ARD-AJ 只说了标准写在哪里，没说它们算不算交付物；本条补上这一点。标准文件后来增加到三份，见 [ARD-BX](#ard-bx)。原因：使用者只调用 skill；标准文件单独交付没有用处。
 
 <a id="ard-bg"></a>
 

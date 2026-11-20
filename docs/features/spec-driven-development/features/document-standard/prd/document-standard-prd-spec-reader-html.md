@@ -41,19 +41,19 @@ spec 的正式版本是已提交的 markdown。但一个 parent feature 往往�
 |---|---|
 | PRD-J | 生成 HTML 必须遵守 DSGN-N 的保真规则，和 document-standard 的 DSGN-I 一致：L1 不删；L2 可以写得更短，但不能删掉事实；L3、L4 可以概括，但必须链到原文 |
 | PRD-K | 不能把整篇 design 或 PRD 压成一段概述。如果一种文档拆成了多个分篇，网页必须按分篇分开展示，每个分篇的 L1 都保留 |
-| PRD-L | 全站视觉风格统一：衬线字体的标题、等宽字体的编号标签、浅色的提示框 |
+| PRD-L | 全站视觉风格统一：衬线字体的标题、等宽字体的编号标签、浅色的提示框。这一条是 NICE：做不到只提醒，不算失败（[ARD-BY](../../../decision-history/spec-driven-development-decision-history.md#ard-by)） |
 | PRD-M | spec-write 改完 markdown 后，应该提示重新生成网页；用户要求时也重新生成。生成时必须按 `skills/spec-html-standard/SPEC-HTML-STANDARD.md` 做（没有单独的 reader skill） |
 | PRD-N | 如果发现 HTML 和 markdown 说法不一致，或者 HTML 暴露出 spec 本身的错误：先报告并问人，先改 markdown，再重新生成 HTML（和 DSGN-G 的原则一样） |
 
 ## Non-Functional Requirements
 
-- **PRD-O**：纯静态网页，不需要构建服务器，用浏览器直接打开文件就能看，不依赖 MkDocs 服务。
+- **PRD-O**：纯静态网页，不需要构建服务器，用浏览器直接打开文件就能看，不依赖 MkDocs（一种把 markdown 生成网站的工具）的服务。
 - **PRD-P**：页面里不能有密钥，也不能有 `raw/` 里给机器用的评测原文；需要的话只放路径链接。
 
 ## Out of Scope
 
 - 替代 book 摘要或 MkDocs 的导航。网页放在 `docs/book/html/`（[ARD-BF](../../../decision-history/spec-driven-development-decision-history.md#ard-bf)）。
-- 每次 git commit 自动同步网页。目前不要求 hook。
+- 每次 git commit 自动同步网页。目前不要求 git hook（提交时自动运行的脚本）。
 - 拿网页当检查的依据。判断对错仍以 `SPEC-STANDARD.md` 和已提交的 markdown 为准。
 
 ## Resources Needed
@@ -69,3 +69,4 @@ spec 的正式版本是已提交的 markdown。但一个 parent feature 往往�
 | 2026-11-07 | PRD-E：HTML 放到 docs/book/html/，按 feature 树建目录（ARD-BF） |
 | 2026-11-20 | 从「单文件、按 Tab 浏览」改为全站左侧目录（PRD-C，ARD-BG、ARD-BI）；PRD-L 不再引用已删除的旧 HTML；PRD-M 由 spec-write 提示重新生成，不再由 spec-pipeline 触发（ARD-AJ）；PRD-O 改为静态网页；Overview 改正 reader 路径；全文改写为完整句子（ARD-BK） |
 | 2026-11-20 | 第 1 轮审查后：链回新的入口文件 document-standard-prd.md（ARD-BQ）；PRD-C 写明 pipeline 没有单独页面（ARD-BI） |
+| 2026-11-20 | 第 2 轮审查后：PRD-L 降为 NICE（ARD-BY）；MkDocs、git hook 第一次出现时解释 |

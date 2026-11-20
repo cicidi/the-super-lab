@@ -32,7 +32,7 @@ last_verified: 2026-11-20
 
 **parent 和 sub-feature：** spec-review 审 parent（`docs/features/spec-driven-development/` 这一层，不含 `features/<sub>/`）时，要确认五篇都在：prd、design、decision-history、impl-plan、test-plan（parent design 的 DSGN-E）。sub-feature 不要求五篇都有，只审已有的文档。
 
-**几个只在本篇用的词：**
+**本篇常用的几个词**（复核、基线也在[术语表](../design/spec-driven-development-design.md#glossary)里，这里补充它们在本篇的用法）：
 
 | 词 | 意思 |
 |---|---|
@@ -94,7 +94,7 @@ last_verified: 2026-11-20
 
 ### TST-A — 生成 MUST 清单
 
-**目标：** 扫描 document-standard design、pipeline design，以及 parent design 的 DSGN-A、DSGN-B，把所有「必须」「禁止」类规则收进 `must_registry.yaml`。spec 定稿后重新扫描。**输入：** 这三篇 design。**通过条件：** 覆盖率 100%；每条都标明 `python` 或 `llm`；NICE 规则不收（[ARD-BN](../decision-history/spec-driven-development-decision-history.md#ard-bn)）。**判定：** 出处比对脚本（`registry_provenance`）。
+**目标：** 扫描每篇 design 的入口和分篇（document-standard design 和它的 reader 分篇、pipeline design），以及 parent design 的 DSGN-A、DSGN-B、DSGN-E，把所有「必须」「禁止」类规则收进 `must_registry.yaml`。spec 定稿后重新扫描。**输入：** 上面这些 design。**通过条件：** 覆盖率 100%；每条都标明 `python` 或 `llm`；NICE 规则不收（[ARD-BN](../decision-history/spec-driven-development-decision-history.md#ard-bn)）。**判定：** 出处比对脚本（`registry_provenance`）。
 
 ### TST-B — 检查脚本的反例和正例
 
@@ -150,7 +150,7 @@ last_verified: 2026-11-20
 
 ### TST-O — PRD 到 design 的追溯
 
-**目标：** PRD 的每条需求，在 design 里都有对应的规则。**输入：** parent PRD、parent design、pipeline design、document-standard design。**通过条件：** 每个 `PRD-*` 至少对应一个 `DSGN-*` 或 `PIPE-*`；有没对应上的就失败。**判定：** Python 比对编号集合。
+**目标：** PRD 的每条需求，在 design 里都有对应的规则。**输入：** parent PRD、document-standard 的 reader PRD，以及 parent design、pipeline design、document-standard design 和它的 reader 分篇。**通过条件：** 两份 PRD 的每个 `PRD-*` 都至少对应一个 `DSGN-*` 或 `PIPE-*`；有没对应上的就失败。**判定：** Python 比对编号集合。
 
 ### TST-P — 子问题归属、证据、UNKNOWN
 
@@ -197,10 +197,10 @@ last_verified: 2026-11-20
 
 1. TST-A：MUST 清单覆盖率不到 100% 就停。
 2. TST-B：检查脚本失效就停。
-3. TST-O、TST-P、TST-V：design 的覆盖、证据、可读性。
+3. TST-O、TST-P、TST-V：design 的覆盖、证据、可读性。这一步的 TST-V 只测 SDD 自己的文档。
 4. TST-C，然后 TST-D：第一次运行，或者 gold 升版时。
 5. TST-G、TST-N、TST-R、TST-S、TST-T、TST-U。
-6. TST-E、TST-F。
+6. TST-E、TST-F，然后对 TST-C、TST-E 里 spec-write 写出的文档跑 TST-V。
 7. TST-H，然后 TST-I。
 8. TST-Q：mock 执行。
 9. TST-K，然后 TST-L。
@@ -233,7 +233,7 @@ last_verified: 2026-11-20
 | PRD-E | TST-B（路径） |
 | PRD-F | TST-B（decision_log）；TST-F |
 | PRD-G | Unverified（[ARD-N](../decision-history/spec-driven-development-decision-history.md#ard-n)） |
-| PRD-H | TST-M；TST-S |
+| PRD-H | Unverified（「优先用已有的热门 skill」没法自动判定） |
 | PRD-I | Unverified（本表里的 Unverified 标注本身就是这条的落实） |
 | PRD-J | Unverified（阶段编排，PRD-I） |
 | PRD-K | TST-S |
@@ -243,6 +243,18 @@ last_verified: 2026-11-20
 | PRD-O | TST-Q |
 | PRD-P | TST-S；Expected Pass Threshold 表 |
 | PRD-Q | TST-S |
+
+document-standard 的 reader PRD：
+
+| PRD | Covered by |
+|---|---|
+| PRD-A、PRD-G、PRD-J、PRD-K（内容不丢） | Unverified（还没有逐条比对 L1 内容的脚本；有了以后由 spec-review 抽查编号） |
+| PRD-B、PRD-H（排版、标题层级） | TST-U |
+| PRD-C、PRD-D、PRD-E（覆盖、原文路径、文件位置） | TST-R 检查汇编页和它的源文件；其余页面 Unverified |
+| PRD-F、PRD-I、PRD-N（流程类要求） | Unverified（流程，PRD-I） |
+| PRD-L（样式统一） | 不测，是 NICE（[ARD-BY](../decision-history/spec-driven-development-decision-history.md#ard-by)） |
+| PRD-M（改完提示重新生成） | TST-R |
+| PRD-O、PRD-P（纯静态、不放密钥） | Unverified（还没有对应的检查脚本） |
 
 ## Change Log
 
@@ -271,3 +283,4 @@ last_verified: 2026-11-20
 | 2026-11-18 | 资产表与 TST-C 改指这套 spec；`gold/v1` 只是练习案例（ARD-BJ） |
 | 2026-11-20 | gold 改回 iPhone 案例，资产表与 TST-C 去掉删除线（ARD-BL、ARD-BM）；新增 TST-V 可读性测试，PRD-M 从 Unverified 改为由 TST-V 覆盖（ARD-BO）；TST-E、TST-F、TST-G 和发布门槛从 spec-organize 改为 spec-write 和 spec-review；「checker」改称「复核」，避免和检查脚本混淆；TST-U 改为删除线只在 decision-history；TST-A、TST-N 改引 parent design 的 DSGN 编号；TST-S、TST-T 按编号顺序排列；追溯表补上能对应的测试；全文改写为完整句子（ARD-BK） |
 | 2026-11-20 | 第 1 轮审查后：`eval.yaml` 的说明从一个表格单元拆成逐键的表 |
+| 2026-11-20 | 第 2 轮审查后：TST-A 扫描所有 design 分篇和 parent 的 DSGN-E；TST-O 加入 reader PRD，追溯表加 reader PRD 一节；TST-V 分两次跑（先测 SDD 文档，spec-write 跑完再测它的产出）；PRD-H 改为 Unverified |
