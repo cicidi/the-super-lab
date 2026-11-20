@@ -31,11 +31,11 @@ last_verified: 2026-11-20
 | ARD-BV | 2026-11-20 | 内容改动由 spec-write 做；格式类 MUST 可以由整理工具的 Lint 模式直接修，同样受 ARD-BP 的改动上限约束 |
 | ARD-BU | 2026-11-20 | feature 目录要等人在 Map 阶段确认后才建；Create 阶段只把暂定名记在 CLAUDE.local.md |
 | ARD-BT | 2026-11-20 | 重申 ARD-U、ARD-V 里仍然有效的部分：Map 阶段以访谈为主；进度在 feature 名字定之前记在 CLAUDE.local.md，定了以后记在 raw/state/；非软件难题留在本 PRD，用同样五篇文档 |
-| ARD-BS | 2026-11-20 | 正文可以中英文混合，只要读着通顺；英文术语第一次出现时要解释，或者收进术语表。Problem Statement 可以保留作者原话，包括原来的编号标题 |
+| ARD-BS | 2026-11-20 | 正文可以中英文混合，只要读着通顺；英文术语第一次出现时要解释，或者收进术语表。Problem Statement 可以保留作者原话，包括原来的编号标题（ARD-AW 的例外，ARD-AW 在本条重述） |
 | ARD-BR | 2026-11-20 | pipeline design 的子条款改用字母：PIPE-A1 改为 PIPE-A-A，PIPE-E1 改为 PIPE-E-A，依此类推；pipeline design 里留新旧对照表 |
 | ARD-BQ | 2026-11-20 | 六种文档都可以拆分篇；有分篇时必须有入口文件 `<f>-<type>.md`，入口链到各分篇 |
 | ARD-BP | 2026-11-20 | AI 每次改 docs/ 下的 .md，必须同时满足：不超过 10 行，并且不超过 200 字符；更大的改动拆成多次，或经人授权后一次大改 |
-| ARD-BO | 2026-11-20 | 可读性是通过条件：由 LLM 扮演本科程序员，只读一篇文档，回答从该篇需求和规则条目里抽出的问题；答错太多，或有第一次出现时没解释的术语，这篇就不通过 |
+| ARD-BO | 2026-11-20 | 可读性是通过条件：由 LLM 扮演本科程序员，只读一篇文档和术语表，回答从该篇需求和规则条目里抽出的问题；答错太多，或有第一次出现时没解释的术语，这篇就不通过 |
 | ARD-BN | 2026-11-20 | 规则分两级：MUST 是违反后 spec 会出错或丢信息的规则；NICE 是格式偏好。八条纯格式规则降为 NICE |
 | ARD-BM | 2026-11-20 | 删除线只用在 decision-history。正文只写现行规则，并链到推翻旧说法的 ARD；正文的旧版本交给 git |
 | ARD-BL | 2026-11-20 | 用来打分的 gold 是 iPhone 购买案例。这套 SDD spec 是写法样板，由 spec-review 审查，不用来打分 |
@@ -53,7 +53,7 @@ last_verified: 2026-11-20
 | ARD-AZ | 2026-11-07 | 写成「§N」的链接要落在第 N 节或它的上下级；同一文档里的步骤范围不能重叠 |
 | ARD-AY | 2026-11-07 | 如果问题清单的每一行都写了负责人和依据，design 可以链到清单，不必再抄一张子问题归属表 |
 | ARD-AX | 2026-11-07 | Decision Log 可以多加一列 Ready；Status 列和 Supersedes 列仍然禁止 |
-| ARD-AW | 2026-11-07 | 必需章节的标题用英文、不编号；专门写有序步骤的章节可以编号 |
+| ~~ARD-AW~~ | 2026-11-07 | ~~必需章节的标题用英文、不编号；专门写有序步骤的章节可以编号~~ → [ARD-BS](#ard-bs) |
 | ARD-AV | 2026-11-07 | design 拆成多篇时，13 个必需章节只要求写在入口文件；其他分篇链回入口，只写自己那部分 |
 | ARD-AU | 2026-11-07 | 本地翻译副本不提交；副本开头写明以原文为准 |
 | ARD-AT | 2026-11-07 | 每个 IMPL 任务写明完成标准；先做读的一侧，再做写的一侧；对方接口还没上线时写一个 mock |
@@ -129,7 +129,7 @@ last_verified: 2026-11-20
 
 **原因。** parent design、skill 契约和 PRD 只列了两份标准文件，但 reader design 和 spec-write 的 SKILL.md 还读第三份 `skills/spec-html-standard/SPEC-HTML-STANDARD.md`。spec-review 要审 HTML 页面，也需要这一份。
 
-**规则。** 两个 skill 读三份标准文件：`SPEC-STANDARD.md` 讲路径、权限、写什么和证据；`SPEC-PRESENTATION.md` 讲文字、格式和表格；`SPEC-HTML-STANDARD.md` 讲 HTML 页面。推翻 ARD-BH 里「两份标准文件」的说法；ARD-BH 其余部分仍然有效，在此重述：交付物只有 spec-write 和 spec-review 两个 skill；三份标准文件是它们的输入，不算交付物；spec-organize 和 spec-pipeline 也不是交付物。
+**规则。** 两个 skill 读三份标准文件：`SPEC-STANDARD.md` 讲路径、权限、写什么和证据；`SPEC-PRESENTATION.md` 讲文字、格式和表格；`SPEC-HTML-STANDARD.md` 讲 HTML 页面。ARD-AJ 说标准写在 SPEC-STANDARD.md 和 SPEC-PRESENTATION.md，这仍然成立，本条只是加上第三份，不推翻 ARD-AJ。推翻 ARD-BH 里「两份标准文件」的说法；ARD-BH 其余部分仍然有效，在此重述：交付物只有 spec-write 和 spec-review 两个 skill；三份标准文件是它们的输入，不算交付物；spec-organize 和 spec-pipeline 也不是交付物。
 
 **放弃的方案。** 把 HTML 规则并进 SPEC-PRESENTATION.md：要改非 spec 文件，而且 markdown 和 HTML 的规则混在一起不好找。
 
@@ -179,6 +179,8 @@ last_verified: 2026-11-20
 
 **规则。** 正文可以中英文混合，只要读着通顺。英文术语第一次出现时要解释，或者收进术语表。Problem Statement 可以保留作者原话，包括原来的编号标题。推翻 ARD-BK 里「正文统一为中文」的说法。ARD-BK 其余部分仍然有效，在此重述：2026-11-20 这次整理是人明确授权的大改，可以大段重写；术语表放在 parent design 附录；单次改动上限在这一批暂停。
 
+本条也给 ARD-AW 加了一个例外，ARD-AW 因此划掉，在此重述：必需章节（`##` 级）的标题用英文、不编号；其他章节只有写有序步骤时才编号；例外是 Problem Statement 下面作者原话的小标题可以保留编号。
+
 <a id="ard-br"></a>
 
 ### ARD-BR — pipeline 子条款改用字母
@@ -213,7 +215,7 @@ last_verified: 2026-11-20
 
 **原因。** PRD-M 把可读性定为硬需求，却又写「不作为通过条件」，等于没有要求。这套方法要解决的问题之一就是「人读不过来」（PRD Problem Statement 第 4 点），可读性必须能挡住交付。
 
-**怎么判。** 一个 LLM 扮演本科程序员，只读被测的那一篇。脚本从这篇的编号条目（`PRD-*`、`DSGN-*`、`PIPE-*`、`IMPL-*`、`TST-*`、`ARD-*`）各出一道题，例如「PRD-F 规定多人决定冲突时怎么办」。再出一组对照题：不给文档直接问，能答对的题说明太容易，作废。答对率不足，或者有第一次出现时没有解释、术语表里也没有的词，这篇就不通过。具体门槛写在 test-plan 的 TST-V。
+**怎么判。** 一个 LLM 扮演本科程序员，只读被测的那一篇和 parent design 的术语表（本行在 2026-11-20 原地修订，加上术语表，和 PRD-M、TST-V 一致；ARD-AN 允许原地修订）。脚本从这篇的编号条目（`PRD-*`、`DSGN-*`、`PIPE-*`、`IMPL-*`、`TST-*`、`ARD-*`）各出一道题，例如「PRD-F 规定多人决定冲突时怎么办」。再出一组对照题：不给文档直接问，能答对的题说明太容易，作废。答对率不足，或者有第一次出现时没有解释、术语表里也没有的词，这篇就不通过。具体门槛写在 test-plan 的 TST-V。
 
 **放弃的方案。** 只让 LLM 打一个「好不好读」的分：主观，同一篇文档两次打分可能差很多。用 ISO 24495-1 之类的可读性公式：只看句长和词频，看不出术语有没有解释。
 

@@ -102,7 +102,7 @@ parent 的汇编页（reader）把 parent 和各个 sub-feature 的文档放在�
 来源：reader PRD 的 PRD-D、PRD-H。
 
 - 正文里出现的编号（`PRD-`、`DSGN-`、`ARD-`、`IMPL-`、`TST-`、`PIPE-`、`QUES-`）要链到它的定义。编号前面写明了出处（例如「parent design 的 DSGN-A」或 `<feature>/<编号>`），就链到那个 feature。没写出处，才先找本 feature；本 feature 里没有，再链到 parent。
-- 指向 `docs/features/` 下 `.md` 的链接，改成指向 `docs/book/html/` 下同路径的 HTML。
+- 指向 `docs/features/` 下 `.md` 的链接，改成指向 `docs/book/html/` 下同路径的 HTML。没有单独页面的文档（例如 pipeline design，见 DSGN-N-L），链到汇编页里对应的那一节。
 - 指向其他已存在文件的链接，直接链到那个文件。
 
 #### DSGN-N-L — 左侧目录的序号和层级
@@ -139,7 +139,7 @@ spec-pipeline 里的 `SPEC-READER.md` 如果还在，只能是指向本篇和 `S
 
 来源：reader PRD 的 PRD-M。
 
-- parent 或任何 sub-feature 的已提交文档有实质修改（尤其是 L1、L2）之后，重新生成（NICE；网页过期由 TST-R 检查）。
+- parent 或任何 sub-feature 的已提交文档有实质修改（尤其是 L1、L2）之后，重新生成（NICE；网页过期由 parent test-plan 的 TST-R 检查）。
 - 用户明确要求时，例如「生成 reader」「生成网页」「reader 太简略了，补全」。
 - 只改了错别字的提交，不必每次都重新生成（NICE）。
 
@@ -182,7 +182,7 @@ spec-pipeline 里的 `SPEC-READER.md` 如果还在，只能是指向本篇和 `S
 ## Further Notes
 
 - 早期手工维护的汇编页，很多 design 只剩一句口号。改为脚本从 markdown 全文生成后，按 DSGN-N-B 检查。
-- parent design 已经写明网页的路径。交付物只有 spec-write 和 spec-review（[ARD-BH](../../../decision-history/spec-driven-development-decision-history.md#ard-bh)）；网页的规则在 `skills/spec-html-standard/`。
+- parent design 已经写明网页的路径。交付物只有 spec-write 和 spec-review（[ARD-BX](../../../decision-history/spec-driven-development-decision-history.md#ard-bx)）；网页的规则在 `skills/spec-html-standard/`。
 
 ## Alternatives Considered
 
@@ -191,7 +191,7 @@ spec-pipeline 里的 `SPEC-READER.md` 如果还在，只能是指向本篇和 `S
 
 ## Drawbacks
 
-- 网页和 markdown 会慢慢不一致，需要 TST-R 检查网页是否过期。
+- 网页和 markdown 会慢慢不一致，需要 parent test-plan 的 TST-R 检查网页是否过期。
 
 ## Risks and Mitigations
 
@@ -230,3 +230,4 @@ spec-pipeline 里的 `SPEC-READER.md` 如果还在，只能是指向本篇和 `S
 | 2026-11-20 | DSGN-N-H 的生成稿与手写稿标记改为与 ARD-AK 一致；「参考」行并回 DSGN-N-A 的表；Implementation Decisions 的重复编号改为 DSGN-N-M、DSGN-N-N 并留对照表；DSGN-N-C 从 Tab 改为全站目录加汇编页（ARD-BG）；DSGN-N-D、DSGN-N-E 去掉已删除的旧 HTML 和 spec-pipeline；Testing Decisions 改指 TST-R、TST-U；全文改写为完整句子（ARD-BK） |
 | 2026-11-20 | 第 1 轮审查后：DSGN-N-D、DSGN-N-F 的 SHOULD、MAY 改为 NICE 或「允许」；DSGN-N-L 写明 pipeline 没有单独页面、内容在汇编页里 |
 | 2026-11-20 | 第 2 轮审查后：每个 DSGN-N 小节写明来源的 reader PRD 编号；DSGN-N-D 加上 PRD-P 的「不放密钥」，样式统一链到 ARD-BY；DSGN-N-K 先按编号前写明的出处链接；对照表链到 ARD-BZ；TST-R、TST-U 写明属于 parent test-plan |
+| 2026-11-20 | 第 3 轮审查后：DSGN-N-K 写明没有单独页面的文档链到汇编页的对应一节；交付物改链 ARD-BX；其余 TST-R 写明属于 parent test-plan |

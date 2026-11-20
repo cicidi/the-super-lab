@@ -19,7 +19,7 @@ Use prose for a single claim, a reason, or a sequence that is not a procedure. O
 
 ## Format
 
-Required headings stay the English text in SPEC-STANDARD, unnumbered. Number a heading only when the section is an ordered procedure (steps). A step reference names the step id; the count of steps in a citation matches the procedure (NICE, ARD-AM, ARD-AZ).
+Required headings stay the English text in SPEC-STANDARD, unnumbered. Number a heading only when the section is an ordered procedure (steps), or when it is the author's own numbered subheading under Problem Statement (ARD-BS). A step reference names the step id; the count of steps in a citation matches the procedure (NICE, ARD-AM, ARD-AZ).
 
 The title, a section, a subsection, and a clause each use a different size, weight, and shape. Body text stays one size. Do not mark those paragraphs with a, b, c or 1, 2, 3.
 

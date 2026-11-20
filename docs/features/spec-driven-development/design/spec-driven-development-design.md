@@ -30,7 +30,7 @@ last_verified: 2026-11-20
 用五篇文档加两个 skill 来解决：
 
 - **五篇文档**：PRD、decision-history、design、impl-plan、test-plan。前三篇反复打磨，稳定后再写后两篇。
-- **两个 skill**：spec-write 负责写和改文档，spec-review 负责检查文档、给出修改建议（[ARD-AJ](../decision-history/spec-driven-development-decision-history.md#ard-aj)、[ARD-BH](../decision-history/spec-driven-development-decision-history.md#ard-bh)）。
+- **两个 skill**：spec-write 负责写和改文档，spec-review 负责检查文档、给出修改建议（[ARD-AJ](../decision-history/spec-driven-development-decision-history.md#ard-aj)、[ARD-BX](../decision-history/spec-driven-development-decision-history.md#ard-bx)）。
 
 ## User Stories
 
@@ -149,7 +149,7 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 
 | 项 | 约定 |
 |---|---|
-| 交付物 | 只有 spec-write 和 spec-review（[ARD-BH](../decision-history/spec-driven-development-decision-history.md#ard-bh)） |
+| 交付物 | 只有 spec-write 和 spec-review（[ARD-BX](../decision-history/spec-driven-development-decision-history.md#ard-bx)） |
 | 两个 skill 读的标准文件 | `skills/spec-organize/SPEC-STANDARD.md`、`skills/spec-html-standard/SPEC-PRESENTATION.md` 和 `skills/spec-html-standard/SPEC-HTML-STANDARD.md`（[ARD-AJ](../decision-history/spec-driven-development-decision-history.md#ard-aj)、[ARD-BX](../decision-history/spec-driven-development-decision-history.md#ard-bx)） |
 | 测试放在哪 | 每个 skill 的测试放在 `skills/<skill>/tests/`；跨 skill 的检查器、gold、报告放在 `skills/spec-organize/tests/`（[ARD-Q](../decision-history/spec-driven-development-decision-history.md#ard-q)） |
 | 打分用的 gold | iPhone 购买案例 `skills/spec-organize/tests/gold/v1/`；本套 spec 是写法样板，由 spec-review 审查，不用来打分（[ARD-BL](../decision-history/spec-driven-development-decision-history.md#ard-bl)） |
@@ -212,7 +212,7 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 |---|---|---|---|---|
 | QUES-A | 两个交付的 skill 要读的标准文件和检查脚本，放在 spec-organize 和 spec-html-standard 目录，这两个目录不算交付物。只把两个 skill 装进别的项目时，怎么把这些文件一起带过去？（[ARD-C](../decision-history/spec-driven-development-decision-history.md#ard-c) 要求 skill 能独立带走） | 未定 | 人决定 | 否 |
 | QUES-B | 产品级成功指标怎么量、基线是多少（PRD-G） | 延后（[ARD-N](../decision-history/spec-driven-development-decision-history.md#ard-n)） | 人决定 | 否 |
-| QUES-C | 以后新增的可替换工具，例如别的 map 工具，要不要写进 skill 契约表 | 未定 | 人决定 | 否 |
+| QUES-C | 以后新增的可替换工具，例如 Map 阶段的其他辅助工具（类似 wayfinder），要不要写进 skill 契约表 | 未定 | 人决定 | 否 |
 | QUES-D | 用 SDD 写出的每份 spec，要不要都带一个「Agent Loop」节，写明目标与约束、什么事件触发 AI 重跑、用什么指标自动评估 | 未定 | 人决定 | 否 |
 
 ## Reversibility
@@ -314,6 +314,8 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 | `skill create`、`skill edit` | 新建和修改 `SKILL.md` 的两个已有 skill 命令 |
 | 触发词 | skill 描述里写的关键词；用户说到这些词时，AI 就知道该用这个 skill |
 | MkDocs | 一种把 markdown 生成网站的工具 |
+| CI | 持续集成（continuous integration）：代码推送后，服务器自动跑检查和测试 |
+| hook、git hook、pre-push hook | 在某个时刻自动运行的脚本。git hook 在 git 提交或推送时运行；pre-push hook 在推送之前运行 |
 | Mermaid | 一种用文字描述流程图、由浏览器画出来的格式 |
 | 检查脚本（checker） | `tools/run_spec_checks.py` 等 Python 脚本，自动检查路径、章节、编号这类机械规则 |
 | MUST 清单（registry） | `must_registry.yaml`，列出所有 MUST 规则以及每条由谁来检查（脚本或 LLM） |
@@ -368,3 +370,4 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 | 2026-11-20 | 补齐 Alternatives Considered、Drawbacks、Risks and Mitigations、Open Questions、Reversibility 五个必需章节；规则小节 §4–§8 改为 DSGN-A–E 并留对照表；新增全套唯一的术语表附录；User Stories 和 Out of Scope 改为链到 PRD，不再重复；gold 改为 iPhone 案例（ARD-BL）；全文改写为完整句子（ARD-BK） |
 | 2026-11-20 | 第 1 轮审查后：DSGN-A 改为两条都要满足（ARD-BP）；DSGN-D 写明来源 PRD-B、PRD-P；DSGN-A 到 DSGN-E 上方保留旧锚点（ARD-AP）；术语表补上 SDD、LLM、阶段、上下游、阶段编排、进度回顾、大改、walter-worker、BMAD、GSD、分数 1、分数 2、复核、基线、run_id；SHOULD 改为等同 NICE |
 | 2026-11-20 | 第 2 轮审查后：标准文件改为三份（ARD-BX）；DSGN-A 到 DSGN-E 加短锚点 `dsgn-a` 到 `dsgn-e`；对照表链到 ARD-BZ；术语表改正 ARD 的来历，补上 SPEC-HTML-STANDARD、spec-organize 的几种模式、skill create、触发词、MkDocs、Mermaid、wayfinder-import |
+| 2026-11-20 | 第 3 轮审查后：交付物改链 ARD-BX；术语表补上 CI、hook；QUES-C 的「map 工具」改为 Map 阶段的辅助工具 |

@@ -13,7 +13,7 @@ last_verified: 2026-11-20
 
 ## Problem Statement
 
-spec-write 和 spec-review 是仅有的两个交付物（[ARD-BH](../decision-history/spec-driven-development-decision-history.md#ard-bh)）。如果它们的职责只写在各自的 `SKILL.md` 里，改 skill 的人可以随手改掉职责边界，而没人察觉。所以需要一份独立的契约：说清每个 skill 什么时候用、要什么输入、产出什么、不能做什么。
+spec-write 和 spec-review 是仅有的两个交付物（[ARD-BX](../decision-history/spec-driven-development-decision-history.md#ard-bx)）。如果它们的职责只写在各自的 `SKILL.md` 里，改 skill 的人可以随手改掉职责边界，而没人察觉。所以需要一份独立的契约：说清每个 skill 什么时候用、要什么输入、产出什么、不能做什么。
 
 ## Solution
 
@@ -25,7 +25,7 @@ spec-write 和 spec-review 是仅有的两个交付物（[ARD-BH](../decision-hi
 |---|---|---|---|---|
 | spec-write | 新建或修改 spec 文档 | 用户的意图；三份标准文件 | 改好的文档 | 动笔前没判断「新建哪篇、还是改哪几篇」；一次改动超过 10 行或超过 200 字符而没有授权（parent design 的 DSGN-A）；悄悄改动上游文档 |
 | spec-review | 提交前；或者有人要求审查设计 | 要审的文档目录或改动；三份标准文件 | 一张问题表，每个问题有严重度和修改建议；一次只问用户一个问题 | 直接改文档；改写别人的结论；讨论严重度 1 或 2 的小问题 |
-| spec-organize（内部工具，不交付） | 检查或整理路径、格式、INDEX（document-standard 的 DSGN-L） | 文档目录 | 格式问题的修正（受 parent design 的 DSGN-A 改动上限约束，[ARD-BV](../decision-history/spec-driven-development-decision-history.md#ard-bv)），或一份问题清单 | 改动文档的内容；当作交付物或入口（[ARD-BH](../decision-history/spec-driven-development-decision-history.md#ard-bh)） |
+| spec-organize（内部工具，不交付） | 检查或整理路径、格式、INDEX（document-standard 的 DSGN-L） | 文档目录 | 格式问题的修正（受 parent design 的 DSGN-A 改动上限约束，[ARD-BV](../decision-history/spec-driven-development-decision-history.md#ard-bv)），或一份问题清单 | 改动文档的内容；当作交付物或入口（[ARD-BX](../decision-history/spec-driven-development-decision-history.md#ard-bx)） |
 
 几项能力落在哪里：
 
@@ -101,3 +101,4 @@ spec-write 和 spec-review 是仅有的两个交付物（[ARD-BH](../decision-hi
 | 2026-11-20 | 全文改写为完整句子；Problem Statement 写明为什么需要契约；Alternatives 不再引用已推翻的 ARD-AB；Open Questions 链到 parent 的唯一问题清单；加入可读性的落点与 TST-V（ARD-BK、ARD-BO） |
 | 2026-11-20 | 第 1 轮审查后：契约表加 spec-organize 一行，写明它是内部工具、不交付；PIPE 子条款编号改为字母（ARD-BR） |
 | 2026-11-20 | 第 2 轮审查后：标准文件改为三份（ARD-BX）；spec-organize 修格式同样受改动上限约束（ARD-BV）；改动上限写成「超过 10 行或超过 200 字符」都算超 |
+| 2026-11-20 | 第 3 轮审查后：交付物改链 ARD-BX（ARD-BH 已被它取代） |

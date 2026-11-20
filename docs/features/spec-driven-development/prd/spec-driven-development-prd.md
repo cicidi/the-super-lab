@@ -141,7 +141,7 @@ AI 要把大问题拆成小的：能查的 AI 自己查（合规、财报、交�
 
 **PRD-O**：执行阶段不真下单、不真订票。所有例子共用一个 mock MCP 服务器，提供几个固定的工具；客户端调用后打印出调用记录，就算交付成功。
 
-**PRD-P**：最终交付物只有 spec-write 和 spec-review 两个 skill（[ARD-BH](../decision-history/spec-driven-development-decision-history.md#ard-bh)）。用它们写出来的 spec，要满足 PRD-K 到 PRD-O。
+**PRD-P**：最终交付物只有 spec-write 和 spec-review 两个 skill（[ARD-BX](../decision-history/spec-driven-development-decision-history.md#ard-bx)）。用它们写出来的 spec，要满足 PRD-K 到 PRD-O。
 
 **PRD-Q**：书写、命名、检查、更新，以及 PRD-K 到 PRD-O，都是需求；spec-write 和 spec-review 能做的事不限于这几件。两个 skill 的正文里都要写出四个例子：盖 shed、北京旅游、数学题、股票。skill 好不好用，只看测试结果。
 
@@ -179,3 +179,4 @@ AI 要把大问题拆成小的：能查的 AI 自己查（合规、财报、交�
 | 2026-11-18 | PRD-P：交付只有 spec-write 与 spec-review（ARD-BH） |
 | 2026-11-20 | PRD-M 改为通过条件（ARD-BO）；PRD-A、B、D、E 改写成可检查的句子，PRD-D 与 DSGN-B 的行数上限对齐；PRD-P 去掉删除线（ARD-BM）；Overview、Goals、Solution 改为完整句子并链到术语表（ARD-BK） |
 | 2026-11-20 | 第 1 轮审查后：PRD-C 改为两条都要满足（ARD-BP）；PRD-D 写明 decision-history 例外；PRD-M 与 TST-V 对齐，允许查术语表；PRD-J 链到 ARD-BT；Problem Statement 保留原话（ARD-BS） |
+| 2026-11-20 | 第 2、3 轮审查后：Resources 写明三份标准文件；PRD-P 改链 ARD-BX（ARD-BH 已被它取代） |

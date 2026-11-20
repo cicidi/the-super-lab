@@ -40,7 +40,7 @@ parent PRD 讲了上游的问题（见 [PRD](../../../prd/spec-driven-developmen
 
 ## Implementation Decisions
 
-- **分工：** 标准写在 `SPEC-STANDARD.md` 和 `SPEC-PRESENTATION.md`；写文档用 spec-write；审文档用 spec-review。spec-pipeline 和 spec-organize 都不是入口（[ARD-AJ](../../../decision-history/spec-driven-development-decision-history.md#ard-aj)）。
+- **分工：** 标准写在三份标准文件 `SPEC-STANDARD.md`、`SPEC-PRESENTATION.md`、`SPEC-HTML-STANDARD.md`；写文档用 spec-write；审文档用 spec-review。spec-pipeline 和 spec-organize 都不是入口（[ARD-BX](../../../decision-history/spec-driven-development-decision-history.md#ard-bx)）。
 - **Map 以访谈为主：** AI 判断是否要记一条决定、是否建议拆出新 feature、是否只在草稿里留个线索。人确认之后，才创建 `docs/features/<f>/` 目录（[ARD-BU](../../../decision-history/spec-driven-development-decision-history.md#ard-bu)）。
 - **辅助工具可替换：** Map 阶段的辅助工具（例如 wayfinder）通过 PIPE-G 的推荐表使用，随时可以换，不在 SDD 交付物里。
 - **进度记在哪：** feature 名字还没定的时候，进度只记在 `CLAUDE.local.md`（或项目的 CLAUDE 层），不建 `raw/state/` 文件。名字定了之后，正式进度记在 `docs/features/<f>/raw/state/state-<YYYY-MM-DD>.md`（document-standard 的 DSGN-B、DSGN-C）。
@@ -48,7 +48,7 @@ parent PRD 讲了上游的问题（见 [PRD](../../../prd/spec-driven-developmen
 - **不引入重框架：** 后期的任务管理接入别的 skill，本篇不引入 BMAD、GSD 这类完整的项目管理框架。
 - **协作：** 读上游文档，不悄悄改。发现冲突时按「发现、报告、问人」处理（document-standard 的 DSGN-G）。
 - **编号：** 本篇的规则编号用 `PIPE-` 前缀；DSGN 留给 document-standard。
-- **子问题归属表不适用：** 本篇是流程设计，没有需要 AI 查或人决定的子问题（PIPE-L 允许这样注明）。还没定的事项见 [Open Questions](#open-questions)。
+- **子问题归属表不适用：** 本篇是纯流程的 design，PIPE-L 允许这样注明。还没定的事项和它们的负责人见 [Open Questions](#open-questions)。
 
 ## Design
 
@@ -67,7 +67,7 @@ parent PRD 讲了上游的问题（见 [PRD](../../../prd/spec-driven-developmen
 
 | 阶段 | 目的 | 常见的失败 |
 |---|---|---|
-| Create | 定暂定名，收集背景 | PRD 没有落地，背景只存在聊天记录里 |
+| Create | 定暂定名，收集背景 | 粗略 PRD 和背景没写进 `CLAUDE.local.md`，只存在聊天记录里 |
 | Map | 弄清已知和未知，判断要不要拆 | 没访谈就建目录 |
 | Converge | PRD、design、decision-history 打磨到足够稳定 | 还有没定的决定，design 就写死了 |
 | Downstream | 同时写 test-plan 和 impl-plan | test-plan 没有回归检查；impl-plan 没有先后顺序 |
@@ -75,13 +75,13 @@ parent PRD 讲了上游的问题（见 [PRD](../../../prd/spec-driven-developmen
 ### PIPE-C — Create（立项）
 
 1. 给 feature 起一个暂定名，记在 `CLAUDE.local.md`。这时还不建目录，目录在 Map 阶段人确认后才建（PIPE-D 第 5 步）。
-2. 写一份粗略的 PRD，例如「推荐一台 iPhone 并协助购买」。可以先写草稿，不要求一次写齐 PIPE-E-B 的五项。
-3. 把搜索和调研得到的背景写进 `CLAUDE.local.md`（或项目的 CLAUDE 层）。它不能代替已提交的 PRD。
+2. 写一份粗略的 PRD，例如「推荐一台 iPhone 并协助购买」。这时还没有目录，粗略 PRD 先写在 `CLAUDE.local.md` 里；不要求一次写齐 PIPE-E-B 的五项。
+3. 把搜索和调研得到的背景也写进 `CLAUDE.local.md`（或项目的 CLAUDE 层）。目录建好以后，粗略 PRD 要整理成已提交的 PRD，`CLAUDE.local.md` 不能代替它。
 
 ### PIPE-D — Map（摸底）
 
 1. 访谈用户（评测时用 context 包代替用户），由 AI 整理出已知和未知。
-2. AI 判断下一步，没有固定要产出的文件：是否建议拆出新 feature、是否要记一条决定、是否只在草稿里留个线索，还是先不拆，直接进入 Converge。
+2. AI 判断下一步，没有固定要产出的文件：是否建议拆出新 feature、哪些结论以后要记成决定、是否只在草稿里留个线索，还是先不拆，直接进入 Converge。要记的决定先列在 `CLAUDE.local.md`，第 5 步建好目录后再写进 decision-history。
 3. 给出 Map 的结论回顾：判断的要点、建议的拆法、还没定的事项。
 4. 可选：调用一个可替换的辅助工具（例如 wayfinder），但它不能代替访谈。
 5. 人确认拆法和名字之后，才用 walter-worker 的 feature create 命令建 `docs/features/<f>/` 目录；要不要放进 parent 的 `features/` 下面，见 parent design 的「目录结构」一节。没有人确认，也不能移动已提交的文档（[ARD-BU](../../../decision-history/spec-driven-development-decision-history.md#ard-bu)）。
@@ -159,6 +159,8 @@ wayfinder 等辅助工具随时可以换，不是 SDD 必须安装的交付物�
 执行只做到 mock（PRD-O）：所有例子共用一个 mock MCP 服务器，打印出调用记录就算成功，不真下单、不真订票（[ARD-X](../../../decision-history/spec-driven-development-decision-history.md#ard-x)）。四个例子（盖 shed、北京旅游、数学题、股票）写进 skill 正文，不在本仓库建 gold。
 
 ### PIPE-L — 子问题归属和证据
+
+来源：PRD-L（子问题归属）、PRD-N（结论要有依据，查不到写 UNKNOWN）。
 
 有子问题的 feature，它的 design 必须有一张「子问题归属」表。纯标准或纯流程的 design 可以注明不适用。
 
@@ -260,3 +262,4 @@ Map 的拆分标准见 PIPE-D 第 6 步。还没定的事项见 [Open Questions]
 | 2026-11-20 | Solution 不再说 spec-pipeline 是统一入口，四阶段改为编号步骤（ARD-AJ）；PIPE-A2 和 PIPE-G 不再要求调用 spec-organize，改为检查脚本或 Lint；PIPE-C 的「六要素」改为 PIPE-E2 的五项（ARD-Z）；PIPE-E1 写明阻塞标记写在问题清单的「阻塞」列（ARD-AG）；Alternatives 不再引用已推翻的 ARD-AB；删除指向已不存在的 workflow HTML 的链接；Open Questions 改为 QUES 清单；全文改写为完整句子（ARD-BK） |
 | 2026-11-20 | 第 1 轮审查后：子条款编号改为字母并在 Further Notes 留对照表（ARD-BR）；PIPE-H 链到 ARD-BT；Testing Decisions 改正 TST-O 的说法；「可以（MAY）」改为「允许」 |
 | 2026-11-20 | 第 2 轮审查后：建目录从 Create 移到 Map 人确认后（ARD-BU）；PIPE-A-C 允许 Lint 直接修格式（ARD-BV）；PIPE-K、PIPE-L 写明 raw/ 可作依据（ARD-BW），PIPE-K 加上 PRD-O 的 mock 规则；开头写明 PRD-*、TST-* 指 parent |
+| 2026-11-20 | 第 3 轮审查后：粗略 PRD 和要记的决定在目录建好前先写在 CLAUDE.local.md（PIPE-B、PIPE-C、PIPE-D）；PIPE-L 写明来源 PRD-L、PRD-N；子问题归属表不适用的理由改为只引 PIPE-L；标准文件改为三份（ARD-BX） |

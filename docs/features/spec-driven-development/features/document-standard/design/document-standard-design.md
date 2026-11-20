@@ -62,11 +62,11 @@ feature 文档一多，如果没有统一标准，会出现四类问题：
 
 ## Implementation Decisions
 
-- 本篇的规则会摘要写进 `SPEC-STANDARD.md` 和 `SPEC-PRESENTATION.md`，spec-write 和 spec-review 读的是这两份摘要（[ARD-AJ](../../../decision-history/spec-driven-development-decision-history.md#ard-aj)）。摘要和本篇不一致时，先改本篇，再改摘要。
+- 本篇的规则会摘要写进 `SPEC-STANDARD.md` 和 `SPEC-PRESENTATION.md`；reader design 的规则摘要写进 `SPEC-HTML-STANDARD.md`。spec-write 和 spec-review 读的是这三份摘要（[ARD-BX](../../../decision-history/spec-driven-development-decision-history.md#ard-bx)）。摘要和本篇不一致时，先改本篇，再改摘要。
 - 格式类的 MUST 由检查脚本执行；内容类的问题由 spec-review 报告。
 - how-to 暂不做机械检查；其他五种文档按 DSGN-E 检查。
 - 已有的不合规文档不迁移，只报告（[ARD-AF](../../../decision-history/spec-driven-development-decision-history.md#ard-af)）。
-- 本篇是一份纯标准，没有需要 AI 去查、或要人来决定的子问题，所以「子问题归属表」不适用（pipeline design 的 PIPE-L 允许这样注明）。还没定的事项见 [Open Questions](#open-questions)。
+- 本篇是一份纯标准，「子问题归属表」不适用（pipeline design 的 PIPE-L 允许这样注明）。还没定的事项和它们的负责人见 [Open Questions](#open-questions)。
 
 ## Design
 
@@ -207,7 +207,7 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 
 可选字段：`spec_id`、`version`、`health`（`active`、`stale` 或 `deprecated`）、`owner`、`last_verified`、`audience`（`internal` 或 `external`，[ARD-AL](../../../decision-history/spec-driven-development-decision-history.md#ard-al)）。表示文档健康状况的字段叫 `health`，不叫 `status`（[ARD-D](../../../decision-history/spec-driven-development-decision-history.md#ard-d)）。
 
-**必需章节（MUST）。** 每种文档必须有下面这些 `##` 章节。标题用英文原文，不翻译、不编号、不改名、不删；可以另外加章节（[ARD-AW](../../../decision-history/spec-driven-development-decision-history.md#ard-aw)）。比如把 Overview 写成 `## 1. 概述` 就违反规则。
+**必需章节（MUST）。** 每种文档必须有下面这些 `##` 章节。标题用英文原文，不翻译、不编号、不改名、不删；可以另外加章节。比如把 Overview 写成 `## 1. 概述` 就违反规则。其他章节只有写有序步骤时才编号；例外是 Problem Statement 下面作者原话的小标题可以保留编号（[ARD-BS](../../../decision-history/spec-driven-development-decision-history.md#ard-bs)）。
 
 | 类型 | 必需章节 |
 |---|---|
@@ -508,3 +508,4 @@ design 管「想要怎样」，代码管「现在怎样」和内部结构。机�
 | 2026-11-20 | 全文改写为完整句子；术语表改为链到 parent design；标题去掉「待 Review」；DSGN-B 大表拆成「路径」和「行数」两张；DSGN-F 改已有正文改为只写现行规则、删除线只在 decision-history（ARD-BM）；DSGN-M 分 MUST 与 NICE（ARD-BN）；Testing Decisions 被测改为 spec-write 与 spec-review；Open Questions 改为 QUES 清单；补写子问题归属不适用的说明（ARD-BK） |
 | 2026-11-20 | 第 1 轮审查后：DSGN-E 加入可读性、未决问题清单、引用代码、impl 依赖两头对得上（ARD-BO、ARD-BS）；DSGN-C 加翻译副本、DSGN-F 加对照表和旧锚点、DSGN-J 加每条 ARD 都有说明，原来只在 Further Notes 里的规则移进正文；DSGN-B 六种文档都可拆分篇并需入口文件（ARD-BQ），写明辅助文件例外；跨 feature 的编号写明出处 |
 | 2026-11-20 | 第 2 轮审查后：`.gitignore` 规则改为 `docs/features/**/raw/`；raw/ 草稿可作依据、指向 raw/ 的链接不算死链（ARD-BW）；DSGN-J 删去和 parent DSGN-B 重复的表，只留链接；DSGN-M 的条目改写成完整句子；PROTECTED、`sections.py`、`registry_provenance` 第一次出现时解释；指向 parent test-plan、impl-plan 的编号写明出处 |
+| 2026-11-20 | 第 3 轮审查后：DSGN-A 写明三份摘要（ARD-BX）；DSGN-E 写明 Problem Statement 小标题可以保留编号（ARD-BS 重述 ARD-AW）；DSGN-J 写明只推翻一部分时也整行划掉；子问题归属表不适用的理由改为只引 PIPE-L |

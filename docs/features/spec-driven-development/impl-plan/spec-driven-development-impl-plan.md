@@ -25,7 +25,7 @@ last_verified: 2026-11-20
 
 **目标：** `doc-organize` 改名为 `spec-organize`，`doc-review` 改名为 `spec-review`。
 
-**步骤：** 用 `git mv` 移动目录；改 `SKILL.md` 里的 `name:` 和互相引用；部署时更新 `~/.coworker/project.yaml` 里的 skill 列表。
+**步骤：** 用 `git mv` 移动目录；改 `SKILL.md` 里的 `name:` 和互相引用；部署时更新 `~/.coworker/project.yaml`（作者本机记录各项目装了哪些 skill 的配置文件）里的 skill 列表。
 
 **依赖：** 无。**挡住：** IMPL-B、IMPL-C。
 
@@ -233,3 +233,4 @@ last_verified: 2026-11-20
 | 2026-11-20 | 每个 IMPL 写明依赖和挡住谁，执行顺序改为分组；IMPL-B 改为 spec-write 和 spec-review；IMPL-D、IMPL-E 改回 iPhone gold（ARD-BL）；IMPL-F 改为全站网页（ARD-BG）；验收的分数 2 从「不低于 6」改为「不低于上一次」，和 ARD-R、test-plan 一致；新增 IMPL-P（markdown 以外的欠账）和 IMPL-Q（可读性测试）；全文改为中文（ARD-BK） |
 | 2026-11-20 | 第 1 轮审查后：依赖和挡住两头对齐（C 挡住 F；D 挡住 L；J 挡住 Q；E 依赖 J、L、Q；I 依赖 E） |
 | 2026-11-20 | 第 2 轮审查后：IMPL-C 改为三份标准摘要（ARD-BX）；IMPL-P 加上 `.gitignore` 和 raw/ 链接两项，数字改为 15/32，解释 System Context 豁免；新增 IMPL-R（CLAUDE 层同步）；IMPL-G 写明暂定名也记在 CLAUDE.local.md（ARD-BU） |
+| 2026-11-20 | 第 3 轮审查后：IMPL-A 解释 `~/.coworker/project.yaml` |

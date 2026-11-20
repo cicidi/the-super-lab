@@ -106,7 +106,7 @@ Detect, then report, then ask; never silently pick the spec side or the code sid
 
 Write behavior, contracts, invariants, constraints, error semantics, and boundaries. Do not write class hierarchies, private methods, or internal algorithms (`SPEC-SCOPE.md`). Levels L1–L4: never delete L1.
 
-A translation copy `<name>.<lang>.md` is local only and names the source (ARD-AU). Required headings stay English and unnumbered. Numbered headings are only for an ordered procedure (ARD-AW). Expression form is `skills/spec-html-standard/SPEC-PRESENTATION.md`.
+A translation copy `<name>.<lang>.md` is local only and names the source (ARD-AU). Required headings stay English and unnumbered. Numbered headings are only for an ordered procedure; the one exception is the author's own numbered subheadings under Problem Statement (ARD-BS, which restates ARD-AW). Expression form is `skills/spec-html-standard/SPEC-PRESENTATION.md`.
 
 ## Chapter 3 — Evidence, citation, reference, commit
 

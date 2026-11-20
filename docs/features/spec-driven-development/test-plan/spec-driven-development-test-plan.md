@@ -12,8 +12,8 @@ last_verified: 2026-11-20
 
 本篇是整个 SDD 唯一的测试计划，sub-feature 不另写。
 
-- **被测对象：** spec-write 和 spec-review 两个 skill。它们是仅有的交付物（[ARD-BH](../decision-history/spec-driven-development-decision-history.md#ard-bh)）。
-- **判断对错的依据：** `SPEC-STANDARD.md` 和 `SPEC-PRESENTATION.md`，以及它们摘要的 document-standard design。
+- **被测对象：** spec-write 和 spec-review 两个 skill。它们是仅有的交付物（[ARD-BX](../decision-history/spec-driven-development-decision-history.md#ard-bx)）。
+- **判断对错的依据：** 三份标准文件 `SPEC-STANDARD.md`、`SPEC-PRESENTATION.md`、`SPEC-HTML-STANDARD.md`，以及它们摘要的 document-standard design 和 reader design（[ARD-BX](../decision-history/spec-driven-development-decision-history.md#ard-bx)）。
 - **验收方式：** 人不读 skill 的正文；skill 好不好用，只看本计划的测试结果。
 
 术语见 [parent design 的术语表](../design/spec-driven-development-design.md#glossary)。
@@ -150,7 +150,7 @@ last_verified: 2026-11-20
 
 ### TST-O — PRD 到 design 的追溯
 
-**目标：** PRD 的每条需求，在 design 里都有对应的规则。**输入：** parent PRD、document-standard 的 reader PRD，以及 parent design、pipeline design、document-standard design 和它的 reader 分篇。**通过条件：** 两份 PRD 的每个 `PRD-*` 都至少对应一个 `DSGN-*` 或 `PIPE-*`；有没对应上的就失败。**判定：** Python 比对编号集合。
+**目标：** PRD 的每条需求，在 design 里都有对应的规则。**输入：** parent PRD、document-standard 的 reader PRD，以及 parent design、pipeline design、document-standard design 和它的 reader 分篇。**通过条件：** 两份 PRD 的每个 `PRD-*` 都至少对应一个 `DSGN-*` 或 `PIPE-*`。两份 PRD 的编号会重复（都有 PRD-A），所以按 feature 分开比对：parent 的 PRD 对 parent design、pipeline design 和 document-standard design，reader PRD 对 reader design。parent 的 PRD-G 已延后（[ARD-N](../decision-history/spec-driven-development-decision-history.md#ard-n)），不要求对应；有没对应上的就失败。**判定：** Python 比对编号集合。
 
 ### TST-P — 子问题归属、证据、UNKNOWN
 
@@ -284,3 +284,4 @@ document-standard 的 reader PRD：
 | 2026-11-20 | gold 改回 iPhone 案例，资产表与 TST-C 去掉删除线（ARD-BL、ARD-BM）；新增 TST-V 可读性测试，PRD-M 从 Unverified 改为由 TST-V 覆盖（ARD-BO）；TST-E、TST-F、TST-G 和发布门槛从 spec-organize 改为 spec-write 和 spec-review；「checker」改称「复核」，避免和检查脚本混淆；TST-U 改为删除线只在 decision-history；TST-A、TST-N 改引 parent design 的 DSGN 编号；TST-S、TST-T 按编号顺序排列；追溯表补上能对应的测试；全文改写为完整句子（ARD-BK） |
 | 2026-11-20 | 第 1 轮审查后：`eval.yaml` 的说明从一个表格单元拆成逐键的表 |
 | 2026-11-20 | 第 2 轮审查后：TST-A 扫描所有 design 分篇和 parent 的 DSGN-E；TST-O 加入 reader PRD，追溯表加 reader PRD 一节；TST-V 分两次跑（先测 SDD 文档，spec-write 跑完再测它的产出）；PRD-H 改为 Unverified |
+| 2026-11-20 | 第 3 轮审查后：判断依据改为三份标准文件，交付物改链 ARD-BX；TST-O 按 feature 分开比对编号，PRD-G 已延后不要求对应 |
