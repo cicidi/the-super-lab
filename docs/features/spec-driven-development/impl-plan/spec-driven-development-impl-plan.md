@@ -201,7 +201,7 @@ last_verified: 2026-11-20
 
 **依赖：** IMPL-C。**挡住：** 无。
 
-**Verify:** CLAUDE 层里关于改动上限的句子写的是「并且」，并引用 PRD-C；没有引用 `FR-` 这类已禁止的编号。
+**Verify:** CLAUDE 层里：改动上限写的是「并且」，并引用 PRD-C；没有 `FR-` 这类已禁止的编号；进度路径是 `CLAUDE.local.md` 或 `raw/state/`（PRD-J）；文档目录是 `docs/features/<f>/<类型>/`（document-standard 的 DSGN-B）；列出的 skill 只有 spec-write 和 spec-review（ARD-BX）。2026-11-20 已按这几条改过 `CLAUDE.local.md`。
 
 ## Execution order
 
@@ -233,4 +233,4 @@ last_verified: 2026-11-20
 | 2026-11-20 | 每个 IMPL 写明依赖和挡住谁，执行顺序改为分组；IMPL-B 改为 spec-write 和 spec-review；IMPL-D、IMPL-E 改回 iPhone gold（ARD-BL）；IMPL-F 改为全站网页（ARD-BG）；验收的分数 2 从「不低于 6」改为「不低于上一次」，和 ARD-R、test-plan 一致；新增 IMPL-P（markdown 以外的欠账）和 IMPL-Q（可读性测试）；全文改为中文（ARD-BK） |
 | 2026-11-20 | 第 1 轮审查后：依赖和挡住两头对齐（C 挡住 F；D 挡住 L；J 挡住 Q；E 依赖 J、L、Q；I 依赖 E） |
 | 2026-11-20 | 第 2 轮审查后：IMPL-C 改为三份标准摘要（ARD-BX）；IMPL-P 加上 `.gitignore` 和 raw/ 链接两项，数字改为 15/32，解释 System Context 豁免；新增 IMPL-R（CLAUDE 层同步）；IMPL-G 写明暂定名也记在 CLAUDE.local.md（ARD-BU） |
-| 2026-11-20 | 第 3 轮审查后：IMPL-A 解释 `~/.coworker/project.yaml` |
+| 2026-11-20 | 第 3 轮审查后：IMPL-A 解释 `~/.coworker/project.yaml`；IMPL-R 的检查加上进度路径、文档目录和 skill 列表 |

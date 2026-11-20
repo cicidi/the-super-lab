@@ -82,10 +82,10 @@ rule: spec and code each own their concern, and a conflict is reported, not sile
 
 Illustrations, not gold. Report only. Do not edit the spec.
 
-- **盖 shed**: a design that skips the permit limit is severity 4. Write the gap under `docs/features/garden-shed/raw/discussion/`.
+- **盖 shed**: a design that skips the permit limit is severity 4. Write the gap under `docs/features/garden-shed/raw/review/`.
 - **北京旅游**: "the hotel is cheap" with no source is severity 3. Ask for a URL, or require `UNKNOWN`.
 - **数学题**: a heading `## 1. 概述` is a mechanical MUST. Suggest the English unnumbered heading. Do not rename it yourself. A proof step that uses "紧集" without explaining it is a readability finding at severity 3.
-- **股票**: a price target with no filing citation is severity 4. The report goes in `raw/work-review/`, not a committed `docs/work-review/`.
+- **股票**: a price target with no filing citation is severity 4. The report goes in `raw/review/`, not a committed `docs/work-review/`.
 
 ## Process
 
@@ -137,7 +137,7 @@ Step 0 is the only way to ask. One table row at a time. Do not add a second menu
 3. Search the web for conflicting evidence or better patterns (at least one
    search per major claim).
 4. Rate every finding 1-5 using the severity scale.
-5. Write `docs/features/<f>/raw/discussion/YYYY-MM-DD-<topic>-gaps.md` (do not commit `raw/`):
+5. Write `docs/features/<f>/raw/review/YYYY-MM-DD-spec-review-<topic>-gaps.md` (document-standard DSGN-B naming; do not commit `raw/`):
 
 ```markdown
 # Gap Report — {document}
@@ -204,7 +204,7 @@ The coordinator (the driving agent):
 
 #### Phase 3: Report
 
-Write `docs/features/<f>/raw/discussion/YYYY-MM-DD-<topic>-review.md` (do not commit `raw/`):
+Write `docs/features/<f>/raw/review/YYYY-MM-DD-spec-review-<topic>.md` (do not commit `raw/`):
 
 ```markdown
 # Review Report — {document}
@@ -244,7 +244,7 @@ Gather all work context:
 3. Read git log (commits since base branch).
 4. Scan the test directory and existing test files.
 
-Synthesize `docs/features/<f>/raw/work-review/YYYY-MM-DD-<topic>/acceptance.md` (do not commit `raw/`) with three sections:
+Synthesize `docs/features/<f>/raw/review/YYYY-MM-DD-spec-review-<topic>-acceptance.md` (do not commit `raw/`) with three sections:
 
 **Acceptance Criteria** — derived from the source documents. Each criterion has
 a source (doc + line), priority (MUST/SHOULD/NICE), and what "done" means.
@@ -270,7 +270,7 @@ Execute the test plan:
 
 ### Phase 3: Sign-Off
 
-Produce `docs/features/<f>/raw/work-review/YYYY-MM-DD-<topic>/report.md` (do not commit `raw/`):
+Produce `docs/features/<f>/raw/review/YYYY-MM-DD-spec-review-<topic>-report.md` (do not commit `raw/`):
 
 **REJECTED** (any FAIL or MISSING criterion):
 - Failed criteria table: #, criterion, status (FAIL/MISSING), reason, fix target
@@ -290,7 +290,7 @@ Produce `docs/features/<f>/raw/work-review/YYYY-MM-DD-<topic>/report.md` (do not
 - [ ] Web search performed for at least one major claim in full adversarial review
 - [ ] Two independent reviewers used in full adversarial mode
 - [ ] Debate capped at 3 rounds per issue
-- [ ] All debate and ruling files written under `raw/discussion/` or `raw/work-review/`, and not committed
+- [ ] All debate and ruling files written under `raw/review/`, and not committed
 - [ ] Work completion: acceptance.md has all 3 sections (criteria, test plan, regression)
 - [ ] Work completion: Reviewer actually executes tests, doesn't just read code
 - [ ] Report always generated (GAPS.md for quick scan, review.md for full, report.md for work)

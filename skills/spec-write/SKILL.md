@@ -59,7 +59,7 @@ Illustrations, not gold. Each edit stays within 10 lines and 200 characters.
 10. A pure standard or orchestration design may say the ownership table does not apply. If every tracker row has Owner and Evidence, link to the tracker instead of copying the table.
 11. A `file:line` citation names the commit. A renamed heading keeps the old anchor above the new title.
 12. **Readability pass.** Reread each changed section as an undergraduate programmer who has only this document and the glossary (parent design appendix). Rewrite any keyword list or arrow chain as sentences. Explain or link every term at first use; add missing terms to the glossary.
-13. After a markdown edit, rebuild the one site with `python3 tools/build_sdd_site.py`. Each page is one directory line. A feature page keeps that feature's directory on the left and the page on the right. A hand-maintained HTML file keeps `spec-source-sha256`.
+13. After a markdown edit, prompt the user to rebuild the one site with `python3 tools/build_sdd_site.py`; rebuild only when the user asks (reader design DSGN-N-E). Each page is one directory line. A feature page keeps that feature's directory on the left and the page on the right. A hand-maintained HTML file keeps `spec-source-sha256`.
 
 ### By type (quick)
 
@@ -72,7 +72,7 @@ Illustrations, not gold. Each edit stays within 10 lines and 200 characters.
 | **test-plan** | **TST-*** cases; execution order; pass threshold; a Traceability table listing every `PRD-*` |
 | **any** | Changing an existing sentence: write the current rule and link the ARD that changed it. No strikethrough outside decision-history (ARD-BM). A typo may be edited in place |
 
-After substantive spec edits, rebuild the site with `python3 tools/build_sdd_site.py`. The reader assembly, when needed, is `python3 tools/build_sdd_reader.py`. HTML does not change the spec.
+After substantive spec edits, prompt the user to rebuild the site with `python3 tools/build_sdd_site.py`. The reader assembly, when needed, is `python3 tools/build_sdd_reader.py`. HTML does not change the spec.
 
 ### Section headings (MUST)
 

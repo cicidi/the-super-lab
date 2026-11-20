@@ -158,6 +158,16 @@ AI 要把大问题拆成小的：能查的 AI 自己查（合规、财报、交�
 - spec-write、spec-review 两个 skill，以及它们要读的三份标准文件（[ARD-BX](../decision-history/spec-driven-development-decision-history.md#ard-bx)）和一份 test-plan。不需要外部服务，也不需要数据库。
 - 评测需要 `deepseek-flash` 的 API，以及每次评测跑 3 次的费用。跑分结果和报告不提交（[ARD-AD](../decision-history/spec-driven-development-decision-history.md#ard-ad)）。
 
+进入下游前，PRD 要写清的五项（pipeline design 的 PIPE-E-B）：
+
+| 项 | 本 PRD |
+|---|---|
+| 限制 | 每次改动不超过 10 行并且不超过 200 字符（PRD-C）；文档行数有上限（PRD-D） |
+| 偏好 | not apply |
+| 时间 | not apply |
+| 资源 | 上面列出的 `deepseek-flash` API 和评测费用 |
+| 工具 | spec-write、spec-review、`run_spec_checks.py` 检查脚本、mock MCP 服务器（PRD-O） |
+
 ## Change Log
 
 | Date | Change |
@@ -180,3 +190,4 @@ AI 要把大问题拆成小的：能查的 AI 自己查（合规、财报、交�
 | 2026-11-20 | PRD-M 改为通过条件（ARD-BO）；PRD-A、B、D、E 改写成可检查的句子，PRD-D 与 DSGN-B 的行数上限对齐；PRD-P 去掉删除线（ARD-BM）；Overview、Goals、Solution 改为完整句子并链到术语表（ARD-BK） |
 | 2026-11-20 | 第 1 轮审查后：PRD-C 改为两条都要满足（ARD-BP）；PRD-D 写明 decision-history 例外；PRD-M 与 TST-V 对齐，允许查术语表；PRD-J 链到 ARD-BT；Problem Statement 保留原话（ARD-BS） |
 | 2026-11-20 | 第 2、3 轮审查后：Resources 写明三份标准文件；PRD-P 改链 ARD-BX（ARD-BH 已被它取代） |
+| 2026-11-20 | Resources Needed 加上 PIPE-E-B 要求的五项；偏好、时间写 not apply |

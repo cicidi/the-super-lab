@@ -43,23 +43,24 @@ One website for the whole project. Entry: `docs/book/html/index.html`.
 - The directory opens a feature. It does not dump every feature's pages into one flat list with no feature.
 - Inside a feature, the left column is that feature's directory. The right column is the page.
 - The left directory shows hierarchy and numbers: 1 prd, 2 decision-history, 3 design, 4 impl plan, 5 test plan, 6 how to, 10 sub-feature (ARD-BI). Design parts and the reader expand under 3. Sub-features expand under 10. Pipeline has no HTML page.
-- spec-write rebuilds this site after a spec edit. It does not invent a second layout.
+- After a spec edit, spec-write prompts the user to rebuild this site; it does not rebuild it itself, and it does not invent a second layout (DSGN-N-E, reader PRD-M).
 
 Rebuild: `python3 tools/build_sdd_site.py`
 
 ## Links (MUST, DSGN-N-K)
 
 - An ID (`PRD-`, `DSGN-`, `ARD-`, `IMPL-`, `TST-`, `PIPE-`, `QUES-`) links to its definition. If the text names the owning feature ("parent design 的 DSGN-A", or `<feature>/<id>`), link there. Only an unqualified ID resolves in the same feature first, then the parent.
-- A path written in the body is a link. A `.md` under `docs/features/` links to the same path under `docs/book/html/` with `.html`. Any other file that exists links to that file.
+- A path written in the body is a link. A `.md` under `docs/features/` links to the same path under `docs/book/html/` with `.html`. A source with no page of its own (pipeline design) links to its section in the reader page. Any other file that exists links to that file.
 
-## Visual (SHOULD)
+## Visual and technical (DSGN-N-D)
 
-Match initiative summary HTML (e.g. `spec-driven-development.html`): self-contained CSS v0; no runtime md fetch for delivery.
+- MUST: the page opens straight from the file in a browser, with no server; CSS lives in the page (reader PRD-O).
+- MUST: no runtime `.md` fetch for main content; no secrets and no raw eval text in the page.
+- NICE: one site-wide style for layout, ID tags, cards, and callouts (ARD-BY).
 
 ## Workflow
 
-- **spec-pipeline:** prompt/trigger after major spec changes or on user request
-- **spec-write:** after the markdown edit, rebuild the one site from this standard (`python3 tools/build_sdd_site.py`)
+- **spec-write:** after the markdown edit, prompt the user to rebuild the one site (`python3 tools/build_sdd_site.py`); rebuild when the user asks
 - Conflict or spec bug found while assembling → **Ask human** → fix md → regenerate HTML
 - SDD parent: `python3 tools/build_sdd_reader.py` then `python3 tools/validate_sdd_reader.py`
 

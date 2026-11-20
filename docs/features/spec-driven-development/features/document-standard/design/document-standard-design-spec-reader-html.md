@@ -116,7 +116,7 @@ parent 的汇编页（reader）把 parent 和各个 sub-feature 的文档放在�
 来源：reader PRD 的 PRD-B、PRD-H、PRD-L、PRD-O、PRD-P。
 
 - 全站用同一套样式：页面布局、编号标签、卡片、提示框（NICE，[ARD-BY](../../../decision-history/spec-driven-development-decision-history.md#ard-by)）。
-- 把 CSS 写在页面里，用浏览器直接打开文件也能正常显示（NICE）。
+- 把 CSS 写在页面里，用浏览器直接打开文件也能正常显示，不需要服务器（MUST，来自 reader PRD 的 PRD-O）。
 - 允许内嵌 Mermaid 流程图（Mermaid 是一种用文字描述、由浏览器画成图的格式）；没有先例时用文字画的流程图。
 - 页面里不能有密钥，也不能有 `raw/` 里给机器用的评测原文；需要的话只放路径（MUST）。
 - 不能在运行时读取 `.md` 文件来显示主要内容；只有调试时可以（MUST）。
@@ -231,3 +231,4 @@ spec-pipeline 里的 `SPEC-READER.md` 如果还在，只能是指向本篇和 `S
 | 2026-11-20 | 第 1 轮审查后：DSGN-N-D、DSGN-N-F 的 SHOULD、MAY 改为 NICE 或「允许」；DSGN-N-L 写明 pipeline 没有单独页面、内容在汇编页里 |
 | 2026-11-20 | 第 2 轮审查后：每个 DSGN-N 小节写明来源的 reader PRD 编号；DSGN-N-D 加上 PRD-P 的「不放密钥」，样式统一链到 ARD-BY；DSGN-N-K 先按编号前写明的出处链接；对照表链到 ARD-BZ；TST-R、TST-U 写明属于 parent test-plan |
 | 2026-11-20 | 第 3 轮审查后：DSGN-N-K 写明没有单独页面的文档链到汇编页的对应一节；交付物改链 ARD-BX；其余 TST-R 写明属于 parent test-plan |
+| 2026-11-20 | DSGN-N-D「浏览器直接打开」改回 MUST，和 PRD-O 一致 |
