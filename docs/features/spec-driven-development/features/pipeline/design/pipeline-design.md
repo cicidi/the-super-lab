@@ -54,14 +54,14 @@ parent PRD 讲了上游的问题（见 [PRD](../../../prd/spec-driven-developmen
 
 ### PIPE-A — 流程必须做到的事
 
-来源：PRD-A（在现有流程上改进，不另造一套）。
+来源：PRD-A（在现有流程上改进，不另造一套）；PRD-J（从 spec-write 开始，提交前询问是否审查，进度记在哪）。
 
-- **PIPE-A1**：任何「写或改 spec」的任务，都从 spec-write 开始，先按 `SPEC-STANDARD.md` 判断要新建哪篇、还是改哪几篇（[ARD-AJ](../../../decision-history/spec-driven-development-decision-history.md#ard-aj)）。
-- **PIPE-A2**：路径和格式按文档标准检查。检查由检查脚本 `run_spec_checks.py` 或 spec-organize 的 Lint 模式执行。
-- **PIPE-A3**：文档的增删改都由 spec-write 做，并遵守 parent design 的 DSGN-A（每次改动的大小上限）。
-- **PIPE-A4**：提交或推送已提交文档的改动之前，询问是否先跑 spec-review。用户说不跑，就把这个选择记下来，不能悄悄跳过。
-- **PIPE-A5**：用户要求，或者对话中断后重新开始时，给出进度回顾：做了什么、现在的进度、还剩什么、建议下一步。
-- **PIPE-A6**：维护和读取 PIPE-H 定义的进度记录；按 PIPE-G 的表推荐 skill。
+- **PIPE-A-A**：任何「写或改 spec」的任务，都从 spec-write 开始，先按 `SPEC-STANDARD.md` 判断要新建哪篇、还是改哪几篇（[ARD-AJ](../../../decision-history/spec-driven-development-decision-history.md#ard-aj)）。
+- **PIPE-A-B**：路径和格式按文档标准检查。检查由检查脚本 `run_spec_checks.py` 或 spec-organize 的 Lint 模式执行。
+- **PIPE-A-C**：文档的增删改都由 spec-write 做，并遵守 parent design 的 DSGN-A（每次改动的大小上限）。
+- **PIPE-A-D**：提交或推送已提交文档的改动之前，询问是否先跑 spec-review。用户说不跑，就把这个选择记下来，不能悄悄跳过。
+- **PIPE-A-E**：用户要求，或者对话中断后重新开始时，给出进度回顾：做了什么、现在的进度、还剩什么、建议下一步。
+- **PIPE-A-F**：维护和读取 PIPE-H 定义的进度记录；按 PIPE-G 的表推荐 skill。
 
 ### PIPE-B — 四个阶段总览
 
@@ -75,7 +75,7 @@ parent PRD 讲了上游的问题（见 [PRD](../../../prd/spec-driven-developmen
 ### PIPE-C — Create（立项）
 
 1. 用 walter-worker 的 feature create 命令新建或选定 feature 的目录。要不要放进 parent 的 `features/` 下面，见 parent design 的「目录结构」一节。
-2. 写一份粗略的 PRD，例如「推荐一台 iPhone 并协助购买」。可以先写草稿，不要求一次写齐 PIPE-E2 的五项。
+2. 写一份粗略的 PRD，例如「推荐一台 iPhone 并协助购买」。可以先写草稿，不要求一次写齐 PIPE-E-B 的五项。
 3. 把搜索和调研得到的背景写进 `CLAUDE.local.md`（或项目的 CLAUDE 层）。它不能代替已提交的 PRD。
 
 ### PIPE-D — Map（摸底）
@@ -92,15 +92,15 @@ parent PRD 讲了上游的问题（见 [PRD](../../../prd/spec-driven-developmen
 
 PRD、design、decision-history 三篇反复打磨（见 parent PRD 的 Solution）。下面三个条件全部满足，才能进入 Downstream：
 
-- **PIPE-E1**：没有阻塞的未决问题。每个未决问题都写在本 feature 的问题清单里，并在「阻塞」一列标明是或否。只要还有标「是」的问题没解决，就不能进入 Downstream（[ARD-AG](../../../decision-history/spec-driven-development-decision-history.md#ard-ag)）。
-- **PIPE-E2**：PRD 写清了限制、偏好、时间、资源、工具五项；不适用的写 not apply，不能留空。design 和 decision-history 两篇都已存在（[ARD-Z](../../../decision-history/spec-driven-development-decision-history.md#ard-z)）。
-- **PIPE-E3**：design 列出了它依赖的决定和还没定的事项，并写清了实现需要的接口和边界。实现任务的细节留到 Downstream 再定。
+- **PIPE-E-A**：没有阻塞的未决问题。每个未决问题都写在本 feature 的问题清单里，并在「阻塞」一列标明是或否。只要还有标「是」的问题没解决，就不能进入 Downstream（[ARD-AG](../../../decision-history/spec-driven-development-decision-history.md#ard-ag)）。
+- **PIPE-E-B**：PRD 写清了限制、偏好、时间、资源、工具五项；不适用的写 not apply，不能留空。design 和 decision-history 两篇都已存在（[ARD-Z](../../../decision-history/spec-driven-development-decision-history.md#ard-z)）。
+- **PIPE-E-C**：design 列出了它依赖的决定和还没定的事项，并写清了实现需要的接口和边界。实现任务的细节留到 Downstream 再定。
 
 ### PIPE-F — Downstream（下游）
 
 - test-plan 和 impl-plan 同时开始写，互不依赖，都从 design 总结出来。
-- **PIPE-F1（test-plan）**：每个任务都有完成检查和回归检查。回归检查用来确认改动没有弄坏原来能用的功能。
-- **PIPE-F2（impl-plan）**：每个任务写明依赖谁、挡住了谁；被挡住的后做，没被挡住的先做。
+- **PIPE-F-A（test-plan）**：每个任务都有完成检查和回归检查。回归检查用来确认改动没有弄坏原来能用的功能。
+- **PIPE-F-B（impl-plan）**：每个任务写明依赖谁、挡住了谁；被挡住的后做，没被挡住的先做。
 
 ### PIPE-G — 每个阶段推荐的 skill
 
@@ -111,12 +111,14 @@ PRD、design、decision-history 三篇反复打磨（见 parent PRD 的 Solution
 | Map | 摸底、辅助拆分 | 可替换的辅助工具（例如 wayfinder） | 可选 |
 | Converge | 写或改文档 | spec-write | 有改动时必须 |
 | Converge | 检查路径和格式 | `run_spec_checks.py` 或 spec-organize 的 Lint | 新建、移动、合并文档后必须 |
-| 任何阶段 | 提交前 | spec-review | 询问（PIPE-A4） |
+| 任何阶段 | 提交前 | spec-review | 询问（PIPE-A-D） |
 | Downstream | 写 test-plan 和 impl-plan | spec-write，加上路径和格式检查 | 必须 |
 
 wayfinder 等辅助工具随时可以换，不是 SDD 必须安装的交付物。
 
 ### PIPE-H — 进度记录
+
+来源：PRD-J、[ARD-BT](../../../decision-history/spec-driven-development-decision-history.md#ard-bt)。
 
 | 时段 | 记在哪 | 记什么 |
 |---|---|---|
@@ -165,7 +167,7 @@ wayfinder 等辅助工具随时可以换，不是 SDD 必须安装的交付物�
 - 归属只能是这三种之一。人没问到的盲区和风险，AI 必须主动加行。
 - 依据必须能追溯；查不到写 `UNKNOWN`，不能写推测。
 - spec-review 检查两种问题：有结论却没有依据；该写 `UNKNOWN` 的地方写成了事实。
-- 可以（MAY）：如果每个子问题都已经是问题清单里的一行，并且每行都有负责人和依据，design 可以只放一个链接，不再抄一张表（[ARD-AY](../../../decision-history/spec-driven-development-decision-history.md#ard-ay)）。
+- 允许：如果每个子问题都已经是问题清单里的一行，并且每行都有负责人和依据，design 可以只放一个链接，不再抄一张表（[ARD-AY](../../../decision-history/spec-driven-development-decision-history.md#ard-ay)）。
 
 ## Testing Decisions
 
@@ -176,7 +178,7 @@ wayfinder 等辅助工具随时可以换，不是 SDD 必须安装的交付物�
 - **decision-history**：方向性的决定都有 ARD 编号；推翻旧决定用删除线加链接（document-standard 的 DSGN-J）。
 - **design**：写明依赖的决定，未决事项都在问题清单里。
 - **test-plan 和 impl-plan**：两篇都在；test-plan 有完成检查和回归检查。
-- **文档之间的追溯**：PRD 的每条需求都能在测试里找到对应（TST-O）。
+- **文档之间的追溯**：PRD 的每条需求在 design 里有对应的规则（TST-O），并且在 test-plan 的追溯表里有对应的测试，或者标为 Unverified。
 - **PRD-N**：正式结论链到事实；评测时答案只能来自 context 包。
 - **PRD-O**：所有例子共用一个 mock MCP 服务器，打印出调用记录就算通过。
 - **PRD-M**：可读性由 TST-V 判定。
@@ -192,6 +194,14 @@ wayfinder 等辅助工具随时可以换，不是 SDD 必须安装的交付物�
 ## Further Notes
 
 Map 的拆分标准见 PIPE-D 第 6 步。还没定的事项见 [Open Questions](#open-questions)。
+
+**子条款编号对照。** 2026-11-20 起，子条款从数字改成字母，和 document-standard 的 DSGN-F 一致（[ARD-BR](../../../decision-history/spec-driven-development-decision-history.md#ard-br)）：
+
+| 旧 | 新 |
+|---|---|
+| PIPE-A1 到 PIPE-A6 | PIPE-A-A 到 PIPE-A-F |
+| PIPE-E1、PIPE-E2、PIPE-E3 | PIPE-E-A、PIPE-E-B、PIPE-E-C |
+| PIPE-F1、PIPE-F2 | PIPE-F-A、PIPE-F-B |
 
 ## Alternatives Considered
 
@@ -246,3 +256,4 @@ Map 的拆分标准见 PIPE-D 第 6 步。还没定的事项见 [Open Questions]
 | 2026-11-07 | 开头与 PIPE-A1：写改 spec 从 spec-write 进入（ARD-AJ） |
 | 2026-11-07 | PIPE-L：tracker 已有 Owner 与 Evidence 时，design 可链过去（ARD-AY） |
 | 2026-11-20 | Solution 不再说 spec-pipeline 是统一入口，四阶段改为编号步骤（ARD-AJ）；PIPE-A2 和 PIPE-G 不再要求调用 spec-organize，改为检查脚本或 Lint；PIPE-C 的「六要素」改为 PIPE-E2 的五项（ARD-Z）；PIPE-E1 写明阻塞标记写在问题清单的「阻塞」列（ARD-AG）；Alternatives 不再引用已推翻的 ARD-AB；删除指向已不存在的 workflow HTML 的链接；Open Questions 改为 QUES 清单；全文改写为完整句子（ARD-BK） |
+| 2026-11-20 | 第 1 轮审查后：子条款编号改为字母并在 Further Notes 留对照表（ARD-BR）；PIPE-H 链到 ARD-BT；Testing Decisions 改正 TST-O 的说法；「可以（MAY）」改为「允许」 |

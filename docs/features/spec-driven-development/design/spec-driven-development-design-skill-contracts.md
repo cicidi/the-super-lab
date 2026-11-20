@@ -25,6 +25,7 @@ spec-write 和 spec-review 是仅有的两个交付物（[ARD-BH](../decision-hi
 |---|---|---|---|---|
 | spec-write | 新建或修改 spec 文档 | 用户的意图；两份标准文件 | 改好的文档 | 动笔前没判断「新建哪篇、还是改哪几篇」；一次改动超过 10 行或 200 字符而没有授权（parent design 的 DSGN-A）；悄悄改动上游文档 |
 | spec-review | 提交前；或者有人要求审查设计 | 要审的文档目录或改动；两份标准文件 | 一张问题表，每个问题有严重度和修改建议；一次只问用户一个问题 | 直接改文档；改写别人的结论；讨论严重度 1 或 2 的小问题 |
+| spec-organize（内部工具，不交付） | 检查或整理路径、格式、INDEX（document-standard 的 DSGN-L） | 文档目录 | 格式问题的修正，或一份问题清单 | 改动文档的内容；当作交付物或入口（[ARD-BH](../decision-history/spec-driven-development-decision-history.md#ard-bh)） |
 
 几项能力落在哪里：
 
@@ -55,7 +56,7 @@ spec-write 和 spec-review 是仅有的两个交付物（[ARD-BH](../decision-hi
 - TST-O、TST-P：PRD 的每条需求都能在 design 里找到对应；归属、证据、`UNKNOWN` 写得对。
 - TST-Q：mock MCP 调用打印出记录，并且没有真实副作用。
 - TST-V：每篇文档本科生读得懂。
-- 暂时测不了：阶段编排（PIPE-A4、PIPE-A5、PIPE-H）、单次改动大小（PRD-C）、不同模型之间的偏差（[ARD-AD](../decision-history/spec-driven-development-decision-history.md#ard-ad)）。
+- 暂时测不了：阶段编排（pipeline design 的 PIPE-A-D、PIPE-A-E、PIPE-H）、单次改动大小（PRD-C）、不同模型之间的偏差（[ARD-AD](../decision-history/spec-driven-development-decision-history.md#ard-ad)）。
 
 ## Out of Scope
 
@@ -98,3 +99,4 @@ spec-write 和 spec-review 是仅有的两个交付物（[ARD-BH](../decision-hi
 | 2026-11-07 | 契约改为 spec-write 与 spec-review；标准两份文档（ARD-AJ） |
 | 2026-11-07 | part 链回 spec-driven-development-design.md（ARD-AV） |
 | 2026-11-20 | 全文改写为完整句子；Problem Statement 写明为什么需要契约；Alternatives 不再引用已推翻的 ARD-AB；Open Questions 链到 parent 的唯一问题清单；加入可读性的落点与 TST-V（ARD-BK、ARD-BO） |
+| 2026-11-20 | 第 1 轮审查后：契约表加 spec-organize 一行，写明它是内部工具、不交付；PIPE 子条款编号改为字母（ARD-BR） |

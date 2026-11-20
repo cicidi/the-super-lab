@@ -60,11 +60,15 @@ Also load `skills/spec-organize/SPEC-STANDARD.md` for **mechanical MUST** checks
 (**ARD-P**): path/filename, frontmatter, letter IDs, decision-log shape, size caps,
 INDEX/dead links, collision signals. `reference/` is not a committed type; `raw/` may exist locally and must not be committed — **suggest fixes only**, never apply edits.
 
-Severity **≥3** when an open question is not `QUES-A`, an `IMPL-*` names no dependency and no one it blocks, or an edit deletes an old sentence instead of `~~strike~~` plus a ref. Reader HTML fails the same bar when the strike toggle is missing, or when the section, subsection, and clause share one size.
+Severity **≥3** when a MUST rule in SPEC-STANDARD is broken, for example: an open question is not `QUES-A` or has no owner or blocking flag; an `IMPL-*` names no dependency and no one it blocks; body text outside decision-history carries strikethrough, or drops an old claim without linking the ARD that changed it (ARD-BM); two documents state the same fact differently. Reader HTML fails the same bar when the strike toggle is missing, or when the section, subsection, and clause share one size. A broken **NICE** rule (ARD-BN) is severity 2: list it as skipped, do not discuss it.
+
+**Readability** (PRD-M, ARD-BO): read each document as an undergraduate programmer who has only that document and the glossary in the parent design's appendix. A term or abbreviation used without explanation and absent from the glossary, or a section written as keyword strings or arrow chains that such a reader cannot follow, is severity **3**. Quote the sentence and propose the plain rewrite.
+
+**Self-consistency:** treat the spec's own rules as the standard and check the spec against itself — a rule it states but breaks, a required section it lacks, a decision that the body still contradicts after it was superseded. Each is severity ≥3.
 
 **Parent initiative** (`docs/features/<parent>/` root, not `features/<sub>/`):
 missing any of prd, design, decision-history, impl-plan, test-plan → severity **≥3**
-(parent HLD §8, **TST-N**).
+(parent design **DSGN-E**, **TST-N**).
 
 **Mechanical pass:** run `python3 tools/run_spec_checks.py docs/features/<f>/` (or review tree); cite each finding with `check` id + path — **suggest fixes only**. Harness cases: `python3 skills/spec-review/tests/run_case_checks.py` (`cases/README.md`). SDD map: `skills/SDD-DELIVERABLES.md`.
 
@@ -79,7 +83,7 @@ Illustrations, not gold. Report only. Do not edit the spec.
 
 - **盖 shed**: a design that skips the permit limit is severity 4. Write the gap under `docs/features/garden-shed/raw/discussion/`.
 - **北京旅游**: "the hotel is cheap" with no source is severity 3. Ask for a URL, or require `UNKNOWN`.
-- **数学题**: a heading `## 1. 概述` is a mechanical MUST. Suggest the English unnumbered heading. Do not rename it yourself.
+- **数学题**: a heading `## 1. 概述` is a mechanical MUST. Suggest the English unnumbered heading. Do not rename it yourself. A proof step that uses "紧集" without explaining it is a readability finding at severity 3.
 - **股票**: a price target with no filing citation is severity 4. The report goes in `raw/work-review/`, not a committed `docs/work-review/`.
 
 ## Process
@@ -125,9 +129,10 @@ Step 0 is the only way to ask. One table row at a time. Do not add a second menu
 
 ### Quick Scan
 
-1. Read the target document.
+1. Read the target document. Run the mechanical pass.
 2. Challenge every claim: is this assumption valid? Is this edge case covered?
-   Are there industry alternatives the doc ignores?
+   Are there industry alternatives the doc ignores? Does the spec obey its own
+   rules? Can an undergraduate follow each section?
 3. Search the web for conflicting evidence or better patterns (at least one
    search per major claim).
 4. Rate every finding 1-5 using the severity scale.
@@ -288,6 +293,7 @@ Produce `docs/features/<f>/raw/work-review/YYYY-MM-DD-<topic>/report.md` (do not
 - [ ] Work completion: acceptance.md has all 3 sections (criteria, test plan, regression)
 - [ ] Work completion: Reviewer actually executes tests, doesn't just read code
 - [ ] Report always generated (GAPS.md for quick scan, review.md for full, report.md for work)
+- [ ] Spec review covers mechanical MUST, self-consistency, and readability; NICE-rule breaks are listed as skipped
 
 ### NICE (warn)
 

@@ -24,6 +24,11 @@ last_verified: 2026-11-20
 
 | ID | Date | Decision |
 |---|------|----------|
+| ARD-BT | 2026-11-20 | 重申 ARD-U、ARD-V 里仍然有效的部分：Map 阶段以访谈为主；进度在 feature 名字定之前记在 CLAUDE.local.md，定了以后记在 raw/state/；非软件难题留在本 PRD，用同样五篇文档 |
+| ARD-BS | 2026-11-20 | 正文可以中英文混合，只要读着通顺；英文术语第一次出现时要解释，或者收进术语表。Problem Statement 可以保留作者原话，包括原来的编号标题 |
+| ARD-BR | 2026-11-20 | pipeline design 的子条款改用字母：PIPE-A1 改为 PIPE-A-A，PIPE-E1 改为 PIPE-E-A，依此类推；pipeline design 里留新旧对照表 |
+| ARD-BQ | 2026-11-20 | 六种文档都可以拆分篇；有分篇时必须有入口文件 `<f>-<type>.md`，入口链到各分篇 |
+| ARD-BP | 2026-11-20 | AI 每次改 docs/ 下的 .md，必须同时满足：不超过 10 行，并且不超过 200 字符；更大的改动拆成多次，或经人授权后一次大改 |
 | ARD-BO | 2026-11-20 | 可读性是通过条件：由 LLM 扮演本科程序员，只读一篇文档，回答从该篇需求和规则条目里抽出的问题；答错太多，或有第一次出现时没解释的术语，这篇就不通过 |
 | ARD-BN | 2026-11-20 | 规则分两级：MUST 是违反后 spec 会出错或丢信息的规则；NICE 是格式偏好。八条纯格式规则降为 NICE |
 | ARD-BM | 2026-11-20 | 删除线只用在 decision-history。正文只写现行规则，并链到推翻旧说法的 ARD；正文的旧版本交给 git |
@@ -57,8 +62,8 @@ last_verified: 2026-11-20
 | ARD-AK | 2026-11-07 | markdown 是全文。手工维护的 HTML 记录源文件和它的 sha256，不一致就算过期；脚本生成的 HTML 直接重新生成 |
 | ARD-AJ | 2026-11-07 | 入口 skill 是 spec-write 和 spec-review；标准写在 SPEC-STANDARD.md 和 SPEC-PRESENTATION.md；spec-organize 和 spec-pipeline 不再是入口 |
 | ARD-AI | 2026-11-04 | 那一次的 spec 合并是人明确授权的大改，那一批允许超过 10 行的改动 |
-| ARD-AH | 2026-11-04 | 给人读的 reader 是唯一的 HTML 交付物；旧的摘要 HTML 删除 |
-| ARD-AG | 2026-11-04 | 是否收敛由规则自动判断：每个未决事项都标明是否阻塞；AI 不能自己宣布「已经够稳」 |
+| ~~ARD-AH~~ | 2026-11-04 | ~~给人读的 reader 是唯一的 HTML 交付物；旧的摘要 HTML 删除~~ → [ARD-BG](#ard-bg) |
+| ARD-AG | 2026-11-04 | 是否收敛由规则自动判断（pipeline design 的 PIPE-E-A 到 PIPE-E-C）：每个未决事项都标明是否阻塞；AI 不能自己宣布「已经够稳」 |
 | ARD-AF | 2026-11-04 | 故意不定义的事项：失败处理、skill 和 spec 的版本管理、信息来源可信度分级、数据清理；不迁移旧文档 |
 | ARD-AE | 2026-11-04 | 非软件问题也用同样的五篇文档；design 里写子问题归属表；结论必须有依据，查不到写 UNKNOWN |
 | ARD-AD | 2026-11-04 | 评测用 deepseek-flash 独立跑 3 次；gold 由案例、版本、范例、标注四部分组成；跑分结果和报告不提交；四个非软件例子写进 skill 正文，不在本仓库建 gold |
@@ -80,12 +85,12 @@ last_verified: 2026-11-20
 | ARD-N | 2026-10-30 | 产品级成功指标的测量方法和基线延后，记在 PRD-G |
 | ~~ARD-M~~ | 2026-10-30 | ~~多人决定以谁为准延后，记在 PRD-F~~ → [ARD-AA](#ard-aa) |
 | ARD-L | 2026-10-30 | 盲区由现有 skill 来发现，不另造新机制 |
-| ARD-K | 2026-10-30 | AI 每次改 docs/ 下的 .md，不超过 10 行或 200 字符；更大的改动拆成多次 |
-| ARD-J | 2026-10-30 | 五个阶段，外加一个可选的 how-to；how-to 不是阶段 |
+| ~~ARD-K~~ | 2026-10-30 | ~~AI 每次改 docs/ 下的 .md，不超过 10 行或 200 字符；更大的改动拆成多次~~ → [ARD-BP](#ard-bp) |
+| ARD-J | 2026-10-30 | 五种必需的文档，外加一种可选的 how-to；how-to 不是每个 feature 都要写 |
 | ARD-I | 2026-09-25 | 当时这个 feature 有两份 spec 文档，是对「每种类型一份」规则的有意例外（已成历史，见 ARD-T） |
 | ARD-H | 2026-09-25 | 内容分四个优先级；L1 永远不删 |
 | ARD-G | 2026-09-25 | design 分篇用名词命名，impl-plan 分篇用「序号加阶段」命名 |
-| ARD-F | 2026-09-25 | 一个 feature 目录可以有多份 design 或 impl-plan |
+| ~~ARD-F~~ | 2026-09-25 | ~~一个 feature 目录可以有多份 design 或 impl-plan~~ → [ARD-BQ](#ard-bq) |
 | ARD-E | 2026-09-25 | design 和 impl-plan 最多 1,000 行；decision-history 不设上限 |
 | ARD-D | 2026-09-25 | 文档健康状况的字段叫 health，不叫 status |
 | ARD-C | 2026-09-25 | 细节写在 skill 目录里的其他文件，不全部塞进 SKILL.md |
@@ -93,6 +98,50 @@ last_verified: 2026-11-20
 | ARD-A | 2026-09-25 | 按关注点分权威，取代「全局只有一个真相来源」 |
 
 ## Evidence Appendix
+
+<a id="ard-bt"></a>
+
+### ARD-BT — 重申 ARD-U、ARD-V 仍然有效的部分
+
+**原因。** ARD-U 和 ARD-V 在日志里整行被划掉，但它们只有一部分被推翻：ARD-U 被推翻的是「spec-pipeline 是入口」，ARD-V 被推翻的是「为四个例子建 gold」。剩下的部分仍是现行规则（PRD-J、pipeline design 的 PIPE-D、PIPE-H、PRD-K），却挂在已划掉的决定上，读者会以为这些规则也作废了。
+
+**规则。** 下面三条仍然有效，以本条为准：Map 阶段以访谈为主，产出由 AI 判断；进度在 feature 名字定之前记在 `CLAUDE.local.md`，定了以后记在 `docs/features/<f>/raw/state/`；非软件难题留在本 PRD，用同样五篇文档。
+
+<a id="ard-bs"></a>
+
+### ARD-BS — 可以中英文混合；Problem Statement 保留原话
+
+**原因。** ARD-BK 要求正文统一为中文。审查时发现 PRD 的 Problem Statement 是作者原话，中英文混写，标题带 1 到 5 的编号。人决定保留原样：读着通顺比形式统一更重要。
+
+**规则。** 正文可以中英文混合，只要读着通顺。英文术语第一次出现时要解释，或者收进术语表。Problem Statement 可以保留作者原话，包括原来的编号标题。修改 ARD-BK 里「正文统一为中文」的说法。
+
+<a id="ard-br"></a>
+
+### ARD-BR — pipeline 子条款改用字母
+
+**原因。** document-standard 的 DSGN-F 规定编号后面只用字母，但 pipeline design 的子条款用了数字（PIPE-A1、PIPE-E1）。人选择改名，不开例外。
+
+**规则。** PIPE-A1 到 PIPE-A6 改为 PIPE-A-A 到 PIPE-A-F；PIPE-E1 到 PIPE-E3 改为 PIPE-E-A 到 PIPE-E-C；PIPE-F1、PIPE-F2 改为 PIPE-F-A、PIPE-F-B。新旧对照表在 pipeline design 的 Further Notes（ARD-AP）。
+
+**放弃的方案。** 记一条例外，允许子条款用数字：改动最小，但标准里就多了一条特例。
+
+<a id="ard-bq"></a>
+
+### ARD-BQ — 六种文档都可以拆分篇
+
+**原因。** ARD-F 只允许 design 和 impl-plan 拆分篇，理由是其他四种不会无限变长。但后来 document-standard 的 DSGN-B 给六种文档都定了分篇的命名规则，DSGN-J 也允许 decision-history 拆分篇，document-standard 还已经有一个 PRD 分篇（reader PRD）。规则和实际做法都已经超出了 ARD-F。
+
+**规则。** 六种文档都可以拆分篇。有分篇时，必须有入口文件 `<f>-<type>.md`，入口文件链到各分篇。document-standard 因此补上入口文件 `document-standard-prd.md`。推翻 ARD-F。
+
+**放弃的方案。** 维持 ARD-F、收紧 DSGN-B：reader PRD 会变成违规文件，又不能随意改名。允许只有分篇、没有入口：读者不知道从哪篇开始读。
+
+<a id="ard-bp"></a>
+
+### ARD-BP — 改动上限两条都要满足
+
+**原因。** ARD-K 写的是「10 行或 200 字符，满足其一即可」。按字面理解，一行 5,000 个字符的改动也算合规，这违背了「小步改、每步能看清」的本意。
+
+**规则。** AI 每次改 `docs/` 下的 markdown，必须同时满足两条：不超过 10 行，并且不超过 200 字符。更大的改动拆成多次；确实需要一次大改，要人明确授权并记一条 ARD。推翻 ARD-K 里「满足其一即可」的部分，ARD-K 其余内容由本条完整重述。
 
 <a id="ard-bo"></a>
 
@@ -133,7 +182,7 @@ ARD-AX 和 ARD-AY 本来就是「允许」，不是要求，不受影响。其�
 
 ### ARD-BM — 删除线只用在 decision-history
 
-**原因。** 2026-11-18 在 DSGN-F 加了一条「改正文时不删旧句，划掉后在旁边写新句」。几轮下来，test-plan 的资产表一个格子里有三处删除线，读者分不清哪句是现行规则。这条规则还和 ARD-AS（删除线只留给 decision-history）直接矛盾。
+**原因。** 2026-11-18 在 document-standard 的 DSGN-F 加了一条「改正文时不删旧句，划掉后在旁边写新句」。几轮下来，test-plan 的资产表一个格子里有三处删除线，读者分不清哪句是现行规则。这条规则还和 ARD-AS（删除线只留给 decision-history）直接矛盾。
 
 **规则。** 正文只写现行规则。推翻旧说法时，在新句后面链到对应的 ARD。旧版本可以从 git 历史和 decision-history 里找到。错别字直接改。本决定重申 ARD-AS，撤销 2026-11-18 那条规则。
 
@@ -153,7 +202,7 @@ ARD-AX 和 ARD-AY 本来就是「允许」，不是要求，不受影响。其�
 
 ### ARD-BK — 本次整理是授权的大改
 
-人在 2026-11-20 明确授权这一批整理：正文统一改成中文（必需章节标题和编号仍是英文，见 DSGN-E）；可以大段重写，但要保留原意；缩写和术语集中解释在 [parent design 附录](../design/spec-driven-development-design.md#glossary)。这一批暂停「每次不超过 10 行或 200 字符」的上限（ARD-K），这一批结束后恢复。做法和 ARD-AI 相同。
+人在 2026-11-20 明确授权这一批整理：正文统一改成中文（必需章节标题和编号仍是英文，见 document-standard 的 DSGN-E；后来 [ARD-BS](#ard-bs) 放宽为允许中英文混合）；可以大段重写，但要保留原意；缩写和术语集中解释在 [parent design 附录](../design/spec-driven-development-design.md#glossary)。这一批暂停「每次不超过 10 行或 200 字符」的上限（ARD-K），这一批结束后恢复。做法和 ARD-AI 相同。
 
 <a id="ard-bj"></a>
 
@@ -165,7 +214,7 @@ ARD-AX 和 ARD-AY 本来就是「允许」，不是要求，不受影响。其�
 
 ### ARD-BI — 左侧栏的序号和层级
 
-左侧栏按层级排列，序号可见：1 prd、2 decision-history、3 design、4 impl plan、5 test plan、6 how to。sub-feature 不放在 design 下面，而是单独一组，编号 10，每个 sub-feature 在这组下展开。design 的分篇和 reader 放在 3 design 下面。pipeline 不生成 HTML 页面。原因：读者先按顺序读 prd、决定、design，序号让顺序一眼可见。
+左侧栏按层级排列，序号可见：1 prd、2 decision-history、3 design、4 impl plan、5 test plan、6 how to。sub-feature 不放在 design 下面，而是单独一组，编号 10，每个 sub-feature 在这组下展开。design 的分篇和 reader 放在 3 design 下面。pipeline 在左侧目录里没有单独的页面，它的内容收在 reader 汇编页里。原因：读者先按顺序读 prd、决定、design，序号让顺序一眼可见。
 
 <a id="ard-bh"></a><a id="ard-bh--deliverable-is-only-spec-write-and-spec-review"></a>
 
@@ -177,7 +226,7 @@ ARD-AX 和 ARD-AY 本来就是「允许」，不是要求，不受影响。其�
 
 ### ARD-BG — 全站一个网站，左边是目录
 
-`docs/book/html/index.html` 列出所有 feature。每篇 spec 的 HTML 是目录里的一行。打开一个 feature，左边是这个 feature 的目录，右边是正文。原因：读者要在多篇文档之间来回跳，一个网站比一堆独立的 HTML 文件好找。
+`docs/book/html/index.html` 列出所有 feature。每篇 spec 的 HTML 是目录里的一行。打开一个 feature，左边是这个 feature 的目录，右边是正文。原因：读者要在多篇文档之间来回跳，一个网站比一堆独立的 HTML 文件好找。推翻 ARD-AH 的「reader 是唯一的 HTML 交付物」：现在 reader 是网站里的一页。ARD-AH 里「旧的摘要页删除」已经执行，仍然有效。
 
 <a id="ard-bf"></a>
 
@@ -325,15 +374,15 @@ frontmatter 的 `audience` 可以是 `internal` 或 `external`。不写不算错
 
 <a id="ard-ah"></a>
 
-### ARD-AH — reader 是唯一的 HTML 交付物
+### ARD-AH — reader 是唯一的 HTML 交付物（已被 ARD-BG 推翻）
 
-`spec-driven-development-reader.html` 是给人读的交付物。旧的摘要页 `spec-driven-development.html` 删除，原来指向它的链接改指 reader。
+`spec-driven-development-reader.html` 是给人读的交付物。旧的摘要页 `spec-driven-development.html` 删除，原来指向它的链接改指 reader。后来改成全站一个网站，reader 是其中一页，见 [ARD-BG](#ard-bg)。
 
 <a id="ard-ag"></a>
 
 ### ARD-AG — 收敛由规则判断
 
-PIPE-E1 到 PIPE-E3 的收敛条件自动检查。每个未决事项都要标明是否阻塞（写在问题清单的「阻塞」列）。只要还有阻塞的事项，就不能进入下游。原因：让 AI 自己判断「够稳了」，它总会说够稳了。
+pipeline design 的 PIPE-E-A 到 PIPE-E-C（收敛条件）自动检查。每个未决事项都要标明是否阻塞（写在问题清单的「阻塞」列）。只要还有阻塞的事项，就不能进入下游。原因：让 AI 自己判断「够稳了」，它总会说够稳了。
 
 <a id="ard-af"></a>
 
@@ -375,13 +424,13 @@ PRD-F 关闭。两个决定冲突时，decision-history 里时间较晚的那条
 
 ### ARD-Z — PRD 写清五项，再进入下游
 
-取代 PIPE-E2 里原来没定义的「六项输入」。PRD 要写清限制、偏好、时间、资源、工具五项；不适用的写 not apply，不能留空。PRD、design、decision-history 三篇都存在后，才能开始写 impl-plan 和 test-plan。放弃的方案：用「building」这个词，以及让 PIPE-E2 指向一个并没有这个定义的 PIPE-F。
+取代 pipeline design 的 PIPE-E-B（当时编号 PIPE-E2）里原来没定义的「六项输入」。PRD 要写清限制、偏好、时间、资源、工具五项；不适用的写 not apply，不能留空。PRD、design、decision-history 三篇都存在后，才能开始写 impl-plan 和 test-plan。放弃的方案：用「building」这个词，以及让 PIPE-E-B 指向一个并没有这个定义的 PIPE-F。
 
 <a id="ard-y"></a>
 
 ### ARD-Y — 按 20 小时估算来拆分
 
-暂行规则（PIPE-D 第 6 点）。AI 先给出几种拆法。一个人 20 小时内能搞清楚的，算一个 feature spec；AI 估算超过 20 小时的，拆成 peer 或 sub-feature。估算和判断都由 AI 做。建目录仍要等人确认（PIPE-D 第 5 点）。
+暂行规则（pipeline design 的 PIPE-D 第 6 步）。AI 先给出几种拆法。一个人 20 小时内能搞清楚的，算一个 feature spec；AI 估算超过 20 小时的，拆成 peer 或 sub-feature。估算和判断都由 AI 做。建目录仍要等人确认（PIPE-D 第 5 步）。
 
 <a id="ard-x"></a>
 
@@ -399,13 +448,13 @@ PRD-F 关闭。两个决定冲突时，decision-history 里时间较晚的那条
 
 ### ARD-V — 难题用同样五篇文档（建 gold 的部分已被 ARD-AD 推翻）
 
-盖 shed、北京旅游、一道著名数学题、分析一只股票，都留在本 PRD（PRD-K），用同样五篇文档。每个子问题写明由谁处理，每个结论引用查到的事实（PRD-L、PRD-N）。放弃的方案：为它们另开一个 feature。
+盖 shed、北京旅游、一道著名数学题、分析一只股票，都留在本 PRD（PRD-K），用同样五篇文档。每个子问题写明由谁处理，每个结论引用查到的事实（PRD-L、PRD-N）。放弃的方案：为它们另开一个 feature。仍然有效的部分由 [ARD-BT](#ard-bt) 重述。
 
 <a id="ard-u"></a>
 
 ### ARD-U — spec-pipeline 编排和 Map、state 模型（已被 ARD-AJ 推翻）
 
-当时 SDD 加了 spec-pipeline 作为入口 skill：它调用 spec-organize 和 spec-write，并在提交前提示跑 spec-review。Map 阶段靠和人访谈，产出（怎么拆、记什么决定、草稿）由 AI 判断，没有固定模板。进度先记在 CLAUDE.local，feature 建好后记到 `docs/features/<f>/raw/state/`。放弃的方案：Map 阶段强制产出固定文件，以及 BMAD 风格的仓库根目录状态树。spec-pipeline 作为入口已被 ARD-AJ 推翻；Create、Map、Converge、Downstream 四个阶段作为参考步骤保留在 pipeline design。
+当时 SDD 加了 spec-pipeline 作为入口 skill：它调用 spec-organize 和 spec-write，并在提交前提示跑 spec-review。Map 阶段靠和人访谈，产出（怎么拆、记什么决定、草稿）由 AI 判断，没有固定模板。进度先记在 CLAUDE.local，feature 建好后记到 `docs/features/<f>/raw/state/`。放弃的方案：Map 阶段强制产出固定文件，以及 BMAD 风格的仓库根目录状态树。spec-pipeline 作为入口已被 ARD-AJ 推翻；Create、Map、Converge、Downstream 四个阶段作为参考步骤保留在 pipeline design。仍然有效的部分（访谈、进度记录的位置）由 [ARD-BT](#ard-bt) 重述。
 
 <a id="ard-t"></a>
 
@@ -463,15 +512,15 @@ review 输出修改建议，不直接改。机械规则的违反也必须出现�
 
 <a id="ard-k"></a>
 
-### ARD-K — AI 每次只改一小段
+### ARD-K — AI 每次只改一小段（「满足其一即可」已被 ARD-BP 推翻）
 
-一次大改动没人细看就进去了，出了问题也难找原因。上限是 10 行或 200 字符，满足其中一条即可。更大的改动拆成多次。真要大改（restructure）需要人明确同意，ARD-AI 和 ARD-BK 就是这样的授权。放弃的方案：超出上限直接拒绝，会挡住正当的大改；只警告不拦，等于没有限制。
+一次大改动没人细看就进去了，出了问题也难找原因。当时的上限是 10 行或 200 字符，满足其中一条即可；[ARD-BP](#ard-bp) 改为两条都要满足。更大的改动拆成多次。真要大改（restructure）需要人明确同意，ARD-AI 和 ARD-BK 就是这样的授权。放弃的方案：超出上限直接拒绝，会挡住正当的大改；只警告不拦，等于没有限制。
 
 <a id="ard-j"></a>
 
-### ARD-J — 五个阶段加一个可选的 how-to
+### ARD-J — 五种必需文档加一种可选的 how-to
 
-PRD 当时写的是六种文档，`pipeline-design.md` 和文档标准写的是五种。pipeline 关于阶段的说法是对的：how-to 只在需要人去操作结果时才写，不是每个 feature 都要经过的一步。放弃的方案：为了和 PRD 一致保留六个，那样会多出一个大多数 feature 用不到的阶段。
+PRD 当时写的是六种必需文档，`pipeline-design.md` 和文档标准写的是五种。五种是对的：how-to 只在需要人去操作结果时才写，不是每个 feature 都要有。当时把这五种文档叫作「阶段」；现在「阶段」专指 pipeline design 里的 Create、Map、Converge、Downstream 四步，所以这里改称「文档」。放弃的方案：为了和 PRD 一致保留六种必需文档，那样会多出一种大多数 feature 用不到的文档。
 
 <a id="ard-i"></a>
 
@@ -500,9 +549,9 @@ payment-impl-plan-01-schema.md         impl-plan 分篇：序号加阶段，有�
 
 <a id="ard-f"></a>
 
-### ARD-F — 一个 feature 可以有多份 design 或 impl-plan
+### ARD-F — 一个 feature 可以有多份 design 或 impl-plan（已被 ARD-BQ 推翻）
 
-取代原来「每个 feature 每种类型只有一份文件」的规则，只对这两种类型放开，并删掉禁止第二份 spec 的反例。`prd`、`test-plan`、`decision-history`、`how-to` 仍是一份：它们不会无限变长。design 和 impl-plan 会，既然限制了 1,000 行，就必须允许拆成多份。
+后来六种文档都允许拆分篇，见 [ARD-BQ](#ard-bq)。当时的内容：取代原来「每个 feature 每种类型只有一份文件」的规则，只对这两种类型放开，并删掉禁止第二份 spec 的反例。`prd`、`test-plan`、`decision-history`、`how-to` 仍是一份：它们不会无限变长。design 和 impl-plan 会，既然限制了 1,000 行，就必须允许拆成多份。
 
 <a id="ard-e"></a>
 
@@ -581,3 +630,4 @@ payment-impl-plan-01-schema.md         impl-plan 分篇：序号加阶段，有�
 | 2026-11-18 | ARD-BJ：gold spec 就是这套 spec-driven-development |
 | 2026-11-20 | ARD-BK–BO：授权本次大改；gold 改回 iPhone 案例（推翻 ARD-BJ）；删除线只在 decision-history；规则分 MUST 与 NICE；可读性成为通过条件 |
 | 2026-11-20 | 全文改为中文；Evidence Appendix 改为与 Log 同序，补齐 ARD-M、ARD-N 与 ARD-AM 之后各条的原因；每条加短锚点，旧英文锚点保留（ARD-AP）；Path Update 说明旧路径已重新使用（ARD-BK） |
+| 2026-11-20 | 第 1 轮审查后：ARD-BP–BT（改动上限两条都要满足、六种文档都可拆分篇、PIPE 子条款改字母、允许中英文混合、重申 ARD-U/V 仍有效的部分）；划掉 ARD-AH、ARD-F、ARD-K；ARD-J 的「阶段」改称「文档」；跨 feature 的编号补上 feature 名 |

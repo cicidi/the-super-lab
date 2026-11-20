@@ -115,9 +115,9 @@ AI 要把大问题拆成小的：能查的 AI 自己查（合规、财报、交�
 
 **PRD-B**：提供一组 skill。skill 本质上是写得好的 prompt，引导 AI 完成 spec 的四件事：书写、命名、检查、更新。
 
-**PRD-C**：AI 每次改 `docs/` 下的文档，不超过 10 行或 200 字符，满足其中一条即可。更大的改动拆成多次；确实需要一次大改（restructure）时，必须有人明确授权，并记一条 ARD（例如 [ARD-BK](../decision-history/spec-driven-development-decision-history.md#ard-bk)）。
+**PRD-C**：AI 每次改 `docs/` 下的文档，必须同时满足两条：不超过 10 行，并且不超过 200 字符（[ARD-BP](../decision-history/spec-driven-development-decision-history.md#ard-bp)）。更大的改动拆成多次；确实需要一次大改（restructure）时，必须有人明确授权，并记一条 ARD（例如 [ARD-BK](../decision-history/spec-driven-development-decision-history.md#ard-bk)）。
 
-**PRD-D**：每篇文档有行数上限，最长不超过 1,000 行，因为太长的文档几乎没法维护。各类文档的具体上限见 document-standard 的 DSGN-B。
+**PRD-D**：每篇文档有行数上限，最长不超过 1,000 行，因为太长的文档几乎没法维护。decision-history 例外，不设上限：它只增不减（[ARD-E](../decision-history/spec-driven-development-decision-history.md#ard-e)）。各类文档的具体上限见 document-standard 的 DSGN-B。
 
 **PRD-E**：规定文档放在哪个目录、文件叫什么名字、目录之间是什么关系（parent、sub-feature、peer）。具体规则见 document-standard 的 DSGN-B。
 
@@ -129,13 +129,13 @@ AI 要把大问题拆成小的：能查的 AI 自己查（合规、财报、交�
 
 **PRD-I**：每项改动都要能验证。实在验证不了的，在 spec 里标为 `Unverified` 并写明原因；标了的项不作为 test-plan 的通过条件。
 
-**PRD-J**：写或改 feature spec 时，由 spec-write 按标准判断要新建哪篇、或要改哪几篇；提交前，询问是否先跑 spec-review。写作进度在 feature 目录建好之前记在 `CLAUDE.local.md`，建好之后记在 `docs/features/<f>/raw/state/`。
+**PRD-J**：写或改 feature spec 时，由 spec-write 按标准判断要新建哪篇、或要改哪几篇；提交前，询问是否先跑 spec-review。写作进度在 feature 目录建好之前记在 `CLAUDE.local.md`，建好之后记在 `docs/features/<f>/raw/state/`（[ARD-BT](../decision-history/spec-driven-development-decision-history.md#ard-bt)）。
 
 **PRD-K**：适用范围不限于软件，任何有门槛的难题都用同一套 spec。四个例子：盖 shed（合规、成本、施工）、北京旅游（行程、住宿、风险、预算）、看懂一道著名数学题（零基础一步步学）、分析一只股票（基本面、财报、新闻，每个结论有依据）。这四个例子不在本仓库建 gold（[ARD-AD](../decision-history/spec-driven-development-decision-history.md#ard-ad)）。
 
 **PRD-L**：每个子问题都标明由谁处理：AI 查、人决定、或 AI 查完后人决定。人没有问到的盲区和风险，AI 必须主动提出来。
 
-**PRD-M**：文档要让人读懂，这是硬需求，而且是通过条件。交付前，由一个 LLM 扮演本科水平的程序员，只读这一篇文档，回答从文档里抽出的问题；答错太多，或有第一次出现时没解释的术语，就不算交付（[ARD-BO](../decision-history/spec-driven-development-decision-history.md#ard-bo)）。具体门槛见 test-plan 的 TST-V。
+**PRD-M**：文档要让人读懂，这是硬需求，而且是通过条件。交付前，由一个 LLM（大语言模型）扮演本科水平的程序员，只读这一篇文档和术语表，回答从文档里抽出的问题；答错太多，或者有文档里没解释、术语表里也没有的术语，就不算交付（[ARD-BO](../decision-history/spec-driven-development-decision-history.md#ard-bo)）。具体门槛见 test-plan 的 TST-V。
 
 **PRD-N**：正式 spec 里的每个结论，都要能追溯到查到的事实，例如法规条文、财报、新闻、定义，不靠猜。查不到的写 `UNKNOWN`。评测时，AI 回答问题只能用 context 包里给的信息。
 
@@ -178,3 +178,4 @@ AI 要把大问题拆成小的：能查的 AI 自己查（合规、财报、交�
 | 2026-11-07 | Overview 与 Goals 验收改为 spec-write 与 spec-review（ARD-AJ） |
 | 2026-11-18 | PRD-P：交付只有 spec-write 与 spec-review（ARD-BH） |
 | 2026-11-20 | PRD-M 改为通过条件（ARD-BO）；PRD-A、B、D、E 改写成可检查的句子，PRD-D 与 DSGN-B 的行数上限对齐；PRD-P 去掉删除线（ARD-BM）；Overview、Goals、Solution 改为完整句子并链到术语表（ARD-BK） |
+| 2026-11-20 | 第 1 轮审查后：PRD-C 改为两条都要满足（ARD-BP）；PRD-D 写明 decision-history 例外；PRD-M 与 TST-V 对齐，允许查术语表；PRD-J 链到 ARD-BT；Problem Statement 保留原话（ARD-BS） |

@@ -95,6 +95,8 @@ PRD-L 要求每个子问题写明由谁处理。本 feature 的子问题如下�
 
 ## Implementation Decisions
 
+<a id="4-ai-文档编辑约束sdd-全-pipeline"></a>
+
 ### DSGN-A — AI 每次改文档的上限
 
 来源：PRD-C。
@@ -103,12 +105,14 @@ PRD-L 要求每个子问题写明由谁处理。本 feature 的子问题如下�
 
 | 规则 | 说明 |
 |---|---|
-| 单次上限 | 不超过 10 行，或不超过 200 字符，满足其一即可 |
+| 单次上限 | 两条都要满足：不超过 10 行，并且不超过 200 字符（[ARD-BP](../decision-history/spec-driven-development-decision-history.md#ard-bp)） |
 | 超出时 | 拆成多次改；或者由人明确授权一次大改（restructure），并记一条 ARD |
 | 和文档标准的关系 | 行数上限、路径、frontmatter 见 document-standard 的 DSGN-B 和 DSGN-E |
 | 怎么验证 | 测试无法检查单次改动的大小，所以这一条不作为 test-plan 的通过条件（PRD-I） |
 
 这条规则写在 spec-write 的正文里，靠 skill 执行，不靠测试。
+
+<a id="5-decision-history--何时写agent-写-spec-时注意"></a>
 
 ### DSGN-B — 什么时候写 decision-history
 
@@ -121,6 +125,8 @@ decision-history 只记已经对外生效、或者已经逼着现实改变的方
 | 流程要求记录的改名、撞名、推翻旧决定（见 document-standard 的 DSGN-J、DSGN-K） | 只是补充 design 正文、还没定下来的理由 |
 
 没提交的草稿和 `raw/design/` 不能代替 decision-history。要把草稿里的结论正式写进文档时，按上表判断要不要记。AI 补写 feature spec 时，默认不自动往 decision-history 里加条目；拿不准就问人。
+
+<a id="6-agent-规范落地claudemd-skill"></a>
 
 ### DSGN-C — 规范要同时写进 CLAUDE.md 和 skill
 
@@ -135,7 +141,11 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 
 ## Testing Decisions
 
+<a id="7-deliverable-与测试"></a>
+
 ### DSGN-D — 交付物和测试放在哪
+
+来源：PRD-B（用一组 skill 引导 AI 写 spec）、PRD-P（交付物只有两个 skill）。
 
 | 项 | 约定 |
 |---|---|
@@ -151,6 +161,8 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 不在范围内的事项见 [PRD 的 Out of Scope](../prd/spec-driven-development-prd.md#out-of-scope)，本文不重复。
 
 ## Further Notes
+
+<a id="8-parent-vs-sub-feature--review-齐备度"></a>
 
 ### DSGN-E — parent 和 sub-feature 的文档齐备要求
 
@@ -215,6 +227,18 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 
 本表是整套 SDD 文档唯一的术语表。其他文档第一次用到这些词时，链到这里。
 
+### 方法和流程
+
+| 术语 | 意思 |
+|---|---|
+| SDD | spec-driven development：先把问题写成 spec，再让 AI 按 spec 去做 |
+| LLM | 大语言模型（large language model），例如 Claude、GPT、DeepSeek |
+| 阶段 | 写 spec 的四步：Create（立项）、Map（摸底）、Converge（收敛）、Downstream（写下游文档）。详见 pipeline design |
+| 上游、下游 | 上游指 PRD、decision-history、design 这三篇；下游指从 design 总结出来的 impl-plan 和 test-plan |
+| 阶段编排 | 决定什么时候进入哪个阶段、调用哪个 skill 的流程控制 |
+| 进度回顾（recap） | AI 生成给人看的小结：做了什么、现在在哪个阶段、还剩什么、建议下一步 |
+| restructure（大改） | 一次超过改动上限（10 行并且 200 字符）的修改，必须有人明确授权并记一条 ARD |
+
 ### 文档类型
 
 | 术语 | 意思 |
@@ -267,7 +291,7 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 |---|---|
 | MUST | 必须做到；做不到就算失败 |
 | NICE | 最好做到；做不到只是提醒，不算失败 |
-| SHOULD、MAY | 「应该」和「可以」。只在少数地方出现，强度在 MUST 和 NICE 之间 |
+| SHOULD、MAY | SHOULD（应该）等同 NICE，做不到不算失败；MAY（可以）表示允许这样做，不是规则 |
 | L1–L4 | 内容的四个优先级。L1 是决定性内容（需求、约束、不在范围内的事项、未决问题等），永远不删；L2 是理由；L3 是放弃的方案；L4 是参考资料。文档需要变短时，从 L4 开始删 |
 | 按关注点分权威 | 不同的事实认不同的文档为准：想要的行为以 design 为准，当前实现以代码为准，接口以接口定义文件为准。冲突时先报告、再问人，不悄悄改一边 |
 | UNKNOWN | 查不到的事实这样写，不许猜 |
@@ -289,6 +313,8 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 | MUST 清单（registry） | `must_registry.yaml`，列出所有 MUST 规则以及每条由谁来检查（脚本或 LLM） |
 | CLAUDE.md、CLAUDE.local.md | AI 每次会话都会读的说明文件。`CLAUDE.local.md` 只在本地，不提交 |
 | wayfinder、grill-with-docs、research | 已有的辅助 skill：分别用来规划路线、追问式访谈、做调研 |
+| walter-worker | 作者的另一个项目（github.com/cicidi/walter-worker），放着一组 skill 和安装脚本；它的 feature create 命令用来新建 feature 目录 |
+| BMAD、GSD | 网上公开的两套 AI 开发流程框架，自带完整的任务管理和大量模板文件。SDD 故意不引入它们 |
 
 ### 评测
 
@@ -301,6 +327,11 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 | exemplar（范例） | 被认可的一份优秀产出 |
 | annotations（标注） | 对产出的好坏标注：`GOOD-*` 是应该做到的，`BAD-*` 是不该犯的错 |
 | judge（判分模型） | 用来打分的 LLM，目前是 `deepseek-flash` |
+| 分数 1 | MUST 合规分：通过的 MUST 条数除以 MUST 清单的总条数，必须满分 |
+| 分数 2 | 和 gold 比的分数：按标注加减分，满分 10，只在同一个 gold 版本内比较，不能比上一次低 |
+| 复核 | 同一个判分模型独立裁决 3 次，得出最终的通过或不通过。和 Python 检查脚本是两回事 |
+| 基线 | 只装被测 skill、不加任何辅助 skill 的评测配置（`eval.yaml` 里 `grill.skills: []`） |
+| run_id | 一次评测运行的名字，格式是「日期加分支名」 |
 | fixture | 测试用的小样例文件。反例（neg）故意违反规则，检查脚本必须报错；正例（pos）合规，检查脚本不能误报 |
 | mock MCP | 假的工具服务器。AI 调用它只会打印调用记录，不会真的下单或订票。MCP（Model Context Protocol）是 AI 调用外部工具的一种协议 |
 | oracle | 判断对错的依据。本套测试的 oracle 是两份标准文件 |
@@ -328,3 +359,4 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 | 2026-11-07 | §7 reader 改到 docs/book/html/（ARD-BF） |
 | 2026-11-18 | §7 Deliverable 只留 spec-write 与 spec-review（ARD-BH） |
 | 2026-11-20 | 补齐 Alternatives Considered、Drawbacks、Risks and Mitigations、Open Questions、Reversibility 五个必需章节；规则小节 §4–§8 改为 DSGN-A–E 并留对照表；新增全套唯一的术语表附录；User Stories 和 Out of Scope 改为链到 PRD，不再重复；gold 改为 iPhone 案例（ARD-BL）；全文改写为完整句子（ARD-BK） |
+| 2026-11-20 | 第 1 轮审查后：DSGN-A 改为两条都要满足（ARD-BP）；DSGN-D 写明来源 PRD-B、PRD-P；DSGN-A 到 DSGN-E 上方保留旧锚点（ARD-AP）；术语表补上 SDD、LLM、阶段、上下游、阶段编排、进度回顾、大改、walter-worker、BMAD、GSD、分数 1、分数 2、复核、基线、run_id；SHOULD 改为等同 NICE |

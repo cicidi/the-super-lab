@@ -95,15 +95,15 @@ parent 的汇编页（reader）把 parent 和各个 sub-feature 的文档放在�
 
 #### DSGN-N-L — 左侧目录的序号和层级
 
-左侧目录显示层级和序号：1 prd、2 decision-history、3 design、4 impl plan、5 test plan、6 how to、10 sub-feature。design 的分篇和汇编页放在 3 下面。sub-feature 单独成一组，在 10 下面逐个展开。pipeline 不生成 HTML 页面（[ARD-BI](../../../decision-history/spec-driven-development-decision-history.md#ard-bi)）。
+左侧目录显示层级和序号：1 prd、2 decision-history、3 design、4 impl plan、5 test plan、6 how to、10 sub-feature。design 的分篇和汇编页放在 3 下面。sub-feature 单独成一组，在 10 下面逐个展开。pipeline 在左侧目录里没有单独的页面，它的内容收在汇编页里（[ARD-BI](../../../decision-history/spec-driven-development-decision-history.md#ard-bi)）。
 
 #### DSGN-N-D — 视觉和技术要求
 
-- 应该（SHOULD）全站用同一套样式：页面布局、编号标签、卡片、提示框。
-- 应该（SHOULD）把 CSS 写在页面里，用浏览器直接打开文件也能正常显示。
-- 可以（MAY）内嵌 Mermaid 流程图；没有先例时用文字画的流程图。
-- 不能（MUST NOT）在运行时读取 `.md` 文件来显示主要内容；只有调试时可以。
-- 必须（MUST）让页面标题、节、小节、条目的字号、粗细、样式各不相同；段落前面不加 a、b、c 或 1、2、3 这类序号。
+- 全站用同一套样式：页面布局、编号标签、卡片、提示框（NICE）。
+- 把 CSS 写在页面里，用浏览器直接打开文件也能正常显示（NICE）。
+- 允许内嵌 Mermaid 流程图；没有先例时用文字画的流程图。
+- 不能在运行时读取 `.md` 文件来显示主要内容；只有调试时可以（MUST）。
+- 页面标题、节、小节、条目的字号、粗细、样式各不相同；段落前面不加 a、b、c 或 1、2、3 这类序号（MUST）。
 
 #### DSGN-N-E — 谁负责什么
 
@@ -118,7 +118,7 @@ spec-pipeline 里的 `SPEC-READER.md` 如果还在，只能是指向本篇和 `S
 
 #### DSGN-N-F — 什么时候重新生成
 
-- parent 或任何 sub-feature 的已提交文档有实质修改（尤其是 L1、L2）之后，应该（SHOULD）重新生成。
+- parent 或任何 sub-feature 的已提交文档有实质修改（尤其是 L1、L2）之后，重新生成（NICE；网页过期由 TST-R 检查）。
 - 用户明确要求时，例如「生成 reader」「生成网页」「reader 太简略了，补全」。
 - 只改了错别字的提交，不必每次都重新生成（NICE）。
 
@@ -207,3 +207,4 @@ spec-pipeline 里的 `SPEC-READER.md` 如果还在，只能是指向本篇和 `S
 | 2026-11-18 | 交付 skill 改为 spec-write 与 spec-review（ARD-BH） |
 | 2026-11-18 | 左侧栏序号 1–6 与 10 sub-feature（ARD-BI） |
 | 2026-11-20 | DSGN-N-H 的生成稿与手写稿标记改为与 ARD-AK 一致；「参考」行并回 DSGN-N-A 的表；Implementation Decisions 的重复编号改为 DSGN-N-M、DSGN-N-N 并留对照表；DSGN-N-C 从 Tab 改为全站目录加汇编页（ARD-BG）；DSGN-N-D、DSGN-N-E 去掉已删除的旧 HTML 和 spec-pipeline；Testing Decisions 改指 TST-R、TST-U；全文改写为完整句子（ARD-BK） |
+| 2026-11-20 | 第 1 轮审查后：DSGN-N-D、DSGN-N-F 的 SHOULD、MAY 改为 NICE 或「允许」；DSGN-N-L 写明 pipeline 没有单独页面、内容在汇编页里 |

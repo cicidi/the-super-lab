@@ -47,7 +47,7 @@ last_verified: 2026-11-20
 
 **步骤：** 每次 DSGN 规则改动，同一批修改摘要。
 
-**依赖：** IMPL-A。**挡住：** IMPL-B、IMPL-M。
+**依赖：** IMPL-A。**挡住：** IMPL-B、IMPL-F、IMPL-M。
 
 **Verify:** 摘要里的每条 MUST 都能在 document-standard design 里找到出处；没有和 design 矛盾的说法。
 
@@ -62,7 +62,7 @@ last_verified: 2026-11-20
 - `fixtures/neg/` 和 `fixtures/pos/`，随 TST-B 增加
 - `checks/` 下的 Python 检查模块，实现 TST-B
 
-**依赖：** 无。**挡住：** IMPL-J、IMPL-K、IMPL-E。
+**依赖：** 无。**挡住：** IMPL-J、IMPL-K、IMPL-L、IMPL-E。
 
 **Verify:** 有检查模块时 TST-B 能跑；gold 的输入文件都在。
 
@@ -72,7 +72,7 @@ last_verified: 2026-11-20
 
 **步骤：** 新开分支 `eval/v1/<run_id>`；用 spec-write 写出一套 feature spec；跑 TST-E、TST-F、TST-K；失败时先改 spec。
 
-**依赖：** IMPL-B、IMPL-D、IMPL-P。**挡住：** IMPL-I。
+**依赖：** IMPL-B、IMPL-D、IMPL-J、IMPL-P；报告部分还依赖 IMPL-L，可读性部分还依赖 IMPL-Q。**挡住：** IMPL-I。
 
 **Verify:** 生成了 HTML 报告；分数按 test-plan 的 Scoring 计算。
 
@@ -112,7 +112,7 @@ last_verified: 2026-11-20
 
 **步骤：** document-standard 和 test-plan 里关于 review 的部分稳定后，修改 `skills/spec-review/SKILL.md`。
 
-**依赖：** IMPL-B、IMPL-K。**挡住：** 无。
+**依赖：** IMPL-B、IMPL-K、IMPL-E。**挡住：** 无。
 
 **Verify:** TST-H 的案例全部检出。
 
@@ -120,7 +120,7 @@ last_verified: 2026-11-20
 
 **目标：** `eval.yaml` 能用 `deepseek-flash` 跑 3 次；目标仓库可以用环境变量覆盖；`test_eval_config.py` 在配置缺项时报错。
 
-**依赖：** IMPL-D。**挡住：** IMPL-E。
+**依赖：** IMPL-D。**挡住：** IMPL-E、IMPL-Q。
 
 **Verify:** `pytest test_eval_config.py` 通过；`eval.yaml` 包含所有必需的键。
 
@@ -219,3 +219,4 @@ last_verified: 2026-11-20
 | 2026-11-04 | Global Constraints 加 eval/no-migration；IMPL-D gold 路径改 iphone/v1 |
 | 2026-11-18 | IMPL-D / IMPL-E：gold spec 改为这套 spec-driven-development（ARD-BJ） |
 | 2026-11-20 | 每个 IMPL 写明依赖和挡住谁，执行顺序改为分组；IMPL-B 改为 spec-write 和 spec-review；IMPL-D、IMPL-E 改回 iPhone gold（ARD-BL）；IMPL-F 改为全站网页（ARD-BG）；验收的分数 2 从「不低于 6」改为「不低于上一次」，和 ARD-R、test-plan 一致；新增 IMPL-P（markdown 以外的欠账）和 IMPL-Q（可读性测试）；全文改为中文（ARD-BK） |
+| 2026-11-20 | 第 1 轮审查后：依赖和挡住两头对齐（C 挡住 F；D 挡住 L；J 挡住 Q；E 依赖 J、L、Q；I 依赖 E） |

@@ -44,7 +44,7 @@ last_verified: 2026-11-20
 
 | 路径 | 内容 |
 |---|---|
-| `skills/spec-organize/tests/eval.yaml` | 判分模型 `judge.model: deepseek-flash`；gold 案例是 iPhone，版本 v1，路径 `gold/v1/`（[ARD-BL](../decision-history/spec-driven-development-decision-history.md#ard-bl)）；`gold.repeats: 3`；`grill.skills`（基线为 `[]`）；`target.repo: .`（可以用环境变量 `SDD_EVAL_REPO` 覆盖）；`checkers.models: [deepseek-flash]`；`checkers.repeats: 3`；`single_provider: true`。现在的文件还指向 SDD 目录，由 IMPL-P 改回 |
+| `skills/spec-organize/tests/eval.yaml` | 评测配置，每个键的含义见下表。现在的文件还指向 SDD 目录，由 IMPL-P 改回 iPhone 案例 |
 | `skills/spec-organize/tests/checks/` | Python 检查模块，每个机械 MUST 一个模块，清单见同目录的 `README.md` |
 | `skills/spec-organize/tests/mock-mcp/` | 所有例子共用的 mock MCP 客户端和服务器，提供几个固定的工具；调用时打印调用记录，不真的下单 |
 | `skills/spec-organize/tests/fixtures/neg/<check>/` | 反例：每个检查至少一个最小的违规样例 |
@@ -54,6 +54,18 @@ last_verified: 2026-11-20
 | `skills/spec-organize/tests/gold/v1/annotations.yaml` | 标注，`GOOD-*` 是应该做到的，`BAD-*` 是不该犯的错。每条有 `where`、`text`；`BAD` 还有 `expected_fix`；`added_in` 记录是哪个 gold 版本加的 |
 | `skills/spec-organize/tests/reports/<run_id>.html` | 评测报告，一次运行一个 HTML；`run_id` 是「日期加分支名」；由 `tools/render_eval_report.py` 生成；不提交 |
 | `skills/spec-review/tests/cases/<名字>/` | 审查案例：`input/`（故意埋了问题的文档）和 `expected.yaml`（应该找出的问题编号，以及应该忽略的严重度 1、2 的问题）；11 个机械案例，5 个语义案例 |
+
+`eval.yaml` 的键：
+
+| 键 | 值 | 含义 |
+|---|---|---|
+| `judge.model` | `deepseek-flash` | 判分用的模型 |
+| `gold.cases` | `gold/v1/` | iPhone 案例（[ARD-BL](../decision-history/spec-driven-development-decision-history.md#ard-bl)） |
+| `gold.repeats` | `3` | 每个案例跑几次 |
+| `grill.skills` | `[]` | 辅助 skill；空表示基线 |
+| `target.repo` | `.` | 写 spec 的仓库；环境变量 `SDD_EVAL_REPO` 可覆盖 |
+| `checkers.models`、`checkers.repeats` | `[deepseek-flash]`、`3` | 复核用的模型和次数 |
+| `single_provider` | `true` | 所有模型来自同一家服务商 |
 
 这套 SDD spec 本身不是打分用的 gold。它是写法样板，由 spec-review 审查，不参与打分（[ARD-BL](../decision-history/spec-driven-development-decision-history.md#ard-bl)）。
 
@@ -258,3 +270,4 @@ last_verified: 2026-11-20
 | 2026-11-18 | Gold spec 改为这套 spec-driven-development（ARD-BJ） |
 | 2026-11-18 | 资产表与 TST-C 改指这套 spec；`gold/v1` 只是练习案例（ARD-BJ） |
 | 2026-11-20 | gold 改回 iPhone 案例，资产表与 TST-C 去掉删除线（ARD-BL、ARD-BM）；新增 TST-V 可读性测试，PRD-M 从 Unverified 改为由 TST-V 覆盖（ARD-BO）；TST-E、TST-F、TST-G 和发布门槛从 spec-organize 改为 spec-write 和 spec-review；「checker」改称「复核」，避免和检查脚本混淆；TST-U 改为删除线只在 decision-history；TST-A、TST-N 改引 parent design 的 DSGN 编号；TST-S、TST-T 按编号顺序排列；追溯表补上能对应的测试；全文改写为完整句子（ARD-BK） |
+| 2026-11-20 | 第 1 轮审查后：`eval.yaml` 的说明从一个表格单元拆成逐键的表 |

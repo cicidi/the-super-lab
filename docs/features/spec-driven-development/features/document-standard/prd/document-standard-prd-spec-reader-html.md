@@ -10,7 +10,7 @@ last_verified: 2026-11-20
 
 # Document Standard — 给人读的 HTML 页面（PRD）
 
-本篇是 document-standard 的一个分篇 PRD，讲「给人读的 HTML 页面」要什么、不要什么。具体规则写在 [reader design](../design/document-standard-design-spec-reader-html.md)（DSGN-N）。生成 HTML 时要遵守的规则摘要在 `skills/spec-html-standard/SPEC-HTML-STANDARD.md`，它只是一份规则文件，不是 skill。术语见 [parent design 的术语表](../../../design/spec-driven-development-design.md#glossary)。
+本篇是 document-standard 的一个分篇 PRD（入口是 [document-standard-prd.md](document-standard-prd.md)），讲「给人读的 HTML 页面」要什么、不要什么。具体规则写在 [reader design](../design/document-standard-design-spec-reader-html.md)（DSGN-N）。生成 HTML 时要遵守的规则摘要在 `skills/spec-html-standard/SPEC-HTML-STANDARD.md`，它只是一份规则文件，不是 skill。术语见 [parent design 的术语表](../../../design/spec-driven-development-design.md#glossary)。
 
 ## Overview
 
@@ -24,7 +24,7 @@ spec 的正式版本是已提交的 markdown。但一个 parent feature 往往�
 |---|---|---|
 | PRD-A | 内容不丢 | 读者在 HTML 里看到的 L1 内容和 markdown 一样多：MUST 和禁止事项、表格的每一行、带编号的条目、Out of Scope、关键的流程图。不能做成高管摘要 |
 | PRD-B | 是排好版的网页，不是 markdown 预览 | 有卡片、提示框、表格，可以有流程图。不能只是把 markdown 原文塞进 `<pre>`，也不能运行时读取 `.md` 文件来显示 |
-| PRD-C | parent 和 sub-feature 都覆盖 | parent 的五篇文档，每篇存在的都有一页；每个 `features/<sub>/` 至少收录它的 design，有其他已提交的文档也一并收录。所有页面都能从左侧目录找到（[ARD-BG](../../../decision-history/spec-driven-development-decision-history.md#ard-bg)、[ARD-BI](../../../decision-history/spec-driven-development-decision-history.md#ard-bi)） |
+| PRD-C | parent 和 sub-feature 都覆盖 | parent 的五篇文档，每篇存在的都有一页；每个 `features/<sub>/` 至少收录它的 design，有其他已提交的文档也一并收录。页面都能从左侧目录找到；pipeline 例外，它没有单独的页面，内容收在汇编页里（[ARD-BG](../../../decision-history/spec-driven-development-decision-history.md#ard-bg)、[ARD-BI](../../../decision-history/spec-driven-development-decision-history.md#ard-bi)） |
 | PRD-D | 能追溯到原文 | 每一页（或每个大的部分）底部写明 `Canonical: <markdown 路径>`；页面顶部说明：要改 spec 先改 markdown，再重新生成 HTML |
 | PRD-E | 位置和命名固定 | parent 的汇编页是 `docs/book/html/<parent>/<parent>-reader.html`；其他页面按它在 `docs/features/` 下的相对路径放在 `docs/book/html/`，扩展名换成 `.html`（[ARD-BF](../../../decision-history/spec-driven-development-decision-history.md#ard-bf)） |
 | PRD-F | 能逐步改进 | 最早可以手工维护；之后改用脚本从 markdown 生成。改用脚本以后，本篇和 DSGN-N 仍然是要遵守的规则 |
@@ -68,3 +68,4 @@ spec 的正式版本是已提交的 markdown。但一个 parent feature 往往�
 | 2026-11-03 | 实现改为 **spec-html-standard**（SPEC-HTML-STANDARD.md），非 spec-reader skill |
 | 2026-11-07 | PRD-E：HTML 放到 docs/book/html/，按 feature 树建目录（ARD-BF） |
 | 2026-11-20 | 从「单文件、按 Tab 浏览」改为全站左侧目录（PRD-C，ARD-BG、ARD-BI）；PRD-L 不再引用已删除的旧 HTML；PRD-M 由 spec-write 提示重新生成，不再由 spec-pipeline 触发（ARD-AJ）；PRD-O 改为静态网页；Overview 改正 reader 路径；全文改写为完整句子（ARD-BK） |
+| 2026-11-20 | 第 1 轮审查后：链回新的入口文件 document-standard-prd.md（ARD-BQ）；PRD-C 写明 pipeline 没有单独页面（ARD-BI） |
