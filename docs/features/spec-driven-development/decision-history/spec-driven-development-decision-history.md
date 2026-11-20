@@ -5,460 +5,552 @@ state: final
 final_date: 2026-09-25
 health: active
 owner: cicidi
-last_verified: 2026-11-04
+last_verified: 2026-11-20
 ---
 
 # Spec-Driven Development — Decision History
 
-Decision Log uses **`ARD-{letter}`** IDs (document-standard **DSGN-F**, **DSGN-J**): newest entry **first**; supersede = ~~strikethrough~~ + link to the replacing **ARD** ID.
+本文件记录这套方法里所有已经生效的决定。每条决定有一个编号，格式是 `ARD-` 加字母，例如 `ARD-A`、`ARD-BK`。编号一旦写下就不再改，也不再给别的决定用。
+
+怎么读这份文件：
+
+- **Decision Log** 是一张总表，一行一条决定，最新的在最上面。
+- **Evidence Appendix** 按同样的顺序，逐条写这条决定的原因、放弃了哪些方案。
+- 一条决定被新决定推翻时，旧行不删，而是用删除线划掉，后面链到新决定。这是整套 spec 里唯一使用删除线的地方（[ARD-BM](#ard-bm)）。
+
+术语见 [parent design 附录：术语表](../design/spec-driven-development-design.md#glossary)。
 
 ## Decision Log
 
 | ID | Date | Decision |
 |---|------|----------|
-| ARD-BJ | 2026-11-18 | The gold spec is this spec-driven-development tree. The iPhone gold/v1 case is not the gold spec |
-| ARD-BI | 2026-11-18 | The left sidebar shows hierarchy and numbers: 1 prd, 2 decision-history, 3 design, 4 impl plan, 5 test plan, 6 how to, 10 sub-feature |
-| ARD-BH | 2026-11-18 | The only deliverable skills are spec-write and spec-review. The two standard files stay as documents those skills read; they are not deliverables |
-| ARD-BG | 2026-11-07 | One site at docs/book/html/index.html. Each spec page is one directory line. The directory opens a feature. Inside a feature the left side is that feature's directory and the right side is the page |
-| ARD-BF | 2026-11-07 | Spec HTML lives under docs/book/html/ and mirrors docs/features/. Parent and sub-feature HTML both go there. Markdown stays in the feature tree |
-| ARD-BE | 2026-11-07 | A diagram explains a flow prose cannot. One flow, one diagram. A steps a–b heading that contains a sequence diagram has b−a+1 messages |
-| ARD-BD | 2026-11-07 | External gold is a manifest of commits and expected findings. The private spec text is not copied into this repo |
-| ARD-BC | 2026-11-07 | A QUES citation's status mark matches the tracker. A closed item is not called open in the citing prose |
-| ARD-BB | 2026-11-07 | Tracker counts match: all N questions equals the row count; each status tally equals rows with that status |
-| ARD-BA | 2026-11-07 | A hand-maintained HTML changelog has one row for each date in the markdown Change Log |
-| ARD-AZ | 2026-11-07 | A §N link lands on heading N or its parent or child. Steps ranges in one doc do not overlap |
-| ARD-AY | 2026-11-07 | A design may link to a question tracker instead of copying the ownership table, when every tracker row has Owner and Evidence |
-| ARD-AX | 2026-11-07 | Decision Log may add a Ready column. Status and Supersedes columns stay forbidden |
-| ARD-AW | 2026-11-07 | Required headings stay English and unnumbered. A section added for an ordered procedure may be numbered |
-| ARD-AV | 2026-11-07 | A split design requires the 13 sections only on the entry file. A part links back and covers its own aspect |
-| ARD-AU | 2026-11-07 | A local translation is not committed. Its first lines name the source file as authoritative. Headings may be translated |
-| ARD-AT | 2026-11-07 | Each IMPL task has a done line. Order is read side before write side. An unbuilt partner port has a mock |
-| ARD-AS | 2026-11-07 | Body text that drops an old claim points at the new ARD. Strike stays for decision history. Typos may be edited in place |
-| ARD-AR | 2026-11-07 | An invariant is a table of records or impossible states, not a slogan |
-| ARD-AQ | 2026-11-07 | A file:line citation in design or impl-plan names the commit it was read at |
-| ARD-AP | 2026-11-07 | An id migration keeps an old-to-new table. A renamed heading keeps the old anchor |
-| ARD-AO | 2026-11-07 | One open-question tracker per feature. Other docs link to it. Entries are QUES-letter with Question, Answer, and Owner |
-| ARD-AN | 2026-11-07 | Readiness may be recorded in the decision text or a Ready mark. A row may be revised in place. Open items group by owner |
-| ARD-AM | 2026-11-07 | A procedure step number is a position, not a permanent id. Impl and test cite the same step range |
-| ARD-AL | 2026-11-07 | Optional frontmatter audience is internal or external. Each section names its authoritative artifact. Design section ids need not match a partner design |
-| ARD-AK | 2026-11-07 | Markdown is the full text. Hand-maintained HTML carries spec-source and sha256; a mismatch is paired_html_stale. Generated HTML is rebuilt |
-| ARD-AJ | 2026-11-07 | Entry skills are spec-write and spec-review. Standards: SPEC-STANDARD.md and SPEC-PRESENTATION.md. spec-organize and spec-pipeline are not entry skills |
-| ARD-AI | 2026-11-04 | This spec consolidation is an explicitly authorized restructure; larger-than-10-line edits are allowed for this batch |
-| ARD-AH | 2026-11-04 | The human-readable reader is the only HTML deliverable; the legacy summary HTML is deleted |
-| ARD-AG | 2026-11-04 | Convergence is auto-decided: open decisions must carry a structured `blocking` flag; AI does not self-declare "stable" |
-| ARD-AF | 2026-11-04 | Deliberately undefined: failure policy, skill/spec versioning, source-trust grading, data cleanup; no legacy migration |
-| ARD-AE | 2026-11-04 | Non-software problems map to the same five artifacts; design carries the ownership table; evidence is mandatory and unknowns are marked UNKNOWN |
-| ARD-AD | 2026-11-04 | Eval uses deepseek-flash with 3 independent runs; gold has case/version/exemplar/annotations; runs and reports are not committed; four examples are skill-doc examples, not repo gold |
-| ARD-AC | 2026-11-04 | PRD required sections drop NFR; IDs are scoped feature+type and cross-feature references use feature/ID; how-to stays unchecked |
-| ~~ARD-AB~~ | 2026-11-04 | ~~Four deliverables: spec-pipeline, spec-organize, spec-review, spec-write~~ → [ARD-AJ](#ard-aj--entry-skills-are-spec-write-and-spec-review) |
-| ARD-AA | 2026-11-04 | Multi-participant decisions use the latest decision-history entry; if order is unclear, ask the user; AI never guesses |
-| ARD-Z | 2026-11-04 | Downstream waits until the PRD states limitation, preference, timeline, resource, and tool, each filled or marked not apply, and design plus decision history both exist |
-| ARD-Y | 2026-11-04 | Map split: AI offers options; ≤20 hours for one person is one feature spec; over that, split into peer or sub-feature; AI estimates and judges |
-| ARD-X | 2026-11-04 | Execution delivery is a mock MCP client call to a mock server; a printed log is success; no live booking or orders |
-| ARD-W | 2026-11-04 | Readability is scored by an LLM playing a bachelor's-level programmer; pass means it understands |
-| ~~ARD-V~~ | 2026-11-04 | ~~Hard non-software problems stay in this PRD and use the same five artifacts; four gold examples~~ → [ARD-AD](#ard-ad--eval-uses-deepseek-flash-with-3-independent-runs) |
-| ~~ARD-U~~ | 2026-11-03 | ~~Pipeline deliverable is spec-pipeline orchestrator; Map is interview-led; state CLAUDE.local then raw/state/~~ → [ARD-AJ](#ard-aj--entry-skills-are-spec-write-and-spec-review) |
-| ARD-T | 2026-11-03 | wayfinder-import is not an SDD sub-feature; its tree under `features/wayfinder-import/` is removed |
-| ARD-S | 2026-11-03 | Gold set grows in both directions and is versioned; scores compare only within one gold version |
-| ARD-R | 2026-11-03 | Two eval scores: MUST `x/total` must be full; exemplar score `(plus−minus)×10/total` must not regress |
-| ARD-Q | 2026-11-03 | Tests live in `skills/<skill>/tests/`; cross-skill checks, gold, and reports in `spec-organize` |
-| ARD-P | 2026-11-03 | `spec-review` detects mechanical MUST violations too; it outputs suggestions, never fixes |
-| ~~ARD-O~~ | 2026-11-03 | ~~Skills are `spec-organize` (main), `spec-review`, `spec-write`; the standard file is `spec-organize/SPEC-STANDARD.md`~~ → [ARD-AB](#ard-ab--four-skills-including-spec-pipeline) |
-| ARD-N | 2026-10-30 | Success-metric measurement and baseline are deferred to PRD-G |
-| ~~ARD-M~~ | 2026-10-30 | ~~Multi-participant decision authority is deferred to PRD-F~~ → [ARD-AA](#ard-aa--multi-participant-decisions-use-the-latest-history-entry-otherwise-ask) |
-| ARD-L | 2026-10-30 | Blind spots are surfaced by existing skills, not a new mechanism |
-| ARD-K | 2026-10-30 | Every AI edit to a `.md` under `docs/` is ≤10 lines or ≤200 characters; larger changes split |
-| ARD-J | 2026-10-30 | Five stages plus an optional `how-to`; `how-to` is not a stage |
-| ARD-I | 2026-09-25 | This feature carries two `spec` documents, against the one-per-type rule |
-| ARD-H | 2026-09-25 | Four content priority levels; L1 is never deleted |
-| ARD-G | 2026-09-25 | Spec parts take an aspect noun, plan parts take a number plus phase |
-| ARD-F | 2026-09-25 | A feature folder may hold more than one `design` or `impl-plan` |
-| ARD-E | 2026-09-25 | `design` and `impl-plan` cap at 1,000 lines; `decision-history` is exempt |
-| ARD-D | 2026-09-25 | The health field is named `health`, not `status` |
-| ARD-C | 2026-09-25 | Detail is carried in sibling files, not inline in `SKILL.md` |
-| ARD-B | 2026-09-25 | The standard lives in ~~`doc-organize`~~ `spec-organize` (→ [ARD-O](#ard-o--skills-are-spec-organize-main-spec-review-spec-write-the-standard-file-is-spec-organizespec-standardmd)), not a new skill |
-| ARD-A | 2026-09-25 | Authority by concern replaces a single global source of truth |
+| ARD-BO | 2026-11-20 | 可读性是通过条件：由 LLM 扮演本科程序员，只读一篇文档，回答从该篇需求和规则条目里抽出的问题；答错太多，或有第一次出现时没解释的术语，这篇就不通过 |
+| ARD-BN | 2026-11-20 | 规则分两级：MUST 是违反后 spec 会出错或丢信息的规则；NICE 是格式偏好。八条纯格式规则降为 NICE |
+| ARD-BM | 2026-11-20 | 删除线只用在 decision-history。正文只写现行规则，并链到推翻旧说法的 ARD；正文的旧版本交给 git |
+| ARD-BL | 2026-11-20 | 用来打分的 gold 是 iPhone 购买案例。这套 SDD spec 是写法样板，由 spec-review 审查，不用来打分 |
+| ARD-BK | 2026-11-20 | 本次整理是人明确授权的大改：正文统一为中文，可以大段重写，术语表放在 parent design 附录；单次改动上限在这一批暂停 |
+| ~~ARD-BJ~~ | 2026-11-18 | ~~gold spec 就是这套 spec-driven-development，iPhone gold/v1 不是 gold~~ → [ARD-BL](#ard-bl) |
+| ARD-BI | 2026-11-18 | 左侧栏显示层级和序号：1 prd、2 decision-history、3 design、4 impl plan、5 test plan、6 how to、10 sub-feature |
+| ARD-BH | 2026-11-18 | 交付物只有 spec-write 和 spec-review 两个 skill。两份标准文件是这两个 skill 要读的文档，不算交付物 |
+| ARD-BG | 2026-11-07 | 全站只有一个网站，入口是 docs/book/html/index.html。进入一个 feature 后，左边是这个 feature 的目录，右边是正文 |
+| ARD-BF | 2026-11-07 | spec 的 HTML 放在 docs/book/html/，目录结构和 docs/features/ 一样；markdown 留在 feature 目录 |
+| ARD-BE | 2026-11-07 | 图只用来画文字说不清的流程，一个流程一张图 |
+| ARD-BD | 2026-11-07 | 外部仓库的 gold 只记一份清单（commit 和应找出的问题），不把别人的 spec 原文复制进本仓库 |
+| ARD-BC | 2026-11-07 | 引用一个未决问题时写的状态，必须和问题清单里的状态一致 |
+| ARD-BB | 2026-11-07 | 问题清单里写的总数和各状态的数量，必须等于实际行数 |
+| ARD-BA | 2026-11-07 | 手工维护的 HTML 更新记录，要覆盖 markdown Change Log 里的每个日期 |
+| ARD-AZ | 2026-11-07 | 写成「§N」的链接要落在第 N 节或它的上下级；同一文档里的步骤范围不能重叠 |
+| ARD-AY | 2026-11-07 | 如果问题清单的每一行都写了负责人和依据，design 可以链到清单，不必再抄一张子问题归属表 |
+| ARD-AX | 2026-11-07 | Decision Log 可以多加一列 Ready；Status 列和 Supersedes 列仍然禁止 |
+| ARD-AW | 2026-11-07 | 必需章节的标题用英文、不编号；专门写有序步骤的章节可以编号 |
+| ARD-AV | 2026-11-07 | design 拆成多篇时，13 个必需章节只要求写在入口文件；其他分篇链回入口，只写自己那部分 |
+| ARD-AU | 2026-11-07 | 本地翻译副本不提交；副本开头写明以原文为准 |
+| ARD-AT | 2026-11-07 | 每个 IMPL 任务写明完成标准；先做读的一侧，再做写的一侧；对方接口还没上线时写一个 mock |
+| ARD-AS | 2026-11-07 | 正文推翻旧说法时，链到新的 ARD；删除线只留给 decision-history；错别字可以直接改 |
+| ARD-AR | 2026-11-07 | 不变量写成表格，不写成口号 |
+| ARD-AQ | 2026-11-07 | design 或 impl-plan 里引用「文件:行号」时，写明是哪个 commit 的 |
+| ARD-AP | 2026-11-07 | 编号迁移时保留新旧对照表；标题改名时保留旧锚点 |
+| ARD-AO | 2026-11-07 | 每个 feature 只有一份未决问题清单，其他文档链过去；条目编号是 QUES 加字母，写明问题、目前答案、负责人 |
+| ARD-AN | 2026-11-07 | 决定的就绪程度可以写在决定正文里；同一行可以原地修订；未决事项按负责人分组 |
+| ARD-AM | 2026-11-07 | 步骤编号表示位置，不是永久编号；impl 和 test 引用同一个步骤范围 |
+| ARD-AL | 2026-11-07 | frontmatter 可选字段 audience 只能是 internal 或 external |
+| ARD-AK | 2026-11-07 | markdown 是全文。手工维护的 HTML 记录源文件和它的 sha256，不一致就算过期；脚本生成的 HTML 直接重新生成 |
+| ARD-AJ | 2026-11-07 | 入口 skill 是 spec-write 和 spec-review；标准写在 SPEC-STANDARD.md 和 SPEC-PRESENTATION.md；spec-organize 和 spec-pipeline 不再是入口 |
+| ARD-AI | 2026-11-04 | 那一次的 spec 合并是人明确授权的大改，那一批允许超过 10 行的改动 |
+| ARD-AH | 2026-11-04 | 给人读的 reader 是唯一的 HTML 交付物；旧的摘要 HTML 删除 |
+| ARD-AG | 2026-11-04 | 是否收敛由规则自动判断：每个未决事项都标明是否阻塞；AI 不能自己宣布「已经够稳」 |
+| ARD-AF | 2026-11-04 | 故意不定义的事项：失败处理、skill 和 spec 的版本管理、信息来源可信度分级、数据清理；不迁移旧文档 |
+| ARD-AE | 2026-11-04 | 非软件问题也用同样的五篇文档；design 里写子问题归属表；结论必须有依据，查不到写 UNKNOWN |
+| ARD-AD | 2026-11-04 | 评测用 deepseek-flash 独立跑 3 次；gold 由案例、版本、范例、标注四部分组成；跑分结果和报告不提交；四个非软件例子写进 skill 正文，不在本仓库建 gold |
+| ARD-AC | 2026-11-04 | PRD 的必需章节去掉非功能需求；编号在「feature 加文档类型」内唯一，跨 feature 引用写成 feature/编号；how-to 暂不检查 |
+| ~~ARD-AB~~ | 2026-11-04 | ~~交付物是四个 skill：spec-pipeline、spec-organize、spec-review、spec-write~~ → [ARD-AJ](#ard-aj) |
+| ARD-AA | 2026-11-04 | 多人的决定互相冲突时，以 decision-history 里时间较晚的为准；看不出先后就问用户；AI 不猜 |
+| ARD-Z | 2026-11-04 | PRD 写清限制、偏好、时间、资源、工具五项（没有的写 not apply），并且 design 和 decision-history 都已存在，才能进入下游 |
+| ARD-Y | 2026-11-04 | 拆分问题时，AI 给出几种拆法；一个人 20 小时内能搞清楚的算一个 feature spec，超过就拆；估算和判断都由 AI 做 |
+| ARD-X | 2026-11-04 | 执行只做到 mock：mock MCP 客户端调用 mock 服务器，打印出调用记录就算成功；不真下单、不真订票 |
+| ARD-W | 2026-11-04 | 可读性由 LLM 扮演本科程序员来判断，它读懂了才算通过 |
+| ~~ARD-V~~ | 2026-11-04 | ~~非软件难题留在本 PRD，用同样五篇文档，并建四个 gold 例子~~ → [ARD-AD](#ard-ad) |
+| ~~ARD-U~~ | 2026-11-03 | ~~交付物是 spec-pipeline 编排 skill；Map 阶段以访谈为主；state 先记在 CLAUDE.local，再记到 raw/state/~~ → [ARD-AJ](#ard-aj) |
+| ARD-T | 2026-11-03 | wayfinder-import 不是 SDD 的 sub-feature，它在 features/wayfinder-import/ 下的目录删除 |
+| ARD-S | 2026-11-03 | gold 集合可以增长，并且有版本号；分数只在同一版本内比较 |
+| ARD-R | 2026-11-03 | 评测有两个分数：MUST 合规分必须满分；对标 gold 的分数不能比上一次低 |
+| ARD-Q | 2026-11-03 | 测试放在 skills/<skill>/tests/；跨 skill 的检查器、gold、报告放在 spec-organize 下 |
+| ARD-P | 2026-11-03 | spec-review 也要找出机械规则的违反；它只给修改建议，不直接改 |
+| ~~ARD-O~~ | 2026-11-03 | ~~skill 是 spec-organize（主）、spec-review、spec-write；标准文件是 spec-organize/SPEC-STANDARD.md~~ → [ARD-AB](#ard-ab) |
+| ARD-N | 2026-10-30 | 产品级成功指标的测量方法和基线延后，记在 PRD-G |
+| ~~ARD-M~~ | 2026-10-30 | ~~多人决定以谁为准延后，记在 PRD-F~~ → [ARD-AA](#ard-aa) |
+| ARD-L | 2026-10-30 | 盲区由现有 skill 来发现，不另造新机制 |
+| ARD-K | 2026-10-30 | AI 每次改 docs/ 下的 .md，不超过 10 行或 200 字符；更大的改动拆成多次 |
+| ARD-J | 2026-10-30 | 五个阶段，外加一个可选的 how-to；how-to 不是阶段 |
+| ARD-I | 2026-09-25 | 当时这个 feature 有两份 spec 文档，是对「每种类型一份」规则的有意例外（已成历史，见 ARD-T） |
+| ARD-H | 2026-09-25 | 内容分四个优先级；L1 永远不删 |
+| ARD-G | 2026-09-25 | design 分篇用名词命名，impl-plan 分篇用「序号加阶段」命名 |
+| ARD-F | 2026-09-25 | 一个 feature 目录可以有多份 design 或 impl-plan |
+| ARD-E | 2026-09-25 | design 和 impl-plan 最多 1,000 行；decision-history 不设上限 |
+| ARD-D | 2026-09-25 | 文档健康状况的字段叫 health，不叫 status |
+| ARD-C | 2026-09-25 | 细节写在 skill 目录里的其他文件，不全部塞进 SKILL.md |
+| ARD-B | 2026-09-25 | 标准放在已有的 skill 里（当时叫 doc-organize，后改名 spec-organize，见 ARD-O），不新建 skill |
+| ARD-A | 2026-09-25 | 按关注点分权威，取代「全局只有一个真相来源」 |
 
 ## Evidence Appendix
 
-### ARD-A — Authority by concern replaces a single global source of truth
+<a id="ard-bo"></a>
 
-The previous rule was "code is the source of truth", stated in three places in
-`doc-organize`. It resolves every conflict in one direction and leaves a spec
-unable to protect intended behavior: under it, a spec that states a retry count
-of 3 while the code retries 5 is simply wrong, even when 3 was the requirement.
+### ARD-BO — 可读性是通过条件
 
-Considered and rejected:
+**原因。** PRD-M 把可读性定为硬需求，却又写「不作为通过条件」，等于没有要求。这套方法要解决的问题之一就是「人读不过来」（PRD Problem Statement 第 4 点），可读性必须能挡住交付。
 
-- *Keep "code is the source of truth"* — rejected because it makes the spec
-  unenforceable precisely where enforcement matters, and because a passing test
-  would then also count as a requirement.
-- *Declare "spec is the source of truth"* — rejected for the mirror reason: a
-  spec cannot answer what the code currently does, and treating it as
-  authoritative for implementation would force spec edits for every refactor.
-- *Single source with an exception list* — rejected as an unmaintainable middle
-  ground that still names one winner by default.
+**怎么判。** 一个 LLM 扮演本科程序员，只读被测的那一篇。脚本从这篇的编号条目（`PRD-*`、`DSGN-*`、`PIPE-*`、`IMPL-*`、`TST-*`、`ARD-*`）各出一道题，例如「PRD-F 规定多人决定冲突时怎么办」。再出一组对照题：不给文档直接问，能答对的题说明太容易，作废。答对率不足，或者有第一次出现时没有解释、术语表里也没有的词，这篇就不通过。具体门槛写在 test-plan 的 TST-V。
 
-Adopted instead: authority by concern. Intended behavior belongs to the spec,
-current implementation to the code, contracts to the machine-readable artifact,
-database structure to migrations, and executable verification to the tests.
+**放弃的方案。** 只让 LLM 打一个「好不好读」的分：主观，同一篇文档两次打分可能差很多。用 ISO 24495-1 之类的可读性公式：只看句长和词频，看不出术语有没有解释。
 
-### ARD-B — The standard lives in `doc-organize`, not a new skill
+**影响。** 修改 PRD-M；ARD-W 的「读懂才算通过」保留，并补上具体做法。
 
-Placement, linting, and consolidation already belong to `doc-organize`, and its
-Sync mode is where drift is detected. A separate skill would have to duplicate
-the document standard to know what a spec is.
+<a id="ard-bn"></a>
 
-Considered and rejected: a new `spec-driven-development` skill with
-`doc-organize` keeping only a pointer. Rejected because the two would share the
-type list, the frontmatter contract, and the required sections, and the copy
-would drift.
+### ARD-BN — 规则分 MUST 和 NICE 两级
 
-### ARD-C — Detail is carried in sibling files, not inline in `SKILL.md`
+**原因。** 2026-11-07 一天加了二十多条格式规则。作者为了逐条满足，只好把句子压成关键词和编号，文档越来越像给机器读的。规则越多，越没人读得完。
 
-The material is seventeen sections. Inline it would have taken `SKILL.md` past
-700 lines, and a skill that must be read in one pass cannot afford that.
+**怎么分。** MUST 是违反后 spec 会写错、会丢信息、会互相矛盾的规则。NICE 是格式上的偏好，spec-review 可以提，但不算失败。下面八条降为 NICE：
 
-Follows the existing pattern: `domain-modeling/ADR-FORMAT.md` and
-`domain-modeling/CONTEXT-FORMAT.md`. Sibling files travel with the directory, so
-the skill stays portable — it must not point at this repository's `docs/`, which
-does not exist in the projects the skill is deployed to.
+| 决定 | 内容 | 为什么只是偏好 |
+|---|---|---|
+| ARD-AL 的后半句 | 每节写明哪份文档对这些事实有权威 | 「一个事实只写一处」已经是 MUST，这句是额外的标注 |
+| ARD-AM | 步骤编号是位置，不是永久编号 | 只影响引用方式 |
+| ARD-AN | 就绪程度、原地修订、按负责人分组 | 都是允许怎么写，不是必须怎么写 |
+| ARD-AR | 不变量写成表格 | 写成清楚的句子也不会错 |
+| ARD-AZ | §N 链接落点、步骤范围不重叠 | 链接打不开已经由 ARD-AP 管 |
+| ARD-BA | HTML 更新记录覆盖每个日期 | HTML 是派生物 |
+| ARD-BB | 问题清单的数量统计 | 数错一个数不影响规则本身 |
+| ARD-BE | 图的规则 | 画法偏好 |
 
-### ARD-D — The health field is named `health`, not `status`
+ARD-AX 和 ARD-AY 本来就是「允许」，不是要求，不受影响。其他规则保持 MUST。
 
-`state` already tracks the authoring state (`draft` or `final`). A second field
-named `status` would be read as the same concept, and it accepted an overlapping
-vocabulary (`draft`, `active`, `stale`, `deprecated`) that made the overlap
-worse.
+**放弃的方案。** 全部保留、只改写法：规则数量不变，作者负担不变。全部删掉：会丢掉其中有用的写法建议。
 
-Considered and rejected: replacing `state`'s vocabulary with
-`draft | active | stale | deprecated`. Rejected because it would invalidate every
-existing document to gain a distinction that a second field provides for free.
+<a id="ard-bm"></a>
 
-### ARD-E — `design` and `impl-plan` cap at 1,000 lines; `decision-history` is exempt
+### ARD-BM — 删除线只用在 decision-history
 
-The earlier guideline said feature specs run 500-1,500 lines, which contradicts a
-1,000-line ceiling. The ceiling wins; the guideline is removed.
+**原因。** 2026-11-18 在 DSGN-F 加了一条「改正文时不删旧句，划掉后在旁边写新句」。几轮下来，test-plan 的资产表一个格子里有三处删除线，读者分不清哪句是现行规则。这条规则还和 ARD-AS（删除线只留给 decision-history）直接矛盾。
 
-`decision-history` is exempt because it is append-only history. Trimming it would
-destroy the record that is its entire purpose. Exempting it also means the cap
-never creates pressure to delete a superseded decision.
+**规则。** 正文只写现行规则。推翻旧说法时，在新句后面链到对应的 ARD。旧版本可以从 git 历史和 decision-history 里找到。错别字直接改。本决定重申 ARD-AS，撤销 2026-11-18 那条规则。
 
-### ARD-F — A feature folder may hold more than one `design` or `impl-plan`
+**放弃的方案。** 保留正文删除线：历史已经有 decision-history 和 git 两处记录，正文再记一次是重复，而且越积越难读。
 
-Supersedes the earlier rule "one file per type per feature" for these two types
-only, and removes the anti-pattern that forbade a second spec file.
+<a id="ard-bl"></a>
 
-`prd`, `test-plan`, `decision-history`, and `how-to` stay single-file: none of
-them grows without bound. `design` and `impl-plan` do, and capping them at 1,000
-lines without allowing a second file would have made the cap unmeetable.
+### ARD-BL — 打分用的 gold 是 iPhone 案例
 
-### ARD-G — Spec parts take an aspect noun, plan parts take a number plus phase
+**原因。** 评测的做法是：给 skill 同一份需求和背景资料，看它写出的 spec 和 gold 有多接近。ARD-BJ 把这套 SDD spec 定为 gold，但它没有对应的「输入需求」，skill 无从生成它，所以没法打分。如果拿 skill 去审 gold 本身，又成了自己考自己：改 gold 就能提高分数。
+
+**规则。** 打分用的 gold 是 iPhone 购买案例 `skills/spec-organize/tests/gold/v1/`：有需求 `requirement.md`、背景资料 `context.md`、范例 `exemplar/` 和标注 `annotations.yaml`。这套 SDD spec 是写法样板：spec-review 拿它当审查对象，找出它不满足自己标准的地方，但它不参与打分。推翻 ARD-BJ。
+
+**放弃的方案。** 保留 ARD-BJ 并补写一份输入需求：需求是事后补的，等于按答案出题。四个非软件例子各建一个 gold：ARD-AD 已决定这四个例子不在本仓库建 gold。
+
+<a id="ard-bk"></a>
+
+### ARD-BK — 本次整理是授权的大改
+
+人在 2026-11-20 明确授权这一批整理：正文统一改成中文（必需章节标题和编号仍是英文，见 DSGN-E）；可以大段重写，但要保留原意；缩写和术语集中解释在 [parent design 附录](../design/spec-driven-development-design.md#glossary)。这一批暂停「每次不超过 10 行或 200 字符」的上限（ARD-K），这一批结束后恢复。做法和 ARD-AI 相同。
+
+<a id="ard-bj"></a>
+
+### ARD-BJ — gold spec 就是这套 spec（已被 ARD-BL 推翻）
+
+当时的想法是：这套 spec 本身就是写得最好的样板，评测通过就意味着写出了这样的 spec。后来发现它没有输入需求，无法用来打分，见 [ARD-BL](#ard-bl)。
+
+<a id="ard-bi"></a><a id="ard-bi--left-sidebar-numbers-and-hierarchy"></a>
+
+### ARD-BI — 左侧栏的序号和层级
+
+左侧栏按层级排列，序号可见：1 prd、2 decision-history、3 design、4 impl plan、5 test plan、6 how to。sub-feature 不放在 design 下面，而是单独一组，编号 10，每个 sub-feature 在这组下展开。design 的分篇和 reader 放在 3 design 下面。pipeline 不生成 HTML 页面。原因：读者先按顺序读 prd、决定、design，序号让顺序一眼可见。
+
+<a id="ard-bh"></a><a id="ard-bh--deliverable-is-only-spec-write-and-spec-review"></a>
+
+### ARD-BH — 交付物只有 spec-write 和 spec-review
+
+对外交付的只有两个 skill：spec-write 负责写，spec-review 负责审。`SPEC-STANDARD.md` 和 `SPEC-PRESENTATION.md` 是这两个 skill 要读的文件，不单独算交付物。spec-organize 和 spec-pipeline 也不在交付物里。推翻 ARD-AJ 里「两份标准也是交付物」的说法。原因：使用者只调用 skill；标准文件单独交付没有用处。
+
+<a id="ard-bg"></a>
+
+### ARD-BG — 全站一个网站，左边是目录
+
+`docs/book/html/index.html` 列出所有 feature。每篇 spec 的 HTML 是目录里的一行。打开一个 feature，左边是这个 feature 的目录，右边是正文。原因：读者要在多篇文档之间来回跳，一个网站比一堆独立的 HTML 文件好找。
+
+<a id="ard-bf"></a>
+
+### ARD-BF — spec 的 HTML 放在 book 下
+
+`docs/book/html/` 的目录结构和 `docs/features/` 一样。parent 的汇编页是 `docs/book/html/<parent>/<parent>-reader.html`；其他 spec 的 HTML 用相同的相对路径，只把扩展名换成 `.html`。markdown 留在 `docs/features/`。原因：HTML 和 markdown 混在一起，容易被误当成权威文件。
+
+<a id="ard-be"></a>
+
+### ARD-BE — 图只画流程
+
+一个流程一张图。图里的步骤数要和它所在章节写的步骤范围一致。状态用表格写，不用图。图不能出现文字里没写的事实。原因：图里多出来的事实没人维护，很快就和文字不一致。按 [ARD-BN](#ard-bn) 降为 NICE。
+
+<a id="ard-bd"></a>
+
+### ARD-BD — 外部 gold 只留清单
+
+清单记录：源仓库路径、有问题的那个 commit、修好后的 commit、应该找出的问题、允许漏掉的问题。别人的 spec 原文不复制进本仓库。原因：那些 spec 不是公开的。
+
+<a id="ard-bc"></a>
+
+### ARD-BC — 引用处的状态与问题清单一致
+
+在正文里提到某个 QUES 时，旁边写的「未决」或「已决」必须和问题清单里一致。原因：清单里已经关闭的问题，正文还说它未决，读者会被误导。
+
+<a id="ard-bb"></a>
+
+### ARD-BB — 问题清单的数量要对得上
+
+清单里写「共 N 个问题」，N 必须等于实际行数；按状态统计的数量也一样。按 [ARD-BN](#ard-bn) 降为 NICE。
+
+<a id="ard-ba"></a>
+
+### ARD-BA — HTML 更新记录覆盖每个日期
+
+手工维护的 reader 页面，它的更新记录要包含 markdown Change Log 里的每一个日期。按 [ARD-BN](#ard-bn) 降为 NICE。
+
+<a id="ard-az"></a>
+
+### ARD-AZ — 章节链接和步骤范围
+
+写成「§N」的链接要落在第 N 节，或它的上一级、下一级。同一文档里的步骤范围不能重叠。按 [ARD-BN](#ard-bn) 降为 NICE。
+
+<a id="ard-ay"></a>
+
+### ARD-AY — 问题清单可以代替子问题归属表
+
+如果每个子问题都已经是问题清单里的一行，并且每行都写了负责人和依据，design 可以只放一个链接，不必再抄一张归属表。原因：同一件事记两处，迟早不一致。
+
+<a id="ard-ax"></a>
+
+### ARD-AX — 可以加 Ready 列
+
+Decision Log 可以加第四列 Ready，表示这条决定是否已经可以执行。仍然不能加 Status 列和 Supersedes 列：状态写在正文里，推翻关系用删除线加链接表示。
+
+<a id="ard-aw"></a>
+
+### ARD-AW — 只有步骤类章节可以编号
+
+必需章节的标题用标准规定的英文原文，不加编号。专门写一串有序步骤的章节可以编号。原因：检查脚本按标题原文找必需章节；编号会让标题对不上。
+
+<a id="ard-av"></a>
+
+### ARD-AV — 必需章节只写在入口文件
+
+design 拆成多篇时，13 个必需章节只要求写在入口文件 `<f>-design.md`。其他分篇在开头链回入口，只写自己负责的那部分。原因：每个分篇都写 13 节，大部分会是空话。
+
+<a id="ard-au"></a>
+
+### ARD-AU — 翻译副本只放本地
+
+`<name>.<lang>.md` 这样的翻译副本不提交。副本开头写明以 `<name>.md` 为准。副本里的标题可以翻译。原因：提交的翻译副本会和原文慢慢不一致，又没人负责同步。
+
+<a id="ard-at"></a>
+
+### ARD-AT — 完成标准、顺序、mock
+
+每个 `IMPL-*` 写明完成标准。先做只读的部分，再做会写入的部分。对方的接口还没上线时，先写一个 mock 代替。原因：没有完成标准的任务不知道什么时候算做完；先写后读容易把数据写坏。
+
+<a id="ard-as"></a>
+
+### ARD-AS — 正文推翻旧说法时链到新 ARD
+
+正文不再成立的句子直接改写，并链到推翻它的 ARD。删除线只留给 decision-history。错别字直接改。[ARD-BM](#ard-bm) 重申了这条。
+
+<a id="ard-ar"></a>
+
+### ARD-AR — 不变量写成表格
+
+不变量是「任何时候都必须成立的事」。把它写成表格：哪些记录必须存在，或者哪些状态绝不能出现，各由谁来保证。原因：一句口号没法检查。按 [ARD-BN](#ard-bn) 降为 NICE。
+
+<a id="ard-aq"></a>
+
+### ARD-AQ — 引用代码时写明 commit
+
+design 或 impl-plan 里写「某文件第几行」时，同时写明是哪个 commit 的。原因：代码会变，行号会移动；不写 commit，以后没人知道当时指的是哪一行。
+
+<a id="ard-ap"></a>
+
+### ARD-AP — 保留旧锚点
+
+编号迁移时，保留一张新旧编号对照表。标题改名时，把旧的锚点留在新标题上方。原因：其他文档里的旧链接不会因此失效。
+
+<a id="ard-ao"></a>
+
+### ARD-AO — 每个 feature 一份问题清单
+
+很多文档都提到同一批问题时，只在一处列出，其他文档链过去。每个条目编号是 `QUES-` 加字母，写明问题、目前答案、负责人。原因：同一个问题记在三处，关掉一处另外两处还开着。
+
+<a id="ard-an"></a>
+
+### ARD-AN — 就绪程度和原地修订
+
+一条决定可以写「这边已经定了，在等另一个团队」。同一行的措辞可以原地修订。未决事项按负责人分组。按 [ARD-BN](#ard-bn) 降为 NICE。
+
+<a id="ard-am"></a>
+
+### ARD-AM — 步骤编号只是位置
+
+步骤编号表示它在流程里的位置，不是永久编号。插入一步时，这一节和引用它的地方一起重新编号。按 [ARD-BN](#ard-bn) 降为 NICE。
+
+<a id="ard-al"></a>
+
+### ARD-AL — audience 字段
+
+frontmatter 的 `audience` 可以是 `internal` 或 `external`。不写不算错，所以已有文档不受影响；写了其他值就算错。原来的后半句「每节写明哪份文档对这些事实有权威」按 [ARD-BN](#ard-bn) 降为 NICE。
+
+<a id="ard-ak"></a>
+
+### ARD-AK — markdown 是全文
+
+脚本生成的 reader 每次从 markdown 重新生成。手工维护的 HTML 要在页面里写明源文件路径和源文件的 sha256；源文件变了而 HTML 没变，检查就会报「过期」。原因：HTML 是给人读的副本，不能比 markdown 旧。
+
+<a id="ard-aj"></a><a id="ard-aj--entry-skills-are-spec-write-and-spec-review"></a>
+
+### ARD-AJ — 入口 skill 是 spec-write 和 spec-review
+
+使用者从 spec-write 和 spec-review 进入。路径、权限、写什么、证据这些规则写在 `skills/spec-organize/SPEC-STANDARD.md`；文字、格式、表格这些表达规则写在 `skills/spec-html-standard/SPEC-PRESENTATION.md`。spec-organize 和 spec-pipeline 不再是入口。推翻 ARD-AB。原因：四个 skill 让使用者不知道该从哪个开始；写和审两个动作已经覆盖全部场景。
+
+<a id="ard-ai"></a>
+
+### ARD-AI — 那一次合并是授权的大改
+
+人明确授权了一次性合并 SDD 的 spec 文档。那一批允许超过 10 行或 200 字符的改动，之后恢复上限。
+
+<a id="ard-ah"></a>
+
+### ARD-AH — reader 是唯一的 HTML 交付物
+
+`spec-driven-development-reader.html` 是给人读的交付物。旧的摘要页 `spec-driven-development.html` 删除，原来指向它的链接改指 reader。
+
+<a id="ard-ag"></a>
+
+### ARD-AG — 收敛由规则判断
+
+PIPE-E1 到 PIPE-E3 的收敛条件自动检查。每个未决事项都要标明是否阻塞（写在问题清单的「阻塞」列）。只要还有阻塞的事项，就不能进入下游。原因：让 AI 自己判断「够稳了」，它总会说够稳了。
+
+<a id="ard-af"></a>
+
+### ARD-AF — 故意不定义的事项
+
+失败处理、skill 和 spec 的版本管理、信息来源可信度分级、数据清理，都故意不定义。已有的不合规 feature 不迁移，只修 SDD 自己这套文档。原因：先把核心流程做对，这些事项等有真实需求再定。
+
+<a id="ard-ae"></a>
+
+### ARD-AE — 非软件问题的对应关系、归属和证据
+
+非软件问题也用同样五篇文档：调研笔记放 `raw/research/`，决定放 decision-history，方案和执行步骤放 design 和 impl-plan，验证放 test-plan。每个有子问题的 design 都有一张子问题归属表，每个子问题标明「AI 查」「人决定」或「AI 查完人决定」。每个结论都有来源；查不到的写 `UNKNOWN`。测不了的项写成 `Unverified: <原因>（<什么条件下能测>）`。
+
+<a id="ard-ad"></a><a id="ard-ad--eval-uses-deepseek-flash-with-3-independent-runs"></a>
+
+### ARD-AD — 评测用 deepseek-flash 跑 3 次
+
+目前只有 DeepSeek 的 API 可用，所以生成 gold 和判分都用 `deepseek-flash` 独立跑 3 次。不同模型之间的偏差暂时测不了，标为 Unverified。gold 由四部分组成：案例、版本、范例、标注。跑分结果 `runs/` 和报告 `reports/` 不提交。四个非软件例子（盖 shed、北京旅游、数学题、股票）写进 skill 正文作说明，不在本仓库建 gold。推翻 ARD-V 里建 gold 的部分。
+
+<a id="ard-ac"></a>
+
+### ARD-AC — PRD 和文档标准的调整
+
+PRD 的必需章节去掉「非功能需求」；parent PRD 补齐 Overview、Goals and Success Metrics、User Stories、Functional Requirements、Out of Scope。编号在「feature 加文档类型」内唯一，跨 feature 引用写成 `<feature>/<编号>`。HLD 的架构章节不要求 DSGN 编号。how-to 有定义，但暂不检查。
+
+<a id="ard-ab"></a><a id="ard-ab--four-skills-including-spec-pipeline"></a>
+
+### ARD-AB — 四个 skill（已被 ARD-AJ 推翻）
+
+当时的交付物是四个 skill：spec-pipeline 负责编排，spec-organize 负责标准和检查，spec-review 负责找问题，spec-write 负责改文档。推翻了只列三个 skill 的 ARD-O。
+
+<a id="ard-aa"></a><a id="ard-aa--multi-participant-decisions-use-the-latest-history-entry-otherwise-ask"></a>
+
+### ARD-AA — 多人决定以较晚的为准，否则问
+
+PRD-F 关闭。两个决定冲突时，decision-history 里时间较晚的那条为准；看不出先后，就问用户。AI 不猜谁说了算。推翻 ARD-M。
+
+<a id="ard-z"></a>
+
+### ARD-Z — PRD 写清五项，再进入下游
+
+取代 PIPE-E2 里原来没定义的「六项输入」。PRD 要写清限制、偏好、时间、资源、工具五项；不适用的写 not apply，不能留空。PRD、design、decision-history 三篇都存在后，才能开始写 impl-plan 和 test-plan。放弃的方案：用「building」这个词，以及让 PIPE-E2 指向一个并没有这个定义的 PIPE-F。
+
+<a id="ard-y"></a>
+
+### ARD-Y — 按 20 小时估算来拆分
+
+暂行规则（PIPE-D 第 6 点）。AI 先给出几种拆法。一个人 20 小时内能搞清楚的，算一个 feature spec；AI 估算超过 20 小时的，拆成 peer 或 sub-feature。估算和判断都由 AI 做。建目录仍要等人确认（PIPE-D 第 5 点）。
+
+<a id="ard-x"></a>
+
+### ARD-X — 执行只做到 mock 调用记录
+
+不真订票，不真交易。mock MCP 客户端调用 mock MCP 服务器，打印出调用记录就算交付成功（PRD-O）。放弃的方案：真实执行，有不可撤回的副作用。
+
+<a id="ard-w"></a>
+
+### ARD-W — 可读性由本科程序员判断
+
+另一个 LLM 扮演本科程序员。它读懂了才算通过，读不懂就不算交付（PRD-M）。调研时找到过 ISO 24495-1（简明语言标准），但没有拿它来打分。[ARD-BO](#ard-bo) 补上了具体判法。
+
+<a id="ard-v"></a>
+
+### ARD-V — 难题用同样五篇文档（建 gold 的部分已被 ARD-AD 推翻）
+
+盖 shed、北京旅游、一道著名数学题、分析一只股票，都留在本 PRD（PRD-K），用同样五篇文档。每个子问题写明由谁处理，每个结论引用查到的事实（PRD-L、PRD-N）。放弃的方案：为它们另开一个 feature。
+
+<a id="ard-u"></a>
+
+### ARD-U — spec-pipeline 编排和 Map、state 模型（已被 ARD-AJ 推翻）
+
+当时 SDD 加了 spec-pipeline 作为入口 skill：它调用 spec-organize 和 spec-write，并在提交前提示跑 spec-review。Map 阶段靠和人访谈，产出（怎么拆、记什么决定、草稿）由 AI 判断，没有固定模板。进度先记在 CLAUDE.local，feature 建好后记到 `docs/features/<f>/raw/state/`。放弃的方案：Map 阶段强制产出固定文件，以及 BMAD 风格的仓库根目录状态树。spec-pipeline 作为入口已被 ARD-AJ 推翻；Create、Map、Converge、Downstream 四个阶段作为参考步骤保留在 pipeline design。
+
+<a id="ard-t"></a>
+
+### ARD-T — wayfinder-import 不是 SDD 的 sub-feature
+
+wayfinder 导入是另一项工作，属于 skill-factory，不属于 SDD 交付物。`spec-driven-development/features/wayfinder-import/` 下的目录删除；需要的话在别处继续。ARD-I 的两份 spec 例外从此只是历史。
+
+<a id="ard-s"></a>
+
+### ARD-S — gold 可以增长，并有版本号
+
+每次跑分发现的新好例子、新坏例子，追加到 `annotations.yaml`，同时 gold 版本号加一。分数只在同一个版本内比较。放弃的方案：gold 冻结不变，那样评审中发现的问题就积累不下来。
+
+<a id="ard-r"></a>
+
+### ARD-R — 两个分数和门槛
+
+MUST 合规分是硬底线，必须满分。对标 gold 的分数按「(加分 − 减分) × 10 / 标注总数」计算，在同一 gold 版本内不能退步。放弃的方案：给对标分设一个固定及格线，因为 gold 升版后分母会变，固定线没有意义。
+
+<a id="ard-q"></a>
+
+### ARD-Q — 测试放在 skill 目录下
+
+skill 会被装到任意项目里，测试也要跟着走。跨 skill 的检查器、gold、报告放在 spec-organize 下（当时它是主 skill）。放弃的方案：放在仓库根目录 `tests/sdd/`，那样测试不会跟着 skill 一起部署。
+
+<a id="ard-p"></a>
+
+### ARD-P — spec-review 也查机械规则
+
+review 输出修改建议，不直接改。机械规则的违反也必须出现在建议里，否则使用者拿到的审查不完整。负责整理的工具可以直接修；review 只找问题、给建议。放弃的方案：review 只看语义，那样就没法用同一套 MUST 来给 review 打分。
+
+<a id="ard-o"></a><a id="ard-o--skills-are-spec-organize-main-spec-review-spec-write-the-standard-file-is-spec-organizespec-standardmd"></a>
+
+### ARD-O — skill 是 spec-organize（主）、spec-review、spec-write（已被 ARD-AB 推翻）
+
+交付的 skill 统一用 `spec-` 前缀，因为它们服务于 spec-driven development，而不是一般的文档编辑。标准文件放在主 skill 里，叫 `SPEC-STANDARD.md`，延续 ARD-B 的做法。放弃的方案：单独建一个 `spec-standard` skill，三个使用方多一份要同步的副本。
+
+<a id="ard-n"></a>
+
+### ARD-N — 产品级成功指标延后
+
+产品级成功指标怎么量、基线是多少，目前没有数据来定，延后到 PRD-G。test-plan 里的分数是评测指标，不是产品成功指标。
+
+<a id="ard-m"></a>
+
+### ARD-M — 多人决定以谁为准（已被 ARD-AA 推翻）
+
+当时还没想清楚多人决定冲突时以谁为准，先延后到 PRD-F。后来由 ARD-AA 定下规则。
+
+<a id="ard-l"></a>
+
+### ARD-L — 盲区由现有 skill 发现
+
+`research` skill 已经有「发现未知」的分支，`grill-with-docs` 已经会做追问式访谈。PRD-H 要求优先用现有工具。放弃的方案：专门新建一个 skill；在现有做法够用之前不做。以后可以换成新 skill，但「这一步必须跑」的要求不变。
+
+<a id="ard-k"></a>
+
+### ARD-K — AI 每次只改一小段
+
+一次大改动没人细看就进去了，出了问题也难找原因。上限是 10 行或 200 字符，满足其中一条即可。更大的改动拆成多次。真要大改（restructure）需要人明确同意，ARD-AI 和 ARD-BK 就是这样的授权。放弃的方案：超出上限直接拒绝，会挡住正当的大改；只警告不拦，等于没有限制。
+
+<a id="ard-j"></a>
+
+### ARD-J — 五个阶段加一个可选的 how-to
+
+PRD 当时写的是六种文档，`pipeline-design.md` 和文档标准写的是五种。pipeline 关于阶段的说法是对的：how-to 只在需要人去操作结果时才写，不是每个 feature 都要经过的一步。放弃的方案：为了和 PRD 一致保留六个，那样会多出一个大多数 feature 用不到的阶段。
+
+<a id="ard-i"></a>
+
+### ARD-I — 当时有两份 spec 文档（已成历史）
+
+这是对 ARD-F 的「每种类型默认一份」的有意例外，按规则要写明原因，不能悄悄违反。当时这个 feature 以标准本身命名，所以标准的 spec 放在这里；而 `wayfinder-import-design.md` 已经占了 `spec-driven-development/design/`，它是另一项有自己生命周期的工作。两份文件按 ARD-G 用名称区分。放弃的方案：给 feature 改名（这个名字已在项目里用开了）；把标准单独放一个 feature（标准和导入当时属于同一项工作）；把两份合成一份（两件不相关的事写在一个文件里）。ARD-T 删除 wayfinder-import 后，这个例外不再存在。
+
+<a id="ard-h"></a>
+
+### ARD-H — 内容分四个优先级，L1 永远不删
+
+L1 是决定性内容：行为、接口约定、不变量、约束、错误处理、安全规则、架构边界、不在范围内的事项、前提假设、兼容性约束、未决问题。L2 是理由，L3 是放弃的方案，L4 是参考资料。文档需要瘦身时，先删 L4，再删 L3，再压缩 L2，L1 永远不删。
+
+「不在范围内」「前提假设」「兼容性约束」「未决问题」归在 L1 而不是 L2，因为丢掉其中任何一项，实现会和丢掉一条需求一样出错。如果一个事实的权威出处在别的文档，这里只能放链接（L4），不能复述一遍。
+
+<a id="ard-g"></a>
+
+### ARD-G — 分篇的命名
 
 ```
-payment-design-authorization.md        aspect noun, unordered
-payment-impl-plan-01-schema.md       number plus phase, ordered
+payment-design-authorization.md        design 分篇：名词，没有顺序
+payment-impl-plan-01-schema.md         impl-plan 分篇：序号加阶段，有顺序
 ```
 
-Considered and rejected: numbering both (`payment-design-01.md`). A number says
-nothing about the contents, and inserting a part forces a renumber across the
-set. A plan is genuinely ordered, so a number carries meaning there; a spec is
-cut by bounded context, so a noun carries meaning there.
+放弃的方案：两者都用序号（`payment-design-01.md`）。序号说明不了内容，插入一篇还要全部重新编号。impl-plan 本身有先后顺序，所以序号有意义；design 按业务边界拆，所以用名词。
 
-### ARD-H — Four content priority levels; L1 is never deleted
+<a id="ard-f"></a>
 
-L1 decisive (behavior, contracts, invariants, constraints, error semantics,
-security rules, architecture boundaries, out of scope, assumptions, compatibility
-constraints, open questions), L2 rationale, L3 alternatives, L4 support. Trim L4,
-then L3, then compress L2. Never delete L1.
+### ARD-F — 一个 feature 可以有多份 design 或 impl-plan
 
-`out of scope`, `assumptions`, `compatibility constraints`, and `open questions`
-are filed at L1 rather than L2 because dropping any of them breaks the
-implementation in the same way as dropping a stated requirement.
+取代原来「每个 feature 每种类型只有一份文件」的规则，只对这两种类型放开，并删掉禁止第二份 spec 的反例。`prd`、`test-plan`、`decision-history`、`how-to` 仍是一份：它们不会无限变长。design 和 impl-plan 会，既然限制了 1,000 行，就必须允许拆成多份。
 
-A fact whose authoritative home is another document is L4 as a link, never a
-restated copy. This connects the level model to the duplication rule: restating a
-fact is a defect, not a level.
+<a id="ard-e"></a>
 
-### ARD-I — This feature carries two `spec` documents
+### ARD-E — 行数上限
 
-Deliberate exception to decision ARD-F's one-`spec`-per-feature default, recorded
-here because the rule requires a logged reason rather than a silent breach.
+旧的指引说 feature spec 一般 500 到 1,500 行，和 1,000 行上限矛盾。以上限为准，删掉旧指引。decision-history 不设上限：它只增不减，删减它就毁掉了它存在的意义；不设上限也就不会有删旧决定的压力。
 
-This feature is named for the standard itself, so the standard's own spec belongs
-to it. `wayfinder-import-design.md` already occupied
-`spec-driven-development/design/`, and the wayfinder import is a distinct effort
-with its own lifecycle.
+<a id="ard-d"></a>
 
-Considered and rejected:
+### ARD-D — 字段叫 health，不叫 status
 
-- *Rename the feature* — rejected because the initiative name is established in
-  the project's working context.
-- *Put the standard's spec in its own feature* — rejected because the standard
-  and the import are the same initiative; splitting them into two features would
-  misrepresent the work.
-- *Fold the standard into `wayfinder-import-design.md`* — rejected as a
-  restatement: two unrelated documents in one file.
+`state` 字段已经表示写作状态（`draft` 或 `final`）。再加一个叫 `status` 的字段，读者会以为是同一件事，而且它的取值（`draft`、`active`、`stale`、`deprecated`）和 `state` 有重叠。放弃的方案：把 `state` 的取值改成 `draft | active | stale | deprecated`，那样所有已有文档都要改。
 
-The two files are distinguished by name, following decision ARD-G's aspect rule:
-`spec-driven-development-design.md` for the standard, `wayfinder-import-design.md`
-for the import.
+<a id="ard-c"></a>
 
-### ARD-J — Five stages plus an optional `how-to`
+### ARD-C — 细节放在 skill 目录的其他文件里
 
-The PRD said six artifacts; `pipeline-design.md` and the document standard said
-five. The pipeline spec is right about stages: `how-to` is an output for the
-case where a human must operate the result, not a step every feature runs.
+标准有十七节，全部写进 `SKILL.md` 会超过 700 行，而 skill 需要一次读完。沿用已有做法，例如 `domain-modeling/ADR-FORMAT.md` 和 `domain-modeling/CONTEXT-FORMAT.md`。这些文件和 skill 放在同一目录，跟着 skill 一起走，skill 才能装到别的项目；skill 不能指向本仓库的 `docs/`，因为别的项目里没有这个目录。
 
-Considered and rejected: keeping six to match the PRD — rejected because it
-invents a stage most features never execute.
+<a id="ard-b"></a>
 
-### ARD-K — Every AI edit to a docs file is small
+### ARD-B — 标准放在已有的 skill 里
 
-A large edit lands unreviewed and is hard to attribute when it breaks something.
-The limit is 10 lines or 200 characters; satisfying either is enough. A larger
-change is split into sequential edits. A restructure needs explicit human
-instruction, which is how this PRD's own revision was applied.
+文档的放置、检查和合并本来就由 `doc-organize`（后改名 spec-organize）负责，它的 Sync 模式也负责发现不一致。新建一个 skill 就得把文档标准再抄一份。放弃的方案：新建 `spec-driven-development` skill，`doc-organize` 只留一个指针；两者会共用类型列表、frontmatter 约定和必需章节，副本迟早会不一致。
 
-Considered and rejected: hard rejection of oversized edits — rejected because it
-blocks a legitimate restructure; warning only — rejected because nothing stops
-the edit.
+<a id="ard-a"></a>
 
-### ARD-L — Blind spots come from existing skills
+### ARD-A — 按关注点分权威
 
-`research` already has a Discover Unknowns branch and `grill-with-docs` already
-runs an adversarial interview. P4 says to use the current tools first.
+原来的规则是「代码是唯一真相」，在 `doc-organize` 里写了三处。它把所有冲突都判给代码，spec 就保护不了「本来想要的行为」。比如 spec 规定重试 3 次，代码重试了 5 次：按旧规则 spec 是错的，即使 3 次才是需求。
 
-Considered and rejected: a new dedicated skill — rejected while the existing
-mechanism works. A future skill may replace them without changing the
-requirement that the step runs.
+放弃的方案：
 
-### ARD-Z — Five PRD fields, then design and decision history
+- 继续「代码是唯一真相」：spec 在最需要约束的地方失效，而且通过的测试会被当成需求。
+- 改成「spec 是唯一真相」：反过来也不行，spec 回答不了代码现在实际在做什么，每次重构都得改 spec。
+- 「唯一真相加例外清单」：很难维护，而且默认仍有一方说了算。
 
-Replaces the undefined six inputs in PIPE-E2. The PRD must state limitation, preference, timeline, resource, and tool. A missing one is marked not apply, not left blank. Downstream starts only after that PRD, the design, and the decision history all exist. Rejected: the word building, and a pointer at PIPE-F for a definition PIPE-F does not hold.
-
-### ARD-Y — Map split uses a 20-hour estimate
-
-Provisional rule (PIPE-D item 6). AI shows several split options. One person able to understand the work within 20 hours stays one feature spec. AI estimates above 20 hours, so it splits into a peer or a sub-feature. AI both estimates and judges. Creating directories still waits for human confirmation (PIPE-D item 5).
-
-### ARD-X — Execution delivery is a mock MCP log
-
-No live booking or trading. A mock MCP client calls a mock MCP server; the printed call log is success (PRD-O). Rejected: real side effects.
-
-### ARD-W — Readability judge is an undergraduate programmer
-
-A second LLM plays a bachelor's-level programmer. Pass only if it understands; otherwise not delivery (PRD-M). ISO 24495-1 was found and not used as the score.
-
-### ARD-V — Hard problems stay on the same five artifacts
-
-Shed, Beijing, a famous math problem, and a stock stay in this PRD (PRD-K) on the same five artifacts. Sub-problems name who acts; claims cite a found fact (PRD-L, PRD-N). Rejected: a new feature.
-
-### ARD-U — spec-pipeline orchestrator and Map/state model
-
-SDD adds **spec-pipeline** as the entry skill that calls spec-organize and
-spec-write and prompts for spec-review before commit. **Map** relies on human
-interview; outputs (split, decision, scratch) are **AI-judged**, not a fixed
-file template. **State** lives in CLAUDE.local until feature create sets `<f>`,
-then in `docs/features/<f>/raw/state/`. Rejected: rigid Map MUST artifacts and
-repo-root BMAD-style state trees. Superseded as an entry skill by ARD-AJ.
-Create, Map, Converge, and Downstream stay in pipeline-design as reference steps.
-
-### ARD-T — wayfinder-import is not an SDD sub-feature
-
-Wayfinder import is a separate skill-factory / import effort, not part of the
-SDD deliverable (spec-organize, spec-review, spec-write). The nested tree under
-`spec-driven-development/features/wayfinder-import/` is removed; wayfinder work
-continues elsewhere if needed. ARD-I's multi-spec exception remains historical.
-
-<a id="ard-o--skills-are-spec-organize-main-spec-review-spec-write-the-standard-file-is-spec-organizespec-standardmd"></a>
-
-### ARD-O — Skills are spec-organize (main), spec-review, spec-write
-
-Deliverable skills use the `spec-` prefix because they serve spec-driven
-development, not generic document editing. The standard file stays inside the
-main skill as `SPEC-STANDARD.md`, continuing ARD-B's placement rule. Rejected: a
-separate `spec-standard` skill — three consumers, one extra copy to drift.
-
-### ARD-P — spec-review detects mechanical MUST violations too
-
-Review outputs modification suggestions, not fixes. Mechanical MUST gaps must
-appear in that list or the user gets an incomplete review. Organize Lint may
-fix; review detects and suggests. Rejected: semantic-only review — gold-based
-eval cannot score review against the same MUST set as organize.
-
-### ARD-Q — Tests live under skills/<skill>/tests/
-
-Skills ship to arbitrary projects; tests must travel with them. Cross-skill
-checks, gold, and HTML reports live under `spec-organize` as the main skill.
-Rejected: repo-root `tests/sdd/` — assets would not deploy with the skill bundle.
-
-### ARD-R — Two eval scores and gates
-
-MUST compliance is a hard floor (`x/total` full pass). Exemplar comparison uses
-`(plus−minus)×10/total` and must not regress within one gold version. Rejected: a
-fixed exemplar cutoff — gold version bumps change the denominator.
-
-### ARD-S — Gold set grows and is versioned
-
-New good and bad examples from runs append to `annotations.yaml`; `gold.version`
-increments. Scores compare only within one version. Rejected: frozen gold — no
-accumulation of review findings.
-
-### ARD-AA — Multi-participant decisions use the latest history entry, otherwise ask
-
-PRD-F is closed. When two decisions conflict, the later entry in decision-history wins; if the order cannot be established, ask the user. The AI never guesses who is authoritative. Supersedes ~~ARD-M~~.
-
-### ARD-AB — Four skills including spec-pipeline
-
-The deliverable is four skills: spec-pipeline (orchestrator), spec-organize (standard/lint), spec-review (findings), spec-write (edits). Supersedes ~~ARD-O~~, which listed three.
-
-### ARD-AC — PRD and document standard changes
-
-PRD required sections drop Non-Functional Requirements; the parent PRD fills Overview, Goals and Success Metrics, User Stories, Functional Requirements, and Out of Scope. IDs are scoped to feature + type; cross-feature references use `<feature>/<ID>`. HLD architecture sections do not require DSGN IDs; `how-to` stays defined but unchecked.
-
-### ARD-AD — Eval uses deepseek-flash with 3 independent runs
-
-Only the DeepSeek API is available, so gold generation and checker verdicts use three independent runs of `deepseek-flash`; cross-model bias is Unverified. Gold uses four terms: gold case, gold version, exemplar, annotations. `runs/` and `reports/` are not committed. The four non-software examples (shed, Beijing, math, stock) are skill-doc examples; their gold lives elsewhere. Supersedes the gold-example part of ~~ARD-V~~.
-
-### ARD-AE — Non-software mapping, ownership, evidence, and UNKNOWN
-
-Non-software problems use the same five artifacts: research in `raw/research/`, decisions in decision-history, execution in design/impl-plan, verification in test-plan. Each feature design carries a sub-question ownership table (AI查 / 人决定 / AI查完人决定); every claim cites a source; unknowns are marked `UNKNOWN`. Unverified items use `Unverified: <reason> (<condition>)`.
-
-### ARD-AF — Deliberately undefined areas
-
-Failure policy, skill/spec versioning, source-trust grading, and data cleanup are intentionally not defined. Existing non-compliant features are not migrated; only the SDD tree is fixed.
-
-### ARD-AG — Convergence is auto-decided
-
-PIPE-E1–E3 are checked automatically; every open decision must carry a structured `blocking` flag. The AI does not self-declare the spec "stable": the automatic check passes only when no blocking item remains.
-
-### ARD-AH — Reader is the only HTML deliverable
-
-`spec-driven-development-reader.html` is the human-readable deliverable. The legacy `spec-driven-development.html` summary is deleted; references point to the reader.
-
-### ARD-AI — This consolidation is an authorized restructure
-
-The human explicitly authorized a one-shot consolidation of the SDD spec docs. Edits larger than the normal 10-line / 200-character cap are allowed for this batch; the normal cap resumes afterward.
-
-### ARD-AJ — Entry skills are spec-write and spec-review
-
-Entry skills are spec-write and spec-review. Path, permission, scope, what to write, and evidence live in `skills/spec-organize/SPEC-STANDARD.md`. Prose, format, style, tables, and icons live in `skills/spec-html-standard/SPEC-PRESENTATION.md`. spec-organize and spec-pipeline are not entry skills. Supersedes ~~ARD-AB~~.
-
-### ARD-AK — Markdown is the full text
-
-A generated reader is rebuilt from markdown and carries no `spec-paired` meta. A hand-maintained HTML file names its markdown in `spec-source` and stores `spec-source-sha256`. If the hash differs, check `paired_html_stale` fails.
-
-### ARD-AL — Audience and per-section authority
-
-`audience` may be `internal` or `external`. A missing key is not a failure, so existing documents stay valid. Any other value fails `frontmatter`. A section states which artifact owns its facts. A partner design may use different section ids.
-
-### ARD-AM — Step numbers are positions
-
-A step number locates a procedure. It is not a permanent id. Inserting a step renumbers that section and the citations of it.
-
-### ARD-AN — Readiness and in-place revision
-
-A decision may say it is settled here and waiting on another team. Wording may be revised in the same row. Open items are grouped by owner.
-
-### ARD-AO — One question tracker
-
-When many docs cite the same questions, one tracker holds them. Other docs link. A tracker entry is `QUES-` plus a letter, with Question, Answer, and Owner.
-
-### ARD-AP — Old anchors stay
-
-An id migration keeps an old-to-new table. A renamed heading keeps the previous anchor.
-
-### ARD-AQ — Cite the commit
-
-A `file:line` citation in design or impl-plan names the commit it was read against.
-
-### ARD-AR — Invariants as data
-
-An invariant is a table of stored records, or of states that must not occur, with who guarantees each row.
-
-### ARD-AS — Point at the new decision
-
-Prose that drops an old claim points at the replacing ARD. A typo may be edited in place. Strike-through stays the decision-history form.
-
-### ARD-AT — Done line, order, mock
-
-Each `IMPL-*` has a done line. Work that reads runs before work that writes. A partner port that is not live has a mock.
-
-### ARD-AU — Translation is a local copy
-
-A `<name>.<lang>.md` copy is not committed. Its opening names `<name>.md` as the source. Headings in the copy may be translated.
-
-### ARD-AV — Required sections on the entry
-
-A design split into parts requires the full section list only on `<f>-design.md`. A part links back and writes only its aspect.
-
-### ARD-AW — Number only a procedure
-
-Required headings stay the English text, unnumbered. A section that exists to hold an ordered procedure may carry a number.
-
-### ARD-AX — Optional Ready column
-
-The Decision Log may add Ready. It still has no Status column and no Supersedes column.
-
-### ARD-AY — Tracker may replace the ownership table
-
-If every tracker row has Owner and Evidence, the design may link to that tracker instead of copying the ownership table.
-
-### ARD-AZ — Section links and step ranges
-
-A link written as §N lands on heading N or on its parent or child. Step ranges in one document do not overlap.
-
-### ARD-BA — HTML changelog covers each md date
-
-A hand-maintained reader has a changelog row for every date in the markdown Change Log.
-
-### ARD-BB — Tracker counts match
-
-`all N questions` equals the number of tracker rows. A status tally equals the rows that carry that status.
-
-### ARD-BC — Cited status matches the tracker
-
-The status next to a QUES link matches the tracker row. A closed row is not described as still open.
-
-### ARD-BD — External gold stays outside
-
-The manifest stores the repo path, the defect commit, the gold commit, expected findings, and allowed misses. The private spec text is not copied here.
-
-### ARD-BE — Diagrams carry the flow
-
-One flow, one diagram. A heading that says steps a–b and contains a sequence diagram has b−a+1 messages. State lives in a table. The diagram adds no fact the prose lacks.
-
-### ARD-BF — Spec HTML under book
-
-`docs/book/html/` repeats the `docs/features/` tree. A parent reader is `docs/book/html/<parent>/<parent>-reader.html`. Other spec HTML uses that same relative path with a `.html` suffix. Markdown stays in `docs/features/`.
-
-### ARD-BG — One site, feature directory on the left
-
-`docs/book/html/index.html` lists every feature. Each spec page is one line in that directory. Opening a feature shows that feature's pages on the left and the page body on the right.
-
-### ARD-BH — Deliverable is only spec-write and spec-review
-
-The product ships two skills: spec-write and spec-review. `SPEC-STANDARD.md` and `SPEC-PRESENTATION.md` remain the files those skills read. They are not deliverables. spec-organize and spec-pipeline stay out of the deliverable. Supersedes the deliverable wording that listed the two standards beside the two skills in [ARD-AJ](#ard-aj--entry-skills-are-spec-write-and-spec-review).
-
-### ARD-BI — Left sidebar numbers and hierarchy
-
-The feature sidebar is a hierarchy, and the numbers are visible. The order is 1 prd, 2 decision-history, 3 design, 4 impl plan, 5 test plan, 6 how to. Sub-features are not under design. They are group 10, and each sub-feature expands beneath that group. Design parts and the reader stay under 3 design. Pipeline has no HTML page.
-
-### ARD-BJ — Gold spec is this spec
-
-The gold test spec is `docs/features/spec-driven-development/`. A passing run is this tree, not a generated iPhone purchase spec. `skills/spec-organize/tests/gold/v1/` stays a practice case. It is not the gold spec.
+采用的做法：按关注点分。想要的行为以 spec 为准，当前实现以代码为准，接口约定以机器可读的定义文件为准，数据库结构以 migration 为准，可执行的验证以测试为准。
 
 ## Path Update — 2026-10-30
 
-The feature was restructured into sub-features. The paths referenced in the
-historical entries now resolve as follows:
+2026-10-30 这个 feature 拆成了几个 sub-feature，历史记录里的路径对应如下：
 
-| Old path | New path |
+| 旧路径 | 新路径 |
 |---|---|
-| `spec-driven-development-design.md` | `features/pipeline/design/pipeline-design.md` |
+| 2026-10-30 之前的 `design/spec-driven-development-design.md`（流程设计） | `features/pipeline/design/pipeline-design.md` |
 
-The historical entries are preserved as written; this note is the current
-pointer. No decision was changed.
+2026-10-31 起，`design/spec-driven-development-design.md` 这个路径重新使用，现在放的是 parent 的整体设计。历史记录保持原样，这张表只是现在的指路。没有改任何决定。
 
 ## Change Log
 
@@ -487,3 +579,5 @@ pointer. No decision was changed.
 | 2026-11-18 | ARD-BH：交付只有 spec-write 与 spec-review |
 | 2026-11-18 | ARD-BI：左侧栏 1–6 加 10 sub-feature |
 | 2026-11-18 | ARD-BJ：gold spec 就是这套 spec-driven-development |
+| 2026-11-20 | ARD-BK–BO：授权本次大改；gold 改回 iPhone 案例（推翻 ARD-BJ）；删除线只在 decision-history；规则分 MUST 与 NICE；可读性成为通过条件 |
+| 2026-11-20 | 全文改为中文；Evidence Appendix 改为与 Log 同序，补齐 ARD-M、ARD-N 与 ARD-AM 之后各条的原因；每条加短锚点，旧英文锚点保留（ARD-AP）；Path Update 说明旧路径已重新使用（ARD-BK） |

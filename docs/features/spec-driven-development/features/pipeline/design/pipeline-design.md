@@ -5,225 +5,227 @@ state: draft
 final_date: 2026-10-30
 health: active
 owner: cicidi
-last_verified: 2026-11-04
+last_verified: 2026-11-20
 ---
 
-# Spec-Driven Development — Pipeline
+# Spec-Driven Development — 写 spec 的阶段
 
-本篇是阶段步骤的参考，不是入口 skill（ARD-AJ）。写或改 feature spec 从 **spec-write** 进入，提交前由 **spec-review** 询问。阶段、state、recap 仍记在本篇。
+本篇讲写一套 spec 要经过哪几个阶段、每个阶段做什么、用哪个 skill。它是参考步骤，不是一个要单独调用的 skill：写或改 spec 从 spec-write 开始，提交前由 spec-write 询问是否跑 spec-review（[ARD-AJ](../../../decision-history/spec-driven-development-decision-history.md#ard-aj)）。
 
-文档格式、路径、ID、体量见 sibling **`../document-standard/design/document-standard-design.md`**（**DSGN-A–M**）。本篇 **link，不 restate**。
+文档的格式、路径、编号、行数见 [document-standard design](../../document-standard/design/document-standard-design.md)，本篇只链过去，不重复。术语见 [parent design 的术语表](../../../design/spec-driven-development-design.md#glossary)。
 
 ## Problem Statement
 
-Parent PRD 定义的四类上游问题见 `../../../prd/spec-driven-development-prd.md`。本篇补充 pipeline 要解决的 **流程** 问题：
+parent PRD 讲了上游的问题（见 [PRD](../../../prd/spec-driven-development-prd.md) 的 Problem Statement）。本篇补充写 spec 这个流程本身的问题：
 
-- **大 feature / initiative** 难拆成可执行的 smaller feature，新人不知道顺序。
-- 多个 skill 并存，调用方 **不知道何时用哪个**。
-- 长会话后 **不知道进度**（做到哪、还剩什么）。
-- **提交前** 容易跳过 review。
+- 大的需求很难拆成能执行的小 feature，新手不知道先做什么。
+- skill 很多，使用者不知道什么时候该用哪个。
+- 对话一长，就不知道做到哪了、还剩什么。
+- 提交前很容易跳过审查。
 
 ## Solution
 
-**spec-pipeline** 为统一入口，驱动四阶段：
+写 spec 分四个阶段，按顺序走：
 
-```
-Create → Map → Converge ⇄ (PRD ↔ design ↔ decision-history) → Downstream (test-plan ∥ impl-plan)
-```
-
-- **Create：** 立项与 context（feature create、粗 PRD、搜索 → CLAUDE.local）。
-- **Map：** **与人 interview**；AI 判断拆分/decision/scratch；**无** 固定 MUST 产物模板；可选 **可替换** map 工具（示例 wayfinder，**非** SDD deliverable）。
-- **Converge：** 三角循环打磨；**收敛后** 才进入 Downstream。
-- **Downstream：** **test-plan** 与 **impl-plan** **并行**，均自 **design 篇** 总结（对齐 parent PRD Solution）。
+1. **Create（立项）**：确定 feature，写一份粗略的 PRD，把调研到的背景写进 `CLAUDE.local.md`。
+2. **Map（摸底）**：和人访谈，弄清已知、未知和盲区；由 AI 判断要不要拆分、要不要记决定、哪些只留草稿。可以用一个可替换的辅助工具（例如 wayfinder），但它不是 SDD 的交付物。
+3. **Converge（收敛）**：PRD、design、decision-history 三篇反复打磨，直到满足 PIPE-E 的收敛条件。
+4. **Downstream（下游）**：从 design 同时写出 test-plan 和 impl-plan，两篇互不依赖（和 parent PRD 的 Solution 一致）。
 
 ## User Stories
 
-1. **拆分大需求：** 作为不熟悉 spec 的人，我希望经 pipeline **Map interview** 后，能拆出 smaller feature 并进入 spec-driven 写齐文稿。
-2. **恢复上下文：** 作为中断后继续的人，我希望 pipeline **recap**：已做什么、state 字段、待办、建议下一步。
-3. **提交前：** 作为提交者，我希望 pipeline 在「该提交了」时 **询问** 是否先跑 **spec-review**。
+- **拆分大需求：** 作为不熟悉 spec 的人，我希望经过 Map 阶段的访谈后，能把大需求拆成几个小 feature，再一个个写齐文档。
+- **恢复进度：** 作为中途离开又回来的人，我希望 AI 给我一份进度回顾（recap）：做了什么、现在在哪个阶段、还剩什么、建议下一步做什么。
+- **提交前提醒：** 作为提交改动的人，我希望在准备提交时被问一句：要不要先跑 spec-review。
 
 ## Implementation Decisions
 
-- **标准** = SPEC-STANDARD.md 与 SPEC-PRESENTATION.md；**写** = **spec-write**；**审** = **spec-review**。spec-pipeline 与 spec-organize 不是入口（ARD-AJ）。
-- **Map** 以 **interview** 为主；**AI 判断** 是否记 decision、建议拆 feature、或仅 scratch task；**人确认** 后才创建 `docs/features/<f>/` 路径。
-- Map 工具（示例 **wayfinder**）经 **推荐表** 调用，**可替换**；不在 SDD deliverable 清单。
-- **State：** **feature create 完成、`<f>` 未确定前** — 进度只写在 **`CLAUDE.local.md`**（或项目 CLAUDE 层），**不** 创建 `raw/state/*.md`。**`<f>` 确定后** — 权威 state 在 **`docs/features/<f>/raw/state/state-<YYYY-MM-DD>.md`**（document-standard **DSGN-B/C**）。
-- **Recap** 由 pipeline **生成**给人看；**不是** source of truth（SO T = state 文件 + committed 文稿）。
-- 后期 task 管理：**plug-in** 其它 skill；本篇 **不** 引入 BMAD/GSD 级重框架。
-- 协作：读上游 artifact，**禁止 silent 改**；冲突 **Detect → Report → Ask**（同 document-standard **DSGN-G**）。
-- 本篇设计条目 ID 前缀 **`PIPE-*`**；**不** 用 **DSGN-*** 作 pipeline 内锚点（DSGN 保留给 document-standard）。
+- **分工：** 标准写在 `SPEC-STANDARD.md` 和 `SPEC-PRESENTATION.md`；写文档用 spec-write；审文档用 spec-review。spec-pipeline 和 spec-organize 都不是入口（[ARD-AJ](../../../decision-history/spec-driven-development-decision-history.md#ard-aj)）。
+- **Map 以访谈为主：** AI 判断是否要记一条决定、是否建议拆出新 feature、是否只在草稿里留个线索。人确认之后，才创建 `docs/features/<f>/` 目录。
+- **辅助工具可替换：** Map 阶段的辅助工具（例如 wayfinder）通过 PIPE-G 的推荐表使用，随时可以换，不在 SDD 交付物里。
+- **进度记在哪：** feature 名字还没定的时候，进度只记在 `CLAUDE.local.md`（或项目的 CLAUDE 层），不建 `raw/state/` 文件。名字定了之后，正式进度记在 `docs/features/<f>/raw/state/state-<YYYY-MM-DD>.md`（document-standard 的 DSGN-B、DSGN-C）。
+- **进度回顾不是正式记录：** recap 是生成给人看的，不是真相来源。真相来源是进度文件加上已提交的文档。
+- **不引入重框架：** 后期的任务管理接入别的 skill，本篇不引入 BMAD、GSD 这类完整的项目管理框架。
+- **协作：** 读上游文档，不悄悄改。发现冲突时按「发现、报告、问人」处理（document-standard 的 DSGN-G）。
+- **编号：** 本篇的规则编号用 `PIPE-` 前缀；DSGN 留给 document-standard。
+- **子问题归属表不适用：** 本篇是流程设计，没有需要 AI 查或人决定的子问题（PIPE-L 允许这样注明）。还没定的事项见 [Open Questions](#open-questions)。
 
 ## Design
 
-### PIPE-A — spec-pipeline 职责（MUST）
+### PIPE-A — 流程必须做到的事
 
-**来源：PRD-A**（在既有 pipeline 上改进，不另造编排）。
+来源：PRD-A（在现有流程上改进，不另造一套）。
 
-- **PIPE-A1** 任意「写/改 spec」任务从 **spec-write** 进入，并先按 SPEC-STANDARD 判断新建或改哪些文（ARD-AJ）。
-- **PIPE-A2** 调用 **spec-organize** 执行标准、Lint、Organize（路径/格式以 organize 为准）。
-- **PIPE-A3** 调用 **spec-write** 执行文稿增删改（含 parent HLD §4 小步编辑 norm）。
-- **PIPE-A4** 在 **提交/推送 committed 变更前**，**询问** 是否 **spec-review**；用户拒绝则记录，不 silent 跳过审计痕迹。
-- **PIPE-A5** 用户请求或会话丢失时 **recap**：已做、当前 state、待做、建议下一步（list）。
-- **PIPE-A6** 维护/读取 **PIPE-H** 定义的 state；推荐 **PIPE-G** 表中的 skill。
+- **PIPE-A1**：任何「写或改 spec」的任务，都从 spec-write 开始，先按 `SPEC-STANDARD.md` 判断要新建哪篇、还是改哪几篇（[ARD-AJ](../../../decision-history/spec-driven-development-decision-history.md#ard-aj)）。
+- **PIPE-A2**：路径和格式按文档标准检查。检查由检查脚本 `run_spec_checks.py` 或 spec-organize 的 Lint 模式执行。
+- **PIPE-A3**：文档的增删改都由 spec-write 做，并遵守 parent design 的 DSGN-A（每次改动的大小上限）。
+- **PIPE-A4**：提交或推送已提交文档的改动之前，询问是否先跑 spec-review。用户说不跑，就把这个选择记下来，不能悄悄跳过。
+- **PIPE-A5**：用户要求，或者对话中断后重新开始时，给出进度回顾：做了什么、现在的进度、还剩什么、建议下一步。
+- **PIPE-A6**：维护和读取 PIPE-H 定义的进度记录；按 PIPE-G 的表推荐 skill。
 
-### PIPE-B — 四阶段总览
+### PIPE-B — 四个阶段总览
 
-| 阶段 | 目的 | 典型失败 |
+| 阶段 | 目的 | 常见的失败 |
 |---|---|---|
-| **Create** | 建立 feature/initiative 与 context | 无 PRD 锚点、context 只存在于聊天 |
-| **Map** | 探已知/未知、判断是否拆分 |  silent 建目录、无 interview |
-| **Converge** | PRD/design/decision 循环至够稳 | 在 open decision 上写死 design |
-| **Downstream** | test-plan ∥ impl-plan | 只写 test 无 regression，或 impl 无顺序 |
+| Create | 建立 feature，收集背景 | PRD 没有落地，背景只存在聊天记录里 |
+| Map | 弄清已知和未知，判断要不要拆 | 没访谈就建目录 |
+| Converge | PRD、design、decision-history 打磨到足够稳定 | 还有没定的决定，design 就写死了 |
+| Downstream | 同时写 test-plan 和 impl-plan | test-plan 没有回归检查；impl-plan 没有先后顺序 |
 
-### PIPE-C — Create
+### PIPE-C — Create（立项）
 
-1. **feature create**（walter-worker）建立或选定 **`<f>`** / initiative 根（peer vs nested 见 parent HLD §3.1）。
-2. **粗 PRD**（示例：「推荐 iPhone 并协助购买」)— 可 draft，不要求一次写齐六要素。
-3. **搜索/调研** → 已知 context 写入 **`CLAUDE.local.md`**（或项目 CLAUDE 层）；**不** 替代 committed PRD。
+1. 用 walter-worker 的 feature create 命令新建或选定 feature 的目录。要不要放进 parent 的 `features/` 下面，见 parent design 的「目录结构」一节。
+2. 写一份粗略的 PRD，例如「推荐一台 iPhone 并协助购买」。可以先写草稿，不要求一次写齐 PIPE-E2 的五项。
+3. 把搜索和调研得到的背景写进 `CLAUDE.local.md`（或项目的 CLAUDE 层）。它不能代替已提交的 PRD。
 
-### PIPE-D — Map
+### PIPE-D — Map（摸底）
 
-1. **Interview** 用户（及 context 包）；AI 归纳已知/未知。
-2. **AI 判断**（无固定 MUST 文件类型）：是否建议 **新 feature**、是否写 **decision**、是否在 **scratch** 留 task 线索、或 **暂不拆** 进入 Converge。
-3. **Recap** Map 结论：判断摘要、建议拆分、仍 open 项。
-4. **可选** 调用 **pluggable map skill**（示例 wayfinder）；**不得** 替代 interview。
-5. **禁止** 未经确认创建 `docs/features/<f>/` 或移动 committed 树（Organize 模式负责路径）。
-6. **拆分标准（暂时）：** AI 先给几个拆法推荐。一个人 20 小时以内能搞清楚的，算一个 feature spec；AI 估算超过 20 小时的，拆成 peer 或 sub-feature。小时估算和拆不拆的评判都由 AI 做。
-7. **子问题（PRD-L）：** 每个子问题标成 AI 查、人决定、或 AI 查完后人决定。人没问到的盲区和风险，AI 必须提出。
+1. 访谈用户（评测时用 context 包代替用户），由 AI 整理出已知和未知。
+2. AI 判断下一步，没有固定要产出的文件：是否建议拆出新 feature、是否要记一条决定、是否只在草稿里留个线索，还是先不拆，直接进入 Converge。
+3. 给出 Map 的结论回顾：判断的要点、建议的拆法、还没定的事项。
+4. 可选：调用一个可替换的辅助工具（例如 wayfinder），但它不能代替访谈。
+5. 没有人确认，不能创建 `docs/features/<f>/` 目录，也不能移动已提交的文档。
+6. 拆分标准（暂行）：AI 先给出几种拆法。一个人 20 小时以内能搞清楚的，算一个 feature spec；AI 估算超过 20 小时的，拆成 peer feature 或 sub-feature。估算和判断都由 AI 做（[ARD-Y](../../../decision-history/spec-driven-development-decision-history.md#ard-y)）。
+7. 子问题（PRD-L）：每个子问题标明「AI 查」「人决定」或「AI 查完人决定」。人没问到的盲区和风险，AI 必须主动提出来。
 
-### PIPE-E — Converge
+### PIPE-E — Converge（收敛）
 
-**循环：** PRD ↔ **design 篇** ↔ decision-history（parent PRD Solution）。
+PRD、design、decision-history 三篇反复打磨（见 parent PRD 的 Solution）。下面三个条件全部满足，才能进入 Downstream：
 
-**收敛条件（MUST 全满足才进 Downstream）：**
+- **PIPE-E1**：没有阻塞的未决问题。每个未决问题都写在本 feature 的问题清单里，并在「阻塞」一列标明是或否。只要还有标「是」的问题没解决，就不能进入 Downstream（[ARD-AG](../../../decision-history/spec-driven-development-decision-history.md#ard-ag)）。
+- **PIPE-E2**：PRD 写清了限制、偏好、时间、资源、工具五项；不适用的写 not apply，不能留空。design 和 decision-history 两篇都已存在（[ARD-Z](../../../decision-history/spec-driven-development-decision-history.md#ard-z)）。
+- **PIPE-E3**：design 列出了它依赖的决定和还没定的事项，并写清了实现需要的接口和边界。实现任务的细节留到 Downstream 再定。
 
-- **PIPE-E1** 无未关闭的 blocking open decision；每条 open item 带 `blocking: true|false`，仍 open 的须在 design 中点名。`blocking: true` 不得进 Downstream（ARD-AG）。
-- **PIPE-E2** PRD 写清 limitation、preference、timeline、resource、tool；没有的注明 not apply。design 篇与 decision history 都在，才进 Downstream。
-- **PIPE-E3** design 篇列出 **依赖的 decision** 与 **仍 open** 项；含 implementation 所需的 contract/边界决策（impl 任务细节 **下一轮** 再定）。
+### PIPE-F — Downstream（下游）
 
-### PIPE-F — Downstream
+- test-plan 和 impl-plan 同时开始写，互不依赖，都从 design 总结出来。
+- **PIPE-F1（test-plan）**：每个任务都有完成检查和回归检查。回归检查用来确认改动没有弄坏原来能用的功能。
+- **PIPE-F2（impl-plan）**：每个任务写明依赖谁、挡住了谁；被挡住的后做，没被挡住的先做。
 
-- **test-plan** 与 **impl-plan** **并行**启动；**互不** 串行依赖；均从 **design 篇** 总结。
-- **test-plan：** 每项任务 **完成检查** + **regression guard**（PIPE-F1）。
-- **impl-plan：** 每条任务写依赖与挡住谁；被挡住的后做，没被挡住的先做（PIPE-F2）。
+### PIPE-G — 每个阶段推荐的 skill
 
-### PIPE-G — Skill 推荐（接口）
-
-| 阶段 | 场景 | 推荐 skill | 必选 |
+| 阶段 | 场景 | 推荐 | 是否必须 |
 |---|---|---|---|
-| Create | 新 feature/initiative | feature create（walter-worker） | MUST |
-| Create | 补 context | research（示例） | 可选 |
-| Map | 探图/拆分辅助 | *pluggable map*（示例 wayfinder） | 可选 |
-| Converge | 写/改文稿 | spec-write | MUST（有改动时） |
-| Converge | 合规/路径 | spec-organize | MUST（create/move/merge 后） |
-| 任意 | 提交 committed 前 | spec-review | 询问（PIPE-A4） |
-| Downstream | test-plan / impl-plan 篇 | spec-write + spec-organize | MUST |
+| Create | 新建 feature | walter-worker 的 feature create | 必须 |
+| Create | 补充背景 | research（举例） | 可选 |
+| Map | 摸底、辅助拆分 | 可替换的辅助工具（例如 wayfinder） | 可选 |
+| Converge | 写或改文档 | spec-write | 有改动时必须 |
+| Converge | 检查路径和格式 | `run_spec_checks.py` 或 spec-organize 的 Lint | 新建、移动、合并文档后必须 |
+| 任何阶段 | 提交前 | spec-review | 询问（PIPE-A4） |
+| Downstream | 写 test-plan 和 impl-plan | spec-write，加上路径和格式检查 | 必须 |
 
-*wayfinder 等 map 工具 **可替换**，**非** SDD 必装 deliverable。*
+wayfinder 等辅助工具随时可以换，不是 SDD 必须安装的交付物。
 
-### PIPE-H — State
+### PIPE-H — 进度记录
 
-| 时段 | 存储 | 内容 |
+| 时段 | 记在哪 | 记什么 |
 |---|---|---|
-| **`<f>` 未确定** | **`CLAUDE.local.md`**（项目 CLAUDE 层） | phase、粗需求、Map 笔记、open items |
-| **`<f>` 已确定** | **`docs/features/<f>/raw/state/state-<YYYY-MM-DD>.md`** | `phase`（Create/Map/Converge/Downstream）、`feature`、`open_items`、`last_action`、可选 `scratch_ref` |
+| feature 名字还没定 | `CLAUDE.local.md`（项目的 CLAUDE 层） | 阶段、粗略需求、Map 笔记、未定事项 |
+| feature 名字已定 | `docs/features/<f>/raw/state/state-<YYYY-MM-DD>.md` | `phase`（Create、Map、Converge、Downstream 之一）、`feature`、`open_items`、`last_action`，可选 `scratch_ref` |
 
-- **Recap** 读取 state + committed 树；输出发给用户，**默认不 commit** recap 本身。
-- 方向性结论 **升格** 进 decision-history / PRD / design，**不** 长期只留在 state。
+- 进度回顾读取进度记录和已提交的文档，发给用户看；回顾本身默认不提交。
+- 有方向性的结论，要正式写进 decision-history、PRD 或 design，不能长期只留在进度记录里。
 
-### PIPE-I — 协作、血缘、齐备度
+### PIPE-I — 协作、来源和齐备
 
-- **读上游、不 silent 改**；分歧 **report + ask**（**DSGN-G**）。
-- **多人 decision：** 以 decision history 时间较晚的为准；看不出先后则问用户。AI 不猜测（**PRD-F**）。
-- **decision 变更** → 点名需 review 的下游 artifact（PRD、design、impl-plan、test-plan）。
-- **Parent vs sub 齐备：** parent initiative review 见 parent HLD **§8**；**sub-feature** 不要求五篇齐全 — **spec-review** 执行，pipeline **转发** 到 review，不 duplicate 规则。
+- 读上游文档，不悄悄改；有分歧就报告并问人（document-standard 的 DSGN-G）。
+- 多人的决定冲突时，以 decision-history 里时间较晚的为准；看不出先后就问用户；AI 不猜（PRD-F）。
+- 决定变了，要点名哪些下游文档需要复查：PRD、design、impl-plan、test-plan。
+- parent 和 sub-feature 的齐备要求见 parent design 的 DSGN-E：parent 五篇都要有，sub-feature 不要求。这件事由 spec-review 检查，本篇只转交，不重复规则。
 
-### PIPE-J — 边界
+### PIPE-J — 本篇管什么、不管什么
 
-| 本篇管 | 不管 |
+| 本篇管 | 本篇不管 |
 |---|---|
-| 阶段、入口、skill 推荐、state、recap、提交前 review 询问 | frontmatter、路径、ID 细则（document-standard） |
-| 收敛条件、Downstream 并行 | map/research **skill 正文** |
-| 轻量 state | 重 task/BMAD/GSD 框架 |
+| 阶段、入口、skill 推荐、进度记录、进度回顾、提交前询问 | frontmatter、路径、编号的细则（见 document-standard） |
+| 收敛条件、下游两篇同时写 | 辅助工具和 research 等 skill 的正文 |
+| 轻量的进度记录 | 完整的任务管理框架（BMAD、GSD 这类） |
 
-### PIPE-K — 非软件问题的五篇映射
+### PIPE-K — 非软件问题对应到五篇文档
 
-**PRD-K / PRD-Q。** 非软件难题走同一套五篇；不新增文档类型。
+依据 PRD-K、PRD-Q：非软件的难题也用同样五篇文档，不新增文档类型。
 
-| 内容 | 落点 |
+| 内容 | 放在哪 |
 |---|---|
-| 调研、学习笔记、原始资料 | `raw/research/<topic>.md`（不 commit、不作权威） |
-| 决策 | `decision-history`（`ARD-*`） |
-| 方案、执行步骤 | `design` 篇；需要排序的执行步骤进 `impl-plan` |
-| 验证 | `test-plan` |
+| 调研、学习笔记、原始资料 | `raw/research/<主题>.md`（不提交，不算权威） |
+| 决定 | decision-history（`ARD-*`） |
+| 方案、执行步骤 | design；需要排先后顺序的执行步骤放 impl-plan |
+| 验证 | test-plan |
 
-`raw/` 结论升格进 committed 文档时只 link，不 restate。四个例子（shed、北京旅游、数学题、股票）写进 skill 正文，不在本仓库建 gold。
+`raw/` 里的结论要正式写进文档时，只放链接，不复述。四个例子（盖 shed、北京旅游、数学题、股票）写进 skill 正文，不在本仓库建 gold。
 
-### PIPE-L — 子问题归属与证据
+### PIPE-L — 子问题归属和证据
 
-有子问题的 feature，其 **design 篇** 必须有「子问题归属」表；纯标准/编排 design 可注明 not apply。
+有子问题的 feature，它的 design 必须有一张「子问题归属」表。纯标准或纯流程的 design 可以注明不适用。
 
 | 子问题 | 归属 | 依据 |
 |---|---|---|
-| <问题> | `AI 查` / `人决定` / `AI 查完人决定` | `raw/` 路径、URL 或 `ARD-*` |
+| <问题> | `AI 查`、`人决定` 或 `AI 查完人决定` | `raw/` 路径、网址或 `ARD-*` 编号 |
 
-- 归属只取三值；人没问到的盲区与风险，AI 必须主动补行。
-- 依据必须可追溯；查不到写 `UNKNOWN`，不得写推测。
-- **spec-review** 检查「有结论但无依据」与「该标 UNKNOWN 却写了事实」。
-- **MAY（ARD-AY）：** 子问题都已是 tracker 条目，且每条有 Owner 与 Evidence 时，design 用一行链接代替归属表。没有 tracker 的 feature 仍用表。
+- 归属只能是这三种之一。人没问到的盲区和风险，AI 必须主动加行。
+- 依据必须能追溯；查不到写 `UNKNOWN`，不能写推测。
+- spec-review 检查两种问题：有结论却没有依据；该写 `UNKNOWN` 的地方写成了事实。
+- 可以（MAY）：如果每个子问题都已经是问题清单里的一行，并且每行都有负责人和依据，design 可以只放一个链接，不再抄一张表（[ARD-AY](../../../decision-history/spec-driven-development-decision-history.md#ard-ay)）。
 
 ## Testing Decisions
 
-验证见 parent **`../../../test-plan/spec-driven-development-test-plan.md`**。本篇至少覆盖：
+测试见 parent 的 [test-plan](../../../test-plan/spec-driven-development-test-plan.md)。本篇至少要覆盖：
 
-- **spec-pipeline：** 进门、recap、提交前 review 询问、state 切换 — **Unverified**（暂无可执行测试；PRD-I）。
-- **PRD：** limitation、preference、timeline、resource、tool 均写明或注明 not apply。
-- **decision-history：** 产品方向 decision 有 **ARD-** ID；supersede = strike + link（**DSGN-J**）。
-- **design 篇：** 依赖 decision；open decision 已命名。
-- **test-plan / impl-plan：** 并行存在；test 含 completion + regression guard。
-- **Cross-artifact：** 测试可追溯到 PRD 要求（TST-O 新增）。
-- **PRD-N：** 正式 spec 结论链到事实；本 harness 评测答案只来自 context 包。
-- **PRD-O：** 一个共用 mock MCP server，call 打出 log 即通过。
-- **PRD-M：** 可读性打分在 spec-review 流程内，不作为测试通过条件。
+- **阶段编排**：入口、进度回顾、提交前询问、进度记录的切换。暂时没有可执行的测试，标为 Unverified（PRD-I）。
+- **PRD**：五项都写了，或注明 not apply。
+- **decision-history**：方向性的决定都有 ARD 编号；推翻旧决定用删除线加链接（document-standard 的 DSGN-J）。
+- **design**：写明依赖的决定，未决事项都在问题清单里。
+- **test-plan 和 impl-plan**：两篇都在；test-plan 有完成检查和回归检查。
+- **文档之间的追溯**：PRD 的每条需求都能在测试里找到对应（TST-O）。
+- **PRD-N**：正式结论链到事实；评测时答案只能来自 context 包。
+- **PRD-O**：所有例子共用一个 mock MCP 服务器，打印出调用记录就算通过。
+- **PRD-M**：可读性由 TST-V 判定。
 
 ## Out of Scope
 
-- **wayfinder**、feature create、research 等 **skill 正文**与部署。
-- BMAD/GSD 式 **重** state/task 框架与满 repo 模板文件。
-- **spec-pipeline** 实现（prompt、代码、hook）。
-- **impl-plan** 阶段 **task 粒度与 parent impl-plan 文稿**（**下一轮 impl 讨论**）。
-- document-standard 条文 duplicate。
+- wayfinder、feature create、research 等 skill 的正文和部署。
+- BMAD、GSD 这类完整的进度和任务管理框架，以及在仓库里铺满模板文件。
+- 流程编排的具体实现（prompt、代码、hook）。
+- impl-plan 阶段的任务粒度，以及 parent impl-plan 的内容。
+- 重复写 document-standard 的规则。
 
 ## Further Notes
 
-- As-is 技能安装图：`../../../design/spec-driven-development-workflow.html`（对照，非 target pipeline 唯一来源）。
-- Open：plug-in task skill；收敛条件自动化检查。Map 拆分见 **PIPE-D** 第 6 点。
+Map 的拆分标准见 PIPE-D 第 6 步。还没定的事项见 [Open Questions](#open-questions)。
 
 ## Alternatives Considered
 
-- 把 wayfinder-import 作为 sub-feature 固化 → 拒(**ARD-T**):map 工具须可替换。
-- 每阶段一个 skill → 拒:四个 skill 已覆盖(ARD-AB),按阶段拆会重复职责。
-- 固定五阶段瀑布、跳过 Map → 拒:未知多的题目会漏拆。
+- **把 wayfinder-import 固定成一个 sub-feature：** 放弃。辅助工具必须可以替换（[ARD-T](../../../decision-history/spec-driven-development-decision-history.md#ard-t)）。
+- **每个阶段一个 skill：** 放弃。写和审两个 skill 已经覆盖了所有阶段（[ARD-AJ](../../../decision-history/spec-driven-development-decision-history.md#ard-aj)），按阶段拆会让职责重复。
+- **固定的瀑布流程，跳过 Map：** 放弃。未知很多的问题，会漏掉该拆的部分。
 
 ## Drawbacks
 
-- Interview 贵且慢,小改动也要走一遍。
-- Map 的产物不可机械验证,只能靠人确认。
+- 访谈又贵又慢，小改动也要走一遍。
+- Map 阶段的产出没法用脚本检查，只能靠人确认。
 
 ## Risks and Mitigations
 
-- 风险:AI 未经确认创建 `docs/features/<f>/` → Step 2 强制 confirm + 反模式清单。
-- 风险:相位判断错 → 读 `raw/state/state-<date>.md` 与 CLAUDE.local,以文件为准。
+| 风险 | 应对 |
+|---|---|
+| AI 没经确认就创建 `docs/features/<f>/` | PIPE-D 第 5 步规定必须人确认 |
+| AI 判断错了当前阶段 | 以进度文件 `raw/state/state-<日期>.md` 和 `CLAUDE.local.md` 为准，不凭记忆 |
 
 ## Open Questions
 
-- 阶段编排本身无执行测试(**PRD-I**,Unverified)。
-- recap 模板是否所有项目都适用。
+本表是 pipeline 这个 feature 唯一的未决问题清单（[ARD-AO](../../../decision-history/spec-driven-development-decision-history.md#ard-ao)）。
+
+| ID | 问题 | 目前答案 | 负责人 | 阻塞 |
+|---|---|---|---|---|
+| QUES-A | 阶段编排怎么测试？目前没有可执行的测试（PRD-I） | 标为 Unverified | 人决定 | 否 |
+| QUES-B | 进度回顾的格式是否适用于所有项目 | 未定 | 人决定 | 否 |
+| QUES-C | 后期的任务管理接入哪个 skill | 未定 | 人决定 | 否 |
+| QUES-D | PIPE-E 的收敛条件，自动检查怎么实现 | 未定 | AI 查完人决定 | 否 |
 
 ## Reversibility
 
-- 阶段是叠加的:去掉 Map 不影响 Create/Converge/Downstream。
-- state 文件可弃用,回到 CLAUDE.local 记录。
+- 阶段是叠加的：去掉 Map，不影响 Create、Converge、Downstream。
+- 进度文件可以不用，退回到只在 `CLAUDE.local.md` 里记录。
 
 ## Change Log
 
@@ -243,3 +245,4 @@ Create → Map → Converge ⇄ (PRD ↔ design ↔ decision-history) → Downst
 | 2026-11-07 | 入口改为 spec-write 与 spec-review；本篇步骤不再是入口 skill（ARD-AJ） |
 | 2026-11-07 | 开头与 PIPE-A1：写改 spec 从 spec-write 进入（ARD-AJ） |
 | 2026-11-07 | PIPE-L：tracker 已有 Owner 与 Evidence 时，design 可链过去（ARD-AY） |
+| 2026-11-20 | Solution 不再说 spec-pipeline 是统一入口，四阶段改为编号步骤（ARD-AJ）；PIPE-A2 和 PIPE-G 不再要求调用 spec-organize，改为检查脚本或 Lint；PIPE-C 的「六要素」改为 PIPE-E2 的五项（ARD-Z）；PIPE-E1 写明阻塞标记写在问题清单的「阻塞」列（ARD-AG）；Alternatives 不再引用已推翻的 ARD-AB；删除指向已不存在的 workflow HTML 的链接；Open Questions 改为 QUES 清单；全文改写为完整句子（ARD-BK） |
