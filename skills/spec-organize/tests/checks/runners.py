@@ -12,6 +12,7 @@ from checks.code_citation_base import check_code_citation_base
 from checks.counts import check_counts
 from checks.decision_log import check_decision_log
 from checks.diagram_steps import check_diagram_steps
+from checks.figures import check_figures
 from checks.frontmatter import check_frontmatter
 from checks.ids import check_ids
 from checks.impl_tasks import check_impl_tasks
@@ -43,6 +44,7 @@ RUNNERS = [
     check_counts,
     check_resolved_refs,
     check_diagram_steps,
+    check_figures,
 ]
 
 

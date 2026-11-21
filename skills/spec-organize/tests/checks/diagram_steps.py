@@ -34,6 +34,7 @@ def check_diagram_steps(path: Path, text: str | None = None) -> list[Finding]:
                     "diagram_steps",
                     str(path),
                     f"steps {sm.group(1)}-{sm.group(2)} has {count} messages, expected {expect}",
+                    level="nice",
                 )
             )
     return findings

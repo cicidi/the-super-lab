@@ -78,9 +78,6 @@ def check_sections(path: Path, text: str | None = None) -> list[Finding]:
     if not need:
         return []
     heads = _headings(raw)
-    # Parent HLD-style designs are identified by their content, not by numbering.
-    if t == "design" and re.search(r"^#{2,4}\s+(?:\d+(?:\.\d+)*[.)]?\s+)?System Context\s*$", raw, re.M):
-        return []
     rel = str(path)
     findings: list[Finding] = []
     part = _PART.match(path.name)

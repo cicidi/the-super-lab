@@ -20,9 +20,9 @@ def check_section_refs(path: Path, text: str | None = None) -> list[Finding]:
     ranges.sort()
     for (a1, b1), (a2, b2) in zip(ranges, ranges[1:]):
         if a2 <= b1:
-            findings.append(Finding("section_refs", rel, f"step ranges overlap: {a1}-{b1} and {a2}-{b2}"))
+            findings.append(Finding("section_refs", rel, f"step ranges overlap: {a1}-{b1} and {a2}-{b2}", level="nice"))
     numbers = {n for n, _title in _H.findall(raw) if n}
     for num, frag in _SEC.findall(raw):
         if num not in numbers and frag not in raw:
-            findings.append(Finding("section_refs", rel, f"§{num} does not land on a heading"))
+            findings.append(Finding("section_refs", rel, f"§{num} does not land on a heading", level="nice"))
     return findings

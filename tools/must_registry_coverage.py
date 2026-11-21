@@ -28,6 +28,7 @@ IMPLEMENTED = {
     "test_trace",
     "registry_provenance",
     "paired_html",
+    "figures",
     "audience_authority",
     "open_questions",
     "anchors",

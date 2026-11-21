@@ -39,6 +39,8 @@ def check_anchors(path: Path, text: str | None = None) -> list[Finding]:
         file_part, _, frag = target.partition("#")
         if not frag or "…" in frag or "..." in frag:
             continue
+        if file_part.startswith("raw/") or "/raw/" in file_part:
+            continue
         dest = path if not file_part else (path.parent / file_part).resolve()
         if dest.suffix != ".md":
             continue
