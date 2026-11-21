@@ -193,13 +193,21 @@ last_verified: 2026-11-20
 
 **判定：** 判分模型 `deepseek-flash`。实现见 impl-plan 的 IMPL-Q。
 
+### TST-W — 网页插图与样式
+
+**目标：** 站点内嵌 SVG、diagram-design 皮肤、无未解析 `data-svg`（DSGN-N-D、[ARD-CA](../decision-history/spec-driven-development-decision-history.md#ard-ca)）。
+
+**通过条件：** `tests/test_sdd_site_render.py` 通过；每个 `-fig-*.svg` 在对应 HTML 中出现一次；`docs/book/html` 无 `data-svg`。
+
+**判定：** Python。
+
 ## Test Execution Order
 
 1. TST-A：MUST 清单覆盖率不到 100% 就停。
 2. TST-B：检查脚本失效就停。
 3. TST-O、TST-P、TST-V：design 的覆盖、证据、可读性。这一步的 TST-V 只测 SDD 自己的文档。
 4. TST-C，然后 TST-D：第一次运行，或者 gold 升版时。
-5. TST-G、TST-N、TST-R、TST-S、TST-T、TST-U。
+5. TST-G、TST-N、TST-R、TST-S、TST-T、TST-U、TST-W。
 6. TST-E、TST-F，然后对 TST-C、TST-E 里 spec-write 写出的文档跑 TST-V。
 7. TST-H，然后 TST-I。
 8. TST-Q：mock 执行。
@@ -254,6 +262,7 @@ document-standard 的 reader PRD：
 | PRD-F、PRD-I、PRD-N（流程类要求） | Unverified（流程，PRD-I） |
 | PRD-L（样式统一） | 不测，是 NICE（[ARD-BY](../decision-history/spec-driven-development-decision-history.md#ard-by)） |
 | PRD-M（改完提示重新生成） | TST-R |
+| DSGN-N-D（插图与样式） | TST-W |
 | PRD-O、PRD-P（纯静态、不放密钥） | Unverified（还没有对应的检查脚本） |
 
 ## Change Log

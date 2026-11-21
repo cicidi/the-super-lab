@@ -203,13 +203,21 @@ last_verified: 2026-11-20
 
 **Verify:** CLAUDE 层里：改动上限写的是「并且」，并引用 PRD-C；没有 `FR-` 这类已禁止的编号；进度路径是 `CLAUDE.local.md` 或 `raw/state/`（PRD-J）；文档目录是 `docs/features/<f>/<类型>/`（document-standard 的 DSGN-B）；列出的 skill 只有 spec-write 和 spec-review（ARD-BX）。2026-11-20 已按这几条改过 `CLAUDE.local.md`。
 
+## IMPL-S — 插图与网页样式
+
+**目标：** diagram-design 皮肤、SVG 内嵌、MUST/NICE 标签（[ARD-CA](../decision-history/spec-driven-development-decision-history.md#ard-ca)）。
+
+**依赖：** IMPL-F。**挡住：** 无。
+
+**Verify:** TST-W 通过。
+
 ## Execution order
 
 先做不依赖别人的任务，被挡住的后做：
 
 1. IMPL-A、IMPL-D、IMPL-G、IMPL-H（互不依赖，可以同时做）
 2. IMPL-C
-3. IMPL-B、IMPL-F、IMPL-J、IMPL-K、IMPL-L、IMPL-M、IMPL-R
+3. IMPL-B、IMPL-F、IMPL-J、IMPL-K、IMPL-L、IMPL-M、IMPL-R、IMPL-S
 4. IMPL-N、IMPL-O、IMPL-P
 5. IMPL-Q
 6. IMPL-E（评测要等 spec 可读、测试骨架齐全、gold 改回 iPhone 之后再跑）
