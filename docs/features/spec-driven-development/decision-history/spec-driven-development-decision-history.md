@@ -24,6 +24,8 @@ last_verified: 2026-11-20
 
 | ID | Date | Decision |
 |---|------|----------|
+| ARD-CB | 2026-11-20 | 网页离线可读指正文与已提交的 SVG 插图；字体与 Mermaid 可联网加载（PRD-O） |
+| ARD-CA | 2026-11-20 | 插图用 diagram-design 画，SVG 与 citing md 同目录；全站配色与 diagram-design 默认一致；spec-review 查图文一致 |
 | ARD-BZ | 2026-11-20 | 补记两次编号迁移：parent design 的 §4 到 §8 改为 DSGN-A 到 DSGN-E；reader design 里重号的 DSGN-N-H、DSGN-N-I 改为 DSGN-N-M、DSGN-N-N |
 | ARD-BY | 2026-11-20 | reader PRD 的 PRD-L（全站样式统一）降为 NICE，和 reader design 的 DSGN-N-D 一致 |
 | ARD-BX | 2026-11-20 | 交付物只有 spec-write 和 spec-review 两个 skill。它们读三份标准文件：SPEC-STANDARD.md、SPEC-PRESENTATION.md，以及讲 HTML 页面的 SPEC-HTML-STANDARD.md；标准文件不算交付物 |
@@ -45,7 +47,7 @@ last_verified: 2026-11-20
 | ~~ARD-BH~~ | 2026-11-18 | ~~交付物只有 spec-write 和 spec-review 两个 skill。两份标准文件是这两个 skill 要读的文档，不算交付物~~ → [ARD-BX](#ard-bx) |
 | ARD-BG | 2026-11-07 | 全站只有一个网站，入口是 docs/book/html/index.html。进入一个 feature 后，左边是这个 feature 的目录，右边是正文 |
 | ARD-BF | 2026-11-07 | spec 的 HTML 放在 docs/book/html/，目录结构和 docs/features/ 一样；markdown 留在 feature 目录 |
-| ARD-BE | 2026-11-07 | 图只用来画文字说不清的流程，一个流程一张图 |
+| ~~ARD-BE~~ | 2026-11-07 | ~~图只用来画文字说不清的流程，一个流程一张图~~ → [ARD-CA](#ard-ca) |
 | ARD-BD | 2026-11-07 | 外部仓库的 gold 只记一份清单（commit 和应找出的问题），不把别人的 spec 原文复制进本仓库 |
 | ARD-BC | 2026-11-07 | 引用一个未决问题时写的状态，必须和问题清单里的状态一致 |
 | ARD-BB | 2026-11-07 | 问题清单里写的总数和各状态的数量，必须等于实际行数 |
@@ -104,6 +106,26 @@ last_verified: 2026-11-20
 | ARD-A | 2026-09-25 | 按关注点分权威，取代「全局只有一个真相来源」 |
 
 ## Evidence Appendix
+
+<a id="ard-ca"></a>
+
+### ARD-CA — 插图与站点样式
+
+**原因。** 纯文字 spec 难读；Mermaid 自动排版不符合 editorial 图；生成时再画图不稳定。
+
+**规则。** 写 spec 时用 diagram-design 产出 SVG，命名 `<doc-stem>-fig-<slug>.svg` 与 citing md 同目录；网页皮肤用 diagram-design 默认 token；spec-review 报图里多写或与正文矛盾（severity 3）。
+
+**放弃的方案。** 仅在 build 时让 AI 重画；只把配色套在 Mermaid 上。
+
+<a id="ard-cb"></a>
+
+### ARD-CB — 离线可读范围
+
+**原因。** 插图内嵌后 PRD-O「直接打开」若要求零联网会阻字体与 Mermaid。
+
+**规则。** MUST：正文与 SVG 插图离线可读；字体、Mermaid CDN 允许。
+
+**放弃的方案。** 全站严格零联网（与 Mermaid、字体策略冲突）。
 
 <a id="ard-bz"></a>
 
