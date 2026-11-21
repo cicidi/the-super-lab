@@ -37,4 +37,20 @@ No decorative icons. A mark is allowed only where this standard names a status. 
 
 ## Diagram
 
-Add a diagram when the prose cannot show an ordered flow. One flow, one diagram. The diagram does not introduce a fact that the prose does not state (NICE, ARD-BE).
+Add a diagram when the prose shape is clearer visually than as a table or list (ARD-CA).
+
+| Content shape | diagram-design type |
+|---|---|
+| Ordered phases | Steps |
+| Components and connections | Architecture |
+| Branching rules | Flowchart |
+| Time-ordered messages | Sequence |
+| States and transitions | State machine |
+| Stacked levels | Layer stack |
+| Task dependencies | Dependency graph |
+| Req → design → test links | Requirement traceability |
+| Parent / child structure | Tree |
+
+Rules: no fact in the figure that prose does not state; L1 text must not live only in the figure; ≤9 nodes and ≤12 edges per figure; Simplified Chinese in `'Geist','Noto Sans SC','PingFang SC',sans-serif` at ≥12px; titles `'Instrument Serif','Noto Serif SC',serif`; keep diagram-design default skin unless onboarding says otherwise; static SVG only (no script).
+
+Workflow: draft in `raw/diagrams/` with **diagram-design**; run `self_check.py` and `verify_geometry.py`; export `<doc-stem>-fig-<slug>.svg` beside the citing `.md`; cite with a blank-line-separated `![caption](<file>.svg)` line.

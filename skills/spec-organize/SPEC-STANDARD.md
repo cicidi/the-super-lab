@@ -13,7 +13,7 @@ Rules are **MUST** (a violation is a failure) or **NICE** (a reminder, never a f
 - Root: `docs/features/<f>/` (sub: `docs/features/<parent>/features/<sub>/`, frontmatter `feature` = **sub** slug).
 - Entry: `<f>-<type>.md` in `<type>/` directory. Parts: `<f>-design-<noun>.md`; `<f>-impl-plan-<NN>-<phase>.md`.
 - All six types may split into parts. When a type has parts, the entry file `<f>-<type>.md` must exist and link to each part (ARD-BQ).
-- No committed `reference/` type; supporting files beside the citing doc.
+- No committed `reference/` type; supporting files beside the citing doc. Figure SVG: `<doc-stem>-fig-<slug>.svg` next to the citing `.md` (ARD-CA).
 
 ## Frontmatter (MUST)
 
@@ -129,5 +129,5 @@ A conclusion is stated in the committed document and cites a `raw/` path, a URL,
 - A §N link lands on N or its parent or child; step ranges do not overlap (ARD-AZ).
 - A hand-maintained HTML changelog has a row for every markdown Change Log date (ARD-BA).
 - Tracker counts match the rows (ARD-BB).
-- One flow, one diagram; message count equals the step range (ARD-BE).
+- Figures state no fact absent from prose; ≤9 nodes per figure (ARD-CA).
 - Heading levels do not skip; terms match `CONTEXT.md`; `last_verified` is recent.

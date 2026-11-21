@@ -60,6 +60,7 @@ Illustrations, not gold. Each edit stays within 10 lines and 200 characters.
 11. A `file:line` citation names the commit. A renamed heading keeps the old anchor above the new title.
 12. **Readability pass.** Reread each changed section as an undergraduate programmer who has only this document and the glossary (parent design appendix). Rewrite any keyword list or arrow chain as sentences. Explain or link every term at first use; add missing terms to the glossary.
 13. After a markdown edit, prompt the user to rebuild the one site with `python3 tools/build_sdd_site.py`; rebuild only when the user asks (reader design DSGN-N-E). Each page is one directory line. A feature page keeps that feature's directory on the left and the page on the right. A hand-maintained HTML file keeps `spec-source-sha256`.
+14. If a section matches a shape in `SPEC-PRESENTATION.md` §Diagram and has no figure yet, add one with **diagram-design** and cite the SVG; do not redraw existing figures unless the user asks.
 
 ### By type (quick)
 

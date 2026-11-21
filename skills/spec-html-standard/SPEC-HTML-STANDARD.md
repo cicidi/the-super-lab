@@ -54,7 +54,8 @@ Rebuild: `python3 tools/build_sdd_site.py`
 
 ## Visual and technical (DSGN-N-D)
 
-- MUST: the page opens straight from the file in a browser, with no server; CSS lives in the page (reader PRD-O).
+- MUST: body text and committed SVG figures open offline in the browser (reader PRD-O, ARD-CB). Fonts and Mermaid may load from the network.
+- NICE: site skin uses diagram-design default tokens and typography (ARD-CA).
 - MUST: no runtime `.md` fetch for main content; no secrets and no raw eval text in the page.
 - NICE: one site-wide style for layout, ID tags, cards, and callouts (ARD-BY).
 
@@ -64,10 +65,10 @@ Rebuild: `python3 tools/build_sdd_site.py`
 - Conflict or spec bug found while assembling → **Ask human** → fix md → regenerate HTML
 - SDD parent: `python3 tools/build_sdd_reader.py` then `python3 tools/validate_sdd_reader.py`
 
-## Sequence / flow diagrams
+## Diagrams
 
-- Prefer **Mermaid** fenced blocks in `.md`; reader build renders them (`MERMAID-PATTERNS.md` samples).
-- ASCII flows acceptable; do not drop L1 labels when converting.
+- Committed `![alt](<doc-stem>-fig-<slug>.svg)` beside the citing `.md`; build inlines SVG (ARD-CA).
+- Mermaid fenced blocks remain allowed; reader build renders them (`MERMAID-PATTERNS.md` samples). ASCII flows remain allowed; do not drop L1 labels when converting.
 
 ## Reference (structure OK, content must meet fidelity)
 
