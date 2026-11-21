@@ -10,6 +10,7 @@ Mechanical gate: `./tools/run_sdd_mechanical.sh` (alias for `skills/spec-organiz
 | `run_gold_ref.py` | TST-T external gold; skips when the source checkout is absent |
 | `tst_g_real_tree.py` | TST-G finding counts vs `tst_g_baselines.txt` |
 | `run_neg_fixtures.py` / `run_pos_fixtures.py` | TST-B fixture gates |
+| `run_readability.py` | TST-V readability (IMPL-Q); `--dry-run` uses a fake model |
 | `check_neg_fixture_catalog.py` | `neg/*` dirs ↔ runner `CASES` |
 | `check_pos_fixture_catalog.py` | `pos/*` ↔ `fixtures/README.md` |
 | `check_review_case_catalog.py` | spec-review `cases/*` ↔ `cases/README.md` |

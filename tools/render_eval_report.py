@@ -86,7 +86,27 @@ def gold_section() -> str:
     return "\n".join(blocks)
 
 
-def render(run_id: str) -> str:
+def readability_section(path: Path | None) -> str:
+    """TST-V: per-doc accuracy and unexplained terms from run_readability.py --out."""
+    if path is None or not path.is_file():
+        return "<p>No readability results (run <code>tools/run_readability.py --out</code>).</p>"
+    import json
+
+    reports = json.loads(path.read_text(encoding="utf-8")).get("readability", [])
+    body = "".join(
+        f"<tr><td class=\"{'pass' if r['passed'] else 'fail'}\">{'PASS' if r['passed'] else 'FAIL'}</td>"
+        f"<td>{html.escape(r['doc'])}</td>"
+        f"<td>{', '.join(f'{x['accuracy']:.0%}' for x in r['runs'])}</td>"
+        f"<td>{html.escape(', '.join(sorted({t for x in r['runs'] for t in x['unexplained_terms']})) or '-')}</td></tr>"
+        for r in reports
+    )
+    return (
+        "<table><thead><tr><th>verdict</th><th>doc</th><th>accuracy per run</th>"
+        f"<th>unexplained terms</th></tr></thead><tbody>{body}</tbody></table>"
+    )
+
+
+def render(run_id: str, readability: Path | None = None) -> str:
     passed, total, s1_lines = score1(ROOT / "docs/features/spec-driven-development")
     s2, s2_lines = score2(ROOT / "docs/features/spec-driven-development")
     cfg = eval_config()
@@ -143,6 +163,9 @@ def render(run_id: str) -> str:
 <h2>Generated gold runs (TST-C / TST-E)</h2>
 {gold_section()}
 
+<h2>Readability (TST-V)</h2>
+{readability_section(readability)}
+
 <h2>Variants (TST-F)</h2>
 <p>Each variant above (baseline, wayfinder, grill-with-docs, both) is recorded as its own
 bundle: <code>tstf-*</code>. Scores are reported, not gated.</p>
@@ -154,11 +177,13 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default="")
     ap.add_argument("--run-id", default="")
+    ap.add_argument("--readability", default="", help="run_readability.py --out JSON (default runs/<id>/readability.json)")
     args = ap.parse_args()
     run_id = args.run_id or datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     out = Path(args.out) if args.out else TESTS / "runs" / run_id / "report.html"
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(render(run_id), encoding="utf-8")
+    readability = Path(args.readability) if args.readability else TESTS / "runs" / run_id / "readability.json"
+    out.write_text(render(run_id, readability), encoding="utf-8")
     print(f"wrote {out}")
 
 
