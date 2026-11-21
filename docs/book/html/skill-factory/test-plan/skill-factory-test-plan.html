@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>skill-factory Test Plan · test-plan · Spec Atlas</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:400,400italic,500,500italic,700|Roboto+Mono:400,500,700|Noto+Sans+SC:400,500,700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@400;600&display=swap">
 <link rel="stylesheet" href="../../assets/styles.css">
 </head>
 <body>
@@ -58,7 +58,7 @@
 <tr>
 <td><strong>Static Analysis</strong></td>
 <td>Skill content conformance, frontmatter format, line count, naming rules, metadata completeness</td>
-<td>Lint‑style checks (MUST / NICE gates) set up in CI and optionally as pre‑commit hooks.</td>
+<td>Lint‑style checks (<span class="lvl lvl--must">MUST</span> / <span class="lvl lvl--nice">NICE</span> gates) set up in CI and optionally as pre‑commit hooks.</td>
 </tr>
 </tbody></table></div>
 <h4>1.1 Unit Testing</h4>
@@ -83,12 +83,12 @@
 </ul>
 <h4>1.4 Static Analysis / Content Validation</h4>
 <ul>
-<li><strong>All skills</strong> must pass the MUST gates defined in their own <code>Quality Gates</code> section.</li>
+<li><strong>All skills</strong> must pass the <span class="lvl lvl--must">MUST</span> gates defined in their own <code>Quality Gates</code> section.</li>
 <li><strong>Import skills</strong> must have a complete <code>META.yaml</code> (source, upstream_commit, license, imported_at, imported_by, note).</li>
 <li><strong>Naming</strong>: <code>walter-worker-</code> prefix for own skills; no prefix for imports; folder names unchanged.</li>
-<li><strong>Line count</strong>: body ≤150 lines (NICE), enforced as soft target.</li>
+<li><strong>Line count</strong>: body ≤150 lines (<span class="lvl lvl--nice">NICE</span>), enforced as soft target.</li>
 <li><strong>Description</strong>: ≤500 chars.</li>
-<li><strong>Sections</strong>: must include Anti-Patterns, Quality Gates (MUST/NICE), Philosophy‑driven overview.</li>
+<li><strong>Sections</strong>: must include Anti-Patterns, Quality Gates (<span class="lvl lvl--must">MUST</span>/<span class="lvl lvl--nice">NICE</span>), Philosophy‑driven overview.</li>
 </ul>
 <hr>
 <h3>Key Test Scenarios</h3>
@@ -121,7 +121,7 @@
 <tr>
 <td>SC‑05</td>
 <td>Line count of body exceeds 150</td>
-<td>NICE gate triggers warning; skill can still be committed.</td>
+<td><span class="lvl lvl--nice">NICE</span> gate triggers warning; skill can still be committed.</td>
 </tr>
 <tr>
 <td>SC‑06</td>
@@ -131,12 +131,12 @@
 <tr>
 <td>SC‑07</td>
 <td>Description &gt;500 chars</td>
-<td>NICE gate warns.</td>
+<td><span class="lvl lvl--nice">NICE</span> gate warns.</td>
 </tr>
 <tr>
 <td>SC‑08</td>
 <td>Skill contains <code>deploy/</code> concept</td>
-<td>MUST gate blocks commit.</td>
+<td><span class="lvl lvl--must">MUST</span> gate blocks commit.</td>
 </tr>
 </tbody></table></div>
 <h4>2.2 Skill Editing (<code>skill-edit</code>)</h4>
@@ -317,12 +317,12 @@
 </tr></thead><tbody>
 <tr>
 <td>QG‑01</td>
-<td>MUST gate violation (e.g., no Anti-Patterns section)</td>
+<td><span class="lvl lvl--must">MUST</span> gate violation (e.g., no Anti-Patterns section)</td>
 <td>Commit blocked.</td>
 </tr>
 <tr>
 <td>QG‑02</td>
-<td>NICE gate violation (e.g., body &gt;150 lines)</td>
+<td><span class="lvl lvl--nice">NICE</span> gate violation (e.g., body &gt;150 lines)</td>
 <td>Warning displayed; commit allowed.</td>
 </tr>
 <tr>
@@ -350,12 +350,12 @@
 <tr>
 <td>CI‑03</td>
 <td>Push with skill that has <code>deploy/</code> concept</td>
-<td>MUST gate fails in CI.</td>
+<td><span class="lvl lvl--must">MUST</span> gate fails in CI.</td>
 </tr>
 </tbody></table></div>
 <hr>
 <h3>Quality Gates / Acceptance Criteria</h3>
-<p>All skills and tools in the skill‑factory project must meet the following criteria.   <strong>MUST</strong> gates block commit; <strong>NICE</strong> gates produce warnings.</p>
+<p>All skills and tools in the skill‑factory project must meet the following criteria.   <strong><span class="lvl lvl--must">MUST</span></strong> gates block commit; <strong><span class="lvl lvl--nice">NICE</span></strong> gates produce warnings.</p>
 <h4>3.1 Skill Content</h4>
 <div class="table-wrap"><table><thead><tr>
 <th>Gate</th>
@@ -364,42 +364,42 @@
 </tr></thead><tbody>
 <tr>
 <td>Anti‑Patterns section present</td>
-<td>MUST</td>
+<td><span class="lvl lvl--must">MUST</span></td>
 <td>Skill includes an <code>Anti‑Patterns</code> or <code>Anti-Patterns</code> section (or mapped section).</td>
 </tr>
 <tr>
-<td>Quality Gates section with MUST / NICE</td>
-<td>MUST</td>
+<td>Quality Gates section with <span class="lvl lvl--must">MUST</span> / <span class="lvl lvl--nice">NICE</span></td>
+<td><span class="lvl lvl--must">MUST</span></td>
 <td>Skill contains a Quality Gates section with checkbox‑style lists.</td>
 </tr>
 <tr>
 <td>Philosophy‑driven overview</td>
-<td>NICE</td>
+<td><span class="lvl lvl--nice">NICE</span></td>
 <td>Skill starts with a rationale/overview that explains the “why”.</td>
 </tr>
 <tr>
 <td>No <code>deploy/</code> concept</td>
-<td>MUST</td>
+<td><span class="lvl lvl--must">MUST</span></td>
 <td>Skill does not reference a <code>deploy/</code> directory or deployment workflow.</td>
 </tr>
 <tr>
 <td>Description ≤500 chars</td>
-<td>NICE</td>
+<td><span class="lvl lvl--nice">NICE</span></td>
 <td><code>description</code> field in frontmatter is ≤500 characters.</td>
 </tr>
 <tr>
 <td>Body ≤150 lines</td>
-<td>NICE</td>
+<td><span class="lvl lvl--nice">NICE</span></td>
 <td>Body of SKILL.md (after frontmatter) is ≤150 lines. (Formerly 500; tightened.)</td>
 </tr>
 <tr>
 <td>Name kebab‑case</td>
-<td>MUST</td>
+<td><span class="lvl lvl--must">MUST</span></td>
 <td>Skill <code>name</code> field is kebab‑case (enforced by skill-edit auto‑conversion).</td>
 </tr>
 <tr>
 <td><code>Use when…</code> description start</td>
-<td>NICE</td>
+<td><span class="lvl lvl--nice">NICE</span></td>
 <td>Description begins with <code>&quot;Use when...&quot;</code>.</td>
 </tr>
 </tbody></table></div>
@@ -411,17 +411,17 @@
 </tr></thead><tbody>
 <tr>
 <td>META.yaml complete</td>
-<td>MUST</td>
+<td><span class="lvl lvl--must">MUST</span></td>
 <td>Contains <code>source</code>, <code>upstream_commit</code>, <code>license</code>, <code>imported_at</code>, <code>imported_by</code>, <code>note</code>.</td>
 </tr>
 <tr>
 <td>Original author preserved</td>
-<td>MUST</td>
+<td><span class="lvl lvl--must">MUST</span></td>
 <td><code>source_author</code> and <code>source_url</code> present in metadata.</td>
 </tr>
 <tr>
 <td>No prefix added</td>
-<td>MUST</td>
+<td><span class="lvl lvl--must">MUST</span></td>
 <td>Imported skill name does not get <code>walter-worker-</code> prefix.</td>
 </tr>
 </tbody></table></div>
@@ -433,27 +433,27 @@
 </tr></thead><tbody>
 <tr>
 <td>Own skills in <code>walter-worker-skills/</code></td>
-<td>MUST</td>
+<td><span class="lvl lvl--must">MUST</span></td>
 <td>Skills created by the factory reside in <code>walter-worker-skills/</code>.</td>
 </tr>
 <tr>
 <td>Prefix applied to own skill name</td>
-<td>MUST</td>
+<td><span class="lvl lvl--must">MUST</span></td>
 <td>Skill name field includes <code>walter-worker-</code> prefix.</td>
 </tr>
 <tr>
 <td>Import skills in <code>import-skills/</code></td>
-<td>MUST</td>
+<td><span class="lvl lvl--must">MUST</span></td>
 <td>Third‑party skills go to <code>import-skills/</code>.</td>
 </tr>
 <tr>
 <td>Personal skills in <code>personal-skills/</code></td>
-<td>MUST</td>
+<td><span class="lvl lvl--must">MUST</span></td>
 <td>Private skills go to <code>personal-skills/</code> (gitignored).</td>
 </tr>
 <tr>
 <td>No generic filenames</td>
-<td>MUST</td>
+<td><span class="lvl lvl--must">MUST</span></td>
 <td>File names must include type suffix (e.g., <code>-decision-YYYY-MM-DD.md</code>).</td>
 </tr>
 </tbody></table></div>
@@ -465,7 +465,7 @@
 </tr></thead><tbody>
 <tr>
 <td>Phase 0 external search</td>
-<td>MUST (for skill-create)</td>
+<td><span class="lvl lvl--must">MUST</span> (for skill-create)</td>
 <td>At least one external source consulted (GitHub ≥10 repos or web search).</td>
 </tr>
 </tbody></table></div>

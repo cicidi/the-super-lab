@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>skill-factory Implementation Plan · impl-plan · Spec Atlas</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:400,400italic,500,500italic,700|Roboto+Mono:400,500,700|Noto+Sans+SC:400,500,700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@400;600&display=swap">
 <link rel="stylesheet" href="../../assets/styles.css">
 </head>
 <body>
@@ -69,7 +69,7 @@
 <ul>
 <li><code>skill-edit</code> skill: follows <code>skill-create</code> process exactly; accepts requirements as interview answers; uses targeted edits only; enforces quality gates before commit; redirects to <code>skill-create</code> if ≥80% rewrite</li>
 <li><code>skill-import</code> skill: fetches source SKILL.md via webfetch/curl; auto‑converts frontmatter to opencode 5‑field format; auto‑adapts body sections; implements ambiguity triggers (one question at a time); stores imported skills in <code>import-skills/</code>; preserves <code>metadata.source_author</code> and <code>source_url</code></li>
-<li>Quality gates for both skills (MUST/NICE checklists, anti‑patterns, line count &lt;150)</li>
+<li>Quality gates for both skills (<span class="lvl lvl--must">MUST</span>/<span class="lvl lvl--nice">NICE</span> checklists, anti‑patterns, line count &lt;150)</li>
 </ul>
 <h5>Dependencies</h5>
 <ul>
@@ -97,7 +97,7 @@
 <ul>
 <li>Import TDD skill from <code>mattpocock/skills</code> into <code>import-skills/</code></li>
 <li>Optimize imported skill to meet project conventions (description, overview, line count)</li>
-<li>Upgrade <code>skill-create</code> quality gates: add anti‑patterns section, MUST/NICE checkboxes, philosophy‑driven overview, <code>deploy/</code> prohibition, description ≤500 chars, body line limit tightened to &lt;150</li>
+<li>Upgrade <code>skill-create</code> quality gates: add anti‑patterns section, <span class="lvl lvl--must">MUST</span>/<span class="lvl lvl--nice">NICE</span> checkboxes, philosophy‑driven overview, <code>deploy/</code> prohibition, description ≤500 chars, body line limit tightened to &lt;150</li>
 <li>META.yaml schema defined for imports: <code>source</code>, <code>upstream_commit</code>, <code>license</code>, <code>imported_at</code>, <code>imported_by</code>, <code>note</code></li>
 <li>CI workflow for import metadata validation</li>
 </ul>

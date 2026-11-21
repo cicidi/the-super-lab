@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>skill-factory Specification · design · Spec Atlas</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:400,400italic,500,500italic,700|Roboto+Mono:400,500,700|Noto+Sans+SC:400,500,700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@400;600&display=swap">
 <link rel="stylesheet" href="../../assets/styles.css">
 </head>
 <body>
@@ -150,7 +150,7 @@ note: &lt;free text&gt;                         # Optional</code></pre>
 <td>Final SKILL.md</td>
 </tr>
 </tbody></table></div>
-<p><strong>Quality Gates (MUST — block commit)</strong>:</p>
+<p><strong>Quality Gates (<span class="lvl lvl--must">MUST</span> — block commit)</strong>:</p>
 <ul>
 <li><code>description ≤ 500 characters</code></li>
 <li><code>Body &lt; 150 lines</code> (hardened from 500)</li>
@@ -159,7 +159,7 @@ note: &lt;free text&gt;                         # Optional</code></pre>
 <li><code>Anti-Patterns section present</code></li>
 <li><code>Philosophy-driven overview</code></li>
 </ul>
-<p><strong>Quality Gates (NICE — warn only)</strong>:</p>
+<p><strong>Quality Gates (<span class="lvl lvl--nice">NICE</span> — warn only)</strong>:</p>
 <ul>
 <li><code>description ≤ 500 chars</code></li>
 <li><code>Anti-Patterns section present</code></li>
@@ -175,7 +175,7 @@ note: &lt;free text&gt;                         # Optional</code></pre>
 <li><strong>Assess scope</strong>: If ≥80% rewrite → redirect to <code>skill-create</code></li>
 <li><strong>Present diff summary</strong> → get user approval</li>
 <li><strong>Make targeted edits</strong> (Edit tool only, never Write entire file, never create new file)</li>
-<li><strong>Run quality gates</strong> (MUST gates block commit)</li>
+<li><strong>Run quality gates</strong> (<span class="lvl lvl--must">MUST</span> gates block commit)</li>
 <li><strong>Publish</strong> with conventional commit message</li>
 </ol>
 <h5>2.3.3 <code>skill-import</code> (Third-Party Conversion)</h5>
@@ -564,7 +564,7 @@ import-skills/&lt;topic&gt;/ directory</code></pre>
 <tr>
 <td><strong>线数限制 vs 内容完整性</strong></td>
 <td>在某些情况下，优先保证内容完整性，软限制 150 行。<code>skill-import</code> 预期为 186 行。</td>
-<td>CONVENTIONS.md 的线数限制是 “NICE” 级门禁。对于导入或特定复杂技能，强制删除必要信息会降低技能质量。</td>
+<td>CONVENTIONS.md 的线数限制是 “<span class="lvl lvl--nice">NICE</span>” 级门禁。对于导入或特定复杂技能，强制删除必要信息会降低技能质量。</td>
 </tr>
 <tr>
 <td><strong>实时真人访谈 vs 模拟访谈 vs 跳过</strong></td>
@@ -738,7 +738,7 @@ metadata:
 <li>Anti-Patterns</li>
 </ul>
 <h3>Quality Gates</h3>
-<h4>MUST</h4>
+<h4><span class="lvl lvl--must">MUST</span></h4>
 <ul>
 <li>[ ] Frontmatter 5 fields complete</li>
 <li>[ ] name matches folder name (walter-worker-devil-advocate)</li>
@@ -751,7 +751,7 @@ metadata:
 <li>[ ] All 3 agent roles defined (con, pro, judge)</li>
 <li>[ ] Output path convention specified ({project-path}/docs/devil-advocate/)</li>
 </ul>
-<h4>NICE</h4>
+<h4><span class="lvl lvl--nice">NICE</span></h4>
 <ul>
 <li>[ ] Body &lt; 150 lines</li>
 <li>[ ] Anti-Patterns section present</li>
@@ -802,11 +802,11 @@ metadata:
 </tr></thead><tbody>
 <tr>
 <td>PRD</td>
-<td>Functional requirements → MUST criteria</td>
+<td>Functional requirements → <span class="lvl lvl--must">MUST</span> criteria</td>
 </tr>
 <tr>
 <td>Design doc</td>
-<td>Technical constraints, architecture → MUST/SHOULD criteria</td>
+<td>Technical constraints, architecture → <span class="lvl lvl--must">MUST</span>/SHOULD criteria</td>
 </tr>
 <tr>
 <td>Plan</td>
@@ -825,7 +825,7 @@ metadata:
 <td>Existing test coverage → baseline for test plan</td>
 </tr>
 </tbody></table></div>
-<p>Each criterion includes: ID, description, source (doc + line), priority (MUST/SHOULD/NICE).</p>
+<p>Each criterion includes: ID, description, source (doc + line), priority (<span class="lvl lvl--must">MUST</span>/SHOULD/<span class="lvl lvl--nice">NICE</span>).</p>
 <h3>Test Plan Structure</h3>
 <p>Agent 1 writes test scenarios without implementation code:</p>
 <pre><code>## Test Plan
@@ -903,7 +903,7 @@ metadata:
     scope/design/PRD documents.
 ---</code></pre>
 <h3>Quality Gates</h3>
-<h4>MUST</h4>
+<h4><span class="lvl lvl--must">MUST</span></h4>
 <ul>
 <li>[ ] Frontmatter 5 fields complete, name matches folder</li>
 <li>[ ] Agent 1 collects all specified document types</li>
@@ -915,7 +915,7 @@ metadata:
 <li>[ ] ACCEPTED report has SIGNED per criterion with evidence</li>
 <li>[ ] No TBD/TODO, no concrete-context leaks, no prohibited sections</li>
 </ul>
-<h4>NICE</h4>
+<h4><span class="lvl lvl--nice">NICE</span></h4>
 <ul>
 <li>[ ] Body &lt; 150 lines</li>
 <li>[ ] Playwright scripts include screenshot on failure</li>

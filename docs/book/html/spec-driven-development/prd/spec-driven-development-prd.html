@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Spec-Driven Development — PRD · prd · Spec Atlas</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:400,400italic,500,500italic,700|Roboto+Mono:400,500,700|Noto+Sans+SC:400,500,700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@400;600&display=swap">
 <link rel="stylesheet" href="../../assets/styles.css">
 </head>
 <body>
@@ -18,7 +18,7 @@
   <aside class="sidebar">
   <nav aria-label="Directory">
     <div class="tree-overview"><a class="tree-link" href="../../index.html"><span class="tree-link__num">00</span>All features</a></div>
-    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="spec-driven-development-prd.html" aria-current="page"><span class="tree-ord">1</span>Spec-Driven Development — PRD</a></li><li class="tree-leaf"><a class="tree-link" href="../decision-history/spec-driven-development-decision-history.html"><span class="tree-ord">2</span>Spec-Driven Development — Decision History</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../design/spec-driven-development-design.html"><span class="tree-ord">3</span>Spec-Driven Development — HLD</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../design/spec-driven-development-design-skill-contracts.html">Spec-Driven Development — Skill Contracts</a></li><li class="tree-leaf"><a class="tree-link" href="../spec-driven-development-reader.html">spec-driven-development — Reader</a></li></ul></details></li><li class="tree-leaf"><a class="tree-link" href="../impl-plan/spec-driven-development-impl-plan.html"><span class="tree-ord">4</span>Spec-Driven Development — Implementation Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../test-plan/spec-driven-development-test-plan.html"><span class="tree-ord">5</span>Spec-Driven Development — Test Plan</a></li><li class="tree-branch"><details open><summary><span class="tree-link"><span class="tree-ord">10</span>sub-feature</span></summary><ul class="tree"><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/document-standard/design/document-standard-design.html">document-standard</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/document-standard/prd/document-standard-prd-spec-reader-html.html"><span class="tree-ord">1</span>Document Standard — Spec Reader HTML（PRD）</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/document-standard/design/document-standard-design-spec-reader-html.html"><span class="tree-ord">3</span>Document Standard — Spec Reader HTML（Design）</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/document-standard/design/document-standard-design.html">Document Standard — 文档标准（待 Review）</a></li></ul></details></li></ul></details></li></ul></details></li></ul>
+    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="spec-driven-development-prd.html" aria-current="page"><span class="tree-ord">1</span>Spec-Driven Development — PRD</a></li><li class="tree-leaf"><a class="tree-link" href="../decision-history/spec-driven-development-decision-history.html"><span class="tree-ord">2</span>Spec-Driven Development — Decision History</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../design/spec-driven-development-design.html"><span class="tree-ord">3</span>Spec-Driven Development — 整体设计</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../design/spec-driven-development-design-skill-contracts.html">Spec-Driven Development — Skill 契约</a></li><li class="tree-leaf"><a class="tree-link" href="../spec-driven-development-reader.html">spec-driven-development — Reader</a></li></ul></details></li><li class="tree-leaf"><a class="tree-link" href="../impl-plan/spec-driven-development-impl-plan.html"><span class="tree-ord">4</span>Spec-Driven Development — 实现计划</a></li><li class="tree-leaf"><a class="tree-link" href="../test-plan/spec-driven-development-test-plan.html"><span class="tree-ord">5</span>Spec-Driven Development — 测试计划</a></li><li class="tree-branch"><details open><summary><span class="tree-link"><span class="tree-ord">10</span>sub-feature</span></summary><ul class="tree"><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/document-standard/design/document-standard-design.html">document-standard</a></summary><ul class="tree"><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/document-standard/prd/document-standard-prd-spec-reader-html.html"><span class="tree-ord">1</span>Document Standard — 给人读的 HTML 页面（PRD）</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/document-standard/prd/document-standard-prd.html">Document Standard（PRD 入口）</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/document-standard/design/document-standard-design-spec-reader-html.html"><span class="tree-ord">3</span>Document Standard — 给人读的 HTML 页面（Design）</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/document-standard/design/document-standard-design.html">Document Standard — 文档标准</a></li></ul></details></li></ul></details></li></ul></details></li></ul>
   </nav>
 </aside>
   <main class="content">
@@ -33,7 +33,9 @@
       <div class="doc-body">
         <h2>Spec-Driven Development — PRD</h2>
 <h3>Overview</h3>
-<p>本 PRD 定义 spec-driven development：用 PRD、decision-history、design 篇、impl-plan、test-plan 五篇，把有门槛的问题分析清楚，并由 spec-write 与 spec-review 执行（<a href="../decision-history/spec-driven-development-decision-history.html#ARD-AJ">ARD-AJ</a>）。</p>
+<p>这份 PRD 说明我们要做什么：一套「先写清楚 spec，再让 AI 去做」的方法，叫 spec-driven development（下文简称 SDD）。</p>
+<p>SDD 用五篇文档把一个有门槛的问题分析清楚：PRD（要做什么）、decision-history（做过哪些决定）、design（怎么做）、impl-plan（按什么顺序做）、test-plan（怎么验证做对了）。写文档由 spec-write 这个 skill 负责，检查文档由 spec-review 负责（<a href="../decision-history/spec-driven-development-decision-history.html#ard-aj">ARD-AJ</a>）。</p>
+<p>文中的缩写和术语，例如 skill、ARD、gold，在 <a href="../design/spec-driven-development-design.html#glossary">parent design 附录：术语表</a> 里有解释。</p>
 <h3>Problem Statement</h3>
 <p>今天，AI 模型的能力已经非常强大。它们可以阅读、搜索最新、最前沿的技术，帮助我们解决问题。</p>
 <p>但是，问题是什么？</p>
@@ -68,60 +70,82 @@
 <p>盖一个 shed、去北京旅游、看懂一道著名数学题、不靠猜地分析一只股票——人往往从没做过，不知道怎么拆、盲区在哪、哪些要自己拍板。</p>
 <p>AI 要把大问题拆成小的：能查的 AI 自己查（合规、财报、交通），要选的人来选（预算、偏好、风险），人想不到的 AI 主动问。spec 既是学习笔记，也是决策记录，最后交给 AI 执行。</p>
 <h3>Goals and Success Metrics</h3>
-<ul>
-<li>目标：任何有门槛的难题都能拆成可查、可决策、可执行的小问题。</li>
-<li>验收：spec-write 与 spec-review 的测试结果（test-plan）；这不是产品 success metric。</li>
-<li><a href="#PRD-G">PRD-G</a> 的产品级 success metric 与 baseline 仍 deferred（<a href="../decision-history/spec-driven-development-decision-history.html#ARD-N">ARD-N</a>）。</li>
-</ul>
+<p><strong>目标：</strong> 任何有门槛的难题，都能拆成三类小问题：AI 能查的、人要决定的、可以交给 AI 执行的。拆完写成一套本科生读得懂、前后一致、结论有依据的 spec。</p>
+<p><strong>验收方式：</strong> 看 test-plan 的测试结果，包括机械检查、对 iPhone 案例的评测分数、可读性测试（<a href="../test-plan/spec-driven-development-test-plan.html">test-plan</a>）。这些是评测指标，用来判断 skill 好不好用。</p>
+<p><strong>产品级成功指标：</strong> 例如「用了 SDD 的人，决策是否真的更好」。怎么量、基线是多少，目前还定不下来，延后处理（<a class="id-ref" href="#PRD-G">PRD-G</a>，<a href="../decision-history/spec-driven-development-decision-history.html#ard-n">ARD-N</a>）。</p>
 <h3>User Stories</h3>
 <ul>
-<li>作为写 spec 的人，我希望先被 interview，把已知/未知/盲区问出来。</li>
-<li>作为 reviewer，我希望机械 MUST 和语义缺陷都能检出，且建议可执行。</li>
-<li>作为执行者，我希望 spec 能落到 design/impl-plan，并有 mock 执行与可追溯证据。</li>
+<li>作为写 spec 的人，我希望 AI 先追问我，把我已知的、未知的和没想到的盲区都问出来。</li>
+<li>作为审 spec 的人，我希望格式错误和内容问题都能被找出来，而且每条修改建议都能直接照着做。</li>
+<li>作为执行的人，我希望 spec 能一路落到 design 和 impl-plan，执行时先用 mock 演练，每个结论都能查到来源。</li>
 </ul>
 <h3>Solution</h3>
-<p><strong>Spec-driven development</strong></p>
-<p>我们不重复什么是 spec-driven。这里要做的是开发一些 skill；这些 skill 会在一起工作，而不是单个 skill。这些 skill 的目标是：通过一组 skill，把具体问题分析清楚。</p>
-<p><strong>PRD、decision history、design 篇 是互相打磨的循环</strong>，不是只走一遍的直线；循环收敛到「够稳」后，<strong>impl plan</strong> 与 <strong>test plan</strong> 各自独立：都从 <strong>design 篇</strong> 总结出来，彼此不串行依赖。</p>
+<p>我们不重新解释什么是 spec-driven。这里要做的是一组配合使用的 skill，让 AI 按固定的方法把一个具体问题分析清楚。</p>
+<p><strong>PRD、decision-history、design 三篇是反复打磨的循环</strong>，不是只写一遍的直线。三篇打磨到足够稳定之后，再从 design 分别总结出 impl-plan 和 test-plan。这两篇互不依赖，可以同时写。</p>
 <ol>
-<li><strong>PRD</strong> — 我们到底要做什么、解决什么；当前的 limitation 是什么；preference 是什么；timeline、各种 resource、tool 都有什么。design 篇 或 decision 暴露缺口时，回到 PRD 改 requirement。</li>
-<li><strong>Decision history</strong> — 基于 PRD 作出 decision；任何跟产品方向相关的 decision 先 update decision history（约 50% AI、50% 人）。新 decision 可能改 PRD 范围；spec 里的 trade-off 也可能要求补 decision。</li>
-<li><strong>Design 篇</strong> — 与 PRD、decision 并行迭代：写设计（技术方案、contract、tool 等；HLD/LLD 不在此展开）。设计问清 problem、或发现 decision 不够，回到 1/2 继续磨。</li>
-<li><strong>Impl plan</strong> — 从 design 篇 总结实现：先做什么、后做什么；各个 task 的细节、准备工作等（不依赖 test plan 先写完）。</li>
-<li><strong>Test plan</strong> — 从 design 篇 总结验证：任务完成标准、可用性检查、regression guard（不依赖 impl plan 先写完）。</li>
+<li><strong>PRD</strong>：要做什么、解决什么问题；有哪些限制、偏好、时间要求、可用的资源和工具。design 或某个决定暴露出缺口时，回到 PRD 修改需求。</li>
+<li><strong>Decision-history</strong>：根据 PRD 做出的决定。凡是影响方向的决定，先记进 decision-history。这一步大约一半靠 AI 整理、一半靠人拍板。新决定可能改变 PRD 的范围；design 里的取舍也可能需要补一条决定。</li>
+<li><strong>Design</strong>：和 PRD、decision-history 一起迭代，写技术方案、接口约定、要用的工具等。写 design 时发现问题没想清楚、或决定不够，就回到第 1 步或第 2 步继续打磨。</li>
+<li><strong>Impl-plan</strong>：从 design 总结出实现步骤，包括先做什么、后做什么、每个任务的细节和准备工作。不需要等 test-plan 写完。</li>
+<li><strong>Test-plan</strong>：从 design 总结出验证方法，包括每个任务怎么算完成、可用性检查、防止改坏旧功能的回归检查。不需要等 impl-plan 写完。</li>
 </ol>
 <h3>Functional Requirements</h3>
-<div class="req" id="PRD-A"><span class="req-id"><a href="#PRD-A">PRD-A</a></span><span class="req-text">做一个 pipeline，基于现在现有的 pipeline 做一些改进。</span></div>
-<div class="req" id="PRD-B"><span class="req-id"><a href="#PRD-B">PRD-B</a></span><span class="req-text">做一些 skill；这些 skill 其实就是优质 prompt，或其他 popular 的 prompt，引导 AI 怎么工作：完成 spec 的书写、命名、校验、更新。</span></div>
-<div class="req" id="PRD-C"><span class="req-id"><a href="#PRD-C">PRD-C</a></span><span class="req-text">每次改动不超过 <strong>10 行</strong> <strong>或</strong> <strong>200 字符</strong>；超出拆多次，restructure 需 human 授权。</span></div>
-<div class="req" id="PRD-D"><span class="req-id"><a href="#PRD-D">PRD-D</a></span><span class="req-text">文档大小限制在 1000 行；太大几乎没法 maintain。</span></div>
-<div class="req" id="PRD-E"><span class="req-id"><a href="#PRD-E">PRD-E</a></span><span class="req-text">文档的文件组织架构、folder 关系。</span></div>
-<p>Additional constraints:</p>
-<div class="req" id="PRD-F"><span class="req-id"><a href="#PRD-F">PRD-F</a></span><span class="req-text">多人 decision 冲突时，以 decision history 里时间较晚的那条为准。看不出先后就问用户。AI 不猜测谁为准。</span></div>
-<div class="req" id="PRD-G"><span class="req-id"><a href="#PRD-G">PRD-G</a></span><span class="req-text">（open）产品级 success metric 与 baseline — deferred，见 <strong><a href="../decision-history/spec-driven-development-decision-history.html#ARD-N">ARD-N</a></strong>。test-plan 的分数是 eval 指标，不是产品 success metric。</span></div>
-<div class="req" id="PRD-H"><span class="req-id"><a href="#PRD-H">PRD-H</a></span><span class="req-text">Spec-driven development 的 workflow 尽量使用 popular skill，不要自己重新发明。</span></div>
-<div class="req" id="PRD-I"><span class="req-id"><a href="#PRD-I">PRD-I</a></span><span class="req-text">修改需要验证；没有能验证的，都需要在 spec 里面标注上。标明后不作为 test plan 的通过条件。</span></div>
-<div class="req" id="PRD-J"><span class="req-id"><a href="#PRD-J">PRD-J</a></span><span class="req-text">写和改 feature spec 时，spec-write 按标准判断新建或修改哪几篇；提交前 spec-review 询问。State：feature 确定前 CLAUDE.local，之后 <code>docs/features/&lt;f&gt;/raw/state/</code>（<a href="../decision-history/spec-driven-development-decision-history.html#ARD-AJ">ARD-AJ</a>）。</span></div>
-<div class="req" id="PRD-K"><span class="req-id"><a href="#PRD-K">PRD-K</a></span><span class="req-text">范围不限软件：任何有门槛的难题走同一套 spec。例子四个：盖 shed（合规、成本、施工）、北京旅游（行程、住宿、风险、预算）、看懂著名数学题（零基础逐步学）、分析股票（基本面、财报、新闻，有理有据）。这轮不在本仓库建 gold，放到别处。</span></div>
-<div class="req" id="PRD-L"><span class="req-id"><a href="#PRD-L">PRD-L</a></span><span class="req-text">每个子问题标明归属：AI 查、人决定、或 AI 查完后人决定。人没问到的盲区和风险，AI 必须主动提出。</span></div>
-<div class="req" id="PRD-M"><span class="req-id"><a href="#PRD-M">PRD-M</a></span><span class="req-text">把人讲明白是硬需求。交付前由一个 LLM 打分：它假设自己是一个本科水平的程序员真人，只按能不能看懂来判；看不懂不算交付。测试验不了，不作为通过条件。</span></div>
-<div class="req" id="PRD-N"><span class="req-id"><a href="#PRD-N">PRD-N</a></span><span class="req-text">正式 spec 的结论必须能追溯到查到的事实（合规条文、财报、新闻、定义），不靠猜；查不到的标成未知。评测时答案只能来自 context 包。</span></div>
-<div class="req" id="PRD-O"><span class="req-id"><a href="#PRD-O">PRD-O</a></span><span class="req-text">执行不真下单、不订票。一个共用 mock MCP server，若干固定工具；client call 打出 log 即算交付成功。</span></div>
-<div class="req" id="PRD-P"><span class="req-id"><a href="#PRD-P">PRD-P</a></span><span class="req-text"><del>最终交付是 spec-write、spec-review，以及 SPEC-STANDARD.md 与 SPEC-PRESENTATION.md（<a href="../decision-history/spec-driven-development-decision-history.html#ARD-AJ">ARD-AJ</a>）。</del> 最终交付只有 spec-write 与 spec-review（→ <a href="../decision-history/spec-driven-development-decision-history.html#ard-bh--deliverable-is-only-spec-write-and-spec-review">ARD-BH</a>）。写出的 spec 满足 <a href="#PRD-K">PRD-K</a> 到 <a href="#PRD-O">PRD-O</a>。</span></div>
-<div class="req" id="PRD-Q"><span class="req-id"><a href="#PRD-Q">PRD-Q</a></span><span class="req-text">书写、命名、校验、更新，以及 <a href="#PRD-K">PRD-K</a> 到 <a href="#PRD-O">PRD-O</a>，都是需求。spec-write 与 spec-review 不限于这几件事。两份 skill 正文写出四个例子：盖 shed、北京旅游、数学题、股票。好不好用只看测试。</span></div>
+<p><strong id="PRD-A"><a class="id-ref" href="#PRD-A">PRD-A</a></strong>：写 spec 的流程沿用现有流程并加以改进，不另造一套。流程分哪几个阶段、每个阶段做什么，写在 <a href="../../../../features/spec-driven-development/features/pipeline/design/pipeline-design.md">pipeline design</a>。</p>
+<p><strong id="PRD-B"><a class="id-ref" href="#PRD-B">PRD-B</a></strong>：提供一组 skill。skill 本质上是写得好的 prompt，引导 AI 完成 spec 的四件事：书写、命名、检查、更新。</p>
+<p><strong id="PRD-C"><a class="id-ref" href="#PRD-C">PRD-C</a></strong>：AI 每次改 <code>docs/</code> 下的文档，必须同时满足两条：不超过 10 行，并且不超过 200 字符（<a href="../decision-history/spec-driven-development-decision-history.html#ard-bp">ARD-BP</a>）。更大的改动拆成多次；确实需要一次大改（restructure）时，必须有人明确授权，并记一条 ARD（例如 <a href="../decision-history/spec-driven-development-decision-history.html#ard-bk">ARD-BK</a>）。</p>
+<p><strong id="PRD-D"><a class="id-ref" href="#PRD-D">PRD-D</a></strong>：每篇文档有行数上限，最长不超过 1,000 行，因为太长的文档几乎没法维护。decision-history 例外，不设上限：它只增不减（<a href="../decision-history/spec-driven-development-decision-history.html#ard-e">ARD-E</a>）。各类文档的具体上限见 document-standard 的 <a class="id-ref" href="../design/spec-driven-development-design.html#DSGN-B">DSGN-B</a>。</p>
+<p><strong id="PRD-E"><a class="id-ref" href="#PRD-E">PRD-E</a></strong>：规定文档放在哪个目录、文件叫什么名字、目录之间是什么关系（parent、sub-feature、peer）。具体规则见 document-standard 的 <a class="id-ref" href="../design/spec-driven-development-design.html#DSGN-B">DSGN-B</a>。</p>
+<p><strong id="PRD-F"><a class="id-ref" href="#PRD-F">PRD-F</a></strong>：多个人的决定互相冲突时，以 decision-history 里时间较晚的那条为准；看不出先后，就问用户。AI 不猜测谁说了算。</p>
+<p><strong id="PRD-G"><a class="id-ref" href="#PRD-G">PRD-G</a></strong>（延后）：产品级成功指标和基线，暂时定不下来，见 <a href="../decision-history/spec-driven-development-decision-history.html#ard-n">ARD-N</a>。test-plan 里的分数是评测指标，不是产品成功指标。</p>
+<p><strong id="PRD-H"><a class="id-ref" href="#PRD-H">PRD-H</a></strong>：流程里的每一步，优先使用已经流行的 skill，不重新发明。</p>
+<p><strong id="PRD-I"><a class="id-ref" href="#PRD-I">PRD-I</a></strong>：每项改动都要能验证。实在验证不了的，在 spec 里标为 <code>Unverified</code> 并写明原因；标了的项不作为 test-plan 的通过条件。</p>
+<p><strong id="PRD-J"><a class="id-ref" href="#PRD-J">PRD-J</a></strong>：写或改 feature spec 时，由 spec-write 按标准判断要新建哪篇、或要改哪几篇；提交前，询问是否先跑 spec-review。写作进度在 feature 目录建好之前记在 <a href="../../../../../CLAUDE.local.md"><code>CLAUDE.local.md</code></a>，建好之后记在 <code>docs/features/&lt;f&gt;/raw/state/</code>（<a href="../decision-history/spec-driven-development-decision-history.html#ard-bt">ARD-BT</a>）。</p>
+<p><strong id="PRD-K"><a class="id-ref" href="#PRD-K">PRD-K</a></strong>：适用范围不限于软件，任何有门槛的难题都用同一套 spec。四个例子：盖 shed（合规、成本、施工）、北京旅游（行程、住宿、风险、预算）、看懂一道著名数学题（零基础一步步学）、分析一只股票（基本面、财报、新闻，每个结论有依据）。这四个例子不在本仓库建 gold（<a href="../decision-history/spec-driven-development-decision-history.html#ard-ad">ARD-AD</a>）。</p>
+<p><strong id="PRD-L"><a class="id-ref" href="#PRD-L">PRD-L</a></strong>：每个子问题都标明由谁处理：AI 查、人决定、或 AI 查完后人决定。人没有问到的盲区和风险，AI 必须主动提出来。</p>
+<p><strong id="PRD-M"><a class="id-ref" href="#PRD-M">PRD-M</a></strong>：文档要让人读懂，这是硬需求，而且是通过条件。交付前，由一个 LLM（大语言模型）扮演本科水平的程序员，只读这一篇文档和术语表，回答从文档里抽出的问题；答错太多，或者有文档里没解释、术语表里也没有的术语，就不算交付（<a href="../decision-history/spec-driven-development-decision-history.html#ard-bo">ARD-BO</a>）。具体门槛见 test-plan 的 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-V">TST-V</a>。</p>
+<p><strong id="PRD-N"><a class="id-ref" href="#PRD-N">PRD-N</a></strong>：正式 spec 里的每个结论，都要能追溯到查到的事实，例如法规条文、财报、新闻、定义，不靠猜。查不到的写 <code>UNKNOWN</code>。评测时，AI 回答问题只能用 context 包里给的信息。</p>
+<p><strong id="PRD-O"><a class="id-ref" href="#PRD-O">PRD-O</a></strong>：执行阶段不真下单、不真订票。所有例子共用一个 mock MCP 服务器，提供几个固定的工具；客户端调用后打印出调用记录，就算交付成功。</p>
+<p><strong id="PRD-P"><a class="id-ref" href="#PRD-P">PRD-P</a></strong>：最终交付物只有 spec-write 和 spec-review 两个 skill（<a href="../decision-history/spec-driven-development-decision-history.html#ard-bx">ARD-BX</a>）。用它们写出来的 spec，要满足 <a class="id-ref" href="#PRD-K">PRD-K</a> 到 <a class="id-ref" href="#PRD-O">PRD-O</a>。</p>
+<p><strong id="PRD-Q"><a class="id-ref" href="#PRD-Q">PRD-Q</a></strong>：书写、命名、检查、更新，以及 <a class="id-ref" href="#PRD-K">PRD-K</a> 到 <a class="id-ref" href="#PRD-O">PRD-O</a>，都是需求；spec-write 和 spec-review 能做的事不限于这几件。两个 skill 的正文里都要写出四个例子：盖 shed、北京旅游、数学题、股票。skill 好不好用，只看测试结果。</p>
 <h3>Out of Scope</h3>
 <ul>
-<li>真实下单、订票、交易；执行只到 mock MCP log。</li>
-<li>多人 decision 的仲裁细则；按 decision-history 时间，仍看不出则问用户。</li>
-<li>本仓库不建非软件四例的 gold；例子写进 skill 正文，gold 放到别处。</li>
-<li>存量不合规文档的批量迁移。</li>
-<li>skill / spec 的版本与迁移策略。</li>
+<li>真实下单、订票、交易。执行只做到 mock MCP 的调用记录。</li>
+<li>多人决定的细致仲裁规则，例如两个决定时间相同怎么办。目前只按 decision-history 的先后，看不出就问用户。</li>
+<li>在本仓库为四个非软件例子建 gold。例子写进 skill 正文，gold 放在别处。</li>
+<li>把已有的不合规文档批量迁移到新标准。</li>
+<li>skill 和 spec 的版本管理与迁移策略。</li>
 </ul>
 <h3>Resources Needed</h3>
 <ul>
-<li>spec-write、spec-review、两份标准 + 一份 test plan;无外部服务、无数据库。</li>
-<li>评测需 <code>deepseek-flash</code> API 与 3 次 run 的预算;runs/reports 不入库(<a href="../decision-history/spec-driven-development-decision-history.html#ARD-AD">ARD-AD</a>)。</li>
+<li>spec-write、spec-review 两个 skill，以及它们要读的三份标准文件（<a href="../decision-history/spec-driven-development-decision-history.html#ard-bx">ARD-BX</a>）和一份 test-plan。不需要外部服务，也不需要数据库。</li>
+<li>评测需要 <code>deepseek-flash</code> 的 API，以及每次评测跑 3 次的费用。跑分结果和报告不提交（<a href="../decision-history/spec-driven-development-decision-history.html#ard-ad">ARD-AD</a>）。</li>
 </ul>
+<p>进入下游前，PRD 要写清的五项（pipeline design 的 PIPE-E-B）：</p>
+<div class="table-wrap"><table><thead><tr>
+<th>项</th>
+<th>本 PRD</th>
+</tr></thead><tbody>
+<tr>
+<td>限制</td>
+<td>每次改动不超过 10 行并且不超过 200 字符（<a class="id-ref" href="#PRD-C">PRD-C</a>）；文档行数有上限（<a class="id-ref" href="#PRD-D">PRD-D</a>）</td>
+</tr>
+<tr>
+<td>偏好</td>
+<td>not apply</td>
+</tr>
+<tr>
+<td>时间</td>
+<td>not apply</td>
+</tr>
+<tr>
+<td>资源</td>
+<td>上面列出的 <code>deepseek-flash</code> API 和评测费用</td>
+</tr>
+<tr>
+<td>工具</td>
+<td>spec-write、spec-review、<code>run_spec_checks.py</code> 检查脚本、mock MCP 服务器（<a class="id-ref" href="#PRD-O">PRD-O</a>）</td>
+</tr>
+</tbody></table></div>
 <h3>Change Log</h3>
 <div class="table-wrap"><table><thead><tr>
 <th>Date</th>
@@ -133,35 +157,35 @@
 </tr>
 <tr>
 <td>2026-11-04</td>
-<td>新增 <a href="#PRD-K">PRD-K</a>：范围覆盖非软件难题，四个 gold example</td>
+<td>新增 <a class="id-ref" href="#PRD-K">PRD-K</a>：范围覆盖非软件难题，四个 gold example</td>
 </tr>
 <tr>
 <td>2026-11-04</td>
-<td>新增 <a href="#PRD-L">PRD-L</a>：子问题归属（AI 查 / 人决定 / 查完再决定）；AI 主动暴露盲区与风险</td>
+<td>新增 <a class="id-ref" href="#PRD-L">PRD-L</a>：子问题归属（AI 查 / 人决定 / 查完再决定）；AI 主动暴露盲区与风险</td>
 </tr>
 <tr>
 <td>2026-11-04</td>
-<td>新增 <a href="#PRD-M">PRD-M</a>：可读性硬需求，LLM 以本科程序员真人身份按「能不能看懂」打分</td>
+<td>新增 <a class="id-ref" href="#PRD-M">PRD-M</a>：可读性硬需求，LLM 以本科程序员真人身份按「能不能看懂」打分</td>
 </tr>
 <tr>
 <td>2026-11-04</td>
-<td>新增 <a href="#PRD-N">PRD-N</a>：结论必须追溯到查到的事实；查不到标未知</td>
+<td>新增 <a class="id-ref" href="#PRD-N">PRD-N</a>：结论必须追溯到查到的事实；查不到标未知</td>
 </tr>
 <tr>
 <td>2026-11-04</td>
-<td>新增 <a href="#PRD-O">PRD-O</a>：执行用 mock MCP client/server，call 打出 log 即成功</td>
+<td>新增 <a class="id-ref" href="#PRD-O">PRD-O</a>：执行用 mock MCP client/server，call 打出 log 即成功</td>
 </tr>
 <tr>
 <td>2026-11-04</td>
-<td>新增 <a href="#PRD-P">PRD-P</a>：交付是 spec-organize / spec-review / spec-write / spec-pipeline，写出的 spec 满足 <a href="#PRD-K">PRD-K</a> 到 <a href="#PRD-O">PRD-O</a></td>
+<td>新增 <a class="id-ref" href="#PRD-P">PRD-P</a>：交付是 spec-organize / spec-review / spec-write / spec-pipeline，写出的 spec 满足 <a class="id-ref" href="#PRD-K">PRD-K</a> 到 <a class="id-ref" href="#PRD-O">PRD-O</a></td>
 </tr>
 <tr>
 <td>2026-11-04</td>
-<td>新增 <a href="#PRD-Q">PRD-Q</a>：skill 不绑定具体题目，以后的新题也要能做；正文是否点名例子未定，验收只看测试</td>
+<td>新增 <a class="id-ref" href="#PRD-Q">PRD-Q</a>：skill 不绑定具体题目，以后的新题也要能做；正文是否点名例子未定，验收只看测试</td>
 </tr>
 <tr>
 <td>2026-11-04</td>
-<td><a href="#PRD-F">PRD-F</a> 关闭延期：按 decision history 时间较晚者；看不出先后则问用户；AI 不猜测</td>
+<td><a class="id-ref" href="#PRD-F">PRD-F</a> 关闭延期：按 decision history 时间较晚者；看不出先后则问用户；AI 不猜测</td>
 </tr>
 <tr>
 <td>2026-11-04</td>
@@ -173,19 +197,35 @@
 </tr>
 <tr>
 <td>2026-11-04</td>
-<td><a href="#PRD-C">PRD-C</a> 改为硬上限 10 行或 200 字符；<a href="#PRD-G">PRD-G</a> 区分 eval 分数与产品 metric；Solution 术语改 design 篇</td>
+<td><a class="id-ref" href="#PRD-C">PRD-C</a> 改为硬上限 10 行或 200 字符；<a class="id-ref" href="#PRD-G">PRD-G</a> 区分 eval 分数与产品 metric；Solution 术语改 design 篇</td>
 </tr>
 <tr>
 <td>2026-11-07</td>
-<td><a href="#PRD-J">PRD-J</a>/P/Q 与 Resources：入口为 spec-write 与 spec-review（<a href="../decision-history/spec-driven-development-decision-history.html#ARD-AJ">ARD-AJ</a>）</td>
+<td><a class="id-ref" href="#PRD-J">PRD-J</a>/P/Q 与 Resources：入口为 spec-write 与 spec-review（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-AJ">ARD-AJ</a>）</td>
 </tr>
 <tr>
 <td>2026-11-07</td>
-<td>Overview 与 Goals 验收改为 spec-write 与 spec-review（<a href="../decision-history/spec-driven-development-decision-history.html#ARD-AJ">ARD-AJ</a>）</td>
+<td>Overview 与 Goals 验收改为 spec-write 与 spec-review（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-AJ">ARD-AJ</a>）</td>
 </tr>
 <tr>
 <td>2026-11-18</td>
-<td><a href="#PRD-P">PRD-P</a>：交付只有 spec-write 与 spec-review（<a href="../decision-history/spec-driven-development-decision-history.html#ARD-BH">ARD-BH</a>）</td>
+<td><a class="id-ref" href="#PRD-P">PRD-P</a>：交付只有 spec-write 与 spec-review（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-BH">ARD-BH</a>）</td>
+</tr>
+<tr>
+<td>2026-11-20</td>
+<td><a class="id-ref" href="#PRD-M">PRD-M</a> 改为通过条件（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-BO">ARD-BO</a>）；<a class="id-ref" href="#PRD-A">PRD-A</a>、B、D、E 改写成可检查的句子，<a class="id-ref" href="#PRD-D">PRD-D</a> 与 <a class="id-ref" href="../design/spec-driven-development-design.html#DSGN-B">DSGN-B</a> 的行数上限对齐；<a class="id-ref" href="#PRD-P">PRD-P</a> 去掉删除线（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-BM">ARD-BM</a>）；Overview、Goals、Solution 改为完整句子并链到术语表（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-BK">ARD-BK</a>）</td>
+</tr>
+<tr>
+<td>2026-11-20</td>
+<td>第 1 轮审查后：<a class="id-ref" href="#PRD-C">PRD-C</a> 改为两条都要满足（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-BP">ARD-BP</a>）；<a class="id-ref" href="#PRD-D">PRD-D</a> 写明 decision-history 例外；<a class="id-ref" href="#PRD-M">PRD-M</a> 与 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-V">TST-V</a> 对齐，允许查术语表；<a class="id-ref" href="#PRD-J">PRD-J</a> 链到 <a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-BT">ARD-BT</a>；Problem Statement 保留原话（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-BS">ARD-BS</a>）</td>
+</tr>
+<tr>
+<td>2026-11-20</td>
+<td>第 2、3 轮审查后：Resources 写明三份标准文件；<a class="id-ref" href="#PRD-P">PRD-P</a> 改链 <a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-BX">ARD-BX</a>（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-BH">ARD-BH</a> 已被它取代）</td>
+</tr>
+<tr>
+<td>2026-11-20</td>
+<td>Resources Needed 加上 PIPE-E-B 要求的五项；偏好、时间写 not apply</td>
 </tr>
 </tbody></table></div>
       </div>
