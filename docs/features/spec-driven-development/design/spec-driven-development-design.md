@@ -44,17 +44,7 @@ SDD 由文档和 skill 两部分组成。PRD 说清楚问题，decision-history 
 
 文档之间的关系如下。上半部分是三篇文档互相打磨的循环；循环稳定后，从 design 往下各写一篇 impl-plan 和 test-plan，两篇互不依赖：
 
-```
-     PRD ◄──────────────────► decision-history
-      ▲                              │
-      │                              ▼
-      └──────────────── design ◄─────┘
-                           │
-              稳定后，从 design 各写一篇
-                ┌──────────┴──────────┐
-                ▼                     ▼
-            impl-plan             test-plan
-```
+![SDD 文档循环与下游](spec-driven-development-design-fig-artifact-loop.svg)
 
 每个阶段具体怎么走，见 [pipeline design](../features/pipeline/design/pipeline-design.md)。
 

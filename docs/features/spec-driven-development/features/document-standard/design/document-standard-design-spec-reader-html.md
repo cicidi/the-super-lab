@@ -78,6 +78,8 @@ last_verified: 2026-11-20
 - 把长段落分段，加提示框，加小流程图，前提是 L1 的内容一条都不少。
 - 一种文档有多个分篇时，按分篇分开显示。
 
+![HTML 内容优先级 L1–L4](document-standard-design-spec-reader-html-fig-content-levels.svg)
+
 #### DSGN-N-C — 汇编页的结构
 
 来源：reader PRD 的 PRD-C、PRD-D。
@@ -116,7 +118,8 @@ parent 的汇编页（reader）把 parent 和各个 sub-feature 的文档放在�
 来源：reader PRD 的 PRD-B、PRD-H、PRD-L、PRD-O、PRD-P。
 
 - 全站用同一套样式：页面布局、编号标签、卡片、提示框（NICE，[ARD-BY](../../../decision-history/spec-driven-development-decision-history.md#ard-by)）。
-- 把 CSS 写在页面里，用浏览器直接打开文件也能正常显示，不需要服务器（MUST，来自 reader PRD 的 PRD-O）。
+- 浏览器直接打开文件即可阅读正文与已提交的 SVG 插图，不需要服务器（MUST，PRD-O、[ARD-CB](../../../decision-history/spec-driven-development-decision-history.md#ard-cb)）；字体与 Mermaid 可联网。
+- 插图用 diagram-design 画，SVG 与 citing md 同目录，生成时内嵌；全站配色与 diagram-design 默认一致（[ARD-CA](../../../decision-history/spec-driven-development-decision-history.md#ard-ca)）。
 - 允许内嵌 Mermaid 流程图（Mermaid 是一种用文字描述、由浏览器画成图的格式）；没有先例时用文字画的流程图。
 - 页面里不能有密钥，也不能有 `raw/` 里给机器用的评测原文；需要的话只放路径（MUST）。
 - 不能在运行时读取 `.md` 文件来显示主要内容；只有调试时可以（MUST）。
@@ -128,8 +131,8 @@ parent 的汇编页（reader）把 parent 和各个 sub-feature 的文档放在�
 
 | 角色 | 负责 |
 |---|---|
-| spec-write | 只改 markdown，不管 HTML 模板；改完后提示重新生成网页（PRD-M） |
-| spec-review | 检查网页有没有丢 L1 内容、编号是否可见 |
+| spec-write | 只改 markdown 与同目录插图 SVG；改完后提示重新生成网页（PRD-M） |
+| spec-review | 检查网页 L1、编号可见；插图事实与正文一致（ARD-CA） |
 | `SPEC-HTML-STANDARD.md` | `skills/spec-html-standard/` 下的规则摘要，是 DSGN-N 的可执行版本；没有对应的 SKILL.md |
 | spec-organize | 负责路径和 INDEX，不负责生成网页 |
 
@@ -212,6 +215,7 @@ spec-pipeline 里的 `SPEC-READER.md` 如果还在，只能是指向本篇和 `S
 
 | Date | Change |
 |------|--------|
+| 2026-11-20 | DSGN-N-D：diagram-design 皮肤与 SVG 内嵌（ARD-CA、ARD-CB） |
 | 2026-11-03 | Initial aspect design **DSGN-N**；保真规则 |
 | 2026-11-03 | **spec-html-standard** 替代 spec-reader skill（**DSGN-N-E/J**） |
 | 2026-11-07 | 表达标准 SPEC-PRESENTATION；write 改 md，review 查保真（ARD-AJ） |

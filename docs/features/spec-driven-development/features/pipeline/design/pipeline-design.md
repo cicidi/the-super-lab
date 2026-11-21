@@ -72,6 +72,8 @@ parent PRD 讲了上游的问题（见 [PRD](../../../prd/spec-driven-developmen
 | Converge | PRD、design、decision-history 打磨到足够稳定 | 还有没定的决定，design 就写死了 |
 | Downstream | 同时写 test-plan 和 impl-plan | test-plan 没有回归检查；impl-plan 没有先后顺序 |
 
+![写 spec 的四个阶段](pipeline-design-fig-four-phases.svg)
+
 ### PIPE-C — Create（立项）
 
 1. 给 feature 起一个暂定名，记在 `CLAUDE.local.md`。这时还不建目录，目录在 Map 阶段人确认后才建（PIPE-D 第 5 步）。
