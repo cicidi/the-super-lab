@@ -39,11 +39,29 @@ SYSTEM = (
 )
 
 
+_FIG_CITE = re.compile(r"!\[[^\]]*\]\(([^)\s]+\.svg)\)")
+_SVG_TEXT = re.compile(r"<(text|title|desc)\b[^>]*>(.*?)</\1>", re.S)
+
+
+def figure_text(md: Path, text: str) -> str:
+    """Visible words of each SVG the md cites, so the judge can compare figure and prose (ARD-CA)."""
+    out = []
+    for src in _FIG_CITE.findall(text):
+        svg = md.parent / src
+        if svg.is_file():
+            words = [m.group(2).strip() for m in _SVG_TEXT.finditer(svg.read_text(encoding="utf-8"))]
+            out.append(f"\n===== FIGURE: {svg.relative_to(ROOT)} =====\n" + "\n".join(w for w in words if w))
+    return "".join(out)
+
+
 def corpus() -> str:
-    return "".join(
-        f"\n===== FILE: {p.relative_to(ROOT)} =====\n{p.read_text(encoding='utf-8')}"
-        for p in corpus_files()
-    )
+    parts = []
+    for p in corpus_files():
+        text = p.read_text(encoding="utf-8")
+        parts.append(f"\n===== FILE: {p.relative_to(ROOT)} =====\n{text}")
+        if p.suffix == ".md":
+            parts.append(figure_text(p, text))
+    return "".join(parts)
 
 
 def corpus_sha(text: str) -> str:

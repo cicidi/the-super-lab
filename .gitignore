@@ -24,7 +24,7 @@ skills/spec-organize/tests/gold/v1/runs/*
 !skills/spec-organize/tests/gold/v1/runs/_template/
 
 # local-only drafts (DSGN-C)
-docs/features/*/raw/
+docs/features/**/raw/
 
 # python bytecode
 __pycache__/

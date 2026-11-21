@@ -258,7 +258,7 @@ def score2(feature: Path) -> tuple[float, list[str]]:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("feature", nargs="?", default=str(DEFAULT_FEATURE))
-    ap.add_argument("--min-score2", type=float, default=6.0)
+    ap.add_argument("--min-score2", type=float, default=None, help="optional floor; ARD-R sets none")
     args = ap.parse_args()
     feature = Path(args.feature)
     if not feature.is_absolute():
@@ -274,9 +274,14 @@ def main() -> None:
     print("\n# score 2 — annotations")
     for line in s2_lines:
         print(line)
-    print(f"\nscore2 = {s2:.1f}/10  gate={'PASS' if s2 >= args.min_score2 else 'FAIL'} (min {args.min_score2})")
+    if args.min_score2 is None:
+        s2_ok = True
+        print(f"\nscore2 = {s2:.1f}/10  (no fixed floor; compare with the previous run of this gold version)")
+    else:
+        s2_ok = s2 >= args.min_score2
+        print(f"\nscore2 = {s2:.1f}/10  gate={'PASS' if s2_ok else 'FAIL'} (min {args.min_score2})")
 
-    ok = passed == total and s2 >= args.min_score2
+    ok = passed == total and s2_ok
     sys.exit(0 if ok else 1)
 
 

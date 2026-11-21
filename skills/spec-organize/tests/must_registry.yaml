@@ -215,3 +215,13 @@ items:
     text: '标题声明 steps a-b 且含时序图时，消息数等于 b-a+1。'
     method: python
     check: 'diagram_steps'
+  - id: MUST-AU
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design-spec-reader-html.md:122
+    text: '插图用 diagram-design 画，SVG 与 citing md 同目录，命名 <doc-stem>-fig-<slug>.svg，生成时内嵌（ARD-CA）。'
+    method: python
+    check: 'figures'
+  - id: MUST-AV
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design-spec-reader-html.md:135
+    text: '插图事实与正文一致：图里不写正文没有的事实，不与正文矛盾（ARD-CA）。'
+    method: llm
+    check: ''
