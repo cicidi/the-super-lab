@@ -97,6 +97,48 @@ def inline_md(s: str) -> str:
     return s
 
 
+def _prefix_svg_ids(svg: str, prefix: str) -> str:
+    ids = set(re.findall(r'\bid="([^"]+)"', svg))
+    for oid in sorted(ids, key=len, reverse=True):
+        if oid.startswith(f"{prefix}-"):
+            continue
+        nid = f"{prefix}-{oid}"
+        svg = svg.replace(f'id="{oid}"', f'id="{nid}"')
+        svg = re.sub(rf"url\(#({re.escape(oid)})\)", f"url(#{nid})", svg)
+        svg = re.sub(rf'href="#({re.escape(oid)})"', f'href="#{nid}"', svg)
+
+    def aria_repl(match: re.Match) -> str:
+        parts = match.group(1).split()
+        return 'aria-labelledby="' + " ".join(
+            f"{prefix}-{p}" if p in ids else p for p in parts
+        ) + '"'
+
+    return re.sub(r'aria-labelledby="([^"]+)"', aria_repl, svg)
+
+
+def inline_figures(page_html: str, md_path: Path) -> str:
+    parent = md_path.parent
+
+    def repl(match: re.Match) -> str:
+        src = match.group(1)
+        svg_path = (parent / src).resolve()
+        if not svg_path.is_file():
+            raise SystemExit(f"missing figure SVG: {svg_path}")
+        svg = svg_path.read_text(encoding="utf-8")
+        if re.search(r"<script\b", svg, re.I) or re.search(r"on\w+\s*=", svg, re.I):
+            raise SystemExit(f"unsafe figure SVG: {svg_path}")
+        svg = re.sub(r"<\?xml[^?]*\?>\s*", "", svg, flags=re.I)
+        svg = re.sub(r"<!DOCTYPE[^>]*>\s*", "", svg, flags=re.I)
+        svg = _prefix_svg_ids(svg, svg_path.stem)
+        return f'<div class="fig-scroll">{svg}</div>'
+
+    return re.sub(
+        r'<div class="fig-svg" data-svg="([^"]+)"></div>',
+        repl,
+        page_html,
+    )
+
+
 def md_to_html(md: str) -> str:
     md = strip_frontmatter(md)
     lines = md.splitlines()
@@ -214,6 +256,17 @@ def md_to_html(md: str) -> str:
             i += 1
             continue
 
+        m_fig = re.match(r"^!\[([^\]]*)\]\(([^)\s]+\.svg)\)\s*$", line)
+        if m_fig:
+            close_list()
+            alt, src = m_fig.group(1), html.escape(m_fig.group(2), quote=True)
+            out.append(
+                f'<figure class="fig"><div class="fig-svg" data-svg="{src}"></div>'
+                f"<figcaption>{inline_md(alt)}</figcaption></figure>"
+            )
+            i += 1
+            continue
+
         if not line.strip():
             close_list()
             i += 1
@@ -222,7 +275,7 @@ def md_to_html(md: str) -> str:
         close_list()
         para_lines = [line]
         i += 1
-        while i < len(lines) and lines[i].strip() and not lines[i].startswith("#") and not lines[i].startswith("|") and not lines[i].startswith("```") and not re.match(r"^>\s?", lines[i]) and not re.match(r"^[-*]\s+", lines[i]) and not re.match(r"^\d+\.\s+", lines[i]):
+        while i < len(lines) and lines[i].strip() and not lines[i].startswith("#") and not lines[i].startswith("|") and not lines[i].startswith("```") and not re.match(r"^>\s?", lines[i]) and not re.match(r"^[-*]\s+", lines[i]) and not re.match(r"^\d+\.\s+", lines[i]) and not re.match(r"^!\[[^\]]*\]\([^)]+\.svg\)\s*$", lines[i]):
             para_lines.append(lines[i])
             i += 1
         out.append(f"<p>{inline_md(' '.join(para_lines))}</p>")
@@ -245,7 +298,7 @@ def panel_html(panel_id: str, title: str, sources: list[tuple[str, Path]]) -> st
         text = path.read_text(encoding="utf-8")
         if idx > 0:
             parts.append(f'<hr><p class="src-inline">Source: <code>{html.escape(rel)}</code></p>')
-        parts.append(md_to_html(text))
+        parts.append(inline_figures(md_to_html(text), path))
     parts.append("</div>")
     canon = " · ".join(f"<code>{html.escape(r)}</code>" for r, _ in sources)
     parts.append(f'<p class="src">Canonical: {canon}</p>')
@@ -253,10 +306,26 @@ def panel_html(panel_id: str, title: str, sources: list[tuple[str, Path]]) -> st
     return "\n".join(parts)
 
 
+READER_FONT_LINK = (
+    '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?'
+    "family=Instrument+Serif:ital@0;1"
+    "&family=Geist:wght@400;500;600"
+    "&family=Geist+Mono:wght@400;500"
+    "&family=Noto+Sans+SC:wght@400;500;700"
+    "&family=Noto+Serif+SC:wght@400;600"
+    '&display=swap">'
+)
+
 CSS_EXTRA = """
 .panel-label{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--orange);margin:0 0 8px}
-.md-body h2{font-family:var(--serif);font-size:32px;font-weight:500;line-height:1.2;margin:32px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--ink)}
-.md-body h3{font-family:var(--sans);font-size:22px;font-weight:700;line-height:1.3;margin:26px 0 10px}
+figure.fig{margin:24px 0;border:1px solid var(--line);border-radius:6px;padding:12px;background:var(--bg)}
+figure.fig .fig-scroll{overflow-x:auto;max-width:100%}
+figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;color:var(--muted);margin-top:8px}
+.md-body h2{font-family:var(--serif);font-size:30px;font-weight:500;line-height:1.2;margin:36px 0 12px;padding-top:18px;border-top:1px solid var(--line)}
+.md-body h3{font-family:var(--sans);font-size:20px;font-weight:600;line-height:1.3;margin:26px 0 10px}
+.lvl{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.06em;padding:1px 6px;border-radius:3px;vertical-align:1px}
+.lvl--must{background:var(--orange);color:#fff}
+.lvl--nice{border:1px solid var(--line);color:var(--muted);background:var(--surface)}
 .md-body h4{font-family:var(--sans);font-size:17px;font-weight:600;line-height:1.4;margin:20px 0 8px;padding-left:10px;border-left:3px solid var(--orange)}
 .md-body h5{font-family:var(--sans);font-size:15px;font-style:italic;font-weight:500;line-height:1.45;margin:16px 0 6px;color:var(--muted)}
 .md-body p{font-size:16.5px;line-height:1.75}
@@ -272,20 +341,22 @@ SHELL_HEAD = """<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Spec-Driven Development — Human Reader</title>
+""" + READER_FONT_LINK + """
 <style>
 :root{
-  --bg:#F6F7F4;--surface:#fff;--surface-2:#EEF1F0;--ink:#14202B;--muted:#55636F;--subtle:#7C8A96;
+  --bg:#f5f5f5;--surface:#fff;--surface-2:#EEF1F0;--ink:#2d3142;--muted:#4f5d75;--subtle:#7C8A96;
   --line:#DCE2E6;--code:#F1F3F1;--navy:#102D46;--navy-2:#173B5C;
-  --yellow:#F2C94C;--green:#5F8D4E;--orange:#D98A3A;--red:#B95547;
+  --yellow:#F2C94C;--green:#5F8D4E;--orange:#bf4520;--red:#B95547;
   --soft-yellow:#FCF5DA;--soft-green:#EDF4E9;--soft-orange:#FBF0E4;--soft-red:#F8EBE9;--soft-blue:#E8F0F6;
-  --serif:Georgia,'Times New Roman','Noto Serif CJK SC',serif;
-  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'PingFang SC','Microsoft YaHei',sans-serif;
-  --mono:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;
+  --serif:"Instrument Serif","Noto Serif SC",serif;
+  --sans:Geist,"Noto Sans SC","PingFang SC",sans-serif;
+  --mono:"Geist Mono",ui-monospace,monospace;
 }
 [data-theme="dark"]{
   --bg:#0B1824;--surface:#102434;--surface-2:#163044;--ink:#EAF0F4;--muted:#A9B8C4;--subtle:#7F93A3;
   --line:#22394C;--code:#0E2130;--navy:#08131C;--navy-2:#0E2130;
   --soft-yellow:#3A3418;--soft-green:#1B3222;--soft-orange:#3A2A1A;--soft-red:#3A2020;--soft-blue:#122A3D;
+  --orange:#f08a59;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15.5px;line-height:1.65}

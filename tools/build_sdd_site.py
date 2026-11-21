@@ -12,7 +12,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from build_sdd_reader import SDD, md_to_html  # noqa: E402
+from build_sdd_reader import SDD, inline_figures, md_to_html  # noqa: E402
 
 FEATURES = ROOT / "docs/features"
 OUT = ROOT / "docs/book/html"
@@ -74,14 +74,14 @@ def feature_docs(feature: str) -> list[dict]:
     return [d for d in DOCS if d["feature"] == feature]
 
 
-# Single theme: Google Cloud docs (devsite) design language.
-# Tokens extracted from https://cloud.google.com clouddocs app.css (2026-11).
+# diagram-design default skin tokens (style-guide.md)
 FONT_LINK = (
-    '<link rel="stylesheet" href="https://fonts.googleapis.com/css?'
-    "family=Google+Sans:400,500"
-    "|Roboto:400,400italic,500,500italic,700"
-    "|Roboto+Mono:400,500,700"
-    "|Noto+Sans+SC:400,500,700"
+    '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?'
+    "family=Instrument+Serif:ital@0;1"
+    "&family=Geist:wght@400;500;600"
+    "&family=Geist+Mono:wght@400;500"
+    "&family=Noto+Sans+SC:wght@400;500;700"
+    "&family=Noto+Serif+SC:wght@400;600"
     '&display=swap">'
 )
 
@@ -290,7 +290,7 @@ def _linkify(body: str, md_path: Path, page_file: str) -> str:
             if not dest:
                 return token
             href = f"#{token}" if dest == page_file else rel_href(page_file, dest) + f"#{token}"
-            return f'<a href="{href}">{token}</a>'
+            return f'<a class="id-ref" href="{href}">{token}</a>'
 
         out.append(_ID_RE.sub(repl, part))
     body = "".join(out)
@@ -628,11 +628,62 @@ def pager(slug: str) -> str:
     return "".join(parts)
 
 
+def _callout_label(inner: str) -> str:
+    if "UNKNOWN" in inner or "Unverified" in inner:
+        return "UNVERIFIED"
+    lead = re.match(r"\s*(?:<p>)?\s*<strong>(.*?)</strong>", inner, re.S)
+    label = re.sub(r"<[^>]+>", "", lead.group(1)) if lead else ""
+    if re.search(r"警告|风险|Warning", label, re.I):
+        return "WARN"
+    if re.search(r"例子|例如|Example", label, re.I):
+        return "EXAMPLE"
+    return "NOTE"
+
+
+def _badge_levels(body: str) -> str:
+    parts = re.split(r"(<[^>]+>)", body)
+    skip = 0
+    out: list[str] = []
+    for part in parts:
+        if part.startswith("<"):
+            tag = re.match(r"</?([a-zA-Z0-9]+)", part)
+            if tag:
+                name = tag.group(1).lower()
+                if part.startswith("</"):
+                    if name in {"a", "code", "pre"} and skip:
+                        skip -= 1
+                elif name in {"a", "code", "pre"} and not part.endswith("/>"):
+                    skip += 1
+            out.append(part)
+            continue
+        if skip:
+            out.append(part)
+            continue
+        part = re.sub(
+            r"\bMUST NOT\b",
+            r'<span class="lvl lvl--must">MUST NOT</span>',
+            part,
+        )
+        part = re.sub(
+            r"\bMUST\b(?!\s+NOT)",
+            r'<span class="lvl lvl--must">MUST</span>',
+            part,
+        )
+        part = re.sub(
+            r"\bNICE\b",
+            r'<span class="lvl lvl--nice">NICE</span>',
+            part,
+        )
+        out.append(part)
+    return "".join(out)
+
+
 def apply_doc_transforms(doc: dict, body: str) -> str:
     rel = doc["source"][0]
+
     def callout(match: re.Match) -> str:
         inner = match.group(1)
-        label = "UNVERIFIED" if "Unverified" in inner or "UNKNOWN" in inner else "NOTE"
+        label = _callout_label(inner)
         return f'<blockquote class="callout" data-label="{label}">{inner}</blockquote>'
 
     body = re.sub(r"<blockquote>(.*?)</blockquote>", callout, body, flags=re.S)
@@ -668,6 +719,7 @@ def apply_doc_transforms(doc: dict, body: str) -> str:
             f'<section class="test-card">{part}</section>' if re.match(r"<h4>TST-", part) else part
             for part in parts
         )
+    body = _badge_levels(body)
     body = _stamp_ids(body, doc["file"])
     return _linkify(body, doc["source"][1], doc["file"])
 
@@ -681,7 +733,7 @@ def site_title(doc: dict) -> str:
 
 def doc_page(doc: dict) -> str:
     rel, path = doc["source"]
-    body = apply_doc_transforms(doc, render_source(rel, path))
+    body = inline_figures(apply_doc_transforms(doc, render_source(rel, path)), path)
     page = doc["file"]
     asset = rel_href(page, "assets/app.js")
     return f'''{head(site_title(doc), page)}
@@ -766,30 +818,30 @@ def index_page() -> str:
 
 
 SITE_CSS = r"""
-/* Google Cloud docs (devsite) theme — tokens from cloud.google.com clouddocs app.css */
+/* diagram-design editorial skin */
 :root {
-  --bg: #ffffff;
-  --bg-2: #f8f9fa;
-  --bg-3: #f1f3f4;
-  --fg: #202124;
-  --muted: #5f6368;
-  --subtle: #9aa0a6;
-  --border: #dadce0;
-  --border-2: #e8eaed;
-  --link: #1a73e8;
-  --link-hover: #1967d2;
-  --blue-soft: #e8f0fe;
-  --red: #d93025;
-  --red-soft: #fce8e6;
-  --code-bg: #f1f3f4;
-  --code-fg: #37474f;
-  --pre-bg: #283142;
-  --pre-fg: #f1f3f4;
-  --pre-link: #669df6;
-  --font-display: "Google Sans", "Noto Sans SC", Roboto, Arial, sans-serif;
-  --font-body: Roboto, "Noto Sans SC", Arial, sans-serif;
-  --font-mono: "Roboto Mono", "Sarasa Mono SC", ui-monospace, monospace;
-  --measure: 820px;
+  --bg: #f5f5f5;
+  --bg-2: #ececec;
+  --bg-3: #e4e4e4;
+  --fg: #2d3142;
+  --muted: #4f5d75;
+  --subtle: #5a6580;
+  --border: #bfc0c0;
+  --border-2: rgba(45, 49, 66, 0.12);
+  --link: #2e5aa8;
+  --link-hover: #24488a;
+  --blue-soft: rgba(46, 90, 168, 0.08);
+  --red: #bf4520;
+  --red-soft: rgba(191, 69, 32, 0.08);
+  --code-bg: #ececec;
+  --code-fg: #2d3142;
+  --pre-bg: #ececec;
+  --pre-fg: #2d3142;
+  --pre-link: #2e5aa8;
+  --font-display: "Instrument Serif", "Noto Serif SC", serif;
+  --font-body: Geist, "Noto Sans SC", "PingFang SC", sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
+  --measure: 760px;
   --topbar-h: 52px;
   color-scheme: light;
 }
@@ -929,13 +981,12 @@ html[data-strike="off"] del { display: none; }
   border: 1px solid var(--border);
   border-radius: 8px;
   text-decoration: none;
-  transition: box-shadow .15s ease, border-color .15s ease;
+  transition: border-color .15s ease;
 }
 .doc-card:hover {
   color: var(--fg);
   text-decoration: none;
-  border-color: transparent;
-  box-shadow: 0 1px 2px rgba(60, 64, 67, .3), 0 1px 3px 1px rgba(60, 64, 67, .15);
+  border-color: var(--fg);
 }
 .doc-card__meta { font-size: 12px; color: var(--muted); }
 .doc-card__title { font-family: var(--font-display); font-size: 16px; font-weight: 500; line-height: 1.35; }
@@ -974,22 +1025,22 @@ html[data-strike="off"] del { display: none; }
 
 /* article body — devsite type scale */
 .doc-body { max-width: var(--measure); min-width: 0; }
-.doc-body > h2:first-child { margin-top: 0; }
 .doc-body h2 {
-  margin: 36px 0 14px;
+  margin: 40px 0 14px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: 32px;
+  font-size: 30px;
   line-height: 1.2;
   color: var(--fg);
-  padding-bottom: 8px;
-  border-bottom: 2px solid var(--fg);
 }
+.doc-body > h2:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
 .doc-body h3 {
   margin: 28px 0 10px;
   font-family: var(--font-body);
-  font-weight: 700;
-  font-size: 22px;
+  font-weight: 600;
+  font-size: 20px;
   line-height: 1.3;
   color: var(--fg);
 }
@@ -997,11 +1048,11 @@ html[data-strike="off"] del { display: none; }
   margin: 22px 0 8px;
   font-family: var(--font-body);
   font-weight: 600;
-  font-size: 17px;
+  font-size: 16px;
   line-height: 1.4;
   color: var(--fg);
   padding-left: 10px;
-  border-left: 3px solid var(--link);
+  border-left: 3px solid var(--red);
 }
 .doc-body h5 {
   margin: 18px 0 6px;
@@ -1012,34 +1063,78 @@ html[data-strike="off"] del { display: none; }
   line-height: 1.45;
   color: var(--muted);
 }
-.doc-body p { margin: 0 0 14px; font-size: 16px; line-height: 1.7; }
+.doc-body p { margin: 0 0 1em; font-size: 16px; line-height: 1.75; }
+.doc-body .lvl {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  border-radius: 3px;
+  padding: 1px 6px;
+  white-space: nowrap;
+}
+.doc-body .lvl--must { background: var(--red); color: #fff; }
+.doc-body .lvl--nice { border: 1px solid var(--border); color: var(--muted); background: var(--bg); }
+.doc-body a.id-ref {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  background: var(--bg-2);
+  border-radius: 3px;
+  padding: 0 4px;
+  text-decoration: none;
+}
+.doc-body a.id-ref:hover { background: var(--bg-3); color: var(--link-hover); }
 .doc-body ul, .doc-body ol { padding-left: 26px; margin: 0 0 12px; }
 .doc-body li { margin: 4px 0; }
 .doc-body li::marker { color: var(--fg); }
 .doc-body strong { font-weight: 500; }
 .doc-body hr { margin: 28px 0; border: 0; border-top: 1px solid var(--border-2); }
 
-/* callouts — devsite aside note style */
+/* callouts */
 .doc-body blockquote {
   margin: 16px 0;
   padding: 12px 16px;
-  border: 0;
-  border-radius: 8px;
-  background: var(--blue-soft);
+  border: 1px solid var(--border-2);
+  border-radius: 6px;
+  background: #fff;
   color: var(--fg);
 }
+.doc-body blockquote.callout { border-left-width: 3px; border-left-style: solid; }
 .doc-body blockquote.callout[data-label]::before {
   content: attr(data-label);
   display: block;
   margin-bottom: 4px;
-  color: var(--link-hover);
-  font-family: var(--font-display);
-  font-size: 13.5px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
   font-weight: 500;
-  letter-spacing: .3px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
 }
-.doc-body blockquote.callout[data-label="UNVERIFIED"] { background: var(--red-soft); }
+.doc-body blockquote.callout[data-label="NOTE"] { border-left-color: var(--link); }
+.doc-body blockquote.callout[data-label="WARN"],
+.doc-body blockquote.callout[data-label="UNVERIFIED"] {
+  border-left-color: var(--red);
+  background: var(--red-soft);
+}
+.doc-body blockquote.callout[data-label="WARN"]::before,
 .doc-body blockquote.callout[data-label="UNVERIFIED"]::before { color: var(--red); }
+.doc-body blockquote.callout[data-label="EXAMPLE"] { border-left-color: var(--muted); }
+
+figure.fig {
+  margin: 24px 0;
+  border: 1px solid var(--border-2);
+  border-radius: 6px;
+  background: var(--bg);
+  padding: 12px;
+}
+figure.fig .fig-scroll { overflow-x: auto; max-width: 100%; }
+figure.fig svg { display: block; max-width: 100%; height: auto; }
+figure.fig figcaption {
+  margin-top: 10px;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--muted);
+}
 .doc-body blockquote p { margin: 0 0 4px; }
 .doc-body blockquote p:last-child { margin-bottom: 0; }
 
@@ -1077,14 +1172,18 @@ html[data-strike="off"] del { display: none; }
   padding: 10px 14px;
   border-bottom: 1px solid var(--border);
   background: var(--bg-2);
-  font-family: var(--font-body);
-  font-size: 13px;
+  font-family: var(--font-mono);
+  font-size: 11px;
   font-weight: 500;
   color: var(--fg);
   text-align: left;
+  text-transform: uppercase;
+  letter-spacing: .06em;
 }
 .doc-body td { padding: 10px 14px; border-bottom: 1px solid var(--border-2); vertical-align: top; text-align: left; }
 .doc-body tbody tr:last-child td { border-bottom: 0; }
+.doc-body tbody tr:nth-child(even) td { background: var(--bg-2); }
+.doc-body tbody tr:has(del) { opacity: .6; }
 
 /* requirement / clause / impl rows — reference-style rows */
 .req { display: grid; grid-template-columns: 76px 1fr; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--border-2); }
