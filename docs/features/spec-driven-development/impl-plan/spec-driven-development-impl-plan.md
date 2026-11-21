@@ -211,13 +211,21 @@ last_verified: 2026-11-20
 
 **Verify:** TST-W 通过。
 
+## IMPL-T — L1 不减少的检查
+
+**目标：** 实现 TST-X：`tools/check_l1_delta.py --base <git ref>`，默认和上一个 commit 比。
+
+**依赖：** IMPL-M。**挡住：** 无。
+
+**Verify:** `test_tst_x_l1_delta.py` 通过；对当前分支运行报 0 个问题。
+
 ## Execution order
 
 先做不依赖别人的任务，被挡住的后做：
 
 1. IMPL-A、IMPL-D、IMPL-G、IMPL-H（互不依赖，可以同时做）
 2. IMPL-C
-3. IMPL-B、IMPL-F、IMPL-J、IMPL-K、IMPL-L、IMPL-M、IMPL-R、IMPL-S
+3. IMPL-B、IMPL-F、IMPL-J、IMPL-K、IMPL-L、IMPL-M、IMPL-R、IMPL-S、IMPL-T
 4. IMPL-N、IMPL-O、IMPL-P
 5. IMPL-Q
 6. IMPL-E（评测要等 spec 可读、测试骨架齐全、gold 改回 iPhone 之后再跑）
@@ -242,3 +250,4 @@ last_verified: 2026-11-20
 | 2026-11-20 | 第 1 轮审查后：依赖和挡住两头对齐（C 挡住 F；D 挡住 L；J 挡住 Q；E 依赖 J、L、Q；I 依赖 E） |
 | 2026-11-20 | 第 2 轮审查后：IMPL-C 改为三份标准摘要（ARD-BX）；IMPL-P 加上 `.gitignore` 和 raw/ 链接两项，数字改为 15/32，解释 System Context 豁免；新增 IMPL-R（CLAUDE 层同步）；IMPL-G 写明暂定名也记在 CLAUDE.local.md（ARD-BU） |
 | 2026-11-20 | 第 3 轮审查后：IMPL-A 解释 `~/.coworker/project.yaml`；IMPL-R 的检查加上进度路径、文档目录和 skill 列表 |
+| 2026-11-20 | IMPL-P 除 MUST 清单出处外已完成；IMPL-Q 脚本就绪（未跑 API）；新增 IMPL-T |

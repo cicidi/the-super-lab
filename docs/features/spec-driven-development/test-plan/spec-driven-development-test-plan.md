@@ -197,9 +197,15 @@ last_verified: 2026-11-20
 
 **目标：** 站点内嵌 SVG、diagram-design 皮肤、无未解析 `data-svg`（DSGN-N-D、[ARD-CA](../decision-history/spec-driven-development-decision-history.md#ard-ca)）。
 
-**通过条件：** `tests/test_sdd_site_render.py` 通过；每个 `-fig-*.svg` 在对应 HTML 中出现一次；`docs/book/html` 无 `data-svg`。
+**通过条件：** `tests/test_sdd_site_render.py` 通过；每个 `-fig-*.svg` 在对应 HTML 中出现一次；`docs/book/html` 无 `data-svg`。插图命名、同目录、无脚本由 `checks/figures.py` 检查。
 
 **判定：** Python。
+
+### TST-X — L1 内容不减少
+
+**目标：** 改文档时不靠删 L1 内容凑分（MUST-D）。**输入：** 两个 git 版本之间的 `docs/features/<f>/`。
+
+**通过条件：** 旧版本的每个编号标题在新版本里还在；每篇的 MUST 句数不减少。例外：decision-history 新增的 ARD 提到了这个编号或这篇文档。**判定：** Python（`tools/check_l1_delta.py`）。
 
 ## Test Execution Order
 
@@ -207,7 +213,7 @@ last_verified: 2026-11-20
 2. TST-B：检查脚本失效就停。
 3. TST-O、TST-P、TST-V：design 的覆盖、证据、可读性。这一步的 TST-V 只测 SDD 自己的文档。
 4. TST-C，然后 TST-D：第一次运行，或者 gold 升版时。
-5. TST-G、TST-N、TST-R、TST-S、TST-T、TST-U、TST-W。
+5. TST-G、TST-N、TST-R、TST-S、TST-T、TST-U、TST-W、TST-X。
 6. TST-E、TST-F，然后对 TST-C、TST-E 里 spec-write 写出的文档跑 TST-V。
 7. TST-H，然后 TST-I。
 8. TST-Q：mock 执行。
@@ -256,7 +262,7 @@ document-standard 的 reader PRD：
 
 | PRD | Covered by |
 |---|---|
-| PRD-A、PRD-G、PRD-J、PRD-K（内容不丢） | Unverified（还没有逐条比对 L1 内容的脚本；有了以后由 spec-review 抽查编号） |
+| PRD-A、PRD-G、PRD-J、PRD-K（内容不丢） | TST-X 查编号标题与 MUST 句数不减少；逐条比对 L1 内容仍 Unverified |
 | PRD-B、PRD-H（排版、标题层级） | TST-U |
 | PRD-C、PRD-D、PRD-E（覆盖、原文路径、文件位置） | TST-R 检查汇编页和它的源文件；其余页面 Unverified |
 | PRD-F、PRD-I、PRD-N（流程类要求） | Unverified（流程，PRD-I） |
@@ -294,3 +300,4 @@ document-standard 的 reader PRD：
 | 2026-11-20 | 第 1 轮审查后：`eval.yaml` 的说明从一个表格单元拆成逐键的表 |
 | 2026-11-20 | 第 2 轮审查后：TST-A 扫描所有 design 分篇和 parent 的 DSGN-E；TST-O 加入 reader PRD，追溯表加 reader PRD 一节；TST-V 分两次跑（先测 SDD 文档，spec-write 跑完再测它的产出）；PRD-H 改为 Unverified |
 | 2026-11-20 | 第 3 轮审查后：判断依据改为三份标准文件，交付物改链 ARD-BX；TST-O 按 feature 分开比对编号，PRD-G 已延后不要求对应 |
+| 2026-11-20 | TST-X：L1 内容不减少 |
