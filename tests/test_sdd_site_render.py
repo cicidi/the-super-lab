@@ -22,6 +22,15 @@ class TestMdFigures(unittest.TestCase):
         self.assertIn('data-svg="a-fig-x.svg"', html)
         self.assertIn("<figcaption>整体结构</figcaption>", html)
 
+    def test_anchor_line_passthrough(self) -> None:
+        html = md_to_html('<a id="4-ai-文档"></a><a id="dsgn-a"></a>\n')
+        self.assertIn('id="dsgn-a"', html)
+        self.assertIn('id="4-ai-文档"', html)
+        self.assertNotIn("&lt;a", html)
+        unsafe = md_to_html('<a id="x" onclick="y"></a>\n')
+        self.assertIn("&lt;a", unsafe)
+        self.assertNotIn("onclick=\"y\">", unsafe)
+
     def test_inline_figures_inlines_and_scopes_ids(self) -> None:
         svg = """<?xml version="1.0"?>
 <svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t">
@@ -59,6 +68,26 @@ class TestMdFigures(unittest.TestCase):
             page = '<div class="fig-svg" data-svg="bad.svg"></div>'
             with self.assertRaises(SystemExit):
                 inline_figures(page, root / "a.md")
+
+
+class TestBuiltSite(unittest.TestCase):
+    def test_built_site_figures(self) -> None:
+        html_root = ROOT / "docs/book/html"
+        features = ROOT / "docs/features"
+        pages = [p for p in html_root.rglob("*.html") if not p.name.startswith("._")]
+        for page in pages:
+            text = page.read_text(encoding="utf-8")
+            self.assertNotIn('data-svg="', text, page)
+            self.assertNotIn("&lt;a id=", text, page)
+        for svg in features.rglob("*-fig-*.svg"):
+            if svg.name.startswith("._") or "raw" in svg.parts:
+                continue
+            doc = svg.parent / (svg.stem.split("-fig-")[0] + ".md")
+            page = html_root / doc.relative_to(features).with_suffix(".html")
+            if not page.is_file():
+                page = html_root / "spec-driven-development/spec-driven-development-reader.html"
+            count = page.read_text(encoding="utf-8").count(f'aria-labelledby="{svg.stem}-')
+            self.assertEqual(count, 1, f"{svg.name} in {page}")
 
 
 class TestDocTransforms(unittest.TestCase):

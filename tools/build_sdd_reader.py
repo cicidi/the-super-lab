@@ -256,6 +256,13 @@ def md_to_html(md: str) -> str:
             i += 1
             continue
 
+        if re.match(r'^\s*(?:<a id="[\w-]+"></a>)+\s*$', line):
+            close_list()
+            ids = re.findall(r'<a id="([\w-]+)"></a>', line)
+            out.append("".join(f'<a id="{html.escape(a, quote=True)}"></a>' for a in ids))
+            i += 1
+            continue
+
         m_fig = re.match(r"^!\[([^\]]*)\]\(([^)\s]+\.svg)\)\s*$", line)
         if m_fig:
             close_list()
