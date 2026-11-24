@@ -74,7 +74,7 @@ PRD-L 要求每个子问题写明由谁处理。本 feature 的子问题如下�
 
 | 子问题 | 归属 | 依据 |
 |---|---|---|
-| 已有的不合规文档要不要迁移 | 人决定 | [ARD-AF](../decision-history/spec-driven-development-decision-history.md#ard-af) |
+| 已有的不合规文档要不要迁移 | 人决定 | [ARD-CC](../decision-history/spec-driven-development-decision-history.md#ard-cc)（重述 ARD-AF） |
 | wayfinder-import 是不是 sub-feature | 人决定 | [ARD-T](../decision-history/spec-driven-development-decision-history.md#ard-t) |
 | 跑分结果和报告要不要提交 | AI 查完人决定 | [ARD-AD](../decision-history/spec-driven-development-decision-history.md#ard-ad) |
 | 四个非软件例子要不要建 gold | 人决定 | [ARD-AD](../decision-history/spec-driven-development-decision-history.md#ard-ad) |
@@ -293,6 +293,7 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 | 术语 | 意思 |
 |---|---|
 | skill | 一份写给 AI 的操作说明（`SKILL.md`），告诉它遇到某类任务时按什么步骤做 |
+| spec bundle | 整套 SDD spec 作为一个整体；版本号写在 parent PRD 的 `version`，印进 skill 用来看出 skill 出自哪一版 spec（ARD-CC） |
 | spec-write | 交付的 skill 之一：新建或修改 spec 文档 |
 | spec-review | 交付的 skill 之一：检查 spec 文档，只给修改建议，不直接改 |
 | spec-organize | 早期的主 skill，现在不是交付物；里面放着标准文件、检查脚本和测试 |
@@ -361,3 +362,4 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 | 2026-11-20 | 第 1 轮审查后：DSGN-A 改为两条都要满足（ARD-BP）；DSGN-D 写明来源 PRD-B、PRD-P；DSGN-A 到 DSGN-E 上方保留旧锚点（ARD-AP）；术语表补上 SDD、LLM、阶段、上下游、阶段编排、进度回顾、大改、walter-worker、BMAD、GSD、分数 1、分数 2、复核、基线、run_id；SHOULD 改为等同 NICE |
 | 2026-11-20 | 第 2 轮审查后：标准文件改为三份（ARD-BX）；DSGN-A 到 DSGN-E 加短锚点 `dsgn-a` 到 `dsgn-e`；对照表链到 ARD-BZ；术语表改正 ARD 的来历，补上 SPEC-HTML-STANDARD、spec-organize 的几种模式、skill create、触发词、MkDocs、Mermaid、wayfinder-import |
 | 2026-11-20 | 第 3 轮审查后：交付物改链 ARD-BX；术语表补上 CI、hook；QUES-C 的「map 工具」改为 Map 阶段的辅助工具 |
+| 2026-11-24 | 术语表补上 spec bundle；子问题归属的迁移一行改链 ARD-CC（ARD-AF 已划掉） |

@@ -19,7 +19,7 @@ last_verified: 2026-11-20
 - **测试：** 测什么见 [test-plan](../test-plan/spec-driven-development-test-plan.md)，测试文件放在 `skills/spec-organize/tests/`。
 - **不做 wayfinder-import sub-feature**（[ARD-T](../decision-history/spec-driven-development-decision-history.md#ard-t)）。
 - **评测：** 用 `deepseek-flash` 跑 3 次；跑分结果和报告不提交（[ARD-AD](../decision-history/spec-driven-development-decision-history.md#ard-ad)）。打分用 iPhone 案例（[ARD-BL](../decision-history/spec-driven-development-decision-history.md#ard-bl)）。
-- **不迁移旧文档**，只修 SDD 自己这套（[ARD-AF](../decision-history/spec-driven-development-decision-history.md#ard-af)）。
+- **不迁移旧文档**，只修 SDD 自己这套（[ARD-CC](../decision-history/spec-driven-development-decision-history.md#ard-cc)，重述 ARD-AF）。
 
 ## IMPL-A — skill 目录改名
 
@@ -219,14 +219,22 @@ last_verified: 2026-11-20
 
 **Verify:** `test_tst_x_l1_delta.py` 通过；对当前分支运行报 0 个问题。
 
+## IMPL-U — spec bundle 版本戳
+
+**目标：** `tools/build_spec_skills.py` 按 [ARD-CC](../decision-history/spec-driven-development-decision-history.md#ard-cc) 给四个 SDD `SKILL.md` 打版本戳。
+
+**依赖：** 无。**挡住：** 无。
+
+**Verify:** TST-Y 通过。
+
 ## Execution order
 
 先做不依赖别人的任务，被挡住的后做：
 
-1. IMPL-A、IMPL-D、IMPL-G、IMPL-H（互不依赖，可以同时做）
+1. IMPL-A、IMPL-D、IMPL-G、IMPL-H、IMPL-U（互不依赖，可以同时做）
 2. IMPL-C
-3. IMPL-B、IMPL-F、IMPL-J、IMPL-K、IMPL-L、IMPL-M、IMPL-R、IMPL-S、IMPL-T
-4. IMPL-N、IMPL-O、IMPL-P
+3. IMPL-B、IMPL-F、IMPL-J、IMPL-K、IMPL-L、IMPL-M、IMPL-R
+4. IMPL-N、IMPL-O、IMPL-P、IMPL-S（等 IMPL-F）、IMPL-T（等 IMPL-M）
 5. IMPL-Q
 6. IMPL-E（评测要等 spec 可读、测试骨架齐全、gold 改回 iPhone 之后再跑）
 7. IMPL-I
@@ -251,3 +259,4 @@ last_verified: 2026-11-20
 | 2026-11-20 | 第 2 轮审查后：IMPL-C 改为三份标准摘要（ARD-BX）；IMPL-P 加上 `.gitignore` 和 raw/ 链接两项，数字改为 15/32，解释 System Context 豁免；新增 IMPL-R（CLAUDE 层同步）；IMPL-G 写明暂定名也记在 CLAUDE.local.md（ARD-BU） |
 | 2026-11-20 | 第 3 轮审查后：IMPL-A 解释 `~/.coworker/project.yaml`；IMPL-R 的检查加上进度路径、文档目录和 skill 列表 |
 | 2026-11-20 | IMPL-P 除 MUST 清单出处外已完成；IMPL-Q 脚本就绪（未跑 API）；新增 IMPL-T |
+| 2026-11-24 | IMPL-S、IMPL-T 移到依赖之后的批次；新增 IMPL-U；不迁移旧文档改链 ARD-CC |

@@ -79,6 +79,7 @@ A design for a feature with sub-problems carries a `子问题归属` table:
 `| 子问题 | 归属 | 依据 |`. Owner is one of `AI 查`, `人决定`, `AI 查完人决定`;
 evidence is a `raw/` path, a URL, or an `ARD-*` id. Unknowns are written
 `UNKNOWN`, never guessed. A pure standard/orchestration design may state not apply.
+The AI must add rows for blind spots and risks the human did not ask about (PIPE-L).
 If every tracker row has Owner and Evidence, the design may link the tracker instead (ARD-AY).
 
 ## Decision history (MUST)
@@ -91,7 +92,7 @@ Hard caps per **DSGN-B** table (prd 800, design 1000, impl-plan 1000, test-plan 
 
 ## INDEX / book (MUST)
 
-When the committed tree changes, regenerate INDEX. No orphan, no dead link, no dead anchor (**DSGN-D**, ARD-AP). A link into `raw/` is not a dead link, even though `raw/` is never committed (ARD-BW).
+When the committed tree changes, regenerate INDEX. A `final` or merged change must reach the book; a `draft` source may skip the summary update (**DSGN-D**). No orphan, no dead link, no dead anchor (**DSGN-D**, ARD-AP). A link into `raw/` is not a dead link, even though `raw/` is never committed (ARD-BW).
 MkDocs / Pages nav is implementation; it must not contradict the feature tree or INDEX (**DSGN-D**).
 
 ## Conflicts (MUST)

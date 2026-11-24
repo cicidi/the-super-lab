@@ -46,7 +46,7 @@ spec-write 和 spec-review 是仅有的两个交付物（[ARD-BX](../decision-hi
 ## Implementation Decisions
 
 - **以谁为准：** 以本篇为准。`SKILL.md` 和本篇冲突时，先改本篇，再改 `SKILL.md`。这条沿用「按关注点分权威」的原则（document-standard 的 DSGN-G）。
-- **故意不定义：** 失败处理、版本和迁移、信息来源可信度分级、数据清理（[ARD-AF](../decision-history/spec-driven-development-decision-history.md#ard-af)）。
+- **故意不定义：** 失败处理、迁移、信息来源可信度分级、数据清理；版本只是来源标记（[ARD-CC](../decision-history/spec-driven-development-decision-history.md#ard-cc)，重述已划掉的 ARD-AF）。
 - **四个例子：** 两个 skill 的正文都要提到盖 shed、北京旅游、数学题、股票（PRD-Q）。它们只是说明用的例子，不是本仓库的 gold。
 - **暂时测不了的：** 阶段编排、单次改动大小、不同模型之间的偏差，按 PRD-I 标为 `Unverified`。
 
@@ -102,3 +102,4 @@ spec-write 和 spec-review 是仅有的两个交付物（[ARD-BX](../decision-hi
 | 2026-11-20 | 第 1 轮审查后：契约表加 spec-organize 一行，写明它是内部工具、不交付；PIPE 子条款编号改为字母（ARD-BR） |
 | 2026-11-20 | 第 2 轮审查后：标准文件改为三份（ARD-BX）；spec-organize 修格式同样受改动上限约束（ARD-BV）；改动上限写成「超过 10 行或超过 200 字符」都算超 |
 | 2026-11-20 | 第 3 轮审查后：交付物改链 ARD-BX（ARD-BH 已被它取代） |
+| 2026-11-24 | 故意不定义：版本改为来源标记（ARD-CC） |

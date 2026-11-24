@@ -24,6 +24,7 @@ last_verified: 2026-11-20
 
 | ID | Date | Decision |
 |---|------|----------|
+| ARD-CC | 2026-11-24 | parent PRD 的 `version` 是 spec bundle（整套 SDD spec）的版本；`tools/build_spec_skills.py` 把它印进四个 SDD `SKILL.md`，只标来源，不做迁移 |
 | ARD-CB | 2026-11-20 | 网页离线可读指正文与已提交的 SVG 插图；字体与 Mermaid 可联网加载（PRD-O） |
 | ARD-CA | 2026-11-20 | 插图用 diagram-design 画，SVG 与 citing md 同目录；全站配色与 diagram-design 默认一致；spec-review 查图文一致 |
 | ARD-BZ | 2026-11-20 | 补记两次编号迁移：parent design 的 §4 到 §8 改为 DSGN-A 到 DSGN-E；reader design 里重号的 DSGN-N-H、DSGN-N-I 改为 DSGN-N-M、DSGN-N-N |
@@ -72,7 +73,7 @@ last_verified: 2026-11-20
 | ARD-AI | 2026-11-04 | 那一次的 spec 合并是人明确授权的大改，那一批允许超过 10 行的改动 |
 | ~~ARD-AH~~ | 2026-11-04 | ~~给人读的 reader 是唯一的 HTML 交付物；旧的摘要 HTML 删除~~ → [ARD-BG](#ard-bg) |
 | ARD-AG | 2026-11-04 | 是否收敛由规则自动判断（pipeline design 的 PIPE-E-A 到 PIPE-E-C）：每个未决事项都标明是否阻塞；AI 不能自己宣布「已经够稳」 |
-| ARD-AF | 2026-11-04 | 故意不定义的事项：失败处理、skill 和 spec 的版本管理、信息来源可信度分级、数据清理；不迁移旧文档 |
+| ~~ARD-AF~~ | 2026-11-04 | ~~故意不定义的事项：失败处理、skill 和 spec 的版本管理、信息来源可信度分级、数据清理；不迁移旧文档~~ → [ARD-CC](#ard-cc) |
 | ARD-AE | 2026-11-04 | 非软件问题也用同样的五篇文档；design 里写子问题归属表；结论必须有依据，查不到写 UNKNOWN |
 | ARD-AD | 2026-11-04 | 评测用 deepseek-flash 独立跑 3 次；gold 由案例、版本、范例、标注四部分组成；跑分结果和报告不提交；四个非软件例子写进 skill 正文，不在本仓库建 gold |
 | ARD-AC | 2026-11-04 | PRD 的必需章节去掉非功能需求；编号在「feature 加文档类型」内唯一，跨 feature 引用写成 feature/编号；how-to 暂不检查 |
@@ -107,25 +108,37 @@ last_verified: 2026-11-20
 
 ## Evidence Appendix
 
-<a id="ard-ca"></a>
+<a id="ard-cc"></a>
 
-### ARD-CA — 插图与站点样式
+### ARD-CC — spec bundle 版本戳
 
-**原因。** 纯文字 spec 难读；Mermaid 自动排版不符合 editorial 图；生成时再画图不稳定。
+**原因。** skill 正文由 spec 提炼；spec 改了以后，看不出手上的 skill 对应哪一版 spec。
 
-**规则。** 写 spec 时用 diagram-design 产出 SVG，命名 `<doc-stem>-fig-<slug>.svg` 与 citing md 同目录；网页皮肤用 diagram-design 默认 token；spec-review 报图里多写或与正文矛盾（severity 3）。
+**规则。** 版本号只写在 parent PRD 的 `version`。脚本把版本、日期、git 短 sha 写进 `SKILL.md`；`--check` 比对版本、拒绝重复键（TST-Y）。迁移策略仍不定义（ARD-AF）。
 
-**放弃的方案。** 仅在 build 时让 AI 重画；只把配色套在 Mermaid 上。
+本条推翻 ARD-AF 里「不定义版本」的部分，ARD-AF 因此划掉，其余在此重述：失败处理、信息来源可信度分级、数据清理、迁移策略故意不定义；不迁移旧文档。
+
+**放弃的方案。** 每个 `SKILL.md` 手写版本号；按 semver 自动升版。
 
 <a id="ard-cb"></a>
 
 ### ARD-CB — 离线可读范围
 
-**原因。** 插图内嵌后 PRD-O「直接打开」若要求零联网会阻字体与 Mermaid。
+**原因。** 插图内嵌进网页后，如果 PRD-O 的「直接打开就能读」要求完全不联网，字体和 Mermaid（把文字描述画成流程图的脚本）就加载不了。
 
-**规则。** MUST：正文与 SVG 插图离线可读；字体、Mermaid CDN 允许。
+**规则。** MUST：断网时正文和 SVG 插图能读；字体和 Mermaid 可以从网上加载。
 
 **放弃的方案。** 全站严格零联网（与 Mermaid、字体策略冲突）。
+
+<a id="ard-ca"></a>
+
+### ARD-CA — 插图与站点样式
+
+**原因。** 只有文字的 spec 难读；Mermaid 自动排的版不像人精心画的图；构建网页时再让 AI 画图，每次结果都不一样。
+
+**规则。** 写 spec 时用 diagram-design 画 SVG，文件名 `<文档名>-fig-<主题>.svg`，放在引用它的 md 旁边；网页配色用 diagram-design 的默认颜色；图里有正文没有的内容或与正文矛盾，spec-review 报 severity 3。
+
+**放弃的方案。** 仅在 build 时让 AI 重画；只把配色套在 Mermaid 上。
 
 <a id="ard-bz"></a>
 
@@ -719,3 +732,6 @@ payment-impl-plan-01-schema.md         impl-plan 分篇：序号加阶段，有�
 | 2026-11-20 | ARD-BK–BO：授权本次大改；gold 改回 iPhone 案例（推翻 ARD-BJ）；删除线只在 decision-history；规则分 MUST 与 NICE；可读性成为通过条件 |
 | 2026-11-20 | 全文改为中文；Evidence Appendix 改为与 Log 同序，补齐 ARD-M、ARD-N 与 ARD-AM 之后各条的原因；每条加短锚点，旧英文锚点保留（ARD-AP）；Path Update 说明旧路径已重新使用（ARD-BK） |
 | 2026-11-20 | 第 1 轮审查后：ARD-BP–BT（改动上限两条都要满足、六种文档都可拆分篇、PIPE 子条款改字母、允许中英文混合、重申 ARD-U/V 仍有效的部分）；划掉 ARD-AH、ARD-F、ARD-K；ARD-J 的「阶段」改称「文档」；跨 feature 的编号补上 feature 名 |
+| 2026-11-24 | ARD-CC：spec bundle 版本戳（审查 F7 选方案一） |
+| 2026-11-24 | Evidence Appendix 的 ARD-CB 移到 ARD-CA 前，与 Log 同序；ARD-CA、ARD-CB 改写成完整句子 |
+| 2026-11-24 | 划掉 ARD-AF，由 ARD-CC 重述仍有效的部分 |

@@ -4,6 +4,7 @@ type: prd
 state: draft
 health: active
 owner: cicidi
+version: "1.0.0"
 last_verified: 2026-11-20
 ---
 
@@ -151,7 +152,7 @@ AI 要把大问题拆成小的：能查的 AI 自己查（合规、财报、交�
 - 多人决定的细致仲裁规则，例如两个决定时间相同怎么办。目前只按 decision-history 的先后，看不出就问用户。
 - 在本仓库为四个非软件例子建 gold。例子写进 skill 正文，gold 放在别处。
 - 把已有的不合规文档批量迁移到新标准。
-- skill 和 spec 的版本管理与迁移策略。
+- skill 和 spec 的迁移策略。版本只做来源标记：PRD 的 `version` 印进 skill（[ARD-CC](../decision-history/spec-driven-development-decision-history.md#ard-cc)）。
 
 ## Resources Needed
 
@@ -191,3 +192,4 @@ AI 要把大问题拆成小的：能查的 AI 自己查（合规、财报、交�
 | 2026-11-20 | 第 1 轮审查后：PRD-C 改为两条都要满足（ARD-BP）；PRD-D 写明 decision-history 例外；PRD-M 与 TST-V 对齐，允许查术语表；PRD-J 链到 ARD-BT；Problem Statement 保留原话（ARD-BS） |
 | 2026-11-20 | 第 2、3 轮审查后：Resources 写明三份标准文件；PRD-P 改链 ARD-BX（ARD-BH 已被它取代） |
 | 2026-11-20 | Resources Needed 加上 PIPE-E-B 要求的五项；偏好、时间写 not apply |
+| 2026-11-24 | Out of Scope：版本只做来源标记（ARD-CC） |

@@ -65,7 +65,7 @@ feature 文档一多，如果没有统一标准，会出现四类问题：
 - 本篇的规则会摘要写进 `SPEC-STANDARD.md` 和 `SPEC-PRESENTATION.md`；reader design 的规则摘要写进 `SPEC-HTML-STANDARD.md`。spec-write 和 spec-review 读的是这三份摘要（[ARD-BX](../../../decision-history/spec-driven-development-decision-history.md#ard-bx)）。摘要和本篇不一致时，先改本篇，再改摘要。
 - 格式类的 MUST 由检查脚本执行；内容类的问题由 spec-review 报告。
 - how-to 暂不做机械检查；其他五种文档按 DSGN-E 检查。
-- 已有的不合规文档不迁移，只报告（[ARD-AF](../../../decision-history/spec-driven-development-decision-history.md#ard-af)）。
+- 已有的不合规文档不迁移，只报告（[ARD-CC](../../../decision-history/spec-driven-development-decision-history.md#ard-cc)，重述 ARD-AF）。
 - 本篇是一份纯标准，「子问题归属表」不适用（pipeline design 的 PIPE-L 允许这样注明）。还没定的事项和它们的负责人见 [Open Questions](#open-questions)。
 
 ## Design
@@ -298,7 +298,7 @@ AI 每次改动的大小上限（不超过 10 行，并且不超过 200 字符�
 | 当前实现 | 代码 |
 | 可执行的验证 | 测试 |
 
-design 管「想要怎样」，代码管「现在怎样」和内部结构。机器可读的接口定义不要整段抄进 markdown，链过去或者自动生成。测试是验证手段，不能代替需求。文档变成 `final` 后只做维护性修改，不整篇重写。
+design 管「想要怎样」，代码管「现在怎样」和内部结构。机器可读的接口定义不要整段抄进 markdown，链过去或者自动生成。测试是验证手段，不能代替需求。文档变成 `final` 后只做维护性修改，不整篇重写；人明确授权并记成 ARD 的大改除外（例如 2026-11-20 的整理，见 parent decision-history 的 [ARD-BS](../../../decision-history/spec-driven-development-decision-history.md#ard-bs)，它重述了 ARD-BK）。
 
 ---
 
@@ -509,3 +509,4 @@ design 管「想要怎样」，代码管「现在怎样」和内部结构。机�
 | 2026-11-20 | 第 1 轮审查后：DSGN-E 加入可读性、未决问题清单、引用代码、impl 依赖两头对得上（ARD-BO、ARD-BS）；DSGN-C 加翻译副本、DSGN-F 加对照表和旧锚点、DSGN-J 加每条 ARD 都有说明，原来只在 Further Notes 里的规则移进正文；DSGN-B 六种文档都可拆分篇并需入口文件（ARD-BQ），写明辅助文件例外；跨 feature 的编号写明出处 |
 | 2026-11-20 | 第 2 轮审查后：`.gitignore` 规则改为 `docs/features/**/raw/`；raw/ 草稿可作依据、指向 raw/ 的链接不算死链（ARD-BW）；DSGN-J 删去和 parent DSGN-B 重复的表，只留链接；DSGN-M 的条目改写成完整句子；PROTECTED、`sections.py`、`registry_provenance` 第一次出现时解释；指向 parent test-plan、impl-plan 的编号写明出处 |
 | 2026-11-20 | 第 3 轮审查后：DSGN-A 写明三份摘要（ARD-BX）；DSGN-E 写明 Problem Statement 小标题可以保留编号（ARD-BS 重述 ARD-AW）；DSGN-J 写明只推翻一部分时也整行划掉；子问题归属表不适用的理由改为只引 PIPE-L |
+| 2026-11-24 | DSGN-G：final 后经 ARD 授权的大改除外（parent ARD-BS）；不迁移旧文档改链 ARD-CC |

@@ -44,7 +44,7 @@ last_verified: 2026-11-20
 
 | 路径 | 内容 |
 |---|---|
-| `skills/spec-organize/tests/eval.yaml` | 评测配置，每个键的含义见下表。现在的文件还指向 SDD 目录，由 IMPL-P 改回 iPhone 案例 |
+| `skills/spec-organize/tests/eval.yaml` | 评测配置，每个键的含义见下表。`cases.iphone.path` 指向 iPhone 案例 `gold/v1`（IMPL-P） |
 | `skills/spec-organize/tests/checks/` | Python 检查模块，每个机械 MUST 一个模块，清单见同目录的 `README.md` |
 | `skills/spec-organize/tests/mock-mcp/` | 所有例子共用的 mock MCP 客户端和服务器，提供几个固定的工具；调用时打印调用记录，不真的下单 |
 | `skills/spec-organize/tests/fixtures/neg/<check>/` | 反例：每个检查至少一个最小的违规样例 |
@@ -195,7 +195,7 @@ last_verified: 2026-11-20
 
 ### TST-W — 网页插图与样式
 
-**目标：** 站点内嵌 SVG、diagram-design 皮肤、无未解析 `data-svg`（DSGN-N-D、[ARD-CA](../decision-history/spec-driven-development-decision-history.md#ard-ca)）。
+**目标：** 站点内嵌 SVG、diagram-design 皮肤、无未解析 `data-svg`（document-standard 的 DSGN-N-D、[ARD-CA](../decision-history/spec-driven-development-decision-history.md#ard-ca)）。
 
 **通过条件：** `tests/test_sdd_site_render.py` 通过；每个 `-fig-*.svg` 在对应 HTML 中出现一次；`docs/book/html` 无 `data-svg`。插图命名、同目录、无脚本由 `checks/figures.py` 检查。
 
@@ -207,13 +207,17 @@ last_verified: 2026-11-20
 
 **通过条件：** 旧版本的每个编号标题在新版本里还在；每篇的 MUST 句数不减少。例外：decision-history 新增的 ARD 提到了这个编号或这篇文档。**判定：** Python（`tools/check_l1_delta.py`）。
 
+### TST-Y — skill 版本戳和 PRD 一致
+
+**目标：** 四个 SDD `SKILL.md` 的版本戳等于 parent PRD 的 `version`，且 frontmatter 里的 `spec_*` 键各只出现一次（[ARD-CC](../decision-history/spec-driven-development-decision-history.md#ard-cc)）。**判定：** Python（`build_spec_skills.py --check`）。
+
 ## Test Execution Order
 
 1. TST-A：MUST 清单覆盖率不到 100% 就停。
 2. TST-B：检查脚本失效就停。
 3. TST-O、TST-P、TST-V：design 的覆盖、证据、可读性。这一步的 TST-V 只测 SDD 自己的文档。
 4. TST-C，然后 TST-D：第一次运行，或者 gold 升版时。
-5. TST-G、TST-N、TST-R、TST-S、TST-T、TST-U、TST-W、TST-X。
+5. TST-G、TST-N、TST-R、TST-S、TST-T、TST-U、TST-W、TST-X、TST-Y。
 6. TST-E、TST-F，然后对 TST-C、TST-E 里 spec-write 写出的文档跑 TST-V。
 7. TST-H，然后 TST-I。
 8. TST-Q：mock 执行。
@@ -268,7 +272,7 @@ document-standard 的 reader PRD：
 | PRD-F、PRD-I、PRD-N（流程类要求） | Unverified（流程，PRD-I） |
 | PRD-L（样式统一） | 不测，是 NICE（[ARD-BY](../decision-history/spec-driven-development-decision-history.md#ard-by)） |
 | PRD-M（改完提示重新生成） | TST-R |
-| DSGN-N-D（插图与样式） | TST-W |
+| document-standard 的 DSGN-N-D（插图与样式） | TST-W |
 | PRD-O、PRD-P（纯静态、不放密钥） | Unverified（还没有对应的检查脚本） |
 
 ## Change Log
@@ -301,3 +305,4 @@ document-standard 的 reader PRD：
 | 2026-11-20 | 第 2 轮审查后：TST-A 扫描所有 design 分篇和 parent 的 DSGN-E；TST-O 加入 reader PRD，追溯表加 reader PRD 一节；TST-V 分两次跑（先测 SDD 文档，spec-write 跑完再测它的产出）；PRD-H 改为 Unverified |
 | 2026-11-20 | 第 3 轮审查后：判断依据改为三份标准文件，交付物改链 ARD-BX；TST-O 按 feature 分开比对编号，PRD-G 已延后不要求对应 |
 | 2026-11-20 | TST-X：L1 内容不减少 |
+| 2026-11-24 | 新增 TST-Y（ARD-CC）；DSGN-N-D 补 feature 名；eval.yaml 现状更新 |
