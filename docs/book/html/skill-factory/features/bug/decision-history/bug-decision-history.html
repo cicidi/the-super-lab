@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>bug — 决策记录 · decision-history · Spec Atlas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@400;600&display=swap">
+<link rel="stylesheet" href="../../../../assets/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><a href="../../../../index.html"><span class="brand-mark">SDD</span><span class="brand-name">Spec Atlas</span></a></div>
+    <button class="strike-btn" type="button" onclick="var r=document.documentElement;var off=r.dataset.strike!=='off';r.dataset.strike=off?'off':'on';this.textContent=off?'显示删除线':'隐藏删除线'">隐藏删除线</button>
+  </div>
+</header>
+<div class="site">
+  <aside class="sidebar">
+  <nav aria-label="Directory">
+    <div class="tree-overview"><a class="tree-link" href="../../../../index.html"><span class="tree-link__num">00</span>All features</a></div>
+    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../../prd/skill-factory-prd.html"><span class="tree-ord">1</span>skill-factory PRD</a></li><li class="tree-leaf"><a class="tree-link" href="../../../decision-history/skill-factory-decision-history.html"><span class="tree-ord">2</span>skill-factory — Decision History</a></li><li class="tree-leaf"><a class="tree-link" href="../../../design/skill-factory-design.html"><span class="tree-ord">3</span>skill-factory Specification</a></li><li class="tree-leaf"><a class="tree-link" href="../../../impl-plan/skill-factory-impl-plan.html"><span class="tree-ord">4</span>skill-factory Implementation Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../../../test-plan/skill-factory-test-plan.html"><span class="tree-ord">5</span>skill-factory Test Plan</a></li><li class="tree-branch"><details open><summary><span class="tree-link"><span class="tree-ord">10</span>sub-feature</span></summary><ul class="tree"><li class="tree-branch"><details open><summary><a class="tree-link" href="../../auto-tdd/design/auto-tdd-design.html">auto-tdd</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../auto-tdd/prd/auto-tdd-prd.html"><span class="tree-ord">1</span>auto-tdd — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../auto-tdd/decision-history/auto-tdd-decision-history.html"><span class="tree-ord">2</span>auto-tdd — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../auto-tdd/design/auto-tdd-design.html"><span class="tree-ord">3</span>auto-tdd — 测试驱动开发循环</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../design/bug-design.html">bug</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../prd/bug-prd.html"><span class="tree-ord">1</span>bug — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="bug-decision-history.html" aria-current="page"><span class="tree-ord">2</span>bug — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../design/bug-design.html"><span class="tree-ord">3</span>bug — 调试、报告与自愈</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../skill/design/skill-design.html">skill</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../skill/prd/skill-prd.html"><span class="tree-ord">1</span>skill — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../skill/decision-history/skill-decision-history.html"><span class="tree-ord">2</span>skill — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../skill/design/skill-design.html"><span class="tree-ord">3</span>skill — Skill 管理入口</a></li></ul></details></li></ul></details></li></ul>
+  </nav>
+</aside>
+  <main class="content">
+    <nav class="breadcrumbs"><a href="../../../../index.html">Docs</a> / <span>skill-factory</span> / <span>features</span> / <span>bug</span> / <span>decision-history</span> / <span>bug — 决策记录</span></nav>
+    <article class="doc" data-doc="skill-factory/features/bug/decision-history/bug-decision-history">
+      <header class="doc-head">
+        <p class="eyebrow">skill-factory</p>
+        <h1>bug — 决策记录</h1>
+        <p class="source">Canonical: docs/features/skill-factory/features/bug/decision-history/bug-decision-history.md</p>
+      </header>
+      
+      <div class="doc-body">
+        <h2>bug — 决策记录</h2>
+<p>本篇按时间倒序记录 <code>bug</code> 这个 skill 的关键决策。 需求见 <a href="../prd/bug-prd.html">PRD</a>，设计见 <a href="../design/bug-design.html">design</a>。 skill-factory 层面的旧决策在 <a href="../../../decision-history/skill-factory-decision-history.html">parent decision history</a>。 opencode 会话按会话 id 前缀引用，数据在本机 opencode.db。</p>
+<h3>Decision Log</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>ID</th>
+<th>Date</th>
+<th>Decision</th>
+</tr></thead><tbody>
+<tr>
+<td><a class="id-ref" href="#ARD-A">ARD-A</a></td>
+<td>2026-08-02</td>
+<td>把 bug-hunt、bug-report、self-heal、self-analyze 合成一个三分支 skill；开头只问一个问题选分支</td>
+</tr>
+<tr>
+<td><a class="id-ref" href="#ARD-B">ARD-B</a></td>
+<td>2026-08-02</td>
+<td>合并时采用 skill-factory 里的旧版 bug-hunt 和 bug-report，没有带上 06-23 在 walter-worker 的改动</td>
+</tr>
+<tr>
+<td><a class="id-ref" href="#ARD-C">ARD-C</a></td>
+<td>2026-06-23</td>
+<td>debug 先收集一切可能相关的信息，不急着分析；再推理，并列出证据</td>
+</tr>
+<tr>
+<td><a class="id-ref" href="#ARD-D">ARD-D</a></td>
+<td>2026-06-23</td>
+<td>bug-sleuth 并入 bug-hunt，分&quot;已知代码 bug&quot;和&quot;原因不明的深挖&quot;两种模式</td>
+</tr>
+<tr>
+<td><a class="id-ref" href="#ARD-E">ARD-E</a></td>
+<td>2026-06-23</td>
+<td>bug-create 并入 bug-report，并改为可以向任意 GitHub 仓库提 issue</td>
+</tr>
+<tr>
+<td><a class="id-ref" href="#ARD-F">ARD-F</a></td>
+<td>2026-06-23</td>
+<td>hook 装在全局（Claude Code 和 OpenCode 各一份），trace 存在项目里；skill 触发时先检查 hook</td>
+</tr>
+<tr>
+<td><a class="id-ref" href="#ARD-G">ARD-G</a></td>
+<td>2026-06-23</td>
+<td>分析结果写进项目 CLAUDE.md 的 SELF-ANALYZE 块；已有就替换，没有就追加</td>
+</tr>
+<tr>
+<td><a class="id-ref" href="#ARD-H">ARD-H</a></td>
+<td>2026-06-23</td>
+<td>同一条纠正出现 2 次及以上才生成规则，单次纠正不生成</td>
+</tr>
+<tr>
+<td><a class="id-ref" href="#ARD-I">ARD-I</a></td>
+<td>2026-06-23</td>
+<td>self-heal 和 self-analyze 放进 skill-factory 的 ai-coworker-skills，从 personal-skills 删除</td>
+</tr>
+<tr>
+<td><del><a class="id-ref" href="#ARD-J">ARD-J</a></del></td>
+<td><del>2026-06-11</del></td>
+<td><del>self-analyze 和 self-healing-trace 迁到 personal 目录</del> 已被 <a href="#ard-i">ARD-I</a> 取代</td>
+</tr>
+</tbody></table></div>
+<h3>Evidence Appendix</h3>
+<h4 id="ARD-A"><a class="id-ref" href="#ARD-A">ARD-A</a></h4>
+<p>理由：commit 6086424 的说明是，近似重复的 skill 合成一个，先问清问题，再分到对应流程（<a class="id-ref" href="../prd/bug-prd.html#PRD-A">PRD-A</a>）。 被否决的方案：保留四个独立 skill。同一天 walter-worker commit e964925 也换成同样的 <code>bug</code>。 出处：commit 6086424；parent design 合并表的 <code>/bug</code> 一行。发起合并的那段对话没有找到，属于 UNKNOWN。</p>
+<h4 id="ARD-B"><a class="id-ref" href="#ARD-B">ARD-B</a></h4>
+<p>理由：UNKNOWN。6086424 合并的输入是本仓库 <code>ai-coworker-skills/</code> 里的旧版，最后改动在 3395648 和 cca25cd。 因此丢了：先收集后推理（<a class="id-ref" href="#ARD-C">ARD-C</a>）、深挖模式（<a class="id-ref" href="#ARD-D">ARD-D</a>）、任意仓库（<a class="id-ref" href="#ARD-E">ARD-E</a>）、触发时检查 hook（<a class="id-ref" href="#ARD-F">ARD-F</a>）。 这些改动当时只提交在 walter-worker（f8b7ffb、af88df6、6511f37、5138ea3），e964925 合并时也被同一份旧内容覆盖。 被否决的方案：以 walter-worker 的新版为输入。是有意取舍还是漏掉，属于 UNKNOWN，见 design 的 <a class="id-ref" href="../design/bug-design.html#QUES-A">QUES-A</a> 到 <a class="id-ref" href="../design/bug-design.html#QUES-D">QUES-D</a>。</p>
+<h4 id="ARD-C"><a class="id-ref" href="#ARD-C">ARD-C</a></h4>
+<p>理由：用户说 debug 一个重要的地方是&quot;收集所有信息，只要可能相关的，先不分析&quot;，然后&quot;推理，并列证据&quot;（<a class="id-ref" href="../prd/bug-prd.html#PRD-C">PRD-C</a>）。 被否决的方案：UNKNOWN，对话里没有列出别的方案。出处：ses_1417bab9（2026-06-23）；walter-worker commit f8b7ffb。 当前 SKILL.md 的 Phase 1 只收集报错、测试、代码和 git log，没有日志和消息，也没写&quot;先不过滤&quot;，原因见 <a class="id-ref" href="#ARD-B">ARD-B</a>。</p>
+<h4 id="ARD-D"><a class="id-ref" href="#ARD-D">ARD-D</a></h4>
+<p>理由：agent 解释了两者区别：bug-hunt 管已知代码 bug，bug-sleuth 管不知原因的多服务事故；用户回复&quot;合并&quot;（<a class="id-ref" href="../prd/bug-prd.html#PRD-D">PRD-D</a>）。 被否决的方案：保留两个独立 skill（agent 当时给的另一个选项）。出处：ses_1417bab9（2026-06-23）；walter-worker af88df6。 当前 SKILL.md 没有深挖模式和事故报告格式，原因见 <a class="id-ref" href="#ARD-B">ARD-B</a>。</p>
+<h4 id="ARD-E"><a class="id-ref" href="#ARD-E">ARD-E</a></h4>
+<p>理由：用户说 bug-create 和 bug-report&quot;重复了， merge成一个&quot;，又说要&quot;对于所有github&quot;（<a class="id-ref" href="../prd/bug-prd.html#PRD-E">PRD-E</a>、<a class="id-ref" href="../prd/bug-prd.html#PRD-F">PRD-F</a>）。 被否决的方案：只向 ai-coworker 一个仓库提 issue（旧 bug-report 的做法）。 出处：ses_1417bab9（2026-06-23）；walter-worker 4285718、6511f37。当前 SKILL.md 又回到只写 walter-worker，见 <a class="id-ref" href="#ARD-B">ARD-B</a>。</p>
+<h4 id="ARD-F"><a class="id-ref" href="#ARD-F">ARD-F</a></h4>
+<p>理由：agent 分析 self-heal 从没被调用，是因为没有触发机制：Claude Code 不会自己按关键词调用 skill（<a class="id-ref" href="../prd/bug-prd.html#PRD-H">PRD-H</a>）。 用户随后定下：触发时检查 hook，hook 全局装在两个 IDE，数据存项目级（<a class="id-ref" href="../prd/bug-prd.html#PRD-G">PRD-G</a>）。 被否决的方案：在 CLAUDE.md 加规则让 AI 每轮自查有没有被纠正（agent 当时给的第二个方案）。 出处：ses_1417bab9（2026-06-23）；walter-worker 5138ea3、45e9edf。当前 SKILL.md 没有检查 hook 的步骤，见 <a class="id-ref" href="#ARD-B">ARD-B</a>。</p>
+<h4 id="ARD-G"><a class="id-ref" href="#ARD-G">ARD-G</a></h4>
+<p>理由：用户要求 self-analyze 总结后&quot;放到当前project level 的claude.md&quot;（<a class="id-ref" href="../prd/bug-prd.html#PRD-I">PRD-I</a>）。 用 <code>&lt;!-- SELF-ANALYZE --&gt;</code> 注释包住、已有就替换，是 agent 写入的做法，用户没有逐条确认。 被否决的方案：UNKNOWN。出处：ses_1417bab9（2026-06-23）；commit dce0d79。</p>
+<h4 id="ARD-H"><a class="id-ref" href="#ARD-H">ARD-H</a></h4>
+<p>理由：UNKNOWN。&quot;2+ 次才算规律&quot;在 2026-06-23 迁入的 personal-skills 版 self-analyze 里就有（commit 3395648）。 对话里没找到用户定这个阈值的原话。被否决的方案：UNKNOWN。见 design 的 <a class="id-ref" href="../design/bug-design.html#QUES-E">QUES-E</a>。</p>
+<h4 id="ARD-I"><a class="id-ref" href="#ARD-I">ARD-I</a></h4>
+<p>理由：用户说&quot;这个self healing move 到skill-factory/ai-coworker-skill factory 里面&quot;（<a class="id-ref" href="../prd/bug-prd.html#PRD-J">PRD-J</a>）。 又问&quot;怎么还在personal folder 里面&quot;。被否决的方案：放在 personal-skills（<a class="id-ref" href="#ARD-J">ARD-J</a>）。 出处：ses_1417bab9（2026-06-23）；commit dce0d79（加入）、bd9bb02（从 personal 删除）。</p>
+<h4 id="ARD-J"><a class="id-ref" href="#ARD-J">ARD-J</a></h4>
+<p>理由：清理 ai-coworker 时，用户把 coworker-meta-self-analyze 和 coworker-meta-self-healing-trace 映射到 personal 目录。 同一条消息把 coworker-meta-report-issue 映射为 ai-coworker-issue-report，即后来的 bug-report。 被否决的方案：UNKNOWN。出处：ses_14a669c2（2026-06-11）。personal 的位置被 <a class="id-ref" href="#ARD-I">ARD-I</a> 取代。</p>
+<h3>Change Log</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Date</th>
+<th>Change</th>
+</tr></thead><tbody>
+<tr>
+<td>2026-11-24</td>
+<td>初版：从过去的对话和提交记录反推 bug 的决策</td>
+</tr>
+</tbody></table></div>
+      </div>
+    </article>
+    <nav class="pager" aria-label="Previous and next"><a class="prev" href="../design/bug-design.html"><span class="label">Previous</span>bug — 调试、报告与自愈</a><a class="next" href="../../skill/prd/skill-prd.html"><span class="label">Next</span>skill — 需求</a></nav>
+  </main>
+</div>
+<footer class="foot"><div class="foot-inner">Assembled from committed <code>.md</code>. The Markdown is authoritative; this page is a reading view.</div></footer>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>if(window.mermaid){mermaid.initialize({startOnLoad:false});}</script>
+<script src="../../../../assets/app.js"></script>
+</body>
+</html>
