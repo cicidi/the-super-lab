@@ -162,7 +162,7 @@ last_verified: 2026-11-20
 
 ### TST-R — 网页不能比 markdown 旧
 
-**目标：** 网页不落后于 markdown。**输入：** `docs/book/html/spec-driven-development/spec-driven-development-reader.html` 和它的所有源 `.md`。**通过条件：** 网页的修改时间不早于任何一个源文件；否则失败。**判定：** Python。
+**目标：** 网页不落后于 markdown。**输入：** `docs/book/html/spec-driven-development/spec-driven-development-reader.html` 和它的所有源 `.md`。**通过条件：** 用源文件重新生成一遍，除第一行（构建标记）外和已提交的网页逐字相同；否则失败。不比修改时间，新 checkout 的修改时间没有意义。**判定：** Python。
 
 ### TST-S — skill 正文里的四个例子
 
@@ -306,3 +306,4 @@ document-standard 的 reader PRD：
 | 2026-11-20 | 第 3 轮审查后：判断依据改为三份标准文件，交付物改链 ARD-BX；TST-O 按 feature 分开比对编号，PRD-G 已延后不要求对应 |
 | 2026-11-20 | TST-X：L1 内容不减少 |
 | 2026-11-24 | 新增 TST-Y（ARD-CC）；DSGN-N-D 补 feature 名；eval.yaml 现状更新 |
+| 2026-11-24 | TST-R 改为比较内容，不比修改时间 |

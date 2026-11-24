@@ -1,4 +1,4 @@
-<!-- SDD reader · source .md · git 8ba542e -->
+<!-- SDD reader · source .md · git d66534e -->
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light">
 <head>
@@ -1738,7 +1738,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <h4 id="TST-Q">TST-Q — mock MCP 的调用记录</h4>
 <p><strong>目标：</strong> 执行只做到 mock。<strong>输入：</strong> <code>skills/spec-organize/tests/mock-mcp/</code> 的客户端和服务器。<strong>通过条件：</strong> 调用时打印出记录（工具名、参数、结果）；没有真实的下单或订票。<strong>判定：</strong> Python 检查记录存在、没有真实副作用。</p>
 <h4 id="TST-R">TST-R — 网页不能比 markdown 旧</h4>
-<p><strong>目标：</strong> 网页不落后于 markdown。<strong>输入：</strong> <code>docs/book/html/spec-driven-development/spec-driven-development-reader.html</code> 和它的所有源 <code>.md</code>。<strong>通过条件：</strong> 网页的修改时间不早于任何一个源文件；否则失败。<strong>判定：</strong> Python。</p>
+<p><strong>目标：</strong> 网页不落后于 markdown。<strong>输入：</strong> <code>docs/book/html/spec-driven-development/spec-driven-development-reader.html</code> 和它的所有源 <code>.md</code>。<strong>通过条件：</strong> 用源文件重新生成一遍，除第一行（构建标记）外和已提交的网页逐字相同；否则失败。不比修改时间，新 checkout 的修改时间没有意义。<strong>判定：</strong> Python。</p>
 <h4 id="TST-S">TST-S — skill 正文里的四个例子</h4>
 <p><strong>目标：</strong> spec-write 和 spec-review 的正文都包含 PRD-Q 的四个例子。<strong>输入：</strong> 这两份 <code>SKILL.md</code>。<strong>通过条件：</strong> 每份都至少提到盖 shed、北京旅游、数学题、股票；缺一个就失败。<strong>判定：</strong> Python 查关键词，判分模型判断是否只是点了个名。</p>
 <h4 id="TST-T">TST-T — 外部仓库的参照 gold</h4>
@@ -2050,6 +2050,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td>2026-11-24</td>
 <td>新增 TST-Y（ARD-CC）；DSGN-N-D 补 feature 名；eval.yaml 现状更新</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>TST-R 改为比较内容，不比修改时间</td>
 </tr>
 </tbody></table>
 </div>

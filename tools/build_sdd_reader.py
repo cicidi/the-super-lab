@@ -491,6 +491,12 @@ def _build_marker() -> str:
     return "<!-- SDD reader · built by tools/build_sdd_reader.py -->\n"
 
 
+def render() -> str:
+    """Full reader HTML; line 1 is the build marker (git sha), the rest is content."""
+    panels = "\n\n".join(panel_html(pid, title, [(r, p) for r, p in srcs]) for pid, title, srcs in PANELS)
+    return _build_marker() + SHELL_HEAD + CSS_EXTRA + SHELL_MID + panels + SHELL_TAIL
+
+
 def main() -> None:
     import sys
 
@@ -502,8 +508,7 @@ def main() -> None:
     if "--check-sources" in sys.argv:
         print(f"ok: {sum(len(s) for _, _, s in PANELS)} reader source file(s)")
         return
-    panels = "\n\n".join(panel_html(pid, title, [(r, p) for r, p in srcs]) for pid, title, srcs in PANELS)
-    css = _build_marker() + SHELL_HEAD + CSS_EXTRA + SHELL_MID + panels + SHELL_TAIL
+    css = render()
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(css, encoding="utf-8")
     print(f"Wrote {OUT} ({OUT.stat().st_size} bytes)")
