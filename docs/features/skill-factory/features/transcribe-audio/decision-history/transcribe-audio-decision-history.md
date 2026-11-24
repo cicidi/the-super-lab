@@ -32,7 +32,8 @@ skill-factory 层面的旧记录在 [parent decision history](../../../decision-
 hvg commit ca6bb23 新增 skill，并改了 create-video-workflow 的 Phase 1 和 hvg 的 CLAUDE.md。
 本仓库 commit ee5f3d5（当年在 skill-factory 仓库）只新增了 `personal-skills/transcribe-audio/SKILL.md`，两份内容完全相同。
 被否决的方案：只放在 hvg。用户有没有要求同时放进 skill factory，没有找到原话，属于 UNKNOWN。
-后果：本仓库的 create-video-workflow 副本没有带上 ca6bb23 的 Phase 1 改动，见 design 的 QUES-C。
+后果：本仓库的 create-video-workflow 副本当时没有带上 ca6bb23 的 Phase 1 改动。
+2026-11-24 已补上，见 create-video-workflow 的 ARD-P。
 
 ### ARD-B
 
@@ -67,3 +68,4 @@ agent 回复"明白——用本地 GPU 跑 Whisper CLI，不走 API"，并重写
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 transcribe-audio 的决策 |
+| 2026-11-24 | ARD-E 的后果补记：本仓库 create-video-workflow 已补上 Phase 1 分流 |

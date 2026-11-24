@@ -16,7 +16,8 @@ last_verified: 2026-11-24
 ## Problem Statement
 
 用户手里有 m4a 等录音，想得到文字稿（PRD-A）。
-create-video-workflow 收集素材时，只能读文字类素材，音频只能记为缺口（兄弟 design 的 QUES-D）。
+没有本 skill 时，create-video-workflow 收集素材只能读文字类素材，音频只能记为缺口。
+现在它的 Phase 1 把音频交给本 skill（见 DSGN-G）。
 用户有一块好显卡，不想为转写按分钟付钱（PRD-C）。
 
 ## Solution
@@ -61,7 +62,7 @@ m4a、mp3、wav 直接交给 Whisper。多个文件时用一个简单的 bash �
 **DSGN-F 质量门。** 四项检查：有显卡或已提醒用户；音频文件存在且可读；输出非空且通顺；语言符合预期（抽查前几行）。
 
 **DSGN-G 与 create-video-workflow 的衔接。** 在 hvg 里，create-video-workflow 的 Phase 1 把音频，以及抽出音轨的视频，交给本 skill（hvg commit ca6bb23；PRD-D）。
-本仓库的 create-video-workflow 副本没有这段改动，见 QUES-C 和兄弟 [design](../../create-video-workflow/design/create-video-workflow-design.md) 的 QUES-D。
+2026-11-24 起，本仓库的 create-video-workflow 也补上了这段分流（[create-video-workflow 的 ARD-P](../../create-video-workflow/decision-history/create-video-workflow-decision-history.md#ard-p)）。
 
 ## Testing Decisions
 
@@ -106,7 +107,7 @@ skill-factory 整体设计的技术选择表里也记了"Whisper（本地 GPU）
 |---|---|---|---|---|
 | QUES-A | 用户说的"full transcript"指什么（PRD-A）？ | SKILL.md 只有 `--output_format all` 可能对应 | cicidi | no |
 | QUES-B | 要不要把转写合到用户"已有的那个 skill"里，而不是另起一个（PRD-B）？ | 现在是独立 skill，与 youtube-summarize 的 Whisper 退路重复 | cicidi | no |
-| QUES-C | 本仓库的 create-video-workflow 要不要补上 hvg ca6bb23 的 Phase 1 路由（PRD-D）？ | 本仓库副本仍把纯音频记为缺口 | cicidi | no |
+| QUES-C | 本仓库的 create-video-workflow 要不要补上 hvg ca6bb23 的 Phase 1 路由（PRD-D）？ | 已补上（create-video-workflow 的 ARD-P） | cicidi | no |
 | QUES-D | 批量处理时，临时音频文件要不要按输入文件命名？ | SKILL.md 写死一个临时路径 | cicidi | no |
 | QUES-E | webm 算音频还是视频？ | 描述里列为音频，DSGN-B 里列为视频 | cicidi | no |
 
@@ -120,3 +121,4 @@ hvg 里还有一份相同的副本，两边要分别撤回。已安装到 `~/.cl
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：按 SKILL.md 写出 transcribe-audio 的 design，引用 PRD-A 到 PRD-E |
+| 2026-11-24 | DSGN-G 和 QUES-C：本仓库 create-video-workflow 已补上 Phase 1 分流 |

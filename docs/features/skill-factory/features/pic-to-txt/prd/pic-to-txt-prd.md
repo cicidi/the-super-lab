@@ -56,7 +56,7 @@ agent 列出 Tesseract、EasyOCR、PaddleOCR 三个引擎让用户选。
 **PRD-F 说"提取图片文字"就该用上。** 2026-07-26 用户让 agent 把一组图片"导成prd 文档"。
 agent 却自己设计了一份 PRD（会话 a2dcb9ad）。
 用户纠正："我要你把图片里面的文字写提取出来，我有skill pic 2 txt"（同一会话）。
-这条需求由这次纠正推出，见 design 的 QUES-B。
+这条需求由这次纠正推出。2026-11-24 补上了这类触发词（ARD-G）。
 
 ## Out of Scope
 
@@ -74,3 +74,4 @@ LLM 修正由运行 skill 的 agent 自己完成，创建当晚就是这样跑�
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 pic-to-txt 的 PRD |
+| 2026-11-24 | PRD-F 记录补上的触发词（ARD-G） |

@@ -19,6 +19,7 @@ ARD-B、ARD-C、ARD-D、ARD-F 都由 agent 在同一次回复里做出，用户�
 
 | ID | Date | Decision |
 |---|---|---|
+| ARD-G | 2026-11-24 | 相关 skill 里已不存在的 doc-organize 换成 spec-write |
 | ARD-A | 2026-07-23 | skill 随一次 luma-event-scout 的提交进入本仓库的 `personal-skills/` |
 | ARD-B | 2026-07-18 | skill 写进 skill-factory 的 `personal-skills/`，分析报告留在 mfangdai-video 项目 |
 | ARD-C | 2026-07-18 | 背景首推实体浅灰背景布，绿幕作为可替换品牌背景的备选 |
@@ -27,6 +28,12 @@ ARD-B、ARD-C、ARD-D、ARD-F 都由 agent 在同一次回复里做出，用户�
 | ARD-F | 2026-07-18 | 写稿时用 `[FULL]` 和 `[PIP]` 标记预先规划每个引用点 |
 
 ## Evidence Appendix
+
+### ARD-G
+
+理由：commit c44e983 把 doc-organize 换成 spec-organize 和 spec-write，本 skill 还指向旧名字。
+spec-organize 不是入口 skill，所以指向 spec-write。
+被否决的方案：指向 spec-organize。出处：用户 2026-11-24 审阅回复；commit c44e983。
 
 ### ARD-A
 
@@ -73,3 +80,4 @@ agent 下载样例，每 10 秒抽一帧，共 185 帧，再按颜色和版面�
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 video-production-pip-style 的决策 |
+| 2026-11-24 | 新增 ARD-G：doc-organize 换成 spec-write |

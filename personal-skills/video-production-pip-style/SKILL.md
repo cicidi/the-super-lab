@@ -363,4 +363,4 @@ The video is complete when:
 
 - `youtube-research-pipeline` — For research and script writing
 - `pic-to-txt` — OCR images to text for research
-- `doc-organize` — Organize research docs and citations
+- `spec-write` — Organize research docs and citations (follows SPEC-STANDARD.md)

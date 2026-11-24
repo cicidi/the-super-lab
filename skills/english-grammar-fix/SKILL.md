@@ -1,6 +1,6 @@
 ---
 name: english-grammar-fix
-description: Auto-correct minor English grammar errors in AI responses for non-native speakers
+description: Correct minor English grammar errors in AI-written text for non-native speakers. Manual only — runs when the user invokes it on a piece of text; no hook runs it automatically.
 license: MIT
 compatibility: claude-code,opencode,gemini
 metadata:
@@ -8,14 +8,14 @@ metadata:
     - english-grammar-fix
     - fix grammar
     - correct english
-  when_to_use: When the user wants to auto-correct minor English grammar errors in AI-generated text.
+  when_to_use: When the user asks to correct minor English grammar errors in a specific piece of AI-generated text.
   audience: walter-worker
 ---
 
 # English Grammar Fix
 
-Automatically corrects minor English grammar and phrasing errors in AI-written content
-(comments, commit messages, PR descriptions, docs).
+Corrects minor English grammar and phrasing errors in AI-written content
+(comments, commit messages, PR descriptions, docs). Runs only when the user invokes it.
 
 ## When to Use
 

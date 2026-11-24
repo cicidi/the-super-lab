@@ -141,7 +141,7 @@ Luma 官方 REST API：要付费订阅，而且只能查自己的 calendar，被
 |---|---|---|---|---|
 | QUES-A | 搜索窗口是一个月，还是 10 天（PRD-D）？ | 偏好一节写一个月，过滤代码写 10 天 | cicidi | no |
 | QUES-B | Process 第 1 步要不要改成先调接口（PRD-M）？ | 仍写先抓 `luma.com/sf/ai` 分类页 | cicidi | no |
-| QUES-C | Strategy 1 里残留的 Playwright 下拉代码要不要删？ | 24d4264 说已删，代码还在；代码块没闭合，吞掉了 Preference Learning 标题 | cicidi | no |
+| QUES-C | Strategy 1 里残留的 Playwright 下拉代码要不要删？ | 24d4264 说已删，代码还在；代码块已补上结束标记（ARD-N），删不删仍未定 | cicidi | no |
 | QUES-D | "不要纯中国人的"是指中文活动吗（PRD-F）？ | SKILL.md 按中文标题或描述过滤 | cicidi | no |
 | QUES-E | 报名要不要用用户已登录的 Chrome（PRD-N）？ | 示例脚本新开 Chromium；当晚用户选了"方案a"，即自己在有显示器的机器上跑 | cicidi | no |
 | QUES-F | 偏好学习真的在用吗（PRD-I）？ | preferences.json 反馈列表为空，最后更新 2026-07-10；文件里还留着资料字段 | cicidi | no |
@@ -159,3 +159,4 @@ Luma 官方 REST API：要付费订阅，而且只能查自己的 calendar，被
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：按已提交的 SKILL.md 写出 luma-event-scout 的 design，引用 PRD-A 到 PRD-P |
+| 2026-11-24 | QUES-C 记录代码块已闭合（ARD-N） |

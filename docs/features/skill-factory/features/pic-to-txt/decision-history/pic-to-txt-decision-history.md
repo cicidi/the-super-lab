@@ -18,6 +18,9 @@ last_verified: 2026-11-24
 
 | ID | Date | Decision |
 |---|---|---|
+| ARD-H | 2026-11-24 | SKILL.md 按 `ocr.py` 的实际做法描述 auto 语言检测 |
+| ARD-G | 2026-11-24 | 触发词加上照片转文字、OCR these photos、HEIC、pic 2 txt、把图片导成文档等 |
+| ARD-F | 2026-11-24 | `ocr.py` 支持 HEIC/HEIF：先转成临时 JPEG 再 OCR |
 | ARD-A | 2026-07-18 | 原始 OCR 结果存为 `_raw_ocr_output.txt`；LLM 修正必做，原始结果不交付 |
 | ARD-B | 2026-07-18 | 输出文件以文件夹名命名，存回图片所在的文件夹 |
 | ARD-C | 2026-07-18 | 放在 personal-skills，并附带 `ocr.py` 脚本统一调用两个引擎 |
@@ -25,6 +28,23 @@ last_verified: 2026-11-24
 | ARD-E | 2026-07-18 | 中文用 PaddleOCR，英文用 EasyOCR，不用 Tesseract |
 
 ## Evidence Appendix
+
+### ARD-H
+
+理由：SKILL.md 说 auto 看 `.chs` 扩展名和 `.zh/` 子目录，`ocr.py` 实际只看文件名和文件夹名里的汉字。
+以代码为准，并提醒 `IMG_1234.HEIC` 这类名字总被判为英文。
+被否决的方案：改代码去配合旧描述。出处：用户 2026-11-24 审阅回复；design 的 QUES-C。
+
+### ARD-F
+
+理由：两次实际使用给的都是 iPhone 的 HEIC 照片（a2dcb9ad、78981854），脚本不认，只能先手工转格式。
+转换依次试 pillow-heif、`heif-convert`、ImageMagick；都不行就报错并列出安装方法。
+被否决的方案：要求用户先手工转格式；只支持 pillow-heif 一种。出处：用户 2026-11-24 审阅回复。
+
+### ARD-G
+
+理由：2026-07-26 用户说"导成prd 文档"，又说"我有skill pic 2 txt"，skill 都没被触发（a2dcb9ad）。
+被否决的方案：保持原触发词。出处：用户 2026-11-24 审阅回复；PRD-F。
 
 ### ARD-A
 
@@ -63,3 +83,4 @@ last_verified: 2026-11-24
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 pic-to-txt 的决策 |
+| 2026-11-24 | 新增 ARD-F（HEIC）、ARD-G（触发词）、ARD-H（auto 描述） |

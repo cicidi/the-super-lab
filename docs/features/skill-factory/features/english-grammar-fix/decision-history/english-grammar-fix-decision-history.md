@@ -18,6 +18,7 @@ opencode 会话按会话 id 前缀引用，数据在本机 opencode.db。
 
 | ID | Date | Decision |
 |---|---|---|
+| ARD-G | 2026-11-24 | description 改为写明只能手动调用，去掉 Auto-correct 的说法 |
 | ARD-A | 2026-08-02 | 把 38 个 skill 合成 11 个时，本 skill 保持独立，不与任何 skill 合并 |
 | ARD-B | 2026-06-24 | 补上使用场景、不适用场景和四步流程；触发词加上 fix grammar、correct english |
 | ARD-C | 2026-06-23 | 改名为 english-grammar-fix，名字直接说明用途 |
@@ -26,6 +27,12 @@ opencode 会话按会话 id 前缀引用，数据在本机 opencode.db。
 | ARD-F | 2026-03-30 | 只在用户手动调用时运行，不挂 hook 自动运行 |
 
 ## Evidence Appendix
+
+### ARD-G
+
+理由：description 写 Auto-correct，但本 skill 只在用户调用时运行（ARD-F），说法和行为不符。
+被否决的方案：加 hook 让它自动运行；保留旧 description。
+出处：用户 2026-11-24 审阅回复；design 的 QUES-A。
 
 ### ARD-A
 
@@ -70,3 +77,4 @@ agent 的方案把 coworker-meta-auto-patches 归入 self-* 一组，叫 self-pa
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 english-grammar-fix 的决策 |
+| 2026-11-24 | 新增 ARD-G：description 改为只能手动调用 |

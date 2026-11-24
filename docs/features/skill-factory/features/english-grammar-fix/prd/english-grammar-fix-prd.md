@@ -35,8 +35,9 @@ Claude Code 的输入记录在 `~/.claude/history.jsonl`，按会话 id 前 8 �
 
 ## Functional Requirements
 
-**PRD-A 修正 AI 写的英文小错。** 首版起 description 一直是
+**PRD-A 修正 AI 写的英文小错。** 首版的 description 是
 "Auto-correct minor English grammar errors in AI responses for non-native speakers"（c3f771f）。
+2026-11-24 起 description 改为写明只能手动调用（ARD-G）。
 范围是语法和措辞，不改写内容本身。
 "for non-native speakers" 是否也包括修正用户自己写的英文，属于 UNKNOWN，见 design 的 QUES-B。
 
@@ -73,3 +74,4 @@ Claude Code 的输入记录在 `~/.claude/history.jsonl`，按会话 id 前 8 �
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 english-grammar-fix 的 PRD |
+| 2026-11-24 | PRD-A 补充 description 的改动（ARD-G） |

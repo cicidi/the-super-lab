@@ -56,6 +56,7 @@ last_verified: 2026-11-24
 
 **PRD-G 文档走 doc-organize，每份都要人审。** 用户说生成文档"要使用doc organize skill"。
 写每一个文档都是 human in the loop（人参与其中）的讨论和 review（1de9cb65，2026-07-22）。
+doc-organize 后来改名，现在由 spec-write 承担这件事（ARD-Q）。
 
 **PRD-H 按软件工程的阶段来组织。** 用户说 phase 0-2 类似写代码的需求分析和 design，phase 3 是 spec。
 phase 4 是具体实施，phase 5 类似 build（同一会话）。
@@ -95,3 +96,4 @@ Seedance 是离线任务，提交后返回 task id；用户要求把 task id 和
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 create-video-workflow 的 PRD |
+| 2026-11-24 | PRD-G 补充 doc-organize 已换成 spec-write（ARD-Q） |

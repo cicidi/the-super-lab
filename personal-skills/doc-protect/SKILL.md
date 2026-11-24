@@ -35,14 +35,16 @@ blocks marked with PROTECTED and END PROTECTED tags.
 
 1. Ask: "Which section should be protected?"
 2. Add `<!-- PROTECTED -->` before and `<!-- END PROTECTED -->` after
-3. Commit with message: "docs: protect {section name}"
+3. Show the user the diff and ask: "Commit this as `docs: protect {section name}`?"
+4. Commit only if the user says yes; otherwise leave the change uncommitted
 
 ### Removing Protection
 
 Only the human can remove protection:
 1. User explicitly says "unprotect this section"
 2. Remove the markers
-3. Commit with message: "docs: unprotect {section name}"
+3. Show the user the diff and ask: "Commit this as `docs: unprotect {section name}`?"
+4. Commit only if the user says yes; otherwise leave the change uncommitted
 
 ### PROTECTED Block Format
 
@@ -51,6 +53,17 @@ Only the human can remove protection:
 Content that AI must never modify, move, remove, or reformat.
 <!-- END PROTECTED -->
 ```
+
+Named form — use when a file has several blocks, so each block can be referred to by name:
+
+```html
+<!-- PROTECTED:CRITICAL-RULES -->
+Content that AI must never modify, move, remove, or reformat.
+<!-- END PROTECTED:CRITICAL-RULES -->
+```
+
+The name is a label only. Tools pair blocks by order (open → next close); they do not check
+that the closing name matches, so always close a named block with the same name.
 
 ## Rules
 
@@ -88,7 +101,7 @@ Content that AI must never modify, move, remove, or reformat.
 
 ### Scenario 3: Remove protection
 **Input:** "Unprotect the architecture decisions section"
-**Expected:** Markers removed, content unchanged
+**Expected:** Markers removed, content unchanged, diff shown, commit only after the user says yes
 
 ### Scenario 4: Suggest protection
 **Input:** User adds critical business rules to a doc

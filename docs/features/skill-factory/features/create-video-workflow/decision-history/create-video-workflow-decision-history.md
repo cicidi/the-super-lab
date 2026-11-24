@@ -17,6 +17,9 @@ last_verified: 2026-11-24
 
 | ID | Date | Decision |
 |---|---|---|
+| ARD-Q | 2026-11-24 | 已不存在的 doc-organize 换成 spec-write |
+| ARD-P | 2026-11-24 | Phase 1 遇到音频或带声音的视频，交给 transcribe-audio 转文字 |
+| ARD-O | 2026-11-24 | 脚本路径改为 hvg 的 `scripts/`，项目目录改为 video-gen-initiative 的 `projects/` |
 | ARD-A | 2026-07-22 | 把 v3 版复制一份到 skill factory 的 `personal-skills/`，项目里的那份照旧 |
 | ARD-B | 2026-07-22 | 加 Phase 7 Deploy：验收通过后像 CI/CD 一样发布到各渠道，并写 release notes |
 | ARD-C | 2026-07-22 | Phase 0 产出带 Goal 的需求文档；加 Phase 6 听众 agent 验收和第 4 个检查点 |
@@ -33,6 +36,24 @@ last_verified: 2026-11-24
 | ~~ARD-N~~ | ~~2026-04-18~~ | ~~5 步加 3 个检查点，把创业故事想法做成 60 秒短视频~~ 已被 [ARD-G](#ard-g) 取代 |
 
 ## Evidence Appendix
+
+### ARD-Q
+
+理由：commit c44e983 把 doc-organize 换成 spec-organize 和 spec-write；spec-organize 不是入口 skill。
+本条修改了 ARD-E 里 doc-organize 的部分；检查点的规则不变。
+被否决的方案：指向 spec-organize。出处：用户 2026-11-24 审阅回复；commit c44e983。
+
+### ARD-P
+
+理由：hvg commit ca6bb23 给 hvg 那份 SKILL.md 加了这段分流，本仓库这份一直没有，音频被记为 gap。
+本次照搬 ca6bb23 的写法：音频直接转，视频先用 ffmpeg 抽音轨，没有字幕的 YouTube 先下载音频。
+被否决的方案：继续把纯音频记为 gap。出处：用户 2026-11-24 审阅回复；hvg commit ca6bb23。
+
+### ARD-O
+
+理由：hvg commit b805482 把 `tools/` 改名为 `scripts/`；video-gen-initiative commit d000be2 把 `projects/` 从 hvg 移了过去。
+hvg 脚本仍按 `<hvg>/projects/<name>/` 拼路径，SKILL.md 要求跑脚本前先问用户怎么接上（QUES-G）。
+被否决的方案：保留旧路径；不问用户直接建软链接。出处：用户 2026-11-24 审阅回复；用 ls 和 git log 核对。
 
 ### ARD-A
 
@@ -122,3 +143,4 @@ v3 保留了这条：Phase 4 说视频按顺序生成，用尾帧衔接。
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 create-video-workflow 的决策 |
+| 2026-11-24 | 新增 ARD-O（路径）、ARD-P（音频分流）、ARD-Q（spec-write） |

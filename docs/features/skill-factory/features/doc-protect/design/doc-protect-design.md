@@ -38,10 +38,10 @@ skill 只有一个 SKILL.md，全是给 agent 读的文字规则，没有脚本�
 内容本该自由编辑，或只是临时笔记时，不用。
 
 **DSGN-B 加保护。** 先问用户要保护哪一段，再在段前加开始标记、段后加结束标记（PRD-A）。
-然后提交，信息为 `docs: protect {section name}`（PRD-D）。
+然后给用户看 diff，问是否提交为 `docs: protect {section name}`；用户同意才提交（PRD-D、ARD-G）。
 
 **DSGN-C 解除保护。** 只有用户明确说"unprotect this section"才做（PRD-C）。
-去掉两行标记，块内文字不动，提交信息为 `docs: unprotect {section name}`（PRD-D）。
+去掉两行标记，块内文字不动；同样先给用户看 diff，同意后提交为 `docs: unprotect {section name}`（ARD-G）。
 
 **DSGN-D AI 的规则。** 不得修改、移动、删除或重排块内内容；可以读它，可以在块外加内容（PRD-B）。
 可以建议加保护，但不给用户没要求的内容加（PRD-E）。
@@ -50,9 +50,10 @@ skill 只有一个 SKILL.md，全是给 agent 读的文字规则，没有脚本�
 **DSGN-E 质量门。** MUST：任何编辑后受保护块保持原样；开始和结束标记成对出现。
 NICE：找出值得保护的段落，如 PRD 需求、架构决定、法律条款、安全策略（PRD-E）。
 
-**DSGN-F 标记写法与工具。** SKILL.md 只教 `<!-- PROTECTED -->` 和 `<!-- END PROTECTED -->` 这一种写法（PRD-A）。
+**DSGN-F 标记写法与工具。** SKILL.md 教 `<!-- PROTECTED -->` 和 `<!-- END PROTECTED -->` 这种基本写法（PRD-A）。
 walter-worker 的合并工具还认 `PROTECTED START`/`PROTECTED END`；没写结束标记时，保护会延伸到文件末尾（0936956）。
-walter-worker 的 CLAUDE.md 还用带名字的写法 `<!-- PROTECTED:CRITICAL-RULES -->`，工具认，SKILL.md 没提（QUES-C）。
+SKILL.md 也写了带名字的写法，如 `<!-- PROTECTED:CRITICAL-RULES -->`，结束标记用同一个名字（ARD-H）。
+工具按先后顺序配对，不核对名字。
 
 **DSGN-G 存放与命名。** 文件在 `personal-skills/doc-protect/`，属于个人 skill（PRD-F）。
 `name` 字段是 `doc-protect`（PRD-H），正文标题却是 `walter-worker-doc-protect`（QUES-E）。
@@ -85,7 +86,7 @@ skill-factory 整体的设计见 [parent design](../../../design/skill-factory-d
 ## Drawbacks
 
 规则只靠 agent 自觉遵守；普通编辑时没有工具拦截对块内的修改，见 QUES-B。
-每次加、减保护都要求提交，SKILL.md 没写要不要先问用户，见 QUES-A。
+每次加、减保护都要用户确认后才提交，多一步询问（ARD-G）。
 
 ## Risks and Mitigations
 
@@ -98,9 +99,9 @@ skill-factory 整体的设计见 [parent design](../../../design/skill-factory-d
 
 | ID | 问题 | 目前答案 | Owner | Blocking |
 |---|---|---|---|---|
-| QUES-A | 加、减保护后要不要自动提交（PRD-D）？ | SKILL.md 要求每次提交，没写先问用户 | cicidi | no |
+| QUES-A | 加、减保护后要不要自动提交（PRD-D）？ | 先给用户看 diff，用户同意才提交（ARD-G） | cicidi | no |
 | QUES-B | 要不要在普通编辑时也自动检查块内是否被改（PRD-B）？ | 只有 walter-worker 合并时检查 | cicidi | no |
-| QUES-C | 带名字的标记 `PROTECTED:名字` 要不要写进 SKILL.md（PRD-A）？ | 工具认，SKILL.md 没写 | cicidi | no |
+| QUES-C | 带名字的标记 `PROTECTED:名字` 要不要写进 SKILL.md（PRD-A）？ | 写进 SKILL.md，结束标记用同一名字（ARD-H） | cicidi | no |
 | QUES-D | 迁移时为什么没按"skill create 新建"重写（PRD-G）？ | UNKNOWN；a5dcc4e 基本是原版 | cicidi | no |
 | QUES-E | `name` 与正文标题不一致，要不要统一（PRD-H）？ | parent 决策 0082 要前缀，3395648 去掉了 | cicidi | no |
 | QUES-F | 为什么留在个人目录，而不是公开的 `skills/`（PRD-F）？ | UNKNOWN（ARD-D、ARD-E） | cicidi | no |
@@ -116,3 +117,4 @@ skill 的改动都在 git 跟踪的 `personal-skills/doc-protect/SKILL.md`，用
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：按 SKILL.md 写出 doc-protect 的 design，引用 PRD-A 到 PRD-H |
+| 2026-11-24 | 按 ARD-G、ARD-H 改写 DSGN-B、C、F，Drawbacks，QUES-A、C |

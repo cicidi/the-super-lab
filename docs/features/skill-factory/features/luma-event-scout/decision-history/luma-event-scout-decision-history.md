@@ -18,6 +18,7 @@ opencode 会话按 id 前缀引用；Claude 会话按 `~/.claude/history.jsonl` 
 
 | ID | Date | Decision |
 |---|---|---|
+| ARD-N | 2026-11-24 | 补上 Strategy 1 代码块缺的结束标记，让 Preference Learning 标题重新显示；代码本身不动 |
 | ARD-A | 2026-08-02 | 从活动详情页挖新 calendar，每次发现都写回 SKILL.md；关键字命中的活动必抓详情 |
 | ARD-B | 2026-07-23 | 报名成功以成功页面加 my-events 页面的状态为准，看不到就重报 |
 | ARD-C | 2026-07-23 | 个人资料移出 SKILL.md，改从本机 `~/.person_info.md` 读 |
@@ -33,6 +34,12 @@ opencode 会话按 id 前缀引用；Claude 会话按 `~/.claude/history.jsonl` 
 | ARD-M | 2026-07-10 | 把七条标准写成 personal skill，只搜一个月内，用 preferences.json 记反馈 |
 
 ## Evidence Appendix
+
+### ARD-N
+
+理由：Strategy 1 的 Python 代码块没有结束标记，后面的 Preference Learning 标题被当成代码显示。
+被否决的方案：同时删掉这段 Playwright 代码，或改 WINDOW_DAYS；这两件事还没定（QUES-A、QUES-C）。
+出处：用户 2026-11-24 审阅回复。
 
 ### ARD-A
 
@@ -118,3 +125,4 @@ agent 先把加分门槛写成 1 万美元，用户说"奖金超过1k都可以"�
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 luma-event-scout 的决策 |
+| 2026-11-24 | 新增 ARD-N：补上代码块结束标记 |

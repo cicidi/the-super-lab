@@ -36,7 +36,7 @@ LLM 修正没有单独的脚本，由运行 skill 的 agent 自己完成（b1cdd
 ## Design
 
 **DSGN-A 触发。** 触发词有 extract text from images、ocr these images、图片转文字、提取图片文字等（PRD-F）。
-触发词里没有"导成文档"这类说法；2026-07-26 就漏触发过一次（a2dcb9ad），见 QUES-B。
+2026-07-26 漏触发过一次（a2dcb9ad）。现在加了照片转文字、OCR these photos、HEIC、pic 2 txt、把图片导成文档（ARD-G）。
 
 **DSGN-B 检查依赖。** 第 0 步分别试着导入 paddleocr 和 easyocr，至少一个可用才继续，否则先安装（PRD-C）。
 
@@ -48,8 +48,10 @@ LLM 修正没有单独的脚本，由运行 skill 的 agent 自己完成（b1cdd
 
 **DSGN-E 脚本 `ocr.py`。** 用法是 `ocr.py <folder> [--lang zh|en|auto]`，默认 auto（PRD-C）。
 auto 的规则：文件名或文件夹名里有汉字就判为中文，否则判为英文。
-SKILL.md 对 auto 的描述不同：它说看 `.chs` 扩展名或 `.zh/` 子目录，见 QUES-C。
+SKILL.md 照此描述，并提醒 `IMG_1234.HEIC` 这类名字总被判为英文，中文要传 `--lang zh`（ARD-H）。
 每张图的结果前加一行 `--- 文件名 ---`，合起来存为 `_raw_ocr_output.txt`，同时打到标准输出（PRD-A）。
+HEIC/HEIF 照片先转成临时 JPEG：依次试 pillow-heif、`heif-convert`、ImageMagick；都不行就报错并列出安装方法（ARD-F）。
+临时文件放在系统临时目录，跑完自动删除；结果里仍用原文件名。
 文件夹不存在或里面没有图片时，报错退出。
 
 **DSGN-F LLM 修正。** 第 3 步把原始 OCR 文本交给 LLM，只修错字、补标点和分段，保留标题和列表（PRD-B）。
@@ -85,25 +87,25 @@ Unlimited-OCR（百度的视觉大模型 OCR）：2026-07-22 讨论过，没有�
 
 ## Drawbacks
 
-不支持 HEIC（苹果手机照片格式）。2026-07-26 和 2026-11-11 用户给的都是 HEIC（a2dcb9ad、78981854），都得先转格式。
-SKILL.md 第 2 步的内联命令只匹配 `*.png`；第 1 步列了 6 种扩展名，脚本还多支持 webp。
+HEIC（苹果手机照片格式）只有 `ocr.py` 能读；转换要装 pillow-heif、`heif-convert` 或 ImageMagick 之一（ARD-F）。
+SKILL.md 第 2 步的内联命令只匹配 `*.png`，HEIC 照片要改用 `ocr.py`（ARD-F）。
 一个文件夹只出一份 md 或 txt。2026-08-03 用户要过 md 加 Excel，还要按图片拆成多份（会话 8be9c74b），见 QUES-E。
 
 ## Risks and Mitigations
 
 | 风险 | 缓解 |
 |---|---|
-| 用户的说法不在触发词里，agent 自己编内容 | 2026-07-26 发生过（a2dcb9ad）；补触发词，见 QUES-B |
-| auto 判断语言不准，选错引擎 | 语言说不清时先问用户（DSGN-D）；规则冲突见 QUES-C |
+| 用户的说法不在触发词里，agent 自己编内容 | 2026-07-26 发生过（a2dcb9ad）；已补触发词（ARD-G） |
+| auto 判断语言不准，选错引擎 | 语言说不清时先问用户（DSGN-D）；照片名里没有语言线索时传 `--lang`（ARD-H） |
 | 原始 OCR 文件一直留在图片旁边 | SKILL.md 要求保留它，没有清理选项；是否需要属于 UNKNOWN |
 
 ## Open Questions
 
 | ID | 问题 | 目前答案 | Owner | Blocking |
 |---|---|---|---|---|
-| QUES-A | 要不要支持 HEIC 照片（PRD-A）？ | 不支持；两次实际使用都得先转格式 | cicidi | no |
-| QUES-B | 触发词要不要加上"导成文档""转文字稿"等说法（PRD-F）？ | 当前没有 | cicidi | no |
-| QUES-C | auto 语言检测以哪个为准（PRD-C）？ | SKILL.md 说看扩展名和子目录，`ocr.py` 看名字里的汉字 | cicidi | no |
+| QUES-A | 要不要支持 HEIC 照片（PRD-A）？ | 支持，`ocr.py` 先转成 JPEG（ARD-F） | cicidi | no |
+| QUES-B | 触发词要不要加上"导成文档""转文字稿"等说法（PRD-F）？ | 已加照片转文字、pic 2 txt、把图片导成文档等（ARD-G） | cicidi | no |
+| QUES-C | auto 语言检测以哪个为准（PRD-C）？ | 以 `ocr.py` 为准：看名字里的汉字（ARD-H） | cicidi | no |
 | QUES-D | 要不要把 Unlimited-OCR 加为可选引擎（PRD-C）？ | agent 2026-07-22 建议暂不；用户未回复（1de9cb65） | cicidi | no |
 | QUES-E | 要不要支持 Excel 等输出，或把一个文件夹拆成多份文档（PRD-A）？ | 当前只出一份 md 或 txt | cicidi | no |
 | QUES-F | youtube-research-pipeline 里 `ocr.py` 的旧路径要不要改（PRD-E）？ | 仍指向已不存在的 `~/project/skill-factory/` | cicidi | no |
@@ -119,3 +121,4 @@ SKILL.md 第 2 步的内联命令只匹配 `*.png`；第 1 步列了 6 种扩展
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：按 SKILL.md 和 ocr.py 写出 pic-to-txt 的 design，引用 PRD-A 到 PRD-F |
+| 2026-11-24 | 按 ARD-F、G、H 改写 DSGN-A、E，Drawbacks，QUES-A、B、C |

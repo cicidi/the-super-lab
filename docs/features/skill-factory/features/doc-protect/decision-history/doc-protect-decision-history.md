@@ -18,6 +18,8 @@ opencode 会话按会话 id 前缀引用，数据在本机 opencode.db；walter-
 
 | ID | Date | Decision |
 |---|---|---|
+| ARD-H | 2026-11-24 | SKILL.md 写明带名字的标记 `<!-- PROTECTED:名字 -->` 和对应的结束标记 |
+| ARD-G | 2026-11-24 | 加、减保护后先给用户看 diff 并询问，用户同意才提交 |
 | ARD-A | 2026-09-25 | 标准写法定为 `<!-- PROTECTED -->` 和 `<!-- END PROTECTED -->`；合并工具也认 `PROTECTED END` |
 | ARD-B | 2026-08-02 | 正文标题随全仓改名变为 `walter-worker-doc-protect`；`name` 字段不变 |
 | ARD-C | 2026-06-23 | 去掉 `ai-coworker-` 前缀，skill 改名为 `doc-protect` |
@@ -26,6 +28,18 @@ opencode 会话按会话 id 前缀引用，数据在本机 opencode.db；walter-
 | ARD-F | 2026-03-30 | 用 HTML 注释标记受保护块；只有人能解除；加、减保护各提交一次 |
 
 ## Evidence Appendix
+
+### ARD-H
+
+理由：walter-worker 的 CLAUDE.md 和模板已在用 `PROTECTED:CRITICAL-RULES`，合并工具也认，SKILL.md 却没写。
+工具按先后顺序配对标记，不核对名字，所以结束标记要写同一个名字。
+被否决的方案：不写进 SKILL.md。出处：用户 2026-11-24 审阅回复；walter-worker `semantic_merge.py` 第 175–177 行。
+
+### ARD-G
+
+理由：旧流程加、减保护后直接提交，不问用户。提交前给用户看 diff，由用户决定。
+本条修改了 ARD-F 里"各提交一次"的部分；用标记和只有人能解除这两点不变。
+被否决的方案：保持自动提交；完全不提交。出处：用户 2026-11-24 审阅回复；design 的 QUES-A。
 
 ### ARD-A
 
@@ -70,3 +84,4 @@ agent 回复说 `personal-skills/` 只剩 doc-protect 和 session-memory；用�
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 doc-protect 的决策 |
+| 2026-11-24 | 新增 ARD-G（提交前询问）和 ARD-H（带名字的标记） |

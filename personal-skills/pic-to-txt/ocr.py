@@ -11,16 +11,23 @@ Usage:
 Output:
     - Writes raw OCR text to <folder>/_raw_ocr_output.txt
     - Prints to stdout for piping/LLM refinement
+
+HEIC/HEIF (iPhone photos) are converted to temporary JPEGs first:
+pillow-heif if installed, else `heif-convert`, else ImageMagick (`magick`/`convert`).
 """
 
 import argparse
 import glob
 import os
 import re
+import shutil
+import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
-IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".gif", ".bmp", ".tiff", ".webp"}
+HEIC_EXTS = {".heic", ".heif"}
+IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".gif", ".bmp", ".tiff", ".webp"} | HEIC_EXTS
 
 
 def natural_sort_key(path: Path) -> list:
@@ -53,32 +60,71 @@ def detect_language(images: list[Path]) -> str:
     return "en"
 
 
-def run_easyocr(images: list[Path]) -> str:
+def convert_heic(src: Path, dst: Path) -> None:
+    """Convert one HEIC/HEIF photo to JPEG at dst, or exit with install advice."""
+    try:
+        from PIL import Image
+        from pillow_heif import register_heif_opener
+
+        register_heif_opener()
+        Image.open(src).convert("RGB").save(dst, "JPEG", quality=95)
+        return
+    except ImportError:
+        pass
+    for tool in ("heif-convert", "magick", "convert"):
+        if shutil.which(tool):
+            done = subprocess.run([tool, str(src), str(dst)], capture_output=True)
+            if done.returncode == 0 and dst.exists():
+                return
+    print(
+        f"Error: cannot read HEIC photo {src.name}. Install one of:\n"
+        "  pip install pillow-heif                      (recommended)\n"
+        "  sudo apt install libheif-examples            (provides heif-convert)\n"
+        "  ImageMagick built with HEIC support          (magick / convert)",
+        file=sys.stderr,
+    )
+    sys.exit(1)
+
+
+def prepare_images(images: list[Path], tmp_dir: Path) -> list[tuple[str, Path]]:
+    """Return (original name, readable path) pairs; HEIC/HEIF become temp JPEGs."""
+    pairs = []
+    for i, img in enumerate(images):
+        if img.suffix.lower() in HEIC_EXTS:
+            jpg = tmp_dir / f"{i:04d}_{img.stem}.jpg"
+            convert_heic(img, jpg)
+            pairs.append((img.name, jpg))
+        else:
+            pairs.append((img.name, img))
+    return pairs
+
+
+def run_easyocr(images: list[tuple[str, Path]]) -> str:
     """Run EasyOCR on all images, return combined text."""
     import easyocr
 
     reader = easyocr.Reader(["en"], gpu=True)
     output_parts = []
-    for img in images:
+    for name, img in images:
         result = reader.readtext(str(img))
         text = " ".join(item[1] for item in result)
-        output_parts.append(f"--- {img.name} ---\n{text}")
+        output_parts.append(f"--- {name} ---\n{text}")
     return "\n\n".join(output_parts)
 
 
-def run_paddleocr(images: list[Path]) -> str:
+def run_paddleocr(images: list[tuple[str, Path]]) -> str:
     """Run PaddleOCR on all images, return combined text."""
     from paddleocr import PaddleOCR
 
     ocr = PaddleOCR(use_angle_cls=True, lang="ch", show_log=False)
     output_parts = []
-    for img in images:
+    for name, img in images:
         result = ocr.ocr(str(img), cls=True)
         if result[0]:
             text = " ".join(line[1][0] for line in result[0])
         else:
             text = ""
-        output_parts.append(f"--- {img.name} ---\n{text}")
+        output_parts.append(f"--- {name} ---\n{text}")
     return "\n\n".join(output_parts)
 
 
@@ -112,10 +158,12 @@ def main():
 
     print(f"[info] found {len(images)} images, using {'PaddleOCR' if lang == 'zh' else 'EasyOCR'}", file=sys.stderr)
 
-    if lang == "zh":
-        text = run_paddleocr(images)
-    else:
-        text = run_easyocr(images)
+    with tempfile.TemporaryDirectory(prefix="pic-to-txt-") as tmp:
+        readable = prepare_images(images, Path(tmp))
+        if lang == "zh":
+            text = run_paddleocr(readable)
+        else:
+            text = run_easyocr(readable)
 
     # Save raw output
     raw_path = Path(folder) / "_raw_ocr_output.txt"

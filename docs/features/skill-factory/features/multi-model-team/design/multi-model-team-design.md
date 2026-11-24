@@ -31,13 +31,14 @@ SKILL.md 的说法是：架构师负责推理和判断，工人负责机械的�
 
 ## Implementation Decisions
 
-两个角色靠 `opencode.json` 的 agent 配置实现。architect 是 primary（主 agent），模型 `zhipu/glm-5.2`，temperature 0.1。
+两个角色靠 `opencode.json` 的 agent 配置实现。architect 是 primary（主 agent），模型 `zai-coding-plan/glm-5.2`，temperature 0.1（ARD-J）。
 worker 是 subagent（子 agent），模型 `deepseek/deepseek-v4-pro`，temperature 0.2。
 
 temperature 是控制输出随机性的参数，越低越稳定。架构师用 opencode 的 Task tool（开子 agent 的工具）分派工人。
 SKILL.md 提醒模型 id 因 provider 而异，要用 `opencode models` 核对。
 
-用户实际用的 GLM provider id 是 `zai-coding-plan/glm-5.2`（ses_0d8c6356，2026-07-03），和示例的 `zhipu` 不同，见 QUES-C。
+GLM 的 provider 是用户在用的 `zai-coding-plan`，用 `opencode auth login` 登录（ARD-J）。
+两个 agent 不随 skill 安装生成；SKILL.md 给出配置块，要用户自己加进 opencode.json（ARD-J）。
 
 ## Design
 
@@ -124,11 +125,12 @@ SKILL.md 只写了 opencode 的配置方法；它也被装进 Claude Code，但�
 |---|---|---|---|---|
 | QUES-A | 触发语要不要只留用户选的大任务一类（PRD-E）？ | SKILL.md 还列了"use the team"等显式说法 | cicidi | no |
 | QUES-B | 失败处理只要工人重试（PRD-F），还是保留重派、接手、上报用户等多级后备？ | SKILL.md 全都写了（ARD-E） | cicidi | no |
-| QUES-C | 配置示例要不要改成用户实际用的 `zai-coding-plan/glm-5.2`？ | 示例写的是 `zhipu/glm-5.2` | cicidi | no |
+| QUES-C | 配置示例要不要改成用户实际用的 `zai-coding-plan/glm-5.2`？ | 已改为 `zai-coding-plan/glm-5.2`（ARD-J） | cicidi | no |
 | QUES-D | 在 Claude Code 里怎么用这个 skill？ | SKILL.md 只写了 opencode | cicidi | no |
 | QUES-E | 工人重试时用同一个 prompt，还是调整做法？ | 阶段三和测试场景 3 说法不一致 | cicidi | no |
 | QUES-F | 拆分后先让用户批准，是否符合用户意图？ | agent 写入，用户没有逐条确认（ARD-C） | cicidi | no |
 | QUES-G | 用什么可量化的指标判断这个 skill 好用？ | UNKNOWN，也没有实际调用记录 | cicidi | no |
+| QUES-H | 架构师模型要不要换成 glm-5.3 或 glm-5.4？ | 2026-11-24 的 `opencode models` 在 zai-coding-plan 下只列出 5.3、5.4，没有 5.2 | cicidi | no |
 
 ## Reversibility
 
@@ -140,3 +142,4 @@ SKILL.md 只写了 opencode 的配置方法；它也被装进 Claude Code，但�
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：按 SKILL.md 写出 multi-model-team 的 design，引用 PRD-A 到 PRD-H |
+| 2026-11-24 | 按 ARD-J 改写 provider 和 agent 配置说明，QUES-C 已答，新增 QUES-H |

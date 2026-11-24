@@ -32,9 +32,11 @@ SKILL.md 自称"7-phase"，但实际编号从 0 到 7，共 8 段。
 
 ## Implementation Decisions
 
-skill 目录下只有 SKILL.md 一个文件，本身不带脚本。生成视频和图片要调用 hvg 仓库里的 Python 脚本（ARD-H）。
-所有中间文件都写在 `projects/<name>/` 下，一个内容项目一个目录（ARD-K）。
-唯一声明的依赖是 `doc-organize`：Phase 4 生成文档时，用它决定路径和文件名（PRD-G）。
+skill 目录下只有 SKILL.md 一个文件，本身不带脚本。生成视频和图片要调用 hvg 仓库 `scripts/` 下的 Python 脚本（ARD-H、ARD-O）。
+所有中间文件都写在 video-gen-initiative 仓库的 `projects/<name>/` 下，一个内容项目一个目录（ARD-K、ARD-O）。
+hvg 脚本仍按 hvg 仓库下的 `projects/` 拼路径；跑脚本前，SKILL.md 要求先问用户怎么接上（QUES-G）。
+声明了两个依赖。Phase 4 生成文档时，用 `spec-write` 决定路径和文件名（PRD-G、ARD-Q）。
+Phase 1 遇到音频时，用 `transcribe-audio` 转文字（ARD-P）。
 
 ## Design
 
@@ -44,7 +46,8 @@ skill 目录下只有 SKILL.md 一个文件，本身不带脚本。生成视频�
 产出 `requirements.md`：渠道与听众、Goal、成功标准、范围。用户说不清目标时，用"教程、推介、深度技术、公告"几类例子帮用户收窄。
 
 **DSGN-B Phase 1 素材摄入和检查点 1。** 输入可以是 markdown、PDF、网页、YouTube 链接、GitHub 仓库或公司内部文档（PRD-A）。
-每种都抽成文字，合并进 `source_material.md`。付费墙、纯音频、死链这类读不了的，记进 gaps 一节，问用户怎么办。
+每种都抽成文字，合并进 `source_material.md`。付费墙、死链、无声视频这类读不了的，记进 gaps 一节，问用户怎么办。
+音频交给 `transcribe-audio`；视频先用 ffmpeg 抽音轨再转；没有字幕的 YouTube 先下载音频（ARD-P）。
 检查点 1：列出收了什么、跳过什么，问用户素材够不够撑起 Goal。
 
 **DSGN-C Phase 2 内容大纲。** 大纲不套模板，不强制 6 个场景；可以是 2 张幻灯片、1 段视频或 3 节文档（PRD-E）。
@@ -58,7 +61,7 @@ skill 目录下只有 SKILL.md 一个文件，本身不带脚本。生成视频�
 检查点 2：用户逐段改文稿，检查 spec 是否覆盖每个单元。
 
 **DSGN-E Phase 4 资源生成，检查点 3。** 按 spec.json 的类型分派：视频走 hvg 的旧脚本链，依次生成叙事、场景、图片、视频，再轮询任务（PRD-E）。
-幻灯片写成带分隔符的 markdown；文档先用 doc-organize 定位置（PRD-G）；网站生成 HTML、CSS、JS；动画生成给引擎的 prompt。
+幻灯片写成带分隔符的 markdown；文档先用 spec-write 定位置（PRD-G、ARD-Q）；网站生成 HTML、CSS、JS；动画生成给引擎的 prompt。
 能并行的都并行（PRD-F）。图片可以并行，视频按顺序生成，用上一段的尾帧接下一段（PRD-L）。
 产物放在 `output/<type>/`，进度记在 `gen_status.json`。失败时重试、跳过或换简化 prompt。
 检查点 3：用户逐个看视频、图片和文档，可以说"重做第 N 个场景"。
@@ -97,7 +100,7 @@ analytics.db 里没有找到调用 v3 的记录；2026-07-23 的 omnigent vlog �
 
 需求见 [PRD](../prd/create-video-workflow-prd.md)，决策见 [decision-history](../decision-history/create-video-workflow-decision-history.md)。
 旧版可在 hvg 仓库用 `git show c440a27:.claude/skills/create-video-workflow/SKILL.md` 查看，含模板和 tasks.json 格式。
-音频素材可交给 `transcribe-audio` 转文字，它的描述里写了服务于本 skill 的 Phase 1（hvg commit ca6bb23，2026-07-22）。
+Phase 1 的音频分流照搬 hvg commit ca6bb23（2026-07-22）里 hvg 那份 SKILL.md 的写法（ARD-P）。
 
 ## Alternatives Considered
 
@@ -115,8 +118,8 @@ skill 依赖 hvg 仓库的脚本，换到别的项目里用时，Phase 4 和 Pha
 
 | 风险 | 缓解 |
 |---|---|
-| SKILL.md 写的是 `tools/`，但 hvg 在 v3 之前已把它改名为 `scripts/`（commit b805482） | 暂无；见 QUES-A |
-| `projects/` 已从 hvg 移到 video-gen-initiative 仓库（hvg commit cb2d6d4），SKILL.md 仍写 `projects/<name>/` | 暂无；见 QUES-B |
+| hvg 再次改动脚本目录，SKILL.md 的路径又失效 | SKILL.md 的 Paths 一节集中写明路径，改一处即可（ARD-O） |
+| hvg 脚本写到 hvg 仓库下的 `projects/`，和 video-gen-initiative 的项目目录对不上 | 跑脚本前先问用户怎么接上，不擅自建软链接（ARD-O、QUES-G） |
 | 发布到公开平台后难以撤回 | 检查点 4 由用户决定通过与否；没有 API 时只导出文件（DSGN-H） |
 | 视频 API 贵且排队久，用户问过"seedance 的api 这么贵"（18d4bf16，2026-04-19） | 检查点 3 逐个审阅，坏场景单独重做 |
 
@@ -124,12 +127,13 @@ skill 依赖 hvg 仓库的脚本，换到别的项目里用时，Phase 4 和 Pha
 
 | ID | 问题 | 目前答案 | Owner | Blocking |
 |---|---|---|---|---|
-| QUES-A | 脚本路径改成 `scripts/` 吗？ | SKILL.md 写 `tools/`，hvg 已没有这个目录 | cicidi | no |
-| QUES-B | 项目文件写在哪个仓库？ | SKILL.md 写 `projects/<name>/`；实际数据在 video-gen-initiative | cicidi | no |
+| QUES-A | 脚本路径改成 `scripts/` 吗？ | 已改为 hvg 的 `scripts/`（ARD-O） | cicidi | no |
+| QUES-B | 项目文件写在哪个仓库？ | video-gen-initiative 的 `projects/<name>/`（ARD-O） | cicidi | no |
 | QUES-C | 要不要恢复"问是否要模板"（PRD-N）？ | v3 不提模板，也不问 | cicidi | no |
-| QUES-D | Phase 1 遇到音频，要不要调 transcribe-audio？ | SKILL.md 把纯音频记为 gap；transcribe-audio 却说服务于这一步 | cicidi | no |
+| QUES-D | Phase 1 遇到音频，要不要调 transcribe-audio？ | 要调用，已照搬 hvg ca6bb23 的分流（ARD-P） | cicidi | no |
 | QUES-E | 听众 agent 用什么工具"看"视频、"听"音频（PRD-I）？ | SKILL.md 只要求能做到，没写怎么做 | cicidi | no |
-| QUES-F | hvg 和 `personal-skills/` 两份，哪份是正本？ | 目前内容相同，没有同步规则 | cicidi | no |
+| QUES-F | hvg 和 `personal-skills/` 两份，哪份是正本？ | 没有同步规则；2026-11-24 只改了 `personal-skills/` 这份，hvg 那份仍写 `tools/` | cicidi | no |
+| QUES-G | hvg 脚本按 `<hvg>/projects/` 拼路径，怎么接到 video-gen-initiative？ | 未定；可建软链接，或给脚本加参数。SKILL.md 要求先问用户 | cicidi | yes |
 
 ## Reversibility
 
@@ -141,3 +145,4 @@ skill 本身是 git 跟踪的一个文件，用 `git revert` 即可撤回；旧�
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：按 SKILL.md 写出 create-video-workflow 的 design，引用 PRD-A 到 PRD-N |
+| 2026-11-24 | 按 ARD-O、P、Q 改写路径、依赖和 Phase 1；QUES-A、B、D 已答，新增 QUES-G |

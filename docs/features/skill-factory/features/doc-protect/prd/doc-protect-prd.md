@@ -44,6 +44,7 @@ opencode 会话存在本机 opencode.db，下文按会话 id 前缀引用。
 **PRD-C 只有人能解除保护。** 用户明确说"unprotect this section"时，才去掉标记（c3f771f）。
 
 **PRD-D 加保护和解除保护各提交一次。** 提交信息是 `docs: protect {section name}` 和 `docs: unprotect {section name}`（c3f771f）。
+2026-11-24 起，提交前先给用户看 diff，用户同意才提交（ARD-G）。
 
 **PRD-E AI 可以建议加保护，但不能擅自加。** 适合保护的有 PRD 需求、架构决定、法律条款、安全策略（c3f771f）。
 原版还列了团队约定和 SLA（服务等级协议），a5dcc4e 迁移时删去，原因 UNKNOWN。
@@ -72,3 +73,4 @@ commit 3395648 去掉 `ai-coworker-` 前缀，改名为 `doc-protect`。
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 doc-protect 的 PRD |
+| 2026-11-24 | PRD-D 补充提交前询问（ARD-G） |

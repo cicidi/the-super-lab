@@ -53,6 +53,7 @@ Oxford comma 指列举三项以上时 and 前面的逗号，统一加上。
 **DSGN-G 不改的内容。** 技术术语、变量名和函数名、故意简短的注释、正确但口语化的表达（PRD-C）。
 
 **DSGN-H 触发方式。** 只在用户点名调用或说出触发词时运行；仓库里没有自动调用它的 hook（PRD-E）。
+description 也写明只能手动调用（ARD-G）。
 
 **DSGN-I 名字。** 目录名、name 字段和第一个触发词都是 english-grammar-fix，与用途一致（PRD-F）。
 
@@ -79,7 +80,7 @@ Oxford comma 指列举三项以上时 and 前面的逗号，统一加上。
 
 ## Drawbacks
 
-description 说 "Auto-correct"，但它不会自己运行，用户忘了调用就没有效果，见 QUES-A。
+本 skill 不会自己运行，用户忘了调用就没有效果（ARD-G）。
 commit message 规则和 commit skill 都写了 Conventional Commits，两处可能说法不同，见 QUES-C。
 
 ## Risks and Mitigations
@@ -93,7 +94,7 @@ commit message 规则和 commit skill 都写了 Conventional Commits，两处可
 
 | ID | 问题 | 目前答案 | Owner | Blocking |
 |---|---|---|---|---|
-| QUES-A | AI 写完 commit message 或 PR 后要不要自动运行（PRD-E）？ | 只能手动调用；description 却写 Auto-correct | cicidi | no |
+| QUES-A | AI 写完 commit message 或 PR 后要不要自动运行（PRD-E）？ | 只能手动调用，description 已写明这一点（ARD-G） | cicidi | no |
 | QUES-B | 要不要也修正用户自己写的英文（PRD-A）？ | SKILL.md 只说 AI 写的文字；原意 UNKNOWN | cicidi | no |
 | QUES-C | commit message 格式以本 skill 还是 commit skill 为准（PRD-D）？ | 两处都写了 Conventional Commits | cicidi | no |
 | QUES-D | which/that 和 Oxford comma 算语法类还是风格类（PRD-B）？ | SKILL.md 没写 | cicidi | no |
@@ -109,3 +110,4 @@ commit message 规则和 commit skill 都写了 Conventional Commits，两处可
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：按 SKILL.md 写出 english-grammar-fix 的 design，引用 PRD-A 到 PRD-F |
+| 2026-11-24 | 按 ARD-G 改写 DSGN-H、Drawbacks 和 QUES-A |

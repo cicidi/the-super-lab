@@ -19,6 +19,7 @@ opencode 会话按会话 id 前缀引用，数据在本机 opencode.db。
 
 | ID | Date | Decision |
 |---|---|---|
+| ARD-J | 2026-11-24 | 配置示例的 GLM provider 改为 `zai-coding-plan`；SKILL.md 写明 architect、worker 两个 agent 要用户自己配 |
 | ARD-A | 2026-08-02 | 合并 38 个 skill 时，multi-model-team 保持独立，不并入别的 skill |
 | ARD-B | 2026-07-14 | 用户没有逐条审阅内容，直接要求提交、推送并部署到各 AI 工具 |
 | ARD-C | 2026-07-14 | 采用分析、拆分、分派、审查、整合五个阶段，拆分方案先经用户批准再分派 |
@@ -30,6 +31,12 @@ opencode 会话按会话 id 前缀引用，数据在本机 opencode.db。
 | ARD-I | 2026-07-13 | 架构师用 GLM 5.2，工人用 DeepSeek v4 Pro，靠 opencode 给每个 agent 单独配模型来实现 |
 
 ## Evidence Appendix
+
+### ARD-J
+
+理由：用户的 GLM 走 `zai-coding-plan`（`~/.config/opencode/config.json` 的 model 字段），本机没有 `zhipu`。
+本机 opencode.json 没有 architect、worker 两个 agent，装上 skill 也不会自动生成。
+被否决的方案：保留 `zhipu`；由 skill 去改 `~/.config`。出处：用户 2026-11-24 审阅回复。
 
 ### ARD-A
 
@@ -100,3 +107,4 @@ opencode 会话按会话 id 前缀引用，数据在本机 opencode.db。
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 multi-model-team 的决策 |
+| 2026-11-24 | 新增 ARD-J：provider 改为 zai-coding-plan，写明 agent 配置 |

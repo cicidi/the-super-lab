@@ -55,13 +55,13 @@ Before using this skill, configure the following in `opencode.json`:
 ```json
 {
   "provider": {
-    "zhipu": { "models": { "glm-5.2": {} } },
+    "zai-coding-plan": { "models": { "glm-5.2": {} } },
     "deepseek": { "models": { "deepseek-v4-pro": {} } }
   },
   "agent": {
     "architect": {
       "mode": "primary",
-      "model": "zhipu/glm-5.2",
+      "model": "zai-coding-plan/glm-5.2",
       "description": "Analyze tasks, decompose into subtasks, dispatch workers, review results",
       "temperature": 0.1
     },
@@ -77,6 +77,13 @@ Before using this skill, configure the following in `opencode.json`:
 
 Model IDs are provider-specific. Run `opencode models` to confirm available
 models and adjust the `model` values to match configured providers.
+
+- GLM comes from the `zai-coding-plan` provider (Z.ai GLM Coding Plan), logged in
+  with `opencode auth login`. Do not use `zhipu/...` — that provider is not configured.
+- The `architect` and `worker` agents are required. They are not created by
+  installing this skill: add the `agent` block above to `~/.config/opencode/opencode.json`
+  (or one file per agent under `~/.config/opencode/agent/`). If `opencode` does not
+  list both agents, stop and show the user this block instead of starting.
 
 ## Process
 
