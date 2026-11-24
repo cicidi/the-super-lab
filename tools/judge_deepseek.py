@@ -4,7 +4,7 @@
   python3 tools/judge_deepseek.py --target must   # 15 llm MUST items
   python3 tools/judge_deepseek.py --target gold   # 10 gold annotations
 
-Corpus: committed SDD markdown + the four SKILL.md + SPEC-STANDARD.md, sent whole
+Corpus: committed SDD markdown + the five SKILL.md + SPEC-STANDARD.md, sent whole
 (~33k tokens/run). Verdicts need 4 of 5 runs to agree (ARD-CJ): >=4 pass is pass,
 >=4 fail is fail, else "disputed" (counts as fail). Every item that is not a pass
 gets `claude_audit: null`; Claude fills it with agree/disagree and a reason and
@@ -19,6 +19,7 @@ import os
 import re
 import sys
 import urllib.request
+from collections import Counter
 from pathlib import Path
 
 import yaml
@@ -76,12 +77,15 @@ def corpus_files() -> list[Path]:
     """Evidence set fed to the judge; excludes the judge itself to avoid self-staleness."""
     docs = [
         p
-        for p in (ROOT / "docs/features").rglob("*.md")
+        for p in sorted(SDD.rglob("*.md"))
         if not p.name.startswith("._") and "raw" not in p.parts and "site" not in p.parts
     ]
-    docs += [ROOT / "docs/INDEX.md"]
+    docs += [ROOT / "docs/INDEX.md"]  # gold BAD-A judges the INDEX entries
     docs += [ROOT / "skills/spec-organize/SPEC-STANDARD.md"]
-    docs += [ROOT / f"skills/{n}/SKILL.md" for n in ("spec-pipeline", "spec-organize", "spec-review", "spec-write")]
+    docs += [
+        ROOT / f"skills/{n}/SKILL.md"
+        for n in ("spec-pipeline", "spec-organize", "spec-review", "spec-write", "wayfinder")
+    ]
     # Enforcement evidence: checkers, tools, registry, eval config.
     # Plumbing that is not evidence for any MUST: builders, the harness itself.
     skip = {
@@ -226,14 +230,19 @@ def aggregate(runs: list[dict]) -> list[dict]:
     return out
 
 
-def keep_audits(old_items: list[dict], new_items: list[dict]) -> list[dict]:
-    """Carry each non-pass item's claude_audit over when its id, verdict and votes are unchanged; else null."""
-    old = {i["id"]: i for i in old_items}
+def keep_audits(old_items: list[dict], new_items: list[dict], old_sha: str | None, new_sha: str) -> list[dict]:
+    """Carry each non-pass item's claude_audit over only when the corpus is unchanged and its
+    verdict and vote counts (order-insensitive) are unchanged; else null."""
+    old = {i["id"]: i for i in old_items} if old_sha == new_sha else {}
     for item in new_items:
         if "claude_audit" not in item:
             continue
         prev = old.get(item["id"])
-        same = prev and prev.get("verdict") == item["verdict"] and prev.get("votes") == item["votes"]
+        same = (
+            prev
+            and prev.get("verdict") == item["verdict"]
+            and Counter(prev.get("votes") or []) == Counter(item["votes"])
+        )
         item["claude_audit"] = prev.get("claude_audit") if same else None
     return new_items
 
@@ -255,7 +264,8 @@ def main() -> None:
     items = aggregate(runs)
     out = OUT_MUST if args.target == "must" else OUT_GOLD
     if out.is_file():
-        items = keep_audits((yaml.safe_load(out.read_text(encoding="utf-8")) or {}).get("items", []), items)
+        prev = yaml.safe_load(out.read_text(encoding="utf-8")) or {}
+        items = keep_audits(prev.get("items", []), items, prev.get("corpus_sha"), corpus_sha(corpus_text))
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(
         yaml.safe_dump(

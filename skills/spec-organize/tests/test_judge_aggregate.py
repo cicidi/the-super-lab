@@ -31,7 +31,7 @@ def test_default_is_five_runs():
     assert j.RUNS == 5
 
 
-def test_keep_audits_only_when_id_verdict_votes_unchanged():
+def test_keep_audits_only_when_corpus_verdict_votes_unchanged():
     votes = ["pass", "pass", "pass", "fail", "fail"]
     old = [
         {"id": "MUST-A", "verdict": "disputed", "votes": votes, "claude_audit": "agree: x"},
@@ -43,7 +43,22 @@ def test_keep_audits_only_when_id_verdict_votes_unchanged():
         {"id": "MUST-C", "verdict": "disputed", "votes": votes, "claude_audit": None},
         {"id": "MUST-D", "verdict": "pass", "votes": ["pass"] * 5},
     ]
-    a, b, c, d = j.keep_audits(old, new)
+    a, b, c, d = j.keep_audits(old, new, "sha1", "sha1")
     assert a["claude_audit"] == "agree: x"
     assert b["claude_audit"] is None and c["claude_audit"] is None
     assert "claude_audit" not in d
+
+
+def test_keep_audits_ignores_vote_order():
+    old = [{"id": "MUST-A", "verdict": "disputed", "votes": ["pass", "pass", "pass", "fail", "fail"], "claude_audit": "agree: x"}]
+    new = [{"id": "MUST-A", "verdict": "disputed", "votes": ["fail", "pass", "fail", "pass", "pass"], "claude_audit": None}]
+    (a,) = j.keep_audits(old, new, "sha1", "sha1")
+    assert a["claude_audit"] == "agree: x"
+
+
+def test_keep_audits_drops_all_when_corpus_changed():
+    votes = ["pass", "pass", "pass", "fail", "fail"]
+    old = [{"id": "MUST-A", "verdict": "disputed", "votes": votes, "claude_audit": "agree: x"}]
+    new = [{"id": "MUST-A", "verdict": "disputed", "votes": list(votes), "claude_audit": None}]
+    (a,) = j.keep_audits(old, new, "sha1", "sha2")
+    assert a["claude_audit"] is None

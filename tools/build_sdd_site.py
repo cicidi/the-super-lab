@@ -6,6 +6,7 @@ from __future__ import annotations
 import html
 import os
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -186,6 +187,33 @@ def _files_named(name: str) -> list[Path]:
     return _NAME_INDEX.get(name, [])
 
 
+_TRACKED: set[str] | None = None
+_TRACKED_LOADED = False
+
+
+def _tracked_files() -> set[str] | None:
+    """Repo-relative paths git tracks, computed once; None when git is unavailable."""
+    global _TRACKED, _TRACKED_LOADED
+    if not _TRACKED_LOADED:
+        _TRACKED_LOADED = True
+        try:
+            out = subprocess.run(
+                ["git", "ls-files", "-z"], cwd=ROOT, capture_output=True, check=True
+            ).stdout.decode("utf-8", "replace")
+            _TRACKED = {f for f in out.split("\0") if f}
+        except (OSError, subprocess.CalledProcessError):
+            _TRACKED = None
+    return _TRACKED
+
+
+def _linkable_file(rel: str) -> bool:
+    """A local file earns a link only when git tracks it (gitignored files never publish)."""
+    if not (ROOT / rel).is_file():
+        return False
+    tracked = _tracked_files()
+    return tracked is None or rel in tracked
+
+
 def _repo_rel(path: Path) -> str | None:
     norm = os.path.normpath(str(path))
     root = str(ROOT)
@@ -231,9 +259,8 @@ def _dest_for_mention(raw: str, md_path: Path) -> Path | None:
             continue
         if rel.startswith("docs/book/html/") and rel.endswith(".html"):
             return OUT / rel[len("docs/book/html/") :]
-        target = ROOT / rel
-        if target.is_file():
-            return target
+        if _linkable_file(rel):
+            return ROOT / rel
     return None
 
 

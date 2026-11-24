@@ -342,7 +342,7 @@ design 管「想要怎样」，代码管「现在怎样」和内部结构。机�
 
 **编号。** `ARD-` 加字母（DSGN-F），分配后不能改。表格里的编号和 `### ARD-A — …` 小节标题里的编号一致。
 
-**推翻旧决定。** 旧行不删，用删除线划掉，后面链到新决定，例如：被划掉的旧说法，后面跟一个指向新决定的链接。新说法用一个新编号完整写一条，放在 Log 最上面。按 DSGN-I 删减时，不删被划掉的文字。只推翻旧决定的一部分时，也划掉整行，并在新决定里重述仍然有效的部分（例如 [ARD-BT](../../../decision-history/spec-driven-development-decision-history.md#ard-bt)）。这是整套 spec 里唯一使用删除线的地方（[ARD-BM](../../../decision-history/spec-driven-development-decision-history.md#ard-bm)）。
+**推翻旧决定。** 旧行不删，用删除线划掉，后面链到新决定，例如：被划掉的旧说法，后面跟一个指向新决定的链接。新说法用一个新编号完整写一条，放在 Log 最上面。按 DSGN-I 删减时，不删被划掉的文字。只推翻旧决定的一部分时，也划掉整行，并在新决定里重述仍然有效的部分（例如 [ARD-CH](../../../decision-history/spec-driven-development-decision-history.md#ard-ch)）。这是整套 spec 里唯一使用删除线的地方（[ARD-BM](../../../decision-history/spec-driven-development-decision-history.md#ard-bm)）。
 
 **拆分篇。** decision-history 不设行数上限，但也可以拆分篇。拆了之后编号在整个 feature 内唯一；新决定写在当前那篇的 Log 最上面；旧篇保留，篇与篇之间用链接连起来。
 
@@ -517,3 +517,4 @@ design 管「想要怎样」，代码管「现在怎样」和内部结构。机�
 | 2026-11-24 | DSGN-E 加「插图（MUST）」，DSGN-M 门槛加一条（ARD-CA，与 SPEC-STANDARD 一致） |
 | 2026-11-24 | raw/state 一行注明 SDD 用 wayfinder-map.md（parent ARD-CH） |
 | 2026-11-24 | 第 8 轮审查后：被测对象三个 skill；本地目录表加 docs/state/；改链 ARD-CH、ARD-CK |
+| 2026-11-24 | 第 9 轮审查后：链到已划掉 ARD 的地方改链 |

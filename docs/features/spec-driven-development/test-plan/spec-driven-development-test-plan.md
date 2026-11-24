@@ -13,7 +13,7 @@ last_verified: 2026-11-24
 本篇是整个 SDD 唯一的测试计划，sub-feature 不另写。
 
 - **被测对象：** 交付的三个 skill：spec-write、spec-review，以及只做静态检查（TST-AA）的 wayfinder（[ARD-CH](../decision-history/spec-driven-development-decision-history.md#ard-ch)）。
-- **判断对错的依据：** 三份标准文件 `SPEC-STANDARD.md`、`SPEC-PRESENTATION.md`、`SPEC-HTML-STANDARD.md`，以及它们摘要的 document-standard design 和 reader design（[ARD-BX](../decision-history/spec-driven-development-decision-history.md#ard-bx)）。
+- **判断对错的依据：** 三份标准文件 `SPEC-STANDARD.md`、`SPEC-PRESENTATION.md`、`SPEC-HTML-STANDARD.md`，以及它们摘要的 document-standard design 和 reader design（[ARD-CH](../decision-history/spec-driven-development-decision-history.md#ard-ch)）。
 - **验收方式：** 人不读 skill 的正文；skill 好不好用，只看本计划的测试结果。
 
 术语见 [parent design 的术语表](../design/spec-driven-development-design.md#glossary)。
@@ -130,7 +130,7 @@ last_verified: 2026-11-24
 
 ### TST-J — 不同评测配置
 
-**目标：** 比较加不同辅助 skill 的效果。**输入：** `grill.skills` 分别为 `[]`、`[wayfinder]`、`[grill-with-docs]`、两个都加。**通过条件：** 每种配置出一份报告；先跑基线；只报分数，不设门槛。**判定：** 同 TST-E。
+**目标：** 比较加不同辅助 skill 的效果。**输入：** `grill.skills` 分别为 `[]`、`[research]`、`[grill-with-docs]`、两个都加；wayfinder 是交付物，每种配置都带（ARD-CH）。**通过条件：** 每种配置出一份报告；先跑基线；只报分数，不设门槛。**判定：** 同 TST-E。
 
 ### TST-K — 评测报告
 
@@ -247,6 +247,7 @@ last_verified: 2026-11-24
 | gold v1 定稿 | TST-D：范例的分数 1 满分；标注经人工认可 |
 | spec-write 可以发布 | TST-E 分数 1 满分、分数 2 不退步；TST-F 四种输入全部通过；TST-G 没有差异；TST-L 5 次里至少 4 次通过 |
 | spec-review 可以发布 | TST-H 找出 100%、误报 0；TST-I 不低于上一次；TST-L 5 次里至少 4 次通过 |
+| wayfinder 可以发布 | TST-AA 通过 |
 | gold 升版 | TST-M 追加标注后，重跑 TST-E 和 TST-H，建立新的基线 |
 
 ## Traceability
@@ -268,7 +269,7 @@ last_verified: 2026-11-24
 | PRD-M | TST-V |
 | PRD-N | TST-P；TST-F |
 | PRD-O | TST-Q |
-| PRD-P | TST-S；Expected Pass Threshold 表 |
+| PRD-P | TST-S；TST-AA；Expected Pass Threshold 表 |
 | PRD-Q | TST-S |
 
 document-standard 的 reader PRD：
@@ -323,3 +324,4 @@ document-standard 的 reader PRD：
 | 2026-11-24 | TST-W 写明查的是 `data-svg="` 占位属性 |
 | 2026-11-24 | 复核改为 5 次、至少 4 次通过，Claude 再核对（ARD-CJ）；TST-Y 加升版本（ARD-CK）；新增 TST-AA（ARD-CH） |
 | 2026-11-24 | 第 8 轮审查后：被测对象三个 skill；checkers.repeats 改 5；TST-Y 五个 SKILL.md、升版本由单元测试判；TST-AA 加进执行顺序、门槛和追溯表 |
+| 2026-11-24 | 第 9 轮审查后：TST-J 的辅助 skill 不再含 wayfinder；门槛表加 wayfinder 发布行；PRD-P 追溯加 TST-AA；改链 ARD-CH |

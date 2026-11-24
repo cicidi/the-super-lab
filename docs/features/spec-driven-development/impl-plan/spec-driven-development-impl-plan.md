@@ -197,7 +197,7 @@ last_verified: 2026-11-24
 
 **目标：** parent design 的 DSGN-C 要求 CLAUDE 层（`CLAUDE.md`、`CLAUDE.local.md`）和 skill 里的规则一致。DSGN-A 的改动上限和 DSGN-B 的「什么时候记 ARD」要同时写进两处。
 
-**步骤：** 标准文件改了之后，检查 CLAUDE 层里有没有对应的旧说法，一起改掉。2026-11-20 已改：`CLAUDE.local.md` 的改动上限从「10 行或 200 字符」改为「10 行并且 200 字符」，需求编号从不存在的 FR-12 改为 PRD-C（[ARD-BP](../decision-history/spec-driven-development-decision-history.md#ard-bp)）。
+**步骤：** 标准文件改了之后，检查 CLAUDE 层里有没有对应的旧说法，一起改掉。2026-11-20 已改：`CLAUDE.local.md` 的改动上限从「10 行或 200 字符」改为「10 行并且 200 字符」，需求编号从不存在的 FR-12 改为 PRD-C（[ARD-CE](../decision-history/spec-driven-development-decision-history.md#ard-ce)）。
 
 **依赖：** IMPL-C。**挡住：** 无。
 
@@ -221,7 +221,7 @@ last_verified: 2026-11-24
 
 ## IMPL-U — spec bundle 版本戳
 
-**目标：** `tools/build_spec_skills.py` 按 [ARD-CC](../decision-history/spec-driven-development-decision-history.md#ard-cc) 给五个 SDD `SKILL.md`（交付的 spec-write、spec-review、wayfinder，以及也引用标准文件的 spec-organize、spec-pipeline）打版本戳；每次 build 版本末位加 1（[ARD-CK](../decision-history/spec-driven-development-decision-history.md#ard-ck)）。
+**目标：** `tools/build_spec_skills.py` 按 [ARD-CK](../decision-history/spec-driven-development-decision-history.md#ard-ck) 给五个 SDD `SKILL.md`（交付的 spec-write、spec-review、wayfinder，以及也引用标准文件的 spec-organize、spec-pipeline）打版本戳；每次 build 版本末位加 1（[ARD-CK](../decision-history/spec-driven-development-decision-history.md#ard-ck)）。
 
 **依赖：** 无。**挡住：** 无。
 
@@ -237,7 +237,7 @@ last_verified: 2026-11-24
 
 ## IMPL-W — wayfinder 轻量改写
 
-**目标：** 按 [ARD-CH](../decision-history/spec-driven-development-decision-history.md#ard-ch) 改 `skills/wayfinder/SKILL.md`：地图文件当进度记录，审查关口用 spec-review，重新开始时给回顾。
+**目标：** 按 [ARD-CH](../decision-history/spec-driven-development-decision-history.md#ard-ch) 改 `skills/wayfinder/SKILL.md`：地图目录当进度记录、任务再小也建，阻塞以 QUES 清单为准，审查关口用 spec-review，重新开始时给回顾。
 
 **依赖：** 无。**挡住：** 无。
 
@@ -290,3 +290,4 @@ last_verified: 2026-11-24
 | 2026-11-24 | IMPL-P 标为已完成，改引 ARD-BS |
 | 2026-11-24 | 新增 IMPL-W、IMPL-X；IMPL-R 进度路径改为地图文件（ARD-CH）；IMPL-U 加升版本（ARD-CK） |
 | 2026-11-24 | 第 8 轮审查后：IMPL-G 改为 CLAUDE 层只记地图路径；评测次数跟上 ARD-CJ；IMPL-U 五个 SKILL.md；验收改到 TST-AA |
+| 2026-11-24 | 第 9 轮审查后：IMPL-W 目标跟上地图目录和 QUES 规则；改链 ARD-CK、ARD-CE |

@@ -18,12 +18,12 @@ metadata:
     - draft design
     - append decision
     - spec write
-  spec_bundle_version: "1.0.2"
+  spec_bundle_version: "1.0.3"
   spec_built_at: "2026-11-24"
-  spec_git_sha: "0928aff"
+  spec_git_sha: "67755dd"
 ---
 <!-- SPEC-BUNDLE-START -->
-> **SDD spec bundle** `1.0.2` · built 2026-11-24 · git `0928aff`
+> **SDD spec bundle** `1.0.3` · built 2026-11-24 · git `67755dd`
 <!-- SPEC-BUNDLE-END -->
 
 # spec-write

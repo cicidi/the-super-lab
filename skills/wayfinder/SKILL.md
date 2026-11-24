@@ -12,11 +12,10 @@ metadata:
     - chart map
     - decision mapping
     - plan large work
-    - resume
-    - progress
-    - recap
-    - where are we
-    - commit
+    - resume spec work
+    - spec progress
+    - spec recap
+    - where are we on the spec
   when_to_use: |
     When work is too big for one session and the path from here to the
     destination isn't visible. When decisions need shared, persistent tracking
@@ -33,12 +32,12 @@ metadata:
     - tech leads
   source_author: mattpocock
   source_url: https://github.com/mattpocock/skills/blob/main/skills/engineering/wayfinder/SKILL.md
-  spec_bundle_version: "1.0.2"
+  spec_bundle_version: "1.0.3"
   spec_built_at: "2026-11-24"
-  spec_git_sha: "0928aff"
+  spec_git_sha: "67755dd"
 ---
 <!-- SPEC-BUNDLE-START -->
-> **SDD spec bundle** `1.0.2` · built 2026-11-24 · git `0928aff`
+> **SDD spec bundle** `1.0.3` · built 2026-11-24 · git `67755dd`
 <!-- SPEC-BUNDLE-END -->
 
 A loose idea has arrived — too big for one agent session, and wrapped in fog: the way from here to the **destination** isn't visible yet. Wayfinding is about finding that way, not charging at the destination. This skill charts the way as a **shared map** on the repo's issue tracker, then works its **decision briefs** — questions whose resolution is a decision, not slices of a build to execute — one at a time until the route is clear.
@@ -59,7 +58,9 @@ The map is a single issue on this repo's issue tracker, labelled `wayfinder:map`
 
 The map is an **index**, not a store. It lists the decisions made and points at the briefs that hold their detail; a decision lives in exactly one place — its brief — so the map never restates it, only gists it and links.
 
-**Where the map, its child briefs, blocking, and frontier queries physically live is tracker-specific.** The issue tracker configuration should have been provided via the project's init flow. If no tracker has been configured, default to the local-markdown tracker (issues as files under `.scratch/`). In an SDD repo (one with `docs/features/spec-driven-development/`) the tracker is always the local layout in [SDD progress record](#sdd-progress-record-ard-ch). Consult the tracker doc's "Wayfinding operations" section for how _this_ repo expresses them.
+**SDD override.** In an SDD repo the committed docs (decision-history, PRD, design) are authoritative; a brief holds working notes only. Before the feature directory exists, the map may also hold the rough PRD and background.
+
+**Where the map, its child briefs, blocking, and frontier queries physically live is tracker-specific.** The issue tracker configuration should have been provided via the project's init flow. If no tracker has been configured, default to the local-markdown tracker (issues as files under `.scratch/`). In an SDD repo (one with `docs/features/spec-driven-development/`) the tracker is always the local layout in [SDD progress record](#sdd-progress-record-ard-ch). Otherwise consult the tracker doc's "Wayfinding operations" section, if the repo has one, for how _this_ repo expresses them; in an SDD repo the operations are defined inline in that section.
 
 ### The map body
 
@@ -110,9 +111,9 @@ Each brief is a **child issue** of the map; the tracker's issue id is its identi
 
 Each brief carries a `wayfinder:<type>` label — one of `research`, `prototype`, `grilling`, `task` (see [Brief Types](#brief-types)).
 
-A session **claims** a brief by assigning it to the dev driving the map, **first**, before any work, so concurrent sessions skip it. That assignee _is_ the claim: an open, unassigned brief is unclaimed.
+A session **claims** a brief by assigning it to the dev driving the map (SDD: an `Assignee:` line in the brief file), **first**, before any work, so concurrent sessions skip it. That assignee _is_ the claim: an open, unassigned brief is unclaimed.
 
-Blocking uses the tracker's **native** dependency relationship — essential because it renders the frontier _visually_ in the tracker's own UI, so the human sees what's takeable without opening the map. Only a tracker that lacks native blocking falls back to a body convention. A brief is **unblocked** when every brief blocking it is closed; the **frontier** is the open, unblocked, unclaimed children — the edge of the known.
+Blocking uses the tracker's **native** dependency relationship — essential because it renders the frontier _visually_ in the tracker's own UI, so the human sees what's takeable without opening the map. Only a tracker that lacks native blocking falls back to a body convention (SDD: a `Blocked by:` line listing brief file names). A brief is **unblocked** when every brief blocking it is closed; the **frontier** is the open, unblocked, unclaimed children — the edge of the known.
 
 The answer isn't part of the body — it's recorded on resolution (see [Work through the map](#work-through-the-map)). Assets created while resolving a brief are linked from the issue, not pasted in.
 
@@ -158,7 +159,14 @@ An SDD repo is one with `docs/features/spec-driven-development/`. There the
 tracker is upstream's local-markdown layout (mattpocock/skills
 `setup-matt-pocock-skills/issue-tracker-local.md`): a directory holding
 `map.md` plus one file per brief, `issues/NN-<slug>.md`, each with a
-`Status:` line and a `Blocked by:` line. The **map is the progress record**:
+`Status:` line and a `Blocked by:` line. The wayfinding operations there:
+
+- **Claim:** add an `Assignee:` line to the brief file.
+- **Blocking between briefs:** a `Blocked by:` line listing the blocking brief file names.
+- **Resolve:** add a `## Answer` section to the brief, set `Status: closed`, and append the one-line gist to map.md **Decisions so far**.
+- **Work through the map:** invoke it with the map path, not a URL or number.
+
+The **map is the progress record**:
 
 | When | Map directory | Committed? |
 |---|---|---|
@@ -252,6 +260,9 @@ Wayfinder map done
 ```
 
 The spec-review checkpoint is a gate — it must pass before `to-tickets` can run.
+In an SDD repo, Downstream / `to-tickets` also requires that no open QUES row is
+marked blocking = yes (PIPE-E-A). A map with no briefs is not "done" by that
+fact alone: in SDD every feature has a map.
 This ensures all documents are consistent, complete, and deployable before any
 implementation begins.
 
@@ -277,6 +288,8 @@ wayfinder -> to-spec -> spec-review -> to-tickets -> auto-tdd
  (decide)    (write)    (verify)      (ticket)     (build)
 ```
 
+In an SDD repo, to-spec's role is filled by **spec-write** writing `docs/features/<f>/`.
+
 ## Invocation
 
 Two modes. Either way, **never resolve more than one brief per session** — with the exception of research briefs.
@@ -294,7 +307,7 @@ User invokes with a loose idea.
 
 ### Work through the map
 
-User invokes with a map (URL or number). A brief is **optional** — without one, you pick the next decision, not the user.
+User invokes with a map (URL or number; in an SDD repo, the map path). A brief is **optional** — without one, you pick the next decision, not the user.
 
 1. Load the **map** — the low-res view, not every brief body.
 2. Choose the brief. If the user named one, use it. Otherwise take the first frontier brief in order. **Claim it**: assign it to yourself before any work.
@@ -306,14 +319,14 @@ User invokes with a map (URL or number). A brief is **optional** — without one
          - spec docs under `docs/features/` → invoke `spec-review`
          - other `.md` files → Claude's default review
          - code files → invoke `matt-code-review` (ai-coworker)
-         - fallback (neither available) → Claude's default review
+         - fallback (spec-review or matt-code-review unavailable) → Claude's default review
        - Review must pass before the brief can be closed.
        - If review fails → fix issues, re-review.
        
        Research, grilling, and prototype briefs skip this gate — their output
        is knowledge/decisions, not deliverables.
    
-   Post the answer as a **resolution comment**, **close** the issue, and **append a context pointer** to the map's Decisions-so-far.
+   Post the answer as a **resolution comment**, **close** the issue, and **append a context pointer** to the map's Decisions-so-far. (SDD: use the resolve operation in [SDD progress record](#sdd-progress-record-ard-ch).)
 5. Add newly-surfaced briefs (create-then-wire); graduate any fog the answer has made specifiable, clearing each graduated patch from **Not yet specified** so it lives only as its new brief. If the answer reveals a brief — this one or another — sits beyond the destination, **rule it out of scope** rather than resolving it on the route. If the decision invalidates other parts of the map, update or delete those briefs.
 
 The user may run unblocked briefs in parallel, so expect other sessions to be editing the tracker concurrently.

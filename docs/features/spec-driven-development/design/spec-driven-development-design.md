@@ -76,8 +76,8 @@ PRD-L 要求每个子问题写明由谁处理。本 feature 的子问题如下�
 |---|---|---|
 | 已有的不合规文档要不要迁移 | 人决定 | [ARD-CK](../decision-history/spec-driven-development-decision-history.md#ard-ck)（重述 ARD-AF） |
 | wayfinder-import 是不是 sub-feature | 人决定 | [ARD-T](../decision-history/spec-driven-development-decision-history.md#ard-t) |
-| 跑分结果和报告要不要提交 | AI 查完人决定 | [ARD-AD](../decision-history/spec-driven-development-decision-history.md#ard-ad) |
-| 四个非软件例子要不要建 gold | 人决定 | [ARD-AD](../decision-history/spec-driven-development-decision-history.md#ard-ad) |
+| 跑分结果和报告要不要提交 | AI 查完人决定 | [ARD-CJ](../decision-history/spec-driven-development-decision-history.md#ard-cj) |
+| 四个非软件例子要不要建 gold | 人决定 | [ARD-CJ](../decision-history/spec-driven-development-decision-history.md#ard-cj) |
 | 用哪个案例来打分 | 人决定 | [ARD-BL](../decision-history/spec-driven-development-decision-history.md#ard-bl) |
 | 哪些规则是 MUST、哪些是 NICE | AI 查完人决定 | [ARD-BN](../decision-history/spec-driven-development-decision-history.md#ard-bn) |
 
@@ -203,7 +203,7 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 
 | ID | 问题 | 目前答案 | 负责人 | 阻塞 |
 |---|---|---|---|---|
-| QUES-A | 两个交付的 skill 要读的标准文件和检查脚本，放在 spec-organize 和 spec-html-standard 目录，这两个目录不算交付物。只把两个 skill 装进别的项目时，怎么把这些文件一起带过去？（[ARD-C](../decision-history/spec-driven-development-decision-history.md#ard-c) 要求 skill 能独立带走） | 未定 | 人决定 | 否 |
+| QUES-A | 交付的 skill 要读的标准文件和检查脚本，放在 spec-organize 和 spec-html-standard 目录，这两个目录不算交付物。只把三个交付的 skill 装进别的项目时，怎么把这些文件一起带过去？（[ARD-C](../decision-history/spec-driven-development-decision-history.md#ard-c) 要求 skill 能独立带走） | 未定 | 人决定 | 否 |
 | QUES-B | 产品级成功指标怎么量、基线是多少（PRD-G） | 延后（[ARD-N](../decision-history/spec-driven-development-decision-history.md#ard-n)） | 人决定 | 否 |
 | QUES-C | 以后新增的可替换工具，例如 Map 阶段的访谈辅助工具，要不要写进 skill 契约表 | wayfinder 已写进（[ARD-CH](../decision-history/spec-driven-development-decision-history.md#ard-ch)）；其他工具未定 | 人决定 | 否 |
 | QUES-E | 有 `CLAUDE.local.md` 就只写它（[ARD-CG](../decision-history/spec-driven-development-decision-history.md#ard-cg)），但它不提交，别人克隆仓库拿不到 DSGN-C 的规则。要不要另外在提交的文件里留一份？ | 未定 | 人决定 | 否 |
@@ -378,3 +378,4 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 | 2026-11-24 | 术语表写明 diagram-design 不随 SDD 交付，未安装时不新画图 |
 | 2026-11-24 | DSGN-C：CLAUDE 层写哪个文件（ARD-CG） |
 | 2026-11-24 | 第 8 轮审查后：三个交付 skill（ARD-CH）；复核 5 次（ARD-CJ）；DSGN-A 加新建文件例外（ARD-CE）；术语表加地图目录、brief、交付物、claude_audit，改写 BMAD、GSD；新增 QUES-E；Drawbacks 加 wayfinder 分叉 |
+| 2026-11-24 | 第 9 轮审查后：链到已划掉 ARD 的地方改链；QUES-A 改为三个交付 skill |

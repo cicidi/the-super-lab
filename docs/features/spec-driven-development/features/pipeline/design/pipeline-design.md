@@ -243,7 +243,7 @@ Map 的拆分标准见 PIPE-D 第 6 步。还没定的事项见 [Open Questions]
 ## Reversibility
 
 - 阶段是叠加的：去掉 Map，不影响 Create、Converge、Downstream。
-- wayfinder 不可用时，退回到在 CLAUDE 层记录进度（ARD-CG）。
+- wayfinder 不可用时，人按 PIPE-H 的格式手工维护地图目录。
 
 ## Change Log
 
@@ -269,3 +269,4 @@ Map 的拆分标准见 PIPE-D 第 6 步。还没定的事项见 [Open Questions]
 | 2026-11-20 | 第 3 轮审查后：粗略 PRD 和要记的决定在目录建好前先写在 CLAUDE.local.md（PIPE-B、PIPE-C、PIPE-D）；PIPE-L 写明来源 PRD-L、PRD-N；子问题归属表不适用的理由改为只引 PIPE-L；标准文件改为三份（ARD-BX） |
 | 2026-11-24 | 进度规则交给 wayfinder，进度记录改为地图文件（ARD-CH） |
 | 2026-11-24 | 第 8 轮审查后：地图改为目录；Map 访谈辅助的例子改为 grill-with-docs；改链 ARD-CH |
+| 2026-11-24 | 第 9 轮审查后：wayfinder 不可用时改为人手维护地图目录 |

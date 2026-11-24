@@ -13,6 +13,10 @@ REQUIRED = {
     "blocking briefs stop Downstream (PIPE-E-A)": "do not\n  start Downstream",
     "recap on resume (PIPE-A-E)": "Recap on resume",
     "blocking questions come from the design's QUES tracker": "design's Open Questions tracker: `QUES-*`",
+    "SDD claim is an Assignee line": "an `Assignee:` line",
+    "SDD resolve adds an Answer section": "add a `## Answer` section",
+    "SDD committed docs are authoritative": "the committed docs (decision-history, PRD, design) are authoritative",
+    "SDD Downstream needs no open blocking QUES": "marked blocking = yes (PIPE-E-A)",
 }
 
 
@@ -29,3 +33,12 @@ def test_wayfinder_no_longer_points_at_doc_review_or_mkdocs():
 
 def test_wayfinder_is_tracker_neutral():
     assert "jira" not in SKILL.read_text(encoding="utf-8").lower()
+
+
+def test_wayfinder_has_no_bare_commit_trigger():
+    import yaml
+
+    text = SKILL.read_text(encoding="utf-8")
+    front = yaml.safe_load(text.split("---", 2)[1])
+    triggers = [t.strip().lower() for t in front["metadata"]["triggers"]]
+    assert "commit" not in triggers, "bare `commit` trigger collides with the commit skill"
