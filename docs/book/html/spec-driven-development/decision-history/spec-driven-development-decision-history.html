@@ -466,7 +466,7 @@
 <a id="ard-cc"></a>
 <h4 id="ARD-CC"><a class="id-ref" href="#ARD-CC">ARD-CC</a> — spec bundle 版本戳</h4>
 <p><strong>原因。</strong> skill 正文由 spec 提炼；spec 改了以后，看不出手上的 skill 对应哪一版 spec。</p>
-<p><strong>规则。</strong> 版本号只写在 parent PRD 的 <code>version</code>。脚本把版本、日期、git 短 sha 写进 <code>SKILL.md</code>；<code>--check</code> 比对版本、拒绝重复键（<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-Y">TST-Y</a>）。迁移策略仍不定义（<a class="id-ref" href="#ARD-AF">ARD-AF</a>）。</p>
+<p><strong>规则。</strong> 版本号只写在 parent PRD 的 <code>version</code>。脚本把版本、日期、git 短 sha 写进 <code>SKILL.md</code>；<code>--check</code> 比对版本、拒绝重复键（<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-Y">TST-Y</a>）。迁移策略仍不定义。</p>
 <p>本条推翻 <a class="id-ref" href="#ARD-AF">ARD-AF</a> 里「不定义版本」的部分，<a class="id-ref" href="#ARD-AF">ARD-AF</a> 因此划掉，其余在此重述：失败处理、信息来源可信度分级、数据清理、迁移策略故意不定义；不迁移旧文档。</p>
 <p><strong>放弃的方案。</strong> 每个 <code>SKILL.md</code> 手写版本号；按 semver 自动升版。</p>
 <a id="ard-cb"></a>
@@ -938,6 +938,10 @@ payment-impl-plan-01-schema.md         impl-plan 分篇：序号加阶段，有�
 <tr>
 <td>2026-11-24</td>
 <td><a class="id-ref" href="#ARD-BO">ARD-BO</a> 的放弃方案改正对 ISO 24495-1 的描述（审查 F16）</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>补记 2026-11-20 的 Log 变化：新增 <a class="id-ref" href="#ARD-BU">ARD-BU</a> 到 <a class="id-ref" href="#ARD-CB">ARD-CB</a>；划掉 <a class="id-ref" href="#ARD-BH">ARD-BH</a>、<a class="id-ref" href="#ARD-BE">ARD-BE</a>、<a class="id-ref" href="#ARD-AW">ARD-AW</a>、<a class="id-ref" href="#ARD-BK">ARD-BK</a>（各自链到推翻它的 ARD）</td>
 </tr>
 </tbody></table></div>
       </div>

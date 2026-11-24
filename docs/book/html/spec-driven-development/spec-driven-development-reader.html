@@ -1,4 +1,4 @@
-<!-- SDD reader · source .md · git 4426061 -->
+<!-- SDD reader · source .md · git f68d4b3 -->
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light">
 <head>
@@ -913,7 +913,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 </tr>
 <tr>
 <td>diagram-design</td>
-<td>一个画图的 skill，按固定的配色和字体画出 SVG 插图（ARD-CA）</td>
+<td>一个画图的 skill，按固定的配色和字体画出 SVG 插图（ARD-CA）。它不随 SDD 一起交付；没有安装时，spec-write 不新画图，只保留已有插图</td>
 </tr>
 <tr>
 <td>GitHub Pages</td>
@@ -1179,6 +1179,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <td>2026-11-24</td>
 <td>术语表补上 SVG、diagram-design、GitHub Pages</td>
 </tr>
+<tr>
+<td>2026-11-24</td>
+<td>术语表写明 diagram-design 不随 SDD 交付，未安装时不新画图</td>
+</tr>
 </tbody></table>
 <hr><p class="src-inline">Source: <code>design/spec-driven-development-design-skill-contracts.md</code></p>
 <h2>Spec-Driven Development — Skill 契约</h2>
@@ -1427,7 +1431,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <p><strong>依赖：</strong> IMPL-F、IMPL-H。<strong>挡住：</strong> 无。</p>
 <p><strong>Verify:</strong> TST-R 通过；没有死链。</p>
 <h3 id="IMPL-P">IMPL-P — 让代码和数据跟上 2026-11-20 的决定</h3>
-<p><strong>目标：</strong> 2026-11-20 这批只改了 spec 的 markdown（<a href="decision-history/spec-driven-development-decision-history.html#ard-bk">ARD-BK</a>）。下面这些 markdown 以外的文件，还按旧规则写，要同步修改：</p>
+<p><strong>目标：</strong> 2026-11-20 那批整理（<a href="decision-history/spec-driven-development-decision-history.html#ard-bs">ARD-BS</a>，它重述了 ARD-BK）只改了 spec 的 markdown，下面这些 markdown 以外的文件当时还按旧规则写，需要同步修改。这一项已于 2026-11-24 完成：</p>
 <table><thead><tr>
 <th>文件</th>
 <th>要改什么</th>
@@ -1579,6 +1583,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td>2026-11-24</td>
 <td>IMPL-U 写明四个 skill；IMPL-P 现状更新；Verify 和验收只查 SDD 目录、覆盖到 TST-Z；IMPL-F、IMPL-H、IMPL-M 补上挡住的任务；IMPL-S 改成完整句子</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>IMPL-P 标为已完成，改引 ARD-BS</td>
 </tr>
 </tbody></table>
 </div>
@@ -2556,7 +2564,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <a id="ard-cc"></a>
 <h4 id="ARD-CC">ARD-CC — spec bundle 版本戳</h4>
 <p><strong>原因。</strong> skill 正文由 spec 提炼；spec 改了以后，看不出手上的 skill 对应哪一版 spec。</p>
-<p><strong>规则。</strong> 版本号只写在 parent PRD 的 <code>version</code>。脚本把版本、日期、git 短 sha 写进 <code>SKILL.md</code>；<code>--check</code> 比对版本、拒绝重复键（TST-Y）。迁移策略仍不定义（ARD-AF）。</p>
+<p><strong>规则。</strong> 版本号只写在 parent PRD 的 <code>version</code>。脚本把版本、日期、git 短 sha 写进 <code>SKILL.md</code>；<code>--check</code> 比对版本、拒绝重复键（TST-Y）。迁移策略仍不定义。</p>
 <p>本条推翻 ARD-AF 里「不定义版本」的部分，ARD-AF 因此划掉，其余在此重述：失败处理、信息来源可信度分级、数据清理、迁移策略故意不定义；不迁移旧文档。</p>
 <p><strong>放弃的方案。</strong> 每个 <code>SKILL.md</code> 手写版本号；按 semver 自动升版。</p>
 <a id="ard-cb"></a>
@@ -3028,6 +3036,10 @@ payment-impl-plan-01-schema.md         impl-plan 分篇：序号加阶段，有�
 <tr>
 <td>2026-11-24</td>
 <td>ARD-BO 的放弃方案改正对 ISO 24495-1 的描述（审查 F16）</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>补记 2026-11-20 的 Log 变化：新增 ARD-BU 到 ARD-CB；划掉 ARD-BH、ARD-BE、ARD-AW、ARD-BK（各自链到推翻它的 ARD）</td>
 </tr>
 </tbody></table>
 </div>
