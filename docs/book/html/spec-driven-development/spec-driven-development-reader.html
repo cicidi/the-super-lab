@@ -1,4 +1,4 @@
-<!-- SDD reader · source .md · git c6c83bd -->
+<!-- SDD reader · source .md · git ce49a35 -->
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light">
 <head>
@@ -1455,8 +1455,8 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <p><strong>Verify:</strong> 有检查模块时 TST-B 能跑；gold 的输入文件都在。</p>
 <h3 id="IMPL-E">IMPL-E — 自己跑一遍评测</h3>
 <p><strong>目标：</strong> 跑基线评测：<code>grill.skills: []</code>，输入是 iPhone 案例的需求和背景资料（<a href="decision-history/spec-driven-development-decision-history.html#ard-bl">ARD-BL</a>）。</p>
-<p><strong>步骤：</strong> 新开分支 <code>eval/v1/&lt;run_id&gt;</code>；用 spec-write 写出一套 feature spec；跑 TST-E、TST-F、TST-K；失败时先改 spec。</p>
-<p><strong>依赖：</strong> IMPL-B、IMPL-D、IMPL-J、IMPL-P；报告部分还依赖 IMPL-L，可读性部分还依赖 IMPL-Q。<strong>挡住：</strong> IMPL-I。</p>
+<p><strong>步骤：</strong> 新开分支 <code>eval/v1/&lt;run_id&gt;</code>；用 spec-write 写出一套 feature spec；跑 TST-E、TST-F、TST-L，然后 TST-K；失败时先改 spec。</p>
+<p><strong>依赖：</strong> IMPL-B、IMPL-D、IMPL-J、IMPL-P；报告部分还依赖 IMPL-L 和 IMPL-X，可读性部分还依赖 IMPL-Q。<strong>挡住：</strong> IMPL-I。</p>
 <p><strong>Verify:</strong> 生成了 HTML 报告；分数按 test-plan 的 Scoring 计算。</p>
 <h3 id="IMPL-F">IMPL-F — 给人读的网页</h3>
 <p><strong>目标：</strong> 全站一个网站，入口 <code>docs/book/html/index.html</code>；feature 页左边是目录，右边是正文；parent 的汇编页 <code>spec-driven-development-reader.html</code> 在其中（<a href="decision-history/spec-driven-development-decision-history.html#ard-bg">ARD-BG</a>、<a href="features/document-standard/design/document-standard-design-spec-reader-html.html">reader design</a>）。</p>
@@ -1483,7 +1483,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <p><strong>依赖：</strong> IMPL-D。<strong>挡住：</strong> IMPL-E、IMPL-Q。</p>
 <p><strong>Verify:</strong> <code>pytest test_eval_config.py</code> 通过；<code>eval.yaml</code> 包含所有必需的键。</p>
 <h3 id="IMPL-K">IMPL-K — 反例、正例和审查案例</h3>
-<p><strong>目标：</strong> 每个检查至少一个反例和一个正例；spec-review 的 16 个审查案例（11 个机械，5 个语义）。</p>
+<p><strong>目标：</strong> 每个检查至少一个反例和一个正例；spec-review 的 16 个审查案例（11 个机械，5 个语义）。现状：机械案例和一个干净案例已写好；5 个语义案例还没写，要等执行器。</p>
 <p><strong>依赖：</strong> IMPL-D。<strong>挡住：</strong> IMPL-I。</p>
 <p><strong>Verify:</strong> TST-B 全部通过；TST-H 和 TST-I 需要的文件都在。</p>
 <h3 id="IMPL-L">IMPL-L — 评测报告脚本</h3>
@@ -1584,7 +1584,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <p><strong>Verify:</strong> TST-AA 通过。</p>
 <h3 id="IMPL-X">IMPL-X — 复核 5 次加 Claude 核对</h3>
 <p><strong>目标：</strong> <code>tools/judge_deepseek.py</code> 按 <a href="decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a> 默认跑 5 次、4 次一致才算定论，输出里留 <code>claude_audit</code> 给 Claude 填。</p>
-<p><strong>依赖：</strong> 无。<strong>挡住：</strong> 无。</p>
+<p><strong>依赖：</strong> 无。<strong>挡住：</strong> IMPL-E 的报告部分。</p>
 <p><strong>Verify:</strong> TST-L 按 5 次判定。</p>
 <h3>Execution order</h3>
 <p>先做不依赖别人的任务，被挡住的后做：</p>
@@ -1680,6 +1680,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <td>2026-11-24</td>
 <td>第 9 轮审查后：IMPL-W 目标跟上地图目录和 QUES 规则；改链 ARD-CK、ARD-CE</td>
 </tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 11 轮审查后：IMPL-E 先跑 TST-L 再跑 TST-K，依赖 IMPL-X；IMPL-K 写明现状</td>
+</tr>
 </tbody></table>
 </div>
 <p class="src">Canonical: <code>docs/features/spec-driven-development/impl-plan/spec-driven-development-impl-plan.md</code></p>
@@ -1768,7 +1772,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 </tr>
 <tr>
 <td><code>skills/spec-review/tests/cases/&lt;名字&gt;/</code></td>
-<td>审查案例：<code>input/</code>（故意埋了问题的文档）和 <code>expected.yaml</code>（应该找出的问题编号，以及应该忽略的严重度 1、2 的问题）；11 个机械案例，5 个语义案例</td>
+<td>审查案例：<code>input/</code>（故意埋了问题的文档）和 <code>expected.yaml</code>（应该找出的问题编号，以及应该忽略的严重度 1、2 的问题）；11 个机械案例，外加一个干净的；5 个语义案例还没写，要等能判 spec-review 输出的执行器</td>
 </tr>
 </tbody></table>
 <p><code>eval.yaml</code> 的键：</p>
@@ -1854,7 +1858,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <h4 id="TST-G">TST-G — 审查真实的文档</h4>
 <p><strong>目标：</strong> 检查别人写的 spec 是否合规。<strong>输入：</strong> 本仓库的 <code>docs/features/</code>；外部仓库的路径。<strong>通过条件：</strong> spec-review 报出的机械问题和 <code>checks/</code> 的结果一致；豁免的路径不报。<strong>判定：</strong> Python 对比两份结果。</p>
 <h4 id="TST-H">TST-H — spec-review 找问题的能力</h4>
-<p><strong>目标：</strong> 问题找全，而且不误报。<strong>输入：</strong> 11 个机械案例和 5 个语义案例；一份干净的范例。<strong>通过条件：</strong> 埋进去的每个问题都被找出，并引用对应的 DSGN 或 MUST 编号；干净的范例上没有严重度 3 及以上的问题；严重度 1、2 的问题不拿出来讨论。<strong>判定：</strong> 比对编号集合。</p>
+<p><strong>目标：</strong> 问题找全，而且不误报。<strong>输入：</strong> 11 个机械案例和 5 个语义案例（语义案例还没写，这一半暂时跑不了，标为 Unverified）；一份干净的范例。<strong>通过条件：</strong> 埋进去的每个问题都被找出，并引用对应的 DSGN 或 MUST 编号；干净的范例上没有严重度 3 及以上的问题；严重度 1、2 的问题不拿出来讨论。<strong>判定：</strong> 比对编号集合。</p>
 <h4 id="TST-I">TST-I — spec-review 修改建议的质量</h4>
 <p><strong>目标：</strong> 修改建议是对的。<strong>输入：</strong> TST-H 找出的问题。<strong>通过条件：</strong> 把建议和 <code>expected_fix</code> 比较：照着建议改了之后，问题消失，而且没有引入新的 MUST 违反。<strong>判定：</strong> 判分模型；报告「建议正确的条数 / 找出的条数」。</p>
 <h4 id="TST-J">TST-J — 不同评测配置</h4>
@@ -1931,7 +1935,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 </tr>
 <tr>
 <td>设计完整</td>
-<td>TST-O 100% 对应；TST-P 全部通过</td>
+<td>TST-N parent 五篇齐全；TST-O 100% 对应；TST-P 全部通过</td>
 </tr>
 <tr>
 <td>读得懂</td>
@@ -1955,11 +1959,11 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 </tr>
 <tr>
 <td>gold v1 定稿</td>
-<td>TST-D：范例的分数 1 满分；标注经人工认可</td>
+<td>TST-C 每次运行都写出五篇；TST-D：范例的分数 1 满分；标注经人工认可</td>
 </tr>
 <tr>
 <td>spec-write 可以发布</td>
-<td>TST-E 分数 1 满分、分数 2 不退步；TST-F 四种输入全部通过；TST-G 没有差异；TST-L 5 次里至少 4 次通过</td>
+<td>TST-E 分数 1 满分、分数 2 不退步；TST-F 四种输入全部通过；TST-G 没有差异；TST-L 5 次里至少 4 次通过；TST-K 报告结构齐全</td>
 </tr>
 <tr>
 <td>spec-review 可以发布</td>
@@ -2238,6 +2242,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td>2026-11-24</td>
 <td>第 10 轮审查后：分数 2 最高分写对；TST-L 先于 TST-K，报告带复核结果</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 11 轮审查后：语义审查案例标明还没写；门槛表加 TST-N、TST-C、TST-K</td>
 </tr>
 </tbody></table>
 </div>
@@ -2786,7 +2794,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <h4 id="ARD-CA">ARD-CA — 插图与站点样式</h4>
 <p><strong>原因。</strong> 只有文字的 spec 难读；Mermaid 自动排的版不像人精心画的图；构建网页时再让 AI 画图，每次结果都不一样。</p>
 <p><strong>规则。</strong> 写 spec 时用 diagram-design 画 SVG，文件名 <code>&lt;文档名&gt;-fig-&lt;主题&gt;.svg</code>，放在引用它的 md 旁边；网页配色用 diagram-design 的默认颜色；图里有正文没有的内容或与正文矛盾，spec-review 报 severity 3。</p>
-<p><strong>重述。</strong> 本条推翻 ARD-BE「图只画流程、状态用表格不用图」的部分，SPEC-PRESENTATION 列的形状都可以画图。其余仍有效：图不能出现正文里没写的事实；步骤数和所在章节一致（NICE，ARD-BN）。</p>
+<p><strong>重述。</strong> 本条推翻 ARD-BE「图只画流程、状态用表格不用图」的部分，SPEC-PRESENTATION 列的形状都可以画图。其余仍有效：图不能出现正文里没写的事实（MUST，见上面的规则）；步骤数和所在章节一致（NICE，ARD-BN）。另加 NICE：一张图不超过 9 个节点、12 条边。</p>
 <p><strong>放弃的方案。</strong> 仅在 build 时让 AI 重画；只把配色套在 Mermaid 上。</p>
 <a id="ard-bz"></a>
 <h4 id="ARD-BZ">ARD-BZ — 补记两次编号迁移</h4>
@@ -3267,6 +3275,10 @@ payment-impl-plan-01-schema.md         impl-plan 分篇：序号加阶段，有�
 <tr>
 <td>2026-11-24</td>
 <td>第 10 轮审查后：ARD-CA 补上对 ARD-BE 的重述</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 11 轮审查后：ARD-CA 的重述分清 MUST 和 NICE，补上节点和连线上限</td>
 </tr>
 </tbody></table>
 </div>
@@ -4432,7 +4444,7 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 <li>写成「§N」的链接落在第 N 节或它的上下级；同一篇里的步骤范围不重叠（ARD-AZ）。</li>
 <li>手工维护的 HTML 更新记录，覆盖 markdown Change Log 里的每个日期（ARD-BA）。</li>
 <li>问题清单里写的总数和各状态的数量，等于实际行数（ARD-BB）。</li>
-<li>图只画文字说不清的流程，一个流程只画一张图（ARD-BE）。</li>
+<li>图的步骤数和所在章节一致；一张图不超过 9 个节点、12 条边；用 diagram-design 默认的字体和配色（ARD-CA）。</li>
 </ul>
 <h3>Testing Decisions</h3>
 <p>测试见 parent 的 <a href="test-plan/spec-driven-development-test-plan.html">test-plan</a>。被测的是 spec-write、spec-review 和 wayfinder 三个 skill，不是本篇。本篇所有的 MUST 和禁止事项，由 parent test-plan 的 TST-A 扫描收进 <code>must_registry.yaml</code>：格式类的由 Python 脚本判断，其余由判分模型判断。</p>
@@ -4707,6 +4719,10 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 <tr>
 <td>2026-11-24</td>
 <td>第 9 轮审查后：链到已划掉 ARD 的地方改链</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 11 轮审查后：DSGN-M 的图规则改为 ARD-CA 保留的部分</td>
 </tr>
 </tbody></table>
 <hr><p class="src-inline">Source: <code>features/document-standard/design/document-standard-design-spec-reader-html.md</code></p>

@@ -672,7 +672,7 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 <li>写成「§N」的链接落在第 N 节或它的上下级；同一篇里的步骤范围不重叠（<a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-AZ">ARD-AZ</a>）。</li>
 <li>手工维护的 HTML 更新记录，覆盖 markdown Change Log 里的每个日期（<a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-BA">ARD-BA</a>）。</li>
 <li>问题清单里写的总数和各状态的数量，等于实际行数（<a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-BB">ARD-BB</a>）。</li>
-<li>图只画文字说不清的流程，一个流程只画一张图（<a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-BE">ARD-BE</a>）。</li>
+<li>图的步骤数和所在章节一致；一张图不超过 9 个节点、12 条边；用 diagram-design 默认的字体和配色（<a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-CA">ARD-CA</a>）。</li>
 </ul>
 <h3>Testing Decisions</h3>
 <p>测试见 parent 的 <a href="../../../test-plan/spec-driven-development-test-plan.html">test-plan</a>。被测的是 spec-write、spec-review 和 wayfinder 三个 skill，不是本篇。本篇所有的 <span class="lvl lvl--must">MUST</span> 和禁止事项，由 parent test-plan 的 <a class="id-ref" href="../../../test-plan/spec-driven-development-test-plan.html#TST-A">TST-A</a> 扫描收进 <code>must_registry.yaml</code>：格式类的由 Python 脚本判断，其余由判分模型判断。</p>
@@ -947,6 +947,10 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 <tr>
 <td>2026-11-24</td>
 <td>第 9 轮审查后：链到已划掉 ARD 的地方改链</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 11 轮审查后：<a class="id-ref" href="#DSGN-M">DSGN-M</a> 的图规则改为 <a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-CA">ARD-CA</a> 保留的部分</td>
 </tr>
 </tbody></table></div>
       </div>

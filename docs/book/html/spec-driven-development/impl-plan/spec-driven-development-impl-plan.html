@@ -70,8 +70,8 @@
 <p class="impl-verify"><strong>Verify:</strong> 有检查模块时 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-B">TST-B</a> 能跑；gold 的输入文件都在。</p>
 <h3 id="IMPL-E"><a class="id-ref" href="#IMPL-E">IMPL-E</a> — 自己跑一遍评测</h3>
 <p><strong>目标：</strong> 跑基线评测：<code>grill.skills: []</code>，输入是 iPhone 案例的需求和背景资料（<a href="../decision-history/spec-driven-development-decision-history.html#ard-bl">ARD-BL</a>）。</p>
-<p><strong>步骤：</strong> 新开分支 <code>eval/v1/&lt;run_id&gt;</code>；用 spec-write 写出一套 feature spec；跑 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-E">TST-E</a>、<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-F">TST-F</a>、<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-K">TST-K</a>；失败时先改 spec。</p>
-<p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-B">IMPL-B</a>、<a class="id-ref" href="#IMPL-D">IMPL-D</a>、<a class="id-ref" href="#IMPL-J">IMPL-J</a>、<a class="id-ref" href="#IMPL-P">IMPL-P</a>；报告部分还依赖 <a class="id-ref" href="#IMPL-L">IMPL-L</a>，可读性部分还依赖 <a class="id-ref" href="#IMPL-Q">IMPL-Q</a>。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-I">IMPL-I</a>。</p>
+<p><strong>步骤：</strong> 新开分支 <code>eval/v1/&lt;run_id&gt;</code>；用 spec-write 写出一套 feature spec；跑 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-E">TST-E</a>、<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-F">TST-F</a>、<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-L">TST-L</a>，然后 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-K">TST-K</a>；失败时先改 spec。</p>
+<p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-B">IMPL-B</a>、<a class="id-ref" href="#IMPL-D">IMPL-D</a>、<a class="id-ref" href="#IMPL-J">IMPL-J</a>、<a class="id-ref" href="#IMPL-P">IMPL-P</a>；报告部分还依赖 <a class="id-ref" href="#IMPL-L">IMPL-L</a> 和 <a class="id-ref" href="#IMPL-X">IMPL-X</a>，可读性部分还依赖 <a class="id-ref" href="#IMPL-Q">IMPL-Q</a>。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-I">IMPL-I</a>。</p>
 <p class="impl-verify"><strong>Verify:</strong> 生成了 HTML 报告；分数按 test-plan 的 Scoring 计算。</p>
 <h3 id="IMPL-F"><a class="id-ref" href="#IMPL-F">IMPL-F</a> — 给人读的网页</h3>
 <p><strong>目标：</strong> 全站一个网站，入口 <a href="../../index.html"><code>docs/book/html/index.html</code></a>；feature 页左边是目录，右边是正文；parent 的汇编页 <code>spec-driven-development-reader.html</code> 在其中（<a href="../decision-history/spec-driven-development-decision-history.html#ard-bg">ARD-BG</a>、<a href="../features/document-standard/design/document-standard-design-spec-reader-html.html">reader design</a>）。</p>
@@ -98,7 +98,7 @@
 <p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-D">IMPL-D</a>。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-E">IMPL-E</a>、<a class="id-ref" href="#IMPL-Q">IMPL-Q</a>。</p>
 <p class="impl-verify"><strong>Verify:</strong> <code>pytest test_eval_config.py</code> 通过；<code>eval.yaml</code> 包含所有必需的键。</p>
 <h3 id="IMPL-K"><a class="id-ref" href="#IMPL-K">IMPL-K</a> — 反例、正例和审查案例</h3>
-<p><strong>目标：</strong> 每个检查至少一个反例和一个正例；spec-review 的 16 个审查案例（11 个机械，5 个语义）。</p>
+<p><strong>目标：</strong> 每个检查至少一个反例和一个正例；spec-review 的 16 个审查案例（11 个机械，5 个语义）。现状：机械案例和一个干净案例已写好；5 个语义案例还没写，要等执行器。</p>
 <p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-D">IMPL-D</a>。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-I">IMPL-I</a>。</p>
 <p class="impl-verify"><strong>Verify:</strong> <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-B">TST-B</a> 全部通过；<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-H">TST-H</a> 和 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-I">TST-I</a> 需要的文件都在。</p>
 <h3 id="IMPL-L"><a class="id-ref" href="#IMPL-L">IMPL-L</a> — 评测报告脚本</h3>
@@ -199,7 +199,7 @@
 <p class="impl-verify"><strong>Verify:</strong> <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-AA">TST-AA</a> 通过。</p>
 <h3 id="IMPL-X"><a class="id-ref" href="#IMPL-X">IMPL-X</a> — 复核 5 次加 Claude 核对</h3>
 <p><strong>目标：</strong> <a href="../../../../../tools/judge_deepseek.py"><code>tools/judge_deepseek.py</code></a> 按 <a href="../decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a> 默认跑 5 次、4 次一致才算定论，输出里留 <code>claude_audit</code> 给 Claude 填。</p>
-<p><strong>依赖：</strong> 无。<strong>挡住：</strong> 无。</p>
+<p><strong>依赖：</strong> 无。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-E">IMPL-E</a> 的报告部分。</p>
 <p class="impl-verify"><strong>Verify:</strong> <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-L">TST-L</a> 按 5 次判定。</p>
 <h3>Execution order</h3>
 <p>先做不依赖别人的任务，被挡住的后做：</p>
@@ -294,6 +294,10 @@
 <tr>
 <td>2026-11-24</td>
 <td>第 9 轮审查后：<a class="id-ref" href="#IMPL-W">IMPL-W</a> 目标跟上地图目录和 QUES 规则；改链 <a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CK">ARD-CK</a>、<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CE">ARD-CE</a></td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 11 轮审查后：<a class="id-ref" href="#IMPL-E">IMPL-E</a> 先跑 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-L">TST-L</a> 再跑 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-K">TST-K</a>，依赖 <a class="id-ref" href="#IMPL-X">IMPL-X</a>；<a class="id-ref" href="#IMPL-K">IMPL-K</a> 写明现状</td>
 </tr>
 </tbody></table></div>
       </div>
