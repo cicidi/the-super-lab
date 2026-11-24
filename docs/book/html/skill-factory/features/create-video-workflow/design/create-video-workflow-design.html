@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>create-video-workflow — 研究文档变内容 · design · Spec Atlas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@400;600&display=swap">
+<link rel="stylesheet" href="../../../../assets/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><a href="../../../../index.html"><span class="brand-mark">SDD</span><span class="brand-name">Spec Atlas</span></a></div>
+    <button class="strike-btn" type="button" onclick="var r=document.documentElement;var off=r.dataset.strike!=='off';r.dataset.strike=off?'off':'on';this.textContent=off?'显示删除线':'隐藏删除线'">隐藏删除线</button>
+  </div>
+</header>
+<div class="site">
+  <aside class="sidebar">
+  <nav aria-label="Directory">
+    <div class="tree-overview"><a class="tree-link" href="../../../../index.html"><span class="tree-link__num">00</span>All features</a></div>
+    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../../prd/skill-factory-prd.html"><span class="tree-ord">1</span>skill-factory PRD</a></li><li class="tree-leaf"><a class="tree-link" href="../../../decision-history/skill-factory-decision-history.html"><span class="tree-ord">2</span>skill-factory — Decision History</a></li><li class="tree-leaf"><a class="tree-link" href="../../../design/skill-factory-design.html"><span class="tree-ord">3</span>skill-factory Specification</a></li><li class="tree-leaf"><a class="tree-link" href="../../../impl-plan/skill-factory-impl-plan.html"><span class="tree-ord">4</span>skill-factory Implementation Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../../../test-plan/skill-factory-test-plan.html"><span class="tree-ord">5</span>skill-factory Test Plan</a></li><li class="tree-branch"><details open><summary><span class="tree-link"><span class="tree-ord">10</span>sub-feature</span></summary><ul class="tree"><li class="tree-branch"><details open><summary><a class="tree-link" href="../../auto-tdd/design/auto-tdd-design.html">auto-tdd</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../auto-tdd/prd/auto-tdd-prd.html"><span class="tree-ord">1</span>auto-tdd — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../auto-tdd/decision-history/auto-tdd-decision-history.html"><span class="tree-ord">2</span>auto-tdd — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../auto-tdd/design/auto-tdd-design.html"><span class="tree-ord">3</span>auto-tdd — 测试驱动开发循环</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../bug/design/bug-design.html">bug</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../bug/prd/bug-prd.html"><span class="tree-ord">1</span>bug — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../bug/decision-history/bug-decision-history.html"><span class="tree-ord">2</span>bug — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../bug/design/bug-design.html"><span class="tree-ord">3</span>bug — 调试、报告与自愈</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="create-video-workflow-design.html">create-video-workflow</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../prd/create-video-workflow-prd.html"><span class="tree-ord">1</span>create-video-workflow — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../decision-history/create-video-workflow-decision-history.html"><span class="tree-ord">2</span>create-video-workflow — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="create-video-workflow-design.html" aria-current="page"><span class="tree-ord">3</span>create-video-workflow — 研究文档变内容</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../domain-modeling/design/domain-modeling-design.html">domain-modeling</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../domain-modeling/prd/domain-modeling-prd.html"><span class="tree-ord">1</span>domain-modeling — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../domain-modeling/decision-history/domain-modeling-decision-history.html"><span class="tree-ord">2</span>domain-modeling — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../domain-modeling/design/domain-modeling-design.html"><span class="tree-ord">3</span>domain-modeling — 领域模型与术语表</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../english-grammar-fix/design/english-grammar-fix-design.html">english-grammar-fix</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../english-grammar-fix/prd/english-grammar-fix-prd.html"><span class="tree-ord">1</span>english-grammar-fix — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../english-grammar-fix/decision-history/english-grammar-fix-decision-history.html"><span class="tree-ord">2</span>english-grammar-fix — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../english-grammar-fix/design/english-grammar-fix-design.html"><span class="tree-ord">3</span>english-grammar-fix — 英文语法修正</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../grill-with-docs/design/grill-with-docs-design.html">grill-with-docs</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../grill-with-docs/prd/grill-with-docs-prd.html"><span class="tree-ord">1</span>grill-with-docs — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../grill-with-docs/decision-history/grill-with-docs-decision-history.html"><span class="tree-ord">2</span>grill-with-docs — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../grill-with-docs/design/grill-with-docs-design.html"><span class="tree-ord">3</span>grill-with-docs — 带文档的拷问式访谈</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../implement/design/implement-design.html">implement</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../implement/prd/implement-prd.html"><span class="tree-ord">1</span>implement — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../implement/decision-history/implement-decision-history.html"><span class="tree-ord">2</span>implement — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../implement/design/implement-design.html"><span class="tree-ord">3</span>implement — 按 spec 和 ticket 实现</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../multi-model-team/design/multi-model-team-design.html">multi-model-team</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../multi-model-team/prd/multi-model-team-prd.html"><span class="tree-ord">1</span>multi-model-team — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../multi-model-team/decision-history/multi-model-team-decision-history.html"><span class="tree-ord">2</span>multi-model-team — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../multi-model-team/design/multi-model-team-design.html"><span class="tree-ord">3</span>multi-model-team — 多模型团队编排</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../prototype/design/prototype-design.html">prototype</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../prototype/prd/prototype-prd.html"><span class="tree-ord">1</span>prototype — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../prototype/decision-history/prototype-decision-history.html"><span class="tree-ord">2</span>prototype — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../prototype/design/prototype-design.html"><span class="tree-ord">3</span>prototype — 用完就扔的原型</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../skill/design/skill-design.html">skill</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../skill/prd/skill-prd.html"><span class="tree-ord">1</span>skill — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../skill/decision-history/skill-decision-history.html"><span class="tree-ord">2</span>skill — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../skill/design/skill-design.html"><span class="tree-ord">3</span>skill — Skill 管理入口</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../to-spec/design/to-spec-design.html">to-spec</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../to-spec/prd/to-spec-prd.html"><span class="tree-ord">1</span>to-spec — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../to-spec/decision-history/to-spec-decision-history.html"><span class="tree-ord">2</span>to-spec — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../to-spec/design/to-spec-design.html"><span class="tree-ord">3</span>to-spec — 把对话整理成 spec</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../to-tickets/design/to-tickets-design.html">to-tickets</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../to-tickets/prd/to-tickets-prd.html"><span class="tree-ord">1</span>to-tickets — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../to-tickets/decision-history/to-tickets-decision-history.html"><span class="tree-ord">2</span>to-tickets — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../to-tickets/design/to-tickets-design.html"><span class="tree-ord">3</span>to-tickets — 把 spec 拆成执行工单</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../wayfinder/design/wayfinder-design.html">wayfinder</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../wayfinder/prd/wayfinder-prd.html"><span class="tree-ord">1</span>wayfinder — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../wayfinder/decision-history/wayfinder-decision-history.html"><span class="tree-ord">2</span>wayfinder — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../wayfinder/design/wayfinder-design.html"><span class="tree-ord">3</span>wayfinder — 规划大任务的决策地图</a></li></ul></details></li></ul></details></li></ul>
+  </nav>
+</aside>
+  <main class="content">
+    <nav class="breadcrumbs"><a href="../../../../index.html">Docs</a> / <span>skill-factory</span> / <span>features</span> / <span>create-video-workflow</span> / <span>design</span> / <span>create-video-workflow — 研究文档变内容</span></nav>
+    <article class="doc" data-doc="skill-factory/features/create-video-workflow/design/create-video-workflow-design">
+      <header class="doc-head">
+        <p class="eyebrow">skill-factory</p>
+        <h1>create-video-workflow — 研究文档变内容</h1>
+        <p class="source">Canonical: docs/features/skill-factory/features/create-video-workflow/design/create-video-workflow-design.md</p>
+      </header>
+      
+      <div class="doc-body">
+        <h2>create-video-workflow — 研究文档变内容</h2>
+<p>本篇说明 <code>create-video-workflow</code> 这个 skill 现在怎么工作。 源文件：<a href="../../../../../../../personal-skills/create-video-workflow/SKILL.md"><code>personal-skills/create-video-workflow/SKILL.md</code></a>（commit c4159a9），与 hackathon-video-gen 仓库 commit 8a9bc62 的版本完全相同。 下文把 hackathon-video-gen 简称 hvg。</p>
+<h3>Problem Statement</h3>
+<p>旧版只能把一个想法做成 30 到 60 秒的竖屏短视频，写死了 2 个模板和 6 个场景（decision-history 的 <a class="id-ref" href="../decision-history/create-video-workflow-decision-history.html#ARD-G">ARD-G</a>）。 用户做完研究后，想按听众和传播渠道，把文档变成演示、视频或网站（<a class="id-ref" href="../prd/create-video-workflow-prd.html#PRD-A">PRD-A</a>、<a class="id-ref" href="../prd/create-video-workflow-prd.html#PRD-B">PRD-B</a>）。</p>
+<h3>Solution</h3>
+<p>一个 8 段的流水线，编号 Phase 0 到 Phase 7，中间有 4 个检查点（checkpoint，必须停下等用户说 continue 的地方）。 阶段对应软件工程：Phase 0-2 是需求和设计，3 是 spec，4 是实施，5 是 build，6 是验收，7 是发布（<a class="id-ref" href="../prd/create-video-workflow-prd.html#PRD-H">PRD-H</a>）。 SKILL.md 自称&quot;7-phase&quot;，但实际编号从 0 到 7，共 8 段。</p>
+<h3>User Stories</h3>
+<ul>
+<li>作为创作者，我说&quot;把这篇论文做成 YouTube 视频&quot;，走完整流程，最后上传（SKILL.md 的 Standard 例子）。</li>
+<li>作为工程师，我说&quot;把会议记录做成团队幻灯片&quot;，走轻量流程，验收只略看（Lite 例子）。</li>
+<li>作为产品负责人，我要一个发布视频、一个落地页和内部文档，三个渠道分别验收、分别发布（Full 例子）。</li>
+</ul>
+<h3>Implementation Decisions</h3>
+<p>skill 目录下只有 SKILL.md 一个文件，本身不带脚本。生成视频和图片要调用 hvg 仓库里的 Python 脚本（<a class="id-ref" href="../decision-history/create-video-workflow-decision-history.html#ARD-H">ARD-H</a>）。 所有中间文件都写在 <code>projects/&lt;name&gt;/</code> 下，一个内容项目一个目录（<a class="id-ref" href="../decision-history/create-video-workflow-decision-history.html#ARD-K">ARD-K</a>）。 唯一声明的依赖是 <code>doc-organize</code>：Phase 4 生成文档时，用它决定路径和文件名（<a class="id-ref" href="../prd/create-video-workflow-prd.html#PRD-G">PRD-G</a>）。</p>
+<h3>Design</h3>
+<p><strong><a class="id-ref" href="#DSGN-A">DSGN-A</a> Phase 0 渠道与听众。</strong> 先问用户内容发到哪里：YouTube、抖音或公众号、公司内部文档、会议演讲、GitHub demo、网站，或多个渠道（<a class="id-ref" href="../prd/create-video-workflow-prd.html#PRD-C">PRD-C</a>）。 每个渠道定下听众的专业程度、细节深度、语气和平台格式（<a class="id-ref" href="../prd/create-video-workflow-prd.html#PRD-B">PRD-B</a>）。 和用户一起写一段 Goal 声明，说清核心信息；它是 Phase 6 验收的靶子（<a class="id-ref" href="../prd/create-video-workflow-prd.html#PRD-I">PRD-I</a>）。 产出 <code>requirements.md</code>：渠道与听众、Goal、成功标准、范围。用户说不清目标时，用&quot;教程、推介、深度技术、公告&quot;几类例子帮他收窄。</p>
+<p><strong><a class="id-ref" href="#DSGN-B">DSGN-B</a> Phase 1 素材摄入和检查点 1。</strong> 输入可以是 markdown、PDF、网页、YouTube 链接、GitHub 仓库或公司内部文档（<a class="id-ref" href="../prd/create-video-workflow-prd.html#PRD-A">PRD-A</a>）。 每种都抽成文字，合并进 <code>source_material.md</code>。付费墙、纯音频、死链这类读不了的，记进 gaps 一节，问用户怎么办。 检查点 1：列出收了什么、跳过什么，问用户素材够不够撑起 Goal。</p>
+<p><strong><a class="id-ref" href="#DSGN-C">DSGN-C</a> Phase 2 内容大纲。</strong> 大纲不套模板，不强制 6 个场景；可以是 2 张幻灯片、1 段视频或 3 节文档（<a class="id-ref" href="../prd/create-video-workflow-prd.html#PRD-E">PRD-E</a>）。 每个内容单元写明类型、主题、要点和大致长度，存为 <code>content_plan.md</code>，交给用户确认。 用户反复否定时，退回&quot;开头、主体、结尾&quot;的线性结构，留给 Phase 3 细化。不再问用户要不要模板（<a class="id-ref" href="../prd/create-video-workflow-prd.html#PRD-N">PRD-N</a>，见 <a class="id-ref" href="#QUES-C">QUES-C</a>）。</p>
+<p><strong><a class="id-ref" href="#DSGN-D">DSGN-D</a> Phase 3 文稿与 spec，检查点 2。</strong> <code>transcript.md</code> 是给人听和看的文稿，不是学术文章（<a class="id-ref" href="../prd/create-video-workflow-prd.html#PRD-C">PRD-C</a>）。 语气按渠道分五种：YouTube 像博主聊天，抖音短而有钩子，公司内部专业清楚，会议演讲配合幻灯片，GitHub demo 偏技术演示。 <code>spec.json</code> 每个内容单元一条，是 Phase 4 的输入（<a class="id-ref" href="../prd/create-video-workflow-prd.html#PRD-H">PRD-H</a>）。字段有类型、文稿片段、屏幕文字、画面描述、配音 <code>voiceover</code>（<a class="id-ref" href="../prd/create-video-workflow-prd.html#PRD-M">PRD-M</a>）。 还有 <code>engine</code>，按单元类型选 seedance、gemini、chatgpt 或 ffmpeg，以及输出尺寸 <code>format</code>（<a class="id-ref" href="../prd/create-video-workflow-prd.html#PRD-D">PRD-D</a>）。 检查点 2：用户逐段改文稿，检查 spec 是否覆盖每个单元。</p>
+<p><strong><a class="id-ref" href="#DSGN-E">DSGN-E</a> Phase 4 资源生成，检查点 3。</strong> 按 spec.json 的类型分派：视频走 hvg 的旧脚本链，依次生成叙事、场景、图片、视频，再轮询任务（<a class="id-ref" href="../prd/create-video-workflow-prd.html#PRD-E">PRD-E</a>）。 幻灯片写成带分隔符的 markdown；文档先用 doc-organize 定位置（<a class="id-ref" href="../prd/create-video-workflow-prd.html#PRD-G">PRD-G</a>）；网站生成 HTML、CSS、JS；动画生成给引擎的 prompt。 能并行的都并行（<a class="id-ref" href="../prd/create-video-workflow-prd.html#PRD-F">PRD-F</a>）。图片可以并行，视频按顺序生成，用上一段的尾帧接下一段（<a class="id-ref" href="../prd/create-video-workflow-prd.html#PRD-L">PRD-L</a>）。 产物放在 <code>output/&lt;type&gt;/</code>，进度记在 <code>gen_status.json</code>。失败时重试、跳过或换简化 prompt。 检查点 3：用户逐个看视频、图片和文档，可以说&quot;重做第 N 个场景&quot;。</p>
+<p><strong><a class="id-ref" href="#DSGN-F">DSGN-F</a> Phase 5 合成。</strong> 视频用 <code>concat.sh</code> 统一格式后拼接；幻灯片编成一个演示文件（<a class="id-ref" href="../prd/create-video-workflow-prd.html#PRD-F">PRD-F</a>）。 markdown 里插入图片和视频的链接或占位符；网站把页面和资源连起来。 多格式时打成一个目录，放在 <code>output/final/</code>，并写一个 README 列出所有产物。</p>
+<p><strong><a class="id-ref" href="#DSGN-G">DSGN-G</a> Phase 6 听众 agent 验收，检查点 4。</strong> 听众 agent 是另起的一个 AI 实例，按 Phase 0 的听众画像设定（<a class="id-ref" href="../prd/create-video-workflow-prd.html#PRD-I">PRD-I</a>）。 它要能读文字、看视频、听音频，写出观后感和一句话总结，存为 <code>audience_review.md</code>。 总结和 Goal 不一致时，按原因回退：目标不清回 Phase 0，缺例证回 1，结构问题回 2，语气问题回 3，画面不对回 4。 检查点 4：把观后感、总结和 Goal 并排给用户，用户选通过或修改。</p>
+<p><strong><a class="id-ref" href="#DSGN-H">DSGN-H</a> Phase 7 发布。</strong> 按渠道发布：YouTube 和抖音走平台 API，内部文档推到 Confluence 或 Notion，GitHub 推代码并建 release，网站部署到托管平台（<a class="id-ref" href="../prd/create-video-workflow-prd.html#PRD-J">PRD-J</a>）。 写 <code>release_notes.md</code> 记录发了什么、发到哪、何时、链接，并逐个确认链接能打开。 没有 API 时导出文件并附手动上传说明；API 失败重试一次，再转人工。</p>
+<p><strong><a class="id-ref" href="#DSGN-I">DSGN-I</a> 检查点、错误和质量门。</strong> 4 个检查点都写着 STOP，用户说 continue 才往下走（<a class="id-ref" href="../prd/create-video-workflow-prd.html#PRD-G">PRD-G</a>）。 任何阶段出错就停在原地，记进 <code>errors.md</code>，让用户选重试、跳过、改需求或放弃。 每个阶段有一条质量门，例如 Phase 0 的 Goal 必须明确可衡量，Phase 6 的总结必须对上 Goal。</p>
+<p><strong><a class="id-ref" href="#DSGN-J">DSGN-J</a> 存放和入口。</strong> 一份在 hvg 的 <code>.claude/skills/</code>，hvg 的 CLAUDE.md 把它定为主入口；另一份在本仓库 <code>personal-skills/</code>（<a class="id-ref" href="../prd/create-video-workflow-prd.html#PRD-K">PRD-K</a>）。 两份目前内容相同，但没有写明谁是正本，见 <a class="id-ref" href="#QUES-F">QUES-F</a>。</p>
+<h3>Testing Decisions</h3>
+<p>SKILL.md 列了 3 个测试场景：论文做 YouTube 视频、内部文档做团队演示、GitHub 仓库做落地页。它们只写了期望行为，没有自动测试或评测集。 analytics.db 里没有找到调用 v3 的记录；2026-07-23 的 omnigent vlog 会话（d1bc3211）也没有用它。v3 是否完整跑通过，属于 UNKNOWN。</p>
+<h3>Out of Scope</h3>
+<p>已有成稿、只拼 30 到 60 秒短视频的，走 git 历史里的旧 5 步流程或直接调脚本；只要文字摘要的，交给摘要类 skill。 单个 PDF 且没有演示意图的，用更简单的抽取流程（SKILL.md 的 When NOT to Use 一节）。</p>
+<h3>Further Notes</h3>
+<p>需求见 <a href="../prd/create-video-workflow-prd.html">PRD</a>，决策见 <a href="../decision-history/create-video-workflow-decision-history.html">decision-history</a>。 旧版可在 hvg 仓库用 <code>git show c440a27:.claude/skills/create-video-workflow/SKILL.md</code> 查看，含模板和 tasks.json 格式。 音频素材可交给 <code>transcribe-audio</code> 转文字，它的描述里写了服务于本 skill 的 Phase 1（hvg commit ca6bb23，2026-07-22）。</p>
+<h3>Alternatives Considered</h3>
+<p>另建一个叫 research-to-content 的编排 skill、旧 skill 当子程序：被否决，直接改写旧的（<a class="id-ref" href="../decision-history/create-video-workflow-decision-history.html#ARD-G">ARD-G</a>）。 所有渠道用同一种口语化语气：被否决，改为按渠道定语气（<a class="id-ref" href="../decision-history/create-video-workflow-decision-history.html#ARD-F">ARD-F</a>）。 合成完就结束、由用户手动发布：被否决，加了听众验收和发布两个阶段（<a class="id-ref" href="../decision-history/create-video-workflow-decision-history.html#ARD-C">ARD-C</a>、<a class="id-ref" href="../decision-history/create-video-workflow-decision-history.html#ARD-B">ARD-B</a>）。</p>
+<h3>Drawbacks</h3>
+<p>8 段加 4 个检查点，对&quot;会议记录做几张幻灯片&quot;这类小请求偏重；SKILL.md 只靠 Lite 例子示意可以简化。 听众 agent 由 AI 扮演，SKILL.md 自评这一步信心为 medium，取决于模拟听众的 prompt 质量。 skill 依赖 hvg 仓库的脚本，换到别的项目里用时，Phase 4 和 Phase 5 的视频部分跑不起来。</p>
+<h3>Risks and Mitigations</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>风险</th>
+<th>缓解</th>
+</tr></thead><tbody>
+<tr>
+<td>SKILL.md 写的是 <code>tools/</code>，但 hvg 在 v3 之前已把它改名为 <code>scripts/</code>（commit b805482）</td>
+<td>暂无；见 <a class="id-ref" href="#QUES-A">QUES-A</a></td>
+</tr>
+<tr>
+<td><code>projects/</code> 已从 hvg 移到 video-gen-initiative 仓库（hvg commit cb2d6d4），SKILL.md 仍写 <code>projects/&lt;name&gt;/</code></td>
+<td>暂无；见 <a class="id-ref" href="#QUES-B">QUES-B</a></td>
+</tr>
+<tr>
+<td>发布到公开平台后难以撤回</td>
+<td>检查点 4 由用户决定通过与否；没有 API 时只导出文件（<a class="id-ref" href="#DSGN-H">DSGN-H</a>）</td>
+</tr>
+<tr>
+<td>视频 API 贵且排队久，用户问过&quot;seedance 的api 这么贵&quot;（18d4bf16，2026-04-19）</td>
+<td>检查点 3 逐个审阅，坏场景单独重做</td>
+</tr>
+</tbody></table></div>
+<h3>Open Questions</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>ID</th>
+<th>问题</th>
+<th>目前答案</th>
+<th>Owner</th>
+<th>Blocking</th>
+</tr></thead><tbody>
+<tr>
+<td id="QUES-A"><a class="id-ref" href="#QUES-A">QUES-A</a></td>
+<td>脚本路径改成 <code>scripts/</code> 吗？</td>
+<td>SKILL.md 写 <code>tools/</code>，hvg 已没有这个目录</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-B"><a class="id-ref" href="#QUES-B">QUES-B</a></td>
+<td>项目文件写在哪个仓库？</td>
+<td>SKILL.md 写 <code>projects/&lt;name&gt;/</code>；实际数据在 video-gen-initiative</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-C"><a class="id-ref" href="#QUES-C">QUES-C</a></td>
+<td>要不要恢复&quot;问是否要模板&quot;（<a class="id-ref" href="../prd/create-video-workflow-prd.html#PRD-N">PRD-N</a>）？</td>
+<td>v3 不提模板，也不问</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-D"><a class="id-ref" href="#QUES-D">QUES-D</a></td>
+<td>Phase 1 遇到音频，要不要调 transcribe-audio？</td>
+<td>SKILL.md 把纯音频记为 gap；transcribe-audio 却说服务于这一步</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-E"><a class="id-ref" href="#QUES-E">QUES-E</a></td>
+<td>听众 agent 用什么工具&quot;看&quot;视频、&quot;听&quot;音频（<a class="id-ref" href="../prd/create-video-workflow-prd.html#PRD-I">PRD-I</a>）？</td>
+<td>SKILL.md 只要求能做到，没写怎么做</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-F"><a class="id-ref" href="#QUES-F">QUES-F</a></td>
+<td>hvg 和 <code>personal-skills/</code> 两份，哪份是正本？</td>
+<td>目前内容相同，没有同步规则</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+</tbody></table></div>
+<h3>Reversibility</h3>
+<p>skill 本身是 git 跟踪的一个文件，用 <code>git revert</code> 即可撤回；旧的短视频版可从 hvg commit c440a27 取回。 已发布到 YouTube、抖音等平台的内容，只能到平台上手动删除。</p>
+<h3>Change Log</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Date</th>
+<th>Change</th>
+</tr></thead><tbody>
+<tr>
+<td>2026-11-24</td>
+<td>初版：按 SKILL.md 写出 create-video-workflow 的 design，引用 <a class="id-ref" href="../prd/create-video-workflow-prd.html#PRD-A">PRD-A</a> 到 <a class="id-ref" href="../prd/create-video-workflow-prd.html#PRD-N">PRD-N</a></td>
+</tr>
+</tbody></table></div>
+      </div>
+    </article>
+    <nav class="pager" aria-label="Previous and next"><a class="prev" href="../prd/create-video-workflow-prd.html"><span class="label">Previous</span>create-video-workflow — 需求</a><a class="next" href="../decision-history/create-video-workflow-decision-history.html"><span class="label">Next</span>create-video-workflow — 决策记录</a></nav>
+  </main>
+</div>
+<footer class="foot"><div class="foot-inner">Assembled from committed <code>.md</code>. The Markdown is authoritative; this page is a reading view.</div></footer>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>if(window.mermaid){mermaid.initialize({startOnLoad:false});}</script>
+<script src="../../../../assets/app.js"></script>
+</body>
+</html>
