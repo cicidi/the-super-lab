@@ -197,7 +197,7 @@ last_verified: 2026-11-24
 
 **目标：** 网页里的插图都已经嵌进页面，用 diagram-design 的默认配色；页面里没有留下等待替换的 `data-svg` 占位标记（document-standard 的 DSGN-N-D、[ARD-CA](../decision-history/spec-driven-development-decision-history.md#ard-ca)）。
 
-**通过条件：** `tests/test_sdd_site_render.py` 通过；每个 `-fig-*.svg` 在对应 HTML 中出现一次；`docs/book/html` 无 `data-svg`。插图命名、同目录、无脚本由 `checks/figures.py` 检查。
+**通过条件：** `tests/test_sdd_site_render.py` 通过；每个 `-fig-*.svg` 在对应 HTML 中出现一次；`docs/book/html` 里没有 `data-svg="` 占位属性。插图命名、同目录、无脚本由 `checks/figures.py` 检查。
 
 **判定：** Python。
 
@@ -316,3 +316,4 @@ document-standard 的 reader PRD：
 | 2026-11-24 | TST-O：编号要出现在规则小节正文里才算对应 |
 | 2026-11-24 | TST-A：写明 parent DSGN-A 的改动上限不收进清单 |
 | 2026-11-24 | TST-X 改引 DSGN-I；TST-W 改成完整句子；TST-Y 写明四个 skill；门槛表补 TST-W 到 TST-Z，TST-R 按内容比较 |
+| 2026-11-24 | TST-W 写明查的是 `data-svg="` 占位属性 |

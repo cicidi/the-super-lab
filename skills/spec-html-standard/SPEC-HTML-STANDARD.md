@@ -4,7 +4,7 @@
 
 **Not a skill.** Expression rules: `SPEC-PRESENTATION.md`. Agents assemble reader HTML from this standard. spec-write edits markdown; spec-review checks fidelity. No separate `spec-reader` skill.
 
-Hand-maintained HTML (ARD-AK) sets `spec-paired` to `hand-maintained`, `spec-source` to the repo path of the markdown, and `spec-source-sha256` to that file's hash. A mismatch fails `paired_html_stale`. Generated readers omit this meta and are rebuilt. Its changelog has one row for every date in the markdown Change Log (ARD-BA). `<!-- html-skip -->` may wrap L4, not L1 or a struck sentence. Struck sentences stay in the HTML. One button switches between showing the strikethrough and hiding it.
+Hand-maintained HTML (ARD-AK) sets `spec-paired` to `hand-maintained`, `spec-source` to the repo path of the markdown, and `spec-source-sha256` to that file's hash. A mismatch fails `paired_html_stale`. Generated readers omit this meta and are rebuilt. Its changelog has one row for every date in the markdown Change Log (NICE, ARD-BA / ARD-BN). `<!-- html-skip -->` may wrap L4, not L1 or a struck sentence. Struck sentences stay in the HTML. One button switches between showing the strikethrough and hiding it.
 
 ## Output (MUST)
 

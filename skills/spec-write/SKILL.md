@@ -75,7 +75,7 @@ Illustrations, not gold. Each edit stays within 10 lines and 200 characters.
 | **prd** | Problem, goals, requirements with **PRD-*** IDs; deferrals → **ARD-** in decision-history |
 | **design** | Behavior, contracts, boundaries, ownership table or a link to the question tracker, evidence or `UNKNOWN`. One Open Questions tracker per feature |
 | **decision-history** | New **ARD-*** row at **top** of Log, plus an Evidence Appendix entry with the reason and rejected options; supersede = ~~strike~~ the old row + link. The only place strikethrough is used |
-| **impl-plan** | Each **IMPL-*** names its dependency, who it blocks, and a done line. Read side before write side. Mock a partner port that is not live |
+| **impl-plan** | Each **IMPL-*** names its dependency, who it blocks, and a done line. Read side before write side. Mock an interface owned by another team or service when it is not live yet |
 | **test-plan** | **TST-*** cases; execution order; pass threshold; a Traceability table listing every `PRD-*` |
 | **any** | Changing an existing sentence: write the current rule and link the ARD that changed it. No strikethrough outside decision-history (ARD-BM). A typo may be edited in place |
 

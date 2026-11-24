@@ -64,8 +64,8 @@ not be there, and any claim about current implementation that the code does not
 support. Report them — never rewrite the spec or the code silently.
 
 Also load `skills/spec-organize/SPEC-STANDARD.md` for **mechanical MUST** checks
-(**ARD-P**): path/filename, frontmatter, letter IDs, decision-log shape, size caps,
-INDEX/dead links, collision signals. `reference/` is not a committed type; `raw/` may exist locally and must not be committed — **suggest fixes only**, never apply edits.
+(**ARD-P**: format rules are checked by script, not by judgment): path/filename, frontmatter, letter IDs, decision-log shape, size caps,
+INDEX/dead links, and name collisions (two features, files, or IDs with the same name). `reference/` is not a committed type; `raw/` may exist locally and must not be committed — **suggest fixes only**, never apply edits.
 
 Severity **≥3** when a MUST rule in SPEC-STANDARD is broken, for example: an open question is not `QUES-A` or has no owner or blocking flag; an `IMPL-*` names no dependency and no one it blocks; body text outside decision-history carries strikethrough, or drops an old claim without linking the ARD that changed it (ARD-BM); two documents state the same fact differently; a cited figure states a fact not in prose or contradicts prose (ARD-CA) — name the SVG file. Reader HTML fails the same bar when the strike toggle is missing, or when the section, subsection, and clause share one size. A broken **NICE** rule (ARD-BN) is severity 2: list it as skipped, do not discuss it.
 
@@ -104,7 +104,7 @@ Illustrations, not gold. Report only. Do not edit the spec.
 | # | 问题 | 严重度 | 选项 A | 选项 B | 建议 | 附加题 |
 |---|---|---|---|---|---|---|
 
-4. Ask row 1 only. After the answer, ask the 附加题 when that cell is non-empty, then the next row.
+4. Ask row 1 only. After the answer, ask the 附加题 (an optional follow-up question for that row) when that cell is non-empty, then the next row.
 5. If the user did not name the documents, the first choice is which tree to review. Then fill the table.
 
 ---
