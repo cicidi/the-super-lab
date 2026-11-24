@@ -92,7 +92,7 @@ Hard caps per **DSGN-B** table (prd 800, design 1000, impl-plan 1000, test-plan 
 
 ## INDEX / book (MUST)
 
-When the committed tree changes, regenerate INDEX. A `final` or merged change must reach the book; a `draft` source may skip the summary update (**DSGN-D**). No orphan, no dead link, no dead anchor (**DSGN-D**, ARD-AP). A link into `raw/` is not a dead link, even though `raw/` is never committed (ARD-BW).
+When the committed tree changes, regenerate INDEX. Every committed markdown change reaches the book before commit, draft or final (**DSGN-D**, ARD-CF). No orphan, no dead link, no dead anchor (**DSGN-D**, ARD-AP). A link into `raw/` is not a dead link, even though `raw/` is never committed (ARD-BW).
 Before a commit that changes markdown, rebuild the site so committed HTML matches it (ARD-CF). MkDocs / Pages nav is implementation; it must not contradict the feature tree or INDEX (**DSGN-D**).
 
 ## Conflicts (MUST)
