@@ -69,8 +69,9 @@ interfaces, not implementation details.
 For each remaining behavior:
 1. RED — write the next test, confirm it fails
 2. GREEN — write minimal code to pass, one test at a time
-3. Never anticipate future tests
-4. Keep tests focused on observable behavior
+3. COMMIT — commit this green step now (see Incremental Commits below)
+4. Never anticipate future tests
+5. Keep tests focused on observable behavior
 
 ### Phase 4: Refactor
 
@@ -82,6 +83,14 @@ After ALL tests pass:
 
 **Anti-pattern:** Horizontal slicing (writing all tests first, then all code).
 Always vertical slicing — one test, one implementation, repeat.
+
+### Incremental Commits (both modes)
+
+- **Commit incrementally.** Commit after every meaningful change — each green
+  step, each bug fix, each test added, each refactor. Do NOT batch unrelated
+  changes into one commit. The PR can bundle everything at the end.
+- **Commit with proof.** Every commit message includes the number of passing
+  tests (and, in auto mode, the current tier).
 
 ---
 
@@ -119,8 +128,19 @@ recommendations. Sign-off required for completion.
 ### Completion Criteria
 
 ALL of: todo list empty, three tiers pass, Agent-D quality judge signs off,
-contrarian review produces zero CRITICAL + HIGH gaps. Closed-loop rule:
+contrarian review produces zero CRITICAL + HIGH gaps. The contrarian review
+is `/spec-review` (it absorbed contrarian-review): run its Quick Scan and
+count level 5 (Critical) and level 4 (Important) findings as CRITICAL + HIGH
+gaps; each one becomes a new task and the loop continues. Closed-loop rule:
 when fixing code, also fix specs and skills that allowed the bug.
+
+### Loop Discipline
+
+- **Commit incrementally** after every green step and every fix (see
+  Incremental Commits above).
+- **Self-audit every 30 minutes.** Check whether the work is done. If not,
+  keep going; if there was no progress in the last interval, analyze why and
+  add corrective tasks. The agent may add tasks to its own todo list.
 
 ## Quality Gates
 
@@ -129,9 +149,12 @@ when fixing code, also fix specs and skills that allowed the bug.
 - [ ] Test uses public interface only
 - [ ] Code is minimal for this test
 - [ ] Never refactor while RED
+- [ ] Each green step committed (no batched commits)
 
 ### Auto TDD MUST
 - [ ] Never stop before complete
+- [ ] Commit after every green step / fix, with passing-test count and tier
+- [ ] Self-audit every 30 minutes; no-progress intervals produce corrective tasks
 - [ ] Tiers run strictly 1 → 2 → 3
 - [ ] Agent-C rulings cite spec sections
 - [ ] Every failure becomes a tracked task

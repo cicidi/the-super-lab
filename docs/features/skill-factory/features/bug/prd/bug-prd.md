@@ -48,18 +48,18 @@ Heal 的起因：用户问 self-heal 和 self-analyze"为什么之前我从来�
 
 **PRD-C 先收集，后推理。** 用户原话："收集所有信息，只要可能相关的，先不分析"。
 第二步是"推理，并列证据， 不管是log ，代码，还是message"（ses_1417bab9，2026-06-23）。
-落地为 walter-worker commit f8b7ffb；当前 SKILL.md 只保留了一部分，见 design 的 QUES-A。
+落地为 walter-worker commit f8b7ffb；2026-11-24 已恢复，见 decision-history 的 ARD-K。
 
 **PRD-D 原因不明时深挖。** bug-sleuth 管"出事不知道原因"的深入追查，bug-hunt 管已知的代码 bug。
 用户听完两者的区别后说"合并"（ses_1417bab9，2026-06-23；walter-worker commit af88df6）。
-当前 SKILL.md 没有深挖模式，见 design 的 QUES-B。
+2026-11-24 已恢复深挖模式，见 decision-history 的 ARD-K。
 
 **PRD-E Report 只留一个提 issue 的入口。** 用户说"bug-create 和bug-report 重复了， merge成一个"。
 出处：ses_1417bab9（2026-06-23）；walter-worker commit 4285718。
 
 **PRD-F Report 面向所有 GitHub 仓库。** 用户原话："bug report 应该是通过对于所有github"（ses_1417bab9，2026-06-23）。
 落地为 walter-worker commit 6511f37：先列项目目录（project catalog）里的仓库让用户选。
-当前 SKILL.md 只写了 walter-worker 一个仓库，见 design 的 QUES-C。
+2026-11-24 起默认当前仓库，提交前请用户确认，见 decision-history 的 ARD-L。
 
 **PRD-G Heal 把纠正记成 trace。** trace 指一条纠正记录。
 数据存在当前项目的 `.self-healing/traces/{date}.yaml`（ses_1417bab9，2026-06-23）。
@@ -67,7 +67,7 @@ Heal 的起因：用户问 self-heal 和 self-analyze"为什么之前我从来�
 **PRD-H 触发时检查 hook。** hook 指 IDE 在固定时机自动运行的脚本。
 用户要求两个 skill"trigger 的时候都默认检查有没有hook"，没有就提示用户安装（ses_1417bab9，2026-06-23）。
 用户补充：hook 是全局的，Claude Code 和 OpenCode 都要装；数据是项目级的（同一会话）。
-当前 SKILL.md 没有这一步，见 design 的 QUES-D。
+2026-11-24 起 Heal 先检查并告诉用户；要不要注册仍待用户决定，见 design 的 QUES-D。
 
 **PRD-I 分析结果写进项目的 CLAUDE.md。** 用户要求 self-analyze"分析当前project 下面的trace 然后总结"。
 总结要"放到当前project level 的claude.md"（ses_1417bab9，2026-06-23）。
@@ -92,3 +92,4 @@ Heal 需要在 Claude Code 和 OpenCode 里各装一个全局 hook（PRD-H）。
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 bug 的 PRD |
+| 2026-11-24 | PRD-C、D、F、H 的现状句改为已恢复（ARD-K、ARD-L、ARD-M） |

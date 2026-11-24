@@ -18,6 +18,8 @@ opencode 会话按会话 id 前缀引用，数据在本机 opencode.db。
 
 | ID | Date | Decision |
 |---|---|---|
+| ARD-L | 2026-11-24 | 完成标准里的 contrarian review 指 `/spec-review` 的 Quick Scan；4、5 级问题算 HIGH、CRITICAL |
+| ARD-K | 2026-11-24 | 恢复逐次提交（每个绿步提交一次，提交信息带通过的测试数）和每 30 分钟自查 |
 | ARD-A | 2026-08-02 | 把 auto-tdd 和导入的 tdd 合成一个两模式 skill；开头只问一个问题选模式 |
 | ARD-B | 2026-08-02 | 合并时把自动模式从约 350 行的完整版压成摘要版 |
 | ARD-C | 2026-06-19 | 完整 skill 放在 ai coworker 的 skill 仓库，业务项目只留引用 |
@@ -67,7 +69,7 @@ CRITICAL 和 HIGH 是 contrarian review 报告里最高的两级问题；"零 CR
 
 理由：用户说"工作每做一点，就commit 一下"，最终 PR 可以一起提，并要求写进 skill（PRD-I）。
 被否决的方案：攒一堆改动一起提交。出处：ses_122b36d0（2026-06-19）；commit 7bfe010 的第 7、8 条。
-当前 SKILL.md 已没有这条，原因见 ARD-B。
+6086424 合并时删了这条（ARD-B），2026-11-24 已恢复，见 ARD-K。
 
 ### ARD-G
 
@@ -80,7 +82,7 @@ CRITICAL 和 HIGH 是 contrarian review 报告里最高的两级问题；"零 CR
 理由：用户在一轮开发后发现很多任务没做完，要求"用一个loop 跑，每30分钟看做没做完"，并可以给自己加任务（PRD-D）。
 7bfe010 版把停滞的原因归到 "yolo aggressive" 式的走捷径，并列成防停滞表。
 被否决的方案：第一次测试全绿就宣布完成。出处：ses_122b36d0（2026-06-19）；commit 7bfe010。
-当前 SKILL.md 保留了"不停"和"失败变任务"，删掉了 30 分钟自查，见 ARD-B。
+6086424 合并时删了 30 分钟自查（ARD-B），2026-11-24 已恢复，见 ARD-K。
 
 ### ARD-I
 
@@ -95,8 +97,22 @@ C 的判定顺序（spec 优先于框架约定，约定优先于风格）由 age
 被否决的方案：自己从头写 TDD skill。出处：commit eed365c（导入）、d98ed8d（改写描述，同时删掉了 `source` 出处字段）。
 独立 skill 的形式被 ARD-A 取代，内容成为基本模式。
 
+### ARD-K
+
+理由：用户原话"工作每做一点，就commit 一下"和"每30分钟看做没做完"（ses_122b36d0）；6086424 合并时删了（ARD-B）。
+按 6086424 之前版本的第 7、8、10 条原文恢复，两种模式都要逐次提交。
+被否决的方案：保持删减后的版本。出处：用户 2026-11-24 审阅回复；ses_122b36d0；commit 6086424 的父版本。
+
+### ARD-L
+
+理由：contrarian-review 在 6086424 并入 doc-review，c44e983 又改名为 spec-review。
+旧版调用它的 Mode 1（轻量验证）写缺口报告；spec-review 里对应的是 Quick Scan，按 1 到 5 级打分。
+被否决的方案：用 Work Completion Review，它做验收签字，不按严重度分级。
+出处：用户 2026-11-24 审阅回复；commit 6086424、c44e983；`skills/spec-review/SKILL.md` 的 Sources 一节。
+
 ## Change Log
 
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 auto-tdd 的决策 |
+| 2026-11-24 | 加 ARD-K（恢复逐次提交和 30 分钟自查）、ARD-L（contrarian review 指 spec-review） |

@@ -18,8 +18,12 @@ opencode 会话按会话 id 前缀引用，数据在本机 opencode.db。
 
 | ID | Date | Decision |
 |---|---|---|
+| ARD-N | 2026-11-24 | 改正失效引用：doc-review 改为 spec-review；self-analyze 改为 Heal 的 Analyze Patterns |
+| ARD-M | 2026-11-24 | Heal 先检查 hook 是否存在、是否已注册；没注册就告诉用户，不替用户注册 |
+| ARD-L | 2026-11-24 | Report 默认用当前仓库（gh repo view 或 git remote），提交前请用户确认目标仓库 |
+| ARD-K | 2026-11-24 | 恢复 06-23 的 Hunt：先收集再推理并列证据；加回深挖模式和事故报告格式 |
 | ARD-A | 2026-08-02 | 把 bug-hunt、bug-report、self-heal、self-analyze 合成一个三分支 skill；开头只问一个问题选分支 |
-| ARD-B | 2026-08-02 | 合并时采用 skill-factory 里的旧版 bug-hunt 和 bug-report，没有带上 06-23 在 walter-worker 的改动 |
+| ~~ARD-B~~ | ~~2026-08-02~~ | ~~合并时采用 skill-factory 里的旧版 bug-hunt 和 bug-report，没有带上 06-23 在 walter-worker 的改动~~ 已被 [ARD-K](#ard-k) 取代 |
 | ARD-C | 2026-06-23 | debug 先收集一切可能相关的信息，不急着分析；再推理，并列出证据 |
 | ARD-D | 2026-06-23 | bug-sleuth 并入 bug-hunt，分"已知代码 bug"和"原因不明的深挖"两种模式 |
 | ARD-E | 2026-06-23 | bug-create 并入 bug-report，并改为可以向任意 GitHub 仓库提 issue |
@@ -48,26 +52,26 @@ opencode 会话按会话 id 前缀引用，数据在本机 opencode.db。
 
 理由：用户说 debug 一个重要的地方是"收集所有信息，只要可能相关的，先不分析"，然后"推理，并列证据"（PRD-C）。
 被否决的方案：UNKNOWN，对话里没有列出别的方案。出处：ses_1417bab9（2026-06-23）；walter-worker commit f8b7ffb。
-当前 SKILL.md 的 Phase 1 只收集报错、测试、代码和 git log，没有日志和消息，也没写"先不过滤"，原因见 ARD-B。
+6086424 合并时丢了这一条（ARD-B），2026-11-24 已恢复，见 ARD-K。
 
 ### ARD-D
 
 理由：agent 解释了两者区别：bug-hunt 管已知代码 bug，bug-sleuth 管不知原因的多服务事故；用户回复"合并"（PRD-D）。
 被否决的方案：保留两个独立 skill（agent 当时给的另一个选项）。出处：ses_1417bab9（2026-06-23）；walter-worker af88df6。
-当前 SKILL.md 没有深挖模式和事故报告格式，原因见 ARD-B。
+6086424 合并时丢了深挖模式和事故报告格式（ARD-B），2026-11-24 已恢复，见 ARD-K。
 
 ### ARD-E
 
 理由：用户说 bug-create 和 bug-report"重复了， merge成一个"，又说要"对于所有github"（PRD-E、PRD-F）。
 被否决的方案：只向 ai-coworker 一个仓库提 issue（旧 bug-report 的做法）。
-出处：ses_1417bab9（2026-06-23）；walter-worker 4285718、6511f37。当前 SKILL.md 又回到只写 walter-worker，见 ARD-B。
+出处：ses_1417bab9（2026-06-23）；walter-worker 4285718、6511f37。合并后曾回到只写 walter-worker，2026-11-24 改为先确认仓库，见 ARD-L。
 
 ### ARD-F
 
 理由：agent 分析 self-heal 从没被调用，是因为没有触发机制：Claude Code 不会自己按关键词调用 skill（PRD-H）。
 用户随后定下：触发时检查 hook，hook 全局装在两个 IDE，数据存项目级（PRD-G）。
 被否决的方案：在 CLAUDE.md 加规则让 AI 每轮自查有没有被纠正（agent 当时给的第二个方案）。
-出处：ses_1417bab9（2026-06-23）；walter-worker 5138ea3、45e9edf。当前 SKILL.md 没有检查 hook 的步骤，见 ARD-B。
+出处：ses_1417bab9（2026-06-23）；walter-worker 5138ea3、45e9edf。合并后曾没有检查 hook 的步骤，2026-11-24 加回，见 ARD-M。
 
 ### ARD-G
 
@@ -92,8 +96,30 @@ opencode 会话按会话 id 前缀引用，数据在本机 opencode.db。
 同一条消息把 coworker-meta-report-issue 映射为 ai-coworker-issue-report，即后来的 bug-report。
 被否决的方案：UNKNOWN。出处：ses_14a669c2（2026-06-11）。personal 的位置被 ARD-I 取代。
 
+### ARD-K
+
+理由：用户要求找回 6086424 合并丢掉的功能（ARD-B）。按 f8b7ffb 原文恢复 Collect、Reason 和深挖模式。
+被否决的方案：保持合并后的精简版。出处：用户 2026-11-24 审阅回复；walter-worker f8b7ffb、af88df6。
+
+### ARD-L
+
+理由：写死 `cicidi/walter-worker`，别的仓库的问题会提错地方（PRD-F）。改为先检测当前仓库，再请用户确认。
+被否决的方案：继续写死一个仓库；不经确认直接提交。出处：用户 2026-11-24 审阅回复；walter-worker 6511f37。
+
+### ARD-M
+
+理由：`~/.claude/hooks/on-self-heal.sh` 存在，但 settings.json 没注册它；要不要注册，用户还没决定。
+所以 Heal 只检查并告诉用户。被否决的方案：照 45e9edf 原文提示安装并注册；假定 hook 已生效。
+出处：用户 2026-11-24 审阅回复；walter-worker 45e9edf。
+
+### ARD-N
+
+理由：c44e983 用 spec-* 取代了 doc-review；self-analyze 在 6086424 并入本 skill 的 Heal。
+被否决的方案：直接删掉这两处引用。出处：用户 2026-11-24 审阅回复；commit c44e983、6086424。
+
 ## Change Log
 
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 bug 的决策 |
+| 2026-11-24 | 加 ARD-K 到 ARD-N：恢复 06-23 的 Hunt，Report 先确认仓库，Heal 检查 hook，修失效引用；ARD-B 被取代 |

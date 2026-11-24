@@ -41,7 +41,7 @@ ft 指 functional test，即功能测试。
 **DSGN-B 基本模式。** 测试只通过公开接口验证行为，不测内部实现（PRD-B）。分四个阶段。
 计划：确认要改的接口，给要测的行为排优先级，取得用户批准。
 tracer bullet（曳光弹）：先为一个行为写一个测试并让它通过，证明从头到尾的路径能走通。
-增量循环：每个剩下的行为都先写测试并确认失败，再写最少的代码让它通过。
+增量循环：每个剩下的行为都先写测试并确认失败，再写最少的代码让它通过，然后立刻提交一次（ARD-K）。
 重构：所有测试通过后才去掉重复、加深模块，每步重构后重跑测试；测试为红时不重构。
 SKILL.md 把"先写完全部测试再写全部代码"列为反模式，要求一个测试、一段实现地交替推进。
 
@@ -62,15 +62,17 @@ SKILL.md 把"先写完全部测试再写全部代码"列为反模式，要求一
 
 **DSGN-G 完成标准。** 四条同时满足才停：todo 清单为空；三层测试都通过；Agent-D 签字；
 contrarian review（挑毛病的对抗式审查）报告里没有 CRITICAL 和 HIGH 两个最高级别的问题（PRD-D、PRD-J）。
+contrarian review 现在就是 `/spec-review` 的 Quick Scan，5 级算 CRITICAL，4 级算 HIGH（ARD-L）。
 闭环规则：修代码时，也要修当初放过这个 bug 的 spec 和 skill（PRD-K）。
 
 **DSGN-H 质量门。** 基本模式：测试描述行为而非实现，只用公开接口，代码对当前测试是最少的，红时不重构。
 自动模式：不提前停，测试层按序跑，C 的裁定引用 spec，每个失败都变成跟踪的任务，每次通过后都跑 D。
+两种模式都要求每个绿步单独提交；自动模式还要求每 30 分钟自查（ARD-K）。
 
 **DSGN-I 存放位置。** 完整 skill 就在本仓库的 `skills/auto-tdd/SKILL.md`，业务项目只引用它（PRD-L）。
 
-**DSGN-J 尚未落地的需求。** 每做一点就提交（PRD-I）和每 30 分钟自查（PRD-D），当前 SKILL.md 都没有对应步骤。
-两条都在 7bfe010 版里，2026-08-02 合并时被删（decision-history 的 ARD-B），是否恢复见 QUES-A、QUES-B。
+**DSGN-J 逐次提交与自查。** 两种模式每个绿步都提交，提交信息带通过的测试数，自动模式再带层号（PRD-I、ARD-K）。
+自动模式每 30 分钟自查做没做完；一段时间没进展，就分析原因并加纠正任务（PRD-D、ARD-K）。
 
 ## Testing Decisions
 
@@ -105,20 +107,20 @@ skill-factory 整体的设计和 2026-08-02 的合并表，见 [parent design](.
 | 风险 | 缓解 |
 |---|---|
 | 第二层每次都调真实 LLM，耗费 token 和钱 | 用户原意是 mock 优先、用户同意才真跑（PRD-F）；SKILL.md 没写这道闸，见 QUES-C |
-| 循环不收敛，一直跑下去 | SKILL.md 没有上限；7bfe010 版曾有每 30 分钟自查，见 QUES-B |
+| 循环不收敛，一直跑下去 | 每 30 分钟自查，没进展就分析原因（ARD-K）；仍没有时间或花费上限 |
 | 基本模式的原作者出处丢失 | d98ed8d 删掉了 mattpocock/skills 的 `source` 字段，见 QUES-F |
 
 ## Open Questions
 
 | ID | 问题 | 目前答案 | Owner | Blocking |
 |---|---|---|---|---|
-| QUES-A | 要不要恢复"每做一点就提交"（PRD-I）？ | 当前 SKILL.md 没有 | cicidi | no |
-| QUES-B | 要不要恢复每 30 分钟自查一次（PRD-D）？ | 当前 SKILL.md 没有 | cicidi | no |
+| QUES-A | 要不要恢复"每做一点就提交"（PRD-I）？ | 恢复，每个绿步提交（ARD-K） | cicidi | no |
+| QUES-B | 要不要恢复每 30 分钟自查一次（PRD-D）？ | 恢复（ARD-K） | cicidi | no |
 | QUES-C | 第二层的真实 LLM 测试，要不要先得到用户同意再跑（PRD-F、PRD-G）？ | SKILL.md 无条件要求跑 | cicidi | no |
 | QUES-D | 被测对象不是对话 agent 时，第二、三层怎么做？ | SKILL.md 没有说 | cicidi | no |
 | QUES-E | 四个角色要不要用真正的子 agent 分别执行？ | 目前是同一个 LLM 依次扮演（ses_0a0d1bce，2026-07-13） | cicidi | no |
 | QUES-F | 基本模式要不要注明来自 mattpocock/skills？ | 当前 SKILL.md 没有出处 | cicidi | no |
-| QUES-G | 完成标准里的 contrarian review 现在指哪个 skill？ | contrarian-review 已并入 doc-review（commit 6086424），SKILL.md 没写名字 | cicidi | no |
+| QUES-G | 完成标准里的 contrarian review 现在指哪个 skill？ | `/spec-review` 的 Quick Scan（ARD-L） | cicidi | no |
 
 ## Reversibility
 
@@ -130,3 +132,4 @@ skill-factory 整体的设计和 2026-08-02 的合并表，见 [parent design](.
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：按 SKILL.md 写出 auto-tdd 的 design，引用 PRD-A 到 PRD-L |
+| 2026-11-24 | 按 ARD-K、ARD-L 改写 DSGN-B、G、J；QUES-A、B、G 已答；QUES-C 不动 |
