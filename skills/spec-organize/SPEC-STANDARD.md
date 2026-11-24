@@ -17,7 +17,7 @@ Rules are **MUST** (a violation is a failure) or **NICE** (a reminder, never a f
 
 ## Frontmatter (MUST)
 
-`feature`, `type`, `state` (`draft`|`final`), `final_date` when `final`. Use **`health`**, not `status`. Optional `audience` is `internal` or `external` (ARD-AL).
+`feature`, `type`, `state` (`draft`|`final`), `final_date` when `final`. Use **`health`**, not `status`. Optional: `spec_id`, `version`, `owner`, `last_verified`, and `audience` (`internal` or `external`, ARD-AL); full list in document-standard **DSGN-E**.
 
 ## Required sections (MUST)
 
@@ -99,6 +99,10 @@ MkDocs / Pages nav is implementation; it must not contradict the feature tree or
 
 Detect, then report, then ask; never silently pick the spec side or the code side (**DSGN-G**). Multi-person decisions: the later decision-history entry wins; if the order is unclear, ask the user (PRD-F).
 
+## Figures (MUST, ARD-CA)
+
+A figure states no fact that prose does not state, and never contradicts prose; L1 text never lives only in a figure. spec-review reports a break at severity 3 and names the SVG file. The SVG is static (no script); its file name and place are in Path & filename.
+
 ## Chapter 1 — Path, permission, scope
 
 **spec-write** may create or edit committed spec markdown. **spec-review** reports only. Paths and filenames follow **Path & filename** above. One fact has one home; other docs link to it. Before editing, list every doc that states the same fact and change those to links.
@@ -130,5 +134,5 @@ A conclusion is stated in the committed document and cites a `raw/` path, a URL,
 - A §N link lands on N or its parent or child; step ranges do not overlap (ARD-AZ).
 - A hand-maintained HTML changelog has a row for every markdown Change Log date (ARD-BA).
 - Tracker counts match the rows (ARD-BB).
-- Figures state no fact absent from prose; ≤9 nodes per figure (ARD-CA).
+- ≤9 nodes and ≤12 edges per figure; diagram-design default fonts and skin (ARD-CA).
 - Heading levels do not skip; terms match `CONTEXT.md`; `last_verified` is recent.

@@ -65,6 +65,10 @@ PANELS: list[tuple[str, str, list[tuple[str, Path]]]] = [
         "Document standard",
         [
             (
+                "features/document-standard/prd/document-standard-prd.md",
+                SDD / "features/document-standard/prd/document-standard-prd.md",
+            ),
+            (
                 "features/document-standard/design/document-standard-design.md",
                 SDD / "features/document-standard/design/document-standard-design.md",
             ),
@@ -313,7 +317,8 @@ def panel_html(panel_id: str, title: str, sources: list[tuple[str, Path]]) -> st
         prefix = f"{feat[1]}-" if feat[0] == "features" else ""
         parts.append(inline_figures(_retarget_links(md_to_html(text, prefix), path, OUT), path))
     parts.append("</div>")
-    canon = " · ".join(f"<code>{html.escape(r)}</code>" for r, _ in sources)
+    # DSGN-N-C: Canonical names each source by its path from the repository root.
+    canon = " · ".join(f"<code>{html.escape(p.relative_to(ROOT).as_posix())}</code>" for _, p in sources)
     parts.append(f'<p class="src">Canonical: {canon}</p>')
     parts.append("</article>")
     return "\n".join(parts)

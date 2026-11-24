@@ -200,3 +200,63 @@ items:
     text: '实现 SDD 或文档标准时，计划里必须同时包含 skill 的修改和 CLAUDE 层的条目，两边写的是同一套规范。规则的细节写在 sub-feature 的 design 里，本文只定「两个渠道都要写」这条原则。'
     method: llm
     check: ''
+  - id: MUST-AO
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design-spec-reader-html.md:54
+    text: '#### DSGN-N-B — 内容不丢（MUST）'
+    method: llm
+    check: ''
+  - id: MUST-AP
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design-spec-reader-html.md:67
+    text: '**编号必须可见（MUST）。** HTML 里要原样显示编号，例如 `PRD-A`、`DSGN-B`、`ARD-C`、`IMPL-C`、`TST-A`，方便和审查结果、MUST 清单对照。'
+    method: llm
+    check: ''
+  - id: MUST-AQ
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design-spec-reader-html.md:71
+    text: '- 只留「问题」「方案」各一段，删掉 Design 下面各个 DSGN 小节的正文。'
+    method: llm
+    check: ''
+  - id: MUST-AR
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design-spec-reader-html.md:72
+    text: '- 用「见原文」代替一整页。（一节里面的 L3、L4 可以指向原文。）'
+    method: llm
+    check: ''
+  - id: MUST-AS
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design-spec-reader-html.md:73
+    text: '- 做成 markdown 预览：整页 `<pre>`，或者没排版的 markdown 原文。'
+    method: llm
+    check: ''
+  - id: MUST-AT
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design-spec-reader-html.md:89
+    text: '- **页面顶部（MUST）：** 说明这是方便阅读的汇编页，要改内容去改 `.md`；写明 parent 的名字。'
+    method: llm
+    check: ''
+  - id: MUST-AU
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design-spec-reader-html.md:92
+    text: '- **每部分底部（MUST）：** 写 `Canonical:` 加原文相对仓库根目录的路径；有多个分篇时，全部列出。'
+    method: llm
+    check: ''
+  - id: MUST-AV
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design-spec-reader-html.md:121
+    text: '- 浏览器直接打开文件即可阅读正文与已提交的 SVG 插图，不需要服务器（MUST，PRD-O、[ARD-CB](../../../decision-history/spec-driven-development-decision-history.md#ard-cb)）；字体与 Mermaid 可联网。'
+    method: llm
+    check: ''
+  - id: MUST-AW
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design-spec-reader-html.md:124
+    text: '- 页面里不能有密钥，也不能有 `raw/` 里给机器用的评测原文；需要的话只放路径（MUST）。'
+    method: llm
+    check: ''
+  - id: MUST-AX
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design-spec-reader-html.md:125
+    text: '- 不能在运行时读取 `.md` 文件来显示主要内容；只有调试时可以（MUST）。'
+    method: llm
+    check: ''
+  - id: MUST-AY
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design-spec-reader-html.md:126
+    text: '- 页面标题、节、小节、条目的字号、粗细、样式各不相同；段落前面不加 a、b、c 或 1、2、3 这类序号（MUST）。'
+    method: llm
+    check: ''
+  - id: MUST-AZ
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design-spec-reader-html.md:151
+    text: '可以再加一份机械转换的规则，例如分篇 `document-standard-design-md-to-html.md`，规定 markdown 的每种结构对应哪种网页组件。自动转换仍然必须满足 DSGN-N-B。本篇和 `SPEC-HTML-STANDARD.md` 规定的是「要达到什么效果」。'
+    method: llm
+    check: ''

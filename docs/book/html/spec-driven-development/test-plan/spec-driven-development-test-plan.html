@@ -183,7 +183,7 @@
 <p><strong>gold 增长：</strong> 运行中发现新的好例子或坏例子，追加到 <code>annotations.yaml</code>，gold 版本号加一，<code>added_in</code> 写上新版本。报告里必须写明 gold 版本（<a href="../decision-history/spec-driven-development-decision-history.html#ard-s">ARD-S</a>）。</p>
 <h3>Test Cases</h3>
 <h4 id="TST-A"><a class="id-ref" href="#TST-A">TST-A</a> — 生成 <span class="lvl lvl--must">MUST</span> 清单</h4>
-<p><strong>目标：</strong> 扫描每篇 design 的入口和分篇（document-standard design 和它的 reader 分篇、pipeline design），以及 parent design 的 <a class="id-ref" href="../design/spec-driven-development-design.html#DSGN-A">DSGN-A</a>、<a class="id-ref" href="../design/spec-driven-development-design.html#DSGN-B">DSGN-B</a>、<a class="id-ref" href="../design/spec-driven-development-design.html#DSGN-E">DSGN-E</a>，把所有「必须」「禁止」类规则收进 <code>must_registry.yaml</code>。spec 定稿后重新扫描。<strong>输入：</strong> 上面这些 design。<strong>通过条件：</strong> 覆盖率 100%；每条都标明 <code>python</code> 或 <code>llm</code>；<span class="lvl lvl--nice">NICE</span> 规则不收（<a href="../decision-history/spec-driven-development-decision-history.html#ard-bn">ARD-BN</a>）。<strong>判定：</strong> 出处比对脚本（<code>registry_provenance</code>）。</p>
+<p><strong>目标：</strong> 扫描每篇 design 的入口和分篇（document-standard design 和它的 reader 分篇、pipeline design），以及 parent design 的 <a class="id-ref" href="../design/spec-driven-development-design.html#DSGN-A">DSGN-A</a>、<a class="id-ref" href="../design/spec-driven-development-design.html#DSGN-B">DSGN-B</a>、<a class="id-ref" href="../design/spec-driven-development-design.html#DSGN-E">DSGN-E</a>，把所有「必须」「禁止」类规则收进 <code>must_registry.yaml</code>。spec 定稿后重新扫描。<strong>输入：</strong> 上面这些 design。<strong>通过条件：</strong> 覆盖率 100%；每条都标明 <code>python</code> 或 <code>llm</code>；parent <a class="id-ref" href="../design/spec-driven-development-design.html#DSGN-A">DSGN-A</a> 的单次改动上限不收，它明确不作通过条件（<a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-I">PRD-I</a>）；<span class="lvl lvl--nice">NICE</span> 规则不收（<a href="../decision-history/spec-driven-development-decision-history.html#ard-bn">ARD-BN</a>）。<strong>判定：</strong> 出处比对脚本（<code>registry_provenance</code>）。</p>
 <h4 id="TST-B"><a class="id-ref" href="#TST-B">TST-B</a> — 检查脚本的反例和正例</h4>
 <p><strong>目标：</strong> 证明检查脚本真的有效。<strong>输入：</strong> <code>fixtures/neg/*</code> 和 <code>fixtures/pos/*</code>。<strong>通过条件：</strong> 每个反例都报错；每个正例都不报错。<strong>判定：</strong> pytest。</p>
 <h4 id="TST-C"><a class="id-ref" href="#TST-C">TST-C</a> — 生成 gold（跑 3 次）</h4>
@@ -543,6 +543,10 @@
 <tr>
 <td>2026-11-24</td>
 <td><a class="id-ref" href="#TST-O">TST-O</a>：编号要出现在规则小节正文里才算对应</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td><a class="id-ref" href="#TST-A">TST-A</a>：写明 parent <a class="id-ref" href="../design/spec-driven-development-design.html#DSGN-A">DSGN-A</a> 的改动上限不收进清单</td>
 </tr>
 </tbody></table></div>
       </div>

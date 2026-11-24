@@ -1,4 +1,4 @@
-<!-- SDD reader · source .md · git 2b35eff -->
+<!-- SDD reader · source .md · git 4d272ec -->
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light">
 <head>
@@ -315,7 +315,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 </tr>
 </tbody></table>
 </div>
-<p class="src">Canonical: <code>prd/spec-driven-development-prd.md</code></p>
+<p class="src">Canonical: <code>docs/features/spec-driven-development/prd/spec-driven-development-prd.md</code></p>
 </article>
 
 <article id="p-design" class="panel">
@@ -1314,7 +1314,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 </tr>
 </tbody></table>
 </div>
-<p class="src">Canonical: <code>design/spec-driven-development-design.md</code> · <code>design/spec-driven-development-design-skill-contracts.md</code></p>
+<p class="src">Canonical: <code>docs/features/spec-driven-development/design/spec-driven-development-design.md</code> · <code>docs/features/spec-driven-development/design/spec-driven-development-design-skill-contracts.md</code></p>
 </article>
 
 <article id="p-impl" class="panel">
@@ -1558,7 +1558,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 </tr>
 </tbody></table>
 </div>
-<p class="src">Canonical: <code>impl-plan/spec-driven-development-impl-plan.md</code></p>
+<p class="src">Canonical: <code>docs/features/spec-driven-development/impl-plan/spec-driven-development-impl-plan.md</code></p>
 </article>
 
 <article id="p-test" class="panel">
@@ -1716,7 +1716,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <p><strong>gold 增长：</strong> 运行中发现新的好例子或坏例子，追加到 <code>annotations.yaml</code>，gold 版本号加一，<code>added_in</code> 写上新版本。报告里必须写明 gold 版本（<a href="decision-history/spec-driven-development-decision-history.html#ard-s">ARD-S</a>）。</p>
 <h3>Test Cases</h3>
 <h4 id="TST-A">TST-A — 生成 MUST 清单</h4>
-<p><strong>目标：</strong> 扫描每篇 design 的入口和分篇（document-standard design 和它的 reader 分篇、pipeline design），以及 parent design 的 DSGN-A、DSGN-B、DSGN-E，把所有「必须」「禁止」类规则收进 <code>must_registry.yaml</code>。spec 定稿后重新扫描。<strong>输入：</strong> 上面这些 design。<strong>通过条件：</strong> 覆盖率 100%；每条都标明 <code>python</code> 或 <code>llm</code>；NICE 规则不收（<a href="decision-history/spec-driven-development-decision-history.html#ard-bn">ARD-BN</a>）。<strong>判定：</strong> 出处比对脚本（<code>registry_provenance</code>）。</p>
+<p><strong>目标：</strong> 扫描每篇 design 的入口和分篇（document-standard design 和它的 reader 分篇、pipeline design），以及 parent design 的 DSGN-A、DSGN-B、DSGN-E，把所有「必须」「禁止」类规则收进 <code>must_registry.yaml</code>。spec 定稿后重新扫描。<strong>输入：</strong> 上面这些 design。<strong>通过条件：</strong> 覆盖率 100%；每条都标明 <code>python</code> 或 <code>llm</code>；parent DSGN-A 的单次改动上限不收，它明确不作通过条件（PRD-I）；NICE 规则不收（<a href="decision-history/spec-driven-development-decision-history.html#ard-bn">ARD-BN</a>）。<strong>判定：</strong> 出处比对脚本（<code>registry_provenance</code>）。</p>
 <h4 id="TST-B">TST-B — 检查脚本的反例和正例</h4>
 <p><strong>目标：</strong> 证明检查脚本真的有效。<strong>输入：</strong> <code>fixtures/neg/*</code> 和 <code>fixtures/pos/*</code>。<strong>通过条件：</strong> 每个反例都报错；每个正例都不报错。<strong>判定：</strong> pytest。</p>
 <h4 id="TST-C">TST-C — 生成 gold（跑 3 次）</h4>
@@ -2077,9 +2077,13 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <td>2026-11-24</td>
 <td>TST-O：编号要出现在规则小节正文里才算对应</td>
 </tr>
+<tr>
+<td>2026-11-24</td>
+<td>TST-A：写明 parent DSGN-A 的改动上限不收进清单</td>
+</tr>
 </tbody></table>
 </div>
-<p class="src">Canonical: <code>test-plan/spec-driven-development-test-plan.md</code></p>
+<p class="src">Canonical: <code>docs/features/spec-driven-development/test-plan/spec-driven-development-test-plan.md</code></p>
 </article>
 
 <article id="p-dh" class="panel">
@@ -2589,7 +2593,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <h4 id="ARD-BO">ARD-BO — 可读性是通过条件</h4>
 <p><strong>原因。</strong> PRD-M 把可读性定为硬需求，却又写「不作为通过条件」，等于没有要求。这套方法要解决的问题之一就是「人读不过来」（PRD Problem Statement 第 4 点），可读性必须能挡住交付。</p>
 <p><strong>怎么判。</strong> 一个 LLM 扮演本科程序员，只读被测的那一篇和 parent design 的术语表（本行在 2026-11-20 原地修订，加上术语表，和 PRD-M、TST-V 一致；ARD-AN 允许原地修订）。脚本从这篇的编号条目（<code>PRD-*</code>、<code>DSGN-*</code>、<code>PIPE-*</code>、<code>IMPL-*</code>、<code>TST-*</code>、<code>ARD-*</code>）各出一道题，例如「PRD-F 规定多人决定冲突时怎么办」。再出一组对照题：不给文档直接问，能答对的题说明太容易，作废。答对率不足，或者有第一次出现时没有解释、术语表里也没有的词，这篇就不通过。具体门槛写在 test-plan 的 TST-V。</p>
-<p><strong>放弃的方案。</strong> 只让 LLM 打一个「好不好读」的分：主观，同一篇文档两次打分可能差很多。用 ISO 24495-1 之类的可读性公式：只看句长和词频，看不出术语有没有解释。</p>
+<p><strong>放弃的方案。</strong> 只让 LLM 打一个「好不好读」的分：主观，同一篇文档两次打分可能差很多。用句长、词频这类可读性公式打分：看不出术语有没有解释。ISO 24495-1（简明语言标准）讲的是原则和真实读者测试，不是公式；TST-V 让模型扮演读者答题，借的正是这个思路。</p>
 <p><strong>影响。</strong> 修改 PRD-M；ARD-W 的「读懂才算通过」保留，并补上具体做法。</p>
 <a id="ard-bn"></a>
 <h4 id="ARD-BN">ARD-BN — 规则分 MUST 和 NICE 两级</h4>
@@ -2989,9 +2993,13 @@ payment-impl-plan-01-schema.md         impl-plan 分篇：序号加阶段，有�
 <td>2026-11-24</td>
 <td>ARD-CD：GitHub Pages 发布，删除 6 个从首页点不到的旧页面</td>
 </tr>
+<tr>
+<td>2026-11-24</td>
+<td>ARD-BO 的放弃方案改正对 ISO 24495-1 的描述（审查 F16）</td>
+</tr>
 </tbody></table>
 </div>
-<p class="src">Canonical: <code>decision-history/spec-driven-development-decision-history.md</code></p>
+<p class="src">Canonical: <code>docs/features/spec-driven-development/decision-history/spec-driven-development-decision-history.md</code></p>
 </article>
 
 <article id="c-pipeline" class="panel">
@@ -3455,12 +3463,50 @@ payment-impl-plan-01-schema.md         impl-plan 分篇：序号加阶段，有�
 </tr>
 </tbody></table>
 </div>
-<p class="src">Canonical: <code>features/pipeline/design/pipeline-design.md</code></p>
+<p class="src">Canonical: <code>docs/features/spec-driven-development/features/pipeline/design/pipeline-design.md</code></p>
 </article>
 
 <article id="c-standard" class="panel">
 <p class="panel-label">Document standard</p>
 <div class="md-body">
+<h2>Document Standard（PRD 入口）</h2>
+<h3>Overview</h3>
+<p>document-standard 规定 spec 文档怎么写：有哪几种文档、放在哪里、文件怎么命名、编号怎么起、什么内容不能删。这些要求本身已经写在 <a href="prd/spec-driven-development-prd.html">parent PRD</a> 里（PRD-B 到 PRD-F，以及 PRD-M 的可读性要求），具体做法写在 <a href="features/document-standard/design/document-standard-design.html">document-standard design</a>。</p>
+<p>本篇是入口文件。按 <a href="decision-history/spec-driven-development-decision-history.html#ard-bq">ARD-BQ</a>，一种文档拆成分篇时，必须有一个入口文件链到各分篇。</p>
+<h3>Goals and Success Metrics</h3>
+<p>本篇没有单独的目标，目标见各分篇和 parent PRD。</p>
+<h3>User Stories</h3>
+<p>见分篇。</p>
+<h3>Functional Requirements</h3>
+<p>本篇不新增需求。分篇如下：</p>
+<table><thead><tr>
+<th>分篇</th>
+<th>讲什么</th>
+</tr></thead><tbody>
+<tr>
+<td><a href="features/document-standard/prd/document-standard-prd-spec-reader-html.html">给人读的 HTML 页面</a></td>
+<td>把已提交的 spec 生成一个网站，左侧目录列出所有 feature，读者不用打开 markdown 也能读懂</td>
+</tr>
+</tbody></table>
+<h3>Non-Functional Requirements</h3>
+<p>见分篇。</p>
+<h3>Out of Scope</h3>
+<ul>
+<li>把 parent PRD 里的文档标准要求在这里再抄一遍。</li>
+</ul>
+<h3>Resources Needed</h3>
+<p>无。</p>
+<h3>Change Log</h3>
+<table><thead><tr>
+<th>日期</th>
+<th>改了什么</th>
+</tr></thead><tbody>
+<tr>
+<td>2026-11-20</td>
+<td>新建入口文件，链到 reader HTML 分篇（ARD-BQ）</td>
+</tr>
+</tbody></table>
+<hr><p class="src-inline">Source: <code>features/document-standard/design/document-standard-design.md</code></p>
 <h2>Document Standard — 文档标准</h2>
 <p>本篇规定 <code>docs/features/</code> 下的 feature 文档怎么写：有哪几种文档、放在哪、叫什么名字、最长多少行、开头写什么、必须有哪些章节、编号怎么起、出现矛盾以谁为准。本篇不规定 skill 怎么拆文件、怎么加载这些规则，那属于实现。</p>
 <p>相关文档：</p>
@@ -4820,7 +4866,7 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 </tr>
 </tbody></table>
 </div>
-<p class="src">Canonical: <code>features/document-standard/design/document-standard-design.md</code> · <code>features/document-standard/design/document-standard-design-spec-reader-html.md</code> · <code>features/document-standard/prd/document-standard-prd-spec-reader-html.md</code></p>
+<p class="src">Canonical: <code>docs/features/spec-driven-development/features/document-standard/prd/document-standard-prd.md</code> · <code>docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md</code> · <code>docs/features/spec-driven-development/features/document-standard/design/document-standard-design-spec-reader-html.md</code> · <code>docs/features/spec-driven-development/features/document-standard/prd/document-standard-prd-spec-reader-html.md</code></p>
 </article>
   <p class="foot">SDD Human Reader · assembled from canonical .md · not source of truth</p>
 </div>

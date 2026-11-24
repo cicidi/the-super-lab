@@ -11,6 +11,8 @@ SOURCES = [
     ROOT / "docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md",
     ROOT / "docs/features/spec-driven-development/features/pipeline/design/pipeline-design.md",
     ROOT / "docs/features/spec-driven-development/design/spec-driven-development-design.md",
+    # Appended last so earlier MUST-* ids keep their letters (ids never change).
+    ROOT / "docs/features/spec-driven-development/features/document-standard/design/document-standard-design-spec-reader-html.md",
 ]
 
 # A rule line sits inside a numbered clause (### DSGN-X / ### PIPE-X) and either
@@ -21,8 +23,9 @@ SECTION = re.compile(r"^## ")
 MARK = re.compile(r"[（(]MUST")
 MODAL = re.compile(r"必须|不得|禁止")
 NEGATED = re.compile(r"不是[^。]*必须")  # "不是 SDD 必须安装的" is not a rule
-GATE_START = "**MUST，做不到就算失败：**"
-GATE_END = "**NICE"
+# A bold label line ending in "：**" opens a bullet list; it is a rule list only
+# when the label carries MUST ("**MUST，做不到就算失败：**", "**不允许（MUST NOT）：**").
+LABEL = re.compile(r"^\*\*[^*]+：\*\*$")
 
 
 def rule_lines(text: str):
@@ -32,17 +35,16 @@ def rule_lines(text: str):
         stripped = line.strip()
         if CLAUSE.match(line):
             in_clause, in_gate = True, False
+            if MARK.search(line):  # "#### DSGN-N-B — 内容不丢（MUST）": the whole clause is a rule
+                yield i, line
             continue
         if SECTION.match(line):
             in_clause = in_gate = False
             continue
         if not in_clause or not stripped or stripped.startswith("|"):
             continue
-        if stripped.startswith(GATE_START):
-            in_gate = True
-            continue
-        if stripped.startswith(GATE_END):
-            in_gate = False
+        if LABEL.match(stripped):
+            in_gate = "MUST" in stripped
             continue
         if NEGATED.search(line):
             continue

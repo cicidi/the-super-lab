@@ -94,7 +94,7 @@ last_verified: 2026-11-20
 
 ### TST-A — 生成 MUST 清单
 
-**目标：** 扫描每篇 design 的入口和分篇（document-standard design 和它的 reader 分篇、pipeline design），以及 parent design 的 DSGN-A、DSGN-B、DSGN-E，把所有「必须」「禁止」类规则收进 `must_registry.yaml`。spec 定稿后重新扫描。**输入：** 上面这些 design。**通过条件：** 覆盖率 100%；每条都标明 `python` 或 `llm`；NICE 规则不收（[ARD-BN](../decision-history/spec-driven-development-decision-history.md#ard-bn)）。**判定：** 出处比对脚本（`registry_provenance`）。
+**目标：** 扫描每篇 design 的入口和分篇（document-standard design 和它的 reader 分篇、pipeline design），以及 parent design 的 DSGN-A、DSGN-B、DSGN-E，把所有「必须」「禁止」类规则收进 `must_registry.yaml`。spec 定稿后重新扫描。**输入：** 上面这些 design。**通过条件：** 覆盖率 100%；每条都标明 `python` 或 `llm`；parent DSGN-A 的单次改动上限不收，它明确不作通过条件（PRD-I）；NICE 规则不收（[ARD-BN](../decision-history/spec-driven-development-decision-history.md#ard-bn)）。**判定：** 出处比对脚本（`registry_provenance`）。
 
 ### TST-B — 检查脚本的反例和正例
 
@@ -313,3 +313,4 @@ document-standard 的 reader PRD：
 | 2026-11-24 | TST-R 改为比较内容，不比修改时间 |
 | 2026-11-24 | 新增 TST-Z：每页都能从首页点到（ARD-CD） |
 | 2026-11-24 | TST-O：编号要出现在规则小节正文里才算对应 |
+| 2026-11-24 | TST-A：写明 parent DSGN-A 的改动上限不收进清单 |

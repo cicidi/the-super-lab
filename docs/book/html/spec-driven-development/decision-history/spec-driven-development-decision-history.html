@@ -535,7 +535,7 @@
 <h4 id="ARD-BO"><a class="id-ref" href="#ARD-BO">ARD-BO</a> — 可读性是通过条件</h4>
 <p><strong>原因。</strong> <a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-M">PRD-M</a> 把可读性定为硬需求，却又写「不作为通过条件」，等于没有要求。这套方法要解决的问题之一就是「人读不过来」（PRD Problem Statement 第 4 点），可读性必须能挡住交付。</p>
 <p><strong>怎么判。</strong> 一个 LLM 扮演本科程序员，只读被测的那一篇和 parent design 的术语表（本行在 2026-11-20 原地修订，加上术语表，和 <a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-M">PRD-M</a>、<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-V">TST-V</a> 一致；<a class="id-ref" href="#ARD-AN">ARD-AN</a> 允许原地修订）。脚本从这篇的编号条目（<code>PRD-*</code>、<code>DSGN-*</code>、<code>PIPE-*</code>、<code>IMPL-*</code>、<code>TST-*</code>、<code>ARD-*</code>）各出一道题，例如「<a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-F">PRD-F</a> 规定多人决定冲突时怎么办」。再出一组对照题：不给文档直接问，能答对的题说明太容易，作废。答对率不足，或者有第一次出现时没有解释、术语表里也没有的词，这篇就不通过。具体门槛写在 test-plan 的 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-V">TST-V</a>。</p>
-<p><strong>放弃的方案。</strong> 只让 LLM 打一个「好不好读」的分：主观，同一篇文档两次打分可能差很多。用 ISO 24495-1 之类的可读性公式：只看句长和词频，看不出术语有没有解释。</p>
+<p><strong>放弃的方案。</strong> 只让 LLM 打一个「好不好读」的分：主观，同一篇文档两次打分可能差很多。用句长、词频这类可读性公式打分：看不出术语有没有解释。ISO 24495-1（简明语言标准）讲的是原则和真实读者测试，不是公式；<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-V">TST-V</a> 让模型扮演读者答题，借的正是这个思路。</p>
 <p><strong>影响。</strong> 修改 <a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-M">PRD-M</a>；<a class="id-ref" href="#ARD-W">ARD-W</a> 的「读懂才算通过」保留，并补上具体做法。</p>
 <a id="ard-bn"></a>
 <h4 id="ARD-BN"><a class="id-ref" href="#ARD-BN">ARD-BN</a> — 规则分 <span class="lvl lvl--must">MUST</span> 和 <span class="lvl lvl--nice">NICE</span> 两级</h4>
@@ -934,6 +934,10 @@ payment-impl-plan-01-schema.md         impl-plan 分篇：序号加阶段，有�
 <tr>
 <td>2026-11-24</td>
 <td><a class="id-ref" href="#ARD-CD">ARD-CD</a>：GitHub Pages 发布，删除 6 个从首页点不到的旧页面</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td><a class="id-ref" href="#ARD-BO">ARD-BO</a> 的放弃方案改正对 ISO 24495-1 的描述（审查 F16）</td>
 </tr>
 </tbody></table></div>
       </div>
