@@ -269,3 +269,4 @@ last_verified: 2026-11-20
 | 2026-11-20 | IMPL-P 除 MUST 清单出处外已完成；IMPL-Q 脚本就绪（未跑 API）；新增 IMPL-T |
 | 2026-11-24 | IMPL-S、IMPL-T 移到依赖之后的批次；新增 IMPL-U；不迁移旧文档改链 ARD-CC |
 | 2026-11-24 | 新增 IMPL-V：GitHub Pages 发布（ARD-CD） |
+| 2026-11-24 | IMPL-K 进度：11 个机械审查案例已齐；5 个语义案例待 judge 执行器 |

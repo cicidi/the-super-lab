@@ -150,7 +150,7 @@ last_verified: 2026-11-20
 
 ### TST-O — PRD 到 design 的追溯
 
-**目标：** PRD 的每条需求，在 design 里都有对应的规则。**输入：** parent PRD、document-standard 的 reader PRD，以及 parent design、pipeline design、document-standard design 和它的 reader 分篇。**通过条件：** 两份 PRD 的每个 `PRD-*` 都至少对应一个 `DSGN-*` 或 `PIPE-*`。两份 PRD 的编号会重复（都有 PRD-A），所以按 feature 分开比对：parent 的 PRD 对 parent design、pipeline design 和 document-standard design，reader PRD 对 reader design。parent 的 PRD-G 已延后（[ARD-N](../decision-history/spec-driven-development-decision-history.md#ard-n)），不要求对应；有没对应上的就失败。**判定：** Python 比对编号集合。
+**目标：** PRD 的每条需求，在 design 里都有对应的规则。**输入：** parent PRD、document-standard 的 reader PRD，以及 parent design、pipeline design、document-standard design 和它的 reader 分篇。**通过条件：** 两份 PRD 的每个 `PRD-*` 都至少对应一个 `DSGN-*` 或 `PIPE-*`。两份 PRD 的编号会重复（都有 PRD-A），所以按 feature 分开比对：parent 的 PRD 对 parent design、pipeline design 和 document-standard design，reader PRD 对 reader design。parent 的 PRD-G 已延后（[ARD-N](../decision-history/spec-driven-development-decision-history.md#ard-n)），不要求对应；有没对应上的就失败。「对应」指编号出现在 `DSGN-*` 或 `PIPE-*` 规则小节的正文里；只在 Open Questions 或 Change Log 里提到不算。**判定：** Python（`test_tst_o_trace.py`）。
 
 ### TST-P — 子问题归属、证据、UNKNOWN
 
@@ -312,3 +312,4 @@ document-standard 的 reader PRD：
 | 2026-11-24 | 新增 TST-Y（ARD-CC）；DSGN-N-D 补 feature 名；eval.yaml 现状更新 |
 | 2026-11-24 | TST-R 改为比较内容，不比修改时间 |
 | 2026-11-24 | 新增 TST-Z：每页都能从首页点到（ARD-CD） |
+| 2026-11-24 | TST-O：编号要出现在规则小节正文里才算对应 |

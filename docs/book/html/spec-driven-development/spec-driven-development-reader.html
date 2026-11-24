@@ -1,4 +1,4 @@
-<!-- SDD reader · source .md · git 389f44a -->
+<!-- SDD reader · source .md · git 2b35eff -->
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light">
 <head>
@@ -1552,6 +1552,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <td>2026-11-24</td>
 <td>新增 IMPL-V：GitHub Pages 发布（ARD-CD）</td>
 </tr>
+<tr>
+<td>2026-11-24</td>
+<td>IMPL-K 进度：11 个机械审查案例已齐；5 个语义案例待 judge 执行器</td>
+</tr>
 </tbody></table>
 </div>
 <p class="src">Canonical: <code>impl-plan/spec-driven-development-impl-plan.md</code></p>
@@ -1740,7 +1744,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <h4 id="TST-N">TST-N — parent 五篇齐全，sub-feature 不要求</h4>
 <p><strong>目标：</strong> parent 五篇都在；sub-feature 不会因为缺篇而失败。<strong>输入：</strong> SDD 的 parent 目录，以及 <code>features/pipeline/</code>、<code>features/document-standard/</code>。<strong>通过条件：</strong> parent 缺任何一篇，spec-review 报出严重度 3 及以上的问题；sub-feature 只有 design 也能通过。<strong>判定：</strong> Python 检查路径，加 spec-review 的报告。</p>
 <h4 id="TST-O">TST-O — PRD 到 design 的追溯</h4>
-<p><strong>目标：</strong> PRD 的每条需求，在 design 里都有对应的规则。<strong>输入：</strong> parent PRD、document-standard 的 reader PRD，以及 parent design、pipeline design、document-standard design 和它的 reader 分篇。<strong>通过条件：</strong> 两份 PRD 的每个 <code>PRD-*</code> 都至少对应一个 <code>DSGN-*</code> 或 <code>PIPE-*</code>。两份 PRD 的编号会重复（都有 PRD-A），所以按 feature 分开比对：parent 的 PRD 对 parent design、pipeline design 和 document-standard design，reader PRD 对 reader design。parent 的 PRD-G 已延后（<a href="decision-history/spec-driven-development-decision-history.html#ard-n">ARD-N</a>），不要求对应；有没对应上的就失败。<strong>判定：</strong> Python 比对编号集合。</p>
+<p><strong>目标：</strong> PRD 的每条需求，在 design 里都有对应的规则。<strong>输入：</strong> parent PRD、document-standard 的 reader PRD，以及 parent design、pipeline design、document-standard design 和它的 reader 分篇。<strong>通过条件：</strong> 两份 PRD 的每个 <code>PRD-*</code> 都至少对应一个 <code>DSGN-*</code> 或 <code>PIPE-*</code>。两份 PRD 的编号会重复（都有 PRD-A），所以按 feature 分开比对：parent 的 PRD 对 parent design、pipeline design 和 document-standard design，reader PRD 对 reader design。parent 的 PRD-G 已延后（<a href="decision-history/spec-driven-development-decision-history.html#ard-n">ARD-N</a>），不要求对应；有没对应上的就失败。「对应」指编号出现在 <code>DSGN-*</code> 或 <code>PIPE-*</code> 规则小节的正文里；只在 Open Questions 或 Change Log 里提到不算。<strong>判定：</strong> Python（<code>test_tst_o_trace.py</code>）。</p>
 <h4 id="TST-P">TST-P — 子问题归属、证据、UNKNOWN</h4>
 <p><strong>目标：</strong> 有子问题的 design 都有「子问题归属」表，结论都能追溯。<strong>输入：</strong> 带归属表的 design；故意写了没有依据的结论的样例；<code>UNKNOWN</code> 的样例。<strong>通过条件：</strong> 缺表就失败；有结论没依据就失败；把 <code>UNKNOWN</code> 当事实写就失败。<strong>判定：</strong> Python 检查表的结构，判分模型判断依据的质量。</p>
 <h4 id="TST-Q">TST-Q — mock MCP 的调用记录</h4>
@@ -2068,6 +2072,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td>2026-11-24</td>
 <td>新增 TST-Z：每页都能从首页点到（ARD-CD）</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>TST-O：编号要出现在规则小节正文里才算对应</td>
 </tr>
 </tbody></table>
 </div>
