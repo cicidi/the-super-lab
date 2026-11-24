@@ -159,3 +159,75 @@ def test_paths_decision_history_sequence_part_ok(tmp_path):
 
 def test_paths_supporting_file_ok(tmp_path):
     assert not check_committed_path(_doc(tmp_path, "pay/design/stripe-api-notes.md"))
+
+
+def test_paths_supporting_file_with_type_word_ok(tmp_path):
+    # Negative control: the name looks like an entry (`...-design-guide.md`), but no
+    # committed `type:` in frontmatter makes it a supporting file (DSGN-B).
+    p = _doc(tmp_path, "pay/design/google-api-design-guide.md")
+    assert not check_committed_path(p)
+
+
+def test_run_file_supporting_file_clean(tmp_path):
+    from checks.runners import run_file
+
+    p = _doc(tmp_path, "pay/design/stripe-api-notes.md")
+    assert run_file(p, p.read_text(encoding="utf-8")) == []
+
+
+def test_run_file_supporting_file_keeps_folder_size_cap(tmp_path):
+    from checks.runners import run_file
+
+    p = tmp_path / "docs" / "features" / "pay" / "design" / "stripe-api-notes.md"
+    p.parent.mkdir(parents=True)
+    p.write_text("line\n" * 1001, encoding="utf-8")
+    assert [f.check for f in run_file(p, p.read_text(encoding="utf-8"))] == ["size"]
+
+
+def test_canonical_name_without_frontmatter_is_document(tmp_path):
+    from checks.runners import run_file
+
+    p = _doc(tmp_path, "pay/design/pay-design.md")
+    assert any(f.check == "frontmatter" for f in run_file(p, p.read_text(encoding="utf-8")))
+
+
+def _impl_plan(tmp_path, body):
+    p = tmp_path / "docs" / "features" / "pay" / "impl-plan" / "pay-impl-plan.md"
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text("---\nfeature: pay\ntype: impl-plan\nstate: draft\n---\n" + body, encoding="utf-8")
+    return p
+
+
+def _task(ident, deps, blocks):
+    return f"\n## {ident} — t\n\n**依赖：** {deps}。**挡住：** {blocks}。\n\n完成标准：ok。\n"
+
+
+def test_impl_edges_two_way_ok(tmp_path):
+    from checks.impl_tasks import check_impl_tasks
+
+    body = _task("IMPL-A", "无", "IMPL-B 的语义部分、IMPL-C") + _task("IMPL-B", "IMPL-A", "无")
+    body += _task("IMPL-C", "无；报告部分还依赖 IMPL-A", "无")
+    assert check_impl_tasks(_impl_plan(tmp_path, body)) == []
+
+
+def test_impl_blocks_without_depends_flagged(tmp_path):
+    from checks.impl_tasks import check_impl_tasks
+
+    body = _task("IMPL-A", "无", "IMPL-B") + _task("IMPL-B", "无", "无")
+    msgs = [f.message for f in check_impl_tasks(_impl_plan(tmp_path, body))]
+    assert msgs == ["IMPL-A blocks IMPL-B, but IMPL-B 依赖 does not name IMPL-A"]
+
+
+def test_impl_depends_without_blocks_flagged(tmp_path):
+    from checks.impl_tasks import check_impl_tasks
+
+    body = _task("IMPL-A", "无", "无") + _task("IMPL-B", "IMPL-A", "无")
+    msgs = [f.message for f in check_impl_tasks(_impl_plan(tmp_path, body))]
+    assert msgs == ["IMPL-B depends on IMPL-A, but IMPL-A 挡住 does not name IMPL-B"]
+
+
+def test_neg_impl_blocks_one_way():
+    from checks.impl_tasks import check_impl_tasks
+
+    p = FIX / "neg/impl-blocks-one-way/docs/features/demo/impl-plan/demo-impl-plan.md"
+    assert any("blocks IMPL-B" in f.message for f in check_impl_tasks(p))

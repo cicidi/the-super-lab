@@ -53,6 +53,7 @@ last_verified: 2026-11-24
 | `skills/spec-organize/tests/gold/v1/` | iPhone gold 案例：`requirement.md`、`context.md`、`context-variants/<名字>.md`、`exemplar/`、`annotations.yaml` |
 | `skills/spec-organize/tests/gold/v1/annotations.yaml` | 标注，`GOOD-*` 是应该做到的，`BAD-*` 是不该犯的错。每条有 `where`、`text`；`BAD` 还有 `expected_fix`；`added_in` 记录是哪个 gold 版本加的 |
 | `skills/spec-organize/tests/reports/<run_id>.html` | 评测报告，一次运行一个 HTML；`run_id` 是「日期加分支名」；由 `tools/render_eval_report.py` 生成；不提交 |
+| `skills/spec-organize/tests/judgments/*-deepseek-flash.yaml` | 复核结论：每条的结论、5 次票数、`claude_audit`、语料 sha；要提交（TST-L） |
 | `skills/spec-review/tests/cases/<名字>/` | 审查案例：`input/`（故意埋了问题的文档）和 `expected.yaml`（应该找出的问题编号，以及应该忽略的严重度 1、2 的问题）；11 个机械案例，外加一个干净的；5 个语义案例还没写，要等能判 spec-review 输出的执行器 |
 
 `eval.yaml` 的键：
@@ -138,7 +139,7 @@ last_verified: 2026-11-24
 
 ### TST-L — 5 次独立复核
 
-**目标：** 得出最终的通过或不通过。**输入：** 分数 1 的逐条结果和改动；结果写进 TST-K 的报告。**通过条件：** 同一个 `deepseek-flash` 独立裁决 5 次，至少 4 次通过；不推翻 Python 检查的结果。**判定：** 跑 5 次，Claude 再核对没通过和有分歧的条目（[ARD-CJ](../decision-history/spec-driven-development-decision-history.md#ard-cj)）。不同模型之间的偏差标为 Unverified。
+**目标：** 得出最终的通过或不通过。**输入：** 分数 1 的逐条结果和改动；结果写进 TST-K 的报告。**通过条件：** 同一个 `deepseek-flash` 独立裁决 5 次，至少 4 次通过；不推翻 Python 检查的结果。**判定：** 跑 5 次，Claude 再核对没通过和有分歧的条目。结论写进 `judgments/*-deepseek-flash.yaml` 并提交，里面记着语料 sha；SDD 文档、skill 或检查脚本改了，sha 就对不上，`test_judge_freshness.py` 失败，要重跑复核（[ARD-CJ](../decision-history/spec-driven-development-decision-history.md#ard-cj)）。不同模型之间的偏差标为 Unverified。
 
 ### TST-M — 改了标准或 gold 之后同步测试
 
@@ -328,3 +329,4 @@ document-standard 的 reader PRD：
 | 2026-11-24 | 第 10 轮审查后：分数 2 最高分写对；TST-L 先于 TST-K，报告带复核结果 |
 | 2026-11-24 | 第 11 轮审查后：语义审查案例标明还没写；门槛表加 TST-N、TST-C、TST-K |
 | 2026-11-24 | 第 12 轮审查后：TST-G 移到 spec-review 发布门槛 |
+| 2026-11-24 | 第 13 轮审查后：TST-L 写明结论文件提交、语料 sha 过期就重跑 |

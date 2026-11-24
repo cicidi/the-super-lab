@@ -1,10 +1,10 @@
 """TST-E/L gate: the eval itself must stay green (score 1 full).
 
 Score 2 has no fixed floor (ARD-R): a human compares it with the previous run of
-the same gold version; run results are not committed (ARD-AD).
+the same gold version; run results are not committed, except `judgments/` (ARD-CJ).
 
 Verdicts come from `judgments/*-deepseek-flash.yaml`, written by
-tools/judge_deepseek.py: 3 independent runs, 3/3 agreement required.
+tools/judge_deepseek.py: 5 independent runs, at least 4 agreeing (ARD-CJ).
 """
 
 import re

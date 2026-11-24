@@ -13,8 +13,8 @@ each part (ARD-BQ, document-standard DSGN-B).
 - `<feature>` is kebab-case, lowercase, no spaces or special characters
 - The filename repeats the feature and the type, so a file is identifiable
   outside its directory
-- A supporting file that a document cites sits in that document's folder:
-  `docs/features/<feature>/design/<source-name>.md`
+- A supporting file that a document cites sits in that document's folder,
+  any `<type>/` folder: `docs/features/<feature>/<type>/<source-name>.md`
 - A feature has one `decision-history` entry file. It may split into parts and
   is exempt from the size cap: it is append-only history, never trimmed
 

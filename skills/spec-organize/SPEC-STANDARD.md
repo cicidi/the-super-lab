@@ -17,7 +17,7 @@ Rules are **MUST** (a violation is a failure) or **NICE** (a reminder, never a f
 
 ## Frontmatter (MUST)
 
-`feature`, `type`, `state` (`draft`|`final`), `final_date` when `final`. Use **`health`**, not `status`. Optional: `spec_id`, `version`, `owner`, `last_verified`, and `audience` (`internal` or `external`, ARD-AL); full list in document-standard **DSGN-E**.
+`feature`, `type`, `state` (`draft`|`final`), `final_date` when `final`. Use **`health`**, not `status`. Optional: `spec_id`, `version`, `health`, `owner`, `last_verified`, and `audience` (`internal` or `external`, ARD-AL); full list in document-standard **DSGN-E**.
 
 ## Required sections (MUST)
 

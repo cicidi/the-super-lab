@@ -27,12 +27,12 @@ metadata:
     - spec drift
     - source of truth
     - authority by concern
-  spec_bundle_version: "1.0.7"
+  spec_bundle_version: "1.0.8"
   spec_built_at: "2026-11-24"
-  spec_git_sha: "03f42d4"
+  spec_git_sha: "b27fbea"
 ---
 <!-- SPEC-BUNDLE-START -->
-> **SDD spec bundle** `1.0.7` · built 2026-11-24 · git `03f42d4`
+> **SDD spec bundle** `1.0.8` · built 2026-11-24 · git `b27fbea`
 <!-- SPEC-BUNDLE-END -->
 
 # spec-organize
@@ -233,7 +233,7 @@ its content is settled; after that it is maintained rather than rewritten, and
 authority follows the concern table above rather than defaulting to the code.
 
 An important spec may additionally carry `spec_id`, `version`, `health`, `owner`,
-and `last_verified`. All five are optional — see `SPEC-HEALTH.md`. `health` is
+`last_verified`, and `audience`. All six are optional — see `SPEC-HEALTH.md`. `health` is
 deliberately not called `status`: `state` already tracks the authoring state
 (`draft` or `final`), and two fields named for "state" invite confusion.
 
@@ -391,7 +391,8 @@ rest.
    - **Wrong filename** — not the entry `<feature>-<type>.md`, not a part
      (`<feature>-<type>-<noun>.md` for prd/design/test-plan/how-to;
      `<feature>-<type>-NN-<name>.md` for impl-plan/decision-history), and not a
-     supporting file the entry links to
+     supporting file (an `.md` in a type folder without a committed `type:` in
+     its frontmatter, cited by a document of that type)
    - **Missing or invalid frontmatter** — any of the four fields absent, or
      `state` outside `draft|final`, or `final` without `final_date`
    - **Missing required sections** for the type

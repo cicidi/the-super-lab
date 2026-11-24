@@ -58,6 +58,7 @@ CASES: list[tuple[str, str, object]] = [
     ("dead-anchor", "anchors", check_anchors),
     ("unanchored-citation", "code_citation_base", check_code_citation_base),
     ("impl-task-no-done", "impl_tasks", check_impl_tasks),
+    ("impl-blocks-one-way", "impl_tasks", check_impl_tasks),
     ("translation-no-banner", "translation_banner", check_translation_banner),
     ("stale-section-ref", "section_refs", check_section_refs),
     ("bad-tracker-counts", "counts", check_counts),

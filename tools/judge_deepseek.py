@@ -57,10 +57,23 @@ def figure_text(md: Path, text: str) -> str:
     return "".join(out)
 
 
+INDEX = ROOT / "docs/INDEX.md"
+_SDD_LINE = re.compile(r"spec-driven[- ]development", re.IGNORECASE)
+
+
+def index_sdd_lines(text: str) -> str:
+    """Only the INDEX lines about SDD (plus the title), so another feature's row
+    does not make SDD judgments stale."""
+    keep = [ln for ln in text.splitlines() if ln.startswith("# ") or _SDD_LINE.search(ln)]
+    return "\n".join(keep) + "\n"
+
+
 def corpus() -> str:
     parts = []
     for p in corpus_files():
         text = p.read_text(encoding="utf-8")
+        if p == INDEX:
+            text = index_sdd_lines(text)
         parts.append(f"\n===== FILE: {p.relative_to(ROOT)} =====\n{text}")
         if p.suffix == ".md":
             parts.append(figure_text(p, text))
@@ -80,7 +93,7 @@ def corpus_files() -> list[Path]:
         for p in sorted(SDD.rglob("*.md"))
         if not p.name.startswith("._") and "raw" not in p.parts and "site" not in p.parts
     ]
-    docs += [ROOT / "docs/INDEX.md"]  # gold BAD-A judges the INDEX entries
+    docs += [INDEX]  # gold BAD-A judges the INDEX entries; corpus() keeps only SDD lines
     docs += [ROOT / "skills/spec-organize/SPEC-STANDARD.md"]
     docs += [
         ROOT / f"skills/{n}/SKILL.md"

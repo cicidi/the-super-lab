@@ -151,7 +151,7 @@ last_verified: 2026-11-24
 
 **范围。** 本条管 `judge_deepseek.py` 的复核（TST-L）。TST-V 的可读性判分另有门槛，不变。Claude 不同意的条目在用户决定前仍算没通过。
 
-**重述。** 本条推翻 ARD-AD「复核跑 3 次」的部分，ARD-AD 因此划掉。其余仍有效：生成 gold 跑 3 次；gold 由案例、版本、范例、标注组成；跑分结果和报告不提交；四个非软件例子写进 skill 正文，不在本仓库建 gold；只有 DeepSeek 的 API，不同模型之间的偏差标为 Unverified。
+**重述。** 本条推翻 ARD-AD「复核跑 3 次」的部分，ARD-AD 因此划掉。其余仍有效：生成 gold 跑 3 次；gold 由案例、版本、范例、标注组成；跑分结果和报告不提交（复核结论文件 `judgments/` 例外，要提交，测试靠它判断结论过没过期）；四个非软件例子写进 skill 正文，不在本仓库建 gold；只有 DeepSeek 的 API，不同模型之间的偏差标为 Unverified。
 
 **规则（补）。** 重跑时，题目、结论、票数分布和语料 sha 都没变的条目，保留上次的 `claude_audit`；有任何一项变了就清空，等 Claude 重新核对。
 
@@ -868,3 +868,4 @@ payment-impl-plan-01-schema.md         impl-plan 分篇：序号加阶段，有�
 | 2026-11-24 | 第 9 轮审查后：ARD-CK、ARD-CJ、ARD-CH 补全被划掉条目里仍有效的部分；ARD-CJ 写明 claude_audit 何时保留 |
 | 2026-11-24 | 第 10 轮审查后：ARD-CA 补上对 ARD-BE 的重述 |
 | 2026-11-24 | 第 11 轮审查后：ARD-CA 的重述分清 MUST 和 NICE，补上节点和连线上限 |
+| 2026-11-24 | 第 13 轮审查后：ARD-CJ 写明 judgments/ 是「结果不提交」的例外 |

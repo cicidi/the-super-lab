@@ -18,7 +18,7 @@ last_verified: 2026-11-24
 - **skill 的写法：** `SKILL.md` 用 `skill create` 或 `skill edit`（见 `skills/skill/SKILL.md`）来写。本篇只规定顺序。
 - **测试：** 测什么见 [test-plan](../test-plan/spec-driven-development-test-plan.md)，测试文件放在 `skills/spec-organize/tests/`。
 - **不做 wayfinder-import sub-feature**（[ARD-T](../decision-history/spec-driven-development-decision-history.md#ard-t)）。
-- **评测：** 用 `deepseek-flash` 生成 gold 跑 3 次、复核跑 5 次；跑分结果和报告不提交（[ARD-CJ](../decision-history/spec-driven-development-decision-history.md#ard-cj)）。打分用 iPhone 案例（[ARD-BL](../decision-history/spec-driven-development-decision-history.md#ard-bl)）。
+- **评测：** 用 `deepseek-flash` 生成 gold 跑 3 次、复核跑 5 次；跑分结果和报告不提交，复核结论文件 `judgments/` 要提交（[ARD-CJ](../decision-history/spec-driven-development-decision-history.md#ard-cj)）。打分用 iPhone 案例（[ARD-BL](../decision-history/spec-driven-development-decision-history.md#ard-bl)）。
 - **不迁移旧文档**，只修 SDD 自己这套（[ARD-CK](../decision-history/spec-driven-development-decision-history.md#ard-ck)，重述 ARD-AF）。
 
 ## IMPL-A — skill 目录改名
@@ -128,7 +128,7 @@ last_verified: 2026-11-24
 
 **目标：** 每个检查至少一个反例和一个正例；spec-review 的 16 个审查案例（11 个机械，5 个语义）。现状：机械案例和一个干净案例已写好；5 个语义案例还没写，要等执行器。
 
-**依赖：** IMPL-D。**挡住：** IMPL-I。
+**依赖：** IMPL-D；语义案例部分还依赖 IMPL-Y。**挡住：** IMPL-I。
 
 **Verify:** TST-B 全部通过；TST-H 和 TST-I 需要的文件都在。
 
@@ -247,7 +247,7 @@ last_verified: 2026-11-24
 
 **目标：** `tools/judge_deepseek.py` 按 [ARD-CJ](../decision-history/spec-driven-development-decision-history.md#ard-cj) 默认跑 5 次、4 次一致才算定论，输出里留 `claude_audit` 给 Claude 填。
 
-**依赖：** 无。**挡住：** IMPL-E 的报告部分。
+**依赖：** 无。**挡住：** IMPL-E 的报告部分、IMPL-Y。
 
 **Verify:** TST-L 按 5 次判定。
 
@@ -301,3 +301,4 @@ last_verified: 2026-11-24
 | 2026-11-24 | 第 9 轮审查后：IMPL-W 目标跟上地图目录和 QUES 规则；改链 ARD-CK、ARD-CE |
 | 2026-11-24 | 第 11 轮审查后：IMPL-E 先跑 TST-L 再跑 TST-K，依赖 IMPL-X；IMPL-K 写明现状 |
 | 2026-11-24 | 第 12 轮审查后：新增 IMPL-Y 语义案例执行器；IMPL-I 只要求机械案例；IMPL-R 加 DSGN-B 检查 |
+| 2026-11-24 | 第 13 轮审查后：IMPL-X、IMPL-K 补上和 IMPL-Y 的双向依赖；judgments/ 要提交 |

@@ -4,7 +4,7 @@ type: prd
 state: draft
 health: active
 owner: cicidi
-version: "1.0.7"
+version: "1.0.8"
 last_verified: 2026-11-24
 ---
 
@@ -157,7 +157,7 @@ AI 要把大问题拆成小的：能查的 AI 自己查（合规、财报、交�
 ## Resources Needed
 
 - spec-write、spec-review、wayfinder 三个 skill，前两个要读的三份标准文件（[ARD-CH](../decision-history/spec-driven-development-decision-history.md#ard-ch)），和一份 test-plan。不需要数据库。外部服务：评测用的 `deepseek-flash` API，以及发布网站用的 GitHub Actions 和 GitHub Pages（[ARD-CD](../decision-history/spec-driven-development-decision-history.md#ard-cd)）。
-- 评测需要 `deepseek-flash` 的 API，以及生成 gold 跑 3 次、复核跑 5 次的费用。跑分结果和报告不提交（[ARD-CJ](../decision-history/spec-driven-development-decision-history.md#ard-cj)）。
+- 评测需要 `deepseek-flash` 的 API，以及生成 gold 跑 3 次、复核跑 5 次的费用。跑分结果和报告不提交，复核结论文件 `judgments/` 要提交（[ARD-CJ](../decision-history/spec-driven-development-decision-history.md#ard-cj)）。
 
 进入下游前，PRD 要写清的五项（pipeline design 的 PIPE-E-B）：
 
@@ -197,3 +197,4 @@ AI 要把大问题拆成小的：能查的 AI 自己查（合规、财报、交�
 | 2026-11-24 | PRD-C：新建文件不算在改动上限内（ARD-CE） |
 | 2026-11-24 | 第 8 轮审查后：PRD-J、PRD-P、Resources 跟上 ARD-CH；复核次数跟上 ARD-CJ；改链 ARD-CE、ARD-CK |
 | 2026-11-24 | 第 9 轮审查后：PRD-K 的链接改到重述它的 ARD-CJ |
+| 2026-11-24 | 第 13 轮审查后：写明复核结论文件 judgments/ 要提交 |
