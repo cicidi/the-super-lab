@@ -1,7 +1,7 @@
 model: deepseek-flash
-runs: 3
+runs: 5
 target: gold
-corpus_sha: e85447175ad65fa9
+corpus_sha: 128eda8ce2c64ef0
 items:
 - id: GOOD-A
   verdict: pass
@@ -9,8 +9,10 @@ items:
   - pass
   - pass
   - pass
-  evidence: SDD uses PRD-A..Q, DSGN-A..E, ARD-A..CD, IMPL-A..V, TST-A..Z in docs/features/spec-driven-development/decision-history/spec-driven-development-decision-history.md
-    and siblings; no numeric ids
+  - pass
+  - pass
+  evidence: 'All target ids use letters: decision-history ARD-A..CL; test-plan TST-A..AA;
+    impl-plan IMPL-A..X; no PRD-1/ARD-2/0001 document ids.'
   confidence: 0.95
 - id: GOOD-B
   verdict: pass
@@ -18,75 +20,87 @@ items:
   - pass
   - pass
   - pass
-  evidence: skills/spec-organize/tests/test_tst_o_trace.py DEFERRED={'PRD-G'} asserts
-    every parent PRD id is cited in DSGN/PIPE clauses; PIPE-I cites PRD-F, PIPE-K
-    cites PRD-O/Q
-  confidence: 0.9
+  - pass
+  - pass
+  evidence: test_tst_o_trace.py checks every parent PRD id is cited in DSGN/PIPE clauses,
+    exempting deferred PRD-G; pipeline PIPE-A sources PRD-A.
+  confidence: 0.86
 - id: GOOD-C
   verdict: pass
   votes:
   - pass
   - pass
   - pass
-  evidence: docs/features/spec-driven-development/prd/spec-driven-development-prd.md
-    exists; sibling design/decision-history/impl-plan/test-plan dirs each hold committed
-    .md entries
-  confidence: 0.99
+  - pass
+  - pass
+  evidence: docs/features/spec-driven-development has prd/, design/, decision-history/,
+    impl-plan/, test-plan/, e.g. impl-plan/spec-driven-development-impl-plan.md.
+  confidence: 1.0
 - id: GOOD-D
   verdict: pass
   votes:
   - pass
   - pass
   - pass
-  evidence: 'docs/features/spec-driven-development/design/spec-driven-development-design.md
-    ends with ## Change Log; all SDD PRD/design/impl-plan/test-plan/decision-history
-    docs do the same'
-  confidence: 0.95
+  - pass
+  - pass
+  evidence: 'Target docs end with ## Change Log, e.g. design/spec-driven-development-design.md
+    and test-plan/spec-driven-development-test-plan.md.'
+  confidence: 0.9
 - id: GOOD-E
   verdict: pass
   votes:
   - pass
   - pass
   - pass
-  evidence: docs/features/spec-driven-development/design/spec-driven-development-design.md
-    has 子问题归属 table rows with allowed owners and ARD evidence
-  confidence: 0.99
+  - pass
+  - pass
+  evidence: design/spec-driven-development-design.md has 子问题归属 table with allowed
+    owners and ARD evidence rows, e.g. ARD-CC/ARD-BL.
+  confidence: 1.0
 - id: GOOD-F
   verdict: pass
   votes:
   - pass
   - pass
   - pass
-  evidence: skills/spec-write/SKILL.md Example Domains names 盖 shed, 北京旅游, 数学题, 股票;
-    spec-pipeline/spec-organize/spec-review likewise
-  confidence: 0.99
+  - pass
+  - pass
+  evidence: skills/spec-write/SKILL.md Example Domains lists 盖 shed, 北京旅游, 数学题, 股票;
+    same four appear in the other three SKILL.md files.
+  confidence: 1.0
 - id: BAD-A
   verdict: pass
   votes:
   - pass
   - pass
   - pass
-  evidence: docs/INDEX.md Spec-Driven Development section links all SDD entry docs
-    (PRD, designs, impl-plan, test-plan, decision-history, subfeatures); target links
-    resolve
-  confidence: 0.9
+  - pass
+  - pass
+  evidence: 'docs/INDEX.md lists all target entries: parent five docs, skill-contracts,
+    pipeline design, document-standard entry and reader part.'
+  confidence: 0.86
 - id: BAD-B
   verdict: pass
   votes:
   - pass
   - pass
   - pass
-  evidence: skills/spec-organize/tests/checks/size.py caps 800/1000/600; SDD prd/design/impl-plan/test-plan
-    files are under caps, decision-history is exempt
-  confidence: 0.9
+  - pass
+  - pass
+  evidence: Target prd/design/impl-plan/test-plan docs stay under 800/1000/1000/800;
+    decision-history is exempt and has no cap.
+  confidence: 0.82
 - id: BAD-C
   verdict: pass
   votes:
   - pass
   - pass
   - pass
-  evidence: skills/spec-review/SKILL.md Contract authority cites docs/features/spec-driven-development/design/spec-driven-development-design-skill-contracts.md
-    and says contract wins on conflict
+  - pass
+  - pass
+  evidence: spec-review/SKILL.md cites design/spec-driven-development-design-skill-contracts.md
+    and says 'the contract wins' on conflict.
   confidence: 1.0
 - id: BAD-D
   verdict: pass
@@ -94,7 +108,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: docs/features/spec-driven-development/decision-history/spec-driven-development-decision-history.md
-    Decision Log starts ARD-CD 2026-11-24, ARD-CC 2026-11-24, ARD-CB 2026-11-20; dates
-    descend
-  confidence: 0.95
+  - pass
+  - pass
+  evidence: decision-history Decision Log starts at ARD-CL/CK/CJ (2026-11-24) and
+    descends to ARD-A (2026-09-25), newest first.
+  confidence: 0.97
