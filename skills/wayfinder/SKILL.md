@@ -32,12 +32,12 @@ metadata:
     - tech leads
   source_author: mattpocock
   source_url: https://github.com/mattpocock/skills/blob/main/skills/engineering/wayfinder/SKILL.md
-  spec_bundle_version: "1.0.6"
+  spec_bundle_version: "1.0.7"
   spec_built_at: "2026-11-24"
-  spec_git_sha: "5119924"
+  spec_git_sha: "03f42d4"
 ---
 <!-- SPEC-BUNDLE-START -->
-> **SDD spec bundle** `1.0.6` · built 2026-11-24 · git `5119924`
+> **SDD spec bundle** `1.0.7` · built 2026-11-24 · git `03f42d4`
 <!-- SPEC-BUNDLE-END -->
 
 A loose idea has arrived — too big for one agent session, and wrapped in fog: the way from here to the **destination** isn't visible yet. Wayfinding is about finding that way, not charging at the destination. This skill charts the way as a **shared map** on the repo's issue tracker, then works its **decision briefs** — questions whose resolution is a decision, not slices of a build to execute — one at a time until the route is clear.
@@ -159,7 +159,7 @@ An SDD repo is one with `docs/features/spec-driven-development/`. There the
 tracker is upstream's local-markdown layout (mattpocock/skills
 `setup-matt-pocock-skills/issue-tracker-local.md`): a directory holding
 `map.md` plus one file per brief, `issues/NN-<slug>.md`. The operations follow
-upstream word for word:
+upstream, plus two SDD statuses — `claimed` and `out-of-scope`:
 
 - **Brief header:** `Status:` (one of `open`, `claimed`, `resolved`, `out-of-scope`), `Type:` (`research`, `prototype`, `grilling` or `task` — the local stand-in for the `wayfinder:<type>` label) and `Blocked by:` (brief numbers `NN, NN`, or empty).
 - **Claim:** set `Status: claimed`. **Frontier:** open briefs whose blockers are all resolved; take the lowest number first.
@@ -222,7 +222,7 @@ Fog only ever gathers _toward_ the destination. The destination fixes the scope,
 
 Out-of-scope work never graduates — the frontier stops at the destination — so it returns only if the destination is redrawn, and then as a fresh effort, not a resumption.
 
-Ruling something out of scope is a scoping act, not a step on the route. When a brief that already exists turns out to sit past the destination — mis-scoped in while charting, or exposed by a resolution — **close it** (a closed brief is unambiguously off the frontier) and leave one line in the **Out of scope** section: the gist plus why it's out of scope, linking the closed brief (SDD: set `Status: out-of-scope`, then re-scope or rule out every brief that lists it in `Blocked by:`; see [SDD progress record](#sdd-progress-record-ard-ch)). It stays out of **Decisions so far**, which records the route actually walked — a scope boundary isn't a step on it.
+Ruling something out of scope is a scoping act, not a step on the route. When a brief that already exists turns out to sit past the destination — mis-scoped in while charting, or exposed by a resolution — **close it** (a closed brief is unambiguously off the frontier; SDD: closing it as out of scope does **not** unblock the briefs it blocks) and leave one line in the **Out of scope** section: the gist plus why it's out of scope, linking the closed brief (SDD: set `Status: out-of-scope`, then re-scope or rule out every brief that lists it in `Blocked by:`; see [SDD progress record](#sdd-progress-record-ard-ch)). It stays out of **Decisions so far**, which records the route actually walked — a scope boundary isn't a step on it.
 
 ## Spec site
 
@@ -233,7 +233,7 @@ deployed by GitHub Pages from master (ARD-CF, ARD-CD).
 
 ## Spec Creation & Spec-Review Checkpoint
 
-After all briefs are resolved and the map is done, before handing off to
+After all briefs are resolved (SDD: or `Status: out-of-scope`, with every brief it blocked re-scoped or ruled out too) and the map is done, before handing off to
 `to-tickets`:
 
 ```

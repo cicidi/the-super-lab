@@ -18,12 +18,12 @@ metadata:
     - draft design
     - append decision
     - spec write
-  spec_bundle_version: "1.0.6"
+  spec_bundle_version: "1.0.7"
   spec_built_at: "2026-11-24"
-  spec_git_sha: "5119924"
+  spec_git_sha: "03f42d4"
 ---
 <!-- SPEC-BUNDLE-START -->
-> **SDD spec bundle** `1.0.6` · built 2026-11-24 · git `5119924`
+> **SDD spec bundle** `1.0.7` · built 2026-11-24 · git `03f42d4`
 <!-- SPEC-BUNDLE-END -->
 
 # spec-write
@@ -94,6 +94,7 @@ added; a required one is never dropped or renamed.
 
 - [ ] Frontmatter and required sections for the type
 - [ ] Change Log last section; append only
+- [ ] Decision-history records only directions already in effect (parent design DSGN-B); do not add an ARD by default — ask the human when unsure
 - [ ] Decision-history: newest-first; supersede via strike + link; every ARD has an Evidence Appendix entry
 - [ ] No L1 deletion to meet size cap
 - [ ] Sub-problem design has `子问题归属`; missing facts are `UNKNOWN`, not guesses

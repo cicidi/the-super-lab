@@ -11,7 +11,7 @@ Rules are **MUST** (a violation is a failure) or **NICE** (a reminder, never a f
 ## Path & filename (MUST)
 
 - Root: `docs/features/<f>/` (sub: `docs/features/<parent>/features/<sub>/`, frontmatter `feature` = **sub** slug).
-- Entry: `<f>-<type>.md` in `<type>/` directory. Parts: `<f>-design-<noun>.md`; `<f>-impl-plan-<NN>-<phase>.md`.
+- Entry: `<f>-<type>.md` in `<type>/` directory. Parts: `<f>-prd-<noun>.md`, `<f>-design-<noun>.md`, `<f>-test-plan-<noun>.md`, `<f>-how-to-<noun>.md` (aspect noun); `<f>-impl-plan-<NN>-<phase>.md`, `<f>-decision-history-<NN>-<period>.md` (zero-padded sequence, ARD-G).
 - All six types may split into parts. When a type has parts, the entry file `<f>-<type>.md` must exist and link to each part (ARD-BQ).
 - No committed `reference/` type; supporting files beside the citing doc. Figure SVG: `<doc-stem>-fig-<slug>.svg` next to the citing `.md` (ARD-CA).
 

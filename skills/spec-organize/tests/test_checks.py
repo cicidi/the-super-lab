@@ -123,3 +123,39 @@ def test_must_registry_coverage_script():
         text=True,
     )
     assert r.returncode == 0, r.stdout + r.stderr
+
+
+def _doc(tmp_path, rel, doc_type=None):
+    p = tmp_path / "docs" / "features" / rel
+    p.parent.mkdir(parents=True, exist_ok=True)
+    front = f"---\nfeature: pay\ntype: {doc_type}\nstate: draft\n---\n" if doc_type else ""
+    p.write_text(front + "# Doc\n", encoding="utf-8")
+    return p
+
+
+def test_paths_wrong_feature_prefix_flagged(tmp_path):
+    p = _doc(tmp_path, "pay/prd/shop-prd.md", "prd")
+    assert any(f.check == "paths" for f in check_committed_path(p))
+
+
+def test_paths_wrong_type_flagged(tmp_path):
+    p = _doc(tmp_path, "pay/prd/pay-design.md", "prd")
+    assert any(f.check == "paths" for f in check_committed_path(p))
+
+
+def test_paths_numbered_noun_part_flagged(tmp_path):
+    p = _doc(tmp_path, "pay/design/pay-design-01-auth.md", "design")
+    assert any(f.check == "paths" for f in check_committed_path(p))
+
+
+def test_paths_prd_aspect_part_ok(tmp_path):
+    assert not check_committed_path(_doc(tmp_path, "pay/prd/pay-prd-refunds.md", "prd"))
+
+
+def test_paths_decision_history_sequence_part_ok(tmp_path):
+    p = _doc(tmp_path, "pay/decision-history/pay-decision-history-01-launch.md", "decision-history")
+    assert not check_committed_path(p)
+
+
+def test_paths_supporting_file_ok(tmp_path):
+    assert not check_committed_path(_doc(tmp_path, "pay/design/stripe-api-notes.md"))

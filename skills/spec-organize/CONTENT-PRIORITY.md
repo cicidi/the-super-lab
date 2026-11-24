@@ -94,7 +94,7 @@ the content belongs in the code, not the spec.
    the decision from being relitigated.
 4. Compress L2 — keep the reason, drop the narration.
 5. Never delete L1.
-6. If the document is still over 1,000 lines, the boundary is wrong. Split it on
+6. If the document is still over its type's DSGN-B hard cap (SPEC-STANDARD Size), the boundary is wrong. Split it on
    a bounded context, domain, ownership, or lifecycle edge and name the parts by
    the rules in `SKILL.md`.
 

@@ -245,8 +245,8 @@ last_verified: 2026-11-24
 | 检查和版本戳 | TST-X 没有 L1 内容减少；TST-Y 版本戳和 PRD 一致 |
 | 外部 gold | TST-T：有问题的快照上，应该找出的都找出；修好的快照上，除了允许的以外 0 个问题；源仓库不在本机就跳过 |
 | gold v1 定稿 | TST-C 每次运行都写出五篇；TST-D：范例的分数 1 满分；标注经人工认可 |
-| spec-write 可以发布 | TST-E 分数 1 满分、分数 2 不退步；TST-F 四种输入全部通过；TST-G 没有差异；TST-L 5 次里至少 4 次通过；TST-K 报告结构齐全 |
-| spec-review 可以发布 | TST-H 找出 100%、误报 0；TST-I 不低于上一次；TST-L 5 次里至少 4 次通过 |
+| spec-write 可以发布 | TST-E 分数 1 满分、分数 2 不退步；TST-F 四种输入全部通过；TST-L 5 次里至少 4 次通过；TST-K 报告结构齐全 |
+| spec-review 可以发布 | TST-G 没有差异；TST-H 找出 100%、误报 0；TST-I 不低于上一次；TST-L 5 次里至少 4 次通过 |
 | wayfinder 可以发布 | TST-AA 通过 |
 | gold 升版 | TST-M 追加标注后，重跑 TST-E 和 TST-H，建立新的基线 |
 
@@ -327,3 +327,4 @@ document-standard 的 reader PRD：
 | 2026-11-24 | 第 9 轮审查后：TST-J 的辅助 skill 不再含 wayfinder；门槛表加 wayfinder 发布行；PRD-P 追溯加 TST-AA；改链 ARD-CH |
 | 2026-11-24 | 第 10 轮审查后：分数 2 最高分写对；TST-L 先于 TST-K，报告带复核结果 |
 | 2026-11-24 | 第 11 轮审查后：语义审查案例标明还没写；门槛表加 TST-N、TST-C、TST-K |
+| 2026-11-24 | 第 12 轮审查后：TST-G 移到 spec-review 发布门槛 |

@@ -112,9 +112,9 @@ last_verified: 2026-11-24
 
 **步骤：** document-standard 和 test-plan 里关于 review 的部分稳定后，修改 `skills/spec-review/SKILL.md`。
 
-**依赖：** IMPL-B、IMPL-K、IMPL-E。**挡住：** 无。
+**依赖：** IMPL-B、IMPL-K、IMPL-E；语义案例部分还依赖 IMPL-Y。**挡住：** 无。
 
-**Verify:** TST-H 的案例全部检出。
+**Verify:** TST-H 的 11 个机械案例全部检出；语义案例在 IMPL-Y 完成前标为 Unverified。
 
 ## IMPL-J — 评测配置和配置测试
 
@@ -201,7 +201,7 @@ last_verified: 2026-11-24
 
 **依赖：** IMPL-C。**挡住：** 无。
 
-**Verify:** CLAUDE 层里：改动上限写的是「并且」，并引用 PRD-C；没有 `FR-` 这类已禁止的编号；进度路径是 wayfinder 的地图目录（PRD-J、ARD-CH）；文档目录是 `docs/features/<f>/<类型>/`（document-standard 的 DSGN-B）；列出的 skill 是 spec-write、spec-review 和 wayfinder（ARD-CH）。2026-11-20 已按这几条改过 `CLAUDE.local.md`。
+**Verify:** CLAUDE 层里：改动上限写的是「并且」，并引用 PRD-C；没有 `FR-` 这类已禁止的编号；进度路径是 wayfinder 的地图目录（PRD-J、ARD-CH）；文档目录是 `docs/features/<f>/<类型>/`（document-standard 的 DSGN-B）；列出的 skill 是 spec-write、spec-review 和 wayfinder（ARD-CH）；写明 DSGN-B：decision-history 只记已生效的方向，AI 默认不自动加 ARD，拿不准就问人。2026-11-20 已按这几条改过 `CLAUDE.local.md`。
 
 ## IMPL-S — 插图与网页样式
 
@@ -251,12 +251,20 @@ last_verified: 2026-11-24
 
 **Verify:** TST-L 按 5 次判定。
 
+## IMPL-Y — 语义审查案例的执行器
+
+**目标：** 一个能跑 spec-review、再判它的输出有没有找出埋下的问题的执行器；有了它才能写 IMPL-K 的 5 个语义案例。
+
+**依赖：** IMPL-X。**挡住：** IMPL-K 的语义部分、IMPL-I。
+
+**Verify:** 5 个语义案例能自动判出找没找到。
+
 ## Execution order
 
 先做不依赖别人的任务，被挡住的后做：
 
 1. IMPL-A、IMPL-D、IMPL-G、IMPL-H、IMPL-U、IMPL-W、IMPL-X（互不依赖，可以同时做）
-2. IMPL-C
+2. IMPL-C、IMPL-Y（等 IMPL-X）
 3. IMPL-B、IMPL-F、IMPL-J、IMPL-K、IMPL-L、IMPL-M、IMPL-R
 4. IMPL-N、IMPL-O、IMPL-P、IMPL-S（等 IMPL-F）、IMPL-T（等 IMPL-M）、IMPL-V（等 IMPL-H）
 5. IMPL-Q
@@ -292,3 +300,4 @@ last_verified: 2026-11-24
 | 2026-11-24 | 第 8 轮审查后：IMPL-G 改为 CLAUDE 层只记地图路径；评测次数跟上 ARD-CJ；IMPL-U 五个 SKILL.md；验收改到 TST-AA |
 | 2026-11-24 | 第 9 轮审查后：IMPL-W 目标跟上地图目录和 QUES 规则；改链 ARD-CK、ARD-CE |
 | 2026-11-24 | 第 11 轮审查后：IMPL-E 先跑 TST-L 再跑 TST-K，依赖 IMPL-X；IMPL-K 写明现状 |
+| 2026-11-24 | 第 12 轮审查后：新增 IMPL-Y 语义案例执行器；IMPL-I 只要求机械案例；IMPL-R 加 DSGN-B 检查 |

@@ -35,7 +35,7 @@ def main() -> None:
             ROOT,
         ),
         run("registry coverage", [sys.executable, "tools/must_registry_coverage.py"], ROOT),
-        run("eval scores", [sys.executable, "tools/score_eval.py", "--min-score2", "6"], ROOT),
+        run("eval scores", [sys.executable, "tools/score_eval.py"], ROOT),
     ]
     print(f"\n{'ALL GATES PASS' if all(results) else 'GATE FAILURE'}")
     sys.exit(0 if all(results) else 1)

@@ -27,12 +27,12 @@ metadata:
     - spec drift
     - source of truth
     - authority by concern
-  spec_bundle_version: "1.0.6"
+  spec_bundle_version: "1.0.7"
   spec_built_at: "2026-11-24"
-  spec_git_sha: "5119924"
+  spec_git_sha: "03f42d4"
 ---
 <!-- SPEC-BUNDLE-START -->
-> **SDD spec bundle** `1.0.6` · built 2026-11-24 · git `5119924`
+> **SDD spec bundle** `1.0.7` · built 2026-11-24 · git `03f42d4`
 <!-- SPEC-BUNDLE-END -->
 
 # spec-organize
@@ -97,8 +97,8 @@ architecture boundaries — not class hierarchies, private methods, or internal
 algorithms. If the implementation can change while externally observable
 behavior does not, the spec should not change.
 
-A `design` or `impl-plan` must stay under 1,000 lines. `decision-history` is exempt
-— it is append-only history, and history is never trimmed. Split on bounded
+A document must stay at or under its DSGN-B hard cap (SPEC-STANDARD Size).
+`decision-history` is exempt — it is append-only history, never trimmed, only split. Split on bounded
 context, domain, ownership, or lifecycle boundaries, never on a line count.
 
 ## Content Priority
@@ -115,7 +115,7 @@ document has to shrink:
 
 A fact whose authoritative home is another document is a link, never a
 restatement — that copy is L4. Trim L4, then L3, then compress L2. If the
-document is still over 1,000 lines, split it. Deleting L1 to fit the cap is a
+document is still over its DSGN-B hard cap (SPEC-STANDARD Size), split it. Deleting L1 to fit the cap is a
 defect, not an optimization. See `CONTENT-PRIORITY.md`.
 
 ## Spec Health
@@ -200,8 +200,8 @@ each part (ARD-BQ, document-standard DSGN-B).
   outside its directory
 - A supporting file that a document cites sits in that document's folder:
   `docs/features/<feature>/design/<source-name>.md`
-- A feature has at most one `decision-history`, and it is exempt from the
-  1,000-line cap: it is append-only history, and history is never trimmed
+- A feature has one `decision-history` entry file. It may split into parts and
+  is exempt from the size cap: it is append-only history, never trimmed
 
 ### Splitting and collisions
 
@@ -314,7 +314,7 @@ documents. They live under the feature but are gitignored and never committed:
 ```
 docs/features/<feature>/raw/research/<topic>.md
 docs/features/<feature>/raw/discussion/<topic>.md
-docs/features/<feature>/raw/state/state-<YYYY-MM-DD>.md
+docs/features/<feature>/raw/state/wayfinder/   (SDD progress: map.md + issues/, ARD-CH)
 ```
 
 `raw/**` is local only. Do not commit it. `.scratch/<feature-slug>/` holds
@@ -363,8 +363,8 @@ is spec-review, not this skill.
    (`NAMING.md` lists the collision signals). Merge, rename, or confirm with the
    user before going further.
 4. Compute the path: `docs/features/<feature>/<type>/<feature>-<type>.md`.
-5. If that file already exists, do not create a second one — unless the type is
-   `design` or `impl-plan` and the existing file is at the 1,000-line cap. Prefer
+5. If that file already exists, do not create a second one — unless the existing
+   file is at its type's DSGN-B hard cap; any type may then get parts. Prefer
    merging into the existing file in the right section and appending a Change Log
    entry. Split only when the cap forces it, and name the parts by the rules
    above.
@@ -388,7 +388,10 @@ rest.
      `how-to/`. Wrong examples: `plan/`, `reference/`, `mockups/`,
      `work-review/`, `issues-found/`, `devil-advocate/`. `raw/` and `.scratch/`
      are local-only; they are not wrong directories.
-   - **Wrong filename** — not `<feature>-<type>.md`
+   - **Wrong filename** — not the entry `<feature>-<type>.md`, not a part
+     (`<feature>-<type>-<noun>.md` for prd/design/test-plan/how-to;
+     `<feature>-<type>-NN-<name>.md` for impl-plan/decision-history), and not a
+     supporting file the entry links to
    - **Missing or invalid frontmatter** — any of the four fields absent, or
      `state` outside `draft|final`, or `final` without `final_date`
    - **Missing required sections** for the type
@@ -404,13 +407,14 @@ rest.
      private methods, or internal algorithms rather than behavior
    - **Reference drift** — a spec citing an API, component, or file that no
      longer exists; report it, do not guess the replacement
-   - **Oversized document** — a `design` or `impl-plan` over 1,000 lines; report it
-     for splitting. `decision-history` is exempt
+   - **Oversized document** — a document over its DSGN-B hard cap (SPEC-STANDARD
+     Size); report it for splitting. `decision-history` is exempt
    - **Name collision** — two features or two files whose names trip a collision
      signal from `NAMING.md`
    - **Restated fact** — the same fact written out in two documents; the second
      occurrence should be a link
-3. Apply the mechanical fixes directly: rename to the standard filename, move to
+3. Apply the mechanical fixes directly: rename an invalid name to the standard
+   filename (never rename a valid part or supporting file), move to
    the standard directory, add missing frontmatter, move Change Log to the end.
 4. Report what was applied and what needs a human decision — content that must be
    split across types, or a section that has no counterpart in the standard.
@@ -419,13 +423,14 @@ rest.
 
 ### Mode C: Consolidate
 
-Reduce many files to one per type per feature. This mode deletes and merges, so
+Reduce many files to one entry file (plus its parts) per type per feature. This mode deletes and merges, so
 it proposes and waits — it never applies without approval.
 
 1. For each feature, list the files by type.
 2. Identify what consolidates:
    - Multiple `prd`, `design`, `impl-plan`, `test-plan`, or `how-to` files for the
-     same feature become one file per type.
+     same feature become one file per type — only files that are not parts or
+     supporting files reachable from the entry file.
    - Multiple decision records become one `decision-history`, with the Decision
      Log in chronological order and every original preserved in the Evidence
      Appendix. Nothing is dropped, including superseded and incorrect decisions.
@@ -489,7 +494,7 @@ MUST:
 - [ ] Authority for each affected concern identified before resolving a conflict
 - [ ] No spec/code conflict resolved silently
 - [ ] No fact maintained by hand in two places
-- [ ] `design` and `impl-plan` under 1,000 lines, or split on a bounded context
+- [ ] Every document at or under its DSGN-B hard cap (SPEC-STANDARD Size), or split on a bounded context
 - [ ] Feature and file names checked for collisions before creation
 - [ ] No L1 content dropped to meet the size cap
 
@@ -503,13 +508,13 @@ NICE:
 
 ## Anti-Patterns
 
-- **Creating a second file for a type that already exists.** A feature has one
-  `design` until it crosses the 1,000-line cap. Add to the existing file rather
+- **Creating a second file for a type that already exists.** A type has one
+  entry file until it crosses its DSGN-B hard cap. Add to the existing file rather
   than creating `design-v2.md`, and split only on a real boundary.
 - **Splitting a spec to dodge the cap without a boundary.** A split part is a
   bounded context, not a page break.
-- **Numbering spec parts.** A number says nothing about the contents. Plans are
-  numbered because a plan is ordered; specs are named by their aspect.
+- **Numbering spec parts.** A number says nothing about the contents. Plans and
+  decision histories are numbered because they are ordered; specs are named by their aspect.
 - **Deleting L1 content to fit the cap.** L1 is never deleted. Trim L4, then L3,
   and split if it is still too long.
 - **Restating a fact that already has a home.** The second occurrence is a link,

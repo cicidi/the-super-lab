@@ -49,11 +49,11 @@ does not, the spec SHOULD NOT change.
 | Document | Typical range |
 |---|---|
 | Feature / change spec | at or under the hard cap |
-| Architecture / design spec | at or under 1,000 lines |
+| Architecture / design spec | at or under the hard cap (design 1000) |
 | A single implementation task | 100-500 lines |
 | Spec context one agent task needs | roughly 5-10k tokens |
 
-`design` and `impl-plan` stay at or under the 1,000-line hard cap in `SPEC-STANDARD.md`. `decision-history` is exempt. Split on boundaries, not on line counts:
+Every document stays at or under its type's DSGN-B hard cap (`SPEC-STANDARD.md` Size). `decision-history` is exempt and only splits. Split on boundaries, not on line counts:
 
 - bounded context
 - domain boundary
