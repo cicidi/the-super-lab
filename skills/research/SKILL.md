@@ -20,13 +20,18 @@ metadata:
     - surface unknowns
     - find my unknowns
     - prototype
+    - investigate
+    - quiz me
+    - 考考我
 ---
 
 # research
 
-Two-branch skill for the front end of development. Discover unknowns surfaces
+Four-branch skill for the front end of development. Discover unknowns surfaces
 blind spots before coding. Design spec takes an idea through structured
-brainstorming to a written spec ready for implementation.
+brainstorming to a written spec ready for implementation. Investigate (AFK)
+answers a research question with no user present (wayfinder research briefs).
+Quiz checks that the user understands a change or topic.
 
 ## When to Use
 
@@ -46,7 +51,14 @@ brainstorming to a written spec ready for implementation.
 
 ### Step 0: Determine Branch
 
-Ask the user ONE question:
+**Unattended first.** If you run as a subagent, were handed a wayfinder
+research brief, or the session is non-interactive, do NOT ask anything —
+go straight to **Branch C: Investigate (AFK)**.
+
+**Quiz request.** If the user asks to be quizzed ("quiz me", "考考我"), go
+straight to **Branch D: Quiz**.
+
+Otherwise ask the user ONE question:
 
 > "What are you trying to do?"
 > - **Discover unknowns** — I have a task in mind but I'm not sure what I don't
@@ -133,9 +145,11 @@ data flow, error handling, testing. Get user approval section by section.
 
 ### Phase B5: Write Spec
 
-Write to `docs/features/<feature>/design/<topic>-design.md` with: purpose, design
-decisions, architecture diagram, interface definitions, error handling,
-testing strategy.
+If the repo has `docs/features/spec-driven-development/`, write the design
+through the `spec-write` skill (it owns the spec format; pass it the approved
+design from B4). Otherwise write to `docs/features/<feature>/design/<topic>-design.md`
+with: purpose, design decisions, architecture diagram, interface definitions,
+error handling, testing strategy.
 
 ### Phase B6: Spec Self-Review
 
@@ -145,3 +159,40 @@ Check for: placeholders (TBD/TODO), internal consistency, scope creep, ambiguity
 
 After user approves the written spec, invoke `superpowers:writing-plans`
 to create the implementation plan.
+
+---
+
+## Branch C: Investigate (AFK)
+
+No human in the loop. Used when wayfinder fires `/research` as a subagent for
+a research brief, or any caller needs facts gathered unattended.
+
+1. **Read the question.** Take it from the brief or the caller's prompt. Never
+   ask the user — if the question is unclear, state your reading of it at the
+   top of the output and proceed.
+2. **Gather.** Read documentation, third-party APIs, and local sources (code,
+   docs, git history, knowledge bases). Prefer primary sources.
+3. **Write one markdown file.** Sections: Question, Answer (short), Findings,
+   Unknowns. Every claim carries a citation: a URL, `path:line`, or a commit
+   hash. Anything you could not verify is marked `UNKNOWN` with what you tried.
+   Write it where the caller says (wayfinder: on the throwaway
+   `research/<name>` branch it names); if the caller names no place, write
+   `research/<name>.md` in the working directory.
+4. **Return the file path** as your final message, plus a one-line answer.
+
+---
+
+## Branch D: Quiz
+
+Checks that the user understands a change or topic before moving on. Restored
+from find-my-unknown's post-implementation quiz.
+
+Generate an HTML report covering:
+- **Context:** Why this change, what problem it solves
+- **Intuition:** Why this approach over alternatives
+- **What changed:** File-by-file walkthrough with rationale (for a topic with
+  no code change, walk through its key points instead)
+- **Quiz:** 3-5 questions testing understanding (not memorization)
+
+The subject is the change just made, or the topic just discussed if there is
+no change. For a code change, the user should pass the quiz before merging.

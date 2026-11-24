@@ -5,7 +5,7 @@ description: |
   deep research via 3 parallel subagents, advocate debate, conversational
   transcript, and interactive HTML page. The HTML is the sole deliverable —
   a readable article embedding transcript, data visualizations (Chart.js),
-  and research screenshots. Follows doc-organize conventions for output.
+  and research screenshots. Follows spec-organize (SPEC-STANDARD.md) conventions for output.
 license: MIT
 compatibility: claude-code
 metadata:
@@ -43,7 +43,7 @@ and embedded research screenshots.
 - You have existing research / images that need deep enrichment + video script
 - You need data visualized as animated charts inside a readable article
 - You want a balanced, debated perspective (not just one-sided reporting)
-- You want all outputs organized per doc-organize conventions
+- You want all outputs organized per spec-organize (SPEC-STANDARD.md) conventions
 
 ## When NOT to Use
 
@@ -94,7 +94,7 @@ Phase 3+4: HTML Production
         │
         ▼
 Phase 5: Organize Outputs
-  doc-organize conventions
+  spec-organize (SPEC-STANDARD.md) conventions
 ```
 
 ## Process
@@ -104,7 +104,9 @@ Phase 5: Organize Outputs
 If the user provides a folder of images (screenshots, scanned slides):
 
 ```bash
-python3 ~/project/skill-factory/personal-skills/pic-to-txt/ocr.py <folder> --lang auto
+# Installed copy (install.sh deploys pic-to-txt to ~/.claude/skills/pic-to-txt/)
+python3 ~/.claude/skills/pic-to-txt/ocr.py <folder> --lang auto
+# Not installed? Use the repo copy: the-super-lab/personal-skills/pic-to-txt/ocr.py
 ```
 
 If text already exists (research doc, notes), skip this phase entirely.
@@ -317,7 +319,7 @@ docs/features/<topic>/
 - HTML MUST use Chart.js for data animations
 - Transcript MUST be conversational (read it aloud to verify)
 - HTML MUST be readable on mobile (responsive CSS)
-- All files MUST follow doc-organize path conventions
+- All files MUST follow spec-organize (SPEC-STANDARD.md) path conventions
 - NICE: include a dark mode CSS preference
 
 ## Anti-Patterns
@@ -344,9 +346,10 @@ The pipeline is complete when:
 ## Sources
 
 - Architecture design: confidence high — based on successful patterns from
-  pic-to-txt, doc-organize, and contrarian-review skills
+  pic-to-txt, doc-organize (now spec-organize), and contrarian-review
+  (now spec-review) skills
 - Phase 1 parallelism: confidence high — 3 independent subagents + aggregator
   is a standard fan-out pattern
 - HTML chart selection: confidence medium — agent judgment needed to match
   data shape to chart type; may need iteration
-- doc-organize integration: confidence high — follows established conventions
+- spec-organize integration: confidence high — follows established conventions
