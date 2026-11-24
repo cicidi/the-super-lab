@@ -1,7 +1,7 @@
 model: deepseek-flash
 runs: 5
 target: gold
-corpus_sha: 5156f7f9b9f41c2d
+corpus_sha: 2cc06967a3350e21
 items:
 - id: GOOD-A
   verdict: pass
@@ -11,9 +11,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: docs/features/spec-driven-development/design/spec-driven-development-design.md
-    glossary says IDs use letters only; PRD/DSGN/ARD/IMPL/PIPE/TST examples are lettered.
-  confidence: 0.95
+  evidence: Decision Log uses ARD-A..ARD-CL; PRD-A..Q, DSGN-A..E, PIPE-A, IMPL-A..X,
+    TST-A..AA are letter-prefixed.
+  confidence: 0.98
 - id: GOOD-B
   verdict: pass
   votes:
@@ -22,9 +22,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: Parent PRD-A..Q are anchored in design clauses (e.g. pipeline PIPE-K/L,
-    document-standard DSGN-B); PRD-G is deferred per test-plan TST-O.
-  confidence: 0.9
+  evidence: test-plan TST-O and test_tst_o_trace.py check every parent PRD id has
+    a DSGN/PIPE clause anchor; PRD-G deferred.
+  confidence: 0.98
 - id: GOOD-C
   verdict: pass
   votes:
@@ -33,9 +33,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: docs/INDEX.md lists parent prd, design, decision-history, impl-plan, and
-    test-plan entries; all five directories exist with committed markdown.
-  confidence: 0.99
+  evidence: docs/INDEX.md lists SDD prd, design, impl-plan, test-plan, decision-history
+    entries; all five dirs exist.
+  confidence: 1.0
 - id: GOOD-D
   verdict: pass
   votes:
@@ -44,9 +44,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: All target docs end with `## Change Log`; e.g. parent PRD, parent design,
-    pipeline design, document-standard design, and reader design.
-  confidence: 0.98
+  evidence: 'Every target doc ends with ## Change Log, e.g. spec-driven-development-design.md,
+    test-plan, skill-contracts.'
+  confidence: 1.0
 - id: GOOD-E
   verdict: pass
   votes:
@@ -55,9 +55,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: docs/features/spec-driven-development/design/spec-driven-development-design.md
-    has `### 子问题归属` table with owners AI 查/人决定/AI 查完人决定 and ARD evidence.
-  confidence: 0.99
+  evidence: spec-driven-development-design.md has 子问题归属 table with valid owners and
+    ARD evidence rows.
+  confidence: 1.0
 - id: GOOD-F
   verdict: pass
   votes:
@@ -66,9 +66,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: skills/spec-pipeline, spec-organize, spec-review, and spec-write SKILL.md
-    Example Domains each mention 盖 shed, 北京旅游, 数学题, 股票.
-  confidence: 0.99
+  evidence: skills/spec-write/SKILL.md and skills/spec-review/SKILL.md Example Domains
+    list 盖 shed, 北京旅游, 数学题, 股票.
+  confidence: 1.0
 - id: BAD-A
   verdict: pass
   votes:
@@ -77,9 +77,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: docs/INDEX.md lists all target feature parent and subfeature entries (prd/design/impl-plan/test-plan/decision-history);
-    target links resolve.
-  confidence: 0.95
+  evidence: docs/INDEX.md links all target SDD entry files; all target links resolve.
+  confidence: 0.98
 - id: BAD-B
   verdict: pass
   votes:
@@ -88,8 +87,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: document-standard DSGN-B caps prd 800, design/impl-plan 1000, test-plan
-    800; target docs are below caps and decision-history is exempt.
+  evidence: Target docs stay under caps (prd 800, design/impl-plan 1000, test-plan
+    800); decision-history exempt.
   confidence: 0.9
 - id: BAD-C
   verdict: pass
@@ -99,9 +98,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: skills/spec-review/SKILL.md has `Contract authority` naming docs/features/spec-driven-development/design/spec-driven-development-design-skill-contracts.md
-    and says the contract wins.
-  confidence: 0.99
+  evidence: skills/spec-review/SKILL.md cites spec-driven-development-design-skill-contracts.md
+    and says the contract wins on conflict.
+  confidence: 1.0
 - id: BAD-D
   verdict: pass
   votes:
@@ -110,6 +109,6 @@ items:
   - pass
   - pass
   - pass
-  evidence: Decision Log starts ARD-CL/CK/CJ dated 2026-11-24 and descends to ARD-A
-    dated 2026-09-25; newest-first.
-  confidence: 0.99
+  evidence: Decision Log starts ARD-CL 2026-11-24 and descends to ARD-A 2026-09-25
+    in decision-history.
+  confidence: 1.0
