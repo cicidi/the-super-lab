@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>skill — Skill 管理入口 · design · Spec Atlas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@400;600&display=swap">
+<link rel="stylesheet" href="../../../../assets/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><a href="../../../../index.html"><span class="brand-mark">SDD</span><span class="brand-name">Spec Atlas</span></a></div>
+    <button class="strike-btn" type="button" onclick="var r=document.documentElement;var off=r.dataset.strike!=='off';r.dataset.strike=off?'off':'on';this.textContent=off?'显示删除线':'隐藏删除线'">隐藏删除线</button>
+  </div>
+</header>
+<div class="site">
+  <aside class="sidebar">
+  <nav aria-label="Directory">
+    <div class="tree-overview"><a class="tree-link" href="../../../../index.html"><span class="tree-link__num">00</span>All features</a></div>
+    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../../prd/skill-factory-prd.html"><span class="tree-ord">1</span>skill-factory PRD</a></li><li class="tree-leaf"><a class="tree-link" href="../../../decision-history/skill-factory-decision-history.html"><span class="tree-ord">2</span>skill-factory — Decision History</a></li><li class="tree-leaf"><a class="tree-link" href="../../../design/skill-factory-design.html"><span class="tree-ord">3</span>skill-factory Specification</a></li><li class="tree-leaf"><a class="tree-link" href="../../../impl-plan/skill-factory-impl-plan.html"><span class="tree-ord">4</span>skill-factory Implementation Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../../../test-plan/skill-factory-test-plan.html"><span class="tree-ord">5</span>skill-factory Test Plan</a></li><li class="tree-branch"><details open><summary><span class="tree-link"><span class="tree-ord">10</span>sub-feature</span></summary><ul class="tree"><li class="tree-branch"><details open><summary><a class="tree-link" href="skill-design.html">skill</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="skill-design.html" aria-current="page"><span class="tree-ord">3</span>skill — Skill 管理入口</a></li></ul></details></li></ul></details></li></ul>
+  </nav>
+</aside>
+  <main class="content">
+    <nav class="breadcrumbs"><a href="../../../../index.html">Docs</a> / <span>skill-factory</span> / <span>features</span> / <span>skill</span> / <span>design</span> / <span>skill — Skill 管理入口</span></nav>
+    <article class="doc" data-doc="skill-factory/features/skill/design/skill-design">
+      <header class="doc-head">
+        <p class="eyebrow">skill-factory</p>
+        <h1>skill — Skill 管理入口</h1>
+        <p class="source">Canonical: docs/features/skill-factory/features/skill/design/skill-design.md</p>
+      </header>
+      
+      <div class="doc-body">
+        <h2>skill — Skill 管理入口</h2>
+<p>本篇说明 <code>skill</code> 这个 skill 做什么：创建、修改、导入、列出 the-super-lab 里的 skill。 源文件：<a href="../../../../../../../skills/skill/SKILL.md"><code>skills/skill/SKILL.md</code></a>（commit 8ba542e）。</p>
+<h3>Problem Statement</h3>
+<p>一个工作流反复手动做，就该收成 skill。没有统一入口时，新 skill 格式不一， 还可能和已有 skill 重复。</p>
+<h3>Solution</h3>
+<p><code>skill</code> 提供四个子命令：<code>create</code>、<code>edit</code>、<code>import</code>、<code>list</code>。 不带子命令时，先列出现有 skill，再问用户要做什么。</p>
+<h3>User Stories</h3>
+<ul>
+<li>作为 skill 作者，我想把一个工作流收成新 skill，并且不和已有的重复。</li>
+<li>作为维护者，我想改一个 skill，改完先看 diff 再保存。</li>
+<li>作为使用者，我想从 GitHub 导入别人的 skill，并转成本仓库的格式。</li>
+</ul>
+<h3>Implementation Decisions</h3>
+<p>格式规则不写在本 skill 里，统一引用仓库根目录的 <a href="../../../../../../../CONVENTIONS.md"><code>CONVENTIONS.md</code></a>。 这样规则只有一个出处，改规则时不用同时改多个 skill。</p>
+<h3>Design</h3>
+<p><strong><a class="id-ref" href="#DSGN-A">DSGN-A</a> create。</strong> 先问名字（kebab-case，即小写加连字符，如 <code>fix-bug</code>）。 再在本地、GitHub 和网上搜相似 skill，避免重复。 然后按 <a href="../../../../../../../CONVENTIONS.md"><code>CONVENTIONS.md</code></a> 起草，给用户审阅；批准后才写入 <code>skills/&lt;name&gt;/SKILL.md</code>。</p>
+<p><strong><a class="id-ref" href="#DSGN-B">DSGN-B</a> edit。</strong> 先读现有 SKILL.md，问清改什么，改后展示 diff，确认才保存。 改动必须守住三条：没有 TBD/TODO；正文不用装饰性 emoji； description（frontmatter 里告诉 agent 何时调用的那段话）以 &quot;Use when&quot; 开头且不超过 1024 字符。</p>
+<p><strong><a class="id-ref" href="#DSGN-C">DSGN-C</a> import。</strong> 从 GitHub URL 取 SKILL.md，保留原名存到 <code>skills/&lt;原名&gt;/</code>。 缺 <code>license</code> 补 MIT，缺 <code>compatibility</code> 补 <code>claude-code,opencode</code>， 缺 When to Use / When NOT to Use 两节就补上。最后报告哪些改了、哪些原样保留。</p>
+<p><strong><a class="id-ref" href="#DSGN-D">DSGN-D</a> list。</strong> 运行 <code>coworker skill list</code>，显示每个 skill 的名字、路径和是否启用。</p>
+<h3>Testing Decisions</h3>
+<p>目前没有自动测试，正确性靠 <a class="id-ref" href="#DSGN-B">DSGN-B</a> 的 diff 确认和人工审阅。 自动检查 SKILL.md 格式的工具是否存在，记为 <a class="id-ref" href="#QUES-A">QUES-A</a>。</p>
+<h3>Out of Scope</h3>
+<p>运行已有 skill（直接调用即可）、管理 feature（用 <code>/feature</code>）、 管理项目目录（用 <code>/project</code>）都不归本 skill 管。</p>
+<h3>Further Notes</h3>
+<p>skill-factory 整体怎么设计，见 <a href="../../../design/skill-factory-design.html">parent design</a>。</p>
+<h3>Alternatives Considered</h3>
+<p>拆成 skill-create、skill-edit、skill-import、skill-list 四个 skill：被否决。 2026-08-02 的合并把它们收成一个带子命令的 skill，见 parent design 的 Skill Consolidation 一节。</p>
+<h3>Drawbacks</h3>
+<p><a class="id-ref" href="#DSGN-A">DSGN-A</a> 的查重靠 agent 搜索，搜不到不代表没有重复。 create、edit、import 都靠人审，skill 多了以后审阅成本会上升。</p>
+<h3>Risks and Mitigations</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>风险</th>
+<th>缓解</th>
+</tr></thead><tbody>
+<tr>
+<td>导入的 skill 带有恶意或越权指令</td>
+<td><a class="id-ref" href="#DSGN-C">DSGN-C</a> 只补格式，不审内容；用前须人读一遍。是否加内容审查见 <a class="id-ref" href="#QUES-B">QUES-B</a></td>
+</tr>
+<tr>
+<td>改名后旧 skill 残留在安装目录</td>
+<td>walter-worker <code>setup/install.sh</code> 的 <code>install_skill()</code> 没有删除分支（commit a0f4ce0）；改名后须手动删除</td>
+</tr>
+</tbody></table></div>
+<h3>Open Questions</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>ID</th>
+<th>问题</th>
+<th>目前答案</th>
+<th>Owner</th>
+<th>Blocking</th>
+</tr></thead><tbody>
+<tr>
+<td id="QUES-A"><a class="id-ref" href="#QUES-A">QUES-A</a></td>
+<td>要不要一个自动检查 SKILL.md 格式的工具？</td>
+<td><code>tools/</code> 下没有</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-B"><a class="id-ref" href="#QUES-B">QUES-B</a></td>
+<td>import 要不要审查 skill 的内容，而不只补格式？</td>
+<td>目前只补格式</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+</tbody></table></div>
+<h3>Reversibility</h3>
+<p>所有改动都落在 git 跟踪的 <code>skills/</code> 下，用 <code>git revert</code> 即可撤回。 已安装到 <code>~/.claude/skills/</code> 的副本，须重跑 <code>install.sh</code> 才同步。</p>
+<h3>Change Log</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Date</th>
+<th>Change</th>
+</tr></thead><tbody>
+<tr>
+<td>2026-11-24</td>
+<td>初版：按 SKILL.md 写出 skill 的 design</td>
+</tr>
+</tbody></table></div>
+      </div>
+    </article>
+    <nav class="pager" aria-label="Previous and next"><a class="prev" href="../../../test-plan/skill-factory-test-plan.html"><span class="label">Previous</span>skill-factory Test Plan</a></nav>
+  </main>
+</div>
+<footer class="foot"><div class="foot-inner">Assembled from committed <code>.md</code>. The Markdown is authoritative; this page is a reading view.</div></footer>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>if(window.mermaid){mermaid.initialize({startOnLoad:false});}</script>
+<script src="../../../../assets/app.js"></script>
+</body>
+</html>
