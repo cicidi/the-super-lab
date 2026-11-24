@@ -1,4 +1,4 @@
-<!-- SDD reader · source .md · git 6d65301 -->
+<!-- SDD reader · source .md · git c6c83bd -->
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light">
 <head>
@@ -685,15 +685,15 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <td>否</td>
 </tr>
 <tr>
-<td>QUES-E</td>
-<td>有 <code>CLAUDE.local.md</code> 就只写它（<a href="decision-history/spec-driven-development-decision-history.html#ard-cg">ARD-CG</a>），但它不提交，别人克隆仓库拿不到 DSGN-C 的规则。要不要另外在提交的文件里留一份？</td>
+<td>QUES-D</td>
+<td>用 SDD 写出的每份 spec，要不要都带一个「Agent Loop」节，写明目标与约束、什么事件触发 AI 重跑、用什么指标自动评估</td>
 <td>未定</td>
 <td>人决定</td>
 <td>否</td>
 </tr>
 <tr>
-<td>QUES-D</td>
-<td>用 SDD 写出的每份 spec，要不要都带一个「Agent Loop」节，写明目标与约束、什么事件触发 AI 重跑、用什么指标自动评估</td>
+<td>QUES-E</td>
+<td>有 <code>CLAUDE.local.md</code> 就只写它（<a href="decision-history/spec-driven-development-decision-history.html#ard-cg">ARD-CG</a>），但它不提交，别人克隆仓库拿不到 DSGN-C 的规则。要不要另外在提交的文件里留一份？</td>
 <td>未定</td>
 <td>人决定</td>
 <td>否</td>
@@ -1084,7 +1084,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 </tr>
 <tr>
 <td>分数 2</td>
-<td>和 gold 比的分数：按标注加减分，满分 10，只在同一个 gold 版本内比较，不能比上一次低</td>
+<td>和 gold 比的分数：按标注加减分，最高分是 GOOD 标注数 × 10 ÷ 标注总数，只在同一个 gold 版本内比较，不能比上一次低</td>
 </tr>
 <tr>
 <td>claude_audit</td>
@@ -1231,6 +1231,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td>2026-11-24</td>
 <td>第 9 轮审查后：链到已划掉 ARD 的地方改链；QUES-A 改为三个交付 skill</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 10 轮审查后：分数 2 最高分写对；QUES-D、QUES-E 按编号排</td>
 </tr>
 </tbody></table>
 <hr><p class="src-inline">Source: <code>design/spec-driven-development-design-skill-contracts.md</code></p>
@@ -1830,7 +1834,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <td>0</td>
 </tr>
 </tbody></table>
-<p>分数 2 =（加分合计 − 减分合计）× 10 ÷ 标注总数。满分 10，可以是负数。「类似」由判分模型判断。只在同一个 gold 版本内比较。</p>
+<p>分数 2 =（加分合计 − 减分合计）× 10 ÷ 标注总数。最高分是 GOOD 标注数 × 10 ÷ 标注总数（全是 GOOD 时才是 10），可以是负数。「类似」由判分模型判断。只在同一个 gold 版本内比较。</p>
 <p><strong>门槛：</strong> 分数 1 必须满分；分数 2 不能低于同一 gold 版本的上一次运行（<a href="decision-history/spec-driven-development-decision-history.html#ard-r">ARD-R</a>）。复核用同一个 <code>deepseek-flash</code> 独立裁决 5 次，至少 4 次通过才算通过；复核不能推翻 Python 检查的结果（<a href="decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a>）。不同模型之间的偏差暂时测不了，标为 Unverified。</p>
 <p><strong>分数的用途：</strong> 分数 1 和分数 2 是评测指标，不是产品的成功指标（PRD-G、<a href="decision-history/spec-driven-development-decision-history.html#ard-n">ARD-N</a>）。</p>
 <p><strong>gold 增长：</strong> 运行中发现新的好例子或坏例子，追加到 <code>annotations.yaml</code>，gold 版本号加一，<code>added_in</code> 写上新版本。报告里必须写明 gold 版本（<a href="decision-history/spec-driven-development-decision-history.html#ard-s">ARD-S</a>）。</p>
@@ -1858,7 +1862,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <h4 id="TST-K">TST-K — 评测报告</h4>
 <p><strong>目标：</strong> 每次运行生成一个 HTML 报告。<strong>输入：</strong> 任意一次运行。<strong>通过条件：</strong> 报告里有 run_id、分支、gold 版本、评测配置、分数 1 的逐条结果（注明 python 或 llm）、分数 2 的加减分、TST-F 四种输入的结果、5 次复核的结果和 Claude 的核对意见。<strong>判定：</strong> 生成报告，再按结构检查。</p>
 <h4 id="TST-L">TST-L — 5 次独立复核</h4>
-<p><strong>目标：</strong> 得出最终的通过或不通过。<strong>输入：</strong> 评测报告和改动。<strong>通过条件：</strong> 同一个 <code>deepseek-flash</code> 独立裁决 5 次，至少 4 次通过；不推翻 Python 检查的结果。<strong>判定：</strong> 跑 5 次，Claude 再核对没通过和有分歧的条目（<a href="decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a>）。不同模型之间的偏差标为 Unverified。</p>
+<p><strong>目标：</strong> 得出最终的通过或不通过。<strong>输入：</strong> 分数 1 的逐条结果和改动；结果写进 TST-K 的报告。<strong>通过条件：</strong> 同一个 <code>deepseek-flash</code> 独立裁决 5 次，至少 4 次通过；不推翻 Python 检查的结果。<strong>判定：</strong> 跑 5 次，Claude 再核对没通过和有分歧的条目（<a href="decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a>）。不同模型之间的偏差标为 Unverified。</p>
 <h4 id="TST-M">TST-M — 改了标准或 gold 之后同步测试</h4>
 <p><strong>目标：</strong> 标准或 gold 变了，测试要跟着变。<strong>输入：</strong> 改了 <code>SPEC-STANDARD.md</code> 或 design；或者运行中发现了新的好例子、坏例子。<strong>通过条件：</strong> design 改了，同一批重跑 TST-A，并更新 MUST 清单和反例；加了新标注，gold 版本号加一。<strong>判定：</strong> 检查流程是否执行，以及覆盖率。</p>
 <h4 id="TST-N">TST-N — parent 五篇齐全，sub-feature 不要求</h4>
@@ -1912,7 +1916,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <li>TST-E、TST-F，然后对 TST-C、TST-E 里 spec-write 写出的文档跑 TST-V。</li>
 <li>TST-H，然后 TST-I。</li>
 <li>TST-Q：mock 执行。</li>
-<li>TST-K，然后 TST-L。</li>
+<li>TST-L，然后 TST-K（报告要带上复核结果）。</li>
 <li>TST-J（可选）。</li>
 <li>有改动时跑 TST-M，再从第 1 步开始。</li>
 </ol>
@@ -2230,6 +2234,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td>2026-11-24</td>
 <td>第 9 轮审查后：TST-J 的辅助 skill 不再含 wayfinder；门槛表加 wayfinder 发布行；PRD-P 追溯加 TST-AA；改链 ARD-CH</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 10 轮审查后：分数 2 最高分写对；TST-L 先于 TST-K，报告带复核结果</td>
 </tr>
 </tbody></table>
 </div>
@@ -2778,6 +2786,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <h4 id="ARD-CA">ARD-CA — 插图与站点样式</h4>
 <p><strong>原因。</strong> 只有文字的 spec 难读；Mermaid 自动排的版不像人精心画的图；构建网页时再让 AI 画图，每次结果都不一样。</p>
 <p><strong>规则。</strong> 写 spec 时用 diagram-design 画 SVG，文件名 <code>&lt;文档名&gt;-fig-&lt;主题&gt;.svg</code>，放在引用它的 md 旁边；网页配色用 diagram-design 的默认颜色；图里有正文没有的内容或与正文矛盾，spec-review 报 severity 3。</p>
+<p><strong>重述。</strong> 本条推翻 ARD-BE「图只画流程、状态用表格不用图」的部分，SPEC-PRESENTATION 列的形状都可以画图。其余仍有效：图不能出现正文里没写的事实；步骤数和所在章节一致（NICE，ARD-BN）。</p>
 <p><strong>放弃的方案。</strong> 仅在 build 时让 AI 重画；只把配色套在 Mermaid 上。</p>
 <a id="ard-bz"></a>
 <h4 id="ARD-BZ">ARD-BZ — 补记两次编号迁移</h4>
@@ -3254,6 +3263,10 @@ payment-impl-plan-01-schema.md         impl-plan 分篇：序号加阶段，有�
 <tr>
 <td>2026-11-24</td>
 <td>第 9 轮审查后：ARD-CK、ARD-CJ、ARD-CH 补全被划掉条目里仍有效的部分；ARD-CJ 写明 claude_audit 何时保留</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 10 轮审查后：ARD-CA 补上对 ARD-BE 的重述</td>
 </tr>
 </tbody></table>
 </div>

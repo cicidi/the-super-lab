@@ -177,7 +177,7 @@
 <td>0</td>
 </tr>
 </tbody></table></div>
-<p>分数 2 =（加分合计 − 减分合计）× 10 ÷ 标注总数。满分 10，可以是负数。「类似」由判分模型判断。只在同一个 gold 版本内比较。</p>
+<p>分数 2 =（加分合计 − 减分合计）× 10 ÷ 标注总数。最高分是 GOOD 标注数 × 10 ÷ 标注总数（全是 GOOD 时才是 10），可以是负数。「类似」由判分模型判断。只在同一个 gold 版本内比较。</p>
 <p><strong>门槛：</strong> 分数 1 必须满分；分数 2 不能低于同一 gold 版本的上一次运行（<a href="../decision-history/spec-driven-development-decision-history.html#ard-r">ARD-R</a>）。复核用同一个 <code>deepseek-flash</code> 独立裁决 5 次，至少 4 次通过才算通过；复核不能推翻 Python 检查的结果（<a href="../decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a>）。不同模型之间的偏差暂时测不了，标为 Unverified。</p>
 <p><strong>分数的用途：</strong> 分数 1 和分数 2 是评测指标，不是产品的成功指标（<a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-G">PRD-G</a>、<a href="../decision-history/spec-driven-development-decision-history.html#ard-n">ARD-N</a>）。</p>
 <p><strong>gold 增长：</strong> 运行中发现新的好例子或坏例子，追加到 <code>annotations.yaml</code>，gold 版本号加一，<code>added_in</code> 写上新版本。报告里必须写明 gold 版本（<a href="../decision-history/spec-driven-development-decision-history.html#ard-s">ARD-S</a>）。</p>
@@ -205,7 +205,7 @@
 <h4 id="TST-K"><a class="id-ref" href="#TST-K">TST-K</a> — 评测报告</h4>
 <p><strong>目标：</strong> 每次运行生成一个 HTML 报告。<strong>输入：</strong> 任意一次运行。<strong>通过条件：</strong> 报告里有 run_id、分支、gold 版本、评测配置、分数 1 的逐条结果（注明 python 或 llm）、分数 2 的加减分、<a class="id-ref" href="#TST-F">TST-F</a> 四种输入的结果、5 次复核的结果和 Claude 的核对意见。<strong>判定：</strong> 生成报告，再按结构检查。</p>
 <h4 id="TST-L"><a class="id-ref" href="#TST-L">TST-L</a> — 5 次独立复核</h4>
-<p><strong>目标：</strong> 得出最终的通过或不通过。<strong>输入：</strong> 评测报告和改动。<strong>通过条件：</strong> 同一个 <code>deepseek-flash</code> 独立裁决 5 次，至少 4 次通过；不推翻 Python 检查的结果。<strong>判定：</strong> 跑 5 次，Claude 再核对没通过和有分歧的条目（<a href="../decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a>）。不同模型之间的偏差标为 Unverified。</p>
+<p><strong>目标：</strong> 得出最终的通过或不通过。<strong>输入：</strong> 分数 1 的逐条结果和改动；结果写进 <a class="id-ref" href="#TST-K">TST-K</a> 的报告。<strong>通过条件：</strong> 同一个 <code>deepseek-flash</code> 独立裁决 5 次，至少 4 次通过；不推翻 Python 检查的结果。<strong>判定：</strong> 跑 5 次，Claude 再核对没通过和有分歧的条目（<a href="../decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a>）。不同模型之间的偏差标为 Unverified。</p>
 <h4 id="TST-M"><a class="id-ref" href="#TST-M">TST-M</a> — 改了标准或 gold 之后同步测试</h4>
 <p><strong>目标：</strong> 标准或 gold 变了，测试要跟着变。<strong>输入：</strong> 改了 <a href="../../../../../skills/spec-organize/SPEC-STANDARD.md"><code>SPEC-STANDARD.md</code></a> 或 design；或者运行中发现了新的好例子、坏例子。<strong>通过条件：</strong> design 改了，同一批重跑 <a class="id-ref" href="#TST-A">TST-A</a>，并更新 <span class="lvl lvl--must">MUST</span> 清单和反例；加了新标注，gold 版本号加一。<strong>判定：</strong> 检查流程是否执行，以及覆盖率。</p>
 <h4 id="TST-N"><a class="id-ref" href="#TST-N">TST-N</a> — parent 五篇齐全，sub-feature 不要求</h4>
@@ -259,7 +259,7 @@
 <li><a class="id-ref" href="#TST-E">TST-E</a>、<a class="id-ref" href="#TST-F">TST-F</a>，然后对 <a class="id-ref" href="#TST-C">TST-C</a>、<a class="id-ref" href="#TST-E">TST-E</a> 里 spec-write 写出的文档跑 <a class="id-ref" href="#TST-V">TST-V</a>。</li>
 <li><a class="id-ref" href="#TST-H">TST-H</a>，然后 <a class="id-ref" href="#TST-I">TST-I</a>。</li>
 <li><a class="id-ref" href="#TST-Q">TST-Q</a>：mock 执行。</li>
-<li><a class="id-ref" href="#TST-K">TST-K</a>，然后 <a class="id-ref" href="#TST-L">TST-L</a>。</li>
+<li><a class="id-ref" href="#TST-L">TST-L</a>，然后 <a class="id-ref" href="#TST-K">TST-K</a>（报告要带上复核结果）。</li>
 <li><a class="id-ref" href="#TST-J">TST-J</a>（可选）。</li>
 <li>有改动时跑 <a class="id-ref" href="#TST-M">TST-M</a>，再从第 1 步开始。</li>
 </ol>
@@ -577,6 +577,10 @@
 <tr>
 <td>2026-11-24</td>
 <td>第 9 轮审查后：<a class="id-ref" href="#TST-J">TST-J</a> 的辅助 skill 不再含 wayfinder；门槛表加 wayfinder 发布行；<a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-P">PRD-P</a> 追溯加 <a class="id-ref" href="#TST-AA">TST-AA</a>；改链 <a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CH">ARD-CH</a></td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 10 轮审查后：分数 2 最高分写对；<a class="id-ref" href="#TST-L">TST-L</a> 先于 <a class="id-ref" href="#TST-K">TST-K</a>，报告带复核结果</td>
 </tr>
 </tbody></table></div>
       </div>

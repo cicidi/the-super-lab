@@ -379,15 +379,15 @@
 <td>否</td>
 </tr>
 <tr>
-<td id="QUES-E"><a class="id-ref" href="#QUES-E">QUES-E</a></td>
-<td>有 <code>CLAUDE.local.md</code> 就只写它（<a href="../decision-history/spec-driven-development-decision-history.html#ard-cg">ARD-CG</a>），但它不提交，别人克隆仓库拿不到 <a class="id-ref" href="#DSGN-C">DSGN-C</a> 的规则。要不要另外在提交的文件里留一份？</td>
+<td id="QUES-D"><a class="id-ref" href="#QUES-D">QUES-D</a></td>
+<td>用 SDD 写出的每份 spec，要不要都带一个「Agent Loop」节，写明目标与约束、什么事件触发 AI 重跑、用什么指标自动评估</td>
 <td>未定</td>
 <td>人决定</td>
 <td>否</td>
 </tr>
 <tr>
-<td id="QUES-D"><a class="id-ref" href="#QUES-D">QUES-D</a></td>
-<td>用 SDD 写出的每份 spec，要不要都带一个「Agent Loop」节，写明目标与约束、什么事件触发 AI 重跑、用什么指标自动评估</td>
+<td id="QUES-E"><a class="id-ref" href="#QUES-E">QUES-E</a></td>
+<td>有 <code>CLAUDE.local.md</code> 就只写它（<a href="../decision-history/spec-driven-development-decision-history.html#ard-cg">ARD-CG</a>），但它不提交，别人克隆仓库拿不到 <a class="id-ref" href="#DSGN-C">DSGN-C</a> 的规则。要不要另外在提交的文件里留一份？</td>
 <td>未定</td>
 <td>人决定</td>
 <td>否</td>
@@ -778,7 +778,7 @@
 </tr>
 <tr>
 <td>分数 2</td>
-<td>和 gold 比的分数：按标注加减分，满分 10，只在同一个 gold 版本内比较，不能比上一次低</td>
+<td>和 gold 比的分数：按标注加减分，最高分是 GOOD 标注数 × 10 ÷ 标注总数，只在同一个 gold 版本内比较，不能比上一次低</td>
 </tr>
 <tr>
 <td>claude_audit</td>
@@ -925,6 +925,10 @@
 <tr>
 <td>2026-11-24</td>
 <td>第 9 轮审查后：链到已划掉 ARD 的地方改链；<a class="id-ref" href="#QUES-A">QUES-A</a> 改为三个交付 skill</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 10 轮审查后：分数 2 最高分写对；<a class="id-ref" href="#QUES-D">QUES-D</a>、<a class="id-ref" href="#QUES-E">QUES-E</a> 按编号排</td>
 </tr>
 </tbody></table></div>
       </div>

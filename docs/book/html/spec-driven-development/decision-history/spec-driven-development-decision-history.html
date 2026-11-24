@@ -570,6 +570,7 @@
 <h4 id="ARD-CA"><a class="id-ref" href="#ARD-CA">ARD-CA</a> — 插图与站点样式</h4>
 <p><strong>原因。</strong> 只有文字的 spec 难读；Mermaid 自动排的版不像人精心画的图；构建网页时再让 AI 画图，每次结果都不一样。</p>
 <p><strong>规则。</strong> 写 spec 时用 diagram-design 画 SVG，文件名 <code>&lt;文档名&gt;-fig-&lt;主题&gt;.svg</code>，放在引用它的 md 旁边；网页配色用 diagram-design 的默认颜色；图里有正文没有的内容或与正文矛盾，spec-review 报 severity 3。</p>
+<p><strong>重述。</strong> 本条推翻 <a class="id-ref" href="#ARD-BE">ARD-BE</a>「图只画流程、状态用表格不用图」的部分，SPEC-PRESENTATION 列的形状都可以画图。其余仍有效：图不能出现正文里没写的事实；步骤数和所在章节一致（<span class="lvl lvl--nice">NICE</span>，<a class="id-ref" href="#ARD-BN">ARD-BN</a>）。</p>
 <p><strong>放弃的方案。</strong> 仅在 build 时让 AI 重画；只把配色套在 Mermaid 上。</p>
 <a id="ard-bz"></a>
 <h4 id="ARD-BZ"><a class="id-ref" href="#ARD-BZ">ARD-BZ</a> — 补记两次编号迁移</h4>
@@ -1046,6 +1047,10 @@ payment-impl-plan-01-schema.md         impl-plan 分篇：序号加阶段，有�
 <tr>
 <td>2026-11-24</td>
 <td>第 9 轮审查后：<a class="id-ref" href="#ARD-CK">ARD-CK</a>、<a class="id-ref" href="#ARD-CJ">ARD-CJ</a>、<a class="id-ref" href="#ARD-CH">ARD-CH</a> 补全被划掉条目里仍有效的部分；<a class="id-ref" href="#ARD-CJ">ARD-CJ</a> 写明 claude_audit 何时保留</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 10 轮审查后：<a class="id-ref" href="#ARD-CA">ARD-CA</a> 补上对 <a class="id-ref" href="#ARD-BE">ARD-BE</a> 的重述</td>
 </tr>
 </tbody></table></div>
       </div>
