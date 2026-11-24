@@ -189,13 +189,17 @@
 <p><strong>目标：</strong> <a href="../../../../../tools/build_spec_skills.py"><code>tools/build_spec_skills.py</code></a> 按 <a href="../decision-history/spec-driven-development-decision-history.html#ard-cc">ARD-CC</a> 给四个 SDD <code>SKILL.md</code> 打版本戳。</p>
 <p><strong>依赖：</strong> 无。<strong>挡住：</strong> 无。</p>
 <p class="impl-verify"><strong>Verify:</strong> <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-Y">TST-Y</a> 通过。</p>
+<h3 id="IMPL-V"><a class="id-ref" href="#IMPL-V">IMPL-V</a> — GitHub Pages 发布</h3>
+<p><strong>目标：</strong> <code>.github/workflows/pages.yml</code> 按 <a href="../decision-history/spec-driven-development-decision-history.html#ard-cd">ARD-CD</a> 在 master 推送后重新生成并部署网站；删除从首页点不到的旧页面。</p>
+<p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-H">IMPL-H</a>。<strong>挡住：</strong> 无。</p>
+<p class="impl-verify"><strong>Verify:</strong> <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-Z">TST-Z</a> 通过；workflow 在 master 上成功部署。</p>
 <h3>Execution order</h3>
 <p>先做不依赖别人的任务，被挡住的后做：</p>
 <ol>
 <li><a class="id-ref" href="#IMPL-A">IMPL-A</a>、<a class="id-ref" href="#IMPL-D">IMPL-D</a>、<a class="id-ref" href="#IMPL-G">IMPL-G</a>、<a class="id-ref" href="#IMPL-H">IMPL-H</a>、<a class="id-ref" href="#IMPL-U">IMPL-U</a>（互不依赖，可以同时做）</li>
 <li><a class="id-ref" href="#IMPL-C">IMPL-C</a></li>
 <li><a class="id-ref" href="#IMPL-B">IMPL-B</a>、<a class="id-ref" href="#IMPL-F">IMPL-F</a>、<a class="id-ref" href="#IMPL-J">IMPL-J</a>、<a class="id-ref" href="#IMPL-K">IMPL-K</a>、<a class="id-ref" href="#IMPL-L">IMPL-L</a>、<a class="id-ref" href="#IMPL-M">IMPL-M</a>、<a class="id-ref" href="#IMPL-R">IMPL-R</a></li>
-<li><a class="id-ref" href="#IMPL-N">IMPL-N</a>、<a class="id-ref" href="#IMPL-O">IMPL-O</a>、<a class="id-ref" href="#IMPL-P">IMPL-P</a>、<a class="id-ref" href="#IMPL-S">IMPL-S</a>（等 <a class="id-ref" href="#IMPL-F">IMPL-F</a>）、<a class="id-ref" href="#IMPL-T">IMPL-T</a>（等 <a class="id-ref" href="#IMPL-M">IMPL-M</a>）</li>
+<li><a class="id-ref" href="#IMPL-N">IMPL-N</a>、<a class="id-ref" href="#IMPL-O">IMPL-O</a>、<a class="id-ref" href="#IMPL-P">IMPL-P</a>、<a class="id-ref" href="#IMPL-S">IMPL-S</a>（等 <a class="id-ref" href="#IMPL-F">IMPL-F</a>）、<a class="id-ref" href="#IMPL-T">IMPL-T</a>（等 <a class="id-ref" href="#IMPL-M">IMPL-M</a>）、<a class="id-ref" href="#IMPL-V">IMPL-V</a>（等 <a class="id-ref" href="#IMPL-H">IMPL-H</a>）</li>
 <li><a class="id-ref" href="#IMPL-Q">IMPL-Q</a></li>
 <li><a class="id-ref" href="#IMPL-E">IMPL-E</a>（评测要等 spec 可读、测试骨架齐全、gold 改回 iPhone 之后再跑）</li>
 <li><a class="id-ref" href="#IMPL-I">IMPL-I</a></li>
@@ -254,6 +258,10 @@
 <tr>
 <td>2026-11-24</td>
 <td><a class="id-ref" href="#IMPL-S">IMPL-S</a>、<a class="id-ref" href="#IMPL-T">IMPL-T</a> 移到依赖之后的批次；新增 <a class="id-ref" href="#IMPL-U">IMPL-U</a>；不迁移旧文档改链 <a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CC">ARD-CC</a></td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>新增 <a class="id-ref" href="#IMPL-V">IMPL-V</a>：GitHub Pages 发布（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CD">ARD-CD</a>）</td>
 </tr>
 </tbody></table></div>
       </div>

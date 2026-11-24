@@ -1,0 +1,48 @@
+name: Spec site (GitHub Pages)
+
+# One site, one entry: docs/book/html/index.html (ARD-BG). Rebuilt from the
+# committed markdown on every push to master, then deployed (ARD-CD).
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build site and reader from markdown
+        run: |
+          python3 tools/build_sdd_site.py
+          python3 tools/build_sdd_reader.py
+      - name: Check the one entry reaches every page
+        run: |
+          python3 tools/validate_sdd_reader.py
+          python3 tools/check_site_reachable.py
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/book/html
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

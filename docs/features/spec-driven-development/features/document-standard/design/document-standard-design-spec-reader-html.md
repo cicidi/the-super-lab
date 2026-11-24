@@ -97,7 +97,7 @@ parent 的汇编页（reader）把 parent 和各个 sub-feature 的文档放在�
 
 来源：reader PRD 的 PRD-C。
 
-全项目只有一个网站，入口是 `docs/book/html/index.html`。每篇 spec 的 HTML 是目录里的一行。先在目录里选 feature；进入后，左边是这个 feature 的目录，右边是正文（[ARD-BG](../../../decision-history/spec-driven-development-decision-history.md#ard-bg)）。
+全项目只有一个网站，入口是 `docs/book/html/index.html`。每篇 spec 的 HTML 是目录里的一行。先在目录里选 feature；进入后，左边是这个 feature 的目录，右边是正文（[ARD-BG](../../../decision-history/spec-driven-development-decision-history.md#ard-bg)）。每一页都能从入口点到；网站由 GitHub Pages 从 master 发布（[ARD-CD](../../../decision-history/spec-driven-development-decision-history.md#ard-cd)）。
 
 #### DSGN-N-K — 正文里的链接
 
@@ -236,3 +236,4 @@ spec-pipeline 里的 `SPEC-READER.md` 如果还在，只能是指向本篇和 `S
 | 2026-11-20 | 第 2 轮审查后：每个 DSGN-N 小节写明来源的 reader PRD 编号；DSGN-N-D 加上 PRD-P 的「不放密钥」，样式统一链到 ARD-BY；DSGN-N-K 先按编号前写明的出处链接；对照表链到 ARD-BZ；TST-R、TST-U 写明属于 parent test-plan |
 | 2026-11-20 | 第 3 轮审查后：DSGN-N-K 写明没有单独页面的文档链到汇编页的对应一节；交付物改链 ARD-BX；其余 TST-R 写明属于 parent test-plan |
 | 2026-11-20 | DSGN-N-D「浏览器直接打开」改回 MUST，和 PRD-O 一致 |
+| 2026-11-24 | 全站每页都能从入口点到；GitHub Pages 从 master 发布（ARD-CD） |

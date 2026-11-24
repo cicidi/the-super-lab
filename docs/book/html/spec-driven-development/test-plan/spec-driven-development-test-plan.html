@@ -245,13 +245,15 @@
 <p><strong>通过条件：</strong> 旧版本的每个编号标题在新版本里还在；每篇的 <span class="lvl lvl--must">MUST</span> 句数不减少。例外：decision-history 新增的 ARD 提到了这个编号或这篇文档。<strong>判定：</strong> Python（<a href="../../../../../tools/check_l1_delta.py"><code>tools/check_l1_delta.py</code></a>）。</p>
 <h4 id="TST-Y"><a class="id-ref" href="#TST-Y">TST-Y</a> — skill 版本戳和 PRD 一致</h4>
 <p><strong>目标：</strong> 四个 SDD <code>SKILL.md</code> 的版本戳等于 parent PRD 的 <code>version</code>，且 frontmatter 里的 <code>spec_*</code> 键各只出现一次（<a href="../decision-history/spec-driven-development-decision-history.html#ard-cc">ARD-CC</a>）。<strong>判定：</strong> Python（<code>build_spec_skills.py --check</code>）。</p>
+<h4 id="TST-Z"><a class="id-ref" href="#TST-Z">TST-Z</a> — 每页都能从首页点到</h4>
+<p><strong>目标：</strong> <code>docs/book/html/</code> 下每个 HTML 页面都能从 <code>index.html</code> 顺着链接点到（<a href="../decision-history/spec-driven-development-decision-history.html#ard-cd">ARD-CD</a>）。<strong>判定：</strong> Python（<a href="../../../../../tools/check_site_reachable.py"><code>tools/check_site_reachable.py</code></a>）。</p>
 <h3>Test Execution Order</h3>
 <ol>
 <li><a class="id-ref" href="#TST-A">TST-A</a>：<span class="lvl lvl--must">MUST</span> 清单覆盖率不到 100% 就停。</li>
 <li><a class="id-ref" href="#TST-B">TST-B</a>：检查脚本失效就停。</li>
 <li><a class="id-ref" href="#TST-O">TST-O</a>、<a class="id-ref" href="#TST-P">TST-P</a>、<a class="id-ref" href="#TST-V">TST-V</a>：design 的覆盖、证据、可读性。这一步的 <a class="id-ref" href="#TST-V">TST-V</a> 只测 SDD 自己的文档。</li>
 <li><a class="id-ref" href="#TST-C">TST-C</a>，然后 <a class="id-ref" href="#TST-D">TST-D</a>：第一次运行，或者 gold 升版时。</li>
-<li><a class="id-ref" href="#TST-G">TST-G</a>、<a class="id-ref" href="#TST-N">TST-N</a>、<a class="id-ref" href="#TST-R">TST-R</a>、<a class="id-ref" href="#TST-S">TST-S</a>、<a class="id-ref" href="#TST-T">TST-T</a>、<a class="id-ref" href="#TST-U">TST-U</a>、<a class="id-ref" href="#TST-W">TST-W</a>、<a class="id-ref" href="#TST-X">TST-X</a>、<a class="id-ref" href="#TST-Y">TST-Y</a>。</li>
+<li><a class="id-ref" href="#TST-G">TST-G</a>、<a class="id-ref" href="#TST-N">TST-N</a>、<a class="id-ref" href="#TST-R">TST-R</a>、<a class="id-ref" href="#TST-S">TST-S</a>、<a class="id-ref" href="#TST-T">TST-T</a>、<a class="id-ref" href="#TST-U">TST-U</a>、<a class="id-ref" href="#TST-W">TST-W</a>、<a class="id-ref" href="#TST-X">TST-X</a>、<a class="id-ref" href="#TST-Y">TST-Y</a>、<a class="id-ref" href="#TST-Z">TST-Z</a>。</li>
 <li><a class="id-ref" href="#TST-E">TST-E</a>、<a class="id-ref" href="#TST-F">TST-F</a>，然后对 <a class="id-ref" href="#TST-C">TST-C</a>、<a class="id-ref" href="#TST-E">TST-E</a> 里 spec-write 写出的文档跑 <a class="id-ref" href="#TST-V">TST-V</a>。</li>
 <li><a class="id-ref" href="#TST-H">TST-H</a>，然后 <a class="id-ref" href="#TST-I">TST-I</a>。</li>
 <li><a class="id-ref" href="#TST-Q">TST-Q</a>：mock 执行。</li>
@@ -533,6 +535,10 @@
 <tr>
 <td>2026-11-24</td>
 <td><a class="id-ref" href="#TST-R">TST-R</a> 改为比较内容，不比修改时间</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>新增 <a class="id-ref" href="#TST-Z">TST-Z</a>：每页都能从首页点到（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CD">ARD-CD</a>）</td>
 </tr>
 </tbody></table></div>
       </div>

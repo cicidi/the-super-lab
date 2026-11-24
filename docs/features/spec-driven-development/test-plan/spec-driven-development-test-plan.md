@@ -211,13 +211,17 @@ last_verified: 2026-11-20
 
 **目标：** 四个 SDD `SKILL.md` 的版本戳等于 parent PRD 的 `version`，且 frontmatter 里的 `spec_*` 键各只出现一次（[ARD-CC](../decision-history/spec-driven-development-decision-history.md#ard-cc)）。**判定：** Python（`build_spec_skills.py --check`）。
 
+### TST-Z — 每页都能从首页点到
+
+**目标：** `docs/book/html/` 下每个 HTML 页面都能从 `index.html` 顺着链接点到（[ARD-CD](../decision-history/spec-driven-development-decision-history.md#ard-cd)）。**判定：** Python（`tools/check_site_reachable.py`）。
+
 ## Test Execution Order
 
 1. TST-A：MUST 清单覆盖率不到 100% 就停。
 2. TST-B：检查脚本失效就停。
 3. TST-O、TST-P、TST-V：design 的覆盖、证据、可读性。这一步的 TST-V 只测 SDD 自己的文档。
 4. TST-C，然后 TST-D：第一次运行，或者 gold 升版时。
-5. TST-G、TST-N、TST-R、TST-S、TST-T、TST-U、TST-W、TST-X、TST-Y。
+5. TST-G、TST-N、TST-R、TST-S、TST-T、TST-U、TST-W、TST-X、TST-Y、TST-Z。
 6. TST-E、TST-F，然后对 TST-C、TST-E 里 spec-write 写出的文档跑 TST-V。
 7. TST-H，然后 TST-I。
 8. TST-Q：mock 执行。
@@ -307,3 +311,4 @@ document-standard 的 reader PRD：
 | 2026-11-20 | TST-X：L1 内容不减少 |
 | 2026-11-24 | 新增 TST-Y（ARD-CC）；DSGN-N-D 补 feature 名；eval.yaml 现状更新 |
 | 2026-11-24 | TST-R 改为比较内容，不比修改时间 |
+| 2026-11-24 | 新增 TST-Z：每页都能从首页点到（ARD-CD） |

@@ -42,6 +42,7 @@ One website for the whole project. Entry: `docs/book/html/index.html`.
 - Each spec HTML page is one line in the directory.
 - The directory opens a feature. It does not dump every feature's pages into one flat list with no feature.
 - Inside a feature, the left column is that feature's directory. The right column is the page.
+- Every page is reachable from the entry. GitHub Pages publishes the site from `master` (ARD-CD).
 - The left directory shows hierarchy and numbers: 1 prd, 2 decision-history, 3 design, 4 impl plan, 5 test plan, 6 how to, 10 sub-feature (ARD-BI). Design parts and the reader expand under 3. Sub-features expand under 10. Pipeline has no HTML page.
 - After a spec edit, spec-write prompts the user to rebuild this site; it does not rebuild it itself, and it does not invent a second layout (DSGN-N-E, reader PRD-M).
 

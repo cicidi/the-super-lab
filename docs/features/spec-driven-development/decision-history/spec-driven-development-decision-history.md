@@ -24,6 +24,7 @@ last_verified: 2026-11-20
 
 | ID | Date | Decision |
 |---|------|----------|
+| ARD-CD | 2026-11-24 | 网站用 GitHub Pages 发布：推送 master 后由 GitHub Actions 从 markdown 重新生成并部署；每一页都要能从 `index.html` 点到 |
 | ARD-CC | 2026-11-24 | parent PRD 的 `version` 是 spec bundle（整套 SDD spec）的版本；`tools/build_spec_skills.py` 把它印进四个 SDD `SKILL.md`，只标来源，不做迁移 |
 | ARD-CB | 2026-11-20 | 网页离线可读指正文与已提交的 SVG 插图；字体与 Mermaid 可联网加载（PRD-O） |
 | ARD-CA | 2026-11-20 | 插图用 diagram-design 画，SVG 与 citing md 同目录；全站配色与 diagram-design 默认一致；spec-review 查图文一致 |
@@ -107,6 +108,16 @@ last_verified: 2026-11-20
 | ARD-A | 2026-09-25 | 按关注点分权威，取代「全局只有一个真相来源」 |
 
 ## Evidence Appendix
+
+<a id="ard-cd"></a>
+
+### ARD-CD — 用 GitHub Pages 发布网站
+
+**原因。** 网站只在本地能看；还有 6 个旧页面从首页点不到，读者找不到也不知道它们过期了。
+
+**规则。** 只从 master 部署。CI 先运行 `build_sdd_site.py` 和 `build_sdd_reader.py`，再用 `check_site_reachable.py` 确认每页都能从首页点到（TST-Z）。从首页点不到的旧页面删掉。
+
+**放弃的方案。** 直接发布已提交的 HTML（忘了重建就发布旧页面）；工作分支也部署（会互相覆盖线上版本）。
 
 <a id="ard-cc"></a>
 
@@ -735,3 +746,4 @@ payment-impl-plan-01-schema.md         impl-plan 分篇：序号加阶段，有�
 | 2026-11-24 | ARD-CC：spec bundle 版本戳（审查 F7 选方案一） |
 | 2026-11-24 | Evidence Appendix 的 ARD-CB 移到 ARD-CA 前，与 Log 同序；ARD-CA、ARD-CB 改写成完整句子 |
 | 2026-11-24 | 划掉 ARD-AF，由 ARD-CC 重述仍有效的部分 |
+| 2026-11-24 | ARD-CD：GitHub Pages 发布，删除 6 个从首页点不到的旧页面 |

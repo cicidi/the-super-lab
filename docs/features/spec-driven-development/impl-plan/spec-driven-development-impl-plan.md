@@ -227,6 +227,14 @@ last_verified: 2026-11-20
 
 **Verify:** TST-Y 通过。
 
+## IMPL-V — GitHub Pages 发布
+
+**目标：** `.github/workflows/pages.yml` 按 [ARD-CD](../decision-history/spec-driven-development-decision-history.md#ard-cd) 在 master 推送后重新生成并部署网站；删除从首页点不到的旧页面。
+
+**依赖：** IMPL-H。**挡住：** 无。
+
+**Verify:** TST-Z 通过；workflow 在 master 上成功部署。
+
 ## Execution order
 
 先做不依赖别人的任务，被挡住的后做：
@@ -234,7 +242,7 @@ last_verified: 2026-11-20
 1. IMPL-A、IMPL-D、IMPL-G、IMPL-H、IMPL-U（互不依赖，可以同时做）
 2. IMPL-C
 3. IMPL-B、IMPL-F、IMPL-J、IMPL-K、IMPL-L、IMPL-M、IMPL-R
-4. IMPL-N、IMPL-O、IMPL-P、IMPL-S（等 IMPL-F）、IMPL-T（等 IMPL-M）
+4. IMPL-N、IMPL-O、IMPL-P、IMPL-S（等 IMPL-F）、IMPL-T（等 IMPL-M）、IMPL-V（等 IMPL-H）
 5. IMPL-Q
 6. IMPL-E（评测要等 spec 可读、测试骨架齐全、gold 改回 iPhone 之后再跑）
 7. IMPL-I
@@ -260,3 +268,4 @@ last_verified: 2026-11-20
 | 2026-11-20 | 第 3 轮审查后：IMPL-A 解释 `~/.coworker/project.yaml`；IMPL-R 的检查加上进度路径、文档目录和 skill 列表 |
 | 2026-11-20 | IMPL-P 除 MUST 清单出处外已完成；IMPL-Q 脚本就绪（未跑 API）；新增 IMPL-T |
 | 2026-11-24 | IMPL-S、IMPL-T 移到依赖之后的批次；新增 IMPL-U；不迁移旧文档改链 ARD-CC |
+| 2026-11-24 | 新增 IMPL-V：GitHub Pages 发布（ARD-CD） |

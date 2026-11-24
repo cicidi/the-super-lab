@@ -23,6 +23,7 @@ Mechanical gate: `./tools/run_sdd_mechanical.sh` (alias for `skills/spec-organiz
 | `build_spec_skills.py` | Stamp SDD `SKILL.md` from parent PRD `version` (`--check` for CI) |
 | `verify_sdd_skills_map.py` | `SDD-DELIVERABLES.md` links exist |
 | `validate_sdd_reader.py` | Reader smoke test |
+| `check_site_reachable.py` | Every site page reachable from `docs/book/html/index.html` (ARD-BG) |
 | `eval_preflight.py` | Gold v1 asset check before TST-C |
 | `check_gold_run_scaffold.py` | Gold runs template + TST-C runbook present |
 | `check_eval_config.py` | `eval.yaml` keys for TST-J matrix |
