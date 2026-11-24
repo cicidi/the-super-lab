@@ -28,8 +28,8 @@ A **skill** is a self-contained directory with a `SKILL.md` file. It packages "h
 | [prototype](skills/prototype/) | Build throwaway prototypes to answer design questions | 🔗 |
 | [research](skills/research/) | Surface unknowns before coding; go from vague idea to concrete design |
 | [skill](skills/skill/) | Skill lifecycle — create, edit, import, list skills |
-| [to-spec](skills/to-spec/) | Synthesize current conversation into a spec (PRD) for the issue tracker | 🔗 |
-| [to-tickets](skills/to-tickets/) | Break a plan into tracer-bullet tickets with declared blocking edges | 🔗 |
+| [spec-ingest](skills/spec-ingest/) | Sort chat or local files into prd / design / decision-history / impl-plan / test-plan items, then hand off to spec-write |
+| [spec-ticket](skills/spec-ticket/) | Open one parent ticket per feature and one ticket per IMPL-* in local / GitHub / Jira |
 | [wayfinder](skills/wayfinder/) | Plan work too large for one agent session via decision briefs on the issue tracker | 🔗 |
 
 🔗 = imported from [mattpocock/skills](https://github.com/mattpocock/skills)

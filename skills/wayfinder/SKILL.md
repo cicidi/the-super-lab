@@ -24,7 +24,7 @@ metadata:
   when_not_to_use: |
     When the work fits in one session. When requirements are already fully
     specified with tickets ready to implement. When you just need a quick
-    spec — use to-spec instead. (Exception: in an SDD repo the map is always
+    spec — use spec-ingest instead. (Exception: in an SDD repo the map is always
     created — it is the progress record for every feature.)
   audience:
     - developers
@@ -193,7 +193,7 @@ one, else `CLAUDE.md`; if neither exists, ask the user whether to create one
   blocking questions is the feature design's Open Questions tracker: `QUES-*`
   rows with a blocking yes/no column, one tracker per feature. While any QUES
   row marked blocking = yes is open, do not
-  start Downstream (impl-plan, test-plan, to-tickets). A brief that works on such
+  start Downstream (impl-plan, test-plan, spec-ticket). A brief that works on such
   a question names its QUES id in its body. This is different from wayfinder's
   own `Blocked by:` between briefs, which only orders briefs.
 - **Review gate before commit (PIPE-A-D).** Before committing or pushing a change
@@ -234,17 +234,17 @@ deployed by GitHub Pages from master (ARD-CF, ARD-CD).
 ## Spec Creation & Spec-Review Checkpoint
 
 After all briefs are resolved (SDD: or `Status: out-of-scope`, with every brief it blocked re-scoped or ruled out too) and the map is done, before handing off to
-`to-tickets`:
+`spec-ticket`:
 
 ```
 Wayfinder map done
        |
        v
-    to-spec
+    spec-ingest
        |
-       +-- Synthesizes all brief conclusions into a spec (PRD)
-       +-- Creates a tracker item for the spec itself
-       +-- (SDD repo: spec-write writes it into docs/features/<f>/ instead)
+       +-- Sorts all brief conclusions into prd / design / decision-history /
+       |   impl-plan / test-plan items
+       +-- Hands them to spec-write, which writes docs/features/<f>/
        |
        v
     spec-review checkpoint
@@ -256,12 +256,12 @@ Wayfinder map done
        v
     Review passed?
        |
-   YES +-- to-tickets -> creates build tracker items
+   YES +-- spec-ticket -> one parent ticket per feature + one ticket per IMPL-*
    NO  +-- fix documents, re-review
 ```
 
-The spec-review checkpoint is a gate — it must pass before `to-tickets` can run.
-In an SDD repo, Downstream / `to-tickets` also requires that no open QUES row is
+The spec-review checkpoint is a gate — it must pass before `spec-ticket` can run.
+In an SDD repo, Downstream / `spec-ticket` also requires that no open QUES row is
 marked blocking = yes (PIPE-E-A). A map with no briefs is not "done" by that
 fact alone: in SDD every feature has a map.
 This ensures all documents are consistent, complete, and deployable before any
@@ -270,26 +270,25 @@ implementation begins.
 ### Entity Relationships
 
 ```
-N briefs (decisions) -> 1 spec (PRD, a tracker item) -> M tracker items (build)
+N briefs (decisions) -> 1 spec (docs/features/<f>/) -> 1 parent + M tickets (build)
 
   Map:      1 issue, label wayfinder:map
   Brief:    N child issues, label wayfinder:<type>
             (research | grilling | prototype | task)
-  Spec:     1 issue, label ready-for-agent (created by to-spec)
-  Tickets:  M issues, label ready-for-agent (created by to-tickets)
+  Spec:     docs, not an issue (spec-ingest sorts, spec-write writes)
+  Parent:   1 ticket per feature, links only (created by spec-ticket)
+  Tickets:  1 per IMPL-*, children of the parent (created by spec-ticket)
 ```
 
-In an SDD repo the spec is not an issue: it is written with **spec-write** into
-`docs/features/<f>/`.
+The spec is not an issue: it is written with **spec-write** into
+`docs/features/<f>/`. The parent ticket only links to it.
 
 ## Pipeline
 
 ```
-wayfinder -> to-spec -> spec-review -> to-tickets -> auto-tdd
- (decide)    (write)    (verify)      (ticket)     (build)
+wayfinder -> spec-ingest -> spec-write -> spec-review -> spec-ticket -> auto-tdd
+ (decide)    (sort)         (write)       (verify)      (ticket)       (build)
 ```
-
-In an SDD repo, to-spec's role is filled by **spec-write** writing `docs/features/<f>/`.
 
 ## Invocation
 
