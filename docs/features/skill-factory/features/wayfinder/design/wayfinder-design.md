@@ -21,7 +21,7 @@ last_verified: 2026-11-24
 ## Solution
 
 把规划写成 tracker 上的一张地图（map）和一组决策问题（brief），每个会话只解决一个 brief。
-brief 全部定完后，交给 to-spec、spec-review、to-tickets、auto-tdd 这条流水线（PRD-L）。
+brief 全部定完后，交给 spec-ingest、spec-write、spec-review、spec-ticket、auto-tdd 这条流水线（PRD-L、ARD-L）。
 
 ## User Stories
 
@@ -79,11 +79,11 @@ SKILL.md 说选择会被记下，但没写记在哪里，见 QUES-C。
 **DSGN-J MkDocs-ready。** 每次建或移文档都顺手跑 doc-organize：维护 INDEX.md，文件名用 kebab-case（小写加连字符）（PRD-H）。
 目录结构对应网站导航；加了新栏目就更新 `mkdocs.yml` 的导航。
 
-**DSGN-K spec 和文档审查关口。** 地图走完后先跑 to-spec，把所有 brief 的结论合成一份 spec，并为 spec 建一个 issue（PRD-G）。
+**DSGN-K spec 和文档审查关口。** 地图走完后先跑 spec-ingest，把所有 brief 的结论分拣好，交给 spec-write 写进 `docs/features/<f>/`（ARD-L）。
 接着 spec-review 审 spec、所有已关闭的 brief、CONTEXT.md 和 ADR，查一致、完整、无矛盾，并确认 MkDocs-ready。
-通过后才能跑 to-tickets。数量关系是 N 个 brief 合成 1 份 spec，再拆成 M 张执行工单。
+通过后才能跑 spec-ticket。数量关系是 N 个 brief 合成 1 份 spec，再开 1 张母工单和 M 张执行工单（PRD-G、ARD-L）。
 
-**DSGN-L 流水线。** 顺序是 wayfinder（决定）、to-spec（写）、spec-review（核对）、to-tickets（拆工单）、auto-tdd（实现）（PRD-L）。
+**DSGN-L 流水线。** 顺序是 wayfinder（决定）、spec-ingest（分拣）、spec-write（写）、spec-review（核对）、spec-ticket（开工单）、auto-tdd（实现）（PRD-L、ARD-L）。
 
 **DSGN-M 出处。** frontmatter 写 `source_author: mattpocock` 和指向原文件的 `source_url`（PRD-A）。
 
@@ -100,7 +100,7 @@ SDD 的 [TST-J](../../../../spec-driven-development/test-plan/spec-driven-develo
 
 ## Out of Scope
 
-不执行（DSGN-A）；不写 spec（to-spec）；不拆执行工单（to-tickets）；不写代码（auto-tdd）。
+不执行（DSGN-A）；不写 spec（spec-ingest、spec-write）；不开执行工单（spec-ticket）；不写代码（auto-tdd）。
 一个会话能做完的工作、需求已完整且有工单的工作，都不用本 skill（`when_not_to_use` 字段）。
 
 ## Further Notes
@@ -138,7 +138,7 @@ SKILL.md 引用的 /grilling 曾找不到；2026-11-24 已补导到 `skills/gril
 | QUES-B | 默认 tracker 是 GitHub Issues、本地 `.scratch/` 还是 Jira？ | SKILL.md 三种说法都有 | cicidi | no |
 | QUES-C | 安装时的四个接口选择记在哪里（PRD-E）？ | SKILL.md 说"会记下"，仓库里没有对应配置文件 | cicidi | no |
 | QUES-D | /grilling 和 doc-review 现在分别指哪个 skill？ | /grilling 指 `skills/grilling/`（2026-11-24 补导，grill-with-docs 的 ARD-G）；688cace 已把 doc-review 改成 spec-review | cicidi | no |
-| QUES-E | spec 的 issue 该由 to-spec 还是 to-tickets 建（PRD-G）？ | SKILL.md 写 to-spec，与用户 17:55 原话不同；同 to-tickets 的 QUES-A | cicidi | no |
+| QUES-E | spec 的 issue 该由 to-spec 还是 to-tickets 建（PRD-G）？ | 已定：spec 是文档，不建 issue；每个 feature 一张母工单由 spec-ticket 建（ARD-L） | cicidi | no |
 | QUES-F | 完整生命周期示例要不要放进 SKILL.md（PRD-I）？ | 只在已删除的导入规格第 8 节 | cicidi | no |
 
 ## Reversibility
@@ -153,3 +153,4 @@ SKILL.md 引用的 /grilling 曾找不到；2026-11-24 已补导到 `skills/gril
 | 2026-11-24 | 初版：按 SKILL.md 写出 wayfinder 的 design，引用 PRD-A 到 PRD-L |
 | 2026-11-24 | QUES-D 有答案：`/grilling` 已补导；doc-review 已在 688cace 改为 spec-review |
 | 2026-11-24 | 正文里的 doc-review 改为 spec-review，跟上 688cace |
+| 2026-11-24 | 流水线、DSGN-K、DSGN-L、范围外改指 spec-ingest / spec-ticket；QUES-E 已定（ARD-L） |

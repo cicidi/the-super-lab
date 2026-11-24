@@ -14,7 +14,7 @@ last_verified: 2026-11-24
 
 ## Problem Statement
 
-wayfinder、to-spec、to-tickets 产出的是决策、spec 和工单，还缺一步把它们变成经过测试和审查的代码（PRD-A）。
+wayfinder、spec-write、spec-ticket 产出的是决策、spec 和工单，还缺一步把它们变成经过测试和审查的代码（PRD-A）。
 写代码时，spec 和代码还容易悄悄走偏：改了行为却不改 spec，或者看到不一致就随手改掉一边（PRD-F、PRD-G）。
 
 ## Solution
@@ -60,7 +60,7 @@ seam（接入点）指测试能插进去观察行为的位置，例如一个公�
 **DSGN-G 冲突先报告。** 代码和 spec 说法不一致时，两边都不悄悄改（PRD-G）。
 agent 报告冲突，列出两边的证据，然后问用户以哪边为准。
 
-**DSGN-H 和 auto-tdd 的关系。** wayfinder 的流水线是 wayfinder、to-spec、doc-review、to-tickets、auto-tdd，build 一步用的是 auto-tdd（PRD-D）。
+**DSGN-H 和 auto-tdd 的关系。** wayfinder 的流水线是 wayfinder、spec-ingest、spec-write、spec-review、spec-ticket、auto-tdd（wayfinder 的 ARD-L），build 一步用的是 auto-tdd（PRD-D）。
 implement 保留，但 TDD 一步转调 auto-tdd，所以两条路最终都由 auto-tdd 写代码（ARD-F）。
 
 **DSGN-I 出处。** frontmatter 的 `source_author` 是 mattpocock，`source_url` 指向原仓库的 engineering/implement/SKILL.md（PRD-B）。
@@ -74,7 +74,7 @@ README 的 skill 表用 🔗 标出它来自 mattpocock/skills。
 ## Out of Scope
 
 spec 还含糊或决定未做完时不用本 skill；没有 ticket 可依据时也不用（SKILL.md 的 `when_not_to_use`）。
-本 skill 不写 spec、不拆 ticket，这些分别是 to-spec 和 to-tickets 的事。
+本 skill 不写 spec、不拆 ticket，这些分别是 spec-ingest / spec-write 和 spec-ticket 的事。
 
 ## Further Notes
 
@@ -120,3 +120,4 @@ implement 的描述是按 spec 实现、用 TDD；auto-tdd 的描述是用 TDD �
 |------|--------|
 | 2026-11-24 | 初版：按 SKILL.md 写出 implement 的 design，引用 PRD-A 到 PRD-G |
 | 2026-11-24 | 转调 auto-tdd、先用 matt-code-review、修路径（ARD-F、ARD-G），QUES-A 到 D 已答 |
+| 2026-11-24 | 现状里的 to-spec、to-tickets 改为 spec-ingest、spec-write、spec-ticket（wayfinder ARD-L） |

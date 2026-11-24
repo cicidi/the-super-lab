@@ -68,6 +68,8 @@ SDD 指 spec-driven-development（从规格驱动开发）这个 feature。
 | youtube-research-pipeline | personal-skills/ | 自写（commit `d7723a2`，2026-07-18） | 把一个话题做成带图表和文字稿的视频 HTML 页 | parked：无规格 |
 | youtube-summarize | personal-skills/ | 自写（commit `db0261d`） | 下载 YouTube 视频的文字稿并写总结 | [design](../features/youtube-summarize/design/youtube-summarize-design.md) |
 
+2026-11-24 注：to-spec、to-tickets 已移除（`5370f61`），由 [spec-ingest](../features/spec-ingest/design/spec-ingest-design.md)、[spec-ticket](../features/spec-ticket/design/spec-ticket-design.md) 取代。
+
 两个 skill 标为 parked，意思是规格还没提交。
 原因是名字和已有 feature 重名：`research` 撞 `docs/features/discovery-research`，`youtube-research-pipeline` 撞 SDD 的 `pipeline` 子 feature（`raw/state/state-loop.md`）。
 怎么改名要等用户决定，见下文建议表。
@@ -162,6 +164,8 @@ to-spec、to-tickets、wayfinder 三份规格写在这次修改之前，所以�
 第二段是写规格：普通仓库用 to-spec 发一个 issue，SDD 仓库用 spec-write 写进 `docs/features/`。
 第三段是关口：spec-review 审过，才能拆工单。
 第四段是交付：to-tickets 拆工单，auto-tdd 按工单写代码（DSGN-AI）。
+2026-11-24 注：to-spec、to-tickets 已移除，流水线现为 wayfinder、spec-ingest、spec-write、spec-review、spec-ticket、auto-tdd。
+spec-ticket 为每个 feature 开一张母工单，再为每条 IMPL-* 开一张工单（[spec-ticket](../features/spec-ticket/design/spec-ticket-design.md)）。
 这条链现在有三处走不通。
 grilling 类 brief 是默认类型（`skills/wayfinder/SKILL.md:125`），但它要的 `/grilling` 不存在。
 research 类 brief 期待一个无人值守、产出带出处 markdown 的子 agent，但 research 的两条分支都先问用户问题（research 草稿的 QUES-A）。
@@ -305,7 +309,7 @@ wayfinder 的 QUES-D 里关于 `/grilling` 的另半句仍成立。
 | 4 | 补导 prototype 的 `LOGIC.md`、`UI.md` 和 `agents/` | 中 | 小 | prototype | 它的 QUES-A |
 | 5 | 把 7 个 skill 里的 doc-organize、doc-review、contrarian-review、self-analyze 改成现在的名字 | 中 | 小 | bug、implement、to-spec、auto-tdd、create-video-workflow、youtube-research-pipeline、video-production-pip-style | DSGN-AJ、DSGN-AP |
 | 6 | 改 youtube-research-pipeline 里 `ocr.py` 的路径 | 中 | 小 | youtube-research-pipeline | pic-to-txt 的 QUES-F |
-| 7 | 在 `.gitignore` 加一行 `.scratch/` | 中 | 小 | to-tickets、wayfinder | to-tickets 的 QUES-D |
+| 7 | 已完成（2026-11-24，`85604c5`）：在 `.gitignore` 加一行 `.scratch/` | 中 | 小 | to-tickets、wayfinder | to-tickets 的 QUES-D |
 | 8 | 决定 implement 的去留：删除、转调 auto-tdd，或者改成可替换的接口 | 中 | 小 | implement、auto-tdd | implement 的 QUES-B、QUES-D |
 | 9 | 改 create-video-workflow 的脚本路径和项目目录，并加上调用 transcribe-audio 的路由 | 中 | 中 | create-video-workflow、transcribe-audio | create-video-workflow 的 QUES-A、QUES-B、QUES-D |
 | 10 | 注册 self-heal hook，并让 Report 分支先问目标仓库 | 中 | 中 | bug | bug 的 QUES-C、QUES-D |
@@ -314,7 +318,7 @@ wayfinder 的 QUES-D 里关于 `/grilling` 的另半句仍成立。
 | 13 | 逐条决定是否恢复 08-02 合并删掉的功能 | 低 | 大 | auto-tdd、bug、skill、research | DSGN-AN |
 | 14 | 给功能重叠的几对 skill 写明分工，或合并 | 低 | 中 | 见 DSGN-AS | DSGN-AS |
 | 15 | 恢复出处字段，并在 `/skill import` 里加上记录出处和检查依赖两步 | 低 | 小 | skill、auto-tdd、research | DSGN-AO、DSGN-AU |
-| 16 | 更新 to-spec、to-tickets、wayfinder 三份规格里关于 doc-review 的过时说法 | 低 | 小 | to-spec、to-tickets、wayfinder | DSGN-AW |
+| 16 | 已完成（2026-11-24）：更新 to-spec、to-tickets、wayfinder 三份规格里关于 doc-review 的过时说法 | 低 | 小 | to-spec、to-tickets、wayfinder | DSGN-AW |
 
 ## 未知项
 
@@ -329,3 +333,4 @@ wayfinder 的 QUES-D 里关于 `/grilling` 的另半句仍成立。
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：skill 目录、调用关系与断边、三条流水线、共性问题和建议修复 |
+| 2026-11-24 | 目录表后和 DSGN-AK 加注：to-spec、to-tickets 已移除并被取代；建议表第 7、16 条标为已完成 |

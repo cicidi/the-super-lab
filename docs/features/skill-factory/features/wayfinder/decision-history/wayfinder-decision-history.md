@@ -18,6 +18,7 @@ skill-factory 层面的决策在 [parent decision history](../../../decision-his
 
 | ID | Date | Decision |
 |---|---|---|
+| ARD-L | 2026-11-24 | 流水线改指 spec-ingest、spec-write、spec-review、spec-ticket、auto-tdd；spec 是文档，母工单由 spec-ticket 建 |
 | ARD-A | 2026-11-03 | wayfinder 导入不再是 spec-driven-development 的 sub-feature，归属 skill-factory |
 | ARD-B | 2026-08-02 | 流水线的 build 一步用 auto-tdd；SKILL.md 加一张流水线图 |
 | ARD-C | 2026-08-02 | 导入工作先写测试计划，再写实现计划 |
@@ -31,6 +32,14 @@ skill-factory 层面的决策在 [parent decision history](../../../decision-his
 | ~~ARD-K~~ | ~~2026-08-02~~ | ~~把 wayfinder 的术语整体换成《绝命毒师》的词~~ 已被 [ARD-F](#ard-f) 取代 |
 
 ## Evidence Appendix
+
+### ARD-L
+
+理由：用户说 Matt 的 to-spec 和 to-tickets"可以去掉"（Q5），先建新 skill 再删旧的（Q9）。
+ARD-E 里"spec 是一个 issue，由 to-spec 建"不再成立：spec 写进 `docs/features/<f>/`，spec-ticket 开一张只放链接的母工单。
+被否决：保留 to-spec、to-tickets 与新 skill 并存。出处：用户 2026-11-24 审阅回复（会话 80291c19）；commit 5370f61；
+[spec-ingest ARD-E](../../spec-ingest/decision-history/spec-ingest-decision-history.md#ard-e)；
+[spec-ticket ARD-H](../../spec-ticket/decision-history/spec-ticket-decision-history.md#ard-h)。
 
 ### ARD-A
 
@@ -101,3 +110,4 @@ agent 为什么推荐 brief，会话记录已不在本机，属于 UNKNOWN。
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 wayfinder 的决策 |
+| 2026-11-24 | 新增 ARD-L：流水线改指 spec-ingest / spec-ticket，母工单由 spec-ticket 建 |

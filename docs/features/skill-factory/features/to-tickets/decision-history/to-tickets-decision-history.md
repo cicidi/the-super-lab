@@ -2,7 +2,7 @@
 feature: to-tickets
 type: decision-history
 state: draft
-health: active
+health: stale
 owner: cicidi
 last_verified: 2026-11-24
 ---
@@ -18,6 +18,7 @@ skill-factory 层面的旧决策在 [parent decision history](../../../decision-
 
 | ID | Date | Decision |
 |---|---|---|
+| ARD-H | 2026-11-24 | 移除本 skill，由 spec-ingest / spec-ticket 取代 |
 | ARD-A | 2026-09-24 | 本地工单放在 `.scratch/<feature-slug>/`，和 `docs/features/<feature>/` 分成两棵树 |
 | ARD-B | 2026-08-02 | to-tickets 拆出的工单交给 auto-tdd 实现，不交给 implement |
 | ARD-C | 2026-08-02 | to-tickets 之前设一道文档审查关口；关口写在 wayfinder，不写进 to-tickets |
@@ -27,6 +28,13 @@ skill-factory 层面的旧决策在 [parent decision history](../../../decision-
 | ~~ARD-G~~ | ~~2026-08-02~~ | ~~to-tickets 列为 wayfinder 导入的后续项，这次不导入~~ 已被 [ARD-F](#ard-f) 取代 |
 
 ## Evidence Appendix
+
+### ARD-H
+
+理由：用户说 Matt 的 to-spec 和 to-tickets"可以去掉"（Q5），并定了先建新 skill、再删旧 skill 的顺序（Q9）。
+取代者：spec-ticket 为每个 feature 开一张母工单，再为每条 IMPL-* 开一张工单；tracker 支持 local、github、jira。被否决：长期保留 to-tickets。
+出处：用户 2026-11-24 审阅回复（会话 80291c19）；[spec-ticket ARD-H](../../spec-ticket/decision-history/spec-ticket-decision-history.md#ard-h)；
+[spec-ingest ARD-E](../../spec-ingest/decision-history/spec-ingest-decision-history.md#ard-e)。
 
 ### ARD-A
 
@@ -83,3 +91,4 @@ wayfinder 导入规格的术语表把决策 ticket 改叫 brief，理由是和 t
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 to-tickets 的决策 |
+| 2026-11-24 | 新增 ARD-H：移除本 skill，由 spec-ingest / spec-ticket 取代；health 改为 stale |

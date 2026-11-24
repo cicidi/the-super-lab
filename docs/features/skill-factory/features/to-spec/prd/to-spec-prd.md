@@ -2,7 +2,7 @@
 feature: to-spec
 type: prd
 state: draft
-health: active
+health: stale
 owner: cicidi
 last_verified: 2026-11-24
 ---
@@ -10,6 +10,7 @@ last_verified: 2026-11-24
 # to-spec — 需求
 
 本篇从过去的对话和提交记录里，整理用户对 `to-spec` 这个 skill 的需求。
+本 skill 已于 2026-11-24 移除（ARD-G），需求由 [spec-ingest PRD](../../spec-ingest/prd/spec-ingest-prd.md) 接手。
 实现见 [design](../design/to-spec-design.md)。
 决策的来由见 [decision-history](../decision-history/to-spec-decision-history.md)。
 Claude Code 会话原文没有保留；下文引用 `~/.claude/history.jsonl` 里的会话 id 前缀和时间。
@@ -82,3 +83,4 @@ to-spec 模板开头的注释写了这条上限（commit f67df5b）。
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 to-spec 的 PRD |
 | 2026-11-24 | 资源一节改为当前路径，并补上 spec-write（ARD-F） |
+| 2026-11-24 | 开头注明本 skill 已移除，由 spec-ingest 取代（ARD-G）；health 改为 stale |

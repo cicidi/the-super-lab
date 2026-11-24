@@ -2,7 +2,7 @@
 feature: to-spec
 type: design
 state: draft
-health: active
+health: stale
 owner: cicidi
 last_verified: 2026-11-24
 ---
@@ -11,6 +11,7 @@ last_verified: 2026-11-24
 
 本篇说明 `to-spec` 这个 skill 现在怎么工作。
 源文件：`skills/to-spec/SKILL.md`（commit 212aab5 导入，f67df5b 最后一次修改）。
+本 skill 已于 2026-11-24 移除（ARD-G），下文记的是移除前的样子；取代者见 [spec-ingest design](../../spec-ingest/design/spec-ingest-design.md)。
 
 ## Problem Statement
 
@@ -126,3 +127,4 @@ spec 发到 tracker，和写进 `docs/features/` 是两条路；同一份 spec �
 | 2026-11-24 | QUES-F 有答案：wayfinder 已在 688cace 改用 spec-review |
 | 2026-11-24 | DSGN-E、DSGN-H 改为按仓库分两路并修路径（ARD-F），QUES-A、QUES-B 已答 |
 | 2026-11-24 | 正文里的 doc-review 改为 spec-review，跟上 688cace |
+| 2026-11-24 | 开头注明本 skill 已移除，由 spec-ingest 取代（ARD-G）；health 改为 stale |

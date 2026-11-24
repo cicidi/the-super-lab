@@ -2,7 +2,7 @@
 feature: to-tickets
 type: prd
 state: draft
-health: active
+health: stale
 owner: cicidi
 last_verified: 2026-11-24
 ---
@@ -10,6 +10,7 @@ last_verified: 2026-11-24
 # to-tickets — 需求
 
 本篇从过去的对话和提交记录里，整理用户对 `to-tickets` 这个 skill 的需求。
+本 skill 已于 2026-11-24 移除（ARD-H），需求由 [spec-ticket PRD](../../spec-ticket/prd/spec-ticket-prd.md) 接手。
 实现见 [design](../design/to-tickets-design.md)。
 决策的来由见 [decision-history](../decision-history/to-tickets-decision-history.md)。
 Claude Code 会话原文没有保留；下文引用 `~/.claude/history.jsonl` 里的会话 id 前缀和时间。
@@ -78,3 +79,4 @@ commit 8730941 在 frontmatter 里写了 `source_author` 和 `source_url`。fron
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 to-tickets 的 PRD |
+| 2026-11-24 | 开头注明本 skill 已移除，由 spec-ticket 取代（ARD-H）；health 改为 stale |

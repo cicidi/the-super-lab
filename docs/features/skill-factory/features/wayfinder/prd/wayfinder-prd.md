@@ -62,6 +62,7 @@ fog of war（战争迷雾）指地图上看得到方向、但还说不清的那�
 **PRD-G spec 也有一个 issue，拆工单前全面审一次文档。** 用户说"spec 本身也得有一个ticket"（17:55）。
 同一句还要求 to-tickets 以前"还得有一个 doc-review 的过程"，审查所有文档。
 落地细节见 [to-spec 的 ARD-B](../../to-spec/decision-history/to-spec-decision-history.md#ard-b)。
+现在 spec 是文档；"spec 的 ticket"由 spec-ticket 为每个 feature 开的母工单满足，审查关口在 spec-ticket 之前（ARD-L）。
 
 **PRD-H 文档能直接发布成网站。** 用户问 doc-organize"还得保证 所有文档 mkdoc ready to deploy as github webpage 这个有吗？"（17:57）。
 MkDocs 是把一组 markdown 生成静态网站的工具，生成的网站可放在 GitHub Pages 上。
@@ -95,3 +96,4 @@ to-spec、to-tickets、implement 当时列为后续导入，同一晚就导入�
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 wayfinder 的 PRD |
+| 2026-11-24 | PRD-G 补一句现状：母工单由 spec-ticket 建（ARD-L） |

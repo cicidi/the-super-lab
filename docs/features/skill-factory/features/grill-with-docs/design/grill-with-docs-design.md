@@ -55,7 +55,7 @@ wayfinder 对 grilling 的描述是"one question at a time"、必须有真人回
 **DSGN-F 可替换的接口实现。** wayfinder 的 interview 接口默认是 grill-with-docs 加 domain-modeling（PRD-D）。
 接口表的替换一栏写的是"(ask on install)"，即安装时问用户；这一步是否真的实现，本次没有核实，见 QUES-D。
 
-**DSGN-G 其他调用方。** `skills/to-spec/` 在对话仍含糊时，让用户改用 grill-with-docs（其 `when_not_to_use`）。
+**DSGN-G 其他调用方。** `skills/spec-ingest/` 在内容仍含糊、需要访谈时，让用户改用 grill-with-docs（其 `when_not_to_use`）。
 SDD 流程在 Map 阶段把它列为可选的压力测试（skills/spec-pipeline/INTEGRATIONS.md；decision-history 的 ARD-A）。
 
 **DSGN-H 安装目标。** `compatibility` 写的是 `claude-code,opencode`（PRD-E）。
@@ -121,3 +121,4 @@ domain-modeling（其 QUES-C）和 wayfinder 同样调用 `/grilling`，三者�
 |------|--------|
 | 2026-11-24 | 初版：按 SKILL.md 写出 grill-with-docs 的 design，引用 PRD-A 到 PRD-E |
 | 2026-11-24 | `/grilling` 已补导（ARD-G）：改写 DSGN-C，QUES-A 有答案 |
+| 2026-11-24 | DSGN-G：to-spec 已移除，调用方改为 spec-ingest |

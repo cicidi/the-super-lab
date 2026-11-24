@@ -165,6 +165,7 @@ OpenCode 得到一个指回源目录的符号链接（symlink），`skills/` 进
 [wayfinder](../features/wayfinder/prd/wayfinder-prd.md)、
 [youtube-summarize](../features/youtube-summarize/prd/youtube-summarize-prd.md)。
 `research`、`youtube-research-pipeline` 和 `spec-*` 系列还没有子 feature 规格。
+2026-11-24 注：to-spec、to-tickets 已移除，规格标为 stale；取代者见 [spec-ingest](../features/spec-ingest/prd/spec-ingest-prd.md)、[spec-ticket](../features/spec-ticket/prd/spec-ticket-prd.md)。
 
 ## 未知项
 
@@ -178,3 +179,4 @@ OpenCode 得到一个指回源目录的符号链接（symlink），`skills/` 进
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：从会话和 git 历史整理 skill-factory 的动机、目标与现状对照、skill 的组成和生命周期 |
+| 2026-11-24 | 各 skill 规格一节加注：to-spec、to-tickets 已移除并被取代 |

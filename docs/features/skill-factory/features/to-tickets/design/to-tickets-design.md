@@ -2,7 +2,7 @@
 feature: to-tickets
 type: design
 state: draft
-health: active
+health: stale
 owner: cicidi
 last_verified: 2026-11-24
 ---
@@ -11,6 +11,7 @@ last_verified: 2026-11-24
 
 本篇说明 `to-tickets` 这个 skill 现在怎么工作。
 源文件：`skills/to-tickets/SKILL.md`（commit 8730941 导入，之后只搬过两次目录）。
+本 skill 已于 2026-11-24 移除（ARD-H），下文记的是移除前的样子；取代者见 [spec-ticket design](../../spec-ticket/design/spec-ticket-design.md)。
 
 ## Problem Statement
 
@@ -134,3 +135,4 @@ spec 写完直接拆工单：被否决，先过 spec-review 关口（ARD-C）。
 | 2026-11-24 | 初版：按 SKILL.md 写出 to-tickets 的 design，引用 PRD-A 到 PRD-G |
 | 2026-11-24 | QUES-D、QUES-F 有答案：`.scratch/` 已加入 .gitignore；wayfinder 已在 688cace 改用 spec-review |
 | 2026-11-24 | 正文里的 doc-review 改为 spec-review，跟上 688cace |
+| 2026-11-24 | 开头注明本 skill 已移除，由 spec-ticket 取代（ARD-H）；health 改为 stale |
