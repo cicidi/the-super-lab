@@ -91,8 +91,8 @@
 <h3 id="IMPL-I"><a class="id-ref" href="#IMPL-I">IMPL-I</a> — spec-review 报告机械 <span class="lvl lvl--must">MUST</span></h3>
 <p><strong>目标：</strong> spec-review 能找出机械 <span class="lvl lvl--must">MUST</span> 的违反，并给出修改建议（<a href="../decision-history/spec-driven-development-decision-history.html#ard-p">ARD-P</a>）。</p>
 <p><strong>步骤：</strong> document-standard 和 test-plan 里关于 review 的部分稳定后，修改 <a href="../../../../../skills/spec-review/SKILL.md"><code>skills/spec-review/SKILL.md</code></a>。</p>
-<p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-B">IMPL-B</a>、<a class="id-ref" href="#IMPL-K">IMPL-K</a>、<a class="id-ref" href="#IMPL-E">IMPL-E</a>。<strong>挡住：</strong> 无。</p>
-<p class="impl-verify"><strong>Verify:</strong> <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-H">TST-H</a> 的案例全部检出。</p>
+<p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-B">IMPL-B</a>、<a class="id-ref" href="#IMPL-K">IMPL-K</a>、<a class="id-ref" href="#IMPL-E">IMPL-E</a>；语义案例部分还依赖 <a class="id-ref" href="#IMPL-Y">IMPL-Y</a>。<strong>挡住：</strong> 无。</p>
+<p class="impl-verify"><strong>Verify:</strong> <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-H">TST-H</a> 的 11 个机械案例全部检出；语义案例在 <a class="id-ref" href="#IMPL-Y">IMPL-Y</a> 完成前标为 Unverified。</p>
 <h3 id="IMPL-J"><a class="id-ref" href="#IMPL-J">IMPL-J</a> — 评测配置和配置测试</h3>
 <p><strong>目标：</strong> <code>eval.yaml</code> 能用 <code>deepseek-flash</code> 生成 gold 跑 3 次、复核跑 5 次；目标仓库可以用环境变量覆盖；<code>test_eval_config.py</code> 在配置缺项时报错。</p>
 <p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-D">IMPL-D</a>。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-E">IMPL-E</a>、<a class="id-ref" href="#IMPL-Q">IMPL-Q</a>。</p>
@@ -176,7 +176,7 @@
 <p><strong>目标：</strong> parent design 的 <a class="id-ref" href="../design/spec-driven-development-design.html#DSGN-C">DSGN-C</a> 要求 CLAUDE 层（<code>CLAUDE.md</code>、<code>CLAUDE.local.md</code>）和 skill 里的规则一致。<a class="id-ref" href="../design/spec-driven-development-design.html#DSGN-A">DSGN-A</a> 的改动上限和 <a class="id-ref" href="../design/spec-driven-development-design.html#DSGN-B">DSGN-B</a> 的「什么时候记 ARD」要同时写进两处。</p>
 <p><strong>步骤：</strong> 标准文件改了之后，检查 CLAUDE 层里有没有对应的旧说法，一起改掉。2026-11-20 已改：<code>CLAUDE.local.md</code> 的改动上限从「10 行或 200 字符」改为「10 行并且 200 字符」，需求编号从不存在的 FR-12 改为 <a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-C">PRD-C</a>（<a href="../decision-history/spec-driven-development-decision-history.html#ard-ce">ARD-CE</a>）。</p>
 <p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-C">IMPL-C</a>。<strong>挡住：</strong> 无。</p>
-<p class="impl-verify"><strong>Verify:</strong> CLAUDE 层里：改动上限写的是「并且」，并引用 <a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-C">PRD-C</a>；没有 <code>FR-</code> 这类已禁止的编号；进度路径是 wayfinder 的地图目录（<a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-J">PRD-J</a>、<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CH">ARD-CH</a>）；文档目录是 <code>docs/features/&lt;f&gt;/&lt;类型&gt;/</code>（document-standard 的 <a class="id-ref" href="../design/spec-driven-development-design.html#DSGN-B">DSGN-B</a>）；列出的 skill 是 spec-write、spec-review 和 wayfinder（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CH">ARD-CH</a>）。2026-11-20 已按这几条改过 <code>CLAUDE.local.md</code>。</p>
+<p class="impl-verify"><strong>Verify:</strong> CLAUDE 层里：改动上限写的是「并且」，并引用 <a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-C">PRD-C</a>；没有 <code>FR-</code> 这类已禁止的编号；进度路径是 wayfinder 的地图目录（<a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-J">PRD-J</a>、<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CH">ARD-CH</a>）；文档目录是 <code>docs/features/&lt;f&gt;/&lt;类型&gt;/</code>（document-standard 的 <a class="id-ref" href="../design/spec-driven-development-design.html#DSGN-B">DSGN-B</a>）；列出的 skill 是 spec-write、spec-review 和 wayfinder（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CH">ARD-CH</a>）；写明 <a class="id-ref" href="../design/spec-driven-development-design.html#DSGN-B">DSGN-B</a>：decision-history 只记已生效的方向，AI 默认不自动加 ARD，拿不准就问人。2026-11-20 已按这几条改过 <code>CLAUDE.local.md</code>。</p>
 <h3 id="IMPL-S"><a class="id-ref" href="#IMPL-S">IMPL-S</a> — 插图与网页样式</h3>
 <p><strong>目标：</strong> 网页里的插图用 diagram-design 的默认配色，SVG 文件在生成网页时嵌进页面；插图规则分清 <span class="lvl lvl--must">MUST</span> 和 <span class="lvl lvl--nice">NICE</span>（<a href="../decision-history/spec-driven-development-decision-history.html#ard-ca">ARD-CA</a>）。</p>
 <p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-F">IMPL-F</a>。<strong>挡住：</strong> 无。</p>
@@ -201,11 +201,15 @@
 <p><strong>目标：</strong> <a href="../../../../../tools/judge_deepseek.py"><code>tools/judge_deepseek.py</code></a> 按 <a href="../decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a> 默认跑 5 次、4 次一致才算定论，输出里留 <code>claude_audit</code> 给 Claude 填。</p>
 <p><strong>依赖：</strong> 无。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-E">IMPL-E</a> 的报告部分。</p>
 <p class="impl-verify"><strong>Verify:</strong> <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-L">TST-L</a> 按 5 次判定。</p>
+<h3 id="IMPL-Y"><a class="id-ref" href="#IMPL-Y">IMPL-Y</a> — 语义审查案例的执行器</h3>
+<p><strong>目标：</strong> 一个能跑 spec-review、再判它的输出有没有找出埋下的问题的执行器；有了它才能写 <a class="id-ref" href="#IMPL-K">IMPL-K</a> 的 5 个语义案例。</p>
+<p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-X">IMPL-X</a>。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-K">IMPL-K</a> 的语义部分、<a class="id-ref" href="#IMPL-I">IMPL-I</a>。</p>
+<p class="impl-verify"><strong>Verify:</strong> 5 个语义案例能自动判出找没找到。</p>
 <h3>Execution order</h3>
 <p>先做不依赖别人的任务，被挡住的后做：</p>
 <ol>
 <li><a class="id-ref" href="#IMPL-A">IMPL-A</a>、<a class="id-ref" href="#IMPL-D">IMPL-D</a>、<a class="id-ref" href="#IMPL-G">IMPL-G</a>、<a class="id-ref" href="#IMPL-H">IMPL-H</a>、<a class="id-ref" href="#IMPL-U">IMPL-U</a>、<a class="id-ref" href="#IMPL-W">IMPL-W</a>、<a class="id-ref" href="#IMPL-X">IMPL-X</a>（互不依赖，可以同时做）</li>
-<li><a class="id-ref" href="#IMPL-C">IMPL-C</a></li>
+<li><a class="id-ref" href="#IMPL-C">IMPL-C</a>、<a class="id-ref" href="#IMPL-Y">IMPL-Y</a>（等 <a class="id-ref" href="#IMPL-X">IMPL-X</a>）</li>
 <li><a class="id-ref" href="#IMPL-B">IMPL-B</a>、<a class="id-ref" href="#IMPL-F">IMPL-F</a>、<a class="id-ref" href="#IMPL-J">IMPL-J</a>、<a class="id-ref" href="#IMPL-K">IMPL-K</a>、<a class="id-ref" href="#IMPL-L">IMPL-L</a>、<a class="id-ref" href="#IMPL-M">IMPL-M</a>、<a class="id-ref" href="#IMPL-R">IMPL-R</a></li>
 <li><a class="id-ref" href="#IMPL-N">IMPL-N</a>、<a class="id-ref" href="#IMPL-O">IMPL-O</a>、<a class="id-ref" href="#IMPL-P">IMPL-P</a>、<a class="id-ref" href="#IMPL-S">IMPL-S</a>（等 <a class="id-ref" href="#IMPL-F">IMPL-F</a>）、<a class="id-ref" href="#IMPL-T">IMPL-T</a>（等 <a class="id-ref" href="#IMPL-M">IMPL-M</a>）、<a class="id-ref" href="#IMPL-V">IMPL-V</a>（等 <a class="id-ref" href="#IMPL-H">IMPL-H</a>）</li>
 <li><a class="id-ref" href="#IMPL-Q">IMPL-Q</a></li>
@@ -298,6 +302,10 @@
 <tr>
 <td>2026-11-24</td>
 <td>第 11 轮审查后：<a class="id-ref" href="#IMPL-E">IMPL-E</a> 先跑 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-L">TST-L</a> 再跑 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-K">TST-K</a>，依赖 <a class="id-ref" href="#IMPL-X">IMPL-X</a>；<a class="id-ref" href="#IMPL-K">IMPL-K</a> 写明现状</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 12 轮审查后：新增 <a class="id-ref" href="#IMPL-Y">IMPL-Y</a> 语义案例执行器；<a class="id-ref" href="#IMPL-I">IMPL-I</a> 只要求机械案例；<a class="id-ref" href="#IMPL-R">IMPL-R</a> 加 <a class="id-ref" href="../design/spec-driven-development-design.html#DSGN-B">DSGN-B</a> 检查</td>
 </tr>
 </tbody></table></div>
       </div>

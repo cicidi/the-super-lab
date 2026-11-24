@@ -1,4 +1,4 @@
-<!-- SDD reader · source .md · git 6e7f30f -->
+<!-- SDD reader · source .md · git eea4896 -->
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light">
 <head>
@@ -1257,7 +1257,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <td>新建或修改 spec 文档</td>
 <td>用户的意图；三份标准文件</td>
 <td>改好的文档；改完告诉用户网页没更新、问要不要重建，commit 前必须重建（<a href="decision-history/spec-driven-development-decision-history.html#ard-cf">ARD-CF</a>）</td>
-<td>动笔前没判断「新建哪篇、还是改哪几篇」；一次改动超过 10 行或超过 200 字符而没有授权（parent design 的 DSGN-A）；悄悄改动上游文档</td>
+<td>动笔前没判断「新建哪篇、还是改哪几篇」；修改已有文件时一次超过 10 行或超过 200 字符而没有授权（parent design 的 DSGN-A；新建文件不算，挪出内容算修改，<a href="decision-history/spec-driven-development-decision-history.html#ard-ce">ARD-CE</a>）；悄悄改动上游文档</td>
 </tr>
 <tr>
 <td>spec-review</td>
@@ -1408,6 +1408,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <td>2026-11-24</td>
 <td>第 9 轮审查后：开头改为三个交付 skill；链到已划掉 ARD 的地方改链</td>
 </tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 12 轮审查后：spec-write 的改动上限写上新建文件例外（ARD-CE）</td>
+</tr>
 </tbody></table>
 </div>
 <p class="src">Canonical: <code>docs/features/spec-driven-development/design/spec-driven-development-design.md</code> · <code>docs/features/spec-driven-development/design/spec-driven-development-design-skill-contracts.md</code></p>
@@ -1476,8 +1480,8 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <h3 id="IMPL-I">IMPL-I — spec-review 报告机械 MUST</h3>
 <p><strong>目标：</strong> spec-review 能找出机械 MUST 的违反，并给出修改建议（<a href="decision-history/spec-driven-development-decision-history.html#ard-p">ARD-P</a>）。</p>
 <p><strong>步骤：</strong> document-standard 和 test-plan 里关于 review 的部分稳定后，修改 <code>skills/spec-review/SKILL.md</code>。</p>
-<p><strong>依赖：</strong> IMPL-B、IMPL-K、IMPL-E。<strong>挡住：</strong> 无。</p>
-<p><strong>Verify:</strong> TST-H 的案例全部检出。</p>
+<p><strong>依赖：</strong> IMPL-B、IMPL-K、IMPL-E；语义案例部分还依赖 IMPL-Y。<strong>挡住：</strong> 无。</p>
+<p><strong>Verify:</strong> TST-H 的 11 个机械案例全部检出；语义案例在 IMPL-Y 完成前标为 Unverified。</p>
 <h3 id="IMPL-J">IMPL-J — 评测配置和配置测试</h3>
 <p><strong>目标：</strong> <code>eval.yaml</code> 能用 <code>deepseek-flash</code> 生成 gold 跑 3 次、复核跑 5 次；目标仓库可以用环境变量覆盖；<code>test_eval_config.py</code> 在配置缺项时报错。</p>
 <p><strong>依赖：</strong> IMPL-D。<strong>挡住：</strong> IMPL-E、IMPL-Q。</p>
@@ -1561,7 +1565,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <p><strong>目标：</strong> parent design 的 DSGN-C 要求 CLAUDE 层（<code>CLAUDE.md</code>、<code>CLAUDE.local.md</code>）和 skill 里的规则一致。DSGN-A 的改动上限和 DSGN-B 的「什么时候记 ARD」要同时写进两处。</p>
 <p><strong>步骤：</strong> 标准文件改了之后，检查 CLAUDE 层里有没有对应的旧说法，一起改掉。2026-11-20 已改：<code>CLAUDE.local.md</code> 的改动上限从「10 行或 200 字符」改为「10 行并且 200 字符」，需求编号从不存在的 FR-12 改为 PRD-C（<a href="decision-history/spec-driven-development-decision-history.html#ard-ce">ARD-CE</a>）。</p>
 <p><strong>依赖：</strong> IMPL-C。<strong>挡住：</strong> 无。</p>
-<p><strong>Verify:</strong> CLAUDE 层里：改动上限写的是「并且」，并引用 PRD-C；没有 <code>FR-</code> 这类已禁止的编号；进度路径是 wayfinder 的地图目录（PRD-J、ARD-CH）；文档目录是 <code>docs/features/&lt;f&gt;/&lt;类型&gt;/</code>（document-standard 的 DSGN-B）；列出的 skill 是 spec-write、spec-review 和 wayfinder（ARD-CH）。2026-11-20 已按这几条改过 <code>CLAUDE.local.md</code>。</p>
+<p><strong>Verify:</strong> CLAUDE 层里：改动上限写的是「并且」，并引用 PRD-C；没有 <code>FR-</code> 这类已禁止的编号；进度路径是 wayfinder 的地图目录（PRD-J、ARD-CH）；文档目录是 <code>docs/features/&lt;f&gt;/&lt;类型&gt;/</code>（document-standard 的 DSGN-B）；列出的 skill 是 spec-write、spec-review 和 wayfinder（ARD-CH）；写明 DSGN-B：decision-history 只记已生效的方向，AI 默认不自动加 ARD，拿不准就问人。2026-11-20 已按这几条改过 <code>CLAUDE.local.md</code>。</p>
 <h3 id="IMPL-S">IMPL-S — 插图与网页样式</h3>
 <p><strong>目标：</strong> 网页里的插图用 diagram-design 的默认配色，SVG 文件在生成网页时嵌进页面；插图规则分清 MUST 和 NICE（<a href="decision-history/spec-driven-development-decision-history.html#ard-ca">ARD-CA</a>）。</p>
 <p><strong>依赖：</strong> IMPL-F。<strong>挡住：</strong> 无。</p>
@@ -1586,11 +1590,15 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <p><strong>目标：</strong> <code>tools/judge_deepseek.py</code> 按 <a href="decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a> 默认跑 5 次、4 次一致才算定论，输出里留 <code>claude_audit</code> 给 Claude 填。</p>
 <p><strong>依赖：</strong> 无。<strong>挡住：</strong> IMPL-E 的报告部分。</p>
 <p><strong>Verify:</strong> TST-L 按 5 次判定。</p>
+<h3 id="IMPL-Y">IMPL-Y — 语义审查案例的执行器</h3>
+<p><strong>目标：</strong> 一个能跑 spec-review、再判它的输出有没有找出埋下的问题的执行器；有了它才能写 IMPL-K 的 5 个语义案例。</p>
+<p><strong>依赖：</strong> IMPL-X。<strong>挡住：</strong> IMPL-K 的语义部分、IMPL-I。</p>
+<p><strong>Verify:</strong> 5 个语义案例能自动判出找没找到。</p>
 <h3>Execution order</h3>
 <p>先做不依赖别人的任务，被挡住的后做：</p>
 <ol>
 <li>IMPL-A、IMPL-D、IMPL-G、IMPL-H、IMPL-U、IMPL-W、IMPL-X（互不依赖，可以同时做）</li>
-<li>IMPL-C</li>
+<li>IMPL-C、IMPL-Y（等 IMPL-X）</li>
 <li>IMPL-B、IMPL-F、IMPL-J、IMPL-K、IMPL-L、IMPL-M、IMPL-R</li>
 <li>IMPL-N、IMPL-O、IMPL-P、IMPL-S（等 IMPL-F）、IMPL-T（等 IMPL-M）、IMPL-V（等 IMPL-H）</li>
 <li>IMPL-Q</li>
@@ -1683,6 +1691,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td>2026-11-24</td>
 <td>第 11 轮审查后：IMPL-E 先跑 TST-L 再跑 TST-K，依赖 IMPL-X；IMPL-K 写明现状</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 12 轮审查后：新增 IMPL-Y 语义案例执行器；IMPL-I 只要求机械案例；IMPL-R 加 DSGN-B 检查</td>
 </tr>
 </tbody></table>
 </div>
@@ -1963,11 +1975,11 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 </tr>
 <tr>
 <td>spec-write 可以发布</td>
-<td>TST-E 分数 1 满分、分数 2 不退步；TST-F 四种输入全部通过；TST-G 没有差异；TST-L 5 次里至少 4 次通过；TST-K 报告结构齐全</td>
+<td>TST-E 分数 1 满分、分数 2 不退步；TST-F 四种输入全部通过；TST-L 5 次里至少 4 次通过；TST-K 报告结构齐全</td>
 </tr>
 <tr>
 <td>spec-review 可以发布</td>
-<td>TST-H 找出 100%、误报 0；TST-I 不低于上一次；TST-L 5 次里至少 4 次通过</td>
+<td>TST-G 没有差异；TST-H 找出 100%、误报 0；TST-I 不低于上一次；TST-L 5 次里至少 4 次通过</td>
 </tr>
 <tr>
 <td>wayfinder 可以发布</td>
@@ -2246,6 +2258,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td>2026-11-24</td>
 <td>第 11 轮审查后：语义审查案例标明还没写；门槛表加 TST-N、TST-C、TST-K</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 12 轮审查后：TST-G 移到 spec-review 发布门槛</td>
 </tr>
 </tbody></table>
 </div>

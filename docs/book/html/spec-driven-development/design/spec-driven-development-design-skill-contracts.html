@@ -50,7 +50,7 @@
 <td>新建或修改 spec 文档</td>
 <td>用户的意图；三份标准文件</td>
 <td>改好的文档；改完告诉用户网页没更新、问要不要重建，commit 前必须重建（<a href="../decision-history/spec-driven-development-decision-history.html#ard-cf">ARD-CF</a>）</td>
-<td>动笔前没判断「新建哪篇、还是改哪几篇」；一次改动超过 10 行或超过 200 字符而没有授权（parent design 的 <a class="id-ref" href="spec-driven-development-design.html#DSGN-A">DSGN-A</a>）；悄悄改动上游文档</td>
+<td>动笔前没判断「新建哪篇、还是改哪几篇」；修改已有文件时一次超过 10 行或超过 200 字符而没有授权（parent design 的 <a class="id-ref" href="spec-driven-development-design.html#DSGN-A">DSGN-A</a>；新建文件不算，挪出内容算修改，<a href="../decision-history/spec-driven-development-decision-history.html#ard-ce">ARD-CE</a>）；悄悄改动上游文档</td>
 </tr>
 <tr>
 <td>spec-review</td>
@@ -200,6 +200,10 @@
 <tr>
 <td>2026-11-24</td>
 <td>第 9 轮审查后：开头改为三个交付 skill；链到已划掉 ARD 的地方改链</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 12 轮审查后：spec-write 的改动上限写上新建文件例外（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CE">ARD-CE</a>）</td>
 </tr>
 </tbody></table></div>
       </div>
