@@ -75,7 +75,7 @@
 </tr></thead><tbody>
 <tr>
 <td><a href="../../../../../skills/spec-organize/tests/eval.yaml"><code>skills/spec-organize/tests/eval.yaml</code></a></td>
-<td>评测配置，每个键的含义见下表。现在的文件还指向 SDD 目录，由 <a class="id-ref" href="../impl-plan/spec-driven-development-impl-plan.html#IMPL-P">IMPL-P</a> 改回 iPhone 案例</td>
+<td>评测配置，每个键的含义见下表。<code>cases.iphone.path</code> 指向 iPhone 案例 <code>gold/v1</code>（<a class="id-ref" href="../impl-plan/spec-driven-development-impl-plan.html#IMPL-P">IMPL-P</a>）</td>
 </tr>
 <tr>
 <td><code>skills/spec-organize/tests/checks/</code></td>
@@ -237,19 +237,21 @@
 <p><strong>通过条件：</strong> 剩下的题答对至少 80%，并且没解释的词是 0 个。跑 3 次，至少 2 次通过才算这篇通过。可读性判断的波动比 <span class="lvl lvl--must">MUST</span> 判断大，所以这里不要求 3 次都通过。</p>
 <p><strong>判定：</strong> 判分模型 <code>deepseek-flash</code>。实现见 impl-plan 的 <a class="id-ref" href="../impl-plan/spec-driven-development-impl-plan.html#IMPL-Q">IMPL-Q</a>。</p>
 <h4 id="TST-W"><a class="id-ref" href="#TST-W">TST-W</a> — 网页插图与样式</h4>
-<p><strong>目标：</strong> 站点内嵌 SVG、diagram-design 皮肤、无未解析 <code>data-svg</code>（<a class="id-ref" href="#DSGN-N-D">DSGN-N-D</a>、<a href="../decision-history/spec-driven-development-decision-history.html#ard-ca">ARD-CA</a>）。</p>
+<p><strong>目标：</strong> 站点内嵌 SVG、diagram-design 皮肤、无未解析 <code>data-svg</code>（document-standard 的 DSGN-N-D、<a href="../decision-history/spec-driven-development-decision-history.html#ard-ca">ARD-CA</a>）。</p>
 <p><strong>通过条件：</strong> <a href="../../../../../tests/test_sdd_site_render.py"><code>tests/test_sdd_site_render.py</code></a> 通过；每个 <code>-fig-*.svg</code> 在对应 HTML 中出现一次；<code>docs/book/html</code> 无 <code>data-svg</code>。插图命名、同目录、无脚本由 <code>checks/figures.py</code> 检查。</p>
 <p><strong>判定：</strong> Python。</p>
 <h4 id="TST-X"><a class="id-ref" href="#TST-X">TST-X</a> — L1 内容不减少</h4>
 <p><strong>目标：</strong> 改文档时不靠删 L1 内容凑分（<span class="lvl lvl--must">MUST</span>-D）。<strong>输入：</strong> 两个 git 版本之间的 <code>docs/features/&lt;f&gt;/</code>。</p>
 <p><strong>通过条件：</strong> 旧版本的每个编号标题在新版本里还在；每篇的 <span class="lvl lvl--must">MUST</span> 句数不减少。例外：decision-history 新增的 ARD 提到了这个编号或这篇文档。<strong>判定：</strong> Python（<a href="../../../../../tools/check_l1_delta.py"><code>tools/check_l1_delta.py</code></a>）。</p>
+<h4 id="TST-Y"><a class="id-ref" href="#TST-Y">TST-Y</a> — skill 版本戳和 PRD 一致</h4>
+<p><strong>目标：</strong> 四个 SDD <code>SKILL.md</code> 的版本戳等于 parent PRD 的 <code>version</code>，且 frontmatter 里的 <code>spec_*</code> 键各只出现一次（<a href="../decision-history/spec-driven-development-decision-history.html#ard-cc">ARD-CC</a>）。<strong>判定：</strong> Python（<code>build_spec_skills.py --check</code>）。</p>
 <h3>Test Execution Order</h3>
 <ol>
 <li><a class="id-ref" href="#TST-A">TST-A</a>：<span class="lvl lvl--must">MUST</span> 清单覆盖率不到 100% 就停。</li>
 <li><a class="id-ref" href="#TST-B">TST-B</a>：检查脚本失效就停。</li>
 <li><a class="id-ref" href="#TST-O">TST-O</a>、<a class="id-ref" href="#TST-P">TST-P</a>、<a class="id-ref" href="#TST-V">TST-V</a>：design 的覆盖、证据、可读性。这一步的 <a class="id-ref" href="#TST-V">TST-V</a> 只测 SDD 自己的文档。</li>
 <li><a class="id-ref" href="#TST-C">TST-C</a>，然后 <a class="id-ref" href="#TST-D">TST-D</a>：第一次运行，或者 gold 升版时。</li>
-<li><a class="id-ref" href="#TST-G">TST-G</a>、<a class="id-ref" href="#TST-N">TST-N</a>、<a class="id-ref" href="#TST-R">TST-R</a>、<a class="id-ref" href="#TST-S">TST-S</a>、<a class="id-ref" href="#TST-T">TST-T</a>、<a class="id-ref" href="#TST-U">TST-U</a>、<a class="id-ref" href="#TST-W">TST-W</a>、<a class="id-ref" href="#TST-X">TST-X</a>。</li>
+<li><a class="id-ref" href="#TST-G">TST-G</a>、<a class="id-ref" href="#TST-N">TST-N</a>、<a class="id-ref" href="#TST-R">TST-R</a>、<a class="id-ref" href="#TST-S">TST-S</a>、<a class="id-ref" href="#TST-T">TST-T</a>、<a class="id-ref" href="#TST-U">TST-U</a>、<a class="id-ref" href="#TST-W">TST-W</a>、<a class="id-ref" href="#TST-X">TST-X</a>、<a class="id-ref" href="#TST-Y">TST-Y</a>。</li>
 <li><a class="id-ref" href="#TST-E">TST-E</a>、<a class="id-ref" href="#TST-F">TST-F</a>，然后对 <a class="id-ref" href="#TST-C">TST-C</a>、<a class="id-ref" href="#TST-E">TST-E</a> 里 spec-write 写出的文档跑 <a class="id-ref" href="#TST-V">TST-V</a>。</li>
 <li><a class="id-ref" href="#TST-H">TST-H</a>，然后 <a class="id-ref" href="#TST-I">TST-I</a>。</li>
 <li><a class="id-ref" href="#TST-Q">TST-Q</a>：mock 执行。</li>
@@ -407,7 +409,7 @@
 <td><a class="id-ref" href="#TST-R">TST-R</a></td>
 </tr>
 <tr>
-<td><a class="id-ref" href="#DSGN-N-D">DSGN-N-D</a>（插图与样式）</td>
+<td>document-standard 的 DSGN-N-D（插图与样式）</td>
 <td><a class="id-ref" href="#TST-W">TST-W</a></td>
 </tr>
 <tr>
@@ -523,6 +525,10 @@
 <tr>
 <td>2026-11-20</td>
 <td><a class="id-ref" href="#TST-X">TST-X</a>：L1 内容不减少</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>新增 <a class="id-ref" href="#TST-Y">TST-Y</a>（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CC">ARD-CC</a>）；DSGN-N-D 补 feature 名；eval.yaml 现状更新</td>
 </tr>
 </tbody></table></div>
       </div>

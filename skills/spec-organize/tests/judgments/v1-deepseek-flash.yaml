@@ -1,104 +1,221 @@
 model: deepseek-flash
 runs: 3
 target: must
-corpus_sha: b3e6be1ad9a8be2b
+corpus_sha: 2f1b5d4ae9859ce1
 items:
+- id: MUST-B
+  verdict: pass
+  votes:
+  - pass
+  - pass
+  - pass
+  evidence: 'document-standard-design.md DSGN-B: six types may split; entry file links
+    parts; part naming noun/sequence.'
+  confidence: 0.95
+- id: MUST-D
+  verdict: pass
+  votes:
+  - pass
+  - pass
+  - pass
+  evidence: 'document-standard-design.md DSGN-B: entry `<f>-<type>.md` must link each
+    part; collisions DSGN-K.'
+  confidence: 0.95
+- id: MUST-F
+  verdict: pass
+  votes:
+  - pass
+  - pass
+  - pass
+  evidence: 'document-standard-design.md DSGN-C: translation copies local only, banner
+    defers to source, headings translatable.'
+  confidence: 0.95
 - id: MUST-H
   verdict: pass
   votes:
   - pass
   - pass
   - pass
-  evidence: 'document-standard-design.md DSGN-C: raw needs no frontmatter/Change Log/INDEX;
-    promoted facts link, not authoritative.'
-  confidence: 0.8
+  evidence: 'document-standard-design.md DSGN-D: draft may skip book summary; final/merged
+    changes must reach book.'
+  confidence: 0.95
+- id: MUST-K
+  verdict: pass
+  votes:
+  - pass
+  - pass
+  - pass
+  evidence: spec-write/SKILL.md Quality Gates + document-standard-design.md DSGN-E
+    require deps, blocks, done; order/mock.
+  confidence: 0.95
 - id: MUST-N
   verdict: pass
   votes:
   - pass
   - pass
   - pass
-  evidence: 'spec-organize/SKILL.md Authority by Concern + Sync mode: report and ask,
-    never silently pick spec/code side.'
+  evidence: 'document-standard-design.md DSGN-E and SPEC-STANDARD Readability: undergrad
+    with doc+glossary; TST-V.'
   confidence: 0.95
-- id: MUST-P
+- id: MUST-Q
   verdict: pass
   votes:
   - pass
   - pass
   - pass
-  evidence: spec-organize/SKILL.md anti-pattern says content review is spec-review,
-    not lint; spec-review Branch A is semantic review.
-  confidence: 0.9
+  evidence: 'document-standard-design.md DSGN-F: IDs immutable, never reused; new
+    ID for changed rule.'
+  confidence: 0.95
+- id: MUST-R
+  verdict: pass
+  votes:
+  - pass
+  - pass
+  - pass
+  evidence: 'document-standard-design.md DSGN-F: keep old-new ID table; old anchor
+    above renamed heading.'
+  confidence: 0.95
 - id: MUST-T
   verdict: pass
   votes:
   - pass
   - pass
   - pass
-  evidence: pipeline-design PIPE-D; spec-pipeline/SKILL.md Step 2 interview, optional
-    map skill, AI judges splits/decisions/scratch.
-  confidence: 0.9
+  evidence: 'document-standard-design.md DSGN-F: IDs unique per feature/type; cross-feature
+    cite feature/id or name feature.'
+  confidence: 0.95
 - id: MUST-U
   verdict: pass
   votes:
   - pass
   - pass
   - pass
-  evidence: 'spec-pipeline/SKILL.md MUST gate: no silent rewrite of upstream artifacts
-    (PIPE-I); conflicts report/ask.'
-  confidence: 0.9
+  evidence: 'document-standard-design.md DSGN-F + spec-write/SKILL.md: prose current
+    only, link ARD, strike only decision-history.'
+  confidence: 0.95
 - id: MUST-V
   verdict: pass
   votes:
   - pass
   - pass
   - pass
-  evidence: pipeline-design PIPE-A defines spec-pipeline responsibilities; spec-pipeline/SKILL.md
-    process and MUST gates mirror them.
-  confidence: 0.85
-- id: MUST-W
-  verdict: pass
-  votes:
-  - pass
-  - pass
-  - pass
-  evidence: pipeline-design PIPE-D item 2; spec-pipeline Step 2 AI judges splits/decisions/scratch,
-    no fixed template.
-  confidence: 0.85
+  evidence: 'document-standard-design.md DSGN-J: every ARD has Evidence Appendix entry
+    with reason/rejected options.'
+  confidence: 0.95
 - id: MUST-X
   verdict: pass
   votes:
   - pass
   - pass
   - pass
-  evidence: pipeline-design PIPE-D item 4; spec-pipeline Step 2 interview required,
-    pluggable map optional/not required.
-  confidence: 0.85
+  evidence: 'document-standard-design.md DSGN-M MUST: DSGN-A contract fully met incl
+    immutable/non-reused IDs.'
+  confidence: 0.92
 - id: MUST-Y
   verdict: pass
   votes:
   - pass
   - pass
   - pass
-  evidence: pipeline-design PIPE-D item 5; spec-pipeline Step 2 confirm before creating
-    paths; anti-pattern forbids unconfirmed dirs.
-  confidence: 0.85
+  evidence: 'document-standard-design.md DSGN-M/DSGN-G and SPEC-STANDARD Conflicts:
+    detect, report, ask; never silent.'
+  confidence: 0.95
 - id: MUST-Z
   verdict: pass
   votes:
   - pass
   - pass
   - pass
-  evidence: pipeline-design PIPE-E lists convergence conditions; spec-pipeline Step
-    3-4 gates Downstream on PIPE-E convergence.
-  confidence: 0.85
-- id: MUST-AB
+  evidence: 'document-standard-design.md DSGN-M/DSGN-I and spec-write Quality Gates:
+    never delete L1.'
+  confidence: 0.95
+- id: MUST-AA
   verdict: pass
   votes:
   - pass
   - pass
   - pass
-  evidence: 'spec-driven-development-design.md §8: sub-features need not have all
-    five; review checks only existing docs.'
-  confidence: 0.9
+  evidence: 'document-standard-design.md DSGN-M/DSGN-L: consolidation preserves every
+    decision; spec-organize gate.'
+  confidence: 0.95
+- id: MUST-AF
+  verdict: pass
+  votes:
+  - pass
+  - pass
+  - pass
+  evidence: 'document-standard-design.md DSGN-M and spec-write/SKILL.md: prose edits
+    obey DSGN-F edit-existing-prose.'
+  confidence: 0.95
+- id: MUST-AG
+  verdict: pass
+  votes:
+  - pass
+  - pass
+  - pass
+  evidence: 'document-standard-design.md DSGN-M, PIPE-L, SPEC-STANDARD: cite evidence;
+    UNKNOWN if not found.'
+  confidence: 0.95
+- id: MUST-AH
+  verdict: pass
+  votes:
+  - pass
+  - pass
+  - pass
+  evidence: 'document-standard-design.md DSGN-M + DSGN-E: four MUSTs (deps/blocks/done,
+    commit, one tracker, readable).'
+  confidence: 0.95
+- id: MUST-AI
+  verdict: pass
+  votes:
+  - pass
+  - pass
+  - pass
+  evidence: 'document-standard-design.md DSGN-M: translation local, ID mapping+anchors,
+    every ARD explained.'
+  confidence: 0.95
+- id: MUST-AJ
+  verdict: pass
+  votes:
+  - pass
+  - pass
+  - pass
+  evidence: 'pipeline-design.md PIPE-D step 7 and PIPE-L: owner one of three; AI adds
+    unseen blind spots/risks.'
+  confidence: 0.95
+- id: MUST-AK
+  verdict: pass
+  votes:
+  - pass
+  - pass
+  - pass
+  evidence: 'pipeline-design.md PIPE-L and SPEC-STANDARD: design with sub-problems
+    must have ownership table; not-applicable allowed.'
+  confidence: 0.95
+- id: MUST-AL
+  verdict: pass
+  votes:
+  - pass
+  - pass
+  - pass
+  evidence: 'pipeline-design.md PIPE-L and spec-write/SKILL.md: owner only AI查/人决定/AI查完人决定;
+    add unseen rows.'
+  confidence: 0.95
+- id: MUST-AM
+  verdict: pass
+  votes:
+  - pass
+  - pass
+  - pass
+  evidence: 'pipeline-design.md PIPE-L and SPEC-STANDARD: evidence traceable to raw/URL/ARD;
+    otherwise UNKNOWN, no guessing.'
+  confidence: 0.95
+- id: MUST-AN
+  verdict: pass
+  votes:
+  - pass
+  - pass
+  - pass
+  evidence: 'spec-driven-development-design.md DSGN-C and impl-plan IMPL-R: plan must
+    include skill + CLAUDE layer same rules.'
+  confidence: 0.95

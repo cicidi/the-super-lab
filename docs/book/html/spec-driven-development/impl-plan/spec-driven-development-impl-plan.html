@@ -40,7 +40,7 @@
 <li><strong>测试：</strong> 测什么见 <a href="../test-plan/spec-driven-development-test-plan.html">test-plan</a>，测试文件放在 <code>skills/spec-organize/tests/</code>。</li>
 <li><strong>不做 wayfinder-import sub-feature</strong>（<a href="../decision-history/spec-driven-development-decision-history.html#ard-t">ARD-T</a>）。</li>
 <li><strong>评测：</strong> 用 <code>deepseek-flash</code> 跑 3 次；跑分结果和报告不提交（<a href="../decision-history/spec-driven-development-decision-history.html#ard-ad">ARD-AD</a>）。打分用 iPhone 案例（<a href="../decision-history/spec-driven-development-decision-history.html#ard-bl">ARD-BL</a>）。</li>
-<li><strong>不迁移旧文档</strong>，只修 SDD 自己这套（<a href="../decision-history/spec-driven-development-decision-history.html#ard-af">ARD-AF</a>）。</li>
+<li><strong>不迁移旧文档</strong>，只修 SDD 自己这套（<a href="../decision-history/spec-driven-development-decision-history.html#ard-cc">ARD-CC</a>，重述 <a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-AF">ARD-AF</a>）。</li>
 </ul>
 <h3 id="IMPL-A"><a class="id-ref" href="#IMPL-A">IMPL-A</a> — skill 目录改名</h3>
 <p><strong>目标：</strong> <code>doc-organize</code> 改名为 <code>spec-organize</code>，<code>doc-review</code> 改名为 <code>spec-review</code>。</p>
@@ -185,13 +185,17 @@
 <p><strong>目标：</strong> 实现 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-X">TST-X</a>：<code>tools/check_l1_delta.py --base &lt;git ref&gt;</code>，默认和上一个 commit 比。</p>
 <p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-M">IMPL-M</a>。<strong>挡住：</strong> 无。</p>
 <p class="impl-verify"><strong>Verify:</strong> <code>test_tst_x_l1_delta.py</code> 通过；对当前分支运行报 0 个问题。</p>
+<h3 id="IMPL-U"><a class="id-ref" href="#IMPL-U">IMPL-U</a> — spec bundle 版本戳</h3>
+<p><strong>目标：</strong> <a href="../../../../../tools/build_spec_skills.py"><code>tools/build_spec_skills.py</code></a> 按 <a href="../decision-history/spec-driven-development-decision-history.html#ard-cc">ARD-CC</a> 给四个 SDD <code>SKILL.md</code> 打版本戳。</p>
+<p><strong>依赖：</strong> 无。<strong>挡住：</strong> 无。</p>
+<p class="impl-verify"><strong>Verify:</strong> <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-Y">TST-Y</a> 通过。</p>
 <h3>Execution order</h3>
 <p>先做不依赖别人的任务，被挡住的后做：</p>
 <ol>
-<li><a class="id-ref" href="#IMPL-A">IMPL-A</a>、<a class="id-ref" href="#IMPL-D">IMPL-D</a>、<a class="id-ref" href="#IMPL-G">IMPL-G</a>、<a class="id-ref" href="#IMPL-H">IMPL-H</a>（互不依赖，可以同时做）</li>
+<li><a class="id-ref" href="#IMPL-A">IMPL-A</a>、<a class="id-ref" href="#IMPL-D">IMPL-D</a>、<a class="id-ref" href="#IMPL-G">IMPL-G</a>、<a class="id-ref" href="#IMPL-H">IMPL-H</a>、<a class="id-ref" href="#IMPL-U">IMPL-U</a>（互不依赖，可以同时做）</li>
 <li><a class="id-ref" href="#IMPL-C">IMPL-C</a></li>
-<li><a class="id-ref" href="#IMPL-B">IMPL-B</a>、<a class="id-ref" href="#IMPL-F">IMPL-F</a>、<a class="id-ref" href="#IMPL-J">IMPL-J</a>、<a class="id-ref" href="#IMPL-K">IMPL-K</a>、<a class="id-ref" href="#IMPL-L">IMPL-L</a>、<a class="id-ref" href="#IMPL-M">IMPL-M</a>、<a class="id-ref" href="#IMPL-R">IMPL-R</a>、<a class="id-ref" href="#IMPL-S">IMPL-S</a>、<a class="id-ref" href="#IMPL-T">IMPL-T</a></li>
-<li><a class="id-ref" href="#IMPL-N">IMPL-N</a>、<a class="id-ref" href="#IMPL-O">IMPL-O</a>、<a class="id-ref" href="#IMPL-P">IMPL-P</a></li>
+<li><a class="id-ref" href="#IMPL-B">IMPL-B</a>、<a class="id-ref" href="#IMPL-F">IMPL-F</a>、<a class="id-ref" href="#IMPL-J">IMPL-J</a>、<a class="id-ref" href="#IMPL-K">IMPL-K</a>、<a class="id-ref" href="#IMPL-L">IMPL-L</a>、<a class="id-ref" href="#IMPL-M">IMPL-M</a>、<a class="id-ref" href="#IMPL-R">IMPL-R</a></li>
+<li><a class="id-ref" href="#IMPL-N">IMPL-N</a>、<a class="id-ref" href="#IMPL-O">IMPL-O</a>、<a class="id-ref" href="#IMPL-P">IMPL-P</a>、<a class="id-ref" href="#IMPL-S">IMPL-S</a>（等 <a class="id-ref" href="#IMPL-F">IMPL-F</a>）、<a class="id-ref" href="#IMPL-T">IMPL-T</a>（等 <a class="id-ref" href="#IMPL-M">IMPL-M</a>）</li>
 <li><a class="id-ref" href="#IMPL-Q">IMPL-Q</a></li>
 <li><a class="id-ref" href="#IMPL-E">IMPL-E</a>（评测要等 spec 可读、测试骨架齐全、gold 改回 iPhone 之后再跑）</li>
 <li><a class="id-ref" href="#IMPL-I">IMPL-I</a></li>
@@ -246,6 +250,10 @@
 <tr>
 <td>2026-11-20</td>
 <td><a class="id-ref" href="#IMPL-P">IMPL-P</a> 除 <span class="lvl lvl--must">MUST</span> 清单出处外已完成；<a class="id-ref" href="#IMPL-Q">IMPL-Q</a> 脚本就绪（未跑 API）；新增 <a class="id-ref" href="#IMPL-T">IMPL-T</a></td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td><a class="id-ref" href="#IMPL-S">IMPL-S</a>、<a class="id-ref" href="#IMPL-T">IMPL-T</a> 移到依赖之后的批次；新增 <a class="id-ref" href="#IMPL-U">IMPL-U</a>；不迁移旧文档改链 <a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CC">ARD-CC</a></td>
 </tr>
 </tbody></table></div>
       </div>

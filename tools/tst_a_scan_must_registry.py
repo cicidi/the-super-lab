@@ -13,9 +13,41 @@ SOURCES = [
     ROOT / "docs/features/spec-driven-development/design/spec-driven-development-design.md",
 ]
 
-PAT = re.compile(
-    r"(?i)(MUST NOT|MUST|禁止|不得|never delete L1|Detect → Report → Ask)"
-)
+# A rule line sits inside a numbered clause (### DSGN-X / ### PIPE-X) and either
+# carries a "（MUST" marker or says 必须/不得/禁止. Lines that only mention the word
+# MUST (overviews, rejected options, test pointers) are not rules.
+CLAUSE = re.compile(r"^#{3,4} (?:DSGN|PIPE)-[A-Z]")
+SECTION = re.compile(r"^## ")
+MARK = re.compile(r"[（(]MUST")
+MODAL = re.compile(r"必须|不得|禁止")
+NEGATED = re.compile(r"不是[^。]*必须")  # "不是 SDD 必须安装的" is not a rule
+GATE_START = "**MUST，做不到就算失败：**"
+GATE_END = "**NICE"
+
+
+def rule_lines(text: str):
+    """Yield (line_no, line) for MUST rule lines in numbered clauses."""
+    in_clause = in_gate = False
+    for i, line in enumerate(text.splitlines(), 1):
+        stripped = line.strip()
+        if CLAUSE.match(line):
+            in_clause, in_gate = True, False
+            continue
+        if SECTION.match(line):
+            in_clause = in_gate = False
+            continue
+        if not in_clause or not stripped or stripped.startswith("|"):
+            continue
+        if stripped.startswith(GATE_START):
+            in_gate = True
+            continue
+        if stripped.startswith(GATE_END):
+            in_gate = False
+            continue
+        if NEGATED.search(line):
+            continue
+        if MARK.search(line) or MODAL.search(line) or (in_gate and stripped.startswith("- ")):
+            yield i, line
 
 
 def _letter(n: int) -> str:
@@ -38,21 +70,18 @@ def main() -> None:
             print(f"missing: {path}")
             continue
         rel = path.relative_to(ROOT).as_posix()
-        for i, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
-            if PAT.search(line) and line.strip() and not line.strip().startswith("|"):
-                if any(s in line for s in ("本篇 MUST 进其 registry", "扫入 `must_registry.yaml`", "待一起 review")):
-                    continue
-                text = line.strip()[:500]
-                print(f"{rel}:{i}: {text[:120]}")
-                items.append(
-                    {
-                        "id": f"MUST-{_letter(len(items))}",
-                        "source": f"{rel}:{i}",
-                        "text": text,
-                        "method": "llm",
-                        "check": "",
-                    }
-                )
+        for i, line in rule_lines(path.read_text(encoding="utf-8")):
+            text = line.strip()[:500]
+            print(f"{rel}:{i}: {text[:120]}")
+            items.append(
+                {
+                    "id": f"MUST-{_letter(len(items))}",
+                    "source": f"{rel}:{i}",
+                    "text": text,
+                    "method": "llm",
+                    "check": "",
+                }
+            )
     print(f"\n# candidates: {len(items)}")
     if write and items:
         out = ROOT / "skills/spec-organize/tests/must_registry.yaml"

@@ -32,6 +32,6 @@ annotations:
   - id: BAD-D
     kind: bad
     where: exemplar/ (TST-D)
-    text: An existing sentence was deleted instead of struck, with no ref for why.
-    expected_fix: Keep ~~the old sentence~~, write the new sentence beside it, and cite an ARD or a link.
+    text: Body text outside decision-history carries ~~struck~~ old sentences (ARD-BM).
+    expected_fix: Remove the strikethrough; state only the current rule and link the ARD that changed it.
     added_in: v1

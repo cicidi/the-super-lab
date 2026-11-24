@@ -47,6 +47,11 @@
 <th>Decision</th>
 </tr></thead><tbody>
 <tr>
+<td><a class="id-ref" href="#ARD-CC">ARD-CC</a></td>
+<td>2026-11-24</td>
+<td>parent PRD 的 <code>version</code> 是 spec bundle（整套 SDD spec）的版本；<a href="../../../../../tools/build_spec_skills.py"><code>tools/build_spec_skills.py</code></a> 把它印进四个 SDD <code>SKILL.md</code>，只标来源，不做迁移</td>
+</tr>
+<tr>
 <td><a class="id-ref" href="#ARD-CB">ARD-CB</a></td>
 <td>2026-11-20</td>
 <td>网页离线可读指正文与已提交的 SVG 插图；字体与 Mermaid 可联网加载（<a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-O">PRD-O</a>）</td>
@@ -64,7 +69,7 @@
 <tr>
 <td><a class="id-ref" href="#ARD-BY">ARD-BY</a></td>
 <td>2026-11-20</td>
-<td>reader PRD 的 <a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-L">PRD-L</a>（全站样式统一）降为 <span class="lvl lvl--nice">NICE</span>，和 reader design 的 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#DSGN-N-D">DSGN-N-D</a> 一致</td>
+<td>reader PRD 的 <a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-L">PRD-L</a>（全站样式统一）降为 <span class="lvl lvl--nice">NICE</span>，和 reader design 的 DSGN-N-D 一致</td>
 </tr>
 <tr>
 <td><a class="id-ref" href="#ARD-BX">ARD-BX</a></td>
@@ -287,9 +292,9 @@
 <td>是否收敛由规则自动判断（pipeline design 的 PIPE-E-A 到 PIPE-E-C）：每个未决事项都标明是否阻塞；AI 不能自己宣布「已经够稳」</td>
 </tr>
 <tr>
-<td><a class="id-ref" href="#ARD-AF">ARD-AF</a></td>
+<td><del><a class="id-ref" href="#ARD-AF">ARD-AF</a></del></td>
 <td>2026-11-04</td>
-<td>故意不定义的事项：失败处理、skill 和 spec 的版本管理、信息来源可信度分级、数据清理；不迁移旧文档</td>
+<td><del>故意不定义的事项：失败处理、skill 和 spec 的版本管理、信息来源可信度分级、数据清理；不迁移旧文档</del> → <a href="#ard-cc">ARD-CC</a></td>
 </tr>
 <tr>
 <td><a class="id-ref" href="#ARD-AE">ARD-AE</a></td>
@@ -448,23 +453,29 @@
 </tr>
 </tbody></table></div>
 <h3>Evidence Appendix</h3>
-<a id="ard-ca"></a>
-<h4 id="ARD-CA"><a class="id-ref" href="#ARD-CA">ARD-CA</a> — 插图与站点样式</h4>
-<p><strong>原因。</strong> 纯文字 spec 难读；Mermaid 自动排版不符合 editorial 图；生成时再画图不稳定。</p>
-<p><strong>规则。</strong> 写 spec 时用 diagram-design 产出 SVG，命名 <code>&lt;doc-stem&gt;-fig-&lt;slug&gt;.svg</code> 与 citing md 同目录；网页皮肤用 diagram-design 默认 token；spec-review 报图里多写或与正文矛盾（severity 3）。</p>
-<p><strong>放弃的方案。</strong> 仅在 build 时让 AI 重画；只把配色套在 Mermaid 上。</p>
+<a id="ard-cc"></a>
+<h4 id="ARD-CC"><a class="id-ref" href="#ARD-CC">ARD-CC</a> — spec bundle 版本戳</h4>
+<p><strong>原因。</strong> skill 正文由 spec 提炼；spec 改了以后，看不出手上的 skill 对应哪一版 spec。</p>
+<p><strong>规则。</strong> 版本号只写在 parent PRD 的 <code>version</code>。脚本把版本、日期、git 短 sha 写进 <code>SKILL.md</code>；<code>--check</code> 比对版本、拒绝重复键（<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-Y">TST-Y</a>）。迁移策略仍不定义（<a class="id-ref" href="#ARD-AF">ARD-AF</a>）。</p>
+<p>本条推翻 <a class="id-ref" href="#ARD-AF">ARD-AF</a> 里「不定义版本」的部分，<a class="id-ref" href="#ARD-AF">ARD-AF</a> 因此划掉，其余在此重述：失败处理、信息来源可信度分级、数据清理、迁移策略故意不定义；不迁移旧文档。</p>
+<p><strong>放弃的方案。</strong> 每个 <code>SKILL.md</code> 手写版本号；按 semver 自动升版。</p>
 <a id="ard-cb"></a>
 <h4 id="ARD-CB"><a class="id-ref" href="#ARD-CB">ARD-CB</a> — 离线可读范围</h4>
-<p><strong>原因。</strong> 插图内嵌后 <a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-O">PRD-O</a>「直接打开」若要求零联网会阻字体与 Mermaid。</p>
-<p><strong>规则。</strong> <span class="lvl lvl--must">MUST</span>：正文与 SVG 插图离线可读；字体、Mermaid CDN 允许。</p>
+<p><strong>原因。</strong> 插图内嵌进网页后，如果 <a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-O">PRD-O</a> 的「直接打开就能读」要求完全不联网，字体和 Mermaid（把文字描述画成流程图的脚本）就加载不了。</p>
+<p><strong>规则。</strong> <span class="lvl lvl--must">MUST</span>：断网时正文和 SVG 插图能读；字体和 Mermaid 可以从网上加载。</p>
 <p><strong>放弃的方案。</strong> 全站严格零联网（与 Mermaid、字体策略冲突）。</p>
+<a id="ard-ca"></a>
+<h4 id="ARD-CA"><a class="id-ref" href="#ARD-CA">ARD-CA</a> — 插图与站点样式</h4>
+<p><strong>原因。</strong> 只有文字的 spec 难读；Mermaid 自动排的版不像人精心画的图；构建网页时再让 AI 画图，每次结果都不一样。</p>
+<p><strong>规则。</strong> 写 spec 时用 diagram-design 画 SVG，文件名 <code>&lt;文档名&gt;-fig-&lt;主题&gt;.svg</code>，放在引用它的 md 旁边；网页配色用 diagram-design 的默认颜色；图里有正文没有的内容或与正文矛盾，spec-review 报 severity 3。</p>
+<p><strong>放弃的方案。</strong> 仅在 build 时让 AI 重画；只把配色套在 Mermaid 上。</p>
 <a id="ard-bz"></a>
 <h4 id="ARD-BZ"><a class="id-ref" href="#ARD-BZ">ARD-BZ</a> — 补记两次编号迁移</h4>
 <p><strong>原因。</strong> document-standard 的 DSGN-F 规定：确实要改编号时，要记一条 ARD。2026-11-20 有两次改编号只引用了通用规则 <a class="id-ref" href="#ARD-AP">ARD-AP</a>，没有自己的 ARD。</p>
 <p><strong>规则。</strong> parent design 的规则小节 §4 到 §8 改为 <a class="id-ref" href="../design/spec-driven-development-design.html#DSGN-A">DSGN-A</a> 到 <a class="id-ref" href="../design/spec-driven-development-design.html#DSGN-E">DSGN-E</a>，因为编号不能用纯数字。reader design 里 Implementation Decisions 表的 DSGN-N-H、DSGN-N-I 和同名小节重号，表里的改为 DSGN-N-M、DSGN-N-N。两处的对照表都留在原文件里。</p>
 <a id="ard-by"></a>
 <h4 id="ARD-BY"><a class="id-ref" href="#ARD-BY">ARD-BY</a> — 全站样式统一降为 <span class="lvl lvl--nice">NICE</span></h4>
-<p><strong>原因。</strong> reader PRD 的 <a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-L">PRD-L</a> 把全站样式统一写成功能需求，reader design 的 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#DSGN-N-D">DSGN-N-D</a> 却标为 <span class="lvl lvl--nice">NICE</span>，两处不一致。</p>
+<p><strong>原因。</strong> reader PRD 的 <a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-L">PRD-L</a> 把全站样式统一写成功能需求，reader design 的 DSGN-N-D 却标为 <span class="lvl lvl--nice">NICE</span>，两处不一致。</p>
 <p><strong>规则。</strong> 人选择降级：<a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-L">PRD-L</a> 改为 <span class="lvl lvl--nice">NICE</span>。样式不统一时只提醒，不算失败。页面能不能读懂由其他 <span class="lvl lvl--must">MUST</span> 保证（编号可见、标题层级可分、不在运行时读 <code>.md</code>）。</p>
 <p><strong>放弃的方案。</strong> 改回 <span class="lvl lvl--must">MUST</span>：样式统一很难用脚本判定，容易误报。</p>
 <a id="ard-bx"></a>
@@ -897,6 +908,18 @@ payment-impl-plan-01-schema.md         impl-plan 分篇：序号加阶段，有�
 <tr>
 <td>2026-11-20</td>
 <td>第 1 轮审查后：<a class="id-ref" href="#ARD-BP">ARD-BP</a>–BT（改动上限两条都要满足、六种文档都可拆分篇、PIPE 子条款改字母、允许中英文混合、重申 <a class="id-ref" href="#ARD-U">ARD-U</a>/V 仍有效的部分）；划掉 <a class="id-ref" href="#ARD-AH">ARD-AH</a>、<a class="id-ref" href="#ARD-F">ARD-F</a>、<a class="id-ref" href="#ARD-K">ARD-K</a>；<a class="id-ref" href="#ARD-J">ARD-J</a> 的「阶段」改称「文档」；跨 feature 的编号补上 feature 名</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td><a class="id-ref" href="#ARD-CC">ARD-CC</a>：spec bundle 版本戳（审查 F7 选方案一）</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>Evidence Appendix 的 <a class="id-ref" href="#ARD-CB">ARD-CB</a> 移到 <a class="id-ref" href="#ARD-CA">ARD-CA</a> 前，与 Log 同序；<a class="id-ref" href="#ARD-CA">ARD-CA</a>、<a class="id-ref" href="#ARD-CB">ARD-CB</a> 改写成完整句子</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>划掉 <a class="id-ref" href="#ARD-AF">ARD-AF</a>，由 <a class="id-ref" href="#ARD-CC">ARD-CC</a> 重述仍有效的部分</td>
 </tr>
 </tbody></table></div>
       </div>

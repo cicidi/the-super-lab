@@ -127,7 +127,7 @@
 <li>本篇的规则会摘要写进 <a href="../../../../../../../skills/spec-organize/SPEC-STANDARD.md"><code>SPEC-STANDARD.md</code></a> 和 <a href="../../../../../../../skills/spec-html-standard/SPEC-PRESENTATION.md"><code>SPEC-PRESENTATION.md</code></a>；reader design 的规则摘要写进 <a href="../../../../../../../skills/spec-html-standard/SPEC-HTML-STANDARD.md"><code>SPEC-HTML-STANDARD.md</code></a>。spec-write 和 spec-review 读的是这三份摘要（<a href="../../../decision-history/spec-driven-development-decision-history.html#ard-bx">ARD-BX</a>）。摘要和本篇不一致时，先改本篇，再改摘要。</li>
 <li>格式类的 <span class="lvl lvl--must">MUST</span> 由检查脚本执行；内容类的问题由 spec-review 报告。</li>
 <li>how-to 暂不做机械检查；其他五种文档按 <a class="id-ref" href="#DSGN-E">DSGN-E</a> 检查。</li>
-<li>已有的不合规文档不迁移，只报告（<a href="../../../decision-history/spec-driven-development-decision-history.html#ard-af">ARD-AF</a>）。</li>
+<li>已有的不合规文档不迁移，只报告（<a href="../../../decision-history/spec-driven-development-decision-history.html#ard-cc">ARD-CC</a>，重述 <a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-AF">ARD-AF</a>）。</li>
 <li>本篇是一份纯标准，「子问题归属表」不适用（pipeline design 的 PIPE-L 允许这样注明）。还没定的事项和它们的负责人见 <a href="#open-questions">Open Questions</a>。</li>
 </ul>
 <h3>Design</h3>
@@ -528,7 +528,7 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 <td>测试</td>
 </tr>
 </tbody></table></div>
-<p>design 管「想要怎样」，代码管「现在怎样」和内部结构。机器可读的接口定义不要整段抄进 markdown，链过去或者自动生成。测试是验证手段，不能代替需求。文档变成 <code>final</code> 后只做维护性修改，不整篇重写。</p>
+<p>design 管「想要怎样」，代码管「现在怎样」和内部结构。机器可读的接口定义不要整段抄进 markdown，链过去或者自动生成。测试是验证手段，不能代替需求。文档变成 <code>final</code> 后只做维护性修改，不整篇重写；人明确授权并记成 ARD 的大改除外（例如 2026-11-20 的整理，见 parent decision-history 的 <a href="../../../decision-history/spec-driven-development-decision-history.html#ard-bs">ARD-BS</a>，它重述了 <a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-BK">ARD-BK</a>）。</p>
 <hr>
 <h4 id="DSGN-H"><a class="id-ref" href="#DSGN-H">DSGN-H</a> — design 写什么、不写什么</h4>
 <p><strong>写：</strong> 系统的行为、接口约定、不变量、约束、错误怎么处理、状态怎么变化、和外部怎么交互、架构边界（包括画图）。</p>
@@ -921,6 +921,10 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 <tr>
 <td>2026-11-20</td>
 <td>第 3 轮审查后：<a class="id-ref" href="#DSGN-A">DSGN-A</a> 写明三份摘要（<a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-BX">ARD-BX</a>）；<a class="id-ref" href="#DSGN-E">DSGN-E</a> 写明 Problem Statement 小标题可以保留编号（<a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-BS">ARD-BS</a> 重述 <a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-AW">ARD-AW</a>）；<a class="id-ref" href="#DSGN-J">DSGN-J</a> 写明只推翻一部分时也整行划掉；子问题归属表不适用的理由改为只引 PIPE-L</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td><a class="id-ref" href="#DSGN-G">DSGN-G</a>：final 后经 ARD 授权的大改除外（parent <a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-BS">ARD-BS</a>）；不迁移旧文档改链 <a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-CC">ARD-CC</a></td>
 </tr>
 </tbody></table></div>
       </div>
