@@ -23,7 +23,7 @@ skill 的组成见 [为什么要做，一个 skill 怎么搭](skill-factory-desi
 `SKILL.md:行号` 形式的引用都指 HEAD `ca8efab` 的文件。
 各 skill 的问题引用它自己 design 里 Open Questions 表的编号，例如"auto-tdd 的 QUES-A"。
 QUES 是 open question（未决问题）的编号前缀。
-`research` 的规格还没提交，草稿在 `raw/parked/research/` 下，只在本机。
+`research` 的规格放在子 feature `find-unknowns` 下（find-unknowns 的 ARD-L）。
 `raw/` 路径是有效证据，即使别人打不开（SPEC-STANDARD 的 ARD-BW）。
 用户原话引用会话 id 前 8 位加日期，多数转引自各 skill 的 PRD。
 找不到证据的地方写 UNKNOWN，不猜。
@@ -49,7 +49,7 @@ SDD 指 spec-driven-development（从规格驱动开发）这个 feature。
 | implement | skills/ | 导入（commit `12c7dce`） | 按 spec 或 ticket 写代码，测试先行 | [design](../features/implement/design/implement-design.md) |
 | multi-model-team | skills/ | 自写（ses_0a0d1e98，2026-07-13） | 架构师模型拆任务，工人模型实现 | [design](../features/multi-model-team/design/multi-model-team-design.md) |
 | prototype | skills/ | 导入（commit `78242fa`） | 做一个用完就扔的原型来回答设计问题 | [design](../features/prototype/design/prototype-design.md) |
-| research | skills/ | 自写；由 find-my-unknown 和 brainstorming 合成（commit `6086424`） | 动手前找出没想清楚的地方，或把想法写成设计 | parked：[草稿](../raw/parked/research/design/research-design.md) |
+| research | skills/ | 自写；由 find-my-unknown 和 brainstorming 合成（commit `6086424`） | 动手前找出没想清楚的地方，或把想法写成设计 | [design](../features/find-unknowns/design/find-unknowns-design.md) |
 | skill | skills/ | 自写（ses_14b5b4b7，2026-06-10）；由四个旧 skill 合成（commit `6086424`） | 在本仓库创建、修改、导入、列出 skill | [design](../features/skill/design/skill-design.md) |
 | to-spec | skills/ | 导入（commit `212aab5`） | 把对话整理成一份 spec 发到 issue tracker | [design](../features/to-spec/design/to-spec-design.md) |
 | to-tickets | skills/ | 导入（commit `8730941`） | 把计划拆成带阻塞关系的执行工单 | [design](../features/to-tickets/design/to-tickets-design.md) |
@@ -65,15 +65,14 @@ SDD 指 spec-driven-development（从规格驱动开发）这个 feature。
 | tmux-status-bar | personal-skills/ | 自写（commit `5cc3d4b`） | 改 tmux 底部状态栏显示的内容 | [design](../features/tmux-status-bar/design/tmux-status-bar-design.md) |
 | transcribe-audio | personal-skills/ | 自写；借鉴本机 openclaw 项目的 openai-whisper skill | 用本机显卡上的 Whisper 把音频转成文字稿 | [design](../features/transcribe-audio/design/transcribe-audio-design.md) |
 | video-production-pip-style | personal-skills/ | 自写，由 agent 一次写成（commit `9e4fb21`） | 一份画中画风格视频的手工制作指南 | [design](../features/video-production-pip-style/design/video-production-pip-style-design.md) |
-| youtube-research-pipeline | personal-skills/ | 自写（commit `d7723a2`，2026-07-18） | 把一个话题做成带图表和文字稿的视频 HTML 页 | parked：无规格 |
+| youtube-research-pipeline | personal-skills/ | 自写（commit `d7723a2`，2026-07-18） | 把一个话题做成带图表和文字稿的视频 HTML 页 | [design](../features/youtube-research/design/youtube-research-design.md) |
 | youtube-summarize | personal-skills/ | 自写（commit `db0261d`） | 下载 YouTube 视频的文字稿并写总结 | [design](../features/youtube-summarize/design/youtube-summarize-design.md) |
 
 2026-11-24 注：to-spec、to-tickets 已移除（`5370f61`），由 [spec-ingest](../features/spec-ingest/design/spec-ingest-design.md)、[spec-ticket](../features/spec-ticket/design/spec-ticket-design.md) 取代。
 
-两个 skill 标为 parked，意思是规格还没提交。
-原因是名字和已有 feature 重名：`research` 撞 `docs/features/discovery-research`，`youtube-research-pipeline` 撞 SDD 的 `pipeline` 子 feature（`raw/state/state-loop.md`）。
-怎么改名要等用户决定，见下文建议表。
-`youtube-research-pipeline` 没有规格，本篇对它的描述只来自它的 SKILL.md。
+2026-11-24 注：两份规格已提交，子 feature 名为 `find-unknowns` 和 `youtube-research`。
+初稿时它们标为 parked，原因是名字和已有 feature 重名：`research` 撞 `docs/features/discovery-research`，`youtube-research-pipeline` 撞 SDD 的 `pipeline` 子 feature（`raw/state/state-loop.md`）。
+用户已定名，见上一句的注。
 
 ## 调用关系
 
@@ -313,7 +312,7 @@ wayfinder 的 QUES-D 里关于 `/grilling` 的另半句仍成立。
 | 8 | 决定 implement 的去留：删除、转调 auto-tdd，或者改成可替换的接口 | 中 | 小 | implement、auto-tdd | implement 的 QUES-B、QUES-D |
 | 9 | 改 create-video-workflow 的脚本路径和项目目录，并加上调用 transcribe-audio 的路由 | 中 | 中 | create-video-workflow、transcribe-audio | create-video-workflow 的 QUES-A、QUES-B、QUES-D |
 | 10 | 注册 self-heal hook，并让 Report 分支先问目标仓库 | 中 | 中 | bug | bug 的 QUES-C、QUES-D |
-| 11 | 定下 research 和 youtube-research-pipeline 的子 feature 名字，再提交它们的规格 | 中 | 小 | research、youtube-research-pipeline | `raw/state/state-loop.md` 的 Questions 一节 |
+| 11 | 已完成（2026-11-24）：定名 find-unknowns 和 youtube-research，规格已提交 | 中 | 小 | research、youtube-research-pipeline | `raw/state/state-loop.md` 的 Questions 一节 |
 | 12 | 写一个检查脚本，找出 SKILL.md 里指向不存在的 skill 或文件的引用 | 中 | 中 | 全部 | skill 的 QUES-A；DSGN-AP |
 | 13 | 逐条决定是否恢复 08-02 合并删掉的功能 | 低 | 大 | auto-tdd、bug、skill、research | DSGN-AN |
 | 14 | 给功能重叠的几对 skill 写明分工，或合并 | 低 | 中 | 见 DSGN-AS | DSGN-AS |
@@ -334,3 +333,4 @@ wayfinder 的 QUES-D 里关于 `/grilling` 的另半句仍成立。
 |------|--------|
 | 2026-11-24 | 初版：skill 目录、调用关系与断边、三条流水线、共性问题和建议修复 |
 | 2026-11-24 | 目录表后和 DSGN-AK 加注：to-spec、to-tickets 已移除并被取代；建议表第 7、16 条标为已完成 |
+| 2026-11-24 | research、youtube-research-pipeline 的规格已提交，去掉 parked；建议表第 11 条标为已完成 |
