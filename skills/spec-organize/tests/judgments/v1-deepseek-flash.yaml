@@ -1,7 +1,7 @@
 model: deepseek-flash
 runs: 5
 target: must
-corpus_sha: 128eda8ce2c64ef0
+corpus_sha: c279e0fde7ec2c04
 items:
 - id: MUST-B
   verdict: pass
@@ -9,11 +9,11 @@ items:
   - pass
   - pass
   - pass
+  - fail
   - pass
-  - pass
-  evidence: document-standard-design.md DSGN-B states six types committed/splittable
-    and entry links parts; SPEC-STANDARD repeats it.
-  confidence: 0.95
+  evidence: 'document-standard-design.md DSGN-B: 六种可拆分篇，入口 <f>-<type>.md 链各分篇；命名按
+    ARD-G。SPEC-STANDARD 重复。'
+  confidence: 0.85
 - id: MUST-D
   verdict: pass
   votes:
@@ -22,9 +22,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'document-standard-design.md DSGN-B; SPEC-STANDARD Path & filename: entry
-    must link each part (ARD-BQ).'
-  confidence: 0.93
+  evidence: 'document-standard-design.md DSGN-B step 3: 入口文件必须链到各分篇；撞名按 DSGN-K。SPEC-STANDARD
+    Path & filename 重复。'
+  confidence: 0.9
 - id: MUST-F
   verdict: pass
   votes:
@@ -33,9 +33,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'document-standard-design.md DSGN-C; SPEC-STANDARD Chapter 2: translation
-    copy local only, names source (ARD-AU).'
-  confidence: 0.94
+  evidence: 'document-standard-design.md DSGN-C: 本地翻译副本不提交，开头写明以 <name>.md 为准；SPEC-STANDARD
+    Chapter 2 重复。'
+  confidence: 0.95
 - id: MUST-H
   verdict: pass
   votes:
@@ -44,9 +44,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'document-standard-design.md DSGN-D; SPEC-STANDARD INDEX/book: final/merged
-    changes must reach book; draft may skip.'
-  confidence: 0.92
+  evidence: 'document-standard-design.md DSGN-D: draft 可暂不更新摘要；final/已合并必须反映到 book；SPEC-STANDARD
+    INDEX/book 重复。'
+  confidence: 0.9
 - id: MUST-K
   verdict: pass
   votes:
@@ -55,9 +55,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: document-standard-design.md DSGN-E; SPEC-STANDARD impl-plan tasks; spec-write/SKILL.md
-    repeats dependency/blocks/done/mock.
-  confidence: 0.96
+  evidence: document-standard-design.md DSGN-E impl-plan 正文 MUST：IMPL 写依赖、挡住、完成标准；执行顺序与
+    mock；spec-write 有质量门。
+  confidence: 0.95
 - id: MUST-N
   verdict: pass
   votes:
@@ -66,9 +66,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: document-standard-design.md DSGN-E Readability; SPEC-STANDARD Readability;
-    spec-write/SKILL.md step 12 and quality gate.
-  confidence: 0.96
+  evidence: document-standard-design.md DSGN-E 可读性 MUST；SPEC-STANDARD Readability；spec-write/spec-review
+    均要求本科读得懂。
+  confidence: 0.95
 - id: MUST-BA
   verdict: pass
   votes:
@@ -77,8 +77,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: document-standard-design.md DSGN-E 插图(MUST); SPEC-STANDARD Figures; spec-review/SKILL.md
-    severity 3 names SVG.
+  evidence: document-standard-design.md DSGN-E 插图 MUST；spec-review SKILL 规定图事实/矛盾报
+    severity 3 并写 SVG 文件名。
   confidence: 0.95
 - id: MUST-Q
   verdict: pass
@@ -88,8 +88,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: document-standard-design.md DSGN-F 编号永不改; SPEC-STANDARD IDs immutable/never
-    reused.
+  evidence: document-standard-design.md DSGN-F 编号永不改/永不复用；SPEC-STANDARD IDs；spec-write
+    只使用字母编号。
   confidence: 0.95
 - id: MUST-R
   verdict: pass
@@ -99,9 +99,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: document-standard-design.md DSGN-F 迁移留对照; SPEC-STANDARD IDs old-to-new
-    table and old anchor; spec-write step 11.
-  confidence: 0.94
+  evidence: document-standard-design.md DSGN-F 迁移留新旧编号对照表和旧锚点；SPEC-STANDARD IDs 重复。
+  confidence: 0.95
 - id: MUST-T
   verdict: pass
   votes:
@@ -110,9 +109,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: document-standard-design.md DSGN-F 编号范围; SPEC-STANDARD IDs unique per
-    feature/type, cite feature/id; spec-write step 8.
-  confidence: 0.94
+  evidence: document-standard-design.md DSGN-F 编号同 feature/同 type 唯一；跨 feature 写 <feature>/<id>；SPEC-STANDARD
+    IDs。
+  confidence: 0.95
 - id: MUST-U
   verdict: pass
   votes:
@@ -121,8 +120,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: document-standard-design.md DSGN-F 改已有正文; SPEC-STANDARD Edits; spec-write/SKILL.md
-    no strikethrough outside decision-history.
+  evidence: document-standard-design.md DSGN-F 改已有正文：只写现行规则、链 ARD、删除线只在 decision-history；SPEC-STANDARD
+    Edits。
   confidence: 0.95
 - id: MUST-V
   verdict: pass
@@ -132,9 +131,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'document-standard-design.md DSGN-J; SPEC-STANDARD Decision history: each
-    ARD Evidence Appendix reason/options; spec-write quality gate.'
-  confidence: 0.94
+  evidence: document-standard-design.md DSGN-J 每条 ARD 在 Evidence Appendix 有原因和放弃方案；SPEC-STANDARD
+    Decision history。
+  confidence: 0.95
 - id: MUST-X
   verdict: pass
   votes:
@@ -143,9 +142,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'document-standard-design.md DSGN-M first MUST: DSGN-A contract incl IDs
-    immutable/never reused.'
-  confidence: 0.88
+  evidence: document-standard-design.md DSGN-M MUST：DSGN-A 契约全部满足，包括编号永不改、永不复用。
+  confidence: 0.9
 - id: MUST-Y
   verdict: pass
   votes:
@@ -154,9 +152,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: document-standard-design.md DSGN-M; spec-organize/SKILL.md Authority by
-    Concern; spec-review DSGN-G conflict reporting.
-  confidence: 0.93
+  evidence: document-standard-design.md DSGN-M MUST 冲突不能悄悄处理；DSGN-G 要求发现/报告/问人；SPEC-STANDARD
+    Conflicts。
+  confidence: 0.95
 - id: MUST-Z
   verdict: pass
   votes:
@@ -165,9 +163,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: document-standard-design.md DSGN-M 不删L1; SPEC-STANDARD Size; spec-write
-    quality gate No L1 deletion.
-  confidence: 0.94
+  evidence: document-standard-design.md DSGN-M MUST 不删 L1；DSGN-I 和 SPEC-STANDARD Size
+    重复。
+  confidence: 0.95
 - id: MUST-AA
   verdict: pass
   votes:
@@ -176,9 +174,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: document-standard-design.md DSGN-M 合并不丢决定; spec-organize/SKILL.md Mode
-    C preserves every decision and quality gate.
-  confidence: 0.92
+  evidence: document-standard-design.md DSGN-M MUST 合并文档不丢决定；DSGN-L Consolidate 和
+    spec-organize Mode C 保留每条决定。
+  confidence: 0.95
 - id: MUST-AF
   verdict: pass
   votes:
@@ -187,9 +185,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: document-standard-design.md DSGN-M; SPEC-STANDARD Edits to existing prose;
-    spec-write/SKILL.md body rule.
-  confidence: 0.93
+  evidence: document-standard-design.md DSGN-M MUST 正文改动遵守 DSGN-F 改已有正文；SPEC-STANDARD
+    Edits 重复。
+  confidence: 0.95
 - id: MUST-AG
   verdict: pass
   votes:
@@ -198,9 +196,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: document-standard-design.md DSGN-M; SPEC-STANDARD Chapter 3; spec-write/SKILL.md
-    process step 9 UNKNOWN not guess.
-  confidence: 0.94
+  evidence: document-standard-design.md DSGN-M MUST 结论有依据、查不到写 UNKNOWN；pipeline PIPE-L
+    和 SPEC-STANDARD Ch3。
+  confidence: 0.95
 - id: MUST-AH
   verdict: pass
   votes:
@@ -209,8 +207,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: document-standard-design.md DSGN-M; SPEC-STANDARD covers impl tasks, code
-    commit, one tracker, readability.
+  evidence: document-standard-design.md DSGN-M MUST 满足 DSGN-E 四条；DSGN-E 与 spec-write
+    质量门覆盖依赖、commit、单一 tracker、可读性。
   confidence: 0.9
 - id: MUST-AI
   verdict: pass
@@ -220,9 +218,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: document-standard-design.md DSGN-M; SPEC-STANDARD translation, ID migration,
-    decision history sections.
-  confidence: 0.9
+  evidence: document-standard-design.md DSGN-M MUST 翻译副本不提交、改编号留对照/旧锚点、每条 ARD 有说明；DSGN-C/F/J。
+  confidence: 0.95
 - id: MUST-BB
   verdict: pass
   votes:
@@ -231,9 +228,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: document-standard-design.md DSGN-M figure gate; SPEC-STANDARD Figures
-    (MUST) same rule.
-  confidence: 0.93
+  evidence: document-standard-design.md DSGN-M MUST 图不写正文没有的事实、不矛盾；spec-review 也检查图与正文一致。
+  confidence: 0.95
 - id: MUST-AJ
   verdict: pass
   votes:
@@ -242,9 +238,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: pipeline-design.md PIPE-D step 7; SPEC-STANDARD Sub-problem ownership;
-    spec-write step 9 AI adds blind spots.
-  confidence: 0.94
+  evidence: pipeline-design.md PIPE-D step 7：子问题标 AI 查/人决定/AI 查完；人没问到的盲区和风险 AI 必须主动提出。PIPE-L
+    重复。
+  confidence: 0.95
 - id: MUST-AK
   verdict: pass
   votes:
@@ -253,9 +249,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: pipeline-design.md PIPE-L; SPEC-STANDARD Sub-problem ownership table required;
-    spec-write steps 9-10.
-  confidence: 0.94
+  evidence: pipeline-design.md PIPE-L：有子问题的 design 必须有子问题归属表；纯标准/流程可注明不适用；spec-write
+    step 9/10。
+  confidence: 0.95
 - id: MUST-AL
   verdict: pass
   votes:
@@ -264,9 +260,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: pipeline-design.md PIPE-L owner only three; SPEC-STANDARD/spec-write add
-    blind-spot rows.
-  confidence: 0.94
+  evidence: pipeline-design.md PIPE-L：归属只能是三种之一；AI 必须主动加盲区和风险行；SPEC-STANDARD Sub-problem
+    ownership。
+  confidence: 0.95
 - id: MUST-AM
   verdict: pass
   votes:
@@ -275,9 +271,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: pipeline-design.md PIPE-L evidence traceable/UNKNOWN; SPEC-STANDARD Chapter
-    3 and ownership; spec-write step 9.
-  confidence: 0.94
+  evidence: pipeline-design.md PIPE-L：依据必须可追溯；查不到写 UNKNOWN，不能推测；SPEC-STANDARD Ch3。
+  confidence: 0.95
 - id: MUST-AN
   verdict: pass
   votes:
@@ -286,9 +281,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: spec-driven-development-design.md DSGN-C principle; impl-plan IMPL-R explicitly
-    syncs CLAUDE layer and skill rules.
-  confidence: 0.9
+  evidence: spec-driven-development-design.md DSGN-C：实现 SDD/文档标准时计划必须同时含 skill 修改和
+    CLAUDE 层条目；impl-plan IMPL-R 落实。
+  confidence: 0.92
 - id: MUST-AO
   verdict: pass
   votes:
@@ -297,9 +292,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: reader design DSGN-N-B 内容不丢(MUST); lists L1 all shown and prohibits summary
-    loss.
-  confidence: 0.93
+  evidence: document-standard-design-spec-reader-html.md DSGN-N-B 内容不丢 MUST：L1 全显示、编号可见、禁止摘要化。
+  confidence: 0.95
 - id: MUST-AP
   verdict: pass
   votes:
@@ -308,8 +302,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'reader design DSGN-N-B 编号必须可见(MUST): HTML must show PRD-A/DSGN-B/ARD-C/IMPL-C/TST-A.'
-  confidence: 0.93
+  evidence: document-standard-design-spec-reader-html.md DSGN-N-B 编号必须可见：PRD-A、DSGN-B、ARD-C、IMPL-C、TST-A
+    原样显示。
+  confidence: 0.95
 - id: MUST-AQ
   verdict: pass
   votes:
@@ -318,9 +313,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'reader design DSGN-N-B MUST NOT: only problem/solution paragraphs, deleting
-    DSGN body.'
-  confidence: 0.9
+  evidence: document-standard-design-spec-reader-html.md DSGN-N-B 不允许只留“问题”“方案”各一段并删
+    Design 下 DSGN 正文。
+  confidence: 0.95
 - id: MUST-AR
   verdict: pass
   votes:
@@ -329,9 +324,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'reader design DSGN-N-B MUST NOT: use 见原文 for a whole page; L3/L4 may
-    point.'
-  confidence: 0.9
+  evidence: document-standard-design-spec-reader-html.md DSGN-N-B 不允许用“见原文”代替整页；一节内
+    L3/L4 可指向原文。
+  confidence: 0.95
 - id: MUST-AS
   verdict: pass
   votes:
@@ -340,9 +335,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'reader design DSGN-N-B MUST NOT: markdown preview / whole <pre> / unformatted
-    markdown.'
-  confidence: 0.9
+  evidence: document-standard-design-spec-reader-html.md DSGN-N-B 不允许做成 markdown 预览：整页
+    <pre> 或未排版原文。
+  confidence: 0.95
 - id: MUST-AT
   verdict: pass
   votes:
@@ -351,9 +346,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'reader design DSGN-N-C page-top MUST: state assembled page, edit .md,
-    parent name.'
-  confidence: 0.93
+  evidence: document-standard-design-spec-reader-html.md DSGN-N-C 页面顶部 MUST：说明汇编页、改内容去改
+    .md、写明 parent 名。
+  confidence: 0.95
 - id: MUST-AU
   verdict: pass
   votes:
@@ -362,8 +357,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'reader design DSGN-N-C part-bottom MUST: Canonical path; list all parts.'
-  confidence: 0.93
+  evidence: 'document-standard-design-spec-reader-html.md DSGN-N-C 每部分底部 MUST：写 Canonical:
+    原文路径；多分篇全部列出。'
+  confidence: 0.95
 - id: MUST-AV
   verdict: pass
   votes:
@@ -372,9 +368,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'reader design DSGN-N-D MUST: open file reads body and committed SVG without
-    server; fonts/Mermaid online.'
-  confidence: 0.93
+  evidence: document-standard-design-spec-reader-html.md DSGN-N-D MUST：浏览器直接打开可读正文和已提交
+    SVG，不需服务器；字体/Mermaid 可联网。
+  confidence: 0.95
 - id: MUST-AW
   verdict: pass
   votes:
@@ -383,8 +379,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'reader design DSGN-N-D MUST: no secrets or raw eval text; paths only.'
-  confidence: 0.93
+  evidence: document-standard-design-spec-reader-html.md DSGN-N-D MUST：页面不能有密钥或 raw/
+    评测原文，需要时只放路径。
+  confidence: 0.95
 - id: MUST-AX
   verdict: pass
   votes:
@@ -393,9 +390,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'reader design DSGN-N-D MUST: no runtime .md reads for main content; debug
-    only.'
-  confidence: 0.93
+  evidence: document-standard-design-spec-reader-html.md DSGN-N-D MUST：运行时不读 .md 显示主要内容，只有调试可。
+  confidence: 0.95
 - id: MUST-AY
   verdict: pass
   votes:
@@ -404,9 +400,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'reader design DSGN-N-D MUST: title/section/subsection/item styles differ;
-    no a/b/c or 1/2/3 prefixes.'
-  confidence: 0.92
+  evidence: document-standard-design-spec-reader-html.md DSGN-N-D MUST：标题/节/小节/条目字号粗细样式不同；段前不加
+    a/b/c 或 1/2/3。
+  confidence: 0.95
 - id: MUST-AZ
   verdict: pass
   votes:
@@ -415,6 +411,6 @@ items:
   - pass
   - pass
   - pass
-  evidence: reader design DSGN-N-G allows mechanical md-to-html rule but requires
-    DSGN-N-B fidelity.
-  confidence: 0.82
+  evidence: document-standard-design-spec-reader-html.md DSGN-N-G：机械转换规则可加，但自动转换仍必须满足
+    DSGN-N-B；本篇和 SPEC-HTML-STANDARD 定效果。
+  confidence: 0.75
