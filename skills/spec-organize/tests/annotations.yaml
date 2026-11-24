@@ -15,7 +15,7 @@ annotations:
     kind: good
     check: prd_anchor
     text: Every parent PRD id is anchored in at least one design document.
-    detail: For each PRD-<letter> defined in the parent PRD, at least one design document in the same feature must state what it is realized by (a DSGN/PIPE clause, an HLD section, or an explicit "来源 PRD-x"). Incidental mention as an example string does not count.
+    detail: For each PRD-<letter> defined in the parent PRD, at least one design document in the same feature must state what it is realized by (a DSGN/PIPE clause, an HLD section, or an explicit "来源 PRD-x"). Incidental mention as an example string does not count. A deferred id (parent PRD-G, ARD-N) is exempt, as in test-plan TST-O.
   - id: GOOD-C
     kind: good
     check: five_types
