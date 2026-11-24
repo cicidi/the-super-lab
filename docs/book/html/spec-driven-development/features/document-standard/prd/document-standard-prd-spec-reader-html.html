@@ -107,7 +107,7 @@
 </tbody></table></div>
 <h3>Non-Functional Requirements</h3>
 <ul>
-<li><strong id="PRD-O"><a class="id-ref" href="#PRD-O">PRD-O</a></strong>：纯静态网页，不需要构建服务器，用浏览器直接打开文件就能看，不依赖 MkDocs（一种把 markdown 生成网站的工具）的服务。</li>
+<li><strong id="PRD-O"><a class="id-ref" href="#PRD-O">PRD-O</a></strong>：纯静态网页，阅读时不需要服务器，用浏览器直接打开文件就能看；发布时由 CI 生成（parent 的 <a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-CD">ARD-CD</a>），不依赖 MkDocs（一种把 markdown 生成网站的工具）的服务。</li>
 <li><strong id="PRD-P"><a class="id-ref" href="#PRD-P">PRD-P</a></strong>：页面里不能有密钥，也不能有 <code>raw/</code> 里给机器用的评测原文；需要的话只放路径链接。</li>
 </ul>
 <h3>Out of Scope</h3>
@@ -148,6 +148,10 @@
 <tr>
 <td>2026-11-20</td>
 <td>第 2 轮审查后：<a class="id-ref" href="#PRD-L">PRD-L</a> 降为 <span class="lvl lvl--nice">NICE</span>（<a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-BY">ARD-BY</a>）；MkDocs、git hook 第一次出现时解释</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td><a class="id-ref" href="#PRD-O">PRD-O</a>：阅读时不需要服务器，发布由 CI 生成（<a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-CD">ARD-CD</a>）</td>
 </tr>
 </tbody></table></div>
       </div>

@@ -1,4 +1,4 @@
-<!-- SDD reader · source .md · git 4d272ec -->
+<!-- SDD reader · source .md · git 4426061 -->
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light">
 <head>
@@ -199,7 +199,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 </ul>
 <h3>Resources Needed</h3>
 <ul>
-<li>spec-write、spec-review 两个 skill，以及它们要读的三份标准文件（<a href="decision-history/spec-driven-development-decision-history.html#ard-bx">ARD-BX</a>）和一份 test-plan。不需要外部服务，也不需要数据库。</li>
+<li>spec-write、spec-review 两个 skill，以及它们要读的三份标准文件（<a href="decision-history/spec-driven-development-decision-history.html#ard-bx">ARD-BX</a>）和一份 test-plan。不需要数据库。外部服务：评测用的 <code>deepseek-flash</code> API，以及发布网站用的 GitHub Actions 和 GitHub Pages（<a href="decision-history/spec-driven-development-decision-history.html#ard-cd">ARD-CD</a>）。</li>
 <li>评测需要 <code>deepseek-flash</code> 的 API，以及每次评测跑 3 次的费用。跑分结果和报告不提交（<a href="decision-history/spec-driven-development-decision-history.html#ard-ad">ARD-AD</a>）。</li>
 </ul>
 <p>进入下游前，PRD 要写清的五项（pipeline design 的 PIPE-E-B）：</p>
@@ -225,7 +225,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 </tr>
 <tr>
 <td>工具</td>
-<td>spec-write、spec-review、<code>run_spec_checks.py</code> 检查脚本、mock MCP 服务器（PRD-O）</td>
+<td>spec-write、spec-review、<code>run_spec_checks.py</code> 检查脚本、mock MCP 服务器（PRD-O）、发布网站的 GitHub Actions</td>
 </tr>
 </tbody></table>
 <h3>Change Log</h3>
@@ -312,6 +312,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td>2026-11-24</td>
 <td>Out of Scope：版本只做来源标记（ARD-CC）</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>Resources：列出外部服务 deepseek API、GitHub Actions 和 Pages（ARD-CD）</td>
 </tr>
 </tbody></table>
 </div>
@@ -904,6 +908,18 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <th>意思</th>
 </tr></thead><tbody>
 <tr>
+<td>SVG</td>
+<td>一种用文字描述的矢量图片格式，浏览器能直接显示，放大不会模糊</td>
+</tr>
+<tr>
+<td>diagram-design</td>
+<td>一个画图的 skill，按固定的配色和字体画出 SVG 插图（ARD-CA）</td>
+</tr>
+<tr>
+<td>GitHub Pages</td>
+<td>GitHub 提供的静态网站托管；本项目由 GitHub Actions（GitHub 上的自动化脚本）生成网站后发布到这里（ARD-CD）</td>
+</tr>
+<tr>
 <td>skill</td>
 <td>一份写给 AI 的操作说明（<code>SKILL.md</code>），告诉它遇到某类任务时按什么步骤做</td>
 </tr>
@@ -1159,6 +1175,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <td>2026-11-24</td>
 <td>术语表补上 spec bundle；子问题归属的迁移一行改链 ARD-CC（ARD-AF 已划掉）</td>
 </tr>
+<tr>
+<td>2026-11-24</td>
+<td>术语表补上 SVG、diagram-design、GitHub Pages</td>
+</tr>
 </tbody></table>
 <hr><p class="src-inline">Source: <code>design/spec-driven-development-design-skill-contracts.md</code></p>
 <h2>Spec-Driven Development — Skill 契约</h2>
@@ -1365,7 +1385,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <h3 id="IMPL-F">IMPL-F — 给人读的网页</h3>
 <p><strong>目标：</strong> 全站一个网站，入口 <code>docs/book/html/index.html</code>；feature 页左边是目录，右边是正文；parent 的汇编页 <code>spec-driven-development-reader.html</code> 在其中（<a href="decision-history/spec-driven-development-decision-history.html#ard-bg">ARD-BG</a>、<a href="features/document-standard/design/document-standard-design-spec-reader-html.html">reader design</a>）。</p>
 <p><strong>步骤：</strong> markdown 改了之后，用 <code>tools/build_sdd_site.py</code> 和 <code>tools/build_sdd_reader.py</code> 重新生成；每页底部链到原文路径。</p>
-<p><strong>依赖：</strong> IMPL-C。<strong>挡住：</strong> IMPL-O。</p>
+<p><strong>依赖：</strong> IMPL-C。<strong>挡住：</strong> IMPL-O、IMPL-S。</p>
 <p><strong>Verify:</strong> 用浏览器直接打开页面能看；页面里列出的原文路径都存在。</p>
 <h3 id="IMPL-G">IMPL-G — CLAUDE.local 里的 SDD 段落</h3>
 <p><strong>目标：</strong> feature 名字还没定的时候，Create 和 Map 阶段的进度和暂定名记在这里（pipeline design 的 PIPE-H；<a href="decision-history/spec-driven-development-decision-history.html#ard-bu">ARD-BU</a>）。</p>
@@ -1375,7 +1395,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <h3 id="IMPL-H">IMPL-H — 文档整理</h3>
 <p><strong>目标：</strong> INDEX 列出 parent 的 impl-plan 和新增的 design 分篇；删除旧的摘要网页。</p>
 <p><strong>步骤：</strong> 重新生成 <code>docs/INDEX.md</code>；删除 <code>spec-driven-development.html</code>，只保留 reader。</p>
-<p><strong>依赖：</strong> 无。<strong>挡住：</strong> IMPL-O。</p>
+<p><strong>依赖：</strong> 无。<strong>挡住：</strong> IMPL-O、IMPL-V。</p>
 <p><strong>Verify:</strong> 没有链接指向已删除的摘要网页，也没有指向 wayfinder-import 的路径。</p>
 <h3 id="IMPL-I">IMPL-I — spec-review 报告机械 MUST</h3>
 <p><strong>目标：</strong> spec-review 能找出机械 MUST 的违反，并给出修改建议（<a href="decision-history/spec-driven-development-decision-history.html#ard-p">ARD-P</a>）。</p>
@@ -1396,7 +1416,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <p><strong>Verify:</strong> 对一次样例运行跑 TST-K 通过。</p>
 <h3 id="IMPL-M">IMPL-M — 检查脚本更新</h3>
 <p><strong>目标：</strong> <code>sections.py</code> 检查五种文档的必需章节；<code>ids.py</code> 检查编号格式；去掉不该有的豁免。</p>
-<p><strong>依赖：</strong> IMPL-C。<strong>挡住：</strong> IMPL-P。</p>
+<p><strong>依赖：</strong> IMPL-C。<strong>挡住：</strong> IMPL-P、IMPL-T。</p>
 <p><strong>Verify:</strong> TST-B 通过；<code>run_spec_checks.py</code> 跑 SDD 目录。</p>
 <h3 id="IMPL-N">IMPL-N — skill 契约和四个例子</h3>
 <p><strong>目标：</strong> <a href="design/spec-driven-development-design-skill-contracts.html">skill 契约</a>写好；两个 skill 的正文都提到盖 shed、北京旅游、数学题、股票（PRD-Q）。</p>
@@ -1420,7 +1440,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 </tr>
 <tr>
 <td><code>skills/spec-organize/tests/must_registry.yaml</code></td>
-<td>重新扫描（TST-A）。document-standard design 已改写，原来按行号记的出处都错位了，出处比对脚本 <code>registry_provenance</code> 现在报「只有 15/32 条出自契约小节」；把 reader design 的 MUST 也收进来（TST-A）；去掉「正文改动要留删除线」这条 MUST；标出改为 NICE 的规则</td>
+<td>重新扫描（TST-A）。document-standard design 已改写，原来按行号记的出处都错位了。已于 2026-11-24 重新扫描，<code>registry_provenance</code> 报 0 个问题；把 reader design 的 MUST 也收进来（TST-A）；去掉「正文改动要留删除线」这条 MUST；标出改为 NICE 的规则</td>
 <td>TST-A、TST-M、<a href="decision-history/spec-driven-development-decision-history.html#ard-bm">ARD-BM</a>、<a href="decision-history/spec-driven-development-decision-history.html#ard-bn">ARD-BN</a></td>
 </tr>
 <tr>
@@ -1455,7 +1475,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 </tr>
 </tbody></table>
 <p><strong>依赖：</strong> 本批 spec 修改完成；IMPL-M。<strong>挡住：</strong> IMPL-E、IMPL-Q。</p>
-<p><strong>Verify:</strong> <code>run_spec_checks.py</code> 跑 <code>docs/features/</code> 报 0 个问题（包括 <code>registry_provenance</code>）；TST-A 覆盖率 100%；TST-R 通过。</p>
+<p><strong>Verify:</strong> <code>run_spec_checks.py</code> 跑 <code>docs/features/spec-driven-development/</code> 报 0 个问题（旧文档不迁移，不检查别的 feature）（包括 <code>registry_provenance</code>）；TST-A 覆盖率 100%；TST-R 通过。</p>
 <h3 id="IMPL-Q">IMPL-Q — 可读性测试</h3>
 <p><strong>目标：</strong> 实现 TST-V：让一个 LLM 扮演本科程序员，只读一篇文档，回答从这篇的编号条目里抽出的问题；再找出第一次出现时没解释、术语表里也没有的词（<a href="decision-history/spec-driven-development-decision-history.html#ard-bo">ARD-BO</a>）。</p>
 <p><strong>步骤：</strong> 在 <code>skills/spec-organize/tests/</code> 下写出题、答题、判分的脚本；对照题不给文档，答对的题作废；结果写进评测报告。</p>
@@ -1467,7 +1487,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <p><strong>依赖：</strong> IMPL-C。<strong>挡住：</strong> 无。</p>
 <p><strong>Verify:</strong> CLAUDE 层里：改动上限写的是「并且」，并引用 PRD-C；没有 <code>FR-</code> 这类已禁止的编号；进度路径是 <code>CLAUDE.local.md</code> 或 <code>raw/state/</code>（PRD-J）；文档目录是 <code>docs/features/&lt;f&gt;/&lt;类型&gt;/</code>（document-standard 的 DSGN-B）；列出的 skill 只有 spec-write 和 spec-review（ARD-BX）。2026-11-20 已按这几条改过 <code>CLAUDE.local.md</code>。</p>
 <h3 id="IMPL-S">IMPL-S — 插图与网页样式</h3>
-<p><strong>目标：</strong> diagram-design 皮肤、SVG 内嵌、MUST/NICE 标签（<a href="decision-history/spec-driven-development-decision-history.html#ard-ca">ARD-CA</a>）。</p>
+<p><strong>目标：</strong> 网页里的插图用 diagram-design 的默认配色，SVG 文件在生成网页时嵌进页面；插图规则分清 MUST 和 NICE（<a href="decision-history/spec-driven-development-decision-history.html#ard-ca">ARD-CA</a>）。</p>
 <p><strong>依赖：</strong> IMPL-F。<strong>挡住：</strong> 无。</p>
 <p><strong>Verify:</strong> TST-W 通过。</p>
 <h3 id="IMPL-T">IMPL-T — L1 不减少的检查</h3>
@@ -1475,7 +1495,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <p><strong>依赖：</strong> IMPL-M。<strong>挡住：</strong> 无。</p>
 <p><strong>Verify:</strong> <code>test_tst_x_l1_delta.py</code> 通过；对当前分支运行报 0 个问题。</p>
 <h3 id="IMPL-U">IMPL-U — spec bundle 版本戳</h3>
-<p><strong>目标：</strong> <code>tools/build_spec_skills.py</code> 按 <a href="decision-history/spec-driven-development-decision-history.html#ard-cc">ARD-CC</a> 给四个 SDD <code>SKILL.md</code> 打版本戳。</p>
+<p><strong>目标：</strong> <code>tools/build_spec_skills.py</code> 按 <a href="decision-history/spec-driven-development-decision-history.html#ard-cc">ARD-CC</a> 给四个 SDD <code>SKILL.md</code>（交付的 spec-write、spec-review，以及也引用标准文件的 spec-organize、spec-pipeline）打版本戳。</p>
 <p><strong>依赖：</strong> 无。<strong>挡住：</strong> 无。</p>
 <p><strong>Verify:</strong> TST-Y 通过。</p>
 <h3 id="IMPL-V">IMPL-V — GitHub Pages 发布</h3>
@@ -1497,7 +1517,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <ul>
 <li>分数 1 满分，并且 3 次独立复核全部通过。</li>
 <li>分数 2 不低于同一 gold 版本的上一次运行（<a href="decision-history/spec-driven-development-decision-history.html#ard-r">ARD-R</a>：不设固定及格线）。</li>
-<li>能执行的 TST-A 到 TST-V 全部通过；<code>run_spec_checks.py</code> 报 0 个问题。</li>
+<li>能执行的 TST-A 到 TST-Z 全部通过；<code>run_spec_checks.py</code> 跑 <code>docs/features/spec-driven-development/</code> 报 0 个问题。</li>
 </ul>
 <h3>Change Log</h3>
 <table><thead><tr>
@@ -1555,6 +1575,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td>2026-11-24</td>
 <td>IMPL-K 进度：11 个机械审查案例已齐；5 个语义案例待 judge 执行器</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>IMPL-U 写明四个 skill；IMPL-P 现状更新；Verify 和验收只查 SDD 目录、覆盖到 TST-Z；IMPL-F、IMPL-H、IMPL-M 补上挡住的任务；IMPL-S 改成完整句子</td>
 </tr>
 </tbody></table>
 </div>
@@ -1770,14 +1794,14 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <p><strong>通过条件：</strong> 剩下的题答对至少 80%，并且没解释的词是 0 个。跑 3 次，至少 2 次通过才算这篇通过。可读性判断的波动比 MUST 判断大，所以这里不要求 3 次都通过。</p>
 <p><strong>判定：</strong> 判分模型 <code>deepseek-flash</code>。实现见 impl-plan 的 IMPL-Q。</p>
 <h4 id="TST-W">TST-W — 网页插图与样式</h4>
-<p><strong>目标：</strong> 站点内嵌 SVG、diagram-design 皮肤、无未解析 <code>data-svg</code>（document-standard 的 DSGN-N-D、<a href="decision-history/spec-driven-development-decision-history.html#ard-ca">ARD-CA</a>）。</p>
+<p><strong>目标：</strong> 网页里的插图都已经嵌进页面，用 diagram-design 的默认配色；页面里没有留下等待替换的 <code>data-svg</code> 占位标记（document-standard 的 DSGN-N-D、<a href="decision-history/spec-driven-development-decision-history.html#ard-ca">ARD-CA</a>）。</p>
 <p><strong>通过条件：</strong> <code>tests/test_sdd_site_render.py</code> 通过；每个 <code>-fig-*.svg</code> 在对应 HTML 中出现一次；<code>docs/book/html</code> 无 <code>data-svg</code>。插图命名、同目录、无脚本由 <code>checks/figures.py</code> 检查。</p>
 <p><strong>判定：</strong> Python。</p>
 <h4 id="TST-X">TST-X — L1 内容不减少</h4>
-<p><strong>目标：</strong> 改文档时不靠删 L1 内容凑分（MUST-D）。<strong>输入：</strong> 两个 git 版本之间的 <code>docs/features/&lt;f&gt;/</code>。</p>
+<p><strong>目标：</strong> 改文档时不靠删 L1 内容凑分（document-standard 的 DSGN-I）。<strong>输入：</strong> 两个 git 版本之间的 <code>docs/features/&lt;f&gt;/</code>。</p>
 <p><strong>通过条件：</strong> 旧版本的每个编号标题在新版本里还在；每篇的 MUST 句数不减少。例外：decision-history 新增的 ARD 提到了这个编号或这篇文档。<strong>判定：</strong> Python（<code>tools/check_l1_delta.py</code>）。</p>
 <h4 id="TST-Y">TST-Y — skill 版本戳和 PRD 一致</h4>
-<p><strong>目标：</strong> 四个 SDD <code>SKILL.md</code> 的版本戳等于 parent PRD 的 <code>version</code>，且 frontmatter 里的 <code>spec_*</code> 键各只出现一次（<a href="decision-history/spec-driven-development-decision-history.html#ard-cc">ARD-CC</a>）。<strong>判定：</strong> Python（<code>build_spec_skills.py --check</code>）。</p>
+<p><strong>目标：</strong> 四个 SDD <code>SKILL.md</code>（交付的 spec-write、spec-review，以及也引用标准文件的 spec-organize、spec-pipeline） 的版本戳等于 parent PRD 的 <code>version</code>，且 frontmatter 里的 <code>spec_*</code> 键各只出现一次（<a href="decision-history/spec-driven-development-decision-history.html#ard-cc">ARD-CC</a>）。<strong>判定：</strong> Python（<code>build_spec_skills.py --check</code>）。</p>
 <h4 id="TST-Z">TST-Z — 每页都能从首页点到</h4>
 <p><strong>目标：</strong> <code>docs/book/html/</code> 下每个 HTML 页面都能从 <code>index.html</code> 顺着链接点到（<a href="decision-history/spec-driven-development-decision-history.html#ard-cd">ARD-CD</a>）。<strong>判定：</strong> Python（<code>tools/check_site_reachable.py</code>）。</p>
 <h3>Test Execution Order</h3>
@@ -1817,7 +1841,11 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 </tr>
 <tr>
 <td>网页和 skill 正文</td>
-<td>TST-R 网页不旧于 markdown；TST-S 四个例子齐全；TST-U 通过</td>
+<td>TST-R 网页和重新生成的一致；TST-S 四个例子齐全；TST-U、TST-W 通过；TST-Z 每页都能从首页点到</td>
+</tr>
+<tr>
+<td>检查和版本戳</td>
+<td>TST-X 没有 L1 内容减少；TST-Y 版本戳和 PRD 一致</td>
 </tr>
 <tr>
 <td>外部 gold</td>
@@ -2081,6 +2109,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <td>2026-11-24</td>
 <td>TST-A：写明 parent DSGN-A 的改动上限不收进清单</td>
 </tr>
+<tr>
+<td>2026-11-24</td>
+<td>TST-X 改引 DSGN-I；TST-W 改成完整句子；TST-Y 写明四个 skill；门槛表补 TST-W 到 TST-Z，TST-R 按内容比较</td>
+</tr>
 </tbody></table>
 </div>
 <p class="src">Canonical: <code>docs/features/spec-driven-development/test-plan/spec-driven-development-test-plan.md</code></p>
@@ -2117,7 +2149,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td>ARD-CB</td>
 <td>2026-11-20</td>
-<td>网页离线可读指正文与已提交的 SVG 插图；字体与 Mermaid 可联网加载（PRD-O）</td>
+<td>网页离线可读指正文与已提交的 SVG 插图；字体与 Mermaid 可联网加载（reader PRD 的 PRD-O）</td>
 </tr>
 <tr>
 <td>ARD-CA</td>
@@ -2529,7 +2561,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <p><strong>放弃的方案。</strong> 每个 <code>SKILL.md</code> 手写版本号；按 semver 自动升版。</p>
 <a id="ard-cb"></a>
 <h4 id="ARD-CB">ARD-CB — 离线可读范围</h4>
-<p><strong>原因。</strong> 插图内嵌进网页后，如果 PRD-O 的「直接打开就能读」要求完全不联网，字体和 Mermaid（把文字描述画成流程图的脚本）就加载不了。</p>
+<p><strong>原因。</strong> 插图内嵌进网页后，如果 reader PRD 的 PRD-O「直接打开就能读」要求完全不联网，字体和 Mermaid（把文字描述画成流程图的脚本）就加载不了。</p>
 <p><strong>规则。</strong> MUST：断网时正文和 SVG 插图能读；字体和 Mermaid 可以从网上加载。</p>
 <p><strong>放弃的方案。</strong> 全站严格零联网（与 Mermaid、字体策略冲突）。</p>
 <a id="ard-ca"></a>
@@ -3927,6 +3959,7 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 <li>正文可以中英文混合，只要读着通顺；英文术语同样要解释或收进术语表。Problem Statement 可以保留作者原话（<a href="decision-history/spec-driven-development-decision-history.html#ard-bs">ARD-BS</a>）。</li>
 <li>必需章节的标题和编号用英文。</li>
 </ul>
+<p><strong>插图（MUST）。</strong> 图里不写正文没有的事实，也不和正文矛盾；L1 内容不能只出现在图里。spec-review 发现时报严重度 3，并写出 SVG 文件名（<a href="decision-history/spec-driven-development-decision-history.html#ard-ca">ARD-CA</a>）。</p>
 <p><strong>Decision Log（MUST）。</strong> 表头是 <code>ID | Date | Decision</code>，可以加第四列 <code>Ready</code>；不能有 Status 列和 Supersedes 列（<a href="decision-history/spec-driven-development-decision-history.html#ard-ax">ARD-AX</a>）。最新的决定写在表的最上面。</p>
 <p><strong>Change Log（MUST）。</strong> 每篇文档的最后一节，只往末尾追加，不改旧行。</p>
 <p><strong>其他：</strong> 夹在 <code>&lt;!-- PROTECTED --&gt;</code> 和 <code>&lt;!-- END PROTECTED --&gt;</code> 两行注释之间的段落是受保护的，任何工具在任何模式下都不能改。文档新建、删除、移动后，重新生成 INDEX。</p>
@@ -4131,6 +4164,7 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 <li>结论有依据，查不到写 <code>UNKNOWN</code>（pipeline design 的 PIPE-L）。</li>
 <li>DSGN-E 里标了 MUST 的四条都满足：impl-plan 的任务写明依赖、挡住和完成标准；引用代码写明 commit；每个 feature 只有一份未决问题清单；文档能让本科程序员读懂。</li>
 <li>本地翻译副本不提交（DSGN-C）；改编号时留对照表和旧锚点（DSGN-F）；每条 ARD 都有说明（DSGN-J）。</li>
+<li>图不写正文没有的事实，也不和正文矛盾（DSGN-E 的「插图」）。</li>
 </ul>
 <p><strong>NICE，做不到只提醒（<a href="decision-history/spec-driven-development-decision-history.html#ard-bn">ARD-BN</a>；下面的 ARD 都在 parent 的 decision-history 里）：</strong></p>
 <ul>
@@ -4401,6 +4435,10 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 <tr>
 <td>2026-11-24</td>
 <td>DSGN-G：final 后经 ARD 授权的大改除外（parent ARD-BS）；不迁移旧文档改链 ARD-CC</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>DSGN-E 加「插图（MUST）」，DSGN-M 门槛加一条（ARD-CA，与 SPEC-STANDARD 一致）</td>
 </tr>
 </tbody></table>
 <hr><p class="src-inline">Source: <code>features/document-standard/design/document-standard-design-spec-reader-html.md</code></p>
@@ -4822,7 +4860,7 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 </tbody></table>
 <h3>Non-Functional Requirements</h3>
 <ul>
-<li><strong>PRD-O</strong>：纯静态网页，不需要构建服务器，用浏览器直接打开文件就能看，不依赖 MkDocs（一种把 markdown 生成网站的工具）的服务。</li>
+<li><strong>PRD-O</strong>：纯静态网页，阅读时不需要服务器，用浏览器直接打开文件就能看；发布时由 CI 生成（parent 的 ARD-CD），不依赖 MkDocs（一种把 markdown 生成网站的工具）的服务。</li>
 <li><strong>PRD-P</strong>：页面里不能有密钥，也不能有 <code>raw/</code> 里给机器用的评测原文；需要的话只放路径链接。</li>
 </ul>
 <h3>Out of Scope</h3>
@@ -4863,6 +4901,10 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 <tr>
 <td>2026-11-20</td>
 <td>第 2 轮审查后：PRD-L 降为 NICE（ARD-BY）；MkDocs、git hook 第一次出现时解释</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>PRD-O：阅读时不需要服务器，发布由 CI 生成（ARD-CD）</td>
 </tr>
 </tbody></table>
 </div>

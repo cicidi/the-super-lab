@@ -451,6 +451,7 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 <li>正文可以中英文混合，只要读着通顺；英文术语同样要解释或收进术语表。Problem Statement 可以保留作者原话（<a href="../../../decision-history/spec-driven-development-decision-history.html#ard-bs">ARD-BS</a>）。</li>
 <li>必需章节的标题和编号用英文。</li>
 </ul>
+<p><strong>插图（<span class="lvl lvl--must">MUST</span>）。</strong> 图里不写正文没有的事实，也不和正文矛盾；L1 内容不能只出现在图里。spec-review 发现时报严重度 3，并写出 SVG 文件名（<a href="../../../decision-history/spec-driven-development-decision-history.html#ard-ca">ARD-CA</a>）。</p>
 <p><strong>Decision Log（<span class="lvl lvl--must">MUST</span>）。</strong> 表头是 <code>ID | Date | Decision</code>，可以加第四列 <code>Ready</code>；不能有 Status 列和 Supersedes 列（<a href="../../../decision-history/spec-driven-development-decision-history.html#ard-ax">ARD-AX</a>）。最新的决定写在表的最上面。</p>
 <p><strong>Change Log（<span class="lvl lvl--must">MUST</span>）。</strong> 每篇文档的最后一节，只往末尾追加，不改旧行。</p>
 <p><strong>其他：</strong> 夹在 <code>&lt;!-- PROTECTED --&gt;</code> 和 <code>&lt;!-- END PROTECTED --&gt;</code> 两行注释之间的段落是受保护的，任何工具在任何模式下都不能改。文档新建、删除、移动后，重新生成 INDEX。</p>
@@ -655,6 +656,7 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 <li>结论有依据，查不到写 <code>UNKNOWN</code>（pipeline design 的 PIPE-L）。</li>
 <li><a class="id-ref" href="#DSGN-E">DSGN-E</a> 里标了 <span class="lvl lvl--must">MUST</span> 的四条都满足：impl-plan 的任务写明依赖、挡住和完成标准；引用代码写明 commit；每个 feature 只有一份未决问题清单；文档能让本科程序员读懂。</li>
 <li>本地翻译副本不提交（<a class="id-ref" href="#DSGN-C">DSGN-C</a>）；改编号时留对照表和旧锚点（<a class="id-ref" href="#DSGN-F">DSGN-F</a>）；每条 ARD 都有说明（<a class="id-ref" href="#DSGN-J">DSGN-J</a>）。</li>
+<li>图不写正文没有的事实，也不和正文矛盾（<a class="id-ref" href="#DSGN-E">DSGN-E</a> 的「插图」）。</li>
 </ul>
 <p><strong><span class="lvl lvl--nice">NICE</span>，做不到只提醒（<a href="../../../decision-history/spec-driven-development-decision-history.html#ard-bn">ARD-BN</a>；下面的 ARD 都在 parent 的 decision-history 里）：</strong></p>
 <ul>
@@ -925,6 +927,10 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 <tr>
 <td>2026-11-24</td>
 <td><a class="id-ref" href="#DSGN-G">DSGN-G</a>：final 后经 ARD 授权的大改除外（parent <a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-BS">ARD-BS</a>）；不迁移旧文档改链 <a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-CC">ARD-CC</a></td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td><a class="id-ref" href="#DSGN-E">DSGN-E</a> 加「插图（<span class="lvl lvl--must">MUST</span>）」，<a class="id-ref" href="#DSGN-M">DSGN-M</a> 门槛加一条（<a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-CA">ARD-CA</a>，与 SPEC-STANDARD 一致）</td>
 </tr>
 </tbody></table></div>
       </div>

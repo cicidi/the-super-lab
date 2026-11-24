@@ -59,7 +59,7 @@
 <tr>
 <td><a class="id-ref" href="#ARD-CB">ARD-CB</a></td>
 <td>2026-11-20</td>
-<td>网页离线可读指正文与已提交的 SVG 插图；字体与 Mermaid 可联网加载（<a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-O">PRD-O</a>）</td>
+<td>网页离线可读指正文与已提交的 SVG 插图；字体与 Mermaid 可联网加载（reader PRD 的 <a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-O">PRD-O</a>）</td>
 </tr>
 <tr>
 <td><a class="id-ref" href="#ARD-CA">ARD-CA</a></td>
@@ -471,7 +471,7 @@
 <p><strong>放弃的方案。</strong> 每个 <code>SKILL.md</code> 手写版本号；按 semver 自动升版。</p>
 <a id="ard-cb"></a>
 <h4 id="ARD-CB"><a class="id-ref" href="#ARD-CB">ARD-CB</a> — 离线可读范围</h4>
-<p><strong>原因。</strong> 插图内嵌进网页后，如果 <a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-O">PRD-O</a> 的「直接打开就能读」要求完全不联网，字体和 Mermaid（把文字描述画成流程图的脚本）就加载不了。</p>
+<p><strong>原因。</strong> 插图内嵌进网页后，如果 reader PRD 的 <a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-O">PRD-O</a>「直接打开就能读」要求完全不联网，字体和 Mermaid（把文字描述画成流程图的脚本）就加载不了。</p>
 <p><strong>规则。</strong> <span class="lvl lvl--must">MUST</span>：断网时正文和 SVG 插图能读；字体和 Mermaid 可以从网上加载。</p>
 <p><strong>放弃的方案。</strong> 全站严格零联网（与 Mermaid、字体策略冲突）。</p>
 <a id="ard-ca"></a>
@@ -506,12 +506,12 @@
 <a id="ard-bu"></a>
 <h4 id="ARD-BU"><a class="id-ref" href="#ARD-BU">ARD-BU</a> — 人确认后才建 feature 目录</h4>
 <p><strong>原因。</strong> pipeline design 里，Create 阶段（PIPE-C、PIPE-G）说要用 feature create 命令建目录，但 PIPE-D 和 Implementation Decisions 说人在 Map 阶段确认后才建。Map 在 Create 之后，两者矛盾。</p>
-<p><strong>规则。</strong> Create 阶段只把暂定的 feature 名字和进度记在 <a href="../../../../../CLAUDE.local.md"><code>CLAUDE.local.md</code></a>（<a class="id-ref" href="#ARD-BT">ARD-BT</a>）。人在 Map 阶段确认拆法和名字之后，才用 feature create 命令建 <code>docs/features/&lt;f&gt;/</code>。</p>
+<p><strong>规则。</strong> Create 阶段只把暂定的 feature 名字和进度记在 <code>CLAUDE.local.md</code>（<a class="id-ref" href="#ARD-BT">ARD-BT</a>）。人在 Map 阶段确认拆法和名字之后，才用 feature create 命令建 <code>docs/features/&lt;f&gt;/</code>。</p>
 <p><strong>放弃的方案。</strong> Create 就建目录：名字还没定就建，事后改名会留下死链。</p>
 <a id="ard-bt"></a>
 <h4 id="ARD-BT"><a class="id-ref" href="#ARD-BT">ARD-BT</a> — 重申 <a class="id-ref" href="#ARD-U">ARD-U</a>、<a class="id-ref" href="#ARD-V">ARD-V</a> 仍然有效的部分</h4>
 <p><strong>原因。</strong> <a class="id-ref" href="#ARD-U">ARD-U</a> 和 <a class="id-ref" href="#ARD-V">ARD-V</a> 在日志里整行被划掉，但它们只有一部分被推翻：<a class="id-ref" href="#ARD-U">ARD-U</a> 被推翻的是「spec-pipeline 是入口」，<a class="id-ref" href="#ARD-V">ARD-V</a> 被推翻的是「为四个例子建 gold」。剩下的部分仍是现行规则（<a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-J">PRD-J</a>、pipeline design 的 PIPE-D、PIPE-H、<a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-K">PRD-K</a>），却挂在已划掉的决定上，读者会以为这些规则也作废了。</p>
-<p><strong>规则。</strong> 下面三条仍然有效，以本条为准：Map 阶段以访谈为主，产出由 AI 判断；进度在 feature 名字定之前记在 <a href="../../../../../CLAUDE.local.md"><code>CLAUDE.local.md</code></a>，定了以后记在 <code>docs/features/&lt;f&gt;/raw/state/</code>；非软件难题留在本 PRD，用同样五篇文档。</p>
+<p><strong>规则。</strong> 下面三条仍然有效，以本条为准：Map 阶段以访谈为主，产出由 AI 判断；进度在 feature 名字定之前记在 <code>CLAUDE.local.md</code>，定了以后记在 <code>docs/features/&lt;f&gt;/raw/state/</code>；非软件难题留在本 PRD，用同样五篇文档。</p>
 <a id="ard-bs"></a>
 <h4 id="ARD-BS"><a class="id-ref" href="#ARD-BS">ARD-BS</a> — 可以中英文混合；Problem Statement 保留原话</h4>
 <p><strong>原因。</strong> <a class="id-ref" href="#ARD-BK">ARD-BK</a> 要求正文统一为中文。审查时发现 PRD 的 Problem Statement 是作者原话，中英文混写，标题带 1 到 5 的编号。人决定保留原样：读着通顺比形式统一更重要。</p>

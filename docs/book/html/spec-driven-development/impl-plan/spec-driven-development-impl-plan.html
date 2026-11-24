@@ -76,17 +76,17 @@
 <h3 id="IMPL-F"><a class="id-ref" href="#IMPL-F">IMPL-F</a> — 给人读的网页</h3>
 <p><strong>目标：</strong> 全站一个网站，入口 <a href="../../index.html"><code>docs/book/html/index.html</code></a>；feature 页左边是目录，右边是正文；parent 的汇编页 <code>spec-driven-development-reader.html</code> 在其中（<a href="../decision-history/spec-driven-development-decision-history.html#ard-bg">ARD-BG</a>、<a href="../features/document-standard/design/document-standard-design-spec-reader-html.html">reader design</a>）。</p>
 <p><strong>步骤：</strong> markdown 改了之后，用 <a href="../../../../../tools/build_sdd_site.py"><code>tools/build_sdd_site.py</code></a> 和 <a href="../../../../../tools/build_sdd_reader.py"><code>tools/build_sdd_reader.py</code></a> 重新生成；每页底部链到原文路径。</p>
-<p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-C">IMPL-C</a>。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-O">IMPL-O</a>。</p>
+<p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-C">IMPL-C</a>。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-O">IMPL-O</a>、<a class="id-ref" href="#IMPL-S">IMPL-S</a>。</p>
 <p class="impl-verify"><strong>Verify:</strong> 用浏览器直接打开页面能看；页面里列出的原文路径都存在。</p>
 <h3 id="IMPL-G"><a class="id-ref" href="#IMPL-G">IMPL-G</a> — CLAUDE.local 里的 SDD 段落</h3>
 <p><strong>目标：</strong> feature 名字还没定的时候，Create 和 Map 阶段的进度和暂定名记在这里（pipeline design 的 PIPE-H；<a href="../decision-history/spec-driven-development-decision-history.html#ard-bu">ARD-BU</a>）。</p>
-<p><strong>步骤：</strong> 在项目的 <a href="../../../../../CLAUDE.local.md"><code>CLAUDE.local.md</code></a> 里加一段 SDD：当前阶段、粗略 PRD 的位置、reader 网页的链接。</p>
+<p><strong>步骤：</strong> 在项目的 <code>CLAUDE.local.md</code> 里加一段 SDD：当前阶段、粗略 PRD 的位置、reader 网页的链接。</p>
 <p><strong>依赖：</strong> 无。<strong>挡住：</strong> 无。</p>
 <p class="impl-verify"><strong>Verify:</strong> spec-write 开始工作时能读到这一段。</p>
 <h3 id="IMPL-H"><a class="id-ref" href="#IMPL-H">IMPL-H</a> — 文档整理</h3>
 <p><strong>目标：</strong> INDEX 列出 parent 的 impl-plan 和新增的 design 分篇；删除旧的摘要网页。</p>
 <p><strong>步骤：</strong> 重新生成 <a href="../../../../INDEX.md"><code>docs/INDEX.md</code></a>；删除 <code>spec-driven-development.html</code>，只保留 reader。</p>
-<p><strong>依赖：</strong> 无。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-O">IMPL-O</a>。</p>
+<p><strong>依赖：</strong> 无。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-O">IMPL-O</a>、<a class="id-ref" href="#IMPL-V">IMPL-V</a>。</p>
 <p class="impl-verify"><strong>Verify:</strong> 没有链接指向已删除的摘要网页，也没有指向 wayfinder-import 的路径。</p>
 <h3 id="IMPL-I"><a class="id-ref" href="#IMPL-I">IMPL-I</a> — spec-review 报告机械 <span class="lvl lvl--must">MUST</span></h3>
 <p><strong>目标：</strong> spec-review 能找出机械 <span class="lvl lvl--must">MUST</span> 的违反，并给出修改建议（<a href="../decision-history/spec-driven-development-decision-history.html#ard-p">ARD-P</a>）。</p>
@@ -107,7 +107,7 @@
 <p class="impl-verify"><strong>Verify:</strong> 对一次样例运行跑 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-K">TST-K</a> 通过。</p>
 <h3 id="IMPL-M"><a class="id-ref" href="#IMPL-M">IMPL-M</a> — 检查脚本更新</h3>
 <p><strong>目标：</strong> <code>sections.py</code> 检查五种文档的必需章节；<code>ids.py</code> 检查编号格式；去掉不该有的豁免。</p>
-<p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-C">IMPL-C</a>。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-P">IMPL-P</a>。</p>
+<p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-C">IMPL-C</a>。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-P">IMPL-P</a>、<a class="id-ref" href="#IMPL-T">IMPL-T</a>。</p>
 <p class="impl-verify"><strong>Verify:</strong> <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-B">TST-B</a> 通过；<code>run_spec_checks.py</code> 跑 SDD 目录。</p>
 <h3 id="IMPL-N"><a class="id-ref" href="#IMPL-N">IMPL-N</a> — skill 契约和四个例子</h3>
 <p><strong>目标：</strong> <a href="../design/spec-driven-development-design-skill-contracts.html">skill 契约</a>写好；两个 skill 的正文都提到盖 shed、北京旅游、数学题、股票（<a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-Q">PRD-Q</a>）。</p>
@@ -131,7 +131,7 @@
 </tr>
 <tr>
 <td><a href="../../../../../skills/spec-organize/tests/must_registry.yaml"><code>skills/spec-organize/tests/must_registry.yaml</code></a></td>
-<td>重新扫描（<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-A">TST-A</a>）。document-standard design 已改写，原来按行号记的出处都错位了，出处比对脚本 <code>registry_provenance</code> 现在报「只有 15/32 条出自契约小节」；把 reader design 的 <span class="lvl lvl--must">MUST</span> 也收进来（<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-A">TST-A</a>）；去掉「正文改动要留删除线」这条 <span class="lvl lvl--must">MUST</span>；标出改为 <span class="lvl lvl--nice">NICE</span> 的规则</td>
+<td>重新扫描（<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-A">TST-A</a>）。document-standard design 已改写，原来按行号记的出处都错位了。已于 2026-11-24 重新扫描，<code>registry_provenance</code> 报 0 个问题；把 reader design 的 <span class="lvl lvl--must">MUST</span> 也收进来（<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-A">TST-A</a>）；去掉「正文改动要留删除线」这条 <span class="lvl lvl--must">MUST</span>；标出改为 <span class="lvl lvl--nice">NICE</span> 的规则</td>
 <td><a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-A">TST-A</a>、<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-M">TST-M</a>、<a href="../decision-history/spec-driven-development-decision-history.html#ard-bm">ARD-BM</a>、<a href="../decision-history/spec-driven-development-decision-history.html#ard-bn">ARD-BN</a></td>
 </tr>
 <tr>
@@ -166,19 +166,19 @@
 </tr>
 </tbody></table></div>
 <p><strong>依赖：</strong> 本批 spec 修改完成；<a class="id-ref" href="#IMPL-M">IMPL-M</a>。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-E">IMPL-E</a>、<a class="id-ref" href="#IMPL-Q">IMPL-Q</a>。</p>
-<p class="impl-verify"><strong>Verify:</strong> <code>run_spec_checks.py</code> 跑 <code>docs/features/</code> 报 0 个问题（包括 <code>registry_provenance</code>）；<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-A">TST-A</a> 覆盖率 100%；<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-R">TST-R</a> 通过。</p>
+<p class="impl-verify"><strong>Verify:</strong> <code>run_spec_checks.py</code> 跑 <code>docs/features/spec-driven-development/</code> 报 0 个问题（旧文档不迁移，不检查别的 feature）（包括 <code>registry_provenance</code>）；<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-A">TST-A</a> 覆盖率 100%；<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-R">TST-R</a> 通过。</p>
 <h3 id="IMPL-Q"><a class="id-ref" href="#IMPL-Q">IMPL-Q</a> — 可读性测试</h3>
 <p><strong>目标：</strong> 实现 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-V">TST-V</a>：让一个 LLM 扮演本科程序员，只读一篇文档，回答从这篇的编号条目里抽出的问题；再找出第一次出现时没解释、术语表里也没有的词（<a href="../decision-history/spec-driven-development-decision-history.html#ard-bo">ARD-BO</a>）。</p>
 <p><strong>步骤：</strong> 在 <code>skills/spec-organize/tests/</code> 下写出题、答题、判分的脚本；对照题不给文档，答对的题作废；结果写进评测报告。</p>
 <p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-J">IMPL-J</a>、<a class="id-ref" href="#IMPL-P">IMPL-P</a>。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-E">IMPL-E</a> 的可读性部分。</p>
 <p class="impl-verify"><strong>Verify:</strong> 对 SDD 的每篇已提交文档跑 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-V">TST-V</a>，并在报告里列出每篇的答对率和没解释的术语。</p>
 <h3 id="IMPL-R"><a class="id-ref" href="#IMPL-R">IMPL-R</a> — CLAUDE 层和 skill 的规则同步</h3>
-<p><strong>目标：</strong> parent design 的 <a class="id-ref" href="../design/spec-driven-development-design.html#DSGN-C">DSGN-C</a> 要求 CLAUDE 层（<code>CLAUDE.md</code>、<a href="../../../../../CLAUDE.local.md"><code>CLAUDE.local.md</code></a>）和 skill 里的规则一致。<a class="id-ref" href="../design/spec-driven-development-design.html#DSGN-A">DSGN-A</a> 的改动上限和 <a class="id-ref" href="../design/spec-driven-development-design.html#DSGN-B">DSGN-B</a> 的「什么时候记 ARD」要同时写进两处。</p>
-<p><strong>步骤：</strong> 标准文件改了之后，检查 CLAUDE 层里有没有对应的旧说法，一起改掉。2026-11-20 已改：<a href="../../../../../CLAUDE.local.md"><code>CLAUDE.local.md</code></a> 的改动上限从「10 行或 200 字符」改为「10 行并且 200 字符」，需求编号从不存在的 FR-12 改为 <a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-C">PRD-C</a>（<a href="../decision-history/spec-driven-development-decision-history.html#ard-bp">ARD-BP</a>）。</p>
+<p><strong>目标：</strong> parent design 的 <a class="id-ref" href="../design/spec-driven-development-design.html#DSGN-C">DSGN-C</a> 要求 CLAUDE 层（<code>CLAUDE.md</code>、<code>CLAUDE.local.md</code>）和 skill 里的规则一致。<a class="id-ref" href="../design/spec-driven-development-design.html#DSGN-A">DSGN-A</a> 的改动上限和 <a class="id-ref" href="../design/spec-driven-development-design.html#DSGN-B">DSGN-B</a> 的「什么时候记 ARD」要同时写进两处。</p>
+<p><strong>步骤：</strong> 标准文件改了之后，检查 CLAUDE 层里有没有对应的旧说法，一起改掉。2026-11-20 已改：<code>CLAUDE.local.md</code> 的改动上限从「10 行或 200 字符」改为「10 行并且 200 字符」，需求编号从不存在的 FR-12 改为 <a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-C">PRD-C</a>（<a href="../decision-history/spec-driven-development-decision-history.html#ard-bp">ARD-BP</a>）。</p>
 <p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-C">IMPL-C</a>。<strong>挡住：</strong> 无。</p>
-<p class="impl-verify"><strong>Verify:</strong> CLAUDE 层里：改动上限写的是「并且」，并引用 <a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-C">PRD-C</a>；没有 <code>FR-</code> 这类已禁止的编号；进度路径是 <a href="../../../../../CLAUDE.local.md"><code>CLAUDE.local.md</code></a> 或 <code>raw/state/</code>（<a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-J">PRD-J</a>）；文档目录是 <code>docs/features/&lt;f&gt;/&lt;类型&gt;/</code>（document-standard 的 <a class="id-ref" href="../design/spec-driven-development-design.html#DSGN-B">DSGN-B</a>）；列出的 skill 只有 spec-write 和 spec-review（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-BX">ARD-BX</a>）。2026-11-20 已按这几条改过 <a href="../../../../../CLAUDE.local.md"><code>CLAUDE.local.md</code></a>。</p>
+<p class="impl-verify"><strong>Verify:</strong> CLAUDE 层里：改动上限写的是「并且」，并引用 <a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-C">PRD-C</a>；没有 <code>FR-</code> 这类已禁止的编号；进度路径是 <code>CLAUDE.local.md</code> 或 <code>raw/state/</code>（<a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-J">PRD-J</a>）；文档目录是 <code>docs/features/&lt;f&gt;/&lt;类型&gt;/</code>（document-standard 的 <a class="id-ref" href="../design/spec-driven-development-design.html#DSGN-B">DSGN-B</a>）；列出的 skill 只有 spec-write 和 spec-review（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-BX">ARD-BX</a>）。2026-11-20 已按这几条改过 <code>CLAUDE.local.md</code>。</p>
 <h3 id="IMPL-S"><a class="id-ref" href="#IMPL-S">IMPL-S</a> — 插图与网页样式</h3>
-<p><strong>目标：</strong> diagram-design 皮肤、SVG 内嵌、<span class="lvl lvl--must">MUST</span>/<span class="lvl lvl--nice">NICE</span> 标签（<a href="../decision-history/spec-driven-development-decision-history.html#ard-ca">ARD-CA</a>）。</p>
+<p><strong>目标：</strong> 网页里的插图用 diagram-design 的默认配色，SVG 文件在生成网页时嵌进页面；插图规则分清 <span class="lvl lvl--must">MUST</span> 和 <span class="lvl lvl--nice">NICE</span>（<a href="../decision-history/spec-driven-development-decision-history.html#ard-ca">ARD-CA</a>）。</p>
 <p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-F">IMPL-F</a>。<strong>挡住：</strong> 无。</p>
 <p class="impl-verify"><strong>Verify:</strong> <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-W">TST-W</a> 通过。</p>
 <h3 id="IMPL-T"><a class="id-ref" href="#IMPL-T">IMPL-T</a> — L1 不减少的检查</h3>
@@ -186,7 +186,7 @@
 <p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-M">IMPL-M</a>。<strong>挡住：</strong> 无。</p>
 <p class="impl-verify"><strong>Verify:</strong> <code>test_tst_x_l1_delta.py</code> 通过；对当前分支运行报 0 个问题。</p>
 <h3 id="IMPL-U"><a class="id-ref" href="#IMPL-U">IMPL-U</a> — spec bundle 版本戳</h3>
-<p><strong>目标：</strong> <a href="../../../../../tools/build_spec_skills.py"><code>tools/build_spec_skills.py</code></a> 按 <a href="../decision-history/spec-driven-development-decision-history.html#ard-cc">ARD-CC</a> 给四个 SDD <code>SKILL.md</code> 打版本戳。</p>
+<p><strong>目标：</strong> <a href="../../../../../tools/build_spec_skills.py"><code>tools/build_spec_skills.py</code></a> 按 <a href="../decision-history/spec-driven-development-decision-history.html#ard-cc">ARD-CC</a> 给四个 SDD <code>SKILL.md</code>（交付的 spec-write、spec-review，以及也引用标准文件的 spec-organize、spec-pipeline）打版本戳。</p>
 <p><strong>依赖：</strong> 无。<strong>挡住：</strong> 无。</p>
 <p class="impl-verify"><strong>Verify:</strong> <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-Y">TST-Y</a> 通过。</p>
 <h3 id="IMPL-V"><a class="id-ref" href="#IMPL-V">IMPL-V</a> — GitHub Pages 发布</h3>
@@ -208,7 +208,7 @@
 <ul>
 <li>分数 1 满分，并且 3 次独立复核全部通过。</li>
 <li>分数 2 不低于同一 gold 版本的上一次运行（<a href="../decision-history/spec-driven-development-decision-history.html#ard-r">ARD-R</a>：不设固定及格线）。</li>
-<li>能执行的 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-A">TST-A</a> 到 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-V">TST-V</a> 全部通过；<code>run_spec_checks.py</code> 报 0 个问题。</li>
+<li>能执行的 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-A">TST-A</a> 到 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-Z">TST-Z</a> 全部通过；<code>run_spec_checks.py</code> 跑 <code>docs/features/spec-driven-development/</code> 报 0 个问题。</li>
 </ul>
 <h3>Change Log</h3>
 <div class="table-wrap"><table><thead><tr>
@@ -266,6 +266,10 @@
 <tr>
 <td>2026-11-24</td>
 <td><a class="id-ref" href="#IMPL-K">IMPL-K</a> 进度：11 个机械审查案例已齐；5 个语义案例待 judge 执行器</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td><a class="id-ref" href="#IMPL-U">IMPL-U</a> 写明四个 skill；<a class="id-ref" href="#IMPL-P">IMPL-P</a> 现状更新；Verify 和验收只查 SDD 目录、覆盖到 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-Z">TST-Z</a>；<a class="id-ref" href="#IMPL-F">IMPL-F</a>、<a class="id-ref" href="#IMPL-H">IMPL-H</a>、<a class="id-ref" href="#IMPL-M">IMPL-M</a> 补上挡住的任务；<a class="id-ref" href="#IMPL-S">IMPL-S</a> 改成完整句子</td>
 </tr>
 </tbody></table></div>
       </div>

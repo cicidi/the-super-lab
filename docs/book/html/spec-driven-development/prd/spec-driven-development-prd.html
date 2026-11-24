@@ -99,7 +99,7 @@
 <p><strong id="PRD-G"><a class="id-ref" href="#PRD-G">PRD-G</a></strong>（延后）：产品级成功指标和基线，暂时定不下来，见 <a href="../decision-history/spec-driven-development-decision-history.html#ard-n">ARD-N</a>。test-plan 里的分数是评测指标，不是产品成功指标。</p>
 <p><strong id="PRD-H"><a class="id-ref" href="#PRD-H">PRD-H</a></strong>：流程里的每一步，优先使用已经流行的 skill，不重新发明。</p>
 <p><strong id="PRD-I"><a class="id-ref" href="#PRD-I">PRD-I</a></strong>：每项改动都要能验证。实在验证不了的，在 spec 里标为 <code>Unverified</code> 并写明原因；标了的项不作为 test-plan 的通过条件。</p>
-<p><strong id="PRD-J"><a class="id-ref" href="#PRD-J">PRD-J</a></strong>：写或改 feature spec 时，由 spec-write 按标准判断要新建哪篇、或要改哪几篇；提交前，询问是否先跑 spec-review。写作进度在 feature 目录建好之前记在 <a href="../../../../../CLAUDE.local.md"><code>CLAUDE.local.md</code></a>，建好之后记在 <code>docs/features/&lt;f&gt;/raw/state/</code>（<a href="../decision-history/spec-driven-development-decision-history.html#ard-bt">ARD-BT</a>）。</p>
+<p><strong id="PRD-J"><a class="id-ref" href="#PRD-J">PRD-J</a></strong>：写或改 feature spec 时，由 spec-write 按标准判断要新建哪篇、或要改哪几篇；提交前，询问是否先跑 spec-review。写作进度在 feature 目录建好之前记在 <code>CLAUDE.local.md</code>，建好之后记在 <code>docs/features/&lt;f&gt;/raw/state/</code>（<a href="../decision-history/spec-driven-development-decision-history.html#ard-bt">ARD-BT</a>）。</p>
 <p><strong id="PRD-K"><a class="id-ref" href="#PRD-K">PRD-K</a></strong>：适用范围不限于软件，任何有门槛的难题都用同一套 spec。四个例子：盖 shed（合规、成本、施工）、北京旅游（行程、住宿、风险、预算）、看懂一道著名数学题（零基础一步步学）、分析一只股票（基本面、财报、新闻，每个结论有依据）。这四个例子不在本仓库建 gold（<a href="../decision-history/spec-driven-development-decision-history.html#ard-ad">ARD-AD</a>）。</p>
 <p><strong id="PRD-L"><a class="id-ref" href="#PRD-L">PRD-L</a></strong>：每个子问题都标明由谁处理：AI 查、人决定、或 AI 查完后人决定。人没有问到的盲区和风险，AI 必须主动提出来。</p>
 <p><strong id="PRD-M"><a class="id-ref" href="#PRD-M">PRD-M</a></strong>：文档要让人读懂，这是硬需求，而且是通过条件。交付前，由一个 LLM（大语言模型）扮演本科水平的程序员，只读这一篇文档和术语表，回答从文档里抽出的问题；答错太多，或者有文档里没解释、术语表里也没有的术语，就不算交付（<a href="../decision-history/spec-driven-development-decision-history.html#ard-bo">ARD-BO</a>）。具体门槛见 test-plan 的 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-V">TST-V</a>。</p>
@@ -117,7 +117,7 @@
 </ul>
 <h3>Resources Needed</h3>
 <ul>
-<li>spec-write、spec-review 两个 skill，以及它们要读的三份标准文件（<a href="../decision-history/spec-driven-development-decision-history.html#ard-bx">ARD-BX</a>）和一份 test-plan。不需要外部服务，也不需要数据库。</li>
+<li>spec-write、spec-review 两个 skill，以及它们要读的三份标准文件（<a href="../decision-history/spec-driven-development-decision-history.html#ard-bx">ARD-BX</a>）和一份 test-plan。不需要数据库。外部服务：评测用的 <code>deepseek-flash</code> API，以及发布网站用的 GitHub Actions 和 GitHub Pages（<a href="../decision-history/spec-driven-development-decision-history.html#ard-cd">ARD-CD</a>）。</li>
 <li>评测需要 <code>deepseek-flash</code> 的 API，以及每次评测跑 3 次的费用。跑分结果和报告不提交（<a href="../decision-history/spec-driven-development-decision-history.html#ard-ad">ARD-AD</a>）。</li>
 </ul>
 <p>进入下游前，PRD 要写清的五项（pipeline design 的 PIPE-E-B）：</p>
@@ -143,7 +143,7 @@
 </tr>
 <tr>
 <td>工具</td>
-<td>spec-write、spec-review、<code>run_spec_checks.py</code> 检查脚本、mock MCP 服务器（<a class="id-ref" href="#PRD-O">PRD-O</a>）</td>
+<td>spec-write、spec-review、<code>run_spec_checks.py</code> 检查脚本、mock MCP 服务器（<a class="id-ref" href="#PRD-O">PRD-O</a>）、发布网站的 GitHub Actions</td>
 </tr>
 </tbody></table></div>
 <h3>Change Log</h3>
@@ -230,6 +230,10 @@
 <tr>
 <td>2026-11-24</td>
 <td>Out of Scope：版本只做来源标记（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CC">ARD-CC</a>）</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>Resources：列出外部服务 deepseek API、GitHub Actions 和 Pages（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CD">ARD-CD</a>）</td>
 </tr>
 </tbody></table></div>
       </div>
