@@ -12,6 +12,7 @@ last_verified: 2026-09-25
 
 - Part: [为什么要做，一个 skill 怎么搭](skill-factory-design-why-and-anatomy.md)
 - Part: [怎么验证 skill，怎么安装和升级](skill-factory-design-verify-upgrade.md)
+- Part: [skill 目录、调用关系与共性问题](skill-factory-design-skill-catalog.md)
 
 ## Specification
 
