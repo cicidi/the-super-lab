@@ -18,12 +18,12 @@ metadata:
     - spec reader
     - human readable spec
     - spec html
-  spec_bundle_version: "1.0.5"
+  spec_bundle_version: "1.0.6"
   spec_built_at: "2026-11-24"
-  spec_git_sha: "37ec9a5"
+  spec_git_sha: "5119924"
 ---
 <!-- SPEC-BUNDLE-START -->
-> **SDD spec bundle** `1.0.5` · built 2026-11-24 · git `37ec9a5`
+> **SDD spec bundle** `1.0.6` · built 2026-11-24 · git `5119924`
 <!-- SPEC-BUNDLE-END -->
 
 # spec-pipeline

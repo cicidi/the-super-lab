@@ -6,9 +6,9 @@
 docs/features/<feature>/<type>/<feature>-<type>.md
 ```
 
-One file per type per feature by default. `prd`, `test-plan`, `decision-history`,
-and `how-to` stay single-file — none of them grows without bound. `spec` and
-`impl-plan` may be split, because they do.
+One file per type per feature by default. All six types may be split into parts;
+when a type has parts, the entry file `<feature>-<type>.md` must exist and link to
+each part (ARD-BQ, document-standard DSGN-B).
 
 - `<feature>` is kebab-case, lowercase, no spaces or special characters
 - The filename repeats the feature and the type, so a file is identifiable
@@ -30,11 +30,11 @@ docs/features/payment/impl-plan/payment-impl-plan-01-schema.md
 docs/features/payment/impl-plan/payment-impl-plan-02-api.md
 ```
 
-- A `spec` part takes a bounded-context noun. Never a number: a number says
+- A `prd`, `design` (spec), `test-plan` or `how-to` part takes a bounded-context noun. Never a number: a number says
   nothing about the contents, and inserting a part forces a renumber across the
   set. A spec is cut by bounded context, so a noun carries the meaning
-- An `impl-plan` part takes a zero-padded sequence plus a phase name. A plan is
-  ordered, so the number carries meaning there
+- An `impl-plan` or `decision-history` part takes a zero-padded sequence plus a
+  phase or period name. Both are ordered, so the number carries meaning there (ARD-G)
 - A `<feature>-design.md` may stay as an entry file holding global L1 constraints
   and links to the parts. Do not keep one as an empty shell
 

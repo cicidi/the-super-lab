@@ -27,12 +27,12 @@ metadata:
     - spec drift
     - source of truth
     - authority by concern
-  spec_bundle_version: "1.0.5"
+  spec_bundle_version: "1.0.6"
   spec_built_at: "2026-11-24"
-  spec_git_sha: "37ec9a5"
+  spec_git_sha: "5119924"
 ---
 <!-- SPEC-BUNDLE-START -->
-> **SDD spec bundle** `1.0.5` · built 2026-11-24 · git `37ec9a5`
+> **SDD spec bundle** `1.0.6` · built 2026-11-24 · git `5119924`
 <!-- SPEC-BUNDLE-END -->
 
 # spec-organize
@@ -191,9 +191,9 @@ exists. Do not add frontmatter to them.
 docs/features/<feature>/<type>/<feature>-<type>.md
 ```
 
-One file per type per feature by default. `prd`, `test-plan`, `decision-history`,
-and `how-to` stay single-file. `design` and `impl-plan` may be split, because they
-are the two types that grow without bound.
+One file per type per feature by default. All six types may be split into parts;
+when a type has parts, the entry file `<feature>-<type>.md` must exist and link to
+each part (ARD-BQ, document-standard DSGN-B).
 
 - `<feature>` is kebab-case, lowercase, no spaces or special characters
 - The filename repeats the feature and the type, so a file is identifiable
@@ -205,9 +205,10 @@ are the two types that grow without bound.
 
 ### Splitting and collisions
 
-Split parts take an aspect noun for `design` (`payment-design-authorization.md`) and
-a zero-padded sequence plus a phase name for `impl-plan`
-(`payment-impl-plan-01-schema.md`). Check every new feature and file name against
+Split parts of `prd`, `design`, `test-plan` and `how-to` take an aspect noun
+(`payment-design-authorization.md`); parts of `impl-plan` and `decision-history`
+take a zero-padded sequence plus a phase or period name
+(`payment-impl-plan-01-schema.md`), because they are ordered (ARD-G). Check every new feature and file name against
 what already exists before creating it, and log a rename rather than performing
 it silently.
 
