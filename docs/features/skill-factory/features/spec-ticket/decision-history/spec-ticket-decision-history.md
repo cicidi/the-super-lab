@@ -19,6 +19,7 @@ skill-factory 层面的旧决策在 [parent decision history](../../../decision-
 
 | ID | Date | Decision |
 |---|---|---|
+| ARD-O | 2026-11-24 | 每个 feature 一张母工单，正文只放 PRD 和 design 的链接；每张 IMPL 工单是它的子工单 |
 | ARD-N | 2026-11-24 | 本地夹具的结果由 `tools/check_spec_ticket_fixture.py` 比对期望清单，不用人工清单 |
 | ARD-M | 2026-11-24 | PIPE-E-A 闸只看 Blocking 列：`yes` 或 `是` 就停，不判断答案一栏 |
 | ARD-L | 2026-11-24 | 依赖标签在整个 IMPL 小节里找；非 IMPL 的依赖文字进报告；已完成的 IMPL 不开工单 |
@@ -127,9 +128,17 @@ impl-plan 已经把工作切成带依赖的步骤（`skills/spec-organize/SPEC-S
 理由：skill 是 agent 读的散文，要有东西检查结果（R10）。重跑、删表要反复比对，脚本比人工清单不易漏。
 被否决的方案：人工逐项清单。出处：审查报告第 10 条；协调者 2026-11-24 让二选一。
 
+### ARD-O
+
+理由：用途是演示和跟踪，母工单一眼看出进度（GitHub、Jira 自动显示"3/7 完成"）；满足 to-spec 的 PRD-D。
+正文只有链接，spec 仍是文档，不违反 wayfinder"SDD 里 spec 不是 issue"。
+被否决的方案：A，不建母工单，只给每张工单打 `feature:<f>` 标签。
+出处：用户 2026-11-24 审阅回复"B"；`skills/wayfinder/SKILL.md` 第 282 行。
+
 ## Change Log
 
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：记录用户 2026-11-24 对 spec-ticket 的决策 ARD-A 到 ARD-H |
 | 2026-11-24 | 按审查报告加 ARD-I 到 ARD-N；ARD-F 被 ARD-I、ARD-J 取代 |
+| 2026-11-24 | 加 ARD-O：每个 feature 一张母工单（用户选 B） |

@@ -61,7 +61,7 @@ spec-ingest 的 spec 用 `docs/features/skill-factory/features/spec-ingest/desig
 带条件的依赖（如"报告部分还依赖 IMPL-L"）也算依赖，宁可多连，不漏连。
 写"无"的，就没有这一项。
 不是 IMPL ID 的依赖文字（如"本批 spec 修改完成"）不丢，原样列进报告。
-小节写明已完成（如"已完成""已经完成"）的 IMPL 不开工单，列进报告（ARD-L）。
+小节写明已完成（"已完成""已经完成""已于…完成"，或英文 `Status: done`）的 IMPL 不开工单，列进报告（ARD-L）。
 
 **DSGN-E 工单内容。** 标题是 `[<feature>] IMPL-X — <IMPL 标题>`；带上 feature 和 IMPL ID，重跑时能按标题找回（PRD-A、PRD-E）。
 正文有三部分：IMPL 的原文（含完成标准），impl-plan 的仓库内路径和小节锚点，以及"Blocked by"一行（本地必写；GitHub 只作退路，见 DSGN-I；Jira 用链接，见 DSGN-K）。
@@ -70,7 +70,7 @@ spec-ingest 的 spec 用 `docs/features/skill-factory/features/spec-ingest/desig
 
 **DSGN-F 阻塞边。** 甲挡住乙，条件是乙的依赖里写了甲，或者甲的挡住里写了乙；两边取并集（PRD-C）。
 两边写得不一致时照样连，并在报告里列出不一致的地方，供作者修 impl-plan。
-依赖指向一个不存在的 IMPL ID 时，跳过这条边并报告。依赖成环时，停下并报告环上的 IMPL，不开工单。
+依赖指向一个不存在的 IMPL ID 时，跳过这条边并报告。被依赖的 IMPL 已完成时，它不再挡人，这条边也跳过并报告。依赖成环时，停下并报告环上的 IMPL，不开工单。
 按依赖顺序一遍开完：被依赖的先开，开后面的工单时前面的编号已经有了，当场就能连边（ARD-K）。
 
 **DSGN-G 对应表。** 只在 github、jira 模式下用（本地模式见 DSGN-J）；每个 feature 一份，放在 `docs/features/<f>/raw/state/spec-ticket-map.md`（PRD-D、ARD-E）。
@@ -86,17 +86,19 @@ impl-plan 里被删掉或改了文字的 IMPL，只在报告里列出，不关�
 
 **DSGN-I GitHub 适配器。** 用 gh 命令行（2.94 以上，本机 2.101）操作当前仓库（PRD-B、ARD-K）。
 查找：`gh issue list --state all --json number,title --limit 1000` 取全部 issue，按标题精确匹配。
-创建：`gh issue create --blocked-by <编号>`，创建时直接带上 GitHub 原生的依赖关系。
+创建：`gh issue create --parent <母工单号> --blocked-by <编号>`，创建时直接带上子工单和依赖关系（DSGN-N）。
 只有旧的自建 GitHub（GHES）不认这个参数时，才退回在正文 "Blocked by" 行写 `#编号`。
 gh 没装或没登录时，停下并提示，不自动退回本地。
 
 **DSGN-J 本地适配器。** 每张工单一个文件：`docs/features/<f>/raw/state/spec-ticket/issues/IMPL-X-<slug>.md`，和 wayfinder 的进度图同在 `raw/state/` 下（PRD-B、ARD-J）。
-slug 是标题转成的小写短横线形式。文件名带 IMPL ID，所以文件名本身就是对应关系，本地模式不用对应表；"查找"就是看文件在不在。
+slug 是标题转小写后，非 `a-z0-9` 的连续字符换成一个短横线、去掉首尾短横线；结果为空（如纯中文标题）就省略，文件名为 `IMPL-X.md`。文件名带 IMPL ID，所以文件名本身就是对应关系，本地模式不用对应表；"查找"就是看文件在不在。
+母工单是同目录的 `_feature.md`；每个 IMPL 文件带一行 `Parent: _feature`（DSGN-N）。
 "Blocked by"行写被依赖工单的 IMPL ID 和文件名。`docs/features/**/raw/` 被 git 忽略（`.gitignore`）。
 
 **DSGN-K Jira 适配器。** 用 Jira REST API v3（curl 调用），连接信息来自环境变量（PRD-G、ARD-I）：
 JIRA_BASE_URL、JIRA_EMAIL、JIRA_API_TOKEN、JIRA_PROJECT_KEY；缺任何一个就停下，不退回本地。
 查找：`POST /rest/api/3/search/jql` 按项目和标题搜，再按标题精确匹配。
+母工单建成 Epic；每张 IMPL 工单的 `parent` 字段设为这个 Epic（DSGN-N）。
 创建：`POST /rest/api/3/issue`，正文用 ADF（Atlassian 的 JSON 文档格式），标签 `ready-for-agent`。
 阻塞边：开完被挡住的工单，立即用 `POST /rest/api/3/issueLink` 建类型为 Blocks 的链接。
 本机没有 Jira，这一路没有实测过，链接方向要先在测试项目里核对（见 Risks）。v3 只适用于云版，自建版见 QUES-B。
@@ -109,13 +111,16 @@ JIRA_BASE_URL、JIRA_EMAIL、JIRA_API_TOKEN、JIRA_PROJECT_KEY；缺任何一个
 要改的文件就是 `grep -rln 'to-spec\|to-tickets'` 找到的每一个（to-spec 同时由 spec-ingest 取代）。
 改前搜一次定清单，逐处改；改完再搜一次，确认没有残留。
 
+**DSGN-N 母工单。** 每个 feature 一张，标题 `[<f>] feature`，正文只放 PRD 和 design 的仓库路径（PRD-J、ARD-O）。
+最先建它，之后每张 IMPL 工单建时都挂在它下面。重跑时按对应表或标题找回它，不重建。
+
 ## Testing Decisions
 
 只测外部行为：给定 impl-plan 和配置，看 tracker 上（或本地 issues 目录里）出现了什么，不测内部怎么解析。
 主要测试用一个固定的小 feature 做夹具（fixture，即事先准备好的测试输入），放在 `skills/spec-ticket/tests/` 下。
 夹具的 impl-plan 有四条 IMPL：一条无依赖，两条依赖它，一条依赖那两条；其中一处只在一边写了依赖。
-用 `tracker: local` 跑一次，期望得到四个文件、正确的 "Blocked by" 行、四行对应表，报告里列出那处不一致。
-再跑一次，期望文件和对应表都不变。加一条新 IMPL 后再跑，期望只多一个文件、一行对应表。
+用 `tracker: local` 跑一次，期望得到 `_feature.md` 加四个 IMPL 文件、正确的 "Blocked by" 行，报告里列出那处不一致。
+再跑一次，期望文件都不变。加一条新 IMPL 后再跑，期望只多一个文件。
 第二个夹具是真实的 `docs/features/spec-driven-development/impl-plan/`：期望已完成的 IMPL（如 IMPL-A）不开工单，非 IMPL 的依赖文字都进报告。
 另备两份反例夹具：design 里有一行 Blocking 写 `是` 的中文 QUES，期望拒绝运行；依赖成环，期望停下并报出环。
 `tracker: jira` 但缺环境变量时，期望停下报错、不产生任何文件；真正的 Jira 没有测试环境（见 Risks）。
@@ -165,7 +170,7 @@ Jira 改用 ankitpokhrel/jira-cli：没采用，要多装一个工具；REST API
 
 | ID | 问题 | 目前答案 | Owner | Blocking |
 |---|---|---|---|---|
-| QUES-A | 除了每条 IMPL，要不要也为 spec 本身开一张工单？用户以前说过"spec 本身也得有一个ticket"（to-spec PRD-D） | 未决定，用户还在考虑；v1 只开 IMPL 的工单。SDD 仓库里 spec 不是 issue（`skills/wayfinder/SKILL.md` 第 282、292 行） | cicidi | no |
+| QUES-A | 除了每条 IMPL，要不要也为 spec 本身开一张工单？用户以前说过"spec 本身也得有一个ticket"（to-spec PRD-D） | 已定：每个 feature 一张只放链接的母工单（ARD-O、DSGN-N）；spec 仍是文档（`skills/wayfinder/SKILL.md` 第 282、292 行） | cicidi | no |
 | QUES-B | 将来接的 Jira 是云版（Jira Cloud）还是自建（Data Center）？ | UNKNOWN；DSGN-K 按云版的 REST API v3 写 | cicidi | no |
 | QUES-C | tracker 配置放在 CLAUDE.local.md 的一行 `tracker:`、缺省用本地，用户同意吗（Q4 未答）？ | 按协调者推荐暂定（ARD-C），信心中等 | cicidi | no |
 | QUES-D | downstream-delivery 的 spec 在新 skill 上线后怎么处理：删除、标为过时，还是改写？ | 未决定；本 spec 不动它 | cicidi | no |
@@ -185,3 +190,5 @@ GitHub 和 Jira 上已开的工单通常只能关闭，删除需要管理员权�
 |------|--------|
 | 2026-11-24 | 初版：spec-ticket 的前瞻式 design，DSGN-A 到 DSGN-M，引用 PRD-A 到 PRD-I |
 | 2026-11-24 | 按审查报告改 DSGN-B、C、D、E、F、G、I、J、K、M，测试与风险；Jira 改真实适配器（ARD-I 到 ARD-N） |
+| 2026-11-24 | 加 DSGN-N 母工单，改 DSGN-I、J、K；QUES-A 由 ARD-O 回答 |
+| 2026-11-24 | 写 SKILL.md 时补：已完成的判定和它的边（DSGN-D、F）、slug 规则（DSGN-J）；本地测试去掉对应表 |

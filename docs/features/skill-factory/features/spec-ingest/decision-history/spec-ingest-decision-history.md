@@ -22,7 +22,7 @@ last_verified: 2026-11-24
 | ARD-K | 2026-11-24 | 改指清单是 `grep -rln 'to-spec\|to-tickets'` 找到的所有文件，改前改后各查一次 |
 | ARD-J | 2026-11-24 | 分拣表存为 `docs/features/<f>/raw/state/spec-ingest/<date>-sort.md` |
 | ARD-I | 2026-11-24 | spec-ingest 只出条目、出处、文档类型、目标 feature；写进哪个文件由 spec-write 定 |
-| ARD-H | 2026-11-24 | spec-ingest 不在 tracker 上建 issue；spec 本身的工单统一在 spec-ticket 的 QUES-A 决定（agent 推荐） |
+| ARD-H | 2026-11-24 | spec-ingest 不在 tracker 上建 issue；spec 本身的工单已定：spec-ticket 的 ARD-O（每个 feature 一张母工单）（agent 推荐） |
 | ARD-G | 2026-11-24 | 去掉 to-spec 的"测试接缝确认"一步；输入里提到的接缝照常分到 design（agent 推荐） |
 | ARD-F | 2026-11-24 | 保留 to-spec 的"不访谈，只整理"；写入前只请用户确认一次分拣表 |
 | ARD-E | 2026-11-24 | 新 skill 能用后删掉 to-spec，引用它的地方在同一个改动里改指 |
@@ -79,7 +79,7 @@ SDD 的 ARD-AJ 已定 spec-write 是写 spec 的入口。
 
 理由：to-spec 在 SDD 仓库里写完后会发一个链接 issue（to-spec 第 3a 步）。
 建工单是 spec-ticket 的职责，放在 spec-ingest 里会让两个 skill 都碰 tracker。
-"spec 本身也得有一个ticket"（[to-spec PRD](../../to-spec/prd/to-spec-prd.md) 的 PRD-D）是否保留，只在 [spec-ticket design](../../spec-ticket/design/spec-ticket-design.md) 的 QUES-A 决定，本篇不定。
+"spec 本身也得有一个ticket"（[to-spec PRD](../../to-spec/prd/to-spec-prd.md) 的 PRD-D）已定：spec-ticket 的 ARD-O（每个 feature 一张母工单），见 [spec-ticket decision-history](../../spec-ticket/decision-history/spec-ticket-decision-history.md)。
 被否决的方案：照搬 to-spec 第 3a 步。出处：agent 推荐（2026-11-24）。
 
 ### ARD-I
@@ -112,3 +112,4 @@ feature 还没确认时，放在 wayfinder 地图目录下（SDD 的 ARD-CH）�
 |------|--------|
 | 2026-11-24 | 初版：记录会话 80291c19 的用户决定和两条 agent 推荐 |
 | 2026-11-24 | 按 spec-review 加 ARD-I 到 ARD-L；ARD-H 指向 spec-ticket 的 QUES-A；ARD-D、ARD-E 修正 |
+| 2026-11-24 | ARD-H 改为已定：spec-ticket 的 ARD-O（每个 feature 一张母工单） |

@@ -1,0 +1,6 @@
+# After appending added-section.md to the impl-plan and rerunning: exactly one new file (IMPL-E).
+IMPL-A: -
+IMPL-B: IMPL-A
+IMPL-C: IMPL-A
+IMPL-D: IMPL-B, IMPL-C
+IMPL-E: IMPL-B

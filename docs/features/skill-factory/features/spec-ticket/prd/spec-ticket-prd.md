@@ -69,6 +69,9 @@ impl-plan 是 spec 里的实施计划文档，每一步写成一个 `IMPL-*` 小
 移除在新 skill 可用之后进行；引用旧 skill 的文件（`grep -rln 'to-spec\|to-tickets'` 找到的每一个），在同一次改动里改指向。
 顺序是：spec、spec-review、用户审阅、写 SKILL.md、最后移除旧 skill 并改指向（用户 2026-11-24，Q9）。
 
+**PRD-J 每个 feature 一张母工单。** 正文只放 PRD 和 design 的链接，不抄内容；每张 IMPL 工单都挂在它下面。
+用户选了方案 B（用户 2026-11-24 审阅回复"B"），见 decision-history 的 ARD-O。
+
 ## Out of Scope
 
 v1 不做：双向同步、把状态写回 spec（PRD-F）。
@@ -87,3 +90,4 @@ Jira 这一路需要 Jira 网址、账号邮箱、API token 和项目 key（环�
 |------|--------|
 | 2026-11-24 | 初版：按用户 2026-11-24 的问答写出 spec-ticket 的前瞻式 PRD |
 | 2026-11-24 | 按审阅改 PRD-D（本地路径）、PRD-G（保留 Jira）、PRD-I（改指向清单） |
+| 2026-11-24 | 加 PRD-J：每个 feature 一张母工单（ARD-O） |

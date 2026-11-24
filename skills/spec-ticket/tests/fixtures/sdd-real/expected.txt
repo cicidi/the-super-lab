@@ -1,0 +1,28 @@
+# Real fixture: docs/features/spec-driven-development/impl-plan/spec-driven-development-impl-plan.md
+# Derived by hand from the 依赖/挡住 lines (2026-11-24). Re-derive when that impl-plan changes.
+# Done (no ticket): IMPL-A ("这一项已经完成"), IMPL-P ("这一项已于 2026-11-24 完成").
+# Edges to done IMPLs are skipped. Report must list P's non-IMPL text "本批 spec 修改完成".
+absent: IMPL-A, IMPL-P
+IMPL-B: IMPL-C
+IMPL-C: -
+IMPL-D: -
+IMPL-E: IMPL-B, IMPL-D, IMPL-J, IMPL-L, IMPL-Q, IMPL-X
+IMPL-F: IMPL-C
+IMPL-G: -
+IMPL-H: -
+IMPL-I: IMPL-B, IMPL-E, IMPL-K, IMPL-Y
+IMPL-J: IMPL-D
+IMPL-K: IMPL-D, IMPL-Y
+IMPL-L: IMPL-D
+IMPL-M: IMPL-C
+IMPL-N: IMPL-B
+IMPL-O: IMPL-F, IMPL-H
+IMPL-Q: IMPL-J
+IMPL-R: IMPL-C
+IMPL-S: IMPL-F
+IMPL-T: IMPL-M
+IMPL-U: -
+IMPL-V: IMPL-H
+IMPL-W: -
+IMPL-X: -
+IMPL-Y: IMPL-X

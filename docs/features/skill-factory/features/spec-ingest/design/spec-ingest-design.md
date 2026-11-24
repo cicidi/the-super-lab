@@ -45,8 +45,9 @@ pdf 用 agent 的文件读取工具读，不另装解析库（PRD-C）。
 给了网址、音视频、代码目录等其他输入时，spec-ingest 停下，说明第一版不支持，并列出以后的方向。
 pdf 没有文字层（例如扫描件）读不出字时，同样停下报告，不猜内容（QUES-C）。
 
-**DSGN-B 切条目，带出处。** 每个条目只说一件事。一句话同时含需求和理由时，拆成两条。
-出处的写法：聊天消息写"用户 日期（会话 id 前缀）"；文件写路径加行号，pdf 写路径加页码。
+**DSGN-B 切条目，带出处。** 每个条目只说一件事。一句话同时含需求和理由时，拆成两条：需求归 PRD，理由作为背后的决定归 decision-history。
+出处的写法：聊天消息写"用户 日期（会话 id 前缀）"；文件写行里点名的人或引用，再加路径和行号（pdf 加页码）。
+文件里既没点名也没引用的事实，出处写 UNKNOWN 并附位置；待定问题不需要依据，只写位置。
 找不到出处的条目，出处写 UNKNOWN，内容照样保留（PRD-G）。
 agent 自己推出来、输入里没有明说的内容，不算条目，不进表。
 
@@ -140,7 +141,7 @@ spec-ingest 自己写文档：被否决，会出现第二条写入路径（ARD-B
 | ID | 问题 | 目前答案 | Owner | Blocking |
 |---|---|---|---|---|
 | QUES-A | spec-ingest 和 spec-ticket 上线后，`docs/features/downstream-delivery/` 怎么处理：删、合并进 skill-factory，还是标成废弃？ | 未定；本次不改它 | cicidi | no |
-| QUES-B | 去掉接缝确认（ARD-G）、不建 issue（ARD-H）这两条 agent 推荐，用户是否同意？ | agent 推荐，待审；spec 本身的工单只在 spec-ticket 的 QUES-A 决定 | cicidi | no |
+| QUES-B | 去掉接缝确认（ARD-G）、不建 issue（ARD-H）这两条 agent 推荐，用户是否同意？ | agent 推荐，待审；spec 本身的工单已定：spec-ticket 的 ARD-O（每个 feature 一张母工单） | cicidi | no |
 | QUES-C | 扫描版 pdf 要不要先交给 pic-to-txt 做 OCR 再分拣？ | 第一版停下报告（DSGN-A） | cicidi | no |
 | QUES-D | 分拣表在 spec-write 写完后保留还是删除？ | 留在 `raw/state/spec-ingest/`，不提交（ARD-J） | cicidi | no |
 
@@ -156,3 +157,5 @@ spec-write 写入的改动是普通的 git 改动，可用 `git revert` 撤回�
 |------|--------|
 | 2026-11-24 | 初版：spec-ingest 的正向 design，覆盖 PRD-A 到 PRD-G |
 | 2026-11-24 | 按 spec-review 改 DSGN-D、E、F、H、I、J、测试和风险（ARD-I 到 ARD-L）；QUES-B 指向 spec-ticket |
+| 2026-11-24 | QUES-B：spec 本身的工单已定，见 spec-ticket 的 ARD-O |
+| 2026-11-24 | DSGN-B 写明理由条目的去向和文件内出处规则（写 SKILL.md 时补） |
