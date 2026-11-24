@@ -38,13 +38,13 @@ multi-model 指一个团队里不同角色用不同的大模型。
 
 ## Functional Requirements
 
-**PRD-A 架构师用 GLM 5.2 分析和拆分。** 用户原话："use glm5.2 as the architect analyze and split the task"。
+**PRD-A 架构师用 GLM 分析和拆分。** 用户原话："use glm5.2 as the architect analyze and split the task"。现在用 glm-5.4（multi-model-team ARD-K）。
 出处：ses_0a0d1e98（2026-07-13）。
 
 **PRD-B 多个工人用 DeepSeek v4 Pro。** 用户要"create serveral sub agent to work on the task"。
 工人"use deepseek v4 pro"（ses_0a0d1e98，2026-07-13）。
 
-**PRD-C 做完由 GLM 5.2 审查。** 用户原话："once the job done , glm 5.2 review the worker"。
+**PRD-C 做完由架构师（GLM）审查。** 用户原话："once the job done , glm 5.2 review the worker"。
 出处：ses_0a0d1e98（2026-07-13）。
 
 **PRD-D 在 opencode 里运行。** 用户问"is that possible run this in the opencode ?"（ses_0a0d1e98，2026-07-13）。
@@ -70,7 +70,7 @@ agent 查了 opencode 文档后回答可以：每个 agent 能单独指定模型
 
 ## Resources Needed
 
-需要 GLM 5.2 和 DeepSeek v4 Pro 两个模型的访问权限（PRD-A、PRD-B）。
+需要 GLM（现为 glm-5.4，ARD-K）和 DeepSeek v4 Pro 两个模型的访问权限（PRD-A、PRD-B）。
 用户的 GLM 5.2 走 Z.ai 订阅："change my default model to glm 5.2 use Z.ai"（ses_0d8c6356，2026-07-03）。
 opencode 的配置里要有 architect 和 worker 两个 agent（PRD-D）。人力上，用户要批准一次拆分方案（见 design）。
 
@@ -79,3 +79,4 @@ opencode 的配置里要有 architect 和 worker 两个 agent（PRD-D）。人�
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 multi-model-team 的 PRD |
+| 2026-11-24 | PRD-A、PRD-C 的模型改为 glm-5.4（ARD-K） |

@@ -19,6 +19,7 @@ opencode 会话按会话 id 前缀引用，数据在本机 opencode.db。
 
 | ID | Date | Decision |
 |---|---|---|
+| ARD-K | 2026-11-24 | 架构师改用 `zai-coding-plan/glm-5.4`，工人仍是 DeepSeek v4 Pro；取代 ARD-I |
 | ARD-J | 2026-11-24 | 配置示例的 GLM provider 改为 `zai-coding-plan`；SKILL.md 写明 architect、worker 两个 agent 要用户自己配 |
 | ARD-A | 2026-08-02 | 合并 38 个 skill 时，multi-model-team 保持独立，不并入别的 skill |
 | ARD-B | 2026-07-14 | 用户没有逐条审阅内容，直接要求提交、推送并部署到各 AI 工具 |
@@ -28,9 +29,14 @@ opencode 会话按会话 id 前缀引用，数据在本机 opencode.db。
 | ARD-F | 2026-07-14 | 成功标准定为端到端：架构师拆分、工人实现、架构师审查 |
 | ARD-G | 2026-07-14 | 触发条件只选"大任务"一类，不设成所有任务的默认流程 |
 | ARD-H | 2026-07-14 | 命名为 multi-model-team，不用 agent 推荐的 team-orchestrate |
-| ARD-I | 2026-07-13 | 架构师用 GLM 5.2，工人用 DeepSeek v4 Pro，靠 opencode 给每个 agent 单独配模型来实现 |
+| ~~ARD-I~~ | ~~2026-07-13~~ | ~~架构师用 GLM 5.2，工人用 DeepSeek v4 Pro，靠 opencode 给每个 agent 单独配模型来实现~~ → [ARD-K](#ard-k) |
 
 ## Evidence Appendix
+
+### ARD-K
+
+理由：zai-coding-plan 已不再列出 glm-5.2；2026-11-24 用 glm-5.4 发了一次测试请求，回复正常。
+被否决：glm-5.3。出处：用户 2026-11-24（会话 80291c19）"如果有5.3 5.4 就用你的"。
 
 ### ARD-J
 
@@ -108,3 +114,4 @@ opencode 会话按会话 id 前缀引用，数据在本机 opencode.db。
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 multi-model-team 的决策 |
 | 2026-11-24 | 新增 ARD-J：provider 改为 zai-coding-plan，写明 agent 配置 |
+| 2026-11-24 | 新增 ARD-K：架构师改用 glm-5.4，ARD-I 划掉 |

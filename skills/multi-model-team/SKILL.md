@@ -5,7 +5,7 @@ description: |
   system, refactor a module) that benefits from decomposition into subtasks
   executed by specialized workers. Use when the user says "orchestrate this",
   "dispatch to workers", "split this into subtasks", or "use the team".
-  The architect (GLM 5.2) analyzes, splits, and dispatches; workers
+  The architect (GLM 5.4) analyzes, splits, and dispatches; workers
   (DeepSeek v4 Pro) implement; the architect reviews and integrates.
 license: MIT
 compatibility: opencode
@@ -30,7 +30,7 @@ metadata:
 
 # multi-model-team
 
-Orchestrate a multi-model team where a reasoning-focused architect (GLM 5.2)
+Orchestrate a multi-model team where a reasoning-focused architect (GLM 5.4)
 decomposes tasks and dispatches implementation to worker subagents (DeepSeek v4
 Pro), then reviews and integrates results. Workers self-correct up to 3 times
 before escalating to the architect.
@@ -55,13 +55,13 @@ Before using this skill, configure the following in `opencode.json`:
 ```json
 {
   "provider": {
-    "zai-coding-plan": { "models": { "glm-5.2": {} } },
+    "zai-coding-plan": { "models": { "glm-5.4": {} } },
     "deepseek": { "models": { "deepseek-v4-pro": {} } }
   },
   "agent": {
     "architect": {
       "mode": "primary",
-      "model": "zai-coding-plan/glm-5.2",
+      "model": "zai-coding-plan/glm-5.4",
       "description": "Analyze tasks, decompose into subtasks, dispatch workers, review results",
       "temperature": 0.1
     },
@@ -89,7 +89,7 @@ models and adjust the `model` values to match configured providers.
 
 ### Phase 1: Analyze
 
-The architect (GLM 5.2) reads the user's task and analyzes it:
+The architect (GLM 5.4) reads the user's task and analyzes it:
 
 1. Identify the goal and acceptance criteria
 2. Map dependencies: what must be done before what
@@ -138,7 +138,7 @@ execution.
 
 ### Phase 4: Review
 
-The architect (GLM 5.2) reviews all worker outputs:
+The architect (GLM 5.4) reviews all worker outputs:
 
 1. Verify each subtask output matches the expected description
 2. Check for integration conflicts between parallel workers
@@ -219,5 +219,5 @@ The architect integrates all worker outputs:
 - Phase 5 (Integrate): confidence high — audit pattern from code review workflows
 - Factor weights: Accuracy 0.50, Speed 0.15, Edge cases 0.20, Readability 0.05,
   Tool integration 0.10 — user-specified quality-first weighting
-- Model selection: GLM 5.2 architect + DeepSeek v4 Pro workers — user-specified
+- Model selection: GLM 5.4 architect + DeepSeek v4 Pro workers — user-specified
   from interview
