@@ -417,6 +417,8 @@ async def scroll_and_extract(calendar_url, output_file):
         await browser.close()
 
 asyncio.run(scroll_and_extract("https://luma.com/genai-sf", "events.json"))
+```
+
 ## Preference Learning
 
 The skill maintains a preference file at `~/project/luma/preferences.json`:
