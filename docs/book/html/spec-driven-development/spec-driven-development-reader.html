@@ -1,4 +1,4 @@
-<!-- SDD reader · source .md · git eea4896 -->
+<!-- SDD reader · source .md · git 7da0d44 -->
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light">
 <head>
@@ -200,7 +200,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <h3>Resources Needed</h3>
 <ul>
 <li>spec-write、spec-review、wayfinder 三个 skill，前两个要读的三份标准文件（<a href="decision-history/spec-driven-development-decision-history.html#ard-ch">ARD-CH</a>），和一份 test-plan。不需要数据库。外部服务：评测用的 <code>deepseek-flash</code> API，以及发布网站用的 GitHub Actions 和 GitHub Pages（<a href="decision-history/spec-driven-development-decision-history.html#ard-cd">ARD-CD</a>）。</li>
-<li>评测需要 <code>deepseek-flash</code> 的 API，以及生成 gold 跑 3 次、复核跑 5 次的费用。跑分结果和报告不提交（<a href="decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a>）。</li>
+<li>评测需要 <code>deepseek-flash</code> 的 API，以及生成 gold 跑 3 次、复核跑 5 次的费用。跑分结果和报告不提交，复核结论文件 <code>judgments/</code> 要提交（<a href="decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a>）。</li>
 </ul>
 <p>进入下游前，PRD 要写清的五项（pipeline design 的 PIPE-E-B）：</p>
 <table><thead><tr>
@@ -328,6 +328,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td>2026-11-24</td>
 <td>第 9 轮审查后：PRD-K 的链接改到重述它的 ARD-CJ</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 13 轮审查后：写明复核结论文件 judgments/ 要提交</td>
 </tr>
 </tbody></table>
 </div>
@@ -1428,7 +1432,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <li><strong>skill 的写法：</strong> <code>SKILL.md</code> 用 <code>skill create</code> 或 <code>skill edit</code>（见 <code>skills/skill/SKILL.md</code>）来写。本篇只规定顺序。</li>
 <li><strong>测试：</strong> 测什么见 <a href="test-plan/spec-driven-development-test-plan.html">test-plan</a>，测试文件放在 <code>skills/spec-organize/tests/</code>。</li>
 <li><strong>不做 wayfinder-import sub-feature</strong>（<a href="decision-history/spec-driven-development-decision-history.html#ard-t">ARD-T</a>）。</li>
-<li><strong>评测：</strong> 用 <code>deepseek-flash</code> 生成 gold 跑 3 次、复核跑 5 次；跑分结果和报告不提交（<a href="decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a>）。打分用 iPhone 案例（<a href="decision-history/spec-driven-development-decision-history.html#ard-bl">ARD-BL</a>）。</li>
+<li><strong>评测：</strong> 用 <code>deepseek-flash</code> 生成 gold 跑 3 次、复核跑 5 次；跑分结果和报告不提交，复核结论文件 <code>judgments/</code> 要提交（<a href="decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a>）。打分用 iPhone 案例（<a href="decision-history/spec-driven-development-decision-history.html#ard-bl">ARD-BL</a>）。</li>
 <li><strong>不迁移旧文档</strong>，只修 SDD 自己这套（<a href="decision-history/spec-driven-development-decision-history.html#ard-ck">ARD-CK</a>，重述 ARD-AF）。</li>
 </ul>
 <h3 id="IMPL-A">IMPL-A — skill 目录改名</h3>
@@ -1488,7 +1492,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <p><strong>Verify:</strong> <code>pytest test_eval_config.py</code> 通过；<code>eval.yaml</code> 包含所有必需的键。</p>
 <h3 id="IMPL-K">IMPL-K — 反例、正例和审查案例</h3>
 <p><strong>目标：</strong> 每个检查至少一个反例和一个正例；spec-review 的 16 个审查案例（11 个机械，5 个语义）。现状：机械案例和一个干净案例已写好；5 个语义案例还没写，要等执行器。</p>
-<p><strong>依赖：</strong> IMPL-D。<strong>挡住：</strong> IMPL-I。</p>
+<p><strong>依赖：</strong> IMPL-D；语义案例部分还依赖 IMPL-Y。<strong>挡住：</strong> IMPL-I。</p>
 <p><strong>Verify:</strong> TST-B 全部通过；TST-H 和 TST-I 需要的文件都在。</p>
 <h3 id="IMPL-L">IMPL-L — 评测报告脚本</h3>
 <p><strong>目标：</strong> <code>tools/render_eval_report.py</code> 生成一个 HTML 报告，包含分数 1、分数 2 和这次运行的信息。</p>
@@ -1588,7 +1592,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <p><strong>Verify:</strong> TST-AA 通过。</p>
 <h3 id="IMPL-X">IMPL-X — 复核 5 次加 Claude 核对</h3>
 <p><strong>目标：</strong> <code>tools/judge_deepseek.py</code> 按 <a href="decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a> 默认跑 5 次、4 次一致才算定论，输出里留 <code>claude_audit</code> 给 Claude 填。</p>
-<p><strong>依赖：</strong> 无。<strong>挡住：</strong> IMPL-E 的报告部分。</p>
+<p><strong>依赖：</strong> 无。<strong>挡住：</strong> IMPL-E 的报告部分、IMPL-Y。</p>
 <p><strong>Verify:</strong> TST-L 按 5 次判定。</p>
 <h3 id="IMPL-Y">IMPL-Y — 语义审查案例的执行器</h3>
 <p><strong>目标：</strong> 一个能跑 spec-review、再判它的输出有没有找出埋下的问题的执行器；有了它才能写 IMPL-K 的 5 个语义案例。</p>
@@ -1696,6 +1700,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <td>2026-11-24</td>
 <td>第 12 轮审查后：新增 IMPL-Y 语义案例执行器；IMPL-I 只要求机械案例；IMPL-R 加 DSGN-B 检查</td>
 </tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 13 轮审查后：IMPL-X、IMPL-K 补上和 IMPL-Y 的双向依赖；judgments/ 要提交</td>
+</tr>
 </tbody></table>
 </div>
 <p class="src">Canonical: <code>docs/features/spec-driven-development/impl-plan/spec-driven-development-impl-plan.md</code></p>
@@ -1781,6 +1789,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td><code>skills/spec-organize/tests/reports/&lt;run_id&gt;.html</code></td>
 <td>评测报告，一次运行一个 HTML；<code>run_id</code> 是「日期加分支名」；由 <code>tools/render_eval_report.py</code> 生成；不提交</td>
+</tr>
+<tr>
+<td><code>skills/spec-organize/tests/judgments/*-deepseek-flash.yaml</code></td>
+<td>复核结论：每条的结论、5 次票数、<code>claude_audit</code>、语料 sha；要提交（TST-L）</td>
 </tr>
 <tr>
 <td><code>skills/spec-review/tests/cases/&lt;名字&gt;/</code></td>
@@ -1878,7 +1890,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <h4 id="TST-K">TST-K — 评测报告</h4>
 <p><strong>目标：</strong> 每次运行生成一个 HTML 报告。<strong>输入：</strong> 任意一次运行。<strong>通过条件：</strong> 报告里有 run_id、分支、gold 版本、评测配置、分数 1 的逐条结果（注明 python 或 llm）、分数 2 的加减分、TST-F 四种输入的结果、5 次复核的结果和 Claude 的核对意见。<strong>判定：</strong> 生成报告，再按结构检查。</p>
 <h4 id="TST-L">TST-L — 5 次独立复核</h4>
-<p><strong>目标：</strong> 得出最终的通过或不通过。<strong>输入：</strong> 分数 1 的逐条结果和改动；结果写进 TST-K 的报告。<strong>通过条件：</strong> 同一个 <code>deepseek-flash</code> 独立裁决 5 次，至少 4 次通过；不推翻 Python 检查的结果。<strong>判定：</strong> 跑 5 次，Claude 再核对没通过和有分歧的条目（<a href="decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a>）。不同模型之间的偏差标为 Unverified。</p>
+<p><strong>目标：</strong> 得出最终的通过或不通过。<strong>输入：</strong> 分数 1 的逐条结果和改动；结果写进 TST-K 的报告。<strong>通过条件：</strong> 同一个 <code>deepseek-flash</code> 独立裁决 5 次，至少 4 次通过；不推翻 Python 检查的结果。<strong>判定：</strong> 跑 5 次，Claude 再核对没通过和有分歧的条目。结论写进 <code>judgments/*-deepseek-flash.yaml</code> 并提交，里面记着语料 sha；SDD 文档、skill 或检查脚本改了，sha 就对不上，<code>test_judge_freshness.py</code> 失败，要重跑复核（<a href="decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a>）。不同模型之间的偏差标为 Unverified。</p>
 <h4 id="TST-M">TST-M — 改了标准或 gold 之后同步测试</h4>
 <p><strong>目标：</strong> 标准或 gold 变了，测试要跟着变。<strong>输入：</strong> 改了 <code>SPEC-STANDARD.md</code> 或 design；或者运行中发现了新的好例子、坏例子。<strong>通过条件：</strong> design 改了，同一批重跑 TST-A，并更新 MUST 清单和反例；加了新标注，gold 版本号加一。<strong>判定：</strong> 检查流程是否执行，以及覆盖率。</p>
 <h4 id="TST-N">TST-N — parent 五篇齐全，sub-feature 不要求</h4>
@@ -2262,6 +2274,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td>2026-11-24</td>
 <td>第 12 轮审查后：TST-G 移到 spec-review 发布门槛</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 13 轮审查后：TST-L 写明结论文件提交、语料 sha 过期就重跑</td>
 </tr>
 </tbody></table>
 </div>
@@ -2755,7 +2771,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <p><strong>规则。</strong> <code>judge_deepseek.py</code> 默认跑 5 次：至少 4 次通过算通过，至少 4 次不通过算不通过，其余算有分歧，按不通过计。</p>
 <p><strong>规则（续）。</strong> Claude 逐条核对不通过和有分歧的结论，把同意或不同意及理由写进 <code>claude_audit</code>。Claude 不同意时报告用户，不自己改判；Python 检查的结果仍不能推翻。</p>
 <p><strong>范围。</strong> 本条管 <code>judge_deepseek.py</code> 的复核（TST-L）。TST-V 的可读性判分另有门槛，不变。Claude 不同意的条目在用户决定前仍算没通过。</p>
-<p><strong>重述。</strong> 本条推翻 ARD-AD「复核跑 3 次」的部分，ARD-AD 因此划掉。其余仍有效：生成 gold 跑 3 次；gold 由案例、版本、范例、标注组成；跑分结果和报告不提交；四个非软件例子写进 skill 正文，不在本仓库建 gold；只有 DeepSeek 的 API，不同模型之间的偏差标为 Unverified。</p>
+<p><strong>重述。</strong> 本条推翻 ARD-AD「复核跑 3 次」的部分，ARD-AD 因此划掉。其余仍有效：生成 gold 跑 3 次；gold 由案例、版本、范例、标注组成；跑分结果和报告不提交（复核结论文件 <code>judgments/</code> 例外，要提交，测试靠它判断结论过没过期）；四个非软件例子写进 skill 正文，不在本仓库建 gold；只有 DeepSeek 的 API，不同模型之间的偏差标为 Unverified。</p>
 <p><strong>规则（补）。</strong> 重跑时，题目、结论、票数分布和语料 sha 都没变的条目，保留上次的 <code>claude_audit</code>；有任何一项变了就清空，等 Claude 重新核对。</p>
 <p><strong>放弃的方案。</strong> 5 次都一致才通过：次数越多越容易因一次波动失败。换更贵的模型：仍是一个模型说了算。</p>
 <a id="ard-ci"></a>
@@ -3295,6 +3311,10 @@ payment-impl-plan-01-schema.md         impl-plan 分篇：序号加阶段，有�
 <tr>
 <td>2026-11-24</td>
 <td>第 11 轮审查后：ARD-CA 的重述分清 MUST 和 NICE，补上节点和连线上限</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 13 轮审查后：ARD-CJ 写明 judgments/ 是「结果不提交」的例外</td>
 </tr>
 </tbody></table>
 </div>

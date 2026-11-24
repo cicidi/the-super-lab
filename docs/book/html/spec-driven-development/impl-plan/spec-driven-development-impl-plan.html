@@ -39,7 +39,7 @@
 <li><strong>skill 的写法：</strong> <code>SKILL.md</code> 用 <code>skill create</code> 或 <code>skill edit</code>（见 <a href="../../../../../skills/skill/SKILL.md"><code>skills/skill/SKILL.md</code></a>）来写。本篇只规定顺序。</li>
 <li><strong>测试：</strong> 测什么见 <a href="../test-plan/spec-driven-development-test-plan.html">test-plan</a>，测试文件放在 <code>skills/spec-organize/tests/</code>。</li>
 <li><strong>不做 wayfinder-import sub-feature</strong>（<a href="../decision-history/spec-driven-development-decision-history.html#ard-t">ARD-T</a>）。</li>
-<li><strong>评测：</strong> 用 <code>deepseek-flash</code> 生成 gold 跑 3 次、复核跑 5 次；跑分结果和报告不提交（<a href="../decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a>）。打分用 iPhone 案例（<a href="../decision-history/spec-driven-development-decision-history.html#ard-bl">ARD-BL</a>）。</li>
+<li><strong>评测：</strong> 用 <code>deepseek-flash</code> 生成 gold 跑 3 次、复核跑 5 次；跑分结果和报告不提交，复核结论文件 <code>judgments/</code> 要提交（<a href="../decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a>）。打分用 iPhone 案例（<a href="../decision-history/spec-driven-development-decision-history.html#ard-bl">ARD-BL</a>）。</li>
 <li><strong>不迁移旧文档</strong>，只修 SDD 自己这套（<a href="../decision-history/spec-driven-development-decision-history.html#ard-ck">ARD-CK</a>，重述 <a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-AF">ARD-AF</a>）。</li>
 </ul>
 <h3 id="IMPL-A"><a class="id-ref" href="#IMPL-A">IMPL-A</a> — skill 目录改名</h3>
@@ -99,7 +99,7 @@
 <p class="impl-verify"><strong>Verify:</strong> <code>pytest test_eval_config.py</code> 通过；<code>eval.yaml</code> 包含所有必需的键。</p>
 <h3 id="IMPL-K"><a class="id-ref" href="#IMPL-K">IMPL-K</a> — 反例、正例和审查案例</h3>
 <p><strong>目标：</strong> 每个检查至少一个反例和一个正例；spec-review 的 16 个审查案例（11 个机械，5 个语义）。现状：机械案例和一个干净案例已写好；5 个语义案例还没写，要等执行器。</p>
-<p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-D">IMPL-D</a>。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-I">IMPL-I</a>。</p>
+<p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-D">IMPL-D</a>；语义案例部分还依赖 <a class="id-ref" href="#IMPL-Y">IMPL-Y</a>。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-I">IMPL-I</a>。</p>
 <p class="impl-verify"><strong>Verify:</strong> <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-B">TST-B</a> 全部通过；<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-H">TST-H</a> 和 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-I">TST-I</a> 需要的文件都在。</p>
 <h3 id="IMPL-L"><a class="id-ref" href="#IMPL-L">IMPL-L</a> — 评测报告脚本</h3>
 <p><strong>目标：</strong> <a href="../../../../../tools/render_eval_report.py"><code>tools/render_eval_report.py</code></a> 生成一个 HTML 报告，包含分数 1、分数 2 和这次运行的信息。</p>
@@ -199,7 +199,7 @@
 <p class="impl-verify"><strong>Verify:</strong> <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-AA">TST-AA</a> 通过。</p>
 <h3 id="IMPL-X"><a class="id-ref" href="#IMPL-X">IMPL-X</a> — 复核 5 次加 Claude 核对</h3>
 <p><strong>目标：</strong> <a href="../../../../../tools/judge_deepseek.py"><code>tools/judge_deepseek.py</code></a> 按 <a href="../decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a> 默认跑 5 次、4 次一致才算定论，输出里留 <code>claude_audit</code> 给 Claude 填。</p>
-<p><strong>依赖：</strong> 无。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-E">IMPL-E</a> 的报告部分。</p>
+<p><strong>依赖：</strong> 无。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-E">IMPL-E</a> 的报告部分、<a class="id-ref" href="#IMPL-Y">IMPL-Y</a>。</p>
 <p class="impl-verify"><strong>Verify:</strong> <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-L">TST-L</a> 按 5 次判定。</p>
 <h3 id="IMPL-Y"><a class="id-ref" href="#IMPL-Y">IMPL-Y</a> — 语义审查案例的执行器</h3>
 <p><strong>目标：</strong> 一个能跑 spec-review、再判它的输出有没有找出埋下的问题的执行器；有了它才能写 <a class="id-ref" href="#IMPL-K">IMPL-K</a> 的 5 个语义案例。</p>
@@ -306,6 +306,10 @@
 <tr>
 <td>2026-11-24</td>
 <td>第 12 轮审查后：新增 <a class="id-ref" href="#IMPL-Y">IMPL-Y</a> 语义案例执行器；<a class="id-ref" href="#IMPL-I">IMPL-I</a> 只要求机械案例；<a class="id-ref" href="#IMPL-R">IMPL-R</a> 加 <a class="id-ref" href="../design/spec-driven-development-design.html#DSGN-B">DSGN-B</a> 检查</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 13 轮审查后：<a class="id-ref" href="#IMPL-X">IMPL-X</a>、<a class="id-ref" href="#IMPL-K">IMPL-K</a> 补上和 <a class="id-ref" href="#IMPL-Y">IMPL-Y</a> 的双向依赖；judgments/ 要提交</td>
 </tr>
 </tbody></table></div>
       </div>

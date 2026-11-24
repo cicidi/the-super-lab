@@ -1,7 +1,7 @@
 model: deepseek-flash
 runs: 5
 target: gold
-corpus_sha: 35b71c5c72458a44
+corpus_sha: 6a88e8446d1a437e
 items:
 - id: GOOD-A
   verdict: pass
@@ -11,8 +11,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: Parent PRD uses PRD-A..Q; design DSGN-A..E; test-plan TST-A..AA (docs/features/spec-driven-development/prd/spec-driven-development-prd.md).
-  confidence: 0.93
+  evidence: decision-history Decision Log uses ARD-CL…ARD-A; PRDs use PRD-A–Q; no
+    bare numeric document IDs are defined.
+  confidence: 0.95
 - id: GOOD-B
   verdict: pass
   votes:
@@ -21,9 +22,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: test-plan TST-O traces every parent PRD id to DSGN/PIPE; PRD-G is deferred.
-    docs/features/spec-driven-development/test-plan/spec-driven-development-test-plan.md
-  confidence: 0.92
+  evidence: test_tst_o_trace.py enforces every parent PRD id in a DSGN/PIPE clause;
+    PRD-G is deferred per ARD-N.
+  confidence: 0.9
 - id: GOOD-C
   verdict: pass
   votes:
@@ -32,9 +33,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: docs/INDEX.md lists spec-driven-development prd, design, decision-history,
-    impl-plan, and test-plan entries.
-  confidence: 0.97
+  evidence: docs/INDEX.md lists prd, design, decision-history, impl-plan, test-plan
+    entries under docs/features/spec-driven-development; all exist.
+  confidence: 0.98
 - id: GOOD-D
   verdict: pass
   votes:
@@ -43,9 +44,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'Parent design, PRD, test-plan, decision-history, pipeline and reader
-    designs all end with ## Change Log; e.g. design/spec-driven-development-design.md.'
-  confidence: 0.9
+  evidence: All target feature .md files end with a final '## Change Log' section,
+    including PRD, designs, plans, and decision-history.
+  confidence: 0.95
 - id: GOOD-E
   verdict: pass
   votes:
@@ -54,9 +55,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'design/spec-driven-development-design.md has ### 子问题归属 table with allowed
-    owners and ARD evidence.'
-  confidence: 0.96
+  evidence: spec-driven-development-design.md has a '### 子问题归属' table with allowed
+    owners and ARD-link evidence.
+  confidence: 0.98
 - id: GOOD-F
   verdict: pass
   votes:
@@ -65,9 +66,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: skills/spec-write/SKILL.md and skills/spec-review/SKILL.md Example Domains
-    list 盖 shed, 北京旅游, 数学题, 股票.
-  confidence: 0.97
+  evidence: spec-write/SKILL.md and spec-review/SKILL.md Example Domains both list
+    盖 shed, 北京旅游, 数学题, 股票.
+  confidence: 0.98
 - id: BAD-A
   verdict: pass
   votes:
@@ -76,9 +77,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: docs/INDEX.md lists all target entries (parent five types plus document-standard
-    and pipeline docs); links resolve.
-  confidence: 0.88
+  evidence: docs/INDEX.md links all target feature entry .md files and every listed
+    target path resolves in the corpus.
+  confidence: 0.95
 - id: BAD-B
   verdict: pass
   votes:
@@ -87,9 +88,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: Non-exempt target docs are under caps (design/impl-plan 1000, prd/test-plan
-    800); decision-history exempt. test-plan/spec-driven-development-test-plan.md
-  confidence: 0.86
+  evidence: No non-decision target document exceeds caps; decision-history is exempt
+    per ARD-E.
+  confidence: 0.85
 - id: BAD-C
   verdict: pass
   votes:
@@ -98,9 +99,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: skills/spec-review/SKILL.md cites spec-driven-development-design-skill-contracts.md
-    and says the contract wins on conflict.
-  confidence: 0.98
+  evidence: spec-review/SKILL.md cites spec-driven-development-design-skill-contracts.md
+    and states the contract wins on conflict.
+  confidence: 0.99
 - id: BAD-D
   verdict: pass
   votes:
@@ -109,6 +110,6 @@ items:
   - pass
   - pass
   - pass
-  evidence: Decision Log dates descend 2026-11-24 → 2026-11-20 → ... → 2026-09-25;
-    newest first. decision-history/spec-driven-development-decision-history.md
-  confidence: 0.95
+  evidence: Decision Log starts at ARD-CL 2026-11-24 and runs down to ARD-A 2026-09-25,
+    newest first.
+  confidence: 0.98

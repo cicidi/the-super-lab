@@ -110,6 +110,10 @@
 <td>评测报告，一次运行一个 HTML；<code>run_id</code> 是「日期加分支名」；由 <a href="../../../../../tools/render_eval_report.py"><code>tools/render_eval_report.py</code></a> 生成；不提交</td>
 </tr>
 <tr>
+<td><code>skills/spec-organize/tests/judgments/*-deepseek-flash.yaml</code></td>
+<td>复核结论：每条的结论、5 次票数、<code>claude_audit</code>、语料 sha；要提交（<a class="id-ref" href="#TST-L">TST-L</a>）</td>
+</tr>
+<tr>
 <td><code>skills/spec-review/tests/cases/&lt;名字&gt;/</code></td>
 <td>审查案例：<code>input/</code>（故意埋了问题的文档）和 <code>expected.yaml</code>（应该找出的问题编号，以及应该忽略的严重度 1、2 的问题）；11 个机械案例，外加一个干净的；5 个语义案例还没写，要等能判 spec-review 输出的执行器</td>
 </tr>
@@ -205,7 +209,7 @@
 <h4 id="TST-K"><a class="id-ref" href="#TST-K">TST-K</a> — 评测报告</h4>
 <p><strong>目标：</strong> 每次运行生成一个 HTML 报告。<strong>输入：</strong> 任意一次运行。<strong>通过条件：</strong> 报告里有 run_id、分支、gold 版本、评测配置、分数 1 的逐条结果（注明 python 或 llm）、分数 2 的加减分、<a class="id-ref" href="#TST-F">TST-F</a> 四种输入的结果、5 次复核的结果和 Claude 的核对意见。<strong>判定：</strong> 生成报告，再按结构检查。</p>
 <h4 id="TST-L"><a class="id-ref" href="#TST-L">TST-L</a> — 5 次独立复核</h4>
-<p><strong>目标：</strong> 得出最终的通过或不通过。<strong>输入：</strong> 分数 1 的逐条结果和改动；结果写进 <a class="id-ref" href="#TST-K">TST-K</a> 的报告。<strong>通过条件：</strong> 同一个 <code>deepseek-flash</code> 独立裁决 5 次，至少 4 次通过；不推翻 Python 检查的结果。<strong>判定：</strong> 跑 5 次，Claude 再核对没通过和有分歧的条目（<a href="../decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a>）。不同模型之间的偏差标为 Unverified。</p>
+<p><strong>目标：</strong> 得出最终的通过或不通过。<strong>输入：</strong> 分数 1 的逐条结果和改动；结果写进 <a class="id-ref" href="#TST-K">TST-K</a> 的报告。<strong>通过条件：</strong> 同一个 <code>deepseek-flash</code> 独立裁决 5 次，至少 4 次通过；不推翻 Python 检查的结果。<strong>判定：</strong> 跑 5 次，Claude 再核对没通过和有分歧的条目。结论写进 <code>judgments/*-deepseek-flash.yaml</code> 并提交，里面记着语料 sha；SDD 文档、skill 或检查脚本改了，sha 就对不上，<code>test_judge_freshness.py</code> 失败，要重跑复核（<a href="../decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a>）。不同模型之间的偏差标为 Unverified。</p>
 <h4 id="TST-M"><a class="id-ref" href="#TST-M">TST-M</a> — 改了标准或 gold 之后同步测试</h4>
 <p><strong>目标：</strong> 标准或 gold 变了，测试要跟着变。<strong>输入：</strong> 改了 <a href="../../../../../skills/spec-organize/SPEC-STANDARD.md"><code>SPEC-STANDARD.md</code></a> 或 design；或者运行中发现了新的好例子、坏例子。<strong>通过条件：</strong> design 改了，同一批重跑 <a class="id-ref" href="#TST-A">TST-A</a>，并更新 <span class="lvl lvl--must">MUST</span> 清单和反例；加了新标注，gold 版本号加一。<strong>判定：</strong> 检查流程是否执行，以及覆盖率。</p>
 <h4 id="TST-N"><a class="id-ref" href="#TST-N">TST-N</a> — parent 五篇齐全，sub-feature 不要求</h4>
@@ -589,6 +593,10 @@
 <tr>
 <td>2026-11-24</td>
 <td>第 12 轮审查后：<a class="id-ref" href="#TST-G">TST-G</a> 移到 spec-review 发布门槛</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 13 轮审查后：<a class="id-ref" href="#TST-L">TST-L</a> 写明结论文件提交、语料 sha 过期就重跑</td>
 </tr>
 </tbody></table></div>
       </div>
