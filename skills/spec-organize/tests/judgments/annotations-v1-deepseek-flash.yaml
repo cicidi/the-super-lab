@@ -1,7 +1,7 @@
 model: deepseek-flash
 runs: 3
 target: gold
-corpus_sha: 946a59868fe5f2a5
+corpus_sha: 816a0b9dcd869772
 items:
 - id: GOOD-A
   verdict: pass
@@ -9,26 +9,26 @@ items:
   - pass
   - pass
   - pass
-  evidence: prd/spec-driven-development-prd.md uses PRD-A..Q; design DSGN-A..E; decision-history
-    ARD-A..CD; impl-plan IMPL-A..V; test-plan TST-A..Z.
-  confidence: 0.8
+  evidence: docs/features/spec-driven-development/decision-history/spec-driven-development-decision-history.md
+    uses ARD-A…ARD-CD; parent PRD/design/impl/test use letter IDs only.
+  confidence: 0.9
 - id: GOOD-B
-  verdict: disputed
+  verdict: pass
   votes:
   - pass
-  - fail
   - pass
-  evidence: design/spec-driven-development-design.md DSGN-A..E cite PRD-B..E,P; pipeline
-    PIPE-A/D/I/K/L cite PRD-A,F,J,L,N; PRD-G deferred in QUES-B (ARD-N).
-  confidence: 0.6
+  - pass
+  evidence: skills/spec-organize/tests/test_tst_o_trace.py enforces parent PRD-A..Q
+    in DSGN/PIPE clauses; PRD-G deferred.
+  confidence: 0.9
 - id: GOOD-C
   verdict: pass
   votes:
   - pass
   - pass
   - pass
-  evidence: docs/features/spec-driven-development/{prd,design,decision-history,impl-plan,test-plan}/
-    each hold a committed .md entry.
+  evidence: docs/INDEX.md lists prd, design, decision-history, impl-plan, test-plan
+    under Spec-Driven Development.
   confidence: 0.95
 - id: GOOD-D
   verdict: pass
@@ -36,8 +36,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'Every SDD doc ends with ## Change Log: prd, design, pipeline-design,
-    document-standard-design, impl-plan, test-plan, decision-history.'
+  evidence: 'docs/features/spec-driven-development/test-plan/spec-driven-development-test-plan.md
+    ends with ## Change Log; peer target docs do too.'
   confidence: 0.9
 - id: GOOD-E
   verdict: pass
@@ -45,8 +45,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: design/spec-driven-development-design.md §子问题归属 table rows use owners
-    人决定/AI 查完人决定 and ARD evidence (ARD-CC, ARD-T, ARD-AD, ARD-BL, ARD-BN).
+  evidence: 'docs/features/spec-driven-development/design/spec-driven-development-design.md
+    has ### 子问题归属 with allowed owners and ARD evidence.'
   confidence: 0.95
 - id: GOOD-F
   verdict: pass
@@ -54,8 +54,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: spec-pipeline, spec-organize, spec-review, spec-write SKILL.md Example
-    Domains each list 盖 shed, 北京旅游, 数学题, 股票.
+  evidence: skills/spec-write/SKILL.md Example Domains lists 盖 shed, 北京旅游, 数学题, 股票;
+    same in other three.
   confidence: 0.95
 - id: BAD-A
   verdict: pass
@@ -63,26 +63,26 @@ items:
   - pass
   - pass
   - pass
-  evidence: docs/INDEX.md lists all SDD entries (prd incl. document-standard, design
-    incl. parts, impl-plan, test-plan, decision-history); links resolve.
-  confidence: 0.85
+  evidence: docs/INDEX.md links all target spec-driven-development entries and every
+    listed path exists.
+  confidence: 0.9
 - id: BAD-B
   verdict: pass
   votes:
   - pass
   - pass
   - pass
-  evidence: 'No SDD doc exceeds caps: prd/test-plan <800, design/impl-plan <1000;
-    decision-history exempt (checks/size.py, DSGN-B).'
-  confidence: 0.75
+  evidence: Hard caps are in document-standard-design.md DSGN-B; target PRD/design/impl-plan/test-plan
+    docs are below caps.
+  confidence: 0.85
 - id: BAD-C
   verdict: pass
   votes:
   - pass
   - pass
   - pass
-  evidence: spec-review/SKILL.md Contract authority cites design/spec-driven-development-design-skill-contracts.md
-    and states the contract wins on conflict.
+  evidence: skills/spec-review/SKILL.md 'Contract authority' cites design-skill-contracts.md
+    and says the contract wins.
   confidence: 0.95
 - id: BAD-D
   verdict: pass
@@ -90,6 +90,6 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'decision-history Decision Log is descending: ARD-CD 2026-11-24, ARD-CC
-    2026-11-24, ARD-CB 2026-11-20 … ARD-A 2026-09-25.'
+  evidence: docs/features/spec-driven-development/decision-history/spec-driven-development-decision-history.md
+    Decision Log descends from ARD-CD 2026-11-24 to ARD-A 2026-09-25.
   confidence: 0.95
