@@ -1,7 +1,7 @@
 model: deepseek-flash
 runs: 5
 target: gold
-corpus_sha: 2cc06967a3350e21
+corpus_sha: 7e8493a61a8607b1
 items:
 - id: GOOD-A
   verdict: pass
@@ -11,9 +11,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: Decision Log uses ARD-A..ARD-CL; PRD-A..Q, DSGN-A..E, PIPE-A, IMPL-A..X,
-    TST-A..AA are letter-prefixed.
-  confidence: 0.98
+  evidence: Target feature headings/tables use PRD-A, DSGN-A, ARD-A, IMPL-A, PIPE-A,
+    TST-A; old numeric mentions are historical/forbidden examples only.
+  confidence: 0.9
 - id: GOOD-B
   verdict: pass
   votes:
@@ -22,9 +22,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: test-plan TST-O and test_tst_o_trace.py check every parent PRD id has
-    a DSGN/PIPE clause anchor; PRD-G deferred.
-  confidence: 0.98
+  evidence: docs/features/spec-driven-development/test-plan/spec-driven-development-test-plan.md
+    TST-O traces parent PRD ids; PRD-G exempt.
+  confidence: 0.95
 - id: GOOD-C
   verdict: pass
   votes:
@@ -33,9 +33,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: docs/INDEX.md lists SDD prd, design, impl-plan, test-plan, decision-history
-    entries; all five dirs exist.
-  confidence: 1.0
+  evidence: docs/INDEX.md lists spec-driven-development prd, design, decision-history,
+    impl-plan, test-plan entries.
+  confidence: 0.98
 - id: GOOD-D
   verdict: pass
   votes:
@@ -44,9 +44,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'Every target doc ends with ## Change Log, e.g. spec-driven-development-design.md,
-    test-plan, skill-contracts.'
-  confidence: 1.0
+  evidence: 'docs/features/spec-driven-development/design/spec-driven-development-design.md
+    and all target docs end with ## Change Log.'
+  confidence: 0.98
 - id: GOOD-E
   verdict: pass
   votes:
@@ -55,9 +55,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: spec-driven-development-design.md has 子问题归属 table with valid owners and
-    ARD evidence rows.
-  confidence: 1.0
+  evidence: docs/features/spec-driven-development/design/spec-driven-development-design.md
+    has 子问题归属 with allowed owners and ARD evidence.
+  confidence: 0.98
 - id: GOOD-F
   verdict: pass
   votes:
@@ -67,8 +67,8 @@ items:
   - pass
   - pass
   evidence: skills/spec-write/SKILL.md and skills/spec-review/SKILL.md Example Domains
-    list 盖 shed, 北京旅游, 数学题, 股票.
-  confidence: 1.0
+    list 盖 shed/北京旅游/数学题/股票.
+  confidence: 0.98
 - id: BAD-A
   verdict: pass
   votes:
@@ -77,8 +77,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: docs/INDEX.md links all target SDD entry files; all target links resolve.
-  confidence: 0.98
+  evidence: docs/INDEX.md lists every target feature committed md; target INDEX links
+    resolve.
+  confidence: 0.9
 - id: BAD-B
   verdict: pass
   votes:
@@ -87,8 +88,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: Target docs stay under caps (prd 800, design/impl-plan 1000, test-plan
-    800); decision-history exempt.
+  evidence: docs/features/spec-driven-development/test-plan/spec-driven-development-test-plan.md
+    <800; designs/impl <1000; decision-history exempt.
   confidence: 0.9
 - id: BAD-C
   verdict: pass
@@ -98,9 +99,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: skills/spec-review/SKILL.md cites spec-driven-development-design-skill-contracts.md
-    and says the contract wins on conflict.
-  confidence: 1.0
+  evidence: skills/spec-review/SKILL.md cites design-skill-contracts.md and states
+    the contract wins on conflict.
+  confidence: 0.98
 - id: BAD-D
   verdict: pass
   votes:
@@ -109,6 +110,6 @@ items:
   - pass
   - pass
   - pass
-  evidence: Decision Log starts ARD-CL 2026-11-24 and descends to ARD-A 2026-09-25
-    in decision-history.
-  confidence: 1.0
+  evidence: docs/features/spec-driven-development/decision-history/spec-driven-development-decision-history.md
+    Decision Log runs 2026-11-24 down to 2026-09-25.
+  confidence: 0.98
