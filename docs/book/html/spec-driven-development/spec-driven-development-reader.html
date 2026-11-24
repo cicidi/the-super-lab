@@ -1,4 +1,4 @@
-<!-- SDD reader · source .md · git 7da0d44 -->
+<!-- SDD reader · source .md · git 6337632 -->
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light">
 <head>
@@ -622,7 +622,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <ul>
 <li><strong>一个 skill 同时负责写和审</strong>：放弃。自己审自己写的东西，容易看不出问题（<a href="decision-history/spec-driven-development-decision-history.html#ard-aj">ARD-AJ</a>）。</li>
 <li><strong>一篇大文档装下所有内容</strong>：放弃。很快会超过行数上限，而且「要什么」「为什么」「怎么做」混在一起，改一处要翻全篇。</li>
-<li><strong>保留 spec-pipeline 作为统一入口</strong>：放弃。四个 skill 让使用者不知道该从哪个开始；写和审两个动作已经覆盖全部场景（<a href="decision-history/spec-driven-development-decision-history.html#ard-aj">ARD-AJ</a>）。</li>
+<li><strong>保留 spec-pipeline 作为统一入口</strong>：放弃。四个入口让使用者不知道该从哪个开始；写、审两个入口加上负责进度的 wayfinder 覆盖全部场景（<a href="decision-history/spec-driven-development-decision-history.html#ard-ch">ARD-CH</a>、<a href="decision-history/spec-driven-development-decision-history.html#ard-aj">ARD-AJ</a>）。</li>
 </ul>
 <h3>Drawbacks</h3>
 <ul>
@@ -1239,6 +1239,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td>2026-11-24</td>
 <td>第 10 轮审查后：分数 2 最高分写对；QUES-D、QUES-E 按编号排</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 14 轮审查后：放弃 spec-pipeline 的理由跟上 ARD-CH</td>
 </tr>
 </tbody></table>
 <hr><p class="src-inline">Source: <code>design/spec-driven-development-design-skill-contracts.md</code></p>
@@ -4923,9 +4927,9 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 <h5 id="document-standard-DSGN-N-F">DSGN-N-F — 什么时候重新生成</h5>
 <p>来源：reader PRD 的 PRD-M。</p>
 <ul>
-<li>parent 或任何 sub-feature 的已提交文档有实质修改（尤其是 L1、L2）之后，重新生成（NICE；网页过期由 parent test-plan 的 TST-R 检查）。</li>
+<li>parent 或任何 sub-feature 的已提交文档有实质修改（尤其是 L1、L2）之后，commit 前必须重新生成（MUST，parent ARD-CF；网页过期由 parent test-plan 的 TST-R 检查）。</li>
 <li>用户明确要求时，例如「生成 reader」「生成网页」「reader 太简略了，补全」。</li>
-<li>只改了错别字的提交，不必每次都重新生成（NICE）。</li>
+<li>只改错别字的提交也一样：改了 markdown 就重新生成，TST-R 要求网页和重新生成的一致。</li>
 </ul>
 <h5 id="document-standard-DSGN-N-G">DSGN-N-G — 以后的 markdown 转 HTML</h5>
 <p>可以再加一份机械转换的规则，例如分篇 <code>document-standard-design-md-to-html.md</code>，规定 markdown 的每种结构对应哪种网页组件。自动转换仍然必须满足 DSGN-N-B。本篇和 <code>SPEC-HTML-STANDARD.md</code> 规定的是「要达到什么效果」。</p>
@@ -5110,6 +5114,10 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 <td>2026-11-24</td>
 <td>第 8 轮审查后：交付物改为三个 skill，改链 ARD-CH</td>
 </tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 14 轮审查后：DSGN-N-F 改为 commit 前必须重建（parent ARD-CF），去掉错别字例外</td>
+</tr>
 </tbody></table>
 <hr><p class="src-inline">Source: <code>features/document-standard/prd/document-standard-prd-spec-reader-html.md</code></p>
 <h2>Document Standard — 给人读的 HTML 页面（PRD）</h2>
@@ -5179,7 +5187,7 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 </tr>
 <tr>
 <td>PRD-M</td>
-<td>spec-write 改完 markdown 后，应该提示重新生成网页；用户要求时也重新生成。生成时必须按 <code>skills/spec-html-standard/SPEC-HTML-STANDARD.md</code> 做（没有单独的 reader skill）</td>
+<td>spec-write 改完 markdown 后，应该提示重新生成网页；用户要求时也重新生成；commit 前必须重新生成（parent ARD-CF）。生成时必须按 <code>skills/spec-html-standard/SPEC-HTML-STANDARD.md</code> 做（没有单独的 reader skill）</td>
 </tr>
 <tr>
 <td>PRD-N</td>
@@ -5233,6 +5241,10 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 <tr>
 <td>2026-11-24</td>
 <td>PRD-O：阅读时不需要服务器，发布由 CI 生成（ARD-CD）</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 14 轮审查后：PRD-M 加 commit 前必须重建（parent ARD-CF）</td>
 </tr>
 </tbody></table>
 </div>

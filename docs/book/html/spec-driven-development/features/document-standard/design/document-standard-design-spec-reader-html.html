@@ -192,9 +192,9 @@
 <h5 id="DSGN-N-F"><a class="id-ref" href="#DSGN-N-F">DSGN-N-F</a> — 什么时候重新生成</h5>
 <p>来源：reader PRD 的 <a class="id-ref" href="../prd/document-standard-prd-spec-reader-html.html#PRD-M">PRD-M</a>。</p>
 <ul>
-<li>parent 或任何 sub-feature 的已提交文档有实质修改（尤其是 L1、L2）之后，重新生成（<span class="lvl lvl--nice">NICE</span>；网页过期由 parent test-plan 的 <a class="id-ref" href="../../../test-plan/spec-driven-development-test-plan.html#TST-R">TST-R</a> 检查）。</li>
+<li>parent 或任何 sub-feature 的已提交文档有实质修改（尤其是 L1、L2）之后，commit 前必须重新生成（<span class="lvl lvl--must">MUST</span>，parent <a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-CF">ARD-CF</a>；网页过期由 parent test-plan 的 <a class="id-ref" href="../../../test-plan/spec-driven-development-test-plan.html#TST-R">TST-R</a> 检查）。</li>
 <li>用户明确要求时，例如「生成 reader」「生成网页」「reader 太简略了，补全」。</li>
-<li>只改了错别字的提交，不必每次都重新生成（<span class="lvl lvl--nice">NICE</span>）。</li>
+<li>只改错别字的提交也一样：改了 markdown 就重新生成，<a class="id-ref" href="../../../test-plan/spec-driven-development-test-plan.html#TST-R">TST-R</a> 要求网页和重新生成的一致。</li>
 </ul>
 <h5 id="DSGN-N-G"><a class="id-ref" href="#DSGN-N-G">DSGN-N-G</a> — 以后的 markdown 转 HTML</h5>
 <p>可以再加一份机械转换的规则，例如分篇 <code>document-standard-design-md-to-html.md</code>，规定 markdown 的每种结构对应哪种网页组件。自动转换仍然必须满足 <a class="id-ref" href="#DSGN-N-B">DSGN-N-B</a>。本篇和 <a href="../../../../../../../skills/spec-html-standard/SPEC-HTML-STANDARD.md"><code>SPEC-HTML-STANDARD.md</code></a> 规定的是「要达到什么效果」。</p>
@@ -378,6 +378,10 @@
 <tr>
 <td>2026-11-24</td>
 <td>第 8 轮审查后：交付物改为三个 skill，改链 <a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-CH">ARD-CH</a></td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 14 轮审查后：<a class="id-ref" href="#DSGN-N-F">DSGN-N-F</a> 改为 commit 前必须重建（parent <a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-CF">ARD-CF</a>），去掉错别字例外</td>
 </tr>
 </tbody></table></div>
       </div>
