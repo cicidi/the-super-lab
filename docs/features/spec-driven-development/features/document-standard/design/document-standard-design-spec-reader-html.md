@@ -12,7 +12,7 @@ last_verified: 2026-11-20
 
 本篇是 [document-standard-design.md](document-standard-design.md) 的分篇，规则编号 DSGN-N。需求见 [reader PRD](../prd/document-standard-prd-spec-reader-html.md)（PRD-A 到 PRD-P）。路径规则和 DSGN-B 一致，内容优先级和 DSGN-I 一致，编号和 DSGN-F 一致。术语见 [parent design 的术语表](../../../design/spec-driven-development-design.md#glossary)。
 
-生成网页时要遵守的规则摘要在 `SPEC-HTML-STANDARD.md` 和 `SPEC-PRESENTATION.md`，它们是两个 skill 要读的三份标准文件中的两份（[ARD-BX](../../../decision-history/spec-driven-development-decision-history.md#ard-bx)）。markdown 是全文，HTML 只是方便阅读的视图。spec-write 只改 markdown；spec-review 检查 HTML 有没有丢内容（[ARD-AJ](../../../decision-history/spec-driven-development-decision-history.md#ard-aj)）。
+生成网页时要遵守的规则摘要在 `SPEC-HTML-STANDARD.md` 和 `SPEC-PRESENTATION.md`，它们是 spec-write、spec-review 要读的三份标准文件中的两份（[ARD-CH](../../../decision-history/spec-driven-development-decision-history.md#ard-ch) 重述 ARD-BX）。markdown 是全文，HTML 只是方便阅读的视图。spec-write 只改 markdown；spec-review 检查 HTML 有没有丢内容（[ARD-AJ](../../../decision-history/spec-driven-development-decision-history.md#ard-aj)）。
 
 ## Problem Statement
 
@@ -185,7 +185,7 @@ spec-pipeline 里的 `SPEC-READER.md` 如果还在，只能是指向本篇和 `S
 ## Further Notes
 
 - 早期手工维护的汇编页，很多 design 只剩一句口号。改为脚本从 markdown 全文生成后，按 DSGN-N-B 检查。
-- parent design 已经写明网页的路径。交付物只有 spec-write 和 spec-review（[ARD-BX](../../../decision-history/spec-driven-development-decision-history.md#ard-bx)）；网页的规则在 `skills/spec-html-standard/`。
+- parent design 已经写明网页的路径。交付物是 spec-write、spec-review 和 wayfinder（[ARD-CH](../../../decision-history/spec-driven-development-decision-history.md#ard-ch)）；网页的规则在 `skills/spec-html-standard/`。
 
 ## Alternatives Considered
 
@@ -238,3 +238,4 @@ spec-pipeline 里的 `SPEC-READER.md` 如果还在，只能是指向本篇和 `S
 | 2026-11-20 | DSGN-N-D「浏览器直接打开」改回 MUST，和 PRD-O 一致 |
 | 2026-11-24 | 全站每页都能从入口点到；GitHub Pages 从 master 发布（ARD-CD） |
 | 2026-11-24 | DSGN-N-E：spec-write 改完问要不要重建，commit 前必须重建（parent ARD-CF） |
+| 2026-11-24 | 第 8 轮审查后：交付物改为三个 skill，改链 ARD-CH |

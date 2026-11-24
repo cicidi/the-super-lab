@@ -4,7 +4,7 @@ type: prd
 state: draft
 health: active
 owner: cicidi
-version: "1.0.1"
+version: "1.0.2"
 last_verified: 2026-11-24
 ---
 
@@ -116,7 +116,7 @@ AI 要把大问题拆成小的：能查的 AI 自己查（合规、财报、交�
 
 **PRD-B**：提供一组 skill。skill 本质上是写得好的 prompt，引导 AI 完成 spec 的四件事：书写、命名、检查、更新。
 
-**PRD-C**：AI 每次改 `docs/` 下的文档，必须同时满足两条：不超过 10 行，并且不超过 200 字符（[ARD-BP](../decision-history/spec-driven-development-decision-history.md#ard-bp)）；新建一个文件不算在内（[ARD-CE](../decision-history/spec-driven-development-decision-history.md#ard-ce)）。更大的改动拆成多次；确实需要一次大改（restructure）时，必须有人明确授权，并记一条 ARD（例如 [ARD-BK](../decision-history/spec-driven-development-decision-history.md#ard-bk)）。
+**PRD-C**：AI 每次改 `docs/` 下的文档，必须同时满足两条：不超过 10 行，并且不超过 200 字符；新建一个文件不算在内（[ARD-CE](../decision-history/spec-driven-development-decision-history.md#ard-ce)）。更大的改动拆成多次；确实需要一次大改（restructure）时，必须有人明确授权，并记一条 ARD（例如 [ARD-BK](../decision-history/spec-driven-development-decision-history.md#ard-bk)）。
 
 **PRD-D**：每篇文档有行数上限，最长不超过 1,000 行，因为太长的文档几乎没法维护。decision-history 例外，不设上限：它只增不减（[ARD-E](../decision-history/spec-driven-development-decision-history.md#ard-e)）。各类文档的具体上限见 document-standard 的 DSGN-B。
 
@@ -130,7 +130,7 @@ AI 要把大问题拆成小的：能查的 AI 自己查（合规、财报、交�
 
 **PRD-I**：每项改动都要能验证。实在验证不了的，在 spec 里标为 `Unverified` 并写明原因；标了的项不作为 test-plan 的通过条件。
 
-**PRD-J**：写或改 feature spec 时，由 spec-write 按标准判断要新建哪篇、或要改哪几篇；提交前，询问是否先跑 spec-review。写作进度在 feature 目录建好之前记在 `CLAUDE.local.md`，建好之后记在 `docs/features/<f>/raw/state/`（[ARD-BT](../decision-history/spec-driven-development-decision-history.md#ard-bt)）。
+**PRD-J**：写或改 feature spec 时，由 spec-write 按标准判断要新建哪篇、或要改哪几篇；提交前，询问是否先跑 spec-review。写作进度记在 wayfinder 的地图目录里，目录建好前后的位置见 pipeline design 的 PIPE-H（[ARD-CH](../decision-history/spec-driven-development-decision-history.md#ard-ch)）。
 
 **PRD-K**：适用范围不限于软件，任何有门槛的难题都用同一套 spec。四个例子：盖 shed（合规、成本、施工）、北京旅游（行程、住宿、风险、预算）、看懂一道著名数学题（零基础一步步学）、分析一只股票（基本面、财报、新闻，每个结论有依据）。这四个例子不在本仓库建 gold（[ARD-AD](../decision-history/spec-driven-development-decision-history.md#ard-ad)）。
 
@@ -142,7 +142,7 @@ AI 要把大问题拆成小的：能查的 AI 自己查（合规、财报、交�
 
 **PRD-O**：执行阶段不真下单、不真订票。所有例子共用一个 mock MCP 服务器，提供几个固定的工具；客户端调用后打印出调用记录，就算交付成功。
 
-**PRD-P**：最终交付物只有 spec-write 和 spec-review 两个 skill（[ARD-BX](../decision-history/spec-driven-development-decision-history.md#ard-bx)）。用它们写出来的 spec，要满足 PRD-K 到 PRD-O。
+**PRD-P**：最终交付物是 spec-write、spec-review，以及负责进度规则的 wayfinder 三个 skill（[ARD-CH](../decision-history/spec-driven-development-decision-history.md#ard-ch)）。用它们写出来的 spec，要满足 PRD-K 到 PRD-O。
 
 **PRD-Q**：书写、命名、检查、更新，以及 PRD-K 到 PRD-O，都是需求；spec-write 和 spec-review 能做的事不限于这几件。两个 skill 的正文里都要写出四个例子：盖 shed、北京旅游、数学题、股票。skill 好不好用，只看测试结果。
 
@@ -152,12 +152,12 @@ AI 要把大问题拆成小的：能查的 AI 自己查（合规、财报、交�
 - 多人决定的细致仲裁规则，例如两个决定时间相同怎么办。目前只按 decision-history 的先后，看不出就问用户。
 - 在本仓库为四个非软件例子建 gold。例子写进 skill 正文，gold 放在别处。
 - 把已有的不合规文档批量迁移到新标准。
-- skill 和 spec 的迁移策略。版本只做来源标记：PRD 的 `version` 印进 skill（[ARD-CC](../decision-history/spec-driven-development-decision-history.md#ard-cc)）。
+- skill 和 spec 的迁移策略。版本只做来源标记：每次 build 把 PRD 的 `version` 末位加 1 再印进 skill（[ARD-CK](../decision-history/spec-driven-development-decision-history.md#ard-ck)）。
 
 ## Resources Needed
 
-- spec-write、spec-review 两个 skill，以及它们要读的三份标准文件（[ARD-BX](../decision-history/spec-driven-development-decision-history.md#ard-bx)）和一份 test-plan。不需要数据库。外部服务：评测用的 `deepseek-flash` API，以及发布网站用的 GitHub Actions 和 GitHub Pages（[ARD-CD](../decision-history/spec-driven-development-decision-history.md#ard-cd)）。
-- 评测需要 `deepseek-flash` 的 API，以及每次评测跑 3 次的费用。跑分结果和报告不提交（[ARD-AD](../decision-history/spec-driven-development-decision-history.md#ard-ad)）。
+- spec-write、spec-review、wayfinder 三个 skill，前两个要读的三份标准文件（[ARD-CH](../decision-history/spec-driven-development-decision-history.md#ard-ch)），和一份 test-plan。不需要数据库。外部服务：评测用的 `deepseek-flash` API，以及发布网站用的 GitHub Actions 和 GitHub Pages（[ARD-CD](../decision-history/spec-driven-development-decision-history.md#ard-cd)）。
+- 评测需要 `deepseek-flash` 的 API，以及生成 gold 跑 3 次、复核跑 5 次的费用。跑分结果和报告不提交（[ARD-CJ](../decision-history/spec-driven-development-decision-history.md#ard-cj)）。
 
 进入下游前，PRD 要写清的五项（pipeline design 的 PIPE-E-B）：
 
@@ -195,3 +195,4 @@ AI 要把大问题拆成小的：能查的 AI 自己查（合规、财报、交�
 | 2026-11-24 | Out of Scope：版本只做来源标记（ARD-CC） |
 | 2026-11-24 | Resources：列出外部服务 deepseek API、GitHub Actions 和 Pages（ARD-CD） |
 | 2026-11-24 | PRD-C：新建文件不算在改动上限内（ARD-CE） |
+| 2026-11-24 | 第 8 轮审查后：PRD-J、PRD-P、Resources 跟上 ARD-CH；复核次数跟上 ARD-CJ；改链 ARD-CE、ARD-CK |

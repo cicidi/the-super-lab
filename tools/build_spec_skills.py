@@ -20,6 +20,7 @@ SKILLS = [
     ROOT / "skills/spec-review/SKILL.md",
     ROOT / "skills/spec-organize/SKILL.md",
     ROOT / "skills/spec-pipeline/SKILL.md",
+    ROOT / "skills/wayfinder/SKILL.md",
 ]
 
 BUNDLE_START = "<!-- SPEC-BUNDLE-START -->"

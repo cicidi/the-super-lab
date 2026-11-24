@@ -22,12 +22,12 @@ metadata:
     - check work
     - accept work
     - challenge this
-  spec_bundle_version: "1.0.1"
+  spec_bundle_version: "1.0.2"
   spec_built_at: "2026-11-24"
-  spec_git_sha: "f68f3ac"
+  spec_git_sha: "0928aff"
 ---
 <!-- SPEC-BUNDLE-START -->
-> **SDD spec bundle** `1.0.1` · built 2026-11-24 · git `f68f3ac`
+> **SDD spec bundle** `1.0.2` · built 2026-11-24 · git `0928aff`
 <!-- SPEC-BUNDLE-END -->
 
 # spec-review
@@ -55,7 +55,7 @@ to avoid over-engineering.
 
 Judge a spec under review against `SPEC-STANDARD.md` chapters 1–3 and
 `SPEC-PRESENTATION.md`; when HTML pages are in scope, also
-`skills/spec-html-standard/SPEC-HTML-STANDARD.md` (three standard files, ARD-BX). Also load content levels
+`skills/spec-html-standard/SPEC-HTML-STANDARD.md` (three standard files, ARD-CH restating ARD-BX). Also load content levels
 (`spec-organize/CONTENT-PRIORITY.md`), the authority model
 (`spec-organize/AUTHORITY-BY-CONCERN.md`), and `spec-organize/SPEC-SCOPE.md` — three review references beyond the three standard files (ARD-CI).
 

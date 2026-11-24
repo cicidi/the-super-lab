@@ -15,7 +15,7 @@ last_verified: 2026-11-24
 相关文档：
 
 - 写 spec 分几个阶段，见 [pipeline design](../../pipeline/design/pipeline-design.md)。
-- 怎么测试，见 parent 的 [test-plan](../../../test-plan/spec-driven-development-test-plan.md)。被测的是 spec-write 和 spec-review 两个 skill；本篇的每条 MUST 都收进 MUST 清单，由测试逐条检查。
+- 怎么测试，见 parent 的 [test-plan](../../../test-plan/spec-driven-development-test-plan.md)。被测的是 spec-write、spec-review 和 wayfinder 三个 skill；本篇的每条 MUST 都收进 MUST 清单，由测试逐条检查。
 - 术语和缩写，见 [parent design 的术语表](../../../design/spec-driven-development-design.md#glossary)。
 
 本篇的规则小节用 DSGN 编号，只在 document-standard 这个 feature 内有效：
@@ -62,10 +62,10 @@ feature 文档一多，如果没有统一标准，会出现四类问题：
 
 ## Implementation Decisions
 
-- 本篇的规则会摘要写进 `SPEC-STANDARD.md` 和 `SPEC-PRESENTATION.md`；reader design 的规则摘要写进 `SPEC-HTML-STANDARD.md`。spec-write 和 spec-review 读的是这三份摘要（[ARD-BX](../../../decision-history/spec-driven-development-decision-history.md#ard-bx)）。摘要和本篇不一致时，先改本篇，再改摘要。
+- 本篇的规则会摘要写进 `SPEC-STANDARD.md` 和 `SPEC-PRESENTATION.md`；reader design 的规则摘要写进 `SPEC-HTML-STANDARD.md`。spec-write 和 spec-review 读的是这三份摘要（[ARD-CH](../../../decision-history/spec-driven-development-decision-history.md#ard-ch) 重述 ARD-BX）。摘要和本篇不一致时，先改本篇，再改摘要。
 - 格式类的 MUST 由检查脚本执行；内容类的问题由 spec-review 报告。
 - how-to 暂不做机械检查；其他五种文档按 DSGN-E 检查。
-- 已有的不合规文档不迁移，只报告（[ARD-CC](../../../decision-history/spec-driven-development-decision-history.md#ard-cc)，重述 ARD-AF）。
+- 已有的不合规文档不迁移，只报告（[ARD-CK](../../../decision-history/spec-driven-development-decision-history.md#ard-ck)，重述 ARD-AF）。
 - 本篇是一份纯标准，「子问题归属表」不适用（pipeline design 的 PIPE-L 允许这样注明）。还没定的事项和它们的负责人见 [Open Questions](#open-questions)。
 
 ## Design
@@ -137,7 +137,7 @@ sub-feature 的例子（parent 是 `spec-driven-development`，sub-feature 是 `
 | `raw/design/` | 还没写进正式 design 的草稿 | `<YYYY-MM-DD>-<对象>.md` |
 | `raw/evidence/` | 证据、工具输出 | `<YYYY-MM-DD>-<简称>.md` |
 | `raw/discussion/` | 讨论记录（可选） | `<主题>.md` |
-| `raw/state/` | 进度快照，用来在长对话被压缩后恢复上下文 | `state-<YYYY-MM-DD>.md`（最多 400 行）；SDD 的进度用 `wayfinder-map.md`（parent ARD-CH） |
+| `raw/state/` | 进度快照，用来在长对话被压缩后恢复上下文 | `state-<YYYY-MM-DD>.md`（最多 400 行）；SDD 的进度用 `raw/state/wayfinder/` 地图目录（parent ARD-CH） |
 
 旧项目里直接放在 feature 根目录的 `state/`、`research/`、`discussion/`，挪进 `raw/`。工单草稿放在 `.scratch/<feature>/`，同样不提交。
 
@@ -146,6 +146,7 @@ sub-feature 的例子（parent 是 `spec-driven-development`，sub-feature 是 `
 | 路径 | 说明 |
 |---|---|
 | `docs/features/<f>/raw/**` | 整个草稿目录，包括 `raw/state/` |
+| `docs/state/` | 名字没定时的 wayfinder 地图目录（parent ARD-CH） |
 | `.scratch/<feature>/` | 工单等临时文件。它不在 `docs/features/` 下，但同样不能提交 |
 
 这些路径必须写进 `.gitignore` 或用等效的办法排除。误提交算违反 DSGN-M 的 MUST。这些文件不需要 frontmatter、Change Log，也不进 INDEX。
@@ -416,7 +417,7 @@ design 管「想要怎样」，代码管「现在怎样」和内部结构。机�
 
 ## Testing Decisions
 
-测试见 parent 的 [test-plan](../../../test-plan/spec-driven-development-test-plan.md)。被测的是 spec-write 和 spec-review 两个 skill，不是本篇。本篇所有的 MUST 和禁止事项，由 parent test-plan 的 TST-A 扫描收进 `must_registry.yaml`：格式类的由 Python 脚本判断，其余由判分模型判断。
+测试见 parent 的 [test-plan](../../../test-plan/spec-driven-development-test-plan.md)。被测的是 spec-write、spec-review 和 wayfinder 三个 skill，不是本篇。本篇所有的 MUST 和禁止事项，由 parent test-plan 的 TST-A 扫描收进 `must_registry.yaml`：格式类的由 Python 脚本判断，其余由判分模型判断。
 
 ## Out of Scope
 
@@ -515,3 +516,4 @@ design 管「想要怎样」，代码管「现在怎样」和内部结构。机�
 | 2026-11-24 | DSGN-G：final 后经 ARD 授权的大改除外（parent ARD-BS）；不迁移旧文档改链 ARD-CC |
 | 2026-11-24 | DSGN-E 加「插图（MUST）」，DSGN-M 门槛加一条（ARD-CA，与 SPEC-STANDARD 一致） |
 | 2026-11-24 | raw/state 一行注明 SDD 用 wayfinder-map.md（parent ARD-CH） |
+| 2026-11-24 | 第 8 轮审查后：被测对象三个 skill；本地目录表加 docs/state/；改链 ARD-CH、ARD-CK |

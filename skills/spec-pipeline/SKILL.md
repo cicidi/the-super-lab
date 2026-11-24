@@ -18,12 +18,12 @@ metadata:
     - spec reader
     - human readable spec
     - spec html
-  spec_bundle_version: "1.0.1"
+  spec_bundle_version: "1.0.2"
   spec_built_at: "2026-11-24"
-  spec_git_sha: "f68f3ac"
+  spec_git_sha: "0928aff"
 ---
 <!-- SPEC-BUNDLE-START -->
-> **SDD spec bundle** `1.0.1` · built 2026-11-24 · git `f68f3ac`
+> **SDD spec bundle** `1.0.2` · built 2026-11-24 · git `0928aff`
 <!-- SPEC-BUNDLE-END -->
 
 # spec-pipeline
@@ -49,7 +49,7 @@ Design: `docs/features/spec-driven-development/features/pipeline/design/pipeline
 Illustrations, not gold. `blocking: true` stops Downstream. `blocking: false` does not.
 
 - **盖 shed**: Map interviews permit versus cost. Converge the PRD and design before any plan. Downstream writes impl-plan and test-plan together only when no open item is `blocking: true`.
-- **北京旅游**: Create keeps the trip in `CLAUDE.local.md` until the slug exists, then in `raw/state/`. An undecided hotel is an open item with `blocking: false` unless the user says the trip cannot be planned without it.
+- **北京旅游**: Create keeps the trip in the wayfinder map `docs/state/wayfinder-<name>/` until the slug exists, then in `raw/state/wayfinder/`. An undecided hotel is an open item with `blocking: false` unless the user says the trip cannot be planned without it.
 - **数学题**: Map asks which theorem. A definition still `UNKNOWN` and marked `blocking: true` stays in Converge.
 - **股票**: Map separates facts to look up from decisions the human makes. Downstream does not start while a `blocking: true` item is open.
 
@@ -57,14 +57,14 @@ Illustrations, not gold. `blocking: true` stops Downstream. `blocking: false` do
 
 ### Step 0: Phase & state
 
-1. If `<f>` not created: read/write progress in **`CLAUDE.local.md`** only (**PIPE-H**).
-2. If `<f>` exists: read `docs/features/<f>/raw/state/state-<YYYY-MM-DD>.md`.
+1. If `<f>` not created: read/write progress in the wayfinder map `docs/state/wayfinder-<name>/` (**PIPE-H**, ARD-CH).
+2. If `<f>` exists: read `docs/features/<f>/raw/state/wayfinder/map.md`.
 3. Infer phase: Create | Map | Converge | Downstream.
 
 ### Step 1: Create (when needed)
 
 - Run **feature create** (walter-worker) or confirm existing `<f>`.
-- Capture rough PRD; put search/context in **CLAUDE.local.md**.
+- Capture rough PRD and search/context in the wayfinder map; the CLAUDE layer stores only the map path (ARD-CG).
 
 ### Step 2: Map (when splitting or unknowns)
 
@@ -114,7 +114,7 @@ Do not treat the HTML as source of truth. If assembly exposes a spec error, **as
 
 ### NICE
 
-- [ ] Phase recorded in state file or CLAUDE.local
+- [ ] Phase recorded in the wayfinder map
 - [ ] Map interview notes captured before structural splits
 
 ## Anti-Patterns

@@ -17,5 +17,5 @@ grill:
   skills: [] # baseline: no extra skill
 checkers:
   models: [deepseek-flash]
-  repeats: 3
+  repeats: 5 # ARD-CJ: 4 of 5 must agree
 single_provider: true

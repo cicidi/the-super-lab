@@ -18,12 +18,12 @@ metadata:
     - draft design
     - append decision
     - spec write
-  spec_bundle_version: "1.0.1"
+  spec_bundle_version: "1.0.2"
   spec_built_at: "2026-11-24"
-  spec_git_sha: "f68f3ac"
+  spec_git_sha: "0928aff"
 ---
 <!-- SPEC-BUNDLE-START -->
-> **SDD spec bundle** `1.0.1` · built 2026-11-24 · git `f68f3ac`
+> **SDD spec bundle** `1.0.2` · built 2026-11-24 · git `0928aff`
 <!-- SPEC-BUNDLE-END -->
 
 # spec-write
@@ -54,10 +54,10 @@ Illustrations, not gold. Each edit stays within 10 lines and 200 characters.
 ## Process
 
 1. Read `SPEC-STANDARD.md`, `SPEC-PRESENTATION.md`, and `SPEC-HTML-STANDARD.md` (the **Site** section, ARD-BG).
-2. Decide: create a new document from the path rules, or edit existing documents. A new feature directory is created only after the human confirms its name and split in Map; before that, keep the working name, rough PRD and progress in the wayfinder map file `docs/state/wayfinder-<working-name>.md` (ARD-CH).
+2. Decide: create a new document from the path rules, or edit existing documents. A new feature directory is created only after the human confirms its name and split in Map; before that, keep the working name, rough PRD and progress in the wayfinder map directory `docs/state/wayfinder-<working-name>/` (ARD-CH). On resume, read the map whose path the CLAUDE layer names.
 3. If editing, list every document that states the same fact. Edit the authority document. Replace the other copies with links.
 4. Classify each edit as prose, format, style, table, or icon, then apply SPEC-PRESENTATION.
-5. Edit an existing file under `docs/` with **≤10 lines and ≤200 characters per edit** (both limits, ARD-BP); a new file may be written in one go (ARD-CE); split, or ask for a `restructure` and record the authorization as an ARD.
+5. Edit an existing file under `docs/` with **≤10 lines and ≤200 characters per edit** (both limits); a new file may be written in one go, but content moved out of an existing file counts as an edit (ARD-CE); split, or ask for a `restructure` and record the authorization as an ARD.
 6. Use letter-prefix IDs only (**PRD-A**, **DSGN-B**, **ARD-C**, **IMPL-A**, **TST-A**, **QUES-A**). An Open Questions entry is `QUES-A`, not `OQ-1` or `QUES-1`, and carries question, answer so far, owner, and blocking yes/no.
 7. After create/move: regenerate INDEX when the tree changes.
 8. Cross-check before finishing: every `PRD-*` id appears in the design; every `TST-*` case names the requirement it covers; an ID from another feature names that feature ("parent test-plan 的 TST-V").

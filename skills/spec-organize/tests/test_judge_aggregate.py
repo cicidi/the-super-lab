@@ -29,3 +29,21 @@ def test_missing_vote_counts_as_fail():
 
 def test_default_is_five_runs():
     assert j.RUNS == 5
+
+
+def test_keep_audits_only_when_id_verdict_votes_unchanged():
+    votes = ["pass", "pass", "pass", "fail", "fail"]
+    old = [
+        {"id": "MUST-A", "verdict": "disputed", "votes": votes, "claude_audit": "agree: x"},
+        {"id": "MUST-B", "verdict": "disputed", "votes": votes, "claude_audit": "disagree: y"},
+    ]
+    new = [
+        {"id": "MUST-A", "verdict": "disputed", "votes": list(votes), "claude_audit": None},
+        {"id": "MUST-B", "verdict": "fail", "votes": ["fail"] * 5, "claude_audit": None},
+        {"id": "MUST-C", "verdict": "disputed", "votes": votes, "claude_audit": None},
+        {"id": "MUST-D", "verdict": "pass", "votes": ["pass"] * 5},
+    ]
+    a, b, c, d = j.keep_audits(old, new)
+    assert a["claude_audit"] == "agree: x"
+    assert b["claude_audit"] is None and c["claude_audit"] is None
+    assert "claude_audit" not in d

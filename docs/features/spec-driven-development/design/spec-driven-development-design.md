@@ -27,10 +27,10 @@ last_verified: 2026-11-24
 
 ## Solution
 
-用五篇文档加两个 skill 来解决：
+用五篇文档加三个 skill 来解决：
 
 - **五篇文档**：PRD、decision-history、design、impl-plan、test-plan。前三篇反复打磨，稳定后再写后两篇。
-- **两个 skill**：spec-write 负责写和改文档，spec-review 负责检查文档、给出修改建议（[ARD-AJ](../decision-history/spec-driven-development-decision-history.md#ard-aj)、[ARD-BX](../decision-history/spec-driven-development-decision-history.md#ard-bx)）。
+- **三个 skill**：spec-write 负责写和改文档，spec-review 负责检查文档、给出修改建议，wayfinder 负责进度记录（[ARD-AJ](../decision-history/spec-driven-development-decision-history.md#ard-aj)、[ARD-CH](../decision-history/spec-driven-development-decision-history.md#ard-ch)）。
 
 ## User Stories
 
@@ -74,7 +74,7 @@ PRD-L 要求每个子问题写明由谁处理。本 feature 的子问题如下�
 
 | 子问题 | 归属 | 依据 |
 |---|---|---|
-| 已有的不合规文档要不要迁移 | 人决定 | [ARD-CC](../decision-history/spec-driven-development-decision-history.md#ard-cc)（重述 ARD-AF） |
+| 已有的不合规文档要不要迁移 | 人决定 | [ARD-CK](../decision-history/spec-driven-development-decision-history.md#ard-ck)（重述 ARD-AF） |
 | wayfinder-import 是不是 sub-feature | 人决定 | [ARD-T](../decision-history/spec-driven-development-decision-history.md#ard-t) |
 | 跑分结果和报告要不要提交 | AI 查完人决定 | [ARD-AD](../decision-history/spec-driven-development-decision-history.md#ard-ad) |
 | 四个非软件例子要不要建 gold | 人决定 | [ARD-AD](../decision-history/spec-driven-development-decision-history.md#ard-ad) |
@@ -95,7 +95,7 @@ PRD-L 要求每个子问题写明由谁处理。本 feature 的子问题如下�
 
 | 规则 | 说明 |
 |---|---|
-| 单次上限 | 两条都要满足：不超过 10 行，并且不超过 200 字符（[ARD-BP](../decision-history/spec-driven-development-decision-history.md#ard-bp)） |
+| 单次上限 | 两条都要满足：不超过 10 行，并且不超过 200 字符；只管修改已有文件，新建文件不算（[ARD-CE](../decision-history/spec-driven-development-decision-history.md#ard-ce)） |
 | 超出时 | 拆成多次改；或者由人明确授权一次大改（restructure），并记一条 ARD |
 | 和文档标准的关系 | 行数上限、路径、frontmatter 见 document-standard 的 DSGN-B 和 DSGN-E |
 | 怎么验证 | 测试无法检查单次改动的大小，所以这一条不作为 test-plan 的通过条件（PRD-I） |
@@ -125,7 +125,7 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 | 渠道 | 作用 |
 |---|---|
 | `~/.claude/CLAUDE.md`，以及项目里的 `CLAUDE.md`、`CLAUDE.local.md` | 跨会话、跨 feature 的默认 AI 行为 |
-| spec-write、spec-review 两个 skill | 具体任务的操作步骤；规则来自三份标准文件 |
+| spec-write、spec-review、wayfinder 三个 skill | 具体任务的操作步骤；规则来自三份标准文件 |
 
 项目里写哪个文件：有 `CLAUDE.local.md` 就写它，没有就写 `CLAUDE.md`，两个都没有就问用户要不要新建（[ARD-CG](../decision-history/spec-driven-development-decision-history.md#ard-cg)）。
 
@@ -137,12 +137,12 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 
 ### DSGN-D — 交付物和测试放在哪
 
-来源：PRD-B（用一组 skill 引导 AI 写 spec）、PRD-P（交付物只有两个 skill）。
+来源：PRD-B（用一组 skill 引导 AI 写 spec）、PRD-P（交付物是三个 skill）。
 
 | 项 | 约定 |
 |---|---|
-| 交付物 | 只有 spec-write 和 spec-review（[ARD-BX](../decision-history/spec-driven-development-decision-history.md#ard-bx)） |
-| 两个 skill 读的标准文件 | `skills/spec-organize/SPEC-STANDARD.md`、`skills/spec-html-standard/SPEC-PRESENTATION.md` 和 `skills/spec-html-standard/SPEC-HTML-STANDARD.md`（[ARD-AJ](../decision-history/spec-driven-development-decision-history.md#ard-aj)、[ARD-BX](../decision-history/spec-driven-development-decision-history.md#ard-bx)） |
+| 交付物 | spec-write、spec-review 和 wayfinder（[ARD-CH](../decision-history/spec-driven-development-decision-history.md#ard-ch)） |
+| spec-write、spec-review 读的标准文件 | `skills/spec-organize/SPEC-STANDARD.md`、`skills/spec-html-standard/SPEC-PRESENTATION.md` 和 `skills/spec-html-standard/SPEC-HTML-STANDARD.md`（[ARD-AJ](../decision-history/spec-driven-development-decision-history.md#ard-aj)、[ARD-CH](../decision-history/spec-driven-development-decision-history.md#ard-ch)） |
 | 测试放在哪 | 每个 skill 的测试放在 `skills/<skill>/tests/`；跨 skill 的检查器、gold、报告放在 `skills/spec-organize/tests/`（[ARD-Q](../decision-history/spec-driven-development-decision-history.md#ard-q)） |
 | 打分用的 gold | iPhone 购买案例 `skills/spec-organize/tests/gold/v1/`；本套 spec 是写法样板，由 spec-review 审查，不用来打分（[ARD-BL](../decision-history/spec-driven-development-decision-history.md#ard-bl)） |
 | test-plan | 只有 parent 一份：[test-plan](../test-plan/spec-driven-development-test-plan.md)。sub-feature 不另写 |
@@ -185,7 +185,8 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 
 - 五篇文档加上 design 的 13 个必需章节，对小问题来说太重。sub-feature 可以只写 design（DSGN-E），能缓解一部分。
 - decision-history 只增不减，越来越长。
-- 审查和可读性判断都依赖 LLM，同样的输入两次结果可能不同。所以评测要跑 3 次（[ARD-AD](../decision-history/spec-driven-development-decision-history.md#ard-ad)）。
+- wayfinder 按 SDD 改写后和上游 mattpocock/skills 分叉，上游更新要手工合并（[ARD-CH](../decision-history/spec-driven-development-decision-history.md#ard-ch)）。
+- 审查和可读性判断都依赖 LLM，同样的输入两次结果可能不同。所以生成 gold 跑 3 次，复核跑 5 次（[ARD-CJ](../decision-history/spec-driven-development-decision-history.md#ard-cj)）。
 
 ## Risks and Mitigations
 
@@ -204,7 +205,8 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 |---|---|---|---|---|
 | QUES-A | 两个交付的 skill 要读的标准文件和检查脚本，放在 spec-organize 和 spec-html-standard 目录，这两个目录不算交付物。只把两个 skill 装进别的项目时，怎么把这些文件一起带过去？（[ARD-C](../decision-history/spec-driven-development-decision-history.md#ard-c) 要求 skill 能独立带走） | 未定 | 人决定 | 否 |
 | QUES-B | 产品级成功指标怎么量、基线是多少（PRD-G） | 延后（[ARD-N](../decision-history/spec-driven-development-decision-history.md#ard-n)） | 人决定 | 否 |
-| QUES-C | 以后新增的可替换工具，例如 Map 阶段的其他辅助工具（类似 wayfinder），要不要写进 skill 契约表 | 未定 | 人决定 | 否 |
+| QUES-C | 以后新增的可替换工具，例如 Map 阶段的访谈辅助工具，要不要写进 skill 契约表 | wayfinder 已写进（[ARD-CH](../decision-history/spec-driven-development-decision-history.md#ard-ch)）；其他工具未定 | 人决定 | 否 |
+| QUES-E | 有 `CLAUDE.local.md` 就只写它（[ARD-CG](../decision-history/spec-driven-development-decision-history.md#ard-cg)），但它不提交，别人克隆仓库拿不到 DSGN-C 的规则。要不要另外在提交的文件里留一份？ | 未定 | 人决定 | 否 |
 | QUES-D | 用 SDD 写出的每份 spec，要不要都带一个「Agent Loop」节，写明目标与约束、什么事件触发 AI 重跑、用什么指标自动评估 | 未定 | 人决定 | 否 |
 
 ## Reversibility
@@ -298,7 +300,7 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 | diagram-design | 一个画图的 skill，按固定的配色和字体画出 SVG 插图（ARD-CA）。它不随 SDD 一起交付；没有安装时，spec-write 不新画图，只保留已有插图 |
 | GitHub Pages | GitHub 提供的静态网站托管；本项目由 GitHub Actions（GitHub 上的自动化脚本）生成网站后发布到这里（ARD-CD） |
 | skill | 一份写给 AI 的操作说明（`SKILL.md`），告诉它遇到某类任务时按什么步骤做 |
-| spec bundle | 整套 SDD spec 作为一个整体；版本号写在 parent PRD 的 `version`，印进 skill 用来看出 skill 出自哪一版 spec（ARD-CC） |
+| spec bundle | 整套 SDD spec 作为一个整体；版本号写在 parent PRD 的 `version`，每次 build 末位加 1 再印进 skill，用来看出 skill 出自哪一版 spec（ARD-CK） |
 | spec-write | 交付的 skill 之一：新建或修改 spec 文档 |
 | spec-review | 交付的 skill 之一：检查 spec 文档，只给修改建议，不直接改 |
 | spec-organize | 早期的主 skill，现在不是交付物；里面放着标准文件、检查脚本和测试 |
@@ -316,10 +318,13 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 | 检查脚本（checker） | `tools/run_spec_checks.py` 等 Python 脚本，自动检查路径、章节、编号这类机械规则 |
 | MUST 清单（registry） | `must_registry.yaml`，列出所有 MUST 规则以及每条由谁来检查（脚本或 LLM） |
 | CLAUDE.md、CLAUDE.local.md | AI 每次会话都会读的说明文件。`CLAUDE.local.md` 只在本地，不提交 |
-| wayfinder、grill-with-docs、research | 已有的辅助 skill：分别用来规划路线、追问式访谈、做调研 |
+| wayfinder、grill-with-docs、research | 已有的 skill：分别用来规划路线、追问式访谈、做调研。wayfinder 还负责进度记录，是交付物（ARD-CH） |
+| 交付物 | SDD 要交给用户安装的东西：spec-write、spec-review、wayfinder 三个 skill |
+| 地图目录（map） | wayfinder 给每个 feature 建的进度目录：`map.md` 记阶段、已做的决定、还没想清的事；`issues/` 下每个文件是一个 brief。不提交（ARD-CH） |
+| brief | 地图里一个待解决的问题，一个文件；解决后关闭，结论记进 `map.md` |
 | wayfinder-import | 把 wayfinder 的规划结果导入成 spec 的一项工作；曾经是 SDD 的 sub-feature，已移出（ARD-T） |
 | walter-worker | 作者的另一个项目（github.com/cicidi/walter-worker），放着一组 skill 和安装脚本；它的 feature create 命令用来新建 feature 目录 |
-| BMAD、GSD | 网上公开的两套 AI 开发流程框架，自带完整的任务管理和大量模板文件。SDD 故意不引入它们 |
+| BMAD、GSD | 网上公开的两套 AI 开发流程。BMAD 按角色分工，自带大量模板；GSD 较轻，侧重管理交给 AI 的上下文。SDD 两个都不引入，只在已有 skill 上加规则（PRD-A） |
 
 ### 评测
 
@@ -334,7 +339,8 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 | judge（判分模型） | 用来打分的 LLM，目前是 `deepseek-flash` |
 | 分数 1 | MUST 合规分：通过的 MUST 条数除以 MUST 清单的总条数，必须满分 |
 | 分数 2 | 和 gold 比的分数：按标注加减分，满分 10，只在同一个 gold 版本内比较，不能比上一次低 |
-| 复核 | 同一个判分模型独立裁决 3 次，得出最终的通过或不通过。和 Python 检查脚本是两回事 |
+| claude_audit | 复核结果文件里的一栏：DeepSeek 判为没通过或有分歧的条目，Claude 在这里写同意还是不同意，以及理由（ARD-CJ） |
+| 复核 | 同一个判分模型独立裁决 5 次，至少 4 次一致才算定论；没通过的条目再由 Claude 核对（ARD-CJ）。和 Python 检查脚本是两回事 |
 | 基线 | 只装被测 skill、不加任何辅助 skill 的评测配置（`eval.yaml` 里 `grill.skills: []`） |
 | run_id | 一次评测运行的名字，格式是「日期加分支名」 |
 | fixture | 测试用的小样例文件。反例（neg）故意违反规则，检查脚本必须报错；正例（pos）合规，检查脚本不能误报 |
@@ -371,3 +377,4 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 | 2026-11-24 | 术语表补上 SVG、diagram-design、GitHub Pages |
 | 2026-11-24 | 术语表写明 diagram-design 不随 SDD 交付，未安装时不新画图 |
 | 2026-11-24 | DSGN-C：CLAUDE 层写哪个文件（ARD-CG） |
+| 2026-11-24 | 第 8 轮审查后：三个交付 skill（ARD-CH）；复核 5 次（ARD-CJ）；DSGN-A 加新建文件例外（ARD-CE）；术语表加地图目录、brief、交付物、claude_audit，改写 BMAD、GSD；新增 QUES-E；Drawbacks 加 wayfinder 分叉 |

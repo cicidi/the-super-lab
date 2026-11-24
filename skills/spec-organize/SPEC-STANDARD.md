@@ -6,7 +6,7 @@ Rules are **MUST** (a violation is a failure) or **NICE** (a reminder, never a f
 
 ## Committed types
 
-`prd` | `design` | `impl-plan` | `test-plan` | `decision-history` | `how-to` — under `docs/features/<f>/`. Local only: `raw/**`, `.scratch/`.
+`prd` | `design` | `impl-plan` | `test-plan` | `decision-history` | `how-to` — under `docs/features/<f>/`. Local only: `raw/**`, `.scratch/`, `docs/state/` (wayfinder maps before a feature is named, ARD-CH).
 
 ## Path & filename (MUST)
 
@@ -58,7 +58,7 @@ Every `PRD-*` id must be anchored in at least one design clause (TST-O).
 
 Body text states the current rule only. When a sentence no longer holds, rewrite it and link the ARD that changed it. Strikethrough appears **only** in decision-history (a superseded row, struck and linked to the new ARD). Older body wording lives in git history. A typo is fixed in place (ARD-BM, ARD-AS).
 
-Edit size for AI edits under `docs/`: at most 10 lines **and** at most 200 characters per edit to an existing file, both limits at once (ARD-BP); creating a new file is exempt but still meets **Size** (ARD-CE); a larger change needs explicit human authorization recorded as an ARD (parent design DSGN-A). Content edits go through spec-write; spec-organize Lint may fix format-class MUST violations directly, under the same cap (ARD-BV).
+Edit size for AI edits under `docs/`: at most 10 lines **and** at most 200 characters per edit to an existing file, both limits at once; creating a new file is exempt (content moved out of an existing file counts as an edit) but still meets **Size** (ARD-CE); a larger change needs explicit human authorization recorded as an ARD (parent design DSGN-A). Content edits go through spec-write; spec-organize Lint may fix format-class MUST violations directly, under the same cap (ARD-BV).
 
 ## Readability (MUST)
 
@@ -119,7 +119,7 @@ A conclusion is stated in the committed document and cites a `raw/` path, a URL,
 
 ## Before create or edit (MUST)
 
-1. Read this file and SPEC-PRESENTATION.md; for HTML pages, also `skills/spec-html-standard/SPEC-HTML-STANDARD.md` (three standard files, ARD-BX).
+1. Read this file and SPEC-PRESENTATION.md; for HTML pages, also `skills/spec-html-standard/SPEC-HTML-STANDARD.md` (three standard files, ARD-CH restating ARD-BX).
 2. Decide: new document from the path rules, or edit existing documents.
 3. If editing, name every document that states the same fact. Edit the authority document. Replace the other copies with links.
 4. Classify the edit as prose, format, style, table, or icon, then apply SPEC-PRESENTATION.md.

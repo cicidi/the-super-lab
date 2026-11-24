@@ -12,21 +12,34 @@ metadata:
     - chart map
     - decision mapping
     - plan large work
+    - resume
+    - progress
+    - recap
+    - where are we
+    - commit
   when_to_use: |
     When work is too big for one session and the path from here to the
     destination isn't visible. When decisions need shared, persistent tracking
-    across multiple sessions.
+    across multiple sessions. In an SDD repo, also when the user resumes a
+    conversation, asks for progress or a recap, or is about to commit docs.
   when_not_to_use: |
     When the work fits in one session. When requirements are already fully
     specified with tickets ready to implement. When you just need a quick
-    spec — use to-spec instead.
+    spec — use to-spec instead. (Exception: in an SDD repo the map is always
+    created — it is the progress record for every feature.)
   audience:
     - developers
     - architects
     - tech leads
   source_author: mattpocock
   source_url: https://github.com/mattpocock/skills/blob/main/skills/engineering/wayfinder/SKILL.md
+  spec_bundle_version: "1.0.2"
+  spec_built_at: "2026-11-24"
+  spec_git_sha: "0928aff"
 ---
+<!-- SPEC-BUNDLE-START -->
+> **SDD spec bundle** `1.0.2` · built 2026-11-24 · git `0928aff`
+<!-- SPEC-BUNDLE-END -->
 
 A loose idea has arrived — too big for one agent session, and wrapped in fog: the way from here to the **destination** isn't visible yet. Wayfinding is about finding that way, not charging at the destination. This skill charts the way as a **shared map** on the repo's issue tracker, then works its **decision briefs** — questions whose resolution is a decision, not slices of a build to execute — one at a time until the route is clear.
 
@@ -46,13 +59,22 @@ The map is a single issue on this repo's issue tracker, labelled `wayfinder:map`
 
 The map is an **index**, not a store. It lists the decisions made and points at the briefs that hold their detail; a decision lives in exactly one place — its brief — so the map never restates it, only gists it and links.
 
-**Where the map, its child briefs, blocking, and frontier queries physically live is tracker-specific.** The issue tracker configuration should have been provided via the project's init flow. If no tracker has been configured, default to the local-markdown tracker (issues as files under `.scratch/`). Consult the tracker doc's "Wayfinding operations" section for how _this_ repo expresses them.
+**Where the map, its child briefs, blocking, and frontier queries physically live is tracker-specific.** The issue tracker configuration should have been provided via the project's init flow. If no tracker has been configured, default to the local-markdown tracker (issues as files under `.scratch/`). In an SDD repo (one with `docs/features/spec-driven-development/`) the tracker is always the local layout in [SDD progress record](#sdd-progress-record-ard-ch). Consult the tracker doc's "Wayfinding operations" section for how _this_ repo expresses them.
 
 ### The map body
 
 The whole map at low resolution, loaded once per session. Open briefs are **not** listed — they are open child issues, found by query.
 
 ```markdown
+<!-- SDD repos only: header block -->
+phase: <Create | Map | Converge | Downstream>
+feature: <feature name, or working name before it is confirmed>
+last_action: <date — what was last done>
+
+## Rough PRD and background
+
+<!-- SDD repos only, before docs/features/<f>/ exists: working name, rough PRD, research background. Removed once the feature directory exists. -->
+
 ## Destination
 
 <what reaching the end of this map looks like — the spec, decision, or change this effort is finding its way to. One or two lines; every session orients to it before choosing a brief.>
@@ -113,7 +135,7 @@ implementation; you can replace any of them with your own skill at install time.
 | **interview** | Grill user, one question at a time, write CONTEXT.md + ADRs | `grill-with-docs` + `domain-modeling` | (ask on install) |
 | **investigate** | Read docs/APIs/source, produce cited markdown file | `research` (ai-coworker) | (ask on install) |
 | **prototype** | Build throwaway artifact to answer a design question | `prototype` | (ask on install) |
-| **tracker** | Issue CRUD — create, list, label, assign, close | `gh` CLI (GitHub Issues) | (ask on install) |
+| **tracker** | Issue CRUD — create, list, label, assign, close | `gh` CLI (GitHub Issues); in an SDD repo, the local markdown layout under [SDD progress record](#sdd-progress-record-ard-ch) | (ask on install) |
 
 ### Configuration
 
@@ -132,27 +154,39 @@ Choices are recorded so the skill reads them on every invocation.
 
 In the-super-lab's spec-driven development (SDD), wayfinder owns the progress
 rules of the pipeline design (PIPE-A-D, PIPE-A-E, PIPE-A-F, PIPE-H, PIPE-E-A).
-The tracker is local markdown and the **map file is the progress record**:
+An SDD repo is one with `docs/features/spec-driven-development/`. There the
+tracker is upstream's local-markdown layout (mattpocock/skills
+`setup-matt-pocock-skills/issue-tracker-local.md`): a directory holding
+`map.md` plus one file per brief, `issues/NN-<slug>.md`, each with a
+`Status:` line and a `Blocked by:` line. The **map is the progress record**:
 
-| When | Map file | Committed? |
+| When | Map directory | Committed? |
 |---|---|---|
-| Before the feature name is confirmed | `docs/state/wayfinder-<working-name>.md` | No (gitignored) |
-| After the name is confirmed and `docs/features/<f>/` exists | `docs/features/<f>/raw/state/wayfinder-map.md` (move it there) | No (`raw/` is gitignored) |
+| Before the feature name is confirmed | `docs/state/wayfinder-<working-name>/map.md` and `docs/state/wayfinder-<working-name>/issues/NN-<slug>.md` | No (`docs/state/` is gitignored) |
+| After the name is confirmed and `docs/features/<f>/` exists | move the whole directory to `docs/features/<f>/raw/state/wayfinder/` (map at `docs/features/<f>/raw/state/wayfinder/map.md`) | No (`raw/` is gitignored) |
 
-One map file per feature, so efforts in progress at the same time never
-overwrite each other. The map body starts with `phase` (Create, Map, Converge
-or Downstream), `feature`, and `last_action`; open briefs are the open items.
-Before the name is confirmed, the working name, the rough PRD and the research
-background live in this file too. The project's CLAUDE layer stores only the
-path of the active map: write it to `CLAUDE.local.md` if the repo has one,
-else `CLAUDE.md`; if neither exists, ask the user whether to create one (ARD-CG).
+Never commit the map directory. One directory per feature, so efforts in
+progress at the same time never overwrite each other. In SDD mode,
+**always create the map**, even when it has no briefs: the map is the progress record
+for every feature (this overrides "you don't need a map" in
+[Chart the map](#chart-the-map) step 2). The map body starts with the SDD
+header block (`phase`, `feature`, `last_action`); before the name is
+confirmed, the working name, the rough PRD and the research background live in
+its **Rough PRD and background** section. The project's CLAUDE layer stores
+only the path of the active map: write it to `CLAUDE.local.md` if the repo has
+one, else `CLAUDE.md`; if neither exists, ask the user whether to create one
+(ARD-CG).
 
 - **Recap on resume (PIPE-A-E).** When the user asks, or a conversation resumes,
   read the map and the committed docs, then report: what was done, where things
   stand, what remains, and the suggested next step. The recap is not committed.
-- **Blocking questions stop Downstream (PIPE-E-A).** Each open question marked
-  blocking = yes is an open brief. While any blocking brief is open, do not
-  start Downstream (impl-plan, test-plan, to-tickets).
+- **Blocking questions stop Downstream (PIPE-E-A).** The authoritative list of
+  blocking questions is the feature design's Open Questions tracker: `QUES-*`
+  rows with a blocking yes/no column, one tracker per feature. While any QUES
+  row marked blocking = yes is open, do not
+  start Downstream (impl-plan, test-plan, to-tickets). A brief that works on such
+  a question names its QUES id in its body. This is different from wayfinder's
+  own `Blocked by:` between briefs, which only orders briefs.
 - **Review gate before commit (PIPE-A-D).** Before committing or pushing a change
   to committed docs, ask whether to run **spec-review** first. If the user says
   no, record the skip in the map (date and "spec-review skipped by user"); never
@@ -200,7 +234,8 @@ Wayfinder map done
     to-spec
        |
        +-- Synthesizes all brief conclusions into a spec (PRD)
-       +-- Creates a Jira ticket for the spec itself
+       +-- Creates a tracker item for the spec itself
+       +-- (SDD repo: spec-write writes it into docs/features/<f>/ instead)
        |
        v
     spec-review checkpoint
@@ -212,7 +247,7 @@ Wayfinder map done
        v
     Review passed?
        |
-   YES +-- to-tickets -> creates Jira build tickets
+   YES +-- to-tickets -> creates build tracker items
    NO  +-- fix documents, re-review
 ```
 
@@ -223,7 +258,7 @@ implementation begins.
 ### Entity Relationships
 
 ```
-N briefs (decisions) -> 1 spec (PRD, a Jira ticket) -> M Jira tickets (build)
+N briefs (decisions) -> 1 spec (PRD, a tracker item) -> M tracker items (build)
 
   Map:      1 issue, label wayfinder:map
   Brief:    N child issues, label wayfinder:<type>
@@ -231,6 +266,9 @@ N briefs (decisions) -> 1 spec (PRD, a Jira ticket) -> M Jira tickets (build)
   Spec:     1 issue, label ready-for-agent (created by to-spec)
   Tickets:  M issues, label ready-for-agent (created by to-tickets)
 ```
+
+In an SDD repo the spec is not an issue: it is written with **spec-write** into
+`docs/features/<f>/`.
 
 ## Pipeline
 
@@ -248,7 +286,7 @@ Two modes. Either way, **never resolve more than one brief per session** — wit
 User invokes with a loose idea.
 
 1. **Name the destination.** Run a `/grilling` and `/domain-modeling` session to pin down what this map is finding its way to — the spec, decision, or change. The destination fixes the scope, so it's settled first.
-2. **Map the frontier.** Grill again, **breadth-first** this time: fan out across the whole space rather than deep on any one thread, surfacing the open decisions and the first steps takeable now. **If this surfaces no fog** — the way to the destination is already clear, the whole journey small enough for one session — you don't need a map. Stop and ask the user how they'd like to proceed.
+2. **Map the frontier.** Grill again, **breadth-first** this time: fan out across the whole space rather than deep on any one thread, surfacing the open decisions and the first steps takeable now. **If this surfaces no fog** — the way to the destination is already clear, the whole journey small enough for one session — you don't need a map. Stop and ask the user how they'd like to proceed. (SDD repo: still create the map — see [SDD progress record](#sdd-progress-record-ard-ch).)
 3. **Create the map** (label `wayfinder:map`): Destination and Notes filled in, Decisions-so-far empty, the fog sketched into **Not yet specified**.
 4. **Create the briefs you can specify now** as child issues of the map — then wire blocking edges in a **second pass** (issues need ids before they can reference each other). Wiring sorts them into the frontier and the blocked; everything you can't yet specify stays in the fog — the **Not yet specified** section.
 5. **Fire the research subagents.** For each `research` brief you just created, spin up a `/research` subagent to resolve it in parallel, capturing its findings on a throwaway `research/<name>` branch with a context pointer from the brief.
@@ -265,7 +303,8 @@ User invokes with a map (URL or number). A brief is **optional** — without one
    4a. **Delivery Review Gate.** IF the brief type is `task` AND the task produced
        deliverables (files, code, documents):
        - Determine deliverable type:
-         - `.md` files → invoke `spec-review`
+         - spec docs under `docs/features/` → invoke `spec-review`
+         - other `.md` files → Claude's default review
          - code files → invoke `matt-code-review` (ai-coworker)
          - fallback (neither available) → Claude's default review
        - Review must pass before the brief can be closed.

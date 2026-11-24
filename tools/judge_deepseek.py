@@ -226,6 +226,18 @@ def aggregate(runs: list[dict]) -> list[dict]:
     return out
 
 
+def keep_audits(old_items: list[dict], new_items: list[dict]) -> list[dict]:
+    """Carry each non-pass item's claude_audit over when its id, verdict and votes are unchanged; else null."""
+    old = {i["id"]: i for i in old_items}
+    for item in new_items:
+        if "claude_audit" not in item:
+            continue
+        prev = old.get(item["id"])
+        same = prev and prev.get("verdict") == item["verdict"] and prev.get("votes") == item["votes"]
+        item["claude_audit"] = prev.get("claude_audit") if same else None
+    return new_items
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--target", choices=["must", "gold"], default="must")
@@ -242,6 +254,8 @@ def main() -> None:
         print(f"run {i + 1}/{args.runs} done", file=sys.stderr)
     items = aggregate(runs)
     out = OUT_MUST if args.target == "must" else OUT_GOLD
+    if out.is_file():
+        items = keep_audits((yaml.safe_load(out.read_text(encoding="utf-8")) or {}).get("items", []), items)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(
         yaml.safe_dump(

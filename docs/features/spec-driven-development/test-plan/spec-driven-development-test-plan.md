@@ -12,7 +12,7 @@ last_verified: 2026-11-24
 
 本篇是整个 SDD 唯一的测试计划，sub-feature 不另写。
 
-- **被测对象：** spec-write 和 spec-review 两个 skill。它们是仅有的交付物（[ARD-BX](../decision-history/spec-driven-development-decision-history.md#ard-bx)）。
+- **被测对象：** 交付的三个 skill：spec-write、spec-review，以及只做静态检查（TST-AA）的 wayfinder（[ARD-CH](../decision-history/spec-driven-development-decision-history.md#ard-ch)）。
 - **判断对错的依据：** 三份标准文件 `SPEC-STANDARD.md`、`SPEC-PRESENTATION.md`、`SPEC-HTML-STANDARD.md`，以及它们摘要的 document-standard design 和 reader design（[ARD-BX](../decision-history/spec-driven-development-decision-history.md#ard-bx)）。
 - **验收方式：** 人不读 skill 的正文；skill 好不好用，只看本计划的测试结果。
 
@@ -64,7 +64,7 @@ last_verified: 2026-11-24
 | `gold.repeats` | `3` | 每个案例跑几次 |
 | `grill.skills` | `[]` | 辅助 skill；空表示基线 |
 | `target.repo` | `.` | 写 spec 的仓库；环境变量 `SDD_EVAL_REPO` 可覆盖 |
-| `checkers.models`、`checkers.repeats` | `[deepseek-flash]`、`3` | 复核用的模型和次数 |
+| `checkers.models`、`checkers.repeats` | `[deepseek-flash]`、`5` | 复核用的模型和次数（[ARD-CJ](../decision-history/spec-driven-development-decision-history.md#ard-cj)） |
 | `single_provider` | `true` | 所有模型来自同一家服务商 |
 
 这套 SDD spec 本身不是打分用的 gold。它是写法样板，由 spec-review 审查，不参与打分（[ARD-BL](../decision-history/spec-driven-development-decision-history.md#ard-bl)）。
@@ -209,7 +209,7 @@ last_verified: 2026-11-24
 
 ### TST-Y — skill 版本戳和 PRD 一致
 
-**目标：** 四个 SDD `SKILL.md`（交付的 spec-write、spec-review，以及也引用标准文件的 spec-organize、spec-pipeline） 的版本戳等于 parent PRD 的 `version`，且 frontmatter 里的 `spec_*` 键各只出现一次；每次 build 版本末位加 1（[ARD-CK](../decision-history/spec-driven-development-decision-history.md#ard-ck)）。**判定：** Python（`build_spec_skills.py --check`）。
+**目标：** 五个 SDD `SKILL.md`（交付的 spec-write、spec-review、wayfinder，以及也引用标准文件的 spec-organize、spec-pipeline）的版本戳等于 parent PRD 的 `version`，且 frontmatter 里的 `spec_*` 键各只出现一次；每次 build 版本末位加 1（[ARD-CK](../decision-history/spec-driven-development-decision-history.md#ard-ck)）。**判定：** Python（`build_spec_skills.py --check` 查戳；升版本由 `test_build_spec_skills.py` 查）。
 
 ### TST-Z — 每页都能从首页点到
 
@@ -217,7 +217,7 @@ last_verified: 2026-11-24
 
 ### TST-AA — wayfinder 执行进度规则
 
-**目标：** `skills/wayfinder/SKILL.md` 写明地图文件的两个位置、提交前问是否跑 spec-review 并记下拒绝、有阻塞问题时不进入 Downstream（[ARD-CH](../decision-history/spec-driven-development-decision-history.md#ard-ch)）。**判定：** Python。
+**目标：** `skills/wayfinder/SKILL.md` 写明地图目录的两个位置、任务再小也建地图、阻塞以 QUES 清单为准、提交前问是否跑 spec-review 并记下拒绝、有阻塞问题时不进入 Downstream（[ARD-CH](../decision-history/spec-driven-development-decision-history.md#ard-ch)）。**判定：** Python。
 
 ## Test Execution Order
 
@@ -225,7 +225,7 @@ last_verified: 2026-11-24
 2. TST-B：检查脚本失效就停。
 3. TST-O、TST-P、TST-V：design 的覆盖、证据、可读性。这一步的 TST-V 只测 SDD 自己的文档。
 4. TST-C，然后 TST-D：第一次运行，或者 gold 升版时。
-5. TST-G、TST-N、TST-R、TST-S、TST-T、TST-U、TST-W、TST-X、TST-Y、TST-Z。
+5. TST-G、TST-N、TST-R、TST-S、TST-T、TST-U、TST-W、TST-X、TST-Y、TST-Z、TST-AA。
 6. TST-E、TST-F，然后对 TST-C、TST-E 里 spec-write 写出的文档跑 TST-V。
 7. TST-H，然后 TST-I。
 8. TST-Q：mock 执行。
@@ -241,7 +241,7 @@ last_verified: 2026-11-24
 | 设计完整 | TST-O 100% 对应；TST-P 全部通过 |
 | 读得懂 | TST-V：每篇都通过 |
 | mock 执行 | TST-Q 有调用记录，没有真实副作用 |
-| 网页和 skill 正文 | TST-R 网页和重新生成的一致；TST-S 四个例子齐全；TST-U、TST-W 通过；TST-Z 每页都能从首页点到 |
+| 网页和 skill 正文 | TST-R 网页和重新生成的一致；TST-S 四个例子齐全；TST-U、TST-W 通过；TST-Z 每页都能从首页点到；TST-AA wayfinder 写明进度规则 |
 | 检查和版本戳 | TST-X 没有 L1 内容减少；TST-Y 版本戳和 PRD 一致 |
 | 外部 gold | TST-T：有问题的快照上，应该找出的都找出；修好的快照上，除了允许的以外 0 个问题；源仓库不在本机就跳过 |
 | gold v1 定稿 | TST-D：范例的分数 1 满分；标注经人工认可 |
@@ -262,7 +262,7 @@ last_verified: 2026-11-24
 | PRD-G | Unverified（[ARD-N](../decision-history/spec-driven-development-decision-history.md#ard-n)） |
 | PRD-H | Unverified（「优先用已有的热门 skill」没法自动判定） |
 | PRD-I | Unverified（本表里的 Unverified 标注本身就是这条的落实） |
-| PRD-J | Unverified（阶段编排，PRD-I） |
+| PRD-J | TST-AA（只查 wayfinder 写没写规则；执行效果 Unverified，PRD-I） |
 | PRD-K | TST-S |
 | PRD-L | TST-P |
 | PRD-M | TST-V |
@@ -322,3 +322,4 @@ document-standard 的 reader PRD：
 | 2026-11-24 | TST-X 改引 DSGN-I；TST-W 改成完整句子；TST-Y 写明四个 skill；门槛表补 TST-W 到 TST-Z，TST-R 按内容比较 |
 | 2026-11-24 | TST-W 写明查的是 `data-svg="` 占位属性 |
 | 2026-11-24 | 复核改为 5 次、至少 4 次通过，Claude 再核对（ARD-CJ）；TST-Y 加升版本（ARD-CK）；新增 TST-AA（ARD-CH） |
+| 2026-11-24 | 第 8 轮审查后：被测对象三个 skill；checkers.repeats 改 5；TST-Y 五个 SKILL.md、升版本由单元测试判；TST-AA 加进执行顺序、门槛和追溯表 |

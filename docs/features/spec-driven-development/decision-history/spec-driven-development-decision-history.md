@@ -84,7 +84,7 @@ last_verified: 2026-11-24
 | ARD-AG | 2026-11-04 | 是否收敛由规则自动判断（pipeline design 的 PIPE-E-A 到 PIPE-E-C）：每个未决事项都标明是否阻塞；AI 不能自己宣布「已经够稳」 |
 | ~~ARD-AF~~ | 2026-11-04 | ~~故意不定义的事项：失败处理、skill 和 spec 的版本管理、信息来源可信度分级、数据清理；不迁移旧文档~~ → [ARD-CC](#ard-cc) |
 | ARD-AE | 2026-11-04 | 非软件问题也用同样的五篇文档；design 里写子问题归属表；结论必须有依据，查不到写 UNKNOWN |
-| ARD-AD | 2026-11-04 | 评测用 deepseek-flash 独立跑 3 次；gold 由案例、版本、范例、标注四部分组成；跑分结果和报告不提交；四个非软件例子写进 skill 正文，不在本仓库建 gold |
+| ~~ARD-AD~~ | 2026-11-04 | ~~评测用 deepseek-flash 独立跑 3 次；gold 由案例、版本、范例、标注四部分组成；跑分结果和报告不提交；四个非软件例子写进 skill 正文，不在本仓库建 gold~~ → [ARD-CJ](#ard-cj) |
 | ARD-AC | 2026-11-04 | PRD 的必需章节去掉非功能需求；编号在「feature 加文档类型」内唯一，跨 feature 引用写成 feature/编号；how-to 暂不检查 |
 | ~~ARD-AB~~ | 2026-11-04 | ~~交付物是四个 skill：spec-pipeline、spec-organize、spec-review、spec-write~~ → [ARD-AJ](#ard-aj) |
 | ARD-AA | 2026-11-04 | 多人的决定互相冲突时，以 decision-history 里时间较晚的为准；看不出先后就问用户；AI 不猜 |
@@ -131,7 +131,7 @@ last_verified: 2026-11-24
 
 ### ARD-CK — 每次 build 升版本号
 
-**原因。** ARD-CC 只说印版本号，没说什么时候升。版本不升，两次不同的 build 印出同一个号，起不到标来源的作用。
+**原因。** ARD-CC 只说印版本号，没说什么时候升。印戳的是五个 `SKILL.md`：spec-write、spec-review、wayfinder、spec-organize、spec-pipeline。版本不升，两次不同的 build 印出同一个号，起不到标来源的作用。
 
 **规则。** 每次运行 `build_spec_skills.py`（不带 `--check`），先把 parent PRD 的 `version` 末位加 1，例如 `1.0.0` 变成 `1.0.1`，再印进 `SKILL.md`。`--check` 只比对，不升版本。
 
@@ -148,6 +148,10 @@ last_verified: 2026-11-24
 **规则。** `judge_deepseek.py` 默认跑 5 次：至少 4 次通过算通过，至少 4 次不通过算不通过，其余算有分歧，按不通过计。
 
 **规则（续）。** Claude 逐条核对不通过和有分歧的结论，把同意或不同意及理由写进 `claude_audit`。Claude 不同意时报告用户，不自己改判；Python 检查的结果仍不能推翻。
+
+**范围。** 本条管 `judge_deepseek.py` 的复核（TST-L）。TST-V 的可读性判分另有门槛，不变。Claude 不同意的条目在用户决定前仍算没通过。
+
+**重述。** 本条推翻 ARD-AD「复核跑 3 次」的部分，ARD-AD 因此划掉。其余仍有效：生成 gold 跑 3 次；gold 由案例、版本、范例、标注组成；跑分结果和报告不提交；四个非软件例子写进 skill 正文。
 
 **放弃的方案。** 5 次都一致才通过：次数越多越容易因一次波动失败。换更贵的模型：仍是一个模型说了算。
 
@@ -171,11 +175,11 @@ last_verified: 2026-11-24
 
 另外，名字没定时进度全记在 `CLAUDE.local.md` 一处，几个 feature 同时进行就会互相覆盖。名字没定时的暂定名、粗略 PRD 和背景也一起移进地图文件。
 
-**规则。** wayfinder 的地图（map）就是进度记录。名字没定时放在 `docs/state/wayfinder-<暂定名>.md`，定了以后移到 `docs/features/<f>/raw/state/wayfinder-map.md`，都不提交。
+**规则。** wayfinder 的地图目录就是进度记录：`map.md` 加 `issues/` 下每个 brief 一个文件。名字没定时放在 `docs/state/wayfinder-<暂定名>/`，定了以后整个移到 `docs/features/<f>/raw/state/wayfinder/`，都不提交。
 
-每个 feature 一个地图文件，互不覆盖；CLAUDE 层只记当前地图的路径（ARD-CG）。
+每个 feature 一个地图目录，互不覆盖；任务再小也建地图。CLAUDE 层只记当前地图的路径（ARD-CG）。
 
-**规则（续）。** 重新开始时读地图给出回顾。标「阻塞」的问题对应未关闭的 brief，有未关闭的就不进入 Downstream。提交前问要不要跑 spec-review，用户说不跑就记进地图。
+**规则（续）。** 重新开始时读地图给出回顾。阻塞与否以 design 的问题清单（QUES-*）为准，有标「是」的没解决就不进入 Downstream；处理它的 brief 写明 QUES 编号。提交前问要不要跑 spec-review，用户说不跑就记进地图。
 
 **重述。** 本条推翻 ARD-BX「交付物只有两个」，以及 ARD-BT、ARD-BU「进度记在 CLAUDE.local.md」的部分，三条因此划掉。
 
@@ -209,7 +213,7 @@ last_verified: 2026-11-24
 
 **原因。** 上限是为了让每次修改都看得清（ARD-BP）。新建的文件没有旧内容可对比，拆成十几次只多出步骤。
 
-**规则。** 上限只管修改已有文件。新建一个文件可以一次写完，但仍要符合行数上限（PRD-D）。
+**规则。** 上限只管修改已有文件。新建一个文件可以一次写完，但仍要符合行数上限（PRD-D）。从已有文件挪出内容另建分篇，算修改，不算新建。
 
 **重述。** 本条推翻 ARD-BP 没区分新建和修改的部分，ARD-BP 因此划掉。其余仍有效：修改 `docs/` 下已有的 markdown，每次不超过 10 行并且不超过 200 字符；更大的改动拆开，或经人授权。
 
@@ -856,3 +860,4 @@ payment-impl-plan-01-schema.md         impl-plan 分篇：序号加阶段，有�
 | 2026-11-24 | ARD-BO 的放弃方案改正对 ISO 24495-1 的描述（审查 F16） |
 | 2026-11-24 | 补记 2026-11-20 的 Log 变化：新增 ARD-BU 到 ARD-CB；划掉 ARD-BH、ARD-BE、ARD-AW、ARD-BK（各自链到推翻它的 ARD） |
 | 2026-11-24 | 新增 ARD-CE 到 ARD-CL；划掉 ARD-CC、ARD-BX、ARD-BP、ARD-BT、ARD-BU（各自链到推翻它的 ARD） |
+| 2026-11-24 | 第 8 轮审查后：划掉 ARD-AD，由 ARD-CJ 重述并写明范围；ARD-CE 写明挪出内容算修改；ARD-CH 地图改为目录、阻塞以 QUES 为准；ARD-CK 写明五个 SKILL.md |

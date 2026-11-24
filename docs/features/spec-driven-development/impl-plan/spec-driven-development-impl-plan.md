@@ -18,8 +18,8 @@ last_verified: 2026-11-24
 - **skill 的写法：** `SKILL.md` 用 `skill create` 或 `skill edit`（见 `skills/skill/SKILL.md`）来写。本篇只规定顺序。
 - **测试：** 测什么见 [test-plan](../test-plan/spec-driven-development-test-plan.md)，测试文件放在 `skills/spec-organize/tests/`。
 - **不做 wayfinder-import sub-feature**（[ARD-T](../decision-history/spec-driven-development-decision-history.md#ard-t)）。
-- **评测：** 用 `deepseek-flash` 跑 3 次；跑分结果和报告不提交（[ARD-AD](../decision-history/spec-driven-development-decision-history.md#ard-ad)）。打分用 iPhone 案例（[ARD-BL](../decision-history/spec-driven-development-decision-history.md#ard-bl)）。
-- **不迁移旧文档**，只修 SDD 自己这套（[ARD-CC](../decision-history/spec-driven-development-decision-history.md#ard-cc)，重述 ARD-AF）。
+- **评测：** 用 `deepseek-flash` 生成 gold 跑 3 次、复核跑 5 次；跑分结果和报告不提交（[ARD-CJ](../decision-history/spec-driven-development-decision-history.md#ard-cj)）。打分用 iPhone 案例（[ARD-BL](../decision-history/spec-driven-development-decision-history.md#ard-bl)）。
+- **不迁移旧文档**，只修 SDD 自己这套（[ARD-CK](../decision-history/spec-driven-development-decision-history.md#ard-ck)，重述 ARD-AF）。
 
 ## IMPL-A — skill 目录改名
 
@@ -33,7 +33,7 @@ last_verified: 2026-11-24
 
 ## IMPL-B — spec-write 和 spec-review 的 SKILL.md
 
-**目标：** 两个交付的 skill 的 `SKILL.md` 和 [skill 契约](../design/spec-driven-development-design-skill-contracts.md)一致（[ARD-AJ](../decision-history/spec-driven-development-decision-history.md#ard-aj)、[ARD-BX](../decision-history/spec-driven-development-decision-history.md#ard-bx)）。
+**目标：** spec-write、spec-review 的 `SKILL.md` 和 [skill 契约](../design/spec-driven-development-design-skill-contracts.md)一致（[ARD-AJ](../decision-history/spec-driven-development-decision-history.md#ard-aj)、[ARD-CH](../decision-history/spec-driven-development-decision-history.md#ard-ch)）。
 
 **步骤：** 契约或标准改了，就用 `skill edit` 同步修改两份 `SKILL.md`。
 
@@ -43,7 +43,7 @@ last_verified: 2026-11-24
 
 ## IMPL-C — 三份标准摘要
 
-**目标：** `skills/spec-organize/SPEC-STANDARD.md`、`skills/spec-html-standard/SPEC-PRESENTATION.md` 和 `skills/spec-html-standard/SPEC-HTML-STANDARD.md` 是可执行的规则摘要；完整规则仍在 document-standard design 和 reader design（[ARD-BX](../decision-history/spec-driven-development-decision-history.md#ard-bx)）。
+**目标：** `skills/spec-organize/SPEC-STANDARD.md`、`skills/spec-html-standard/SPEC-PRESENTATION.md` 和 `skills/spec-html-standard/SPEC-HTML-STANDARD.md` 是可执行的规则摘要；完整规则仍在 document-standard design 和 reader design（[ARD-CH](../decision-history/spec-driven-development-decision-history.md#ard-ch) 重述 ARD-BX）。
 
 **步骤：** 每次 DSGN 规则改动，同一批修改摘要。
 
@@ -86,11 +86,11 @@ last_verified: 2026-11-24
 
 **Verify:** 用浏览器直接打开页面能看；页面里列出的原文路径都存在。
 
-## IMPL-G — CLAUDE.local 里的 SDD 段落
+## IMPL-G — CLAUDE 层里的 SDD 段落
 
-**目标：** feature 名字还没定的时候，Create 和 Map 阶段的进度和暂定名记在这里（pipeline design 的 PIPE-H；[ARD-BU](../decision-history/spec-driven-development-decision-history.md#ard-bu)）。
+**目标：** CLAUDE 层只记当前 wayfinder 地图目录的路径，进度本身在地图里（pipeline design 的 PIPE-H；[ARD-CG](../decision-history/spec-driven-development-decision-history.md#ard-cg)、[ARD-CH](../decision-history/spec-driven-development-decision-history.md#ard-ch)）。
 
-**步骤：** 在项目的 CLAUDE 层（ARD-CG）里加一段 SDD：当前地图文件的路径、reader 网页的链接。
+**步骤：** 在项目的 CLAUDE 层（ARD-CG）里加一段 SDD：当前地图目录的路径、reader 网页的链接。
 
 **依赖：** 无。**挡住：** 无。
 
@@ -118,7 +118,7 @@ last_verified: 2026-11-24
 
 ## IMPL-J — 评测配置和配置测试
 
-**目标：** `eval.yaml` 能用 `deepseek-flash` 跑 3 次；目标仓库可以用环境变量覆盖；`test_eval_config.py` 在配置缺项时报错。
+**目标：** `eval.yaml` 能用 `deepseek-flash` 生成 gold 跑 3 次、复核跑 5 次；目标仓库可以用环境变量覆盖；`test_eval_config.py` 在配置缺项时报错。
 
 **依赖：** IMPL-D。**挡住：** IMPL-E、IMPL-Q。
 
@@ -201,7 +201,7 @@ last_verified: 2026-11-24
 
 **依赖：** IMPL-C。**挡住：** 无。
 
-**Verify:** CLAUDE 层里：改动上限写的是「并且」，并引用 PRD-C；没有 `FR-` 这类已禁止的编号；进度路径是 wayfinder 的地图文件（PRD-J、ARD-CH）；文档目录是 `docs/features/<f>/<类型>/`（document-standard 的 DSGN-B）；列出的 skill 是 spec-write、spec-review 和 wayfinder（ARD-CH）。2026-11-20 已按这几条改过 `CLAUDE.local.md`。
+**Verify:** CLAUDE 层里：改动上限写的是「并且」，并引用 PRD-C；没有 `FR-` 这类已禁止的编号；进度路径是 wayfinder 的地图目录（PRD-J、ARD-CH）；文档目录是 `docs/features/<f>/<类型>/`（document-standard 的 DSGN-B）；列出的 skill 是 spec-write、spec-review 和 wayfinder（ARD-CH）。2026-11-20 已按这几条改过 `CLAUDE.local.md`。
 
 ## IMPL-S — 插图与网页样式
 
@@ -221,7 +221,7 @@ last_verified: 2026-11-24
 
 ## IMPL-U — spec bundle 版本戳
 
-**目标：** `tools/build_spec_skills.py` 按 [ARD-CC](../decision-history/spec-driven-development-decision-history.md#ard-cc) 给四个 SDD `SKILL.md`（交付的 spec-write、spec-review，以及也引用标准文件的 spec-organize、spec-pipeline）打版本戳；每次 build 版本末位加 1（[ARD-CK](../decision-history/spec-driven-development-decision-history.md#ard-ck)）。
+**目标：** `tools/build_spec_skills.py` 按 [ARD-CC](../decision-history/spec-driven-development-decision-history.md#ard-cc) 给五个 SDD `SKILL.md`（交付的 spec-write、spec-review、wayfinder，以及也引用标准文件的 spec-organize、spec-pipeline）打版本戳；每次 build 版本末位加 1（[ARD-CK](../decision-history/spec-driven-development-decision-history.md#ard-ck)）。
 
 **依赖：** 无。**挡住：** 无。
 
@@ -265,9 +265,9 @@ last_verified: 2026-11-24
 
 ## Acceptance Criteria
 
-- 分数 1 满分，并且 3 次独立复核全部通过。
+- 分数 1 满分，并且 5 次独立复核里至少 4 次通过（ARD-CJ）。
 - 分数 2 不低于同一 gold 版本的上一次运行（[ARD-R](../decision-history/spec-driven-development-decision-history.md#ard-r)：不设固定及格线）。
-- 能执行的 TST-A 到 TST-Z 全部通过；`run_spec_checks.py` 跑 `docs/features/spec-driven-development/` 报 0 个问题。
+- 能执行的 TST-A 到 TST-AA 全部通过；`run_spec_checks.py` 跑 `docs/features/spec-driven-development/` 报 0 个问题。
 
 ## Change Log
 
@@ -289,3 +289,4 @@ last_verified: 2026-11-24
 | 2026-11-24 | IMPL-U 写明四个 skill；IMPL-P 现状更新；Verify 和验收只查 SDD 目录、覆盖到 TST-Z；IMPL-F、IMPL-H、IMPL-M 补上挡住的任务；IMPL-S 改成完整句子 |
 | 2026-11-24 | IMPL-P 标为已完成，改引 ARD-BS |
 | 2026-11-24 | 新增 IMPL-W、IMPL-X；IMPL-R 进度路径改为地图文件（ARD-CH）；IMPL-U 加升版本（ARD-CK） |
+| 2026-11-24 | 第 8 轮审查后：IMPL-G 改为 CLAUDE 层只记地图路径；评测次数跟上 ARD-CJ；IMPL-U 五个 SKILL.md；验收改到 TST-AA |
