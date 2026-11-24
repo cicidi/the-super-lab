@@ -19,7 +19,7 @@ last_verified: 2026-11-24
 
 ## Solution
 
-`skill` 提供四个子命令：`create`、`edit`、`import`、`list`。
+`skill` 提供四个子命令：`create`、`edit`、`import`、`list`（PRD-A）。
 不带子命令时，先列出现有 skill，再问用户要做什么。
 
 ## User Stories
@@ -30,20 +30,20 @@ last_verified: 2026-11-24
 
 ## Implementation Decisions
 
-格式规则不写在本 skill 里，统一引用仓库根目录的 `CONVENTIONS.md`。
+格式规则不写在本 skill 里，统一引用仓库根目录的 `CONVENTIONS.md`（PRD-C）。
 这样规则只有一个出处，改规则时不用同时改多个 skill。
 
 ## Design
 
 **DSGN-A create。** 先问名字（kebab-case，即小写加连字符，如 `fix-bug`）。
-再在本地、GitHub 和网上搜相似 skill，避免重复。
-然后按 `CONVENTIONS.md` 起草，给用户审阅；批准后才写入 `skills/<name>/SKILL.md`。
+再在本地、GitHub 和网上搜相似 skill，避免重复（PRD-B）。
+然后按 `CONVENTIONS.md` 起草，给用户审阅；批准后才写入 `skills/<name>/SKILL.md`（PRD-G、PRD-H）。
 
-**DSGN-B edit。** 先读现有 SKILL.md，问清改什么，改后展示 diff，确认才保存。
+**DSGN-B edit。** 先读现有 SKILL.md，问清改什么，改后展示 diff，确认才保存（PRD-D）。
 改动必须守住三条：没有 TBD/TODO；正文不用装饰性 emoji；
 description（frontmatter 里告诉 agent 何时调用的那段话）以 "Use when" 开头且不超过 1024 字符。
 
-**DSGN-C import。** 从 GitHub URL 取 SKILL.md，保留原名存到 `skills/<原名>/`。
+**DSGN-C import。** 从 GitHub URL 取 SKILL.md，保留原名存到 `skills/<原名>/`（PRD-E）。
 缺 `license` 补 MIT，缺 `compatibility` 补 `claude-code,opencode`，
 缺 When to Use / When NOT to Use 两节就补上。最后报告哪些改了、哪些原样保留。
 
@@ -53,6 +53,7 @@ description（frontmatter 里告诉 agent 何时调用的那段话）以 "Use wh
 
 目前没有自动测试，正确性靠 DSGN-B 的 diff 确认和人工审阅。
 自动检查 SKILL.md 格式的工具是否存在，记为 QUES-A。
+产出的 skill 不好时，先修 create 再重新生成（PRD-I）。
 
 ## Out of Scope
 
@@ -62,6 +63,7 @@ description（frontmatter 里告诉 agent 何时调用的那段话）以 "Use wh
 ## Further Notes
 
 skill-factory 整体怎么设计，见 [parent design](../../../design/skill-factory-design.md)。
+需求见 [PRD](../prd/skill-prd.md)，决策见 [decision-history](../decision-history/skill-decision-history.md)。
 
 ## Alternatives Considered
 
@@ -86,6 +88,7 @@ create、edit、import 都靠人审，skill 多了以后审阅成本会上升。
 |---|---|---|---|---|
 | QUES-A | 要不要一个自动检查 SKILL.md 格式的工具？ | `tools/` 下没有 | cicidi | no |
 | QUES-B | import 要不要审查 skill 的内容，而不只补格式？ | 目前只补格式 | cicidi | no |
+| QUES-C | import 要不要记录原作者和出处（PRD-F）？ | SKILL.md 目前不记录 | cicidi | no |
 
 ## Reversibility
 
@@ -97,3 +100,4 @@ create、edit、import 都靠人审，skill 多了以后审阅成本会上升。
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：按 SKILL.md 写出 skill 的 design |
+| 2026-11-24 | 引用 PRD-A 到 PRD-I，新增 QUES-C，链接 PRD 和 decision-history |
