@@ -57,7 +57,7 @@ task（两种都可）是做决定前必须先完成的手工活，比如注册�
 **DSGN-E 迷雾和范围外。** 能把问题说精确，就建 brief，哪怕它暂时被阻塞；说不精确，就写进 Not yet specified（PRD-C）。
 超出终点的工作写进 Out of scope，永远不会变成 brief。已建的 brief 若超出终点，就关闭它，并在这一节留一行。
 
-**DSGN-F 可替换接口。** 四个接口和默认实现：interview 用 grill-with-docs 加 domain-modeling，investigate 用 research（PRD-E）。
+**DSGN-F 可替换接口。** 四个接口和默认实现：interview 用 grilling 加 domain-modeling（grill-with-docs 只能手动调用，见 grill-with-docs 的 ARD-H），investigate 用 research（PRD-E）。
 prototype 用 prototype，tracker 用 `gh` 命令行操作 GitHub Issues。
 首次安装时每个接口问一句，回答可以是 keep、use <name> 或 skip；skip 表示那类 brief 不可用。
 SKILL.md 说选择会被记下，但没写记在哪里，见 QUES-C。
@@ -154,3 +154,4 @@ SKILL.md 引用的 /grilling 曾找不到；2026-11-24 已补导到 `skills/gril
 | 2026-11-24 | QUES-D 有答案：`/grilling` 已补导；doc-review 已在 688cace 改为 spec-review |
 | 2026-11-24 | 正文里的 doc-review 改为 spec-review，跟上 688cace |
 | 2026-11-24 | 流水线、DSGN-K、DSGN-L、范围外改指 spec-ingest / spec-ticket；QUES-E 已定（ARD-L） |
+| 2026-11-24 | DSGN-F：interview 默认改为 grilling 加 domain-modeling（grill-with-docs 的 ARD-H） |

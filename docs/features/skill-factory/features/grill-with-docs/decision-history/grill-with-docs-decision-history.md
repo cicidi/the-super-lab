@@ -17,6 +17,7 @@ Claude Code 会话按 `~/.claude/history.jsonl` 里的会话 id 前缀引用；�
 
 | ID | Date | Decision |
 |---|---|---|
+| ARD-H | 2026-11-24 | 加 `disable-model-invocation: true`，只能由用户手动调用；wayfinder 的 interview 改为直接用 grilling 加 domain-modeling |
 | ARD-G | 2026-11-24 | 补导上游 commit fa460cb 版的 `/grilling` 到 `skills/grilling/`，正文原样 |
 | ARD-A | 2026-11-04 | SDD 流程把 grill-with-docs 列为 Map 阶段可选的压力测试，评测矩阵加 grill-docs 一行 |
 | ARD-B | 2026-08-02 | 和其他 skill 一起从 `import-skills/` 移到 `skills/grill-with-docs/` |
@@ -26,6 +27,11 @@ Claude Code 会话按 `~/.claude/history.jsonl` 里的会话 id 前缀引用；�
 | ARD-F | 2026-08-02 | 直接导入 Matt Pocock 的版本，不自己从头写 |
 
 ## Evidence Appendix
+
+### ARD-H
+
+理由：与上游一致。上游写明设了这一项后别的 skill 也调不到它，所以 wayfinder 改成和上游一样直接调用两个 skill。
+被否决：保持 agent 可自行触发。出处：用户 2026-11-24（会话 80291c19）"其他几个按照你说的修"。
 
 ### ARD-A
 
@@ -82,3 +88,4 @@ docs/book/imported-skills.md 把导入日期写成 2026-07-25，与 commit 68354
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 grill-with-docs 的决策 |
 | 2026-11-24 | 加 ARD-G：补导 `/grilling`（fa460cb 版）；划掉 ARD-C |
+| 2026-11-24 | 加 ARD-H：disable-model-invocation |

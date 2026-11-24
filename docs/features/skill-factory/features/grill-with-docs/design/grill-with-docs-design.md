@@ -63,7 +63,7 @@ SDD 流程在 Map 阶段把它列为可选的压力测试（skills/spec-pipeline
 `~/.claude/skills/grill-with-docs/SKILL.md` 与仓库版本逐字相同（2026-11-24 比对）。
 
 **DSGN-I 与上游的差异。** 上游现在的正文是"Call the Skill tool twice, for "grilling" and "domain-modeling"."（2026-11-24 查看）。
-上游 frontmatter 还有 `disable-model-invocation: true`，即只能由用户手动调用；本仓库版本没有这一项（PRD-C）。
+上游 frontmatter 还有 `disable-model-invocation: true`，即只能由用户手动调用；本仓库 2026-11-24 起也加上了（ARD-H）。正文仍未同步。
 这两处差异是导入后上游改的，还是导入时就不同，属于 UNKNOWN，见 QUES-B。
 
 ## Testing Decisions
@@ -98,7 +98,7 @@ domain-modeling（其 QUES-C）和 wayfinder 同样调用 `/grilling`，三者�
 | 风险 | 缓解 |
 |---|---|
 | `/grilling` 曾找不到，访谈没有固定规则 | 2026-11-24 已补导 fa460cb 版（ARD-G） |
-| 与上游渐行渐远，agent 可自行触发而上游不允许 | 目前没有同步机制，见 QUES-B |
+| 与上游渐行渐远 | 调用方式已对齐（ARD-H）；正文没有同步机制，见 QUES-B |
 | docs/book/imported-skills.md 把导入日期写成 2026-07-25 | 以 commit 6835420（2026-08-02）为准，见 QUES-C |
 
 ## Open Questions
@@ -106,7 +106,7 @@ domain-modeling（其 QUES-C）和 wayfinder 同样调用 `/grilling`，三者�
 | ID | 问题 | 目前答案 | Owner | Blocking |
 |---|---|---|---|---|
 | QUES-A | `/grilling` 指哪个 skill？要导入上游的 grilling 吗？ | 已导入：`skills/grilling/` 取自上游 fa460cb（ARD-G） | cicidi | no |
-| QUES-B | 要不要按上游更新正文，并加 `disable-model-invocation: true`？ | 未同步；本仓库版本允许 agent 自行触发 | cicidi | no |
+| QUES-B | 要不要按上游更新正文，并加 `disable-model-invocation: true`？ | 已加 disable-model-invocation（ARD-H）；正文未同步 | cicidi | no |
 | QUES-C | 要不要把 docs/book/imported-skills.md 的导入日期改成 2026-08-02？ | 该文写 2026-07-25，git 是 2026-08-02 | cicidi | no |
 | QUES-D | 安装时真的会问用户替换 interview 接口吗？ | wayfinder 接口表写"(ask on install)"，实现未核实 | cicidi | no |
 
@@ -122,3 +122,4 @@ domain-modeling（其 QUES-C）和 wayfinder 同样调用 `/grilling`，三者�
 | 2026-11-24 | 初版：按 SKILL.md 写出 grill-with-docs 的 design，引用 PRD-A 到 PRD-E |
 | 2026-11-24 | `/grilling` 已补导（ARD-G）：改写 DSGN-C，QUES-A 有答案 |
 | 2026-11-24 | DSGN-G：to-spec 已移除，调用方改为 spec-ingest |
+| 2026-11-24 | DSGN-I、QUES-B：已加 disable-model-invocation（ARD-H） |

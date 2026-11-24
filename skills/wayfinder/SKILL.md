@@ -133,7 +133,7 @@ implementation; you can replace any of them with your own skill at install time.
 
 | Interface | Purpose | Default | Your Replacement |
 |---|---|---|---|
-| **interview** | Grill user, one question at a time, write CONTEXT.md + ADRs | `grill-with-docs` + `domain-modeling` | (ask on install) |
+| **interview** | Grill user, one question at a time, write CONTEXT.md + ADRs | `grilling` + `domain-modeling` (grill-with-docs is user-invoked only) | (ask on install) |
 | **investigate** | Read docs/APIs/source, produce cited markdown file | `research` (ai-coworker) | (ask on install) |
 | **prototype** | Build throwaway artifact to answer a design question | `prototype` | (ask on install) |
 | **tracker** | Issue CRUD — create, list, label, assign, close | `gh` CLI (GitHub Issues); in an SDD repo, the local markdown layout under [SDD progress record](#sdd-progress-record-ard-ch) | (ask on install) |

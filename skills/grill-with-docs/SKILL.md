@@ -4,6 +4,7 @@ description: |
   Use when you need a relentless interview to sharpen a plan or design. Writes
   ADRs and glossary (CONTEXT.md) inline as terminology crystallizes. Composes
   /grilling and /domain-modeling into one session.
+disable-model-invocation: true
 license: MIT
 compatibility: claude-code,opencode
 metadata:
