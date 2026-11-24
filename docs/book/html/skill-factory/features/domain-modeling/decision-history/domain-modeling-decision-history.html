@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>domain-modeling — 决策记录 · decision-history · Spec Atlas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@400;600&display=swap">
+<link rel="stylesheet" href="../../../../assets/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><a href="../../../../index.html"><span class="brand-mark">SDD</span><span class="brand-name">Spec Atlas</span></a></div>
+    <button class="strike-btn" type="button" onclick="var r=document.documentElement;var off=r.dataset.strike!=='off';r.dataset.strike=off?'off':'on';this.textContent=off?'显示删除线':'隐藏删除线'">隐藏删除线</button>
+  </div>
+</header>
+<div class="site">
+  <aside class="sidebar">
+  <nav aria-label="Directory">
+    <div class="tree-overview"><a class="tree-link" href="../../../../index.html"><span class="tree-link__num">00</span>All features</a></div>
+    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../../prd/skill-factory-prd.html"><span class="tree-ord">1</span>skill-factory PRD</a></li><li class="tree-leaf"><a class="tree-link" href="../../../decision-history/skill-factory-decision-history.html"><span class="tree-ord">2</span>skill-factory — Decision History</a></li><li class="tree-leaf"><a class="tree-link" href="../../../design/skill-factory-design.html"><span class="tree-ord">3</span>skill-factory Specification</a></li><li class="tree-leaf"><a class="tree-link" href="../../../impl-plan/skill-factory-impl-plan.html"><span class="tree-ord">4</span>skill-factory Implementation Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../../../test-plan/skill-factory-test-plan.html"><span class="tree-ord">5</span>skill-factory Test Plan</a></li><li class="tree-branch"><details open><summary><span class="tree-link"><span class="tree-ord">10</span>sub-feature</span></summary><ul class="tree"><li class="tree-branch"><details open><summary><a class="tree-link" href="../../auto-tdd/design/auto-tdd-design.html">auto-tdd</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../auto-tdd/prd/auto-tdd-prd.html"><span class="tree-ord">1</span>auto-tdd — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../auto-tdd/decision-history/auto-tdd-decision-history.html"><span class="tree-ord">2</span>auto-tdd — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../auto-tdd/design/auto-tdd-design.html"><span class="tree-ord">3</span>auto-tdd — 测试驱动开发循环</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../bug/design/bug-design.html">bug</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../bug/prd/bug-prd.html"><span class="tree-ord">1</span>bug — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../bug/decision-history/bug-decision-history.html"><span class="tree-ord">2</span>bug — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../bug/design/bug-design.html"><span class="tree-ord">3</span>bug — 调试、报告与自愈</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../design/domain-modeling-design.html">domain-modeling</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../prd/domain-modeling-prd.html"><span class="tree-ord">1</span>domain-modeling — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="domain-modeling-decision-history.html" aria-current="page"><span class="tree-ord">2</span>domain-modeling — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../design/domain-modeling-design.html"><span class="tree-ord">3</span>domain-modeling — 领域模型与术语表</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../skill/design/skill-design.html">skill</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../skill/prd/skill-prd.html"><span class="tree-ord">1</span>skill — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../skill/decision-history/skill-decision-history.html"><span class="tree-ord">2</span>skill — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../skill/design/skill-design.html"><span class="tree-ord">3</span>skill — Skill 管理入口</a></li></ul></details></li></ul></details></li></ul>
+  </nav>
+</aside>
+  <main class="content">
+    <nav class="breadcrumbs"><a href="../../../../index.html">Docs</a> / <span>skill-factory</span> / <span>features</span> / <span>domain-modeling</span> / <span>decision-history</span> / <span>domain-modeling — 决策记录</span></nav>
+    <article class="doc" data-doc="skill-factory/features/domain-modeling/decision-history/domain-modeling-decision-history">
+      <header class="doc-head">
+        <p class="eyebrow">skill-factory</p>
+        <h1>domain-modeling — 决策记录</h1>
+        <p class="source">Canonical: docs/features/skill-factory/features/domain-modeling/decision-history/domain-modeling-decision-history.md</p>
+      </header>
+      
+      <div class="doc-body">
+        <h2>domain-modeling — 决策记录</h2>
+<p>本篇按时间倒序记录 <code>domain-modeling</code> 这个 skill 的关键决策。 需求见 <a href="../prd/domain-modeling-prd.html">PRD</a>，设计见 <a href="../design/domain-modeling-design.html">design</a>。 skill-factory 层面的旧决策在 <a href="../../../decision-history/skill-factory-decision-history.html">parent decision history</a>。 Claude Code 会话按 <code>~/.claude/history.jsonl</code> 里的会话 id 前缀引用；会话原文没有保留。</p>
+<h3>Decision Log</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>ID</th>
+<th>Date</th>
+<th>Decision</th>
+</tr></thead><tbody>
+<tr>
+<td><a class="id-ref" href="#ARD-A">ARD-A</a></td>
+<td>2026-08-02</td>
+<td>和其他 skill 一起从 <code>import-skills/</code> 移到 <code>skills/domain-modeling/</code></td>
+</tr>
+<tr>
+<td><a class="id-ref" href="#ARD-B">ARD-B</a></td>
+<td>2026-08-02</td>
+<td>正文和两个模板原样导入，只改 frontmatter，并写上原作者和原文链接</td>
+</tr>
+<tr>
+<td><a class="id-ref" href="#ARD-C">ARD-C</a></td>
+<td>2026-08-02</td>
+<td>作为 wayfinder 的 interview 接口默认实现，和 grill-with-docs 搭配；用户可换成自己的实现</td>
+</tr>
+<tr>
+<td><a class="id-ref" href="#ARD-D">ARD-D</a></td>
+<td>2026-08-02</td>
+<td>直接导入 Matt Pocock 的版本，不自己从头写</td>
+</tr>
+</tbody></table></div>
+<h3>Evidence Appendix</h3>
+<h4 id="ARD-A"><a class="id-ref" href="#ARD-A">ARD-A</a></h4>
+<p>理由：commit 93d4a4a 把所有 skill 收进同一个 <code>skills/</code> 目录，domain-modeling 只是其中之一。 被否决的方案：保留单独的 <code>import-skills/</code> 目录。这次移动的讨论没有找到，理由属于 UNKNOWN。 出处：commit 93d4a4a；之前的 commit 8d451059 先把 import-skills 并入根目录。</p>
+<h4 id="ARD-B"><a class="id-ref" href="#ARD-B">ARD-B</a></h4>
+<p>理由：用户要求注明作者（<a class="id-ref" href="../prd/domain-modeling-prd.html#PRD-B">PRD-B</a>），没有替换的接口&quot;就用matt 的skill&quot;（<a class="id-ref" href="../prd/domain-modeling-prd.html#PRD-C">PRD-C</a>）。 导入规格把这一条写成 Body preservation：grill-with-docs、domain-modeling、prototype 只改 frontmatter。 被否决的方案：像 wayfinder 那样改写正文。wayfinder 改了术语和接口，domain-modeling 没有改。 出处：d8d2da7f（2026-08-02 17:22、17:27）；commit f6255af；wayfinder-import-spec（commit 0f3ede7）。</p>
+<h4 id="ARD-C"><a class="id-ref" href="#ARD-C">ARD-C</a></h4>
+<p>理由：用户要求 wayfinder 用到的 skill 都做成接口，安装时问用户，没给替换就用 matt 的（<a class="id-ref" href="../prd/domain-modeling-prd.html#PRD-D">PRD-D</a>）。 用户只说&quot;对于ai -cowork 我有自己的research&quot;，没有提 interview 的替代，所以默认值是 grill-with-docs 加 domain-modeling。 被否决的方案：在 wayfinder 里写死 skill 名字。 出处：d8d2da7f（17:22 第 4 条，17:27 第 4 条）；skills/wayfinder/SKILL.md 的接口表。</p>
+<h4 id="ARD-D"><a class="id-ref" href="#ARD-D">ARD-D</a></h4>
+<p>理由：用户读完 wayfinder 及其依赖后说&quot;这个wayfind 大部分我是同意的。 我也想使用&quot;（d8d2da7f，17:22）。 导入前用户问过 domain-modeling 做什么、glossary 怎么维护、定义由谁给（同一会话 10:19 到 10:25）。 被否决的方案：自己写一个术语表 skill。助手当时怎么回答的没有保留，用户为何满意属于 UNKNOWN。</p>
+<h3>Change Log</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Date</th>
+<th>Change</th>
+</tr></thead><tbody>
+<tr>
+<td>2026-11-24</td>
+<td>初版：从过去的对话和提交记录反推 domain-modeling 的决策</td>
+</tr>
+</tbody></table></div>
+      </div>
+    </article>
+    <nav class="pager" aria-label="Previous and next"><a class="prev" href="../design/domain-modeling-design.html"><span class="label">Previous</span>domain-modeling — 领域模型与术语表</a><a class="next" href="../../skill/prd/skill-prd.html"><span class="label">Next</span>skill — 需求</a></nav>
+  </main>
+</div>
+<footer class="foot"><div class="foot-inner">Assembled from committed <code>.md</code>. The Markdown is authoritative; this page is a reading view.</div></footer>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>if(window.mermaid){mermaid.initialize({startOnLoad:false});}</script>
+<script src="../../../../assets/app.js"></script>
+</body>
+</html>
