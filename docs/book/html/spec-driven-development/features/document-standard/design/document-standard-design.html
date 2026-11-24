@@ -576,7 +576,7 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 <p><strong>顺序。</strong> 新决定写在 Decision Log 的最上面，越往下越早。</p>
 <p><strong>每条都有一节说明（<span class="lvl lvl--must">MUST</span>）。</strong> 每条 ARD 在 Evidence Appendix 里有一节，写明原因；当时考虑过别的做法，就写出放弃了哪些、为什么。</p>
 <p><strong>编号。</strong> <code>ARD-</code> 加字母（<a class="id-ref" href="#DSGN-F">DSGN-F</a>），分配后不能改。表格里的编号和 <code>### ARD-A — …</code> 小节标题里的编号一致。</p>
-<p><strong>推翻旧决定。</strong> 旧行不删，用删除线划掉，后面链到新决定，例如：被划掉的旧说法，后面跟一个指向新决定的链接。新说法用一个新编号完整写一条，放在 Log 最上面。按 <a class="id-ref" href="#DSGN-I">DSGN-I</a> 删减时，不删被划掉的文字。只推翻旧决定的一部分时，也划掉整行，并在新决定里重述仍然有效的部分（例如 <a href="../../../decision-history/spec-driven-development-decision-history.html#ard-bt">ARD-BT</a>）。这是整套 spec 里唯一使用删除线的地方（<a href="../../../decision-history/spec-driven-development-decision-history.html#ard-bm">ARD-BM</a>）。</p>
+<p><strong>推翻旧决定。</strong> 旧行不删，用删除线划掉，后面链到新决定，例如：被划掉的旧说法，后面跟一个指向新决定的链接。新说法用一个新编号完整写一条，放在 Log 最上面。按 <a class="id-ref" href="#DSGN-I">DSGN-I</a> 删减时，不删被划掉的文字。只推翻旧决定的一部分时，也划掉整行，并在新决定里重述仍然有效的部分（例如 <a href="../../../decision-history/spec-driven-development-decision-history.html#ard-ch">ARD-CH</a>）。这是整套 spec 里唯一使用删除线的地方（<a href="../../../decision-history/spec-driven-development-decision-history.html#ard-bm">ARD-BM</a>）。</p>
 <p><strong>拆分篇。</strong> decision-history 不设行数上限，但也可以拆分篇。拆了之后编号在整个 feature 内唯一；新决定写在当前那篇的 Log 最上面；旧篇保留，篇与篇之间用链接连起来。</p>
 <p><strong>什么时候加一条。</strong> 规则只写在一处：<a href="../../../design/spec-driven-development-design.html#dsgn-b">parent design 的 DSGN-B</a>。另外，改名、撞名这类流程要求记录的事（<a class="id-ref" href="#DSGN-K">DSGN-K</a>）也要加一条。</p>
 <hr>
@@ -943,6 +943,10 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 <tr>
 <td>2026-11-24</td>
 <td>第 8 轮审查后：被测对象三个 skill；本地目录表加 docs/state/；改链 <a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-CH">ARD-CH</a>、<a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-CK">ARD-CK</a></td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 9 轮审查后：链到已划掉 ARD 的地方改链</td>
 </tr>
 </tbody></table></div>
       </div>

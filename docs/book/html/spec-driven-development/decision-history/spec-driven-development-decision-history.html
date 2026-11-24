@@ -507,7 +507,7 @@
 <h4 id="ARD-CK"><a class="id-ref" href="#ARD-CK">ARD-CK</a> — 每次 build 升版本号</h4>
 <p><strong>原因。</strong> <a class="id-ref" href="#ARD-CC">ARD-CC</a> 只说印版本号，没说什么时候升。印戳的是五个 <code>SKILL.md</code>：spec-write、spec-review、wayfinder、spec-organize、spec-pipeline。版本不升，两次不同的 build 印出同一个号，起不到标来源的作用。</p>
 <p><strong>规则。</strong> 每次运行 <code>build_spec_skills.py</code>（不带 <code>--check</code>），先把 parent PRD 的 <code>version</code> 末位加 1，例如 <code>1.0.0</code> 变成 <code>1.0.1</code>，再印进 <code>SKILL.md</code>。<code>--check</code> 只比对，不升版本。</p>
-<p><strong>重述。</strong> 本条推翻 <a class="id-ref" href="#ARD-CC">ARD-CC</a> 里放弃「自动升版」的部分，<a class="id-ref" href="#ARD-CC">ARD-CC</a> 因此划掉。其余仍有效：版本号只写在 parent PRD 的 <code>version</code>；脚本写入版本、日期、git 短 sha，拒绝重复键（<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-Y">TST-Y</a>）；不定义迁移策略。</p>
+<p><strong>重述。</strong> 本条推翻 <a class="id-ref" href="#ARD-CC">ARD-CC</a> 里放弃「自动升版」的部分，<a class="id-ref" href="#ARD-CC">ARD-CC</a> 因此划掉。其余仍有效：版本号只写在 parent PRD 的 <code>version</code>；脚本写入版本、日期、git 短 sha，拒绝重复键（<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-Y">TST-Y</a>）；失败处理、信息来源可信度分级、数据清理、迁移策略故意不定义，旧文档不迁移（<a class="id-ref" href="#ARD-AF">ARD-AF</a> 经 <a class="id-ref" href="#ARD-CC">ARD-CC</a> 的重述）。</p>
 <p><strong>放弃的方案。</strong> 每次由人决定升哪一位：每次都要人判断，容易忘。</p>
 <a id="ard-cj"></a>
 <h4 id="ARD-CJ"><a class="id-ref" href="#ARD-CJ">ARD-CJ</a> — 复核跑 5 次，Claude 再核对</h4>
@@ -515,7 +515,8 @@
 <p><strong>规则。</strong> <code>judge_deepseek.py</code> 默认跑 5 次：至少 4 次通过算通过，至少 4 次不通过算不通过，其余算有分歧，按不通过计。</p>
 <p><strong>规则（续）。</strong> Claude 逐条核对不通过和有分歧的结论，把同意或不同意及理由写进 <code>claude_audit</code>。Claude 不同意时报告用户，不自己改判；Python 检查的结果仍不能推翻。</p>
 <p><strong>范围。</strong> 本条管 <code>judge_deepseek.py</code> 的复核（<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-L">TST-L</a>）。<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-V">TST-V</a> 的可读性判分另有门槛，不变。Claude 不同意的条目在用户决定前仍算没通过。</p>
-<p><strong>重述。</strong> 本条推翻 <a class="id-ref" href="#ARD-AD">ARD-AD</a>「复核跑 3 次」的部分，<a class="id-ref" href="#ARD-AD">ARD-AD</a> 因此划掉。其余仍有效：生成 gold 跑 3 次；gold 由案例、版本、范例、标注组成；跑分结果和报告不提交；四个非软件例子写进 skill 正文。</p>
+<p><strong>重述。</strong> 本条推翻 <a class="id-ref" href="#ARD-AD">ARD-AD</a>「复核跑 3 次」的部分，<a class="id-ref" href="#ARD-AD">ARD-AD</a> 因此划掉。其余仍有效：生成 gold 跑 3 次；gold 由案例、版本、范例、标注组成；跑分结果和报告不提交；四个非软件例子写进 skill 正文，不在本仓库建 gold；只有 DeepSeek 的 API，不同模型之间的偏差标为 Unverified。</p>
+<p><strong>规则（补）。</strong> 重跑时，题目、结论、票数分布和语料 sha 都没变的条目，保留上次的 <code>claude_audit</code>；有任何一项变了就清空，等 Claude 重新核对。</p>
 <p><strong>放弃的方案。</strong> 5 次都一致才通过：次数越多越容易因一次波动失败。换更贵的模型：仍是一个模型说了算。</p>
 <a id="ard-ci"></a>
 <h4 id="ARD-CI"><a class="id-ref" href="#ARD-CI">ARD-CI</a> — spec-review 的三份审查参考</h4>
@@ -531,7 +532,7 @@
 <p>每个 feature 一个地图目录，互不覆盖；任务再小也建地图。CLAUDE 层只记当前地图的路径（<a class="id-ref" href="#ARD-CG">ARD-CG</a>）。</p>
 <p><strong>规则（续）。</strong> 重新开始时读地图给出回顾。阻塞与否以 design 的问题清单（QUES-*）为准，有标「是」的没解决就不进入 Downstream；处理它的 brief 写明 QUES 编号。提交前问要不要跑 spec-review，用户说不跑就记进地图。</p>
 <p><strong>重述。</strong> 本条推翻 <a class="id-ref" href="#ARD-BX">ARD-BX</a>「交付物只有两个」，以及 <a class="id-ref" href="#ARD-BT">ARD-BT</a>、<a class="id-ref" href="#ARD-BU">ARD-BU</a>「进度记在 CLAUDE.local.md」的部分，三条因此划掉。</p>
-<p>仍有效的部分：spec-write、spec-review 读三份标准文件，标准文件不算交付物；Map 以访谈为主；非软件难题留在本 PRD；人在 Map 确认名字后才建 feature 目录。</p>
+<p>仍有效的部分：spec-write、spec-review 读三份标准文件，标准文件不算交付物；Map 以访谈为主；非软件难题留在本 PRD；人在 Map 确认名字后才建 feature 目录；spec-organize 和 spec-pipeline 不是交付物。</p>
 <p><strong>放弃的方案。</strong> 交给 spec-write：正文变重，名字没定时的冲突还要另想办法。先标 Unverified：规则一直没人执行。改写 wayfinder 会和上游 mattpocock/skills 分叉，接受这个代价。</p>
 <a id="ard-cg"></a>
 <h4 id="ARD-CG"><a class="id-ref" href="#ARD-CG">ARD-CG</a> — CLAUDE 层写在哪个文件</h4>
@@ -1041,6 +1042,10 @@ payment-impl-plan-01-schema.md         impl-plan 分篇：序号加阶段，有�
 <tr>
 <td>2026-11-24</td>
 <td>第 8 轮审查后：划掉 <a class="id-ref" href="#ARD-AD">ARD-AD</a>，由 <a class="id-ref" href="#ARD-CJ">ARD-CJ</a> 重述并写明范围；<a class="id-ref" href="#ARD-CE">ARD-CE</a> 写明挪出内容算修改；<a class="id-ref" href="#ARD-CH">ARD-CH</a> 地图改为目录、阻塞以 QUES 为准；<a class="id-ref" href="#ARD-CK">ARD-CK</a> 写明五个 SKILL.md</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 9 轮审查后：<a class="id-ref" href="#ARD-CK">ARD-CK</a>、<a class="id-ref" href="#ARD-CJ">ARD-CJ</a>、<a class="id-ref" href="#ARD-CH">ARD-CH</a> 补全被划掉条目里仍有效的部分；<a class="id-ref" href="#ARD-CJ">ARD-CJ</a> 写明 claude_audit 何时保留</td>
 </tr>
 </tbody></table></div>
       </div>

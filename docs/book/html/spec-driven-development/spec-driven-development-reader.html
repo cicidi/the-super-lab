@@ -1,4 +1,4 @@
-<!-- SDD reader · source .md · git a9ae422 -->
+<!-- SDD reader · source .md · git 6d65301 -->
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light">
 <head>
@@ -174,7 +174,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <h3>Functional Requirements</h3>
 <p><strong>PRD-A</strong>：写 spec 的流程沿用现有流程并加以改进，不另造一套。流程分哪几个阶段、每个阶段做什么，写在 <a href="../../../features/spec-driven-development/features/pipeline/design/pipeline-design.md">pipeline design</a>。</p>
 <p><strong>PRD-B</strong>：提供一组 skill。skill 本质上是写得好的 prompt，引导 AI 完成 spec 的四件事：书写、命名、检查、更新。</p>
-<p><strong>PRD-C</strong>：AI 每次改 <code>docs/</code> 下的文档，必须同时满足两条：不超过 10 行，并且不超过 200 字符；新建一个文件不算在内（<a href="decision-history/spec-driven-development-decision-history.html#ard-ce">ARD-CE</a>）。更大的改动拆成多次；确实需要一次大改（restructure）时，必须有人明确授权，并记一条 ARD（例如 <a href="decision-history/spec-driven-development-decision-history.html#ard-bk">ARD-BK</a>）。</p>
+<p><strong>PRD-C</strong>：AI 每次改 <code>docs/</code> 下的文档，必须同时满足两条：不超过 10 行，并且不超过 200 字符；新建一个文件不算在内（<a href="decision-history/spec-driven-development-decision-history.html#ard-ce">ARD-CE</a>）。更大的改动拆成多次；确实需要一次大改（restructure）时，必须有人明确授权，并记一条 ARD。</p>
 <p><strong>PRD-D</strong>：每篇文档有行数上限，最长不超过 1,000 行，因为太长的文档几乎没法维护。decision-history 例外，不设上限：它只增不减（<a href="decision-history/spec-driven-development-decision-history.html#ard-e">ARD-E</a>）。各类文档的具体上限见 document-standard 的 DSGN-B。</p>
 <p><strong>PRD-E</strong>：规定文档放在哪个目录、文件叫什么名字、目录之间是什么关系（parent、sub-feature、peer）。具体规则见 document-standard 的 DSGN-B。</p>
 <p><strong>PRD-F</strong>：多个人的决定互相冲突时，以 decision-history 里时间较晚的那条为准；看不出先后，就问用户。AI 不猜测谁说了算。</p>
@@ -182,7 +182,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <p><strong>PRD-H</strong>：流程里的每一步，优先使用已经流行的 skill，不重新发明。</p>
 <p><strong>PRD-I</strong>：每项改动都要能验证。实在验证不了的，在 spec 里标为 <code>Unverified</code> 并写明原因；标了的项不作为 test-plan 的通过条件。</p>
 <p><strong>PRD-J</strong>：写或改 feature spec 时，由 spec-write 按标准判断要新建哪篇、或要改哪几篇；提交前，询问是否先跑 spec-review。写作进度记在 wayfinder 的地图目录里，目录建好前后的位置见 pipeline design 的 PIPE-H（<a href="decision-history/spec-driven-development-decision-history.html#ard-ch">ARD-CH</a>）。</p>
-<p><strong>PRD-K</strong>：适用范围不限于软件，任何有门槛的难题都用同一套 spec。四个例子：盖 shed（合规、成本、施工）、北京旅游（行程、住宿、风险、预算）、看懂一道著名数学题（零基础一步步学）、分析一只股票（基本面、财报、新闻，每个结论有依据）。这四个例子不在本仓库建 gold（<a href="decision-history/spec-driven-development-decision-history.html#ard-ad">ARD-AD</a>）。</p>
+<p><strong>PRD-K</strong>：适用范围不限于软件，任何有门槛的难题都用同一套 spec。四个例子：盖 shed（合规、成本、施工）、北京旅游（行程、住宿、风险、预算）、看懂一道著名数学题（零基础一步步学）、分析一只股票（基本面、财报、新闻，每个结论有依据）。这四个例子不在本仓库建 gold（<a href="decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a>）。</p>
 <p><strong>PRD-L</strong>：每个子问题都标明由谁处理：AI 查、人决定、或 AI 查完后人决定。人没有问到的盲区和风险，AI 必须主动提出来。</p>
 <p><strong>PRD-M</strong>：文档要让人读懂，这是硬需求，而且是通过条件。交付前，由一个 LLM（大语言模型）扮演本科水平的程序员，只读这一篇文档和术语表，回答从文档里抽出的问题；答错太多，或者有文档里没解释、术语表里也没有的术语，就不算交付（<a href="decision-history/spec-driven-development-decision-history.html#ard-bo">ARD-BO</a>）。具体门槛见 test-plan 的 TST-V。</p>
 <p><strong>PRD-N</strong>：正式 spec 里的每个结论，都要能追溯到查到的事实，例如法规条文、财报、新闻、定义，不靠猜。查不到的写 <code>UNKNOWN</code>。评测时，AI 回答问题只能用 context 包里给的信息。</p>
@@ -325,6 +325,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <td>2026-11-24</td>
 <td>第 8 轮审查后：PRD-J、PRD-P、Resources 跟上 ARD-CH；复核次数跟上 ARD-CJ；改链 ARD-CE、ARD-CK</td>
 </tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 9 轮审查后：PRD-K 的链接改到重述它的 ARD-CJ</td>
+</tr>
 </tbody></table>
 </div>
 <p class="src">Canonical: <code>docs/features/spec-driven-development/prd/spec-driven-development-prd.md</code></p>
@@ -455,12 +459,12 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td>跑分结果和报告要不要提交</td>
 <td>AI 查完人决定</td>
-<td><a href="decision-history/spec-driven-development-decision-history.html#ard-ad">ARD-AD</a></td>
+<td><a href="decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a></td>
 </tr>
 <tr>
 <td>四个非软件例子要不要建 gold</td>
 <td>人决定</td>
-<td><a href="decision-history/spec-driven-development-decision-history.html#ard-ad">ARD-AD</a></td>
+<td><a href="decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a></td>
 </tr>
 <tr>
 <td>用哪个案例来打分</td>
@@ -661,7 +665,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 </tr></thead><tbody>
 <tr>
 <td>QUES-A</td>
-<td>两个交付的 skill 要读的标准文件和检查脚本，放在 spec-organize 和 spec-html-standard 目录，这两个目录不算交付物。只把两个 skill 装进别的项目时，怎么把这些文件一起带过去？（<a href="decision-history/spec-driven-development-decision-history.html#ard-c">ARD-C</a> 要求 skill 能独立带走）</td>
+<td>交付的 skill 要读的标准文件和检查脚本，放在 spec-organize 和 spec-html-standard 目录，这两个目录不算交付物。只把三个交付的 skill 装进别的项目时，怎么把这些文件一起带过去？（<a href="decision-history/spec-driven-development-decision-history.html#ard-c">ARD-C</a> 要求 skill 能独立带走）</td>
 <td>未定</td>
 <td>人决定</td>
 <td>否</td>
@@ -1224,14 +1228,18 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <td>2026-11-24</td>
 <td>第 8 轮审查后：三个交付 skill（ARD-CH）；复核 5 次（ARD-CJ）；DSGN-A 加新建文件例外（ARD-CE）；术语表加地图目录、brief、交付物、claude_audit，改写 BMAD、GSD；新增 QUES-E；Drawbacks 加 wayfinder 分叉</td>
 </tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 9 轮审查后：链到已划掉 ARD 的地方改链；QUES-A 改为三个交付 skill</td>
+</tr>
 </tbody></table>
 <hr><p class="src-inline">Source: <code>design/spec-driven-development-design-skill-contracts.md</code></p>
 <h2>Spec-Driven Development — Skill 契约</h2>
-<p>本篇是 <a href="design/spec-driven-development-design.html">整体设计 spec-driven-development-design.md</a> 的一个分篇，只讲两个交付的 skill 各自做什么。术语见 <a href="design/spec-driven-development-design.html#glossary">术语表</a>。</p>
+<p>本篇是 <a href="design/spec-driven-development-design.html">整体设计 spec-driven-development-design.md</a> 的一个分篇，只讲三个交付的 skill 各自做什么。术语见 <a href="design/spec-driven-development-design.html#glossary">术语表</a>。</p>
 <h3>Problem Statement</h3>
 <p>交付物是 spec-write、spec-review，以及负责进度规则的 wayfinder（<a href="decision-history/spec-driven-development-decision-history.html#ard-ch">ARD-CH</a>）。如果它们的职责只写在各自的 <code>SKILL.md</code> 里，改 skill 的人可以随手改掉职责边界，而没人察觉。所以需要一份独立的契约：说清每个 skill 什么时候用、要什么输入、产出什么、不能做什么。</p>
 <h3>Solution</h3>
-<p>本篇是三个交付 skill 行为的权威来源，<code>SKILL.md</code> 只是它的实现。两者不一致时，以本篇为准：先改本篇，再改 <code>SKILL.md</code>。具体的写作规则不在本篇重复，以三份标准文件 <code>SPEC-STANDARD.md</code>、<code>SPEC-PRESENTATION.md</code>、<code>SPEC-HTML-STANDARD.md</code> 为准（<a href="decision-history/spec-driven-development-decision-history.html#ard-aj">ARD-AJ</a>、<a href="decision-history/spec-driven-development-decision-history.html#ard-bx">ARD-BX</a>）。</p>
+<p>本篇是三个交付 skill 行为的权威来源，<code>SKILL.md</code> 只是它的实现。两者不一致时，以本篇为准：先改本篇，再改 <code>SKILL.md</code>。具体的写作规则不在本篇重复，以三份标准文件 <code>SPEC-STANDARD.md</code>、<code>SPEC-PRESENTATION.md</code>、<code>SPEC-HTML-STANDARD.md</code> 为准（<a href="decision-history/spec-driven-development-decision-history.html#ard-aj">ARD-AJ</a>、<a href="decision-history/spec-driven-development-decision-history.html#ard-ch">ARD-CH</a>）。</p>
 <h3>Design</h3>
 <table><thead><tr>
 <th>Skill</th>
@@ -1266,7 +1274,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <td>检查或整理路径、格式、INDEX（document-standard 的 DSGN-L）</td>
 <td>文档目录</td>
 <td>格式问题的修正（受 parent design 的 DSGN-A 改动上限约束，<a href="decision-history/spec-driven-development-decision-history.html#ard-bv">ARD-BV</a>），或一份问题清单</td>
-<td>改动文档的内容；当作交付物或入口（<a href="decision-history/spec-driven-development-decision-history.html#ard-bx">ARD-BX</a>）</td>
+<td>改动文档的内容；当作交付物或入口（<a href="decision-history/spec-driven-development-decision-history.html#ard-ch">ARD-CH</a>）</td>
 </tr>
 </tbody></table>
 <p>几项能力落在哪里：</p>
@@ -1314,7 +1322,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <li>TST-O、TST-P：PRD 的每条需求都能在 design 里找到对应；归属、证据、<code>UNKNOWN</code> 写得对。</li>
 <li>TST-Q：mock MCP 调用打印出记录，并且没有真实副作用。</li>
 <li>TST-V：每篇文档本科生读得懂。</li>
-<li>暂时测不了：阶段编排（pipeline design 的 PIPE-A-D、PIPE-A-E、PIPE-H）、单次改动大小（PRD-C）、不同模型之间的偏差（<a href="decision-history/spec-driven-development-decision-history.html#ard-ad">ARD-AD</a>）。</li>
+<li>暂时测不了：阶段编排（pipeline design 的 PIPE-A-D、PIPE-A-E、PIPE-H）、单次改动大小（PRD-C）、不同模型之间的偏差（<a href="decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a>）。</li>
 </ul>
 <h3>Out of Scope</h3>
 <ul>
@@ -1391,6 +1399,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td>2026-11-24</td>
 <td>第 8 轮审查后：spec-write 加重建网页职责（ARD-CF）；四个例子只要求 spec-write、spec-review；wayfinder 阻塞以 QUES 为准</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 9 轮审查后：开头改为三个交付 skill；链到已划掉 ARD 的地方改链</td>
 </tr>
 </tbody></table>
 </div>
@@ -1543,7 +1555,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <p><strong>Verify:</strong> 对 SDD 的每篇已提交文档跑 TST-V，并在报告里列出每篇的答对率和没解释的术语。</p>
 <h3 id="IMPL-R">IMPL-R — CLAUDE 层和 skill 的规则同步</h3>
 <p><strong>目标：</strong> parent design 的 DSGN-C 要求 CLAUDE 层（<code>CLAUDE.md</code>、<code>CLAUDE.local.md</code>）和 skill 里的规则一致。DSGN-A 的改动上限和 DSGN-B 的「什么时候记 ARD」要同时写进两处。</p>
-<p><strong>步骤：</strong> 标准文件改了之后，检查 CLAUDE 层里有没有对应的旧说法，一起改掉。2026-11-20 已改：<code>CLAUDE.local.md</code> 的改动上限从「10 行或 200 字符」改为「10 行并且 200 字符」，需求编号从不存在的 FR-12 改为 PRD-C（<a href="decision-history/spec-driven-development-decision-history.html#ard-bp">ARD-BP</a>）。</p>
+<p><strong>步骤：</strong> 标准文件改了之后，检查 CLAUDE 层里有没有对应的旧说法，一起改掉。2026-11-20 已改：<code>CLAUDE.local.md</code> 的改动上限从「10 行或 200 字符」改为「10 行并且 200 字符」，需求编号从不存在的 FR-12 改为 PRD-C（<a href="decision-history/spec-driven-development-decision-history.html#ard-ce">ARD-CE</a>）。</p>
 <p><strong>依赖：</strong> IMPL-C。<strong>挡住：</strong> 无。</p>
 <p><strong>Verify:</strong> CLAUDE 层里：改动上限写的是「并且」，并引用 PRD-C；没有 <code>FR-</code> 这类已禁止的编号；进度路径是 wayfinder 的地图目录（PRD-J、ARD-CH）；文档目录是 <code>docs/features/&lt;f&gt;/&lt;类型&gt;/</code>（document-standard 的 DSGN-B）；列出的 skill 是 spec-write、spec-review 和 wayfinder（ARD-CH）。2026-11-20 已按这几条改过 <code>CLAUDE.local.md</code>。</p>
 <h3 id="IMPL-S">IMPL-S — 插图与网页样式</h3>
@@ -1555,7 +1567,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <p><strong>依赖：</strong> IMPL-M。<strong>挡住：</strong> 无。</p>
 <p><strong>Verify:</strong> <code>test_tst_x_l1_delta.py</code> 通过；对当前分支运行报 0 个问题。</p>
 <h3 id="IMPL-U">IMPL-U — spec bundle 版本戳</h3>
-<p><strong>目标：</strong> <code>tools/build_spec_skills.py</code> 按 <a href="decision-history/spec-driven-development-decision-history.html#ard-cc">ARD-CC</a> 给五个 SDD <code>SKILL.md</code>（交付的 spec-write、spec-review、wayfinder，以及也引用标准文件的 spec-organize、spec-pipeline）打版本戳；每次 build 版本末位加 1（<a href="decision-history/spec-driven-development-decision-history.html#ard-ck">ARD-CK</a>）。</p>
+<p><strong>目标：</strong> <code>tools/build_spec_skills.py</code> 按 <a href="decision-history/spec-driven-development-decision-history.html#ard-ck">ARD-CK</a> 给五个 SDD <code>SKILL.md</code>（交付的 spec-write、spec-review、wayfinder，以及也引用标准文件的 spec-organize、spec-pipeline）打版本戳；每次 build 版本末位加 1（<a href="decision-history/spec-driven-development-decision-history.html#ard-ck">ARD-CK</a>）。</p>
 <p><strong>依赖：</strong> 无。<strong>挡住：</strong> 无。</p>
 <p><strong>Verify:</strong> TST-Y 通过。</p>
 <h3 id="IMPL-V">IMPL-V — GitHub Pages 发布</h3>
@@ -1563,7 +1575,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <p><strong>依赖：</strong> IMPL-H。<strong>挡住：</strong> 无。</p>
 <p><strong>Verify:</strong> TST-Z 通过；workflow 在 master 上成功部署。</p>
 <h3 id="IMPL-W">IMPL-W — wayfinder 轻量改写</h3>
-<p><strong>目标：</strong> 按 <a href="decision-history/spec-driven-development-decision-history.html#ard-ch">ARD-CH</a> 改 <code>skills/wayfinder/SKILL.md</code>：地图文件当进度记录，审查关口用 spec-review，重新开始时给回顾。</p>
+<p><strong>目标：</strong> 按 <a href="decision-history/spec-driven-development-decision-history.html#ard-ch">ARD-CH</a> 改 <code>skills/wayfinder/SKILL.md</code>：地图目录当进度记录、任务再小也建，阻塞以 QUES 清单为准，审查关口用 spec-review，重新开始时给回顾。</p>
 <p><strong>依赖：</strong> 无。<strong>挡住：</strong> 无。</p>
 <p><strong>Verify:</strong> TST-AA 通过。</p>
 <h3 id="IMPL-X">IMPL-X — 复核 5 次加 Claude 核对</h3>
@@ -1660,6 +1672,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <td>2026-11-24</td>
 <td>第 8 轮审查后：IMPL-G 改为 CLAUDE 层只记地图路径；评测次数跟上 ARD-CJ；IMPL-U 五个 SKILL.md；验收改到 TST-AA</td>
 </tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 9 轮审查后：IMPL-W 目标跟上地图目录和 QUES 规则；改链 ARD-CK、ARD-CE</td>
+</tr>
 </tbody></table>
 </div>
 <p class="src">Canonical: <code>docs/features/spec-driven-development/impl-plan/spec-driven-development-impl-plan.md</code></p>
@@ -1672,7 +1688,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <p>本篇是整个 SDD 唯一的测试计划，sub-feature 不另写。</p>
 <ul>
 <li><strong>被测对象：</strong> 交付的三个 skill：spec-write、spec-review，以及只做静态检查（TST-AA）的 wayfinder（<a href="decision-history/spec-driven-development-decision-history.html#ard-ch">ARD-CH</a>）。</li>
-<li><strong>判断对错的依据：</strong> 三份标准文件 <code>SPEC-STANDARD.md</code>、<code>SPEC-PRESENTATION.md</code>、<code>SPEC-HTML-STANDARD.md</code>，以及它们摘要的 document-standard design 和 reader design（<a href="decision-history/spec-driven-development-decision-history.html#ard-bx">ARD-BX</a>）。</li>
+<li><strong>判断对错的依据：</strong> 三份标准文件 <code>SPEC-STANDARD.md</code>、<code>SPEC-PRESENTATION.md</code>、<code>SPEC-HTML-STANDARD.md</code>，以及它们摘要的 document-standard design 和 reader design（<a href="decision-history/spec-driven-development-decision-history.html#ard-ch">ARD-CH</a>）。</li>
 <li><strong>验收方式：</strong> 人不读 skill 的正文；skill 好不好用，只看本计划的测试结果。</li>
 </ul>
 <p>术语见 <a href="design/spec-driven-development-design.html#glossary">parent design 的术语表</a>。</p>
@@ -1838,7 +1854,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <h4 id="TST-I">TST-I — spec-review 修改建议的质量</h4>
 <p><strong>目标：</strong> 修改建议是对的。<strong>输入：</strong> TST-H 找出的问题。<strong>通过条件：</strong> 把建议和 <code>expected_fix</code> 比较：照着建议改了之后，问题消失，而且没有引入新的 MUST 违反。<strong>判定：</strong> 判分模型；报告「建议正确的条数 / 找出的条数」。</p>
 <h4 id="TST-J">TST-J — 不同评测配置</h4>
-<p><strong>目标：</strong> 比较加不同辅助 skill 的效果。<strong>输入：</strong> <code>grill.skills</code> 分别为 <code>[]</code>、<code>[wayfinder]</code>、<code>[grill-with-docs]</code>、两个都加。<strong>通过条件：</strong> 每种配置出一份报告；先跑基线；只报分数，不设门槛。<strong>判定：</strong> 同 TST-E。</p>
+<p><strong>目标：</strong> 比较加不同辅助 skill 的效果。<strong>输入：</strong> <code>grill.skills</code> 分别为 <code>[]</code>、<code>[research]</code>、<code>[grill-with-docs]</code>、两个都加；wayfinder 是交付物，每种配置都带（ARD-CH）。<strong>通过条件：</strong> 每种配置出一份报告；先跑基线；只报分数，不设门槛。<strong>判定：</strong> 同 TST-E。</p>
 <h4 id="TST-K">TST-K — 评测报告</h4>
 <p><strong>目标：</strong> 每次运行生成一个 HTML 报告。<strong>输入：</strong> 任意一次运行。<strong>通过条件：</strong> 报告里有 run_id、分支、gold 版本、评测配置、分数 1 的逐条结果（注明 python 或 llm）、分数 2 的加减分、TST-F 四种输入的结果、5 次复核的结果和 Claude 的核对意见。<strong>判定：</strong> 生成报告，再按结构检查。</p>
 <h4 id="TST-L">TST-L — 5 次独立复核</h4>
@@ -1946,6 +1962,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <td>TST-H 找出 100%、误报 0；TST-I 不低于上一次；TST-L 5 次里至少 4 次通过</td>
 </tr>
 <tr>
+<td>wayfinder 可以发布</td>
+<td>TST-AA 通过</td>
+</tr>
+<tr>
 <td>gold 升版</td>
 <td>TST-M 追加标注后，重跑 TST-E 和 TST-H，建立新的基线</td>
 </tr>
@@ -2017,7 +2037,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 </tr>
 <tr>
 <td>PRD-P</td>
-<td>TST-S；Expected Pass Threshold 表</td>
+<td>TST-S；TST-AA；Expected Pass Threshold 表</td>
 </tr>
 <tr>
 <td>PRD-Q</td>
@@ -2206,6 +2226,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td>2026-11-24</td>
 <td>第 8 轮审查后：被测对象三个 skill；checkers.repeats 改 5；TST-Y 五个 SKILL.md、升版本由单元测试判；TST-AA 加进执行顺序、门槛和追溯表</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 9 轮审查后：TST-J 的辅助 skill 不再含 wayfinder；门槛表加 wayfinder 发布行；PRD-P 追溯加 TST-AA；改链 ARD-CH</td>
 </tr>
 </tbody></table>
 </div>
@@ -2691,7 +2715,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <h4 id="ARD-CK">ARD-CK — 每次 build 升版本号</h4>
 <p><strong>原因。</strong> ARD-CC 只说印版本号，没说什么时候升。印戳的是五个 <code>SKILL.md</code>：spec-write、spec-review、wayfinder、spec-organize、spec-pipeline。版本不升，两次不同的 build 印出同一个号，起不到标来源的作用。</p>
 <p><strong>规则。</strong> 每次运行 <code>build_spec_skills.py</code>（不带 <code>--check</code>），先把 parent PRD 的 <code>version</code> 末位加 1，例如 <code>1.0.0</code> 变成 <code>1.0.1</code>，再印进 <code>SKILL.md</code>。<code>--check</code> 只比对，不升版本。</p>
-<p><strong>重述。</strong> 本条推翻 ARD-CC 里放弃「自动升版」的部分，ARD-CC 因此划掉。其余仍有效：版本号只写在 parent PRD 的 <code>version</code>；脚本写入版本、日期、git 短 sha，拒绝重复键（TST-Y）；不定义迁移策略。</p>
+<p><strong>重述。</strong> 本条推翻 ARD-CC 里放弃「自动升版」的部分，ARD-CC 因此划掉。其余仍有效：版本号只写在 parent PRD 的 <code>version</code>；脚本写入版本、日期、git 短 sha，拒绝重复键（TST-Y）；失败处理、信息来源可信度分级、数据清理、迁移策略故意不定义，旧文档不迁移（ARD-AF 经 ARD-CC 的重述）。</p>
 <p><strong>放弃的方案。</strong> 每次由人决定升哪一位：每次都要人判断，容易忘。</p>
 <a id="ard-cj"></a>
 <h4 id="ARD-CJ">ARD-CJ — 复核跑 5 次，Claude 再核对</h4>
@@ -2699,7 +2723,8 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <p><strong>规则。</strong> <code>judge_deepseek.py</code> 默认跑 5 次：至少 4 次通过算通过，至少 4 次不通过算不通过，其余算有分歧，按不通过计。</p>
 <p><strong>规则（续）。</strong> Claude 逐条核对不通过和有分歧的结论，把同意或不同意及理由写进 <code>claude_audit</code>。Claude 不同意时报告用户，不自己改判；Python 检查的结果仍不能推翻。</p>
 <p><strong>范围。</strong> 本条管 <code>judge_deepseek.py</code> 的复核（TST-L）。TST-V 的可读性判分另有门槛，不变。Claude 不同意的条目在用户决定前仍算没通过。</p>
-<p><strong>重述。</strong> 本条推翻 ARD-AD「复核跑 3 次」的部分，ARD-AD 因此划掉。其余仍有效：生成 gold 跑 3 次；gold 由案例、版本、范例、标注组成；跑分结果和报告不提交；四个非软件例子写进 skill 正文。</p>
+<p><strong>重述。</strong> 本条推翻 ARD-AD「复核跑 3 次」的部分，ARD-AD 因此划掉。其余仍有效：生成 gold 跑 3 次；gold 由案例、版本、范例、标注组成；跑分结果和报告不提交；四个非软件例子写进 skill 正文，不在本仓库建 gold；只有 DeepSeek 的 API，不同模型之间的偏差标为 Unverified。</p>
+<p><strong>规则（补）。</strong> 重跑时，题目、结论、票数分布和语料 sha 都没变的条目，保留上次的 <code>claude_audit</code>；有任何一项变了就清空，等 Claude 重新核对。</p>
 <p><strong>放弃的方案。</strong> 5 次都一致才通过：次数越多越容易因一次波动失败。换更贵的模型：仍是一个模型说了算。</p>
 <a id="ard-ci"></a>
 <h4 id="ARD-CI">ARD-CI — spec-review 的三份审查参考</h4>
@@ -2715,7 +2740,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <p>每个 feature 一个地图目录，互不覆盖；任务再小也建地图。CLAUDE 层只记当前地图的路径（ARD-CG）。</p>
 <p><strong>规则（续）。</strong> 重新开始时读地图给出回顾。阻塞与否以 design 的问题清单（QUES-*）为准，有标「是」的没解决就不进入 Downstream；处理它的 brief 写明 QUES 编号。提交前问要不要跑 spec-review，用户说不跑就记进地图。</p>
 <p><strong>重述。</strong> 本条推翻 ARD-BX「交付物只有两个」，以及 ARD-BT、ARD-BU「进度记在 CLAUDE.local.md」的部分，三条因此划掉。</p>
-<p>仍有效的部分：spec-write、spec-review 读三份标准文件，标准文件不算交付物；Map 以访谈为主；非软件难题留在本 PRD；人在 Map 确认名字后才建 feature 目录。</p>
+<p>仍有效的部分：spec-write、spec-review 读三份标准文件，标准文件不算交付物；Map 以访谈为主；非软件难题留在本 PRD；人在 Map 确认名字后才建 feature 目录；spec-organize 和 spec-pipeline 不是交付物。</p>
 <p><strong>放弃的方案。</strong> 交给 spec-write：正文变重，名字没定时的冲突还要另想办法。先标 Unverified：规则一直没人执行。改写 wayfinder 会和上游 mattpocock/skills 分叉，接受这个代价。</p>
 <a id="ard-cg"></a>
 <h4 id="ARD-CG">ARD-CG — CLAUDE 层写在哪个文件</h4>
@@ -3226,6 +3251,10 @@ payment-impl-plan-01-schema.md         impl-plan 分篇：序号加阶段，有�
 <td>2026-11-24</td>
 <td>第 8 轮审查后：划掉 ARD-AD，由 ARD-CJ 重述并写明范围；ARD-CE 写明挪出内容算修改；ARD-CH 地图改为目录、阻塞以 QUES 为准；ARD-CK 写明五个 SKILL.md</td>
 </tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 9 轮审查后：ARD-CK、ARD-CJ、ARD-CH 补全被划掉条目里仍有效的部分；ARD-CJ 写明 claude_audit 何时保留</td>
+</tr>
 </tbody></table>
 </div>
 <p class="src">Canonical: <code>docs/features/spec-driven-development/decision-history/spec-driven-development-decision-history.md</code></p>
@@ -3612,7 +3641,7 @@ payment-impl-plan-01-schema.md         impl-plan 分篇：序号加阶段，有�
 <h3>Reversibility</h3>
 <ul>
 <li>阶段是叠加的：去掉 Map，不影响 Create、Converge、Downstream。</li>
-<li>wayfinder 不可用时，退回到在 CLAUDE 层记录进度（ARD-CG）。</li>
+<li>wayfinder 不可用时，人按 PIPE-H 的格式手工维护地图目录。</li>
 </ul>
 <h3>Change Log</h3>
 <table><thead><tr>
@@ -3698,6 +3727,10 @@ payment-impl-plan-01-schema.md         impl-plan 分篇：序号加阶段，有�
 <tr>
 <td>2026-11-24</td>
 <td>第 8 轮审查后：地图改为目录；Map 访谈辅助的例子改为 grill-with-docs；改链 ARD-CH</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 9 轮审查后：wayfinder 不可用时改为人手维护地图目录</td>
 </tr>
 </tbody></table>
 </div>
@@ -4290,7 +4323,7 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 <p><strong>顺序。</strong> 新决定写在 Decision Log 的最上面，越往下越早。</p>
 <p><strong>每条都有一节说明（MUST）。</strong> 每条 ARD 在 Evidence Appendix 里有一节，写明原因；当时考虑过别的做法，就写出放弃了哪些、为什么。</p>
 <p><strong>编号。</strong> <code>ARD-</code> 加字母（DSGN-F），分配后不能改。表格里的编号和 <code>### ARD-A — …</code> 小节标题里的编号一致。</p>
-<p><strong>推翻旧决定。</strong> 旧行不删，用删除线划掉，后面链到新决定，例如：被划掉的旧说法，后面跟一个指向新决定的链接。新说法用一个新编号完整写一条，放在 Log 最上面。按 DSGN-I 删减时，不删被划掉的文字。只推翻旧决定的一部分时，也划掉整行，并在新决定里重述仍然有效的部分（例如 <a href="decision-history/spec-driven-development-decision-history.html#ard-bt">ARD-BT</a>）。这是整套 spec 里唯一使用删除线的地方（<a href="decision-history/spec-driven-development-decision-history.html#ard-bm">ARD-BM</a>）。</p>
+<p><strong>推翻旧决定。</strong> 旧行不删，用删除线划掉，后面链到新决定，例如：被划掉的旧说法，后面跟一个指向新决定的链接。新说法用一个新编号完整写一条，放在 Log 最上面。按 DSGN-I 删减时，不删被划掉的文字。只推翻旧决定的一部分时，也划掉整行，并在新决定里重述仍然有效的部分（例如 <a href="decision-history/spec-driven-development-decision-history.html#ard-ch">ARD-CH</a>）。这是整套 spec 里唯一使用删除线的地方（<a href="decision-history/spec-driven-development-decision-history.html#ard-bm">ARD-BM</a>）。</p>
 <p><strong>拆分篇。</strong> decision-history 不设行数上限，但也可以拆分篇。拆了之后编号在整个 feature 内唯一；新决定写在当前那篇的 Log 最上面；旧篇保留，篇与篇之间用链接连起来。</p>
 <p><strong>什么时候加一条。</strong> 规则只写在一处：<a href="design/spec-driven-development-design.html#dsgn-b">parent design 的 DSGN-B</a>。另外，改名、撞名这类流程要求记录的事（DSGN-K）也要加一条。</p>
 <hr>
@@ -4657,6 +4690,10 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 <tr>
 <td>2026-11-24</td>
 <td>第 8 轮审查后：被测对象三个 skill；本地目录表加 docs/state/；改链 ARD-CH、ARD-CK</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 9 轮审查后：链到已划掉 ARD 的地方改链</td>
 </tr>
 </tbody></table>
 <hr><p class="src-inline">Source: <code>features/document-standard/design/document-standard-design-spec-reader-html.md</code></p>
