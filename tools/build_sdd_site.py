@@ -192,13 +192,13 @@ _TRACKED_LOADED = False
 
 
 def _tracked_files() -> set[str] | None:
-    """Repo-relative paths git tracks, computed once; None when git is unavailable."""
+    """Repo-relative paths git tracks or would track (not ignored), computed once; None without git."""
     global _TRACKED, _TRACKED_LOADED
     if not _TRACKED_LOADED:
         _TRACKED_LOADED = True
         try:
             out = subprocess.run(
-                ["git", "ls-files", "-z"], cwd=ROOT, capture_output=True, check=True
+                ["git", "ls-files", "-z", "--cached", "--others", "--exclude-standard"], cwd=ROOT, capture_output=True, check=True
             ).stdout.decode("utf-8", "replace")
             _TRACKED = {f for f in out.split("\0") if f}
         except (OSError, subprocess.CalledProcessError):

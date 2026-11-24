@@ -34,8 +34,8 @@ annotations:
   - id: GOOD-F
     kind: good
     check: skill_examples
-    text: All four skill bodies name the PRD-Q examples (shed, Beijing trip, math, stocks).
-    detail: Each of spec-pipeline, spec-organize, spec-review, spec-write has a SKILL.md that mentions 盖 shed, 北京旅游, 数学题, and 股票.
+    text: Both deliverable skill bodies that write and review specs name the PRD-Q examples (shed, Beijing trip, math, stocks).
+    detail: Each of spec-write and spec-review has a SKILL.md that mentions 盖 shed, 北京旅游, 数学题, and 股票.
   - id: BAD-A
     kind: bad
     check: index_complete

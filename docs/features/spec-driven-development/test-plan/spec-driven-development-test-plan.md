@@ -82,7 +82,7 @@ last_verified: 2026-11-24
 | GOOD | +1 | 0 |
 | BAD | −1（犯了这个错） | 0 |
 
-分数 2 =（加分合计 − 减分合计）× 10 ÷ 标注总数。满分 10，可以是负数。「类似」由判分模型判断。只在同一个 gold 版本内比较。
+分数 2 =（加分合计 − 减分合计）× 10 ÷ 标注总数。最高分是 GOOD 标注数 × 10 ÷ 标注总数（全是 GOOD 时才是 10），可以是负数。「类似」由判分模型判断。只在同一个 gold 版本内比较。
 
 **门槛：** 分数 1 必须满分；分数 2 不能低于同一 gold 版本的上一次运行（[ARD-R](../decision-history/spec-driven-development-decision-history.md#ard-r)）。复核用同一个 `deepseek-flash` 独立裁决 5 次，至少 4 次通过才算通过；复核不能推翻 Python 检查的结果（[ARD-CJ](../decision-history/spec-driven-development-decision-history.md#ard-cj)）。不同模型之间的偏差暂时测不了，标为 Unverified。
 
@@ -138,7 +138,7 @@ last_verified: 2026-11-24
 
 ### TST-L — 5 次独立复核
 
-**目标：** 得出最终的通过或不通过。**输入：** 评测报告和改动。**通过条件：** 同一个 `deepseek-flash` 独立裁决 5 次，至少 4 次通过；不推翻 Python 检查的结果。**判定：** 跑 5 次，Claude 再核对没通过和有分歧的条目（[ARD-CJ](../decision-history/spec-driven-development-decision-history.md#ard-cj)）。不同模型之间的偏差标为 Unverified。
+**目标：** 得出最终的通过或不通过。**输入：** 分数 1 的逐条结果和改动；结果写进 TST-K 的报告。**通过条件：** 同一个 `deepseek-flash` 独立裁决 5 次，至少 4 次通过；不推翻 Python 检查的结果。**判定：** 跑 5 次，Claude 再核对没通过和有分歧的条目（[ARD-CJ](../decision-history/spec-driven-development-decision-history.md#ard-cj)）。不同模型之间的偏差标为 Unverified。
 
 ### TST-M — 改了标准或 gold 之后同步测试
 
@@ -229,7 +229,7 @@ last_verified: 2026-11-24
 6. TST-E、TST-F，然后对 TST-C、TST-E 里 spec-write 写出的文档跑 TST-V。
 7. TST-H，然后 TST-I。
 8. TST-Q：mock 执行。
-9. TST-K，然后 TST-L。
+9. TST-L，然后 TST-K（报告要带上复核结果）。
 10. TST-J（可选）。
 11. 有改动时跑 TST-M，再从第 1 步开始。
 
@@ -325,3 +325,4 @@ document-standard 的 reader PRD：
 | 2026-11-24 | 复核改为 5 次、至少 4 次通过，Claude 再核对（ARD-CJ）；TST-Y 加升版本（ARD-CK）；新增 TST-AA（ARD-CH） |
 | 2026-11-24 | 第 8 轮审查后：被测对象三个 skill；checkers.repeats 改 5；TST-Y 五个 SKILL.md、升版本由单元测试判；TST-AA 加进执行顺序、门槛和追溯表 |
 | 2026-11-24 | 第 9 轮审查后：TST-J 的辅助 skill 不再含 wayfinder；门槛表加 wayfinder 发布行；PRD-P 追溯加 TST-AA；改链 ARD-CH |
+| 2026-11-24 | 第 10 轮审查后：分数 2 最高分写对；TST-L 先于 TST-K，报告带复核结果 |

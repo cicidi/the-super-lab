@@ -182,7 +182,7 @@ def a_ownership(feature: Path) -> bool:
 
 def a_skill_examples(feature: Path) -> bool:
     skills = ROOT / "skills"
-    for name in ("spec-pipeline", "spec-organize", "spec-review", "spec-write"):
+    for name in ("spec-review", "spec-write"):  # TST-S
         text = (skills / name / "SKILL.md").read_text(encoding="utf-8")
         if not all(pat.search(text) for pat in _examples()):
             return False

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Real judge: deepseek-flash, 5 independent runs, writes cross-model verdicts.
 
-  python3 tools/judge_deepseek.py --target must   # 15 llm MUST items
+  python3 tools/judge_deepseek.py --target must   # llm-method MUST items in the registry
   python3 tools/judge_deepseek.py --target gold   # 10 gold annotations
 
 Corpus: committed SDD markdown + the five SKILL.md + SPEC-STANDARD.md, sent whole

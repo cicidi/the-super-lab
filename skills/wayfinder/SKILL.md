@@ -32,12 +32,12 @@ metadata:
     - tech leads
   source_author: mattpocock
   source_url: https://github.com/mattpocock/skills/blob/main/skills/engineering/wayfinder/SKILL.md
-  spec_bundle_version: "1.0.3"
+  spec_bundle_version: "1.0.4"
   spec_built_at: "2026-11-24"
-  spec_git_sha: "67755dd"
+  spec_git_sha: "ab9b322"
 ---
 <!-- SPEC-BUNDLE-START -->
-> **SDD spec bundle** `1.0.3` · built 2026-11-24 · git `67755dd`
+> **SDD spec bundle** `1.0.4` · built 2026-11-24 · git `ab9b322`
 <!-- SPEC-BUNDLE-END -->
 
 A loose idea has arrived — too big for one agent session, and wrapped in fog: the way from here to the **destination** isn't visible yet. Wayfinding is about finding that way, not charging at the destination. This skill charts the way as a **shared map** on the repo's issue tracker, then works its **decision briefs** — questions whose resolution is a decision, not slices of a build to execute — one at a time until the route is clear.
@@ -158,12 +158,12 @@ rules of the pipeline design (PIPE-A-D, PIPE-A-E, PIPE-A-F, PIPE-H, PIPE-E-A).
 An SDD repo is one with `docs/features/spec-driven-development/`. There the
 tracker is upstream's local-markdown layout (mattpocock/skills
 `setup-matt-pocock-skills/issue-tracker-local.md`): a directory holding
-`map.md` plus one file per brief, `issues/NN-<slug>.md`, each with a
-`Status:` line and a `Blocked by:` line. The wayfinding operations there:
+`map.md` plus one file per brief, `issues/NN-<slug>.md`. The operations follow
+upstream word for word:
 
-- **Claim:** add an `Assignee:` line to the brief file.
-- **Blocking between briefs:** a `Blocked by:` line listing the blocking brief file names.
-- **Resolve:** add a `## Answer` section to the brief, set `Status: closed`, and append the one-line gist to map.md **Decisions so far**.
+- **Brief header:** `Status:` (one of `open`, `claimed`, `resolved`), `Type:` (`research`, `prototype`, `grilling` or `task` — the local stand-in for the `wayfinder:<type>` label) and `Blocked by:` (brief numbers `NN, NN`, or empty).
+- **Claim:** set `Status: claimed`. **Frontier:** open briefs whose blockers are all resolved; take the lowest number first.
+- **Resolve:** add a `## Answer` section, set `Status: resolved`, and append the one-line gist to map.md **Decisions so far**.
 - **Work through the map:** invoke it with the map path, not a URL or number.
 
 The **map is the progress record**:

@@ -206,8 +206,8 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 | QUES-A | 交付的 skill 要读的标准文件和检查脚本，放在 spec-organize 和 spec-html-standard 目录，这两个目录不算交付物。只把三个交付的 skill 装进别的项目时，怎么把这些文件一起带过去？（[ARD-C](../decision-history/spec-driven-development-decision-history.md#ard-c) 要求 skill 能独立带走） | 未定 | 人决定 | 否 |
 | QUES-B | 产品级成功指标怎么量、基线是多少（PRD-G） | 延后（[ARD-N](../decision-history/spec-driven-development-decision-history.md#ard-n)） | 人决定 | 否 |
 | QUES-C | 以后新增的可替换工具，例如 Map 阶段的访谈辅助工具，要不要写进 skill 契约表 | wayfinder 已写进（[ARD-CH](../decision-history/spec-driven-development-decision-history.md#ard-ch)）；其他工具未定 | 人决定 | 否 |
-| QUES-E | 有 `CLAUDE.local.md` 就只写它（[ARD-CG](../decision-history/spec-driven-development-decision-history.md#ard-cg)），但它不提交，别人克隆仓库拿不到 DSGN-C 的规则。要不要另外在提交的文件里留一份？ | 未定 | 人决定 | 否 |
 | QUES-D | 用 SDD 写出的每份 spec，要不要都带一个「Agent Loop」节，写明目标与约束、什么事件触发 AI 重跑、用什么指标自动评估 | 未定 | 人决定 | 否 |
+| QUES-E | 有 `CLAUDE.local.md` 就只写它（[ARD-CG](../decision-history/spec-driven-development-decision-history.md#ard-cg)），但它不提交，别人克隆仓库拿不到 DSGN-C 的规则。要不要另外在提交的文件里留一份？ | 未定 | 人决定 | 否 |
 
 ## Reversibility
 
@@ -338,7 +338,7 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 | annotations（标注） | 对产出的好坏标注：`GOOD-*` 是应该做到的，`BAD-*` 是不该犯的错 |
 | judge（判分模型） | 用来打分的 LLM，目前是 `deepseek-flash` |
 | 分数 1 | MUST 合规分：通过的 MUST 条数除以 MUST 清单的总条数，必须满分 |
-| 分数 2 | 和 gold 比的分数：按标注加减分，满分 10，只在同一个 gold 版本内比较，不能比上一次低 |
+| 分数 2 | 和 gold 比的分数：按标注加减分，最高分是 GOOD 标注数 × 10 ÷ 标注总数，只在同一个 gold 版本内比较，不能比上一次低 |
 | claude_audit | 复核结果文件里的一栏：DeepSeek 判为没通过或有分歧的条目，Claude 在这里写同意还是不同意，以及理由（ARD-CJ） |
 | 复核 | 同一个判分模型独立裁决 5 次，至少 4 次一致才算定论；没通过的条目再由 Claude 核对（ARD-CJ）。和 Python 检查脚本是两回事 |
 | 基线 | 只装被测 skill、不加任何辅助 skill 的评测配置（`eval.yaml` 里 `grill.skills: []`） |
@@ -379,3 +379,4 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 | 2026-11-24 | DSGN-C：CLAUDE 层写哪个文件（ARD-CG） |
 | 2026-11-24 | 第 8 轮审查后：三个交付 skill（ARD-CH）；复核 5 次（ARD-CJ）；DSGN-A 加新建文件例外（ARD-CE）；术语表加地图目录、brief、交付物、claude_audit，改写 BMAD、GSD；新增 QUES-E；Drawbacks 加 wayfinder 分叉 |
 | 2026-11-24 | 第 9 轮审查后：链到已划掉 ARD 的地方改链；QUES-A 改为三个交付 skill |
+| 2026-11-24 | 第 10 轮审查后：分数 2 最高分写对；QUES-D、QUES-E 按编号排 |
