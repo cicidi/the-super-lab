@@ -58,7 +58,7 @@ Every `PRD-*` id must be anchored in at least one design clause (TST-O).
 
 Body text states the current rule only. When a sentence no longer holds, rewrite it and link the ARD that changed it. Strikethrough appears **only** in decision-history (a superseded row, struck and linked to the new ARD). Older body wording lives in git history. A typo is fixed in place (ARD-BM, ARD-AS).
 
-Edit size for AI edits under `docs/`: at most 10 lines **and** at most 200 characters per edit, both limits at once (ARD-BP); a larger change needs explicit human authorization recorded as an ARD (parent design DSGN-A). Content edits go through spec-write; spec-organize Lint may fix format-class MUST violations directly, under the same cap (ARD-BV).
+Edit size for AI edits under `docs/`: at most 10 lines **and** at most 200 characters per edit to an existing file, both limits at once (ARD-BP); creating a new file is exempt but still meets **Size** (ARD-CE); a larger change needs explicit human authorization recorded as an ARD (parent design DSGN-A). Content edits go through spec-write; spec-organize Lint may fix format-class MUST violations directly, under the same cap (ARD-BV).
 
 ## Readability (MUST)
 
@@ -88,12 +88,12 @@ Log: `ID | Date | Decision` (optional 4th column `Ready`; no Status, no Supersed
 
 ## Size (MUST)
 
-Hard caps per **DSGN-B** table (prd 800, design 1000, impl-plan 1000, test-plan 800, how-to 600); never delete **L1** to fit. `decision-history` has no hard cap.
+Hard caps per **DSGN-B** table (prd 800, design 1000, impl-plan 1000, test-plan 800, how-to 600); never delete **L1** to fit. `decision-history` has no hard cap. Struck decision-log rows are kept; when a document must shrink, compress struck content first (ARD-CL).
 
 ## INDEX / book (MUST)
 
 When the committed tree changes, regenerate INDEX. A `final` or merged change must reach the book; a `draft` source may skip the summary update (**DSGN-D**). No orphan, no dead link, no dead anchor (**DSGN-D**, ARD-AP). A link into `raw/` is not a dead link, even though `raw/` is never committed (ARD-BW).
-MkDocs / Pages nav is implementation; it must not contradict the feature tree or INDEX (**DSGN-D**).
+Before a commit that changes markdown, rebuild the site so committed HTML matches it (ARD-CF). MkDocs / Pages nav is implementation; it must not contradict the feature tree or INDEX (**DSGN-D**).
 
 ## Conflicts (MUST)
 

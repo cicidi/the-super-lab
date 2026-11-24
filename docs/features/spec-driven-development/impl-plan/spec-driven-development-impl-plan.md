@@ -90,7 +90,7 @@ last_verified: 2026-11-24
 
 **目标：** feature 名字还没定的时候，Create 和 Map 阶段的进度和暂定名记在这里（pipeline design 的 PIPE-H；[ARD-BU](../decision-history/spec-driven-development-decision-history.md#ard-bu)）。
 
-**步骤：** 在项目的 `CLAUDE.local.md` 里加一段 SDD：当前阶段、粗略 PRD 的位置、reader 网页的链接。
+**步骤：** 在项目的 CLAUDE 层（ARD-CG）里加一段 SDD：当前地图文件的路径、reader 网页的链接。
 
 **依赖：** 无。**挡住：** 无。
 
@@ -201,7 +201,7 @@ last_verified: 2026-11-24
 
 **依赖：** IMPL-C。**挡住：** 无。
 
-**Verify:** CLAUDE 层里：改动上限写的是「并且」，并引用 PRD-C；没有 `FR-` 这类已禁止的编号；进度路径是 `CLAUDE.local.md` 或 `raw/state/`（PRD-J）；文档目录是 `docs/features/<f>/<类型>/`（document-standard 的 DSGN-B）；列出的 skill 只有 spec-write 和 spec-review（ARD-BX）。2026-11-20 已按这几条改过 `CLAUDE.local.md`。
+**Verify:** CLAUDE 层里：改动上限写的是「并且」，并引用 PRD-C；没有 `FR-` 这类已禁止的编号；进度路径是 wayfinder 的地图文件（PRD-J、ARD-CH）；文档目录是 `docs/features/<f>/<类型>/`（document-standard 的 DSGN-B）；列出的 skill 是 spec-write、spec-review 和 wayfinder（ARD-CH）。2026-11-20 已按这几条改过 `CLAUDE.local.md`。
 
 ## IMPL-S — 插图与网页样式
 
@@ -221,7 +221,7 @@ last_verified: 2026-11-24
 
 ## IMPL-U — spec bundle 版本戳
 
-**目标：** `tools/build_spec_skills.py` 按 [ARD-CC](../decision-history/spec-driven-development-decision-history.md#ard-cc) 给四个 SDD `SKILL.md`（交付的 spec-write、spec-review，以及也引用标准文件的 spec-organize、spec-pipeline）打版本戳。
+**目标：** `tools/build_spec_skills.py` 按 [ARD-CC](../decision-history/spec-driven-development-decision-history.md#ard-cc) 给四个 SDD `SKILL.md`（交付的 spec-write、spec-review，以及也引用标准文件的 spec-organize、spec-pipeline）打版本戳；每次 build 版本末位加 1（[ARD-CK](../decision-history/spec-driven-development-decision-history.md#ard-ck)）。
 
 **依赖：** 无。**挡住：** 无。
 
@@ -235,11 +235,27 @@ last_verified: 2026-11-24
 
 **Verify:** TST-Z 通过；workflow 在 master 上成功部署。
 
+## IMPL-W — wayfinder 轻量改写
+
+**目标：** 按 [ARD-CH](../decision-history/spec-driven-development-decision-history.md#ard-ch) 改 `skills/wayfinder/SKILL.md`：地图文件当进度记录，审查关口用 spec-review，重新开始时给回顾。
+
+**依赖：** 无。**挡住：** 无。
+
+**Verify:** TST-AA 通过。
+
+## IMPL-X — 复核 5 次加 Claude 核对
+
+**目标：** `tools/judge_deepseek.py` 按 [ARD-CJ](../decision-history/spec-driven-development-decision-history.md#ard-cj) 默认跑 5 次、4 次一致才算定论，输出里留 `claude_audit` 给 Claude 填。
+
+**依赖：** 无。**挡住：** 无。
+
+**Verify:** TST-L 按 5 次判定。
+
 ## Execution order
 
 先做不依赖别人的任务，被挡住的后做：
 
-1. IMPL-A、IMPL-D、IMPL-G、IMPL-H、IMPL-U（互不依赖，可以同时做）
+1. IMPL-A、IMPL-D、IMPL-G、IMPL-H、IMPL-U、IMPL-W、IMPL-X（互不依赖，可以同时做）
 2. IMPL-C
 3. IMPL-B、IMPL-F、IMPL-J、IMPL-K、IMPL-L、IMPL-M、IMPL-R
 4. IMPL-N、IMPL-O、IMPL-P、IMPL-S（等 IMPL-F）、IMPL-T（等 IMPL-M）、IMPL-V（等 IMPL-H）
@@ -272,3 +288,4 @@ last_verified: 2026-11-24
 | 2026-11-24 | IMPL-K 进度：11 个机械审查案例已齐；5 个语义案例待 judge 执行器 |
 | 2026-11-24 | IMPL-U 写明四个 skill；IMPL-P 现状更新；Verify 和验收只查 SDD 目录、覆盖到 TST-Z；IMPL-F、IMPL-H、IMPL-M 补上挡住的任务；IMPL-S 改成完整句子 |
 | 2026-11-24 | IMPL-P 标为已完成，改引 ARD-BS |
+| 2026-11-24 | 新增 IMPL-W、IMPL-X；IMPL-R 进度路径改为地图文件（ARD-CH）；IMPL-U 加升版本（ARD-CK） |

@@ -27,7 +27,7 @@ parent PRD 讲了上游的问题（见 [PRD](../../../prd/spec-driven-developmen
 
 写 spec 分四个阶段，按顺序走：
 
-1. **Create（立项）**：给 feature 起一个暂定名，写一份粗略的 PRD，把调研到的背景写进 `CLAUDE.local.md`。feature 目录要等 Map 阶段人确认后才建。
+1. **Create（立项）**：给 feature 起一个暂定名，写一份粗略的 PRD，把调研到的背景写进 wayfinder 的地图文件 `docs/state/wayfinder-<暂定名>.md`。feature 目录要等 Map 阶段人确认后才建。
 2. **Map（摸底）**：和人访谈，弄清已知、未知和盲区；由 AI 判断要不要拆分、要不要记决定、哪些只留草稿。可以用一个可替换的辅助工具（例如 wayfinder），但它不是 SDD 的交付物。
 3. **Converge（收敛）**：PRD、design、decision-history 三篇反复打磨，直到满足 PIPE-E 的收敛条件。
 4. **Downstream（下游）**：从 design 同时写出 test-plan 和 impl-plan，两篇互不依赖（和 parent PRD 的 Solution 一致）。
@@ -42,8 +42,8 @@ parent PRD 讲了上游的问题（见 [PRD](../../../prd/spec-driven-developmen
 
 - **分工：** 标准写在三份标准文件 `SPEC-STANDARD.md`、`SPEC-PRESENTATION.md`、`SPEC-HTML-STANDARD.md`；写文档用 spec-write；审文档用 spec-review。spec-pipeline 和 spec-organize 都不是入口（[ARD-BX](../../../decision-history/spec-driven-development-decision-history.md#ard-bx)）。
 - **Map 以访谈为主：** AI 判断是否要记一条决定、是否建议拆出新 feature、是否只在草稿里留个线索。人确认之后，才创建 `docs/features/<f>/` 目录（[ARD-BU](../../../decision-history/spec-driven-development-decision-history.md#ard-bu)）。
-- **辅助工具可替换：** Map 阶段的辅助工具（例如 wayfinder）通过 PIPE-G 的推荐表使用，随时可以换，不在 SDD 交付物里。
-- **进度记在哪：** feature 名字还没定的时候，进度只记在 `CLAUDE.local.md`（或项目的 CLAUDE 层），不建 `raw/state/` 文件。名字定了之后，正式进度记在 `docs/features/<f>/raw/state/state-<YYYY-MM-DD>.md`（document-standard 的 DSGN-B、DSGN-C）。
+- **访谈辅助可替换：** Map 阶段的访谈辅助工具通过 PIPE-G 的推荐表使用，随时可以换。wayfinder 另外负责进度规则，是交付物（[ARD-CH](../../../decision-history/spec-driven-development-decision-history.md#ard-ch)）。
+- **进度记在哪：** 进度记在 wayfinder 的地图文件里，规则见 PIPE-H（[ARD-CH](../../../decision-history/spec-driven-development-decision-history.md#ard-ch)）。
 - **进度回顾不是正式记录：** recap 是生成给人看的，不是真相来源。真相来源是进度文件加上已提交的文档。
 - **不引入重框架：** 后期的任务管理接入别的 skill，本篇不引入 BMAD、GSD 这类完整的项目管理框架。
 - **协作：** 读上游文档，不悄悄改。发现冲突时按「发现、报告、问人」处理（document-standard 的 DSGN-G）。
@@ -63,11 +63,13 @@ parent PRD 讲了上游的问题（见 [PRD](../../../prd/spec-driven-developmen
 - **PIPE-A-E**：用户要求，或者对话中断后重新开始时，给出进度回顾：做了什么、现在的进度、还剩什么、建议下一步。
 - **PIPE-A-F**：维护和读取 PIPE-H 定义的进度记录；按 PIPE-G 的表推荐 skill。
 
+PIPE-A-D、PIPE-A-E、PIPE-A-F 由 wayfinder 执行（ARD-CH）。
+
 ### PIPE-B — 四个阶段总览
 
 | 阶段 | 目的 | 常见的失败 |
 |---|---|---|
-| Create | 定暂定名，收集背景 | 粗略 PRD 和背景没写进 `CLAUDE.local.md`，只存在聊天记录里 |
+| Create | 定暂定名，收集背景 | 粗略 PRD 和背景没写进地图文件，只存在聊天记录里 |
 | Map | 弄清已知和未知，判断要不要拆 | 没访谈就建目录 |
 | Converge | PRD、design、decision-history 打磨到足够稳定 | 还有没定的决定，design 就写死了 |
 | Downstream | 同时写 test-plan 和 impl-plan | test-plan 没有回归检查；impl-plan 没有先后顺序 |
@@ -76,14 +78,14 @@ parent PRD 讲了上游的问题（见 [PRD](../../../prd/spec-driven-developmen
 
 ### PIPE-C — Create（立项）
 
-1. 给 feature 起一个暂定名，记在 `CLAUDE.local.md`。这时还不建目录，目录在 Map 阶段人确认后才建（PIPE-D 第 5 步）。
-2. 写一份粗略的 PRD，例如「推荐一台 iPhone 并协助购买」。这时还没有目录，粗略 PRD 先写在 `CLAUDE.local.md` 里；不要求一次写齐 PIPE-E-B 的五项。
-3. 把搜索和调研得到的背景也写进 `CLAUDE.local.md`（或项目的 CLAUDE 层）。目录建好以后，粗略 PRD 要整理成已提交的 PRD，`CLAUDE.local.md` 不能代替它。
+1. 给 feature 起一个暂定名，新建地图文件 `docs/state/wayfinder-<暂定名>.md`，CLAUDE 层只记它的路径。这时还不建目录，目录在 Map 阶段人确认后才建（PIPE-D 第 5 步）。
+2. 写一份粗略的 PRD，例如「推荐一台 iPhone 并协助购买」。这时还没有目录，粗略 PRD 先写在地图文件里；不要求一次写齐 PIPE-E-B 的五项。
+3. 把搜索和调研得到的背景也写进地图文件。目录建好以后，粗略 PRD 要整理成已提交的 PRD，地图文件不能代替它。
 
 ### PIPE-D — Map（摸底）
 
 1. 访谈用户（评测时用 context 包代替用户），由 AI 整理出已知和未知。
-2. AI 判断下一步，没有固定要产出的文件：是否建议拆出新 feature、哪些结论以后要记成决定、是否只在草稿里留个线索，还是先不拆，直接进入 Converge。要记的决定先列在 `CLAUDE.local.md`，第 5 步建好目录后再写进 decision-history。
+2. AI 判断下一步，没有固定要产出的文件：是否建议拆出新 feature、哪些结论以后要记成决定、是否只在草稿里留个线索，还是先不拆，直接进入 Converge。要记的决定先列在地图文件里，第 5 步建好目录后再写进 decision-history。
 3. 给出 Map 的结论回顾：判断的要点、建议的拆法、还没定的事项。
 4. 可选：调用一个可替换的辅助工具（例如 wayfinder），但它不能代替访谈。
 5. 人确认拆法和名字之后，才用 walter-worker 的 feature create 命令建 `docs/features/<f>/` 目录；要不要放进 parent 的 `features/` 下面，见 parent design 的「目录结构」一节。没有人确认，也不能移动已提交的文档（[ARD-BU](../../../decision-history/spec-driven-development-decision-history.md#ard-bu)）。
@@ -94,7 +96,7 @@ parent PRD 讲了上游的问题（见 [PRD](../../../prd/spec-driven-developmen
 
 PRD、design、decision-history 三篇反复打磨（见 parent PRD 的 Solution）。下面三个条件全部满足，才能进入 Downstream：
 
-- **PIPE-E-A**：没有阻塞的未决问题。每个未决问题都写在本 feature 的问题清单里，并在「阻塞」一列标明是或否。只要还有标「是」的问题没解决，就不能进入 Downstream（[ARD-AG](../../../decision-history/spec-driven-development-decision-history.md#ard-ag)）。
+- **PIPE-E-A**：没有阻塞的未决问题。每个未决问题都写在本 feature 的问题清单里，并在「阻塞」一列标明是或否。只要还有标「是」的问题没解决，就不能进入 Downstream；由 wayfinder 检查（ARD-CH）（[ARD-AG](../../../decision-history/spec-driven-development-decision-history.md#ard-ag)）。
 - **PIPE-E-B**：PRD 写清了限制、偏好、时间、资源、工具五项；不适用的写 not apply，不能留空。design 和 decision-history 两篇都已存在（[ARD-Z](../../../decision-history/spec-driven-development-decision-history.md#ard-z)）。
 - **PIPE-E-C**：design 列出了它依赖的决定和还没定的事项，并写清了实现需要的接口和边界。实现任务的细节留到 Downstream 再定。
 
@@ -116,16 +118,16 @@ PRD、design、decision-history 三篇反复打磨（见 parent PRD 的 Solution
 | 任何阶段 | 提交前 | spec-review | 询问（PIPE-A-D） |
 | Downstream | 写 test-plan 和 impl-plan | spec-write，加上路径和格式检查 | 必须 |
 
-wayfinder 等辅助工具随时可以换，不是 SDD 必须安装的交付物。
+Map 阶段的访谈辅助工具随时可以换；wayfinder 负责进度规则，是交付物（[ARD-CH](../../../decision-history/spec-driven-development-decision-history.md#ard-ch)）。
 
 ### PIPE-H — 进度记录
 
-来源：PRD-J、[ARD-BT](../../../decision-history/spec-driven-development-decision-history.md#ard-bt)。
+来源：PRD-J、[ARD-CH](../../../decision-history/spec-driven-development-decision-history.md#ard-ch)。进度记录就是 wayfinder 的地图文件，每个 feature 一个，都不提交。
 
 | 时段 | 记在哪 | 记什么 |
 |---|---|---|
-| feature 名字还没定 | `CLAUDE.local.md`（项目的 CLAUDE 层） | 阶段、粗略需求、Map 笔记、未定事项 |
-| feature 名字已定 | `docs/features/<f>/raw/state/state-<YYYY-MM-DD>.md` | `phase`（Create、Map、Converge、Downstream 之一）、`feature`、`open_items`、`last_action`，可选 `scratch_ref`（指向相关草稿的路径） |
+| feature 名字还没定 | `docs/state/wayfinder-<暂定名>.md` | 阶段、粗略需求、Map 笔记、未定事项 |
+| feature 名字已定 | `docs/features/<f>/raw/state/wayfinder-map.md`（目录建好后从上一行移过来） | `phase`（Create、Map、Converge、Downstream 之一）、`feature`、`open_items`、`last_action`，可选 `scratch_ref`（指向相关草稿的路径） |
 
 - 进度回顾读取进度记录和已提交的文档，发给用户看；回顾本身默认不提交。
 - 有方向性的结论，要正式写进 decision-history、PRD 或 design，不能长期只留在进度记录里。
@@ -191,7 +193,7 @@ wayfinder 等辅助工具随时可以换，不是 SDD 必须安装的交付物�
 
 ## Out of Scope
 
-- wayfinder、feature create、research 等 skill 的正文和部署。
+- feature create、research 等 skill 的正文和部署。wayfinder 只改进度规则需要的部分（ARD-CH）。
 - BMAD、GSD 这类完整的进度和任务管理框架，以及在仓库里铺满模板文件。
 - 流程编排的具体实现（prompt、代码、hook）。
 - impl-plan 阶段的任务粒度，以及 parent impl-plan 的内容。
@@ -225,7 +227,7 @@ Map 的拆分标准见 PIPE-D 第 6 步。还没定的事项见 [Open Questions]
 | 风险 | 应对 |
 |---|---|
 | AI 没经确认就创建 `docs/features/<f>/` | PIPE-D 第 5 步规定必须人确认 |
-| AI 判断错了当前阶段 | 以进度文件 `raw/state/state-<日期>.md` 和 `CLAUDE.local.md` 为准，不凭记忆 |
+| AI 判断错了当前阶段 | 以 wayfinder 的地图文件为准，不凭记忆 |
 
 ## Open Questions
 
@@ -241,7 +243,7 @@ Map 的拆分标准见 PIPE-D 第 6 步。还没定的事项见 [Open Questions]
 ## Reversibility
 
 - 阶段是叠加的：去掉 Map，不影响 Create、Converge、Downstream。
-- 进度文件可以不用，退回到只在 `CLAUDE.local.md` 里记录。
+- wayfinder 不可用时，退回到在 CLAUDE 层记录进度（ARD-CG）。
 
 ## Change Log
 
@@ -265,3 +267,4 @@ Map 的拆分标准见 PIPE-D 第 6 步。还没定的事项见 [Open Questions]
 | 2026-11-20 | 第 1 轮审查后：子条款编号改为字母并在 Further Notes 留对照表（ARD-BR）；PIPE-H 链到 ARD-BT；Testing Decisions 改正 TST-O 的说法；「可以（MAY）」改为「允许」 |
 | 2026-11-20 | 第 2 轮审查后：建目录从 Create 移到 Map 人确认后（ARD-BU）；PIPE-A-C 允许 Lint 直接修格式（ARD-BV）；PIPE-K、PIPE-L 写明 raw/ 可作依据（ARD-BW），PIPE-K 加上 PRD-O 的 mock 规则；开头写明 PRD-*、TST-* 指 parent |
 | 2026-11-20 | 第 3 轮审查后：粗略 PRD 和要记的决定在目录建好前先写在 CLAUDE.local.md（PIPE-B、PIPE-C、PIPE-D）；PIPE-L 写明来源 PRD-L、PRD-N；子问题归属表不适用的理由改为只引 PIPE-L；标准文件改为三份（ARD-BX） |
+| 2026-11-24 | 进度规则交给 wayfinder，进度记录改为地图文件（ARD-CH） |

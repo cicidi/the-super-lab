@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Stamp SDD skill SKILL.md files with the parent PRD spec bundle version."""
+"""Stamp SDD skill SKILL.md files with the parent PRD spec bundle version.
+
+Each build (without --check) first adds 1 to the last part of the version (ARD-CK).
+"""
 
 from __future__ import annotations
 
@@ -46,6 +49,21 @@ def read_prd_version() -> str:
         print("missing frontmatter version: in parent SDD PRD", file=sys.stderr)
         sys.exit(1)
     return m.group(1).strip()
+
+
+def bump_prd_version() -> str:
+    """Add 1 to the last part of the parent PRD `version` and write it back (ARD-CK)."""
+    text = PRD.read_text(encoding="utf-8")
+    old = read_prd_version()
+    parts = old.split(".")
+    if not parts[-1].isdigit():
+        print(f"cannot bump non-numeric version {old!r}", file=sys.stderr)
+        sys.exit(1)
+    parts[-1] = str(int(parts[-1]) + 1)
+    new = ".".join(parts)
+    text = re.sub(r'(?m)^version:.*$', f'version: "{new}"', text, count=1)
+    PRD.write_text(text, encoding="utf-8")
+    return new
 
 
 def bundle_block(version: str, built: str, sha: str) -> str:
@@ -143,7 +161,7 @@ def main() -> None:
         help="Fail if SKILL stamps do not match parent PRD version",
     )
     args = parser.parse_args()
-    version = read_prd_version()
+    version = read_prd_version() if args.check else bump_prd_version()
     built = date.today().isoformat()
     sha = git_sha()
     if args.check:

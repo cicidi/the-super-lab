@@ -37,7 +37,7 @@ last_verified: 2026-11-24
 | 词 | 意思 |
 |---|---|
 | requirement | 固定的需求：「给我推荐一台 iPhone，并帮我购买」 |
-| 复核 | 同一个模型独立裁决 3 次，得出最终的通过或不通过。`eval.yaml` 里对应的键叫 `checkers`。它和 Python 检查脚本是两回事 |
+| 复核 | 同一个模型独立裁决 5 次，得出最终的通过或不通过（[ARD-CJ](../decision-history/spec-driven-development-decision-history.md#ard-cj)）。`eval.yaml` 里对应的键叫 `checkers`。它和 Python 检查脚本是两回事 |
 | 基线 | 只装被测 skill、不加任何辅助 skill 的配置，即 `grill.skills: []` |
 
 ## Test Assets
@@ -84,7 +84,7 @@ last_verified: 2026-11-24
 
 分数 2 =（加分合计 − 减分合计）× 10 ÷ 标注总数。满分 10，可以是负数。「类似」由判分模型判断。只在同一个 gold 版本内比较。
 
-**门槛：** 分数 1 必须满分；分数 2 不能低于同一 gold 版本的上一次运行（[ARD-R](../decision-history/spec-driven-development-decision-history.md#ard-r)）。复核用同一个 `deepseek-flash` 独立裁决 3 次，3 次都通过才算通过，而且复核不能推翻 Python 检查的结果。不同模型之间的偏差暂时测不了，标为 Unverified。
+**门槛：** 分数 1 必须满分；分数 2 不能低于同一 gold 版本的上一次运行（[ARD-R](../decision-history/spec-driven-development-decision-history.md#ard-r)）。复核用同一个 `deepseek-flash` 独立裁决 5 次，至少 4 次通过才算通过；复核不能推翻 Python 检查的结果（[ARD-CJ](../decision-history/spec-driven-development-decision-history.md#ard-cj)）。不同模型之间的偏差暂时测不了，标为 Unverified。
 
 **分数的用途：** 分数 1 和分数 2 是评测指标，不是产品的成功指标（PRD-G、[ARD-N](../decision-history/spec-driven-development-decision-history.md#ard-n)）。
 
@@ -134,11 +134,11 @@ last_verified: 2026-11-24
 
 ### TST-K — 评测报告
 
-**目标：** 每次运行生成一个 HTML 报告。**输入：** 任意一次运行。**通过条件：** 报告里有 run_id、分支、gold 版本、评测配置、分数 1 的逐条结果（注明 python 或 llm）、分数 2 的加减分、TST-F 四种输入的结果、3 次复核的结果。**判定：** 生成报告，再按结构检查。
+**目标：** 每次运行生成一个 HTML 报告。**输入：** 任意一次运行。**通过条件：** 报告里有 run_id、分支、gold 版本、评测配置、分数 1 的逐条结果（注明 python 或 llm）、分数 2 的加减分、TST-F 四种输入的结果、5 次复核的结果和 Claude 的核对意见。**判定：** 生成报告，再按结构检查。
 
-### TST-L — 3 次独立复核
+### TST-L — 5 次独立复核
 
-**目标：** 得出最终的通过或不通过。**输入：** 评测报告和改动。**通过条件：** 同一个 `deepseek-flash` 独立裁决 3 次，3 次都通过；不推翻 Python 检查的结果。**判定：** 跑 3 次。不同模型之间的偏差标为 Unverified。
+**目标：** 得出最终的通过或不通过。**输入：** 评测报告和改动。**通过条件：** 同一个 `deepseek-flash` 独立裁决 5 次，至少 4 次通过；不推翻 Python 检查的结果。**判定：** 跑 5 次，Claude 再核对没通过和有分歧的条目（[ARD-CJ](../decision-history/spec-driven-development-decision-history.md#ard-cj)）。不同模型之间的偏差标为 Unverified。
 
 ### TST-M — 改了标准或 gold 之后同步测试
 
@@ -209,11 +209,15 @@ last_verified: 2026-11-24
 
 ### TST-Y — skill 版本戳和 PRD 一致
 
-**目标：** 四个 SDD `SKILL.md`（交付的 spec-write、spec-review，以及也引用标准文件的 spec-organize、spec-pipeline） 的版本戳等于 parent PRD 的 `version`，且 frontmatter 里的 `spec_*` 键各只出现一次（[ARD-CC](../decision-history/spec-driven-development-decision-history.md#ard-cc)）。**判定：** Python（`build_spec_skills.py --check`）。
+**目标：** 四个 SDD `SKILL.md`（交付的 spec-write、spec-review，以及也引用标准文件的 spec-organize、spec-pipeline） 的版本戳等于 parent PRD 的 `version`，且 frontmatter 里的 `spec_*` 键各只出现一次；每次 build 版本末位加 1（[ARD-CK](../decision-history/spec-driven-development-decision-history.md#ard-ck)）。**判定：** Python（`build_spec_skills.py --check`）。
 
 ### TST-Z — 每页都能从首页点到
 
 **目标：** `docs/book/html/` 下每个 HTML 页面都能从 `index.html` 顺着链接点到（[ARD-CD](../decision-history/spec-driven-development-decision-history.md#ard-cd)）。**判定：** Python（`tools/check_site_reachable.py`）。
+
+### TST-AA — wayfinder 执行进度规则
+
+**目标：** `skills/wayfinder/SKILL.md` 写明地图文件的两个位置、提交前问是否跑 spec-review 并记下拒绝、有阻塞问题时不进入 Downstream（[ARD-CH](../decision-history/spec-driven-development-decision-history.md#ard-ch)）。**判定：** Python。
 
 ## Test Execution Order
 
@@ -241,8 +245,8 @@ last_verified: 2026-11-24
 | 检查和版本戳 | TST-X 没有 L1 内容减少；TST-Y 版本戳和 PRD 一致 |
 | 外部 gold | TST-T：有问题的快照上，应该找出的都找出；修好的快照上，除了允许的以外 0 个问题；源仓库不在本机就跳过 |
 | gold v1 定稿 | TST-D：范例的分数 1 满分；标注经人工认可 |
-| spec-write 可以发布 | TST-E 分数 1 满分、分数 2 不退步；TST-F 四种输入全部通过；TST-G 没有差异；TST-L 3 次都通过 |
-| spec-review 可以发布 | TST-H 找出 100%、误报 0；TST-I 不低于上一次；TST-L 3 次都通过 |
+| spec-write 可以发布 | TST-E 分数 1 满分、分数 2 不退步；TST-F 四种输入全部通过；TST-G 没有差异；TST-L 5 次里至少 4 次通过 |
+| spec-review 可以发布 | TST-H 找出 100%、误报 0；TST-I 不低于上一次；TST-L 5 次里至少 4 次通过 |
 | gold 升版 | TST-M 追加标注后，重跑 TST-E 和 TST-H，建立新的基线 |
 
 ## Traceability
@@ -317,3 +321,4 @@ document-standard 的 reader PRD：
 | 2026-11-24 | TST-A：写明 parent DSGN-A 的改动上限不收进清单 |
 | 2026-11-24 | TST-X 改引 DSGN-I；TST-W 改成完整句子；TST-Y 写明四个 skill；门槛表补 TST-W 到 TST-Z，TST-R 按内容比较 |
 | 2026-11-24 | TST-W 写明查的是 `data-svg="` 占位属性 |
+| 2026-11-24 | 复核改为 5 次、至少 4 次通过，Claude 再核对（ARD-CJ）；TST-Y 加升版本（ARD-CK）；新增 TST-AA（ARD-CH） |

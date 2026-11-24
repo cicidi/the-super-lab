@@ -22,12 +22,12 @@ metadata:
     - check work
     - accept work
     - challenge this
-  spec_bundle_version: "1.0.0"
+  spec_bundle_version: "1.0.1"
   spec_built_at: "2026-11-24"
-  spec_git_sha: "8ba542e"
+  spec_git_sha: "f68f3ac"
 ---
 <!-- SPEC-BUNDLE-START -->
-> **SDD spec bundle** `1.0.0` · built 2026-11-24 · git `8ba542e`
+> **SDD spec bundle** `1.0.1` · built 2026-11-24 · git `f68f3ac`
 <!-- SPEC-BUNDLE-END -->
 
 # spec-review
@@ -57,7 +57,7 @@ Judge a spec under review against `SPEC-STANDARD.md` chapters 1–3 and
 `SPEC-PRESENTATION.md`; when HTML pages are in scope, also
 `skills/spec-html-standard/SPEC-HTML-STANDARD.md` (three standard files, ARD-BX). Also load content levels
 (`spec-organize/CONTENT-PRIORITY.md`), the authority model
-(`spec-organize/AUTHORITY-BY-CONCERN.md`), and `spec-organize/SPEC-SCOPE.md`.
+(`spec-organize/AUTHORITY-BY-CONCERN.md`), and `spec-organize/SPEC-SCOPE.md` — three review references beyond the three standard files (ARD-CI).
 
 Report as findings: L1 content that is missing, implementation detail that should
 not be there, and any claim about current implementation that the code does not

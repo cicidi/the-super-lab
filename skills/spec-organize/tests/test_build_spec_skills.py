@@ -28,3 +28,15 @@ def test_upsert_metadata_is_idempotent_without_duplicate_keys():
     twice = b.upsert_metadata(once.rstrip(), "1.0.0", "2026-01-02", "def")
     for key in ("spec_bundle_version", "spec_built_at", "spec_git_sha"):
         assert twice.count(f"  {key}:") == 1, twice
+
+
+def test_build_bumps_last_version_part(tmp_path, monkeypatch):
+    """ARD-CK: every build adds 1 to the last part of the PRD version."""
+    sys.path.insert(0, str(ROOT / "tools"))
+    import build_spec_skills as b
+
+    prd = tmp_path / "prd.md"
+    prd.write_text('---\ntitle: x\nversion: "1.0.9"\n---\n# x\n', encoding="utf-8")
+    monkeypatch.setattr(b, "PRD", prd)
+    assert b.bump_prd_version() == "1.0.10"
+    assert 'version: "1.0.10"' in prd.read_text(encoding="utf-8")

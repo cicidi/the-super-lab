@@ -131,7 +131,7 @@ parent 的汇编页（reader）把 parent 和各个 sub-feature 的文档放在�
 
 | 角色 | 负责 |
 |---|---|
-| spec-write | 只改 markdown 与同目录插图 SVG；改完后提示重新生成网页（PRD-M） |
+| spec-write | 只改 markdown 与同目录插图 SVG；改完后告诉用户网页没更新、问要不要重建，commit 前必须重建（PRD-M、parent ARD-CF） |
 | spec-review | 检查网页 L1、编号可见；插图事实与正文一致（ARD-CA） |
 | `SPEC-HTML-STANDARD.md` | `skills/spec-html-standard/` 下的规则摘要，是 DSGN-N 的可执行版本；没有对应的 SKILL.md |
 | spec-organize | 负责路径和 INDEX，不负责生成网页 |
@@ -237,3 +237,4 @@ spec-pipeline 里的 `SPEC-READER.md` 如果还在，只能是指向本篇和 `S
 | 2026-11-20 | 第 3 轮审查后：DSGN-N-K 写明没有单独页面的文档链到汇编页的对应一节；交付物改链 ARD-BX；其余 TST-R 写明属于 parent test-plan |
 | 2026-11-20 | DSGN-N-D「浏览器直接打开」改回 MUST，和 PRD-O 一致 |
 | 2026-11-24 | 全站每页都能从入口点到；GitHub Pages 从 master 发布（ARD-CD） |
+| 2026-11-24 | DSGN-N-E：spec-write 改完问要不要重建，commit 前必须重建（parent ARD-CF） |

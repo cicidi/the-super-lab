@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
-"""Real judge: deepseek-flash, 3 independent runs, writes cross-model verdicts.
+"""Real judge: deepseek-flash, 5 independent runs, writes cross-model verdicts.
 
   python3 tools/judge_deepseek.py --target must   # 15 llm MUST items
   python3 tools/judge_deepseek.py --target gold   # 10 gold annotations
 
 Corpus: committed SDD markdown + the four SKILL.md + SPEC-STANDARD.md, sent whole
-(~33k tokens/run). Verdicts aggregate 3/3: unanimous pass, unanimous fail, else
-"disputed" (counts as fail). See test-plan TST-D/E/L.
+(~33k tokens/run). Verdicts need 4 of 5 runs to agree (ARD-CJ): >=4 pass is pass,
+>=4 fail is fail, else "disputed" (counts as fail). Every item that is not a pass
+gets `claude_audit: null`; Claude fills it with agree/disagree and a reason and
+reports any disagreement to the user. See test-plan TST-D/E/L.
 """
 
 from __future__ import annotations
@@ -30,7 +32,7 @@ OUT_MUST = TESTS / "judgments" / "v1-deepseek-flash.yaml"
 OUT_GOLD = TESTS / "judgments" / "annotations-v1-deepseek-flash.yaml"
 API = "https://api.deepseek.com/chat/completions"
 MODEL = "deepseek-flash"
-RUNS = 3
+RUNS = 5
 
 SYSTEM = (
     "You are a strict repository auditor. You check whether a repository actually "
@@ -190,7 +192,13 @@ def call(prompt: str) -> dict:
     return json.loads(text[start:])
 
 
+def needed(runs: int) -> int:
+    """Votes needed for a settled verdict: 4 of 5, all of 3 or fewer (ARD-CJ)."""
+    return runs - 1 if runs >= 5 else runs
+
+
 def aggregate(runs: list[dict]) -> list[dict]:
+    need = needed(len(runs))
     by_id: dict[str, list[dict]] = {}
     for run in runs:
         for item in run.get("items", []):
@@ -198,23 +206,23 @@ def aggregate(runs: list[dict]) -> list[dict]:
     out = []
     for ident, votes in by_id.items():
         verdicts = [v.get("verdict", "fail") for v in votes]
-        if len(votes) < RUNS:
-            final = "fail"
-        elif all(v == "pass" for v in verdicts):
+        verdicts += ["fail"] * (len(runs) - len(verdicts))  # a missing vote counts as fail
+        if verdicts.count("pass") >= need:
             final = "pass"
-        elif all(v == "fail" for v in verdicts):
+        elif verdicts.count("fail") >= need:
             final = "fail"
         else:
             final = "disputed"
-        out.append(
-            {
-                "id": ident,
-                "verdict": final,
-                "votes": verdicts,
-                "evidence": votes[0].get("evidence", ""),
-                "confidence": votes[0].get("confidence"),
-            }
-        )
+        row = {
+            "id": ident,
+            "verdict": final,
+            "votes": verdicts,
+            "evidence": votes[0].get("evidence", ""),
+            "confidence": votes[0].get("confidence"),
+        }
+        if final != "pass":
+            row["claude_audit"] = None
+        out.append(row)
     return out
 
 

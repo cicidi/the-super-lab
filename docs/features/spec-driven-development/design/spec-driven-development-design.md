@@ -127,6 +127,8 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 | `~/.claude/CLAUDE.md`，以及项目里的 `CLAUDE.md`、`CLAUDE.local.md` | 跨会话、跨 feature 的默认 AI 行为 |
 | spec-write、spec-review 两个 skill | 具体任务的操作步骤；规则来自三份标准文件 |
 
+项目里写哪个文件：有 `CLAUDE.local.md` 就写它，没有就写 `CLAUDE.md`，两个都没有就问用户要不要新建（[ARD-CG](../decision-history/spec-driven-development-decision-history.md#ard-cg)）。
+
 实现 SDD 或文档标准时，计划里必须同时包含 skill 的修改和 CLAUDE 层的条目，两边写的是同一套规范。规则的细节写在 sub-feature 的 design 里，本文只定「两个渠道都要写」这条原则。
 
 ## Testing Decisions
@@ -368,3 +370,4 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 | 2026-11-24 | 术语表补上 spec bundle；子问题归属的迁移一行改链 ARD-CC（ARD-AF 已划掉） |
 | 2026-11-24 | 术语表补上 SVG、diagram-design、GitHub Pages |
 | 2026-11-24 | 术语表写明 diagram-design 不随 SDD 交付，未安装时不新画图 |
+| 2026-11-24 | DSGN-C：CLAUDE 层写哪个文件（ARD-CG） |

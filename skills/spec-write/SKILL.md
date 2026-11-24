@@ -18,12 +18,12 @@ metadata:
     - draft design
     - append decision
     - spec write
-  spec_bundle_version: "1.0.0"
+  spec_bundle_version: "1.0.1"
   spec_built_at: "2026-11-24"
-  spec_git_sha: "8ba542e"
+  spec_git_sha: "f68f3ac"
 ---
 <!-- SPEC-BUNDLE-START -->
-> **SDD spec bundle** `1.0.0` · built 2026-11-24 · git `8ba542e`
+> **SDD spec bundle** `1.0.1` · built 2026-11-24 · git `f68f3ac`
 <!-- SPEC-BUNDLE-END -->
 
 # spec-write
@@ -54,10 +54,10 @@ Illustrations, not gold. Each edit stays within 10 lines and 200 characters.
 ## Process
 
 1. Read `SPEC-STANDARD.md`, `SPEC-PRESENTATION.md`, and `SPEC-HTML-STANDARD.md` (the **Site** section, ARD-BG).
-2. Decide: create a new document from the path rules, or edit existing documents. A new feature directory is created only after the human confirms its name and split in Map; before that, keep the working name and progress in `CLAUDE.local.md` (ARD-BU).
+2. Decide: create a new document from the path rules, or edit existing documents. A new feature directory is created only after the human confirms its name and split in Map; before that, keep the working name, rough PRD and progress in the wayfinder map file `docs/state/wayfinder-<working-name>.md` (ARD-CH).
 3. If editing, list every document that states the same fact. Edit the authority document. Replace the other copies with links.
 4. Classify each edit as prose, format, style, table, or icon, then apply SPEC-PRESENTATION.
-5. Edit with **≤10 lines and ≤200 characters per edit** (both limits, ARD-BP) under `docs/`; split, or ask for a `restructure` and record the authorization as an ARD.
+5. Edit an existing file under `docs/` with **≤10 lines and ≤200 characters per edit** (both limits, ARD-BP); a new file may be written in one go (ARD-CE); split, or ask for a `restructure` and record the authorization as an ARD.
 6. Use letter-prefix IDs only (**PRD-A**, **DSGN-B**, **ARD-C**, **IMPL-A**, **TST-A**, **QUES-A**). An Open Questions entry is `QUES-A`, not `OQ-1` or `QUES-1`, and carries question, answer so far, owner, and blocking yes/no.
 7. After create/move: regenerate INDEX when the tree changes.
 8. Cross-check before finishing: every `PRD-*` id appears in the design; every `TST-*` case names the requirement it covers; an ID from another feature names that feature ("parent test-plan 的 TST-V").
@@ -65,7 +65,7 @@ Illustrations, not gold. Each edit stays within 10 lines and 200 characters.
 10. A pure standard or orchestration design may say the ownership table does not apply. If every tracker row has Owner and Evidence, link to the tracker instead of copying the table.
 11. A `file:line` citation names the commit. A renamed heading keeps the old anchor above the new title.
 12. **Readability pass.** Reread each changed section as an undergraduate programmer who has only this document and the glossary (parent design appendix). Rewrite any keyword list or arrow chain as sentences. Explain or link every term at first use; add missing terms to the glossary.
-13. After a markdown edit, prompt the user to rebuild the one site with `python3 tools/build_sdd_site.py`; rebuild only when the user asks (reader design DSGN-N-E). Each page is one directory line. A feature page keeps that feature's directory on the left and the page on the right. A hand-maintained HTML file keeps `spec-source-sha256`.
+13. After a markdown edit, tell the user which HTML pages are now out of date and ask whether to rebuild now with `python3 tools/build_sdd_site.py`. Before any commit, rebuild so the committed HTML matches the markdown (ARD-CF). Each page is one directory line. A feature page keeps that feature's directory on the left and the page on the right. A hand-maintained HTML file keeps `spec-source-sha256`.
 14. When the **diagram-design** skill is installed (it does not ship with SDD): if a section matches a shape in `SPEC-PRESENTATION.md` §Diagram and has no figure yet, add one and cite the SVG. Without it, keep existing figures and add none; do not redraw existing figures unless the user asks.
 
 ### By type (quick)
@@ -79,7 +79,7 @@ Illustrations, not gold. Each edit stays within 10 lines and 200 characters.
 | **test-plan** | **TST-*** cases; execution order; pass threshold; a Traceability table listing every `PRD-*` |
 | **any** | Changing an existing sentence: write the current rule and link the ARD that changed it. No strikethrough outside decision-history (ARD-BM). A typo may be edited in place |
 
-After substantive spec edits, prompt the user to rebuild the site with `python3 tools/build_sdd_site.py`. The reader assembly, when needed, is `python3 tools/build_sdd_reader.py`. HTML does not change the spec.
+After substantive spec edits, say the HTML is out of date and ask whether to rebuild with `python3 tools/build_sdd_site.py`; rebuild before commit regardless (ARD-CF). The reader assembly, when needed, is `python3 tools/build_sdd_reader.py`. HTML does not change the spec.
 
 ### Section headings (MUST)
 

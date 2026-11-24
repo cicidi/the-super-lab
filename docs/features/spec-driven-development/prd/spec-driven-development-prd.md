@@ -4,7 +4,7 @@ type: prd
 state: draft
 health: active
 owner: cicidi
-version: "1.0.0"
+version: "1.0.1"
 last_verified: 2026-11-24
 ---
 
@@ -116,7 +116,7 @@ AI 要把大问题拆成小的：能查的 AI 自己查（合规、财报、交�
 
 **PRD-B**：提供一组 skill。skill 本质上是写得好的 prompt，引导 AI 完成 spec 的四件事：书写、命名、检查、更新。
 
-**PRD-C**：AI 每次改 `docs/` 下的文档，必须同时满足两条：不超过 10 行，并且不超过 200 字符（[ARD-BP](../decision-history/spec-driven-development-decision-history.md#ard-bp)）。更大的改动拆成多次；确实需要一次大改（restructure）时，必须有人明确授权，并记一条 ARD（例如 [ARD-BK](../decision-history/spec-driven-development-decision-history.md#ard-bk)）。
+**PRD-C**：AI 每次改 `docs/` 下的文档，必须同时满足两条：不超过 10 行，并且不超过 200 字符（[ARD-BP](../decision-history/spec-driven-development-decision-history.md#ard-bp)）；新建一个文件不算在内（[ARD-CE](../decision-history/spec-driven-development-decision-history.md#ard-ce)）。更大的改动拆成多次；确实需要一次大改（restructure）时，必须有人明确授权，并记一条 ARD（例如 [ARD-BK](../decision-history/spec-driven-development-decision-history.md#ard-bk)）。
 
 **PRD-D**：每篇文档有行数上限，最长不超过 1,000 行，因为太长的文档几乎没法维护。decision-history 例外，不设上限：它只增不减（[ARD-E](../decision-history/spec-driven-development-decision-history.md#ard-e)）。各类文档的具体上限见 document-standard 的 DSGN-B。
 
@@ -194,3 +194,4 @@ AI 要把大问题拆成小的：能查的 AI 自己查（合规、财报、交�
 | 2026-11-20 | Resources Needed 加上 PIPE-E-B 要求的五项；偏好、时间写 not apply |
 | 2026-11-24 | Out of Scope：版本只做来源标记（ARD-CC） |
 | 2026-11-24 | Resources：列出外部服务 deepseek API、GitHub Actions 和 Pages（ARD-CD） |
+| 2026-11-24 | PRD-C：新建文件不算在改动上限内（ARD-CE） |

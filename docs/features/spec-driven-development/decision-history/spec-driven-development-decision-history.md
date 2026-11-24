@@ -24,21 +24,29 @@ last_verified: 2026-11-24
 
 | ID | Date | Decision |
 |---|------|----------|
+| ARD-CL | 2026-11-24 | 划掉的 ARD 行一律保留；某篇超过行数上限要压缩时，先压缩已划掉的内容 |
+| ARD-CK | 2026-11-24 | 每次运行 `build_spec_skills.py` 都把 parent PRD 的 `version` 末位加 1，再印进 `SKILL.md`；`--check` 不升版本 |
+| ARD-CJ | 2026-11-24 | DeepSeek 复核跑 5 次，至少 4 次一致才算定论；Claude 再逐条核对没通过或有分歧的结论，记下同意还是不同意 |
+| ARD-CI | 2026-11-24 | spec-review 除三份标准文件外，还读三份审查参考：`CONTENT-PRIORITY.md`、`AUTHORITY-BY-CONCERN.md`、`SPEC-SCOPE.md` |
+| ARD-CH | 2026-11-24 | wayfinder 负责进度规则（pipeline design 的 PIPE-A-D、PIPE-A-E、PIPE-A-F、PIPE-H、PIPE-E-A），轻量改写后成为第三个交付物 |
+| ARD-CG | 2026-11-24 | CLAUDE 层按顺序找：项目里有 `CLAUDE.local.md` 就写它，没有就写 `CLAUDE.md`，两个都没有就问用户要不要新建 |
+| ARD-CF | 2026-11-24 | spec-write 改完 markdown 要告诉用户网页还没更新，问要不要重建；commit 前必须重建，提交的网页和 markdown 一致（TST-R） |
+| ARD-CE | 2026-11-24 | 改动上限只管修改已有文件；新建一个文件不算在内 |
 | ARD-CD | 2026-11-24 | 网站用 GitHub Pages 发布：推送 master 后由 GitHub Actions 从 markdown 重新生成并部署；每一页都要能从 `index.html` 点到 |
-| ARD-CC | 2026-11-24 | parent PRD 的 `version` 是 spec bundle（整套 SDD spec）的版本；`tools/build_spec_skills.py` 把它印进四个 SDD `SKILL.md`，只标来源，不做迁移 |
+| ~~ARD-CC~~ | 2026-11-24 | ~~parent PRD 的 `version` 是 spec bundle（整套 SDD spec）的版本；`tools/build_spec_skills.py` 把它印进四个 SDD `SKILL.md`，只标来源，不做迁移~~ → [ARD-CK](#ard-ck) |
 | ARD-CB | 2026-11-20 | 网页离线可读指正文与已提交的 SVG 插图；字体与 Mermaid 可联网加载（reader PRD 的 PRD-O） |
 | ARD-CA | 2026-11-20 | 插图用 diagram-design 画，SVG 与 citing md 同目录；全站配色与 diagram-design 默认一致；spec-review 查图文一致 |
 | ARD-BZ | 2026-11-20 | 补记两次编号迁移：parent design 的 §4 到 §8 改为 DSGN-A 到 DSGN-E；reader design 里重号的 DSGN-N-H、DSGN-N-I 改为 DSGN-N-M、DSGN-N-N |
 | ARD-BY | 2026-11-20 | reader PRD 的 PRD-L（全站样式统一）降为 NICE，和 reader design 的 DSGN-N-D 一致 |
-| ARD-BX | 2026-11-20 | 交付物只有 spec-write 和 spec-review 两个 skill。它们读三份标准文件：SPEC-STANDARD.md、SPEC-PRESENTATION.md，以及讲 HTML 页面的 SPEC-HTML-STANDARD.md；标准文件不算交付物 |
+| ~~ARD-BX~~ | 2026-11-20 | ~~交付物只有 spec-write 和 spec-review 两个 skill。它们读三份标准文件：SPEC-STANDARD.md、SPEC-PRESENTATION.md，以及讲 HTML 页面的 SPEC-HTML-STANDARD.md；标准文件不算交付物~~ → [ARD-CH](#ard-ch) |
 | ARD-BW | 2026-11-20 | `raw/` 里的文件可以单独作为证据，即使其他读者打不开；链接检查不把指向 `raw/` 的链接算作死链 |
 | ARD-BV | 2026-11-20 | 内容改动由 spec-write 做；格式类 MUST 可以由整理工具的 Lint 模式直接修，同样受 ARD-BP 的改动上限约束 |
-| ARD-BU | 2026-11-20 | feature 目录要等人在 Map 阶段确认后才建；Create 阶段只把暂定名记在 CLAUDE.local.md |
-| ARD-BT | 2026-11-20 | 重申 ARD-U、ARD-V 里仍然有效的部分：Map 阶段以访谈为主；进度在 feature 名字定之前记在 CLAUDE.local.md，定了以后记在 raw/state/；非软件难题留在本 PRD，用同样五篇文档 |
+| ~~ARD-BU~~ | 2026-11-20 | ~~feature 目录要等人在 Map 阶段确认后才建；Create 阶段只把暂定名记在 CLAUDE.local.md~~ → [ARD-CH](#ard-ch) |
+| ~~ARD-BT~~ | 2026-11-20 | ~~重申 ARD-U、ARD-V 里仍然有效的部分：Map 阶段以访谈为主；进度在 feature 名字定之前记在 CLAUDE.local.md，定了以后记在 raw/state/；非软件难题留在本 PRD，用同样五篇文档~~ → [ARD-CH](#ard-ch) |
 | ARD-BS | 2026-11-20 | 正文可以中英文混合，只要读着通顺；英文术语第一次出现时要解释，或者收进术语表。Problem Statement 可以保留作者原话，包括原来的编号标题（ARD-AW 的例外，ARD-AW 在本条重述） |
 | ARD-BR | 2026-11-20 | pipeline design 的子条款改用字母：PIPE-A1 改为 PIPE-A-A，PIPE-E1 改为 PIPE-E-A，依此类推；pipeline design 里留新旧对照表 |
 | ARD-BQ | 2026-11-20 | 六种文档都可以拆分篇；有分篇时必须有入口文件 `<f>-<type>.md`，入口链到各分篇 |
-| ARD-BP | 2026-11-20 | AI 每次改 docs/ 下的 .md，必须同时满足：不超过 10 行，并且不超过 200 字符；更大的改动拆成多次，或经人授权后一次大改 |
+| ~~ARD-BP~~ | 2026-11-20 | ~~AI 每次改 docs/ 下的 .md，必须同时满足：不超过 10 行，并且不超过 200 字符；更大的改动拆成多次，或经人授权后一次大改~~ → [ARD-CE](#ard-ce) |
 | ARD-BO | 2026-11-20 | 可读性是通过条件：由 LLM 扮演本科程序员，只读一篇文档和术语表，回答从该篇需求和规则条目里抽出的问题；答错太多，或有第一次出现时没解释的术语，这篇就不通过 |
 | ARD-BN | 2026-11-20 | 规则分两级：MUST 是违反后 spec 会出错或丢信息的规则；NICE 是格式偏好。八条纯格式规则降为 NICE |
 | ARD-BM | 2026-11-20 | 删除线只用在 decision-history。正文只写现行规则，并链到推翻旧说法的 ARD；正文的旧版本交给 git |
@@ -108,6 +116,104 @@ last_verified: 2026-11-24
 | ARD-A | 2026-09-25 | 按关注点分权威，取代「全局只有一个真相来源」 |
 
 ## Evidence Appendix
+
+<a id="ard-cl"></a>
+
+### ARD-CL — 划掉的内容保留，压缩时先压它
+
+**原因。** 划掉的 ARD 行说明一条规则为什么变了，删掉就查不到来龙去脉。ARD-BE 划掉后剩下的两句也一样保留。
+
+**规则。** 划掉的行和它的 Evidence Appendix 一律保留。某篇文档超过行数上限、必须压缩时，先压缩已划掉的内容（例如合成一行并链到新 ARD），再动别的；L1 内容仍不能删。
+
+**放弃的方案。** 定期清理划掉的行：会丢掉历史。
+
+<a id="ard-ck"></a>
+
+### ARD-CK — 每次 build 升版本号
+
+**原因。** ARD-CC 只说印版本号，没说什么时候升。版本不升，两次不同的 build 印出同一个号，起不到标来源的作用。
+
+**规则。** 每次运行 `build_spec_skills.py`（不带 `--check`），先把 parent PRD 的 `version` 末位加 1，例如 `1.0.0` 变成 `1.0.1`，再印进 `SKILL.md`。`--check` 只比对，不升版本。
+
+**重述。** 本条推翻 ARD-CC 里放弃「自动升版」的部分，ARD-CC 因此划掉。其余仍有效：版本号只写在 parent PRD 的 `version`；脚本写入版本、日期、git 短 sha，拒绝重复键（TST-Y）；不定义迁移策略。
+
+**放弃的方案。** 每次由人决定升哪一位：每次都要人判断，容易忘。
+
+<a id="ard-cj"></a>
+
+### ARD-CJ — 复核跑 5 次，Claude 再核对
+
+**原因。** 2026-11-24 夜里，MUST-B 在相关内容没变的情况下出现过一次 2 比 1 的翻转，说明 3 次太少。DeepSeek 的结论本身也可能错。
+
+**规则。** `judge_deepseek.py` 默认跑 5 次：至少 4 次通过算通过，至少 4 次不通过算不通过，其余算有分歧，按不通过计。
+
+**规则（续）。** Claude 逐条核对不通过和有分歧的结论，把同意或不同意及理由写进 `claude_audit`。Claude 不同意时报告用户，不自己改判；Python 检查的结果仍不能推翻。
+
+**放弃的方案。** 5 次都一致才通过：次数越多越容易因一次波动失败。换更贵的模型：仍是一个模型说了算。
+
+<a id="ard-ci"></a>
+
+### ARD-CI — spec-review 的三份审查参考
+
+**原因。** 契约说 skill 只读三份标准文件，spec-review 的正文却还加载另外三份，两处说法不一致。
+
+**规则。** spec-review 另读三份审查参考：`CONTENT-PRIORITY.md`（哪些是 L1 必有内容）、`AUTHORITY-BY-CONCERN.md`（每件事以哪篇为准）、`SPEC-SCOPE.md`（design 不写实现细节）。
+
+它们支撑审查里的具体检查，不是写作标准，spec-write 不必读。
+
+**放弃的方案。** 并进 SPEC-STANDARD.md：标准文件变长，写作时又用不到。
+
+<a id="ard-ch"></a>
+
+### ARD-CH — wayfinder 负责进度规则
+
+**原因。** spec-pipeline 不再是入口 skill 以后，pipeline design 的 PIPE-A-D、PIPE-A-E、PIPE-A-F、PIPE-H、PIPE-E-A 没有 skill 负责。
+
+另外，名字没定时进度全记在 `CLAUDE.local.md` 一处，几个 feature 同时进行就会互相覆盖。名字没定时的暂定名、粗略 PRD 和背景也一起移进地图文件。
+
+**规则。** wayfinder 的地图（map）就是进度记录。名字没定时放在 `docs/state/wayfinder-<暂定名>.md`，定了以后移到 `docs/features/<f>/raw/state/wayfinder-map.md`，都不提交。
+
+每个 feature 一个地图文件，互不覆盖；CLAUDE 层只记当前地图的路径（ARD-CG）。
+
+**规则（续）。** 重新开始时读地图给出回顾。标「阻塞」的问题对应未关闭的 brief，有未关闭的就不进入 Downstream。提交前问要不要跑 spec-review，用户说不跑就记进地图。
+
+**重述。** 本条推翻 ARD-BX「交付物只有两个」，以及 ARD-BT、ARD-BU「进度记在 CLAUDE.local.md」的部分，三条因此划掉。
+
+仍有效的部分：spec-write、spec-review 读三份标准文件，标准文件不算交付物；Map 以访谈为主；非软件难题留在本 PRD；人在 Map 确认名字后才建 feature 目录。
+
+**放弃的方案。** 交给 spec-write：正文变重，名字没定时的冲突还要另想办法。先标 Unverified：规则一直没人执行。改写 wayfinder 会和上游 mattpocock/skills 分叉，接受这个代价。
+
+<a id="ard-cg"></a>
+
+### ARD-CG — CLAUDE 层写在哪个文件
+
+**原因。** DSGN-C 要求规范也写进 CLAUDE 层，但本仓库没有 `CLAUDE.md`，只有不提交的 `CLAUDE.local.md`。
+
+**规则。** 按顺序找：项目里有 `CLAUDE.local.md` 就写它；没有就写 `CLAUDE.md`；两个都没有，问用户要不要新建，不自己建。
+
+**放弃的方案。** 一律新建 `CLAUDE.md`：会把个人设置提交进仓库。
+
+<a id="ard-cf"></a>
+
+### ARD-CF — 网页什么时候重建
+
+**原因。** TST-R 要求提交的网页和 markdown 一致，spec-write 却规定用户要求时才重建，两条冲突。
+
+**规则。** spec-write 改完 markdown，告诉用户哪些网页还没更新，问要不要现在重建。commit 前必须重建，让提交的网页和 markdown 一致；推送 master 后 CI 再重建并部署（ARD-CD）。
+
+**放弃的方案。** 不再提交 HTML、只靠 CI 生成：在本地分支上就看不到网页。
+
+<a id="ard-ce"></a>
+
+### ARD-CE — 新建文件不受改动上限限制
+
+**原因。** 上限是为了让每次修改都看得清（ARD-BP）。新建的文件没有旧内容可对比，拆成十几次只多出步骤。
+
+**规则。** 上限只管修改已有文件。新建一个文件可以一次写完，但仍要符合行数上限（PRD-D）。
+
+**重述。** 本条推翻 ARD-BP 没区分新建和修改的部分，ARD-BP 因此划掉。其余仍有效：修改 `docs/` 下已有的 markdown，每次不超过 10 行并且不超过 200 字符；更大的改动拆开，或经人授权。
+
+**放弃的方案。** 新建文件也按 10 行拆：步骤多，看不出好处。
 
 <a id="ard-cd"></a>
 
@@ -749,3 +855,4 @@ payment-impl-plan-01-schema.md         impl-plan 分篇：序号加阶段，有�
 | 2026-11-24 | ARD-CD：GitHub Pages 发布，删除 6 个从首页点不到的旧页面 |
 | 2026-11-24 | ARD-BO 的放弃方案改正对 ISO 24495-1 的描述（审查 F16） |
 | 2026-11-24 | 补记 2026-11-20 的 Log 变化：新增 ARD-BU 到 ARD-CB；划掉 ARD-BH、ARD-BE、ARD-AW、ARD-BK（各自链到推翻它的 ARD） |
+| 2026-11-24 | 新增 ARD-CE 到 ARD-CL；划掉 ARD-CC、ARD-BX、ARD-BP、ARD-BT、ARD-BU（各自链到推翻它的 ARD） |

@@ -128,6 +128,38 @@ Answers can be:
 
 Choices are recorded so the skill reads them on every invocation.
 
+## SDD progress record (ARD-CH)
+
+In the-super-lab's spec-driven development (SDD), wayfinder owns the progress
+rules of the pipeline design (PIPE-A-D, PIPE-A-E, PIPE-A-F, PIPE-H, PIPE-E-A).
+The tracker is local markdown and the **map file is the progress record**:
+
+| When | Map file | Committed? |
+|---|---|---|
+| Before the feature name is confirmed | `docs/state/wayfinder-<working-name>.md` | No (gitignored) |
+| After the name is confirmed and `docs/features/<f>/` exists | `docs/features/<f>/raw/state/wayfinder-map.md` (move it there) | No (`raw/` is gitignored) |
+
+One map file per feature, so efforts in progress at the same time never
+overwrite each other. The map body starts with `phase` (Create, Map, Converge
+or Downstream), `feature`, and `last_action`; open briefs are the open items.
+Before the name is confirmed, the working name, the rough PRD and the research
+background live in this file too. The project's CLAUDE layer stores only the
+path of the active map: write it to `CLAUDE.local.md` if the repo has one,
+else `CLAUDE.md`; if neither exists, ask the user whether to create one (ARD-CG).
+
+- **Recap on resume (PIPE-A-E).** When the user asks, or a conversation resumes,
+  read the map and the committed docs, then report: what was done, where things
+  stand, what remains, and the suggested next step. The recap is not committed.
+- **Blocking questions stop Downstream (PIPE-E-A).** Each open question marked
+  blocking = yes is an open brief. While any blocking brief is open, do not
+  start Downstream (impl-plan, test-plan, to-tickets).
+- **Review gate before commit (PIPE-A-D).** Before committing or pushing a change
+  to committed docs, ask whether to run **spec-review** first. If the user says
+  no, record the skip in the map (date and "spec-review skipped by user"); never
+  skip silently.
+- **Decisions leave the map.** A decision with direction goes into
+  decision-history, the PRD or the design via **spec-write**; the map only links it.
+
 ## Fog of war
 
 The map is _deliberately_ incomplete: don't chart what you can't yet see. Beyond the live briefs lies the **fog of war** — the dim view of decisions and investigations you can tell are coming but can't yet pin down, because they hang on questions still open. Resolving a brief clears the fog ahead of it, graduating whatever's now specifiable into fresh briefs — one at a time, until the way to the destination is clear and no briefs remain.
@@ -149,20 +181,14 @@ Out-of-scope work never graduates — the frontier stops at the destination — 
 
 Ruling something out of scope is a scoping act, not a step on the route. When a brief that already exists turns out to sit past the destination — mis-scoped in while charting, or exposed by a resolution — **close it** (a closed brief is unambiguously off the frontier) and leave one line in the **Out of scope** section: the gist plus why it's out of scope, linking the closed brief. It stays out of **Decisions so far**, which records the route actually walked — a scope boundary isn't a step on it.
 
-## Doc-Organize: MkDocs-Ready
+## Spec site
 
-Every document created or moved during a Wayfinder session must be MkDocs-ready
-— deployable as a GitHub Pages website without additional conversion.
+Every committed document created or moved during a Wayfinder session follows
+`skills/spec-organize/SPEC-STANDARD.md` (paths, kebab-case names, INDEX.md).
+The one site is rebuilt with `python3 tools/build_sdd_site.py` before commit and
+deployed by GitHub Pages from master (ARD-CF, ARD-CD).
 
-`doc-organize` runs as an inline discipline, not a separate checkpoint:
-- INDEX.md is maintained (new docs added, moved docs updated)
-- File naming follows mkdocs conventions (kebab-case, no special chars)
-- Directory structure matches mkdocs nav hierarchy
-- `mkdocs.yml` nav is updated when new sections are added
-
-This is a standing requirement for every document-producing step.
-
-## Spec Creation & Doc-Review Checkpoint
+## Spec Creation & Spec-Review Checkpoint
 
 After all briefs are resolved and the map is done, before handing off to
 `to-tickets`:
@@ -177,11 +203,11 @@ Wayfinder map done
        +-- Creates a Jira ticket for the spec itself
        |
        v
-    doc-review checkpoint
+    spec-review checkpoint
        |
        +-- Reviews: spec + all closed briefs + CONTEXT.md + ADRs
        +-- Checks: consistency, completeness, no contradictions
-       +-- Verifies: mkdocs-ready (INDEX.md, nav, naming)
+       +-- Verifies: SPEC-STANDARD paths, INDEX.md, naming
        |
        v
     Review passed?
@@ -190,7 +216,7 @@ Wayfinder map done
    NO  +-- fix documents, re-review
 ```
 
-The doc-review checkpoint is a gate — it must pass before `to-tickets` can run.
+The spec-review checkpoint is a gate — it must pass before `to-tickets` can run.
 This ensures all documents are consistent, complete, and deployable before any
 implementation begins.
 
@@ -209,7 +235,7 @@ N briefs (decisions) -> 1 spec (PRD, a Jira ticket) -> M Jira tickets (build)
 ## Pipeline
 
 ```
-wayfinder -> to-spec -> doc-review -> to-tickets -> auto-tdd
+wayfinder -> to-spec -> spec-review -> to-tickets -> auto-tdd
  (decide)    (write)    (verify)      (ticket)     (build)
 ```
 
@@ -239,7 +265,7 @@ User invokes with a map (URL or number). A brief is **optional** — without one
    4a. **Delivery Review Gate.** IF the brief type is `task` AND the task produced
        deliverables (files, code, documents):
        - Determine deliverable type:
-         - `.md` files → invoke `doc-review` (ai-coworker)
+         - `.md` files → invoke `spec-review`
          - code files → invoke `matt-code-review` (ai-coworker)
          - fallback (neither available) → Claude's default review
        - Review must pass before the brief can be closed.

@@ -137,7 +137,7 @@ sub-feature 的例子（parent 是 `spec-driven-development`，sub-feature 是 `
 | `raw/design/` | 还没写进正式 design 的草稿 | `<YYYY-MM-DD>-<对象>.md` |
 | `raw/evidence/` | 证据、工具输出 | `<YYYY-MM-DD>-<简称>.md` |
 | `raw/discussion/` | 讨论记录（可选） | `<主题>.md` |
-| `raw/state/` | 进度快照，用来在长对话被压缩后恢复上下文 | `state-<YYYY-MM-DD>.md`（最多 400 行） |
+| `raw/state/` | 进度快照，用来在长对话被压缩后恢复上下文 | `state-<YYYY-MM-DD>.md`（最多 400 行）；SDD 的进度用 `wayfinder-map.md`（parent ARD-CH） |
 
 旧项目里直接放在 feature 根目录的 `state/`、`research/`、`discussion/`，挪进 `raw/`。工单草稿放在 `.scratch/<feature>/`，同样不提交。
 
@@ -514,3 +514,4 @@ design 管「想要怎样」，代码管「现在怎样」和内部结构。机�
 | 2026-11-20 | 第 3 轮审查后：DSGN-A 写明三份摘要（ARD-BX）；DSGN-E 写明 Problem Statement 小标题可以保留编号（ARD-BS 重述 ARD-AW）；DSGN-J 写明只推翻一部分时也整行划掉；子问题归属表不适用的理由改为只引 PIPE-L |
 | 2026-11-24 | DSGN-G：final 后经 ARD 授权的大改除外（parent ARD-BS）；不迁移旧文档改链 ARD-CC |
 | 2026-11-24 | DSGN-E 加「插图（MUST）」，DSGN-M 门槛加一条（ARD-CA，与 SPEC-STANDARD 一致） |
+| 2026-11-24 | raw/state 一行注明 SDD 用 wayfinder-map.md（parent ARD-CH） |
