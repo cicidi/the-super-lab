@@ -34,7 +34,7 @@
         <h2>spec-ticket — 需求</h2>
 <p>本篇写用户对一个<strong>还没有实现</strong>的新 skill <code>spec-ticket</code> 的需求，是前瞻式 spec（forward spec）。 实现方案见 <a href="../design/spec-ticket-design.html">design</a>。 决策的来由见 <a href="../decision-history/spec-ticket-decision-history.html">decision-history</a>。 需求全部来自用户 2026-11-24（会话 80291c19）的原话和问答，下文简称&quot;用户 2026-11-24&quot;。</p>
 <h3>Overview</h3>
-<p>ticket 指 issue tracker 上的一条工单；issue tracker 是问题跟踪系统，例如 GitHub Issues 或 Jira。 impl-plan 是 spec 里的实施计划文档，每一步写成一个 <code>IMPL-*</code> 小节，并写明它依赖谁、挡住谁、怎样算完成。 <code>spec-ticket</code> 读一份 impl-plan，为每条 <code>IMPL-*</code> 开一张工单，发到用户配置的 tracker。 用户的出发点是：&quot;to ticket 可以转成jira 或者github issue 。 看用户自己的配置&quot;（用户 2026-11-24）。 灵感来自 Matt Pocock 的 to-tickets（<a href="../../../../../../../skills/to-tickets/SKILL.md"><code>skills/to-tickets/SKILL.md</code></a>）；新 skill 可用后，to-tickets 会被移除（<a class="id-ref" href="#PRD-I">PRD-I</a>）。 与它配对的上游新 skill 是 spec-ingest，负责把聊天和已有材料整理进 spec，见 <a href="../../spec-ingest/prd/spec-ingest-prd.html"><code>docs/features/skill-factory/features/spec-ingest/prd/spec-ingest-prd.md</code></a>。</p>
+<p>ticket 指 issue tracker 上的一条工单；issue tracker 是问题跟踪系统，例如 GitHub Issues 或 Jira。 impl-plan 是 spec 里的实施计划文档，每一步写成一个 <code>IMPL-*</code> 小节，并写明它依赖谁、挡住谁、怎样算完成。 <code>spec-ticket</code> 读一份 impl-plan，为每条 <code>IMPL-*</code> 开一张工单，发到用户配置的 tracker。 用户的出发点是：&quot;to ticket 可以转成jira 或者github issue 。 看用户自己的配置&quot;（用户 2026-11-24）。 灵感来自 Matt Pocock 的 to-tickets（<code>skills/to-tickets/SKILL.md</code>）；新 skill 可用后，to-tickets 会被移除（<a class="id-ref" href="#PRD-I">PRD-I</a>）。 与它配对的上游新 skill 是 spec-ingest，负责把聊天和已有材料整理进 spec，见 <a href="../../spec-ingest/prd/spec-ingest-prd.html"><code>docs/features/skill-factory/features/spec-ingest/prd/spec-ingest-prd.md</code></a>。</p>
 <h3>Goals and Success Metrics</h3>
 <p>目标一：把 impl-plan 里已经拆好的每一步，变成 tracker 上能看、能跟踪的工单（<a class="id-ref" href="#PRD-A">PRD-A</a>）。 目标二：tracker 由用户自己选，GitHub、Jira 或本地文件都行（<a class="id-ref" href="#PRD-B">PRD-B</a>）。 用途说明：用户说这&quot;只是为了demo/track job&quot;，&quot;目前没发现什么实际用途。比如提高 工作效率，准确度&quot;（用户 2026-11-24）。 所以本 skill 的目标是演示和跟踪进度，不承诺提高效率或准确度。 成功指标：UNKNOWN。用户没有给出可量化的指标；可检查的底线是重跑不产生重复工单（<a class="id-ref" href="#PRD-E">PRD-E</a>）。</p>
 <h3>User Stories</h3>
@@ -54,6 +54,7 @@
 <p><strong><a class="id-ref" href="#PRD-G">PRD-G</a> 保留 Jira，给其他人用。</strong> 用户说&quot;jira 保留，给其他人用。保留三个选项&quot;（用户 2026-11-24 审阅）。 本机没有 Jira 连接：没有 Jira 的 MCP 服务；GitHub 有 gh 命令行和 GitHub MCP。 所以 Jira 这一路在本机没法实测；早先&quot;先只留接口&quot;（Q8）的决定已被取代（<a class="id-ref" href="../decision-history/spec-ticket-decision-history.html#ARD-I">ARD-I</a>）。用哪种 Jira（云版还是自建）未知，见 design 的 <a class="id-ref" href="../design/spec-ticket-design.html#QUES-B">QUES-B</a>。</p>
 <p><strong><a class="id-ref" href="#PRD-H">PRD-H</a> 有阻塞问题时不开工单。</strong> wayfinder 规定：feature design 里有标为 blocking 的 <code>QUES-*</code> 还开着时， 不开始下游工作，包括拆工单（<a href="../../../../../../../skills/wayfinder/SKILL.md"><code>skills/wayfinder/SKILL.md</code></a> 的 PIPE-E-A 规则）。spec-ticket 同样遵守。</p>
 <p><strong><a class="id-ref" href="#PRD-I">PRD-I</a> 取代 to-tickets。</strong> 用户说 Matt 的 to-spec 和 to-tickets&quot;可以去掉&quot;（用户 2026-11-24，Q5）。 移除在新 skill 可用之后进行；引用旧 skill 的文件（<code>grep -rln &#x27;to-spec\|to-tickets&#x27;</code> 找到的每一个），在同一次改动里改指向。 顺序是：spec、spec-review、用户审阅、写 SKILL.md、最后移除旧 skill 并改指向（用户 2026-11-24，Q9）。</p>
+<p><strong><a class="id-ref" href="#PRD-J">PRD-J</a> 每个 feature 一张母工单。</strong> 正文只放 PRD 和 design 的链接，不抄内容；每张 IMPL 工单都挂在它下面。 用户选了方案 B（用户 2026-11-24 审阅回复&quot;B&quot;），见 decision-history 的 <a class="id-ref" href="../decision-history/spec-ticket-decision-history.html#ARD-O">ARD-O</a>。</p>
 <h3>Out of Scope</h3>
 <p>v1 不做：双向同步、把状态写回 spec（<a class="id-ref" href="#PRD-F">PRD-F</a>）。 不重新切分工作：to-tickets 的纵向切片（tracer bullet）不要了，切分已在 impl-plan 里做完（<a class="id-ref" href="#PRD-A">PRD-A</a>）。 不写 spec 文档，那是 spec-ingest 和 spec-write 的事；不写代码，那是 implement 的事。</p>
 <h3>Resources Needed</h3>
@@ -70,6 +71,10 @@
 <tr>
 <td>2026-11-24</td>
 <td>按审阅改 <a class="id-ref" href="#PRD-D">PRD-D</a>（本地路径）、<a class="id-ref" href="#PRD-G">PRD-G</a>（保留 Jira）、<a class="id-ref" href="#PRD-I">PRD-I</a>（改指向清单）</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>加 <a class="id-ref" href="#PRD-J">PRD-J</a>：每个 feature 一张母工单（<a class="id-ref" href="../decision-history/spec-ticket-decision-history.html#ARD-O">ARD-O</a>）</td>
 </tr>
 </tbody></table></div>
       </div>

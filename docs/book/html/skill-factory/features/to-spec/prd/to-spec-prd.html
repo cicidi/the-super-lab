@@ -32,7 +32,7 @@
       
       <div class="doc-body">
         <h2>to-spec — 需求</h2>
-<p>本篇从过去的对话和提交记录里，整理用户对 <code>to-spec</code> 这个 skill 的需求。 实现见 <a href="../design/to-spec-design.html">design</a>。 决策的来由见 <a href="../decision-history/to-spec-decision-history.html">decision-history</a>。 Claude Code 会话原文没有保留；下文引用 <code>~/.claude/history.jsonl</code> 里的会话 id 前缀和时间。</p>
+<p>本篇从过去的对话和提交记录里，整理用户对 <code>to-spec</code> 这个 skill 的需求。 本 skill 已于 2026-11-24 移除（<a class="id-ref" href="../decision-history/to-spec-decision-history.html#ARD-G">ARD-G</a>），需求由 <a href="../../spec-ingest/prd/spec-ingest-prd.html">spec-ingest PRD</a> 接手。 实现见 <a href="../design/to-spec-design.html">design</a>。 决策的来由见 <a href="../decision-history/to-spec-decision-history.html">decision-history</a>。 Claude Code 会话原文没有保留；下文引用 <code>~/.claude/history.jsonl</code> 里的会话 id 前缀和时间。</p>
 <h3>Overview</h3>
 <p>spec 是写给开发者的需求和设计文档，PRD（product requirements document，产品需求文档）是它的另一个叫法。 <code>to-spec</code> 把当前对话里已经谈清楚的内容整理成一份 spec，发布到项目的 issue tracker。 issue tracker 指问题跟踪系统，例如 GitHub Issues 或 Jira。它不访谈用户，只做整理。 这个 skill 来自 Matt Pocock 的 mattpocock/skills，于 2026-08-02 导入（commit 212aab5）。 导入发生在会话 d8d2da7f：用户当天先学习 wayfinder，问&quot;what does to spec to&quot;，随后说&quot;continue importing to-spec&quot;（18:33、18:34）。 wayfinder 是另一个导入的 skill，把大任务拆成一串决策逐个定下来；to-spec 接在它后面。</p>
 <h3>Goals and Success Metrics</h3>
@@ -69,6 +69,10 @@
 <tr>
 <td>2026-11-24</td>
 <td>资源一节改为当前路径，并补上 spec-write（<a class="id-ref" href="../decision-history/to-spec-decision-history.html#ARD-F">ARD-F</a>）</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>开头注明本 skill 已移除，由 spec-ingest 取代（<a class="id-ref" href="../decision-history/to-spec-decision-history.html#ARD-G">ARD-G</a>）；health 改为 stale</td>
 </tr>
 </tbody></table></div>
       </div>

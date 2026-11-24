@@ -32,7 +32,7 @@
       
       <div class="doc-body">
         <h2>spec-ingest — 把已有信息分拣进 spec</h2>
-<p>本篇说明 <code>spec-ingest</code> 打算怎么工作。skill 还不存在，<code>skills/spec-ingest/SKILL.md</code> 要等本篇审过后再写（<a class="id-ref" href="../prd/spec-ingest-prd.html#PRD-F">PRD-F</a>）。 需求见 <a href="../prd/spec-ingest-prd.html">PRD</a>，决策见 <a href="../decision-history/spec-ingest-decision-history.html">decision-history</a>。 姊妹 skill 见 <a href="../../spec-ticket/design/spec-ticket-design.html">spec-ticket design</a>。</p>
+<p>本篇说明 <code>spec-ingest</code> 打算怎么工作。skill 还不存在，<a href="../../../../../../../skills/spec-ingest/SKILL.md"><code>skills/spec-ingest/SKILL.md</code></a> 要等本篇审过后再写（<a class="id-ref" href="../prd/spec-ingest-prd.html#PRD-F">PRD-F</a>）。 需求见 <a href="../prd/spec-ingest-prd.html">PRD</a>，决策见 <a href="../decision-history/spec-ingest-decision-history.html">decision-history</a>。 姊妹 skill 见 <a href="../../spec-ticket/design/spec-ticket-design.html">spec-ticket design</a>。</p>
 <h3>Problem Statement</h3>
 <p>讨论有了结论，或者手上有一份旧文档，用户想把内容并进某个 feature 的 spec。 现在只能用 Matt 的 to-spec，它按一份 PRD 模板整理，不认识用户的五类文档（<a class="id-ref" href="../prd/spec-ingest-prd.html#PRD-A">PRD-A</a>）。 如果另做一个会写文档的 skill，又会和 spec-write 形成两条写入路径，规则分叉（<a class="id-ref" href="../prd/spec-ingest-prd.html#PRD-B">PRD-B</a>）。</p>
 <h3>Solution</h3>
@@ -47,7 +47,7 @@
 <p>skill 只有一个 SKILL.md，不带脚本。分类、找出处由 agent 按本篇的规则做。 pdf 用 agent 的文件读取工具读，不另装解析库（<a class="id-ref" href="../prd/spec-ingest-prd.html#PRD-C">PRD-C</a>）。 分拣表存为 <code>docs/features/&lt;f&gt;/raw/state/spec-ingest/&lt;date&gt;-sort.md</code>；<code>raw/</code> 被 <code>.gitignore</code> 忽略，不会提交（<a class="id-ref" href="../decision-history/spec-ingest-decision-history.html#ARD-J">ARD-J</a>）。</p>
 <h3>Design</h3>
 <p><strong><a class="id-ref" href="#DSGN-A">DSGN-A</a> 输入。</strong> 第一版只接受两种输入（<a class="id-ref" href="../prd/spec-ingest-prd.html#PRD-C">PRD-C</a>）。 一是当前聊天的上下文：从用户指定的起点到现在的消息；没指定起点就用整段会话。 二是本地文件：扩展名为 <code>.md</code>、<code>.pdf</code>、<code>.txt</code> 的路径，可以一次给多个。 给了网址、音视频、代码目录等其他输入时，spec-ingest 停下，说明第一版不支持，并列出以后的方向。 pdf 没有文字层（例如扫描件）读不出字时，同样停下报告，不猜内容（<a class="id-ref" href="#QUES-C">QUES-C</a>）。</p>
-<p><strong><a class="id-ref" href="#DSGN-B">DSGN-B</a> 切条目，带出处。</strong> 每个条目只说一件事。一句话同时含需求和理由时，拆成两条。 出处的写法：聊天消息写&quot;用户 日期（会话 id 前缀）&quot;；文件写路径加行号，pdf 写路径加页码。 找不到出处的条目，出处写 UNKNOWN，内容照样保留（<a class="id-ref" href="../prd/spec-ingest-prd.html#PRD-G">PRD-G</a>）。 agent 自己推出来、输入里没有明说的内容，不算条目，不进表。</p>
+<p><strong><a class="id-ref" href="#DSGN-B">DSGN-B</a> 切条目，带出处。</strong> 每个条目只说一件事。一句话同时含需求和理由时，拆成两条：需求归 PRD，理由作为背后的决定归 decision-history。 出处的写法：聊天消息写&quot;用户 日期（会话 id 前缀）&quot;；文件写行里点名的人或引用，再加路径和行号（pdf 加页码）。 文件里既没点名也没引用的事实，出处写 UNKNOWN 并附位置；待定问题不需要依据，只写位置。 找不到出处的条目，出处写 UNKNOWN，内容照样保留（<a class="id-ref" href="../prd/spec-ingest-prd.html#PRD-G">PRD-G</a>）。 agent 自己推出来、输入里没有明说的内容，不算条目，不进表。</p>
 <p><strong><a class="id-ref" href="#DSGN-C">DSGN-C</a> 分类规则。</strong> 每个条目按下表归到一种文档类型。类型和 ID 前缀见 <a href="../../../../../../../skills/spec-organize/SPEC-STANDARD.md"><code>skills/spec-organize/SPEC-STANDARD.md</code></a>。</p>
 <div class="table-wrap"><table><thead><tr>
 <th>条目是什么</th>
@@ -98,7 +98,7 @@
 <h3>Out of Scope</h3>
 <p>网址、会议转写稿、从代码反推 spec（<a class="id-ref" href="../prd/spec-ingest-prd.html#PRD-C">PRD-C</a>）；直接写提交文档（<a class="id-ref" href="../prd/spec-ingest-prd.html#PRD-B">PRD-B</a>）；建工单（<a class="id-ref" href="../decision-history/spec-ingest-decision-history.html#ARD-H">ARD-H</a>）；对抗式审查，那是 spec-review 的事。</p>
 <h3>Further Notes</h3>
-<p>Matt 原版见 <a href="../../../../../../../skills/to-spec/SKILL.md"><code>skills/to-spec/SKILL.md</code></a>；它的旧需求见 <a href="../../to-spec/prd/to-spec-prd.html">to-spec PRD</a>。 spec-ticket 读的是 spec-write 写好的 impl-plan，所以两者的顺序是：spec-ingest、spec-write、spec-review、spec-ticket。</p>
+<p>Matt 原版见 <code>skills/to-spec/SKILL.md</code>；它的旧需求见 <a href="../../to-spec/prd/to-spec-prd.html">to-spec PRD</a>。 spec-ticket 读的是 spec-write 写好的 impl-plan，所以两者的顺序是：spec-ingest、spec-write、spec-review、spec-ticket。</p>
 <h3>Alternatives Considered</h3>
 <p>spec-ingest 自己写文档：被否决，会出现第二条写入路径（<a class="id-ref" href="../decision-history/spec-ingest-decision-history.html#ARD-B">ARD-B</a>）。 保留 to-spec 不删：被否决（<a class="id-ref" href="../decision-history/spec-ingest-decision-history.html#ARD-E">ARD-E</a>）。 保留接缝确认：被否决，它是设计而不是分拣（<a class="id-ref" href="../decision-history/spec-ingest-decision-history.html#ARD-G">ARD-G</a>）。 按条目逐条问用户：被否决，改为整张表确认一次（<a class="id-ref" href="../decision-history/spec-ingest-decision-history.html#ARD-F">ARD-F</a>）。</p>
 <h3>Drawbacks</h3>
@@ -143,7 +143,7 @@
 <tr>
 <td id="QUES-B"><a class="id-ref" href="#QUES-B">QUES-B</a></td>
 <td>去掉接缝确认（<a class="id-ref" href="../decision-history/spec-ingest-decision-history.html#ARD-G">ARD-G</a>）、不建 issue（<a class="id-ref" href="../decision-history/spec-ingest-decision-history.html#ARD-H">ARD-H</a>）这两条 agent 推荐，用户是否同意？</td>
-<td>agent 推荐，待审；spec 本身的工单只在 spec-ticket 的 <a class="id-ref" href="#QUES-A">QUES-A</a> 决定</td>
+<td>agent 推荐，待审；spec 本身的工单已定：spec-ticket 的 ARD-O（每个 feature 一张母工单）</td>
 <td>cicidi</td>
 <td>no</td>
 </tr>
@@ -176,6 +176,14 @@
 <tr>
 <td>2026-11-24</td>
 <td>按 spec-review 改 <a class="id-ref" href="#DSGN-D">DSGN-D</a>、E、F、H、I、J、测试和风险（<a class="id-ref" href="../decision-history/spec-ingest-decision-history.html#ARD-I">ARD-I</a> 到 <a class="id-ref" href="../decision-history/spec-ingest-decision-history.html#ARD-L">ARD-L</a>）；<a class="id-ref" href="#QUES-B">QUES-B</a> 指向 spec-ticket</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td><a class="id-ref" href="#QUES-B">QUES-B</a>：spec 本身的工单已定，见 spec-ticket 的 ARD-O</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td><a class="id-ref" href="#DSGN-B">DSGN-B</a> 写明理由条目的去向和文件内出处规则（写 SKILL.md 时补）</td>
 </tr>
 </tbody></table></div>
       </div>

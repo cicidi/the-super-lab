@@ -36,7 +36,7 @@
 <h3>Problem Statement</h3>
 <p>一个大任务塞不进一个 agent 会话，而且从起点到终点的路还看不清。 直接动手容易冲错方向；换了会话，前面定下的决策又会丢（PRD 的目标一）。 用户学习时问过&quot;how does the issue tracker persist state across sessions?&quot;（d8d2da7f，2026-08-02 14:30）。</p>
 <h3>Solution</h3>
-<p>把规划写成 tracker 上的一张地图（map）和一组决策问题（brief），每个会话只解决一个 brief。 brief 全部定完后，交给 to-spec、spec-review、to-tickets、auto-tdd 这条流水线（<a class="id-ref" href="../prd/wayfinder-prd.html#PRD-L">PRD-L</a>）。</p>
+<p>把规划写成 tracker 上的一张地图（map）和一组决策问题（brief），每个会话只解决一个 brief。 brief 全部定完后，交给 spec-ingest、spec-write、spec-review、spec-ticket、auto-tdd 这条流水线（<a class="id-ref" href="../prd/wayfinder-prd.html#PRD-L">PRD-L</a>、<a class="id-ref" href="../decision-history/wayfinder-decision-history.html#ARD-L">ARD-L</a>）。</p>
 <h3>User Stories</h3>
 <ul>
 <li>作为开发者，我带着一个模糊的大想法调用 wayfinder，它和我一起定下终点，画出第一版地图。</li>
@@ -56,14 +56,14 @@
 <p><strong><a class="id-ref" href="#DSGN-H">DSGN-H</a> 走地图（第二种调用）。</strong> 用户给出地图的链接或编号，brief 可给可不给；没给就取 frontier 上的第一个，先 claim（<a class="id-ref" href="../prd/wayfinder-prd.html#PRD-J">PRD-J</a>）。 需要时读相关 brief 的全文，调用 Notes 里点名的 skill 来解决。 记录结果：在 issue 下评论答案，关闭它，在地图的 Decisions so far 追加一行。 接着建新浮现的 brief，把变清楚的迷雾升级成 brief。除 research 外，每个会话只解决一个 brief。</p>
 <p><strong><a class="id-ref" href="#DSGN-I">DSGN-I</a> 交付审查关口。</strong> 走地图第 4a 步：task 类 brief 产出了文件、代码或文档时，关闭前必须过审查（<a class="id-ref" href="../prd/wayfinder-prd.html#PRD-F">PRD-F</a>）。 <code>.md</code> 文件用 spec-review（688cace 起），代码用 matt-code-review，都没有时用 Claude 默认审查；没通过就修了再审。 其余三类 brief 跳过这一步，因为它们产出的是知识和决策。</p>
 <p><strong><a class="id-ref" href="#DSGN-J">DSGN-J</a> MkDocs-ready。</strong> 每次建或移文档都顺手跑 doc-organize：维护 INDEX.md，文件名用 kebab-case（小写加连字符）（<a class="id-ref" href="../prd/wayfinder-prd.html#PRD-H">PRD-H</a>）。 目录结构对应网站导航；加了新栏目就更新 <code>mkdocs.yml</code> 的导航。</p>
-<p><strong><a class="id-ref" href="#DSGN-K">DSGN-K</a> spec 和文档审查关口。</strong> 地图走完后先跑 to-spec，把所有 brief 的结论合成一份 spec，并为 spec 建一个 issue（<a class="id-ref" href="../prd/wayfinder-prd.html#PRD-G">PRD-G</a>）。 接着 spec-review 审 spec、所有已关闭的 brief、CONTEXT.md 和 ADR，查一致、完整、无矛盾，并确认 MkDocs-ready。 通过后才能跑 to-tickets。数量关系是 N 个 brief 合成 1 份 spec，再拆成 M 张执行工单。</p>
-<p><strong><a class="id-ref" href="#DSGN-L">DSGN-L</a> 流水线。</strong> 顺序是 wayfinder（决定）、to-spec（写）、spec-review（核对）、to-tickets（拆工单）、auto-tdd（实现）（<a class="id-ref" href="../prd/wayfinder-prd.html#PRD-L">PRD-L</a>）。</p>
+<p><strong><a class="id-ref" href="#DSGN-K">DSGN-K</a> spec 和文档审查关口。</strong> 地图走完后先跑 spec-ingest，把所有 brief 的结论分拣好，交给 spec-write 写进 <code>docs/features/&lt;f&gt;/</code>（<a class="id-ref" href="../decision-history/wayfinder-decision-history.html#ARD-L">ARD-L</a>）。 接着 spec-review 审 spec、所有已关闭的 brief、CONTEXT.md 和 ADR，查一致、完整、无矛盾，并确认 MkDocs-ready。 通过后才能跑 spec-ticket。数量关系是 N 个 brief 合成 1 份 spec，再开 1 张母工单和 M 张执行工单（<a class="id-ref" href="../prd/wayfinder-prd.html#PRD-G">PRD-G</a>、<a class="id-ref" href="../decision-history/wayfinder-decision-history.html#ARD-L">ARD-L</a>）。</p>
+<p><strong><a class="id-ref" href="#DSGN-L">DSGN-L</a> 流水线。</strong> 顺序是 wayfinder（决定）、spec-ingest（分拣）、spec-write（写）、spec-review（核对）、spec-ticket（开工单）、auto-tdd（实现）（<a class="id-ref" href="../prd/wayfinder-prd.html#PRD-L">PRD-L</a>、<a class="id-ref" href="../decision-history/wayfinder-decision-history.html#ARD-L">ARD-L</a>）。</p>
 <p><strong><a class="id-ref" href="#DSGN-M">DSGN-M</a> 出处。</strong> frontmatter 写 <code>source_author: mattpocock</code> 和指向原文件的 <code>source_url</code>（<a class="id-ref" href="../prd/wayfinder-prd.html#PRD-A">PRD-A</a>）。</p>
 <p><strong><a class="id-ref" href="#DSGN-N">DSGN-N</a> 只写在导入规格里的需求。</strong> 完整生命周期示例只在导入规格第 8 节，SKILL.md 没有（<a class="id-ref" href="../prd/wayfinder-prd.html#PRD-I">PRD-I</a>），见 <a class="id-ref" href="#QUES-F">QUES-F</a>。 &quot;先写测试计划，再写实现计划&quot;只约束当时的导入工作，不是 skill 的行为（<a class="id-ref" href="../prd/wayfinder-prd.html#PRD-K">PRD-K</a>）。 &quot;定终点是第一个 challenge&quot;写成了画地图的一步，不是一个 brief（<a class="id-ref" href="../prd/wayfinder-prd.html#PRD-D">PRD-D</a>），见 <a class="id-ref" href="#QUES-A">QUES-A</a>。</p>
 <h3>Testing Decisions</h3>
 <p><code>skills/wayfinder/</code> 下只有 SKILL.md，没有自动测试或评测集。 导入时写过 12 条检查用例，覆盖 frontmatter、出处、术语、接口、审查关口和冒烟测试（commit 0f3ede7 的 test plan）。 这些用例是否逐条跑过，git 里没有记录，属于 UNKNOWN。 SDD 的 <a href="../../../../spec-driven-development/test-plan/spec-driven-development-test-plan.html">TST-J</a> 计划比较追问时加不加 wayfinder 的效果。</p>
 <h3>Out of Scope</h3>
-<p>不执行（<a class="id-ref" href="#DSGN-A">DSGN-A</a>）；不写 spec（to-spec）；不拆执行工单（to-tickets）；不写代码（auto-tdd）。 一个会话能做完的工作、需求已完整且有工单的工作，都不用本 skill（<code>when_not_to_use</code> 字段）。</p>
+<p>不执行（<a class="id-ref" href="#DSGN-A">DSGN-A</a>）；不写 spec（spec-ingest、spec-write）；不开执行工单（spec-ticket）；不写代码（auto-tdd）。 一个会话能做完的工作、需求已完整且有工单的工作，都不用本 skill（<code>when_not_to_use</code> 字段）。</p>
 <h3>Further Notes</h3>
 <p>需求见 <a href="../prd/wayfinder-prd.html">PRD</a>，决策见 <a href="../decision-history/wayfinder-decision-history.html">decision-history</a>。 导入规格、实现计划和测试计划已在 c44e983 删除，可用 <code>git show 0f3ede7</code> 查看。 用户后来真用过它：2026-08-25 规划一份硬件产品的 PRD 和交付合同（会话 09bbe239），2026-09-13 问&quot;当前做到哪里了&quot;（fbb18112）。 2026-09-25 用户发现已安装的 skill 里&quot;wayfinder 有两个&quot;，随后要求给 install.sh 加清理旧目录的 prune（631b8662）。</p>
 <h3>Alternatives Considered</h3>
@@ -127,7 +127,7 @@
 <tr>
 <td id="QUES-E"><a class="id-ref" href="#QUES-E">QUES-E</a></td>
 <td>spec 的 issue 该由 to-spec 还是 to-tickets 建（<a class="id-ref" href="../prd/wayfinder-prd.html#PRD-G">PRD-G</a>）？</td>
-<td>SKILL.md 写 to-spec，与用户 17:55 原话不同；同 to-tickets 的 <a class="id-ref" href="#QUES-A">QUES-A</a></td>
+<td>已定：spec 是文档，不建 issue；每个 feature 一张母工单由 spec-ticket 建（<a class="id-ref" href="../decision-history/wayfinder-decision-history.html#ARD-L">ARD-L</a>）</td>
 <td>cicidi</td>
 <td>no</td>
 </tr>
@@ -157,6 +157,10 @@
 <tr>
 <td>2026-11-24</td>
 <td>正文里的 doc-review 改为 spec-review，跟上 688cace</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>流水线、<a class="id-ref" href="#DSGN-K">DSGN-K</a>、<a class="id-ref" href="#DSGN-L">DSGN-L</a>、范围外改指 spec-ingest / spec-ticket；<a class="id-ref" href="#QUES-E">QUES-E</a> 已定（<a class="id-ref" href="../decision-history/wayfinder-decision-history.html#ARD-L">ARD-L</a>）</td>
 </tr>
 </tbody></table></div>
       </div>

@@ -51,7 +51,7 @@
 <p><strong><a class="id-ref" href="#DSGN-D">DSGN-D</a> 由 domain-modeling 负责记录。</strong> <code>skills/domain-modeling/</code> 存在，负责收紧术语、写 <code>CONTEXT.md</code> 和 <code>docs/adr/</code>（<a class="id-ref" href="../prd/grill-with-docs-prd.html#PRD-A">PRD-A</a>）。 它的行为见 <a href="../../domain-modeling/design/domain-modeling-design.html">domain-modeling design</a>。</p>
 <p><strong><a class="id-ref" href="#DSGN-E">DSGN-E</a> 注明出处。</strong> frontmatter 写了 <code>source_author: mattpocock</code>、<code>source_url</code>（上游原文链接）和 <code>license: MIT</code>（<a class="id-ref" href="../prd/grill-with-docs-prd.html#PRD-B">PRD-B</a>）。</p>
 <p><strong><a class="id-ref" href="#DSGN-F">DSGN-F</a> 可替换的接口实现。</strong> wayfinder 的 interview 接口默认是 grill-with-docs 加 domain-modeling（<a class="id-ref" href="../prd/grill-with-docs-prd.html#PRD-D">PRD-D</a>）。 接口表的替换一栏写的是&quot;(ask on install)&quot;，即安装时问用户；这一步是否真的实现，本次没有核实，见 <a class="id-ref" href="#QUES-D">QUES-D</a>。</p>
-<p><strong><a class="id-ref" href="#DSGN-G">DSGN-G</a> 其他调用方。</strong> <code>skills/to-spec/</code> 在对话仍含糊时，让用户改用 grill-with-docs（其 <code>when_not_to_use</code>）。 SDD 流程在 Map 阶段把它列为可选的压力测试（skills/spec-pipeline/INTEGRATIONS.md；decision-history 的 <a class="id-ref" href="../decision-history/grill-with-docs-decision-history.html#ARD-A">ARD-A</a>）。</p>
+<p><strong><a class="id-ref" href="#DSGN-G">DSGN-G</a> 其他调用方。</strong> <code>skills/spec-ingest/</code> 在内容仍含糊、需要访谈时，让用户改用 grill-with-docs（其 <code>when_not_to_use</code>）。 SDD 流程在 Map 阶段把它列为可选的压力测试（skills/spec-pipeline/INTEGRATIONS.md；decision-history 的 <a class="id-ref" href="../decision-history/grill-with-docs-decision-history.html#ARD-A">ARD-A</a>）。</p>
 <p><strong><a class="id-ref" href="#DSGN-H">DSGN-H</a> 安装目标。</strong> <code>compatibility</code> 写的是 <code>claude-code,opencode</code>（<a class="id-ref" href="../prd/grill-with-docs-prd.html#PRD-E">PRD-E</a>）。 <code>~/.coworker/install-manifest.json</code> 记录它装到了 <code>~/.claude/skills/</code>、OpenCode 和 Cursor 三处。 <code>~/.claude/skills/grill-with-docs/SKILL.md</code> 与仓库版本逐字相同（2026-11-24 比对）。</p>
 <p><strong><a class="id-ref" href="#DSGN-I">DSGN-I</a> 与上游的差异。</strong> 上游现在的正文是&quot;Call the Skill tool twice, for &quot;grilling&quot; and &quot;domain-modeling&quot;.&quot;（2026-11-24 查看）。 上游 frontmatter 还有 <code>disable-model-invocation: true</code>，即只能由用户手动调用；本仓库版本没有这一项（<a class="id-ref" href="../prd/grill-with-docs-prd.html#PRD-C">PRD-C</a>）。 这两处差异是导入后上游改的，还是导入时就不同，属于 UNKNOWN，见 <a class="id-ref" href="#QUES-B">QUES-B</a>。</p>
 <h3>Testing Decisions</h3>
@@ -133,6 +133,10 @@
 <tr>
 <td>2026-11-24</td>
 <td><code>/grilling</code> 已补导（<a class="id-ref" href="../decision-history/grill-with-docs-decision-history.html#ARD-G">ARD-G</a>）：改写 <a class="id-ref" href="#DSGN-C">DSGN-C</a>，<a class="id-ref" href="#QUES-A">QUES-A</a> 有答案</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td><a class="id-ref" href="#DSGN-G">DSGN-G</a>：to-spec 已移除，调用方改为 spec-ingest</td>
 </tr>
 </tbody></table></div>
       </div>

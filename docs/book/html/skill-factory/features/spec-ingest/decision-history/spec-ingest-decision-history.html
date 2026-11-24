@@ -63,7 +63,7 @@
 <tr>
 <td><a class="id-ref" href="#ARD-H">ARD-H</a></td>
 <td>2026-11-24</td>
-<td>spec-ingest 不在 tracker 上建 issue；spec 本身的工单统一在 spec-ticket 的 <a class="id-ref" href="../design/spec-ingest-design.html#QUES-A">QUES-A</a> 决定（agent 推荐）</td>
+<td>spec-ingest 不在 tracker 上建 issue；spec 本身的工单已定：spec-ticket 的 ARD-O（每个 feature 一张母工单）（agent 推荐）</td>
 </tr>
 <tr>
 <td><a class="id-ref" href="#ARD-G">ARD-G</a></td>
@@ -113,11 +113,11 @@
 <h4 id="ARD-E"><a class="id-ref" href="#ARD-E">ARD-E</a></h4>
 <p>理由：两个 skill 做同一件事会让 agent 选错入口（<a class="id-ref" href="../prd/spec-ingest-prd.html#PRD-F">PRD-F</a>）。 顺序是：spec、spec-review、用户审阅、SKILL.md，最后删旧 skill 并改指所有引用（清单见 <a class="id-ref" href="#ARD-K">ARD-K</a>）。 被否决的方案：长期保留 to-spec 作为非 SDD 仓库的入口。出处：用户 2026-11-24（会话 80291c19），Q5&quot;可以去掉&quot;、Q9。</p>
 <h4 id="ARD-F"><a class="id-ref" href="#ARD-F">ARD-F</a></h4>
-<p>理由：to-spec 的核心想法是只整理、不访谈（<a class="id-ref" href="../prd/spec-ingest-prd.html#PRD-D">PRD-D</a>）。spec-ingest 只分拣，不需要向用户要新内容。 分拣表的确认不是访谈：它只问&quot;这样分对不对&quot;，不问新事实。 被否决的方案：像 grill-with-docs 一样逐条访谈补齐。出处：<a href="../../../../../../../skills/to-spec/SKILL.md"><code>skills/to-spec/SKILL.md</code></a>；协调方的需求简报（2026-11-24）。</p>
+<p>理由：to-spec 的核心想法是只整理、不访谈（<a class="id-ref" href="../prd/spec-ingest-prd.html#PRD-D">PRD-D</a>）。spec-ingest 只分拣，不需要向用户要新内容。 分拣表的确认不是访谈：它只问&quot;这样分对不对&quot;，不问新事实。 被否决的方案：像 grill-with-docs 一样逐条访谈补齐。出处：<code>skills/to-spec/SKILL.md</code>；协调方的需求简报（2026-11-24）。</p>
 <h4 id="ARD-G"><a class="id-ref" href="#ARD-G">ARD-G</a></h4>
-<p>理由：to-spec 的第 2 步让 agent 自己设计测试接缝（seam，即测试从哪一层接入代码）并找用户确认。 这是新的设计工作，和&quot;只读和分拣&quot;（<a class="id-ref" href="#ARD-B">ARD-B</a>）矛盾。输入里已有的接缝说法，照常分到 design 的 Testing Decisions。 被否决的方案：保留这一步。把握约 80%，用户还没确认。出处：agent 推荐（2026-11-24）；<a href="../../../../../../../skills/to-spec/SKILL.md"><code>skills/to-spec/SKILL.md</code></a> 第 2 步。</p>
+<p>理由：to-spec 的第 2 步让 agent 自己设计测试接缝（seam，即测试从哪一层接入代码）并找用户确认。 这是新的设计工作，和&quot;只读和分拣&quot;（<a class="id-ref" href="#ARD-B">ARD-B</a>）矛盾。输入里已有的接缝说法，照常分到 design 的 Testing Decisions。 被否决的方案：保留这一步。把握约 80%，用户还没确认。出处：agent 推荐（2026-11-24）；<code>skills/to-spec/SKILL.md</code> 第 2 步。</p>
 <h4 id="ARD-H"><a class="id-ref" href="#ARD-H">ARD-H</a></h4>
-<p>理由：to-spec 在 SDD 仓库里写完后会发一个链接 issue（to-spec 第 3a 步）。 建工单是 spec-ticket 的职责，放在 spec-ingest 里会让两个 skill 都碰 tracker。 &quot;spec 本身也得有一个ticket&quot;（<a href="../../to-spec/prd/to-spec-prd.html">to-spec PRD</a> 的 <a class="id-ref" href="../prd/spec-ingest-prd.html#PRD-D">PRD-D</a>）是否保留，只在 <a href="../../spec-ticket/design/spec-ticket-design.html">spec-ticket design</a> 的 <a class="id-ref" href="../design/spec-ingest-design.html#QUES-A">QUES-A</a> 决定，本篇不定。 被否决的方案：照搬 to-spec 第 3a 步。出处：agent 推荐（2026-11-24）。</p>
+<p>理由：to-spec 在 SDD 仓库里写完后会发一个链接 issue（to-spec 第 3a 步）。 建工单是 spec-ticket 的职责，放在 spec-ingest 里会让两个 skill 都碰 tracker。 &quot;spec 本身也得有一个ticket&quot;（<a href="../../to-spec/prd/to-spec-prd.html">to-spec PRD</a> 的 <a class="id-ref" href="../prd/spec-ingest-prd.html#PRD-D">PRD-D</a>）已定：spec-ticket 的 ARD-O（每个 feature 一张母工单），见 <a href="../../spec-ticket/decision-history/spec-ticket-decision-history.html">spec-ticket decision-history</a>。 被否决的方案：照搬 to-spec 第 3a 步。出处：agent 推荐（2026-11-24）。</p>
 <h4 id="ARD-I"><a class="id-ref" href="#ARD-I">ARD-I</a></h4>
 <p>理由：spec-write 的第 2、3 步已经决定新建还是改旧、哪份是权威文档；spec-ingest 再定一次，规则就在两处（<a class="id-ref" href="#ARD-B">ARD-B</a>）。 被否决的方案：spec-ingest 给出动作列，并改 spec-write 让它照单执行。采用本决定后，spec-write 的 SKILL.md 不用改。 出处：用户 2026-11-24&quot;是的 spec write 决定文件在哪里写&quot;；spec-review 报告第 1 条。</p>
 <h4 id="ARD-J"><a class="id-ref" href="#ARD-J">ARD-J</a></h4>
@@ -138,6 +138,10 @@
 <tr>
 <td>2026-11-24</td>
 <td>按 spec-review 加 <a class="id-ref" href="#ARD-I">ARD-I</a> 到 <a class="id-ref" href="#ARD-L">ARD-L</a>；<a class="id-ref" href="#ARD-H">ARD-H</a> 指向 spec-ticket 的 <a class="id-ref" href="../design/spec-ingest-design.html#QUES-A">QUES-A</a>；<a class="id-ref" href="#ARD-D">ARD-D</a>、<a class="id-ref" href="#ARD-E">ARD-E</a> 修正</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td><a class="id-ref" href="#ARD-H">ARD-H</a> 改为已定：spec-ticket 的 ARD-O（每个 feature 一张母工单）</td>
 </tr>
 </tbody></table></div>
       </div>

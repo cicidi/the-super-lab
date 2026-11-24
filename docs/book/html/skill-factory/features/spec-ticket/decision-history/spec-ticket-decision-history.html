@@ -40,9 +40,14 @@
 <th>Decision</th>
 </tr></thead><tbody>
 <tr>
+<td><a class="id-ref" href="#ARD-O">ARD-O</a></td>
+<td>2026-11-24</td>
+<td>每个 feature 一张母工单，正文只放 PRD 和 design 的链接；每张 IMPL 工单是它的子工单</td>
+</tr>
+<tr>
 <td><a class="id-ref" href="#ARD-N">ARD-N</a></td>
 <td>2026-11-24</td>
-<td>本地夹具的结果由 <code>tools/check_spec_ticket_fixture.py</code> 比对期望清单，不用人工清单</td>
+<td>本地夹具的结果由 <a href="../../../../../../../tools/check_spec_ticket_fixture.py"><code>tools/check_spec_ticket_fixture.py</code></a> 比对期望清单，不用人工清单</td>
 </tr>
 <tr>
 <td><a class="id-ref" href="#ARD-M">ARD-M</a></td>
@@ -114,11 +119,11 @@
 </tbody></table></div>
 <h3>Evidence Appendix</h3>
 <h4 id="ARD-A"><a class="id-ref" href="#ARD-A">ARD-A</a></h4>
-<p>理由：用户说&quot;to-spec to-ticket 我认为我自己应该创建一个 skill 灵感是来此matt pccock&quot;。 被否决的方案：继续用导入的 to-tickets 原版（<a href="../../../../../../../skills/to-tickets/SKILL.md"><code>skills/to-tickets/SKILL.md</code></a>）。 出处：用户 2026-11-24（会话 80291c19）的第一条消息。</p>
+<p>理由：用户说&quot;to-spec to-ticket 我认为我自己应该创建一个 skill 灵感是来此matt pccock&quot;。 被否决的方案：继续用导入的 to-tickets 原版（<code>skills/to-tickets/SKILL.md</code>）。 出处：用户 2026-11-24（会话 80291c19）的第一条消息。</p>
 <h4 id="ARD-B"><a class="id-ref" href="#ARD-B">ARD-B</a></h4>
 <p>理由：用户说&quot;to ticket 可以是impl 也要对应git issue or jira&quot;（Q3）。 impl-plan 已经把工作切成带依赖的步骤（<a href="../../../../../../../skills/spec-organize/SPEC-STANDARD.md"><code>skills/spec-organize/SPEC-STANDARD.md</code></a>），再切一次是重复劳动。 被否决的方案：沿用 to-tickets 的纵向切片，并在发布前让用户审拆法。 出处：用户 2026-11-24（会话 80291c19），Q3、Q8。</p>
 <h4 id="ARD-C"><a class="id-ref" href="#ARD-C">ARD-C</a></h4>
-<p>理由：用户没有回答 Q4；本条按协调者的推荐处理，用户尚未确认，信心中等，见 design 的 <a class="id-ref" href="../design/spec-ticket-design.html#QUES-C">QUES-C</a>。 一行配置放在 CLAUDE.local.md，是因为不同机器可能用不同 tracker，而这个文件不提交。 缺省用本地，是沿用 to-tickets 和 wayfinder 的做法：没配置就写本地 markdown。本地工单的位置后来定在 <code>raw/state/</code> 下，见 <a class="id-ref" href="#ARD-J">ARD-J</a>。 被否决的方案：放进提交的配置文件；没配置时直接报错停下。 出处：会话 80291c19 的协调者推荐；<code>.gitignore</code>；<a href="../../../../../../../skills/to-tickets/SKILL.md"><code>skills/to-tickets/SKILL.md</code></a>。</p>
+<p>理由：用户没有回答 Q4；本条按协调者的推荐处理，用户尚未确认，信心中等，见 design 的 <a class="id-ref" href="../design/spec-ticket-design.html#QUES-C">QUES-C</a>。 一行配置放在 CLAUDE.local.md，是因为不同机器可能用不同 tracker，而这个文件不提交。 缺省用本地，是沿用 to-tickets 和 wayfinder 的做法：没配置就写本地 markdown。本地工单的位置后来定在 <code>raw/state/</code> 下，见 <a class="id-ref" href="#ARD-J">ARD-J</a>。 被否决的方案：放进提交的配置文件；没配置时直接报错停下。 出处：会话 80291c19 的协调者推荐；<code>.gitignore</code>；<code>skills/to-tickets/SKILL.md</code>。</p>
 <h4 id="ARD-D"><a class="id-ref" href="#ARD-D">ARD-D</a></h4>
 <p>理由：用户说用途&quot;只是为了demo/track job&quot;（Q3），并同意&quot;按照建议来&quot;的最小方案（Q8）。 同步状态要处理冲突，花费远大于演示用途的收益。 被否决的方案：tracker 状态自动回写到 impl-plan；tracker 上的修改同步回 spec。 出处：用户 2026-11-24（会话 80291c19），Q3、Q8。</p>
 <h4 id="ARD-E"><a class="id-ref" href="#ARD-E">ARD-E</a></h4>
@@ -141,6 +146,8 @@
 <p>理由：SDD 的 design 用 <code>是</code>/<code>否</code> 填 Blocking 列；每行都有目前答案（&quot;暂定…&quot;），&quot;有没有答案&quot;无法判断（R4）。 留在表里的行就算开着（SPEC-STANDARD 的 ARD-BC）。被否决的方案：只认 <code>yes</code>；再看答案一栏。 出处：审查报告第 4 条；<a href="../../../../../../../skills/spec-organize/SPEC-STANDARD.md"><code>skills/spec-organize/SPEC-STANDARD.md</code></a>。</p>
 <h4 id="ARD-N"><a class="id-ref" href="#ARD-N">ARD-N</a></h4>
 <p>理由：skill 是 agent 读的散文，要有东西检查结果（R10）。重跑、删表要反复比对，脚本比人工清单不易漏。 被否决的方案：人工逐项清单。出处：审查报告第 10 条；协调者 2026-11-24 让二选一。</p>
+<h4 id="ARD-O"><a class="id-ref" href="#ARD-O">ARD-O</a></h4>
+<p>理由：用途是演示和跟踪，母工单一眼看出进度（GitHub、Jira 自动显示&quot;3/7 完成&quot;）；满足 to-spec 的 <a class="id-ref" href="../prd/spec-ticket-prd.html#PRD-D">PRD-D</a>。 正文只有链接，spec 仍是文档，不违反 wayfinder&quot;SDD 里 spec 不是 issue&quot;。 被否决的方案：A，不建母工单，只给每张工单打 <code>feature:&lt;f&gt;</code> 标签。 出处：用户 2026-11-24 审阅回复&quot;B&quot;；<a href="../../../../../../../skills/wayfinder/SKILL.md"><code>skills/wayfinder/SKILL.md</code></a> 第 282 行。</p>
 <h3>Change Log</h3>
 <div class="table-wrap"><table><thead><tr>
 <th>Date</th>
@@ -153,6 +160,10 @@
 <tr>
 <td>2026-11-24</td>
 <td>按审查报告加 <a class="id-ref" href="#ARD-I">ARD-I</a> 到 <a class="id-ref" href="#ARD-N">ARD-N</a>；<a class="id-ref" href="#ARD-F">ARD-F</a> 被 <a class="id-ref" href="#ARD-I">ARD-I</a>、<a class="id-ref" href="#ARD-J">ARD-J</a> 取代</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>加 <a class="id-ref" href="#ARD-O">ARD-O</a>：每个 feature 一张母工单（用户选 B）</td>
 </tr>
 </tbody></table></div>
       </div>

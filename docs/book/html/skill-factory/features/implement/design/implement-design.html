@@ -34,7 +34,7 @@
         <h2>implement — 按 spec 和 ticket 实现</h2>
 <p>本篇说明 <code>implement</code> 这个 skill 现在怎么工作。 源文件：<a href="../../../../../../../skills/implement/SKILL.md"><code>skills/implement/SKILL.md</code></a>（commit 12c7dce 导入，f67df5b 加了 Skill Dependencies 一节）。</p>
 <h3>Problem Statement</h3>
-<p>wayfinder、to-spec、to-tickets 产出的是决策、spec 和工单，还缺一步把它们变成经过测试和审查的代码（<a class="id-ref" href="../prd/implement-prd.html#PRD-A">PRD-A</a>）。 写代码时，spec 和代码还容易悄悄走偏：改了行为却不改 spec，或者看到不一致就随手改掉一边（<a class="id-ref" href="../prd/implement-prd.html#PRD-F">PRD-F</a>、<a class="id-ref" href="../prd/implement-prd.html#PRD-G">PRD-G</a>）。</p>
+<p>wayfinder、spec-write、spec-ticket 产出的是决策、spec 和工单，还缺一步把它们变成经过测试和审查的代码（<a class="id-ref" href="../prd/implement-prd.html#PRD-A">PRD-A</a>）。 写代码时，spec 和代码还容易悄悄走偏：改了行为却不改 spec，或者看到不一致就随手改掉一边（<a class="id-ref" href="../prd/implement-prd.html#PRD-F">PRD-F</a>、<a class="id-ref" href="../prd/implement-prd.html#PRD-G">PRD-G</a>）。</p>
 <h3>Solution</h3>
 <p>一份 SKILL.md，正文沿用原作者的五句话（<a class="id-ref" href="../prd/implement-prd.html#PRD-C">PRD-C</a>），TDD 和审查两句改指本仓库的 skill（<a class="id-ref" href="../decision-history/implement-decision-history.html#ARD-F">ARD-F</a>、<a class="id-ref" href="../decision-history/implement-decision-history.html#ARD-G">ARD-G</a>）：照 spec 或 ticket 实现，用 auto-tdd 做 TDD，勤跑类型检查和单个测试，最后跑全量，审查后提交。 后加的 Skill Dependencies 一节管动手前的分类和冲突处理（<a class="id-ref" href="../prd/implement-prd.html#PRD-F">PRD-F</a>、<a class="id-ref" href="../prd/implement-prd.html#PRD-G">PRD-G</a>）。</p>
 <h3>User Stories</h3>
@@ -52,12 +52,12 @@
 <p><strong><a class="id-ref" href="#DSGN-E">DSGN-E</a> 做完先审查。</strong> 全部完成后先用 <code>/matt-code-review</code> 审查这次的改动（<a class="id-ref" href="../prd/implement-prd.html#PRD-E">PRD-E</a>、<a class="id-ref" href="../decision-history/implement-decision-history.html#ARD-G">ARD-G</a>）。 没装 matt-code-review 时，退回通用的 <code>/code-review</code>。</p>
 <p><strong><a class="id-ref" href="#DSGN-F">DSGN-F</a> 提交到当前分支。</strong> 审查之后，把工作提交到当前所在的分支，不另开分支（<a class="id-ref" href="../prd/implement-prd.html#PRD-C">PRD-C</a>）。</p>
 <p><strong><a class="id-ref" href="#DSGN-G">DSGN-G</a> 冲突先报告。</strong> 代码和 spec 说法不一致时，两边都不悄悄改（<a class="id-ref" href="../prd/implement-prd.html#PRD-G">PRD-G</a>）。 agent 报告冲突，列出两边的证据，然后问用户以哪边为准。</p>
-<p><strong><a class="id-ref" href="#DSGN-H">DSGN-H</a> 和 auto-tdd 的关系。</strong> wayfinder 的流水线是 wayfinder、to-spec、doc-review、to-tickets、auto-tdd，build 一步用的是 auto-tdd（<a class="id-ref" href="../prd/implement-prd.html#PRD-D">PRD-D</a>）。 implement 保留，但 TDD 一步转调 auto-tdd，所以两条路最终都由 auto-tdd 写代码（<a class="id-ref" href="../decision-history/implement-decision-history.html#ARD-F">ARD-F</a>）。</p>
+<p><strong><a class="id-ref" href="#DSGN-H">DSGN-H</a> 和 auto-tdd 的关系。</strong> wayfinder 的流水线是 wayfinder、spec-ingest、spec-write、spec-review、spec-ticket、auto-tdd（wayfinder 的 ARD-L），build 一步用的是 auto-tdd（<a class="id-ref" href="../prd/implement-prd.html#PRD-D">PRD-D</a>）。 implement 保留，但 TDD 一步转调 auto-tdd，所以两条路最终都由 auto-tdd 写代码（<a class="id-ref" href="../decision-history/implement-decision-history.html#ARD-F">ARD-F</a>）。</p>
 <p><strong><a class="id-ref" href="#DSGN-I">DSGN-I</a> 出处。</strong> frontmatter 的 <code>source_author</code> 是 mattpocock，<code>source_url</code> 指向原仓库的 engineering/implement/SKILL.md（<a class="id-ref" href="../prd/implement-prd.html#PRD-B">PRD-B</a>）。 README 的 skill 表用 🔗 标出它来自 mattpocock/skills。</p>
 <h3>Testing Decisions</h3>
 <p>本 skill 没有自动测试或评测集，<code>skills/implement/</code> 下只有 SKILL.md 一个文件。 是否好用，目前只能在真实项目里跑一次再人工判断；没找到实际调用过它的会话记录。</p>
 <h3>Out of Scope</h3>
-<p>spec 还含糊或决定未做完时不用本 skill；没有 ticket 可依据时也不用（SKILL.md 的 <code>when_not_to_use</code>）。 本 skill 不写 spec、不拆 ticket，这些分别是 to-spec 和 to-tickets 的事。</p>
+<p>spec 还含糊或决定未做完时不用本 skill；没有 ticket 可依据时也不用（SKILL.md 的 <code>when_not_to_use</code>）。 本 skill 不写 spec、不拆 ticket，这些分别是 spec-ingest / spec-write 和 spec-ticket 的事。</p>
 <h3>Further Notes</h3>
 <p>需求见 <a href="../prd/implement-prd.html">PRD</a>，决策见 <a href="../decision-history/implement-decision-history.html">decision-history</a>。 用户指定的替代实现见 <a href="../../auto-tdd/design/auto-tdd-design.html">auto-tdd design</a>；skill-factory 整体见 <a href="../../../design/skill-factory-design.html">parent design</a>。</p>
 <h3>Alternatives Considered</h3>
@@ -133,6 +133,10 @@
 <tr>
 <td>2026-11-24</td>
 <td>转调 auto-tdd、先用 matt-code-review、修路径（<a class="id-ref" href="../decision-history/implement-decision-history.html#ARD-F">ARD-F</a>、<a class="id-ref" href="../decision-history/implement-decision-history.html#ARD-G">ARD-G</a>），<a class="id-ref" href="#QUES-A">QUES-A</a> 到 D 已答</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>现状里的 to-spec、to-tickets 改为 spec-ingest、spec-write、spec-ticket（wayfinder ARD-L）</td>
 </tr>
 </tbody></table></div>
       </div>

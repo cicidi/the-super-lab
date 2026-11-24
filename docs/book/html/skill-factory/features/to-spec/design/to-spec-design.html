@@ -32,7 +32,7 @@
       
       <div class="doc-body">
         <h2>to-spec — 把对话整理成 spec</h2>
-<p>本篇说明 <code>to-spec</code> 这个 skill 现在怎么工作。 源文件：<a href="../../../../../../../skills/to-spec/SKILL.md"><code>skills/to-spec/SKILL.md</code></a>（commit 212aab5 导入，f67df5b 最后一次修改）。</p>
+<p>本篇说明 <code>to-spec</code> 这个 skill 现在怎么工作。 源文件：<code>skills/to-spec/SKILL.md</code>（commit 212aab5 导入，f67df5b 最后一次修改）。 本 skill 已于 2026-11-24 移除（<a class="id-ref" href="../decision-history/to-spec-decision-history.html#ARD-G">ARD-G</a>），下文记的是移除前的样子；取代者见 <a href="../../spec-ingest/design/spec-ingest-design.html">spec-ingest design</a>。</p>
 <h3>Problem Statement</h3>
 <p>wayfinder 把大任务拆成多个决策逐个定下来后，结论散在各个 issue 和对话里（<a class="id-ref" href="../prd/to-spec-prd.html#PRD-A">PRD-A</a>）。 下游的 to-tickets 拆工单时，需要一份完整、可链接的 spec 作为依据（<a class="id-ref" href="../prd/to-spec-prd.html#PRD-D">PRD-D</a>）。</p>
 <h3>Solution</h3>
@@ -134,7 +134,7 @@
 </tr>
 </tbody></table></div>
 <h3>Reversibility</h3>
-<p>所有改动都落在 git 跟踪的 <a href="../../../../../../../skills/to-spec/SKILL.md"><code>skills/to-spec/SKILL.md</code></a>，用 <code>git revert</code> 即可撤回；导入时的原样可从 commit 212aab5 取回。 已安装到 <code>~/.claude/skills/</code> 的副本，须重跑 <code>install.sh</code> 才同步。</p>
+<p>所有改动都落在 git 跟踪的 <code>skills/to-spec/SKILL.md</code>，用 <code>git revert</code> 即可撤回；导入时的原样可从 commit 212aab5 取回。 已安装到 <code>~/.claude/skills/</code> 的副本，须重跑 <code>install.sh</code> 才同步。</p>
 <h3>Change Log</h3>
 <div class="table-wrap"><table><thead><tr>
 <th>Date</th>
@@ -155,6 +155,10 @@
 <tr>
 <td>2026-11-24</td>
 <td>正文里的 doc-review 改为 spec-review，跟上 688cace</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>开头注明本 skill 已移除，由 spec-ingest 取代（<a class="id-ref" href="../decision-history/to-spec-decision-history.html#ARD-G">ARD-G</a>）；health 改为 stale</td>
 </tr>
 </tbody></table></div>
       </div>

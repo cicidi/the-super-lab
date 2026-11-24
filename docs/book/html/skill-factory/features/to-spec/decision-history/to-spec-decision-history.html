@@ -40,6 +40,11 @@
 <th>Decision</th>
 </tr></thead><tbody>
 <tr>
+<td><a class="id-ref" href="#ARD-G">ARD-G</a></td>
+<td>2026-11-24</td>
+<td>移除本 skill，由 spec-ingest / spec-ticket 取代</td>
+</tr>
+<tr>
 <td><a class="id-ref" href="#ARD-F">ARD-F</a></td>
 <td>2026-11-24</td>
 <td>SDD 仓库里交给 spec-write 写，再发一个链接 issue；非 SDD 仓库仍按模板写 PRD 发到 tracker</td>
@@ -71,6 +76,8 @@
 </tr>
 </tbody></table></div>
 <h3>Evidence Appendix</h3>
+<h4 id="ARD-G"><a class="id-ref" href="#ARD-G">ARD-G</a></h4>
+<p>理由：用户说 Matt 的 to-spec 和 to-tickets&quot;可以去掉&quot;（Q5），并定了先建新 skill、再删旧 skill 的顺序（Q9）。 取代者：spec-ingest 把对话或本地文件分拣成文档条目，交给 spec-write；spec-ticket 拆工单。被否决：长期保留 to-spec。 出处：用户 2026-11-24 审阅回复（会话 80291c19）；<a href="../../spec-ingest/decision-history/spec-ingest-decision-history.html#ard-e">spec-ingest ARD-E</a>； <a href="../../spec-ticket/decision-history/spec-ticket-decision-history.html#ard-h">spec-ticket ARD-H</a>。</p>
 <h4 id="ARD-F"><a class="id-ref" href="#ARD-F">ARD-F</a></h4>
 <p>理由：c44e983 后没有 <code>spec</code> 类型，模板也对不上 prd 和 design；SDD 规定写 spec 只走 spec-write（ARD-AJ）。 被否决：改模板去凑现行标准。出处：用户 2026-11-24 审阅回复；SDD decision-history ARD-AJ。</p>
 <h4 id="ARD-A"><a class="id-ref" href="#ARD-A">ARD-A</a></h4>
@@ -95,6 +102,10 @@
 <tr>
 <td>2026-11-24</td>
 <td>新增 <a class="id-ref" href="#ARD-F">ARD-F</a>：SDD 仓库交给 spec-write</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>新增 <a class="id-ref" href="#ARD-G">ARD-G</a>：移除本 skill，由 spec-ingest / spec-ticket 取代；health 改为 stale</td>
 </tr>
 </tbody></table></div>
       </div>

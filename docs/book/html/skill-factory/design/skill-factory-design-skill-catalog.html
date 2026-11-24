@@ -227,6 +227,7 @@
 <td><a href="../features/youtube-summarize/design/youtube-summarize-design.html">design</a></td>
 </tr>
 </tbody></table></div>
+<p>2026-11-24 注：to-spec、to-tickets 已移除（<code>5370f61</code>），由 <a href="../features/spec-ingest/design/spec-ingest-design.html">spec-ingest</a>、<a href="../features/spec-ticket/design/spec-ticket-design.html">spec-ticket</a> 取代。</p>
 <p>两个 skill 标为 parked，意思是规格还没提交。 原因是名字和已有 feature 重名：<code>research</code> 撞 <code>docs/features/discovery-research</code>，<code>youtube-research-pipeline</code> 撞 SDD 的 <code>pipeline</code> 子 feature（<code>raw/state/state-loop.md</code>）。 怎么改名要等用户决定，见下文建议表。 <code>youtube-research-pipeline</code> 没有规格，本篇对它的描述只来自它的 SKILL.md。</p>
 <h3>调用关系</h3>
 <p><strong><a class="id-ref" href="#DSGN-AG">DSGN-AG</a> 怎么数一条调用。</strong> 本篇把&quot;一个 SKILL.md 让 agent 去用另一个 skill&quot;记作一条调用边。 写法有三种：<code>/名字</code> 这样的斜杠命令，正文里点名&quot;调用某 skill&quot;，以及&quot;配套 skill&quot;这类列表。 只在 When NOT to Use 里说&quot;改用某 skill&quot;的，算作转介，不算调用。 被调用的 skill 在本仓库和 <code>~/.claude/skills/</code> 下都找不到，就记为断边。 被调用的名字后来改了，SKILL.md 没跟着改，也记为断边。 以上边是逐个 grep 26 份 SKILL.md 得到的（HEAD <code>ca8efab</code>）。</p>
@@ -326,7 +327,7 @@
 </tbody></table></div>
 <p>wayfinder 里原来也有 5 处 doc-review，commit <code>688cace</code>（2026-11-24 09:29）已改成 spec-review。 to-spec、to-tickets、wayfinder 三份规格写在这次修改之前，所以它们说&quot;wayfinder 仍写 doc-review&quot;已经过时，见 <a class="id-ref" href="#DSGN-AW">DSGN-AW</a>。</p>
 <h3>流水线</h3>
-<p><strong><a class="id-ref" href="#DSGN-AK">DSGN-AK</a> wayfinder 交付流水线。</strong> 这是本仓库最完整的一条流水线，从模糊的想法一直走到代码。 第一段是规划：wayfinder 建地图，把 brief 分给 research、grilling、prototype 去解决（<a class="id-ref" href="#DSGN-AH">DSGN-AH</a>）。 第二段是写规格：普通仓库用 to-spec 发一个 issue，SDD 仓库用 spec-write 写进 <code>docs/features/</code>。 第三段是关口：spec-review 审过，才能拆工单。 第四段是交付：to-tickets 拆工单，auto-tdd 按工单写代码（<a class="id-ref" href="#DSGN-AI">DSGN-AI</a>）。 这条链现在有三处走不通。 grilling 类 brief 是默认类型（<code>skills/wayfinder/SKILL.md:125</code>），但它要的 <code>/grilling</code> 不存在。 research 类 brief 期待一个无人值守、产出带出处 markdown 的子 agent，但 research 的两条分支都先问用户问题（research 草稿的 QUES-A）。 prototype 类 brief 走 UI 或逻辑分支时，要读的两份说明文件不存在。 另外，用户要求所有代码都要审查，但 wayfinder 让 prototype brief 跳过审查关口（prototype 的 QUES-B）。</p>
+<p><strong><a class="id-ref" href="#DSGN-AK">DSGN-AK</a> wayfinder 交付流水线。</strong> 这是本仓库最完整的一条流水线，从模糊的想法一直走到代码。 第一段是规划：wayfinder 建地图，把 brief 分给 research、grilling、prototype 去解决（<a class="id-ref" href="#DSGN-AH">DSGN-AH</a>）。 第二段是写规格：普通仓库用 to-spec 发一个 issue，SDD 仓库用 spec-write 写进 <code>docs/features/</code>。 第三段是关口：spec-review 审过，才能拆工单。 第四段是交付：to-tickets 拆工单，auto-tdd 按工单写代码（<a class="id-ref" href="#DSGN-AI">DSGN-AI</a>）。 2026-11-24 注：to-spec、to-tickets 已移除，流水线现为 wayfinder、spec-ingest、spec-write、spec-review、spec-ticket、auto-tdd。 spec-ticket 为每个 feature 开一张母工单，再为每条 IMPL-* 开一张工单（<a href="../features/spec-ticket/design/spec-ticket-design.html">spec-ticket</a>）。 这条链现在有三处走不通。 grilling 类 brief 是默认类型（<code>skills/wayfinder/SKILL.md:125</code>），但它要的 <code>/grilling</code> 不存在。 research 类 brief 期待一个无人值守、产出带出处 markdown 的子 agent，但 research 的两条分支都先问用户问题（research 草稿的 QUES-A）。 prototype 类 brief 走 UI 或逻辑分支时，要读的两份说明文件不存在。 另外，用户要求所有代码都要审查，但 wayfinder 让 prototype brief 跳过审查关口（prototype 的 QUES-B）。</p>
 <p><strong><a class="id-ref" href="#DSGN-AL">DSGN-AL</a> 视频流水线。</strong> 视频相关的 6 个 skill 都在 <code>personal-skills/</code>，它们没有一个总入口来串联。 create-video-workflow 把研究文档变成演示、视频或网站，分 7 个阶段。 transcribe-audio 说自己服务于 create-video-workflow 的第 1 阶段（<code>personal-skills/transcribe-audio/SKILL.md:7</code>）。 但 create-video-workflow 并不调用它，而是把纯音频素材记为缺口（<code>personal-skills/create-video-workflow/SKILL.md:85</code>，create-video-workflow 的 QUES-D）。 hvg 仓库里的那份 create-video-workflow 加过这一步路由，本仓库的副本没有跟上（transcribe-audio 的 QUES-C）。 youtube-summarize 自带一套 Whisper 转写和 easyocr 截图识别（<code>personal-skills/youtube-summarize/SKILL.md:64-65</code>）。 这和 transcribe-audio、pic-to-txt 的功能重复，但它不调用这两个 skill（transcribe-audio 的 QUES-B，youtube-summarize 的 QUES-D）。 youtube-research-pipeline 的第 0 步调用 pic-to-txt 的 <code>ocr.py</code>，但路径指向已不存在的目录（<a class="id-ref" href="#DSGN-AJ">DSGN-AJ</a>）。 它的第 1 步派 3 个并行子 agent 查资料，这些是它自己的子 agent，不是 research skill。 video-production-pip-style 是一份手工指南，在&quot;配套资源&quot;一节列了 youtube-research-pipeline、pic-to-txt 和 doc-organize（<code>personal-skills/video-production-pip-style/SKILL.md:364-366</code>）。 把 youtube-summarize 和 youtube-research-pipeline 合成一个 <code>/youtube</code> 的提议，2026-08-02 被推迟（youtube-summarize 的 QUES-B）。</p>
 <pre class="mermaid">flowchart LR
   TA[transcribe-audio] -. 自称服务第 1 阶段 .-&gt; CVW[create-video-workflow]
@@ -411,7 +412,7 @@
 </tr>
 <tr>
 <td>7</td>
-<td>在 <code>.gitignore</code> 加一行 <code>.scratch/</code></td>
+<td>已完成（2026-11-24，<code>85604c5</code>）：在 <code>.gitignore</code> 加一行 <code>.scratch/</code></td>
 <td>中</td>
 <td>小</td>
 <td>to-tickets、wayfinder</td>
@@ -483,7 +484,7 @@
 </tr>
 <tr>
 <td>16</td>
-<td>更新 to-spec、to-tickets、wayfinder 三份规格里关于 doc-review 的过时说法</td>
+<td>已完成（2026-11-24）：更新 to-spec、to-tickets、wayfinder 三份规格里关于 doc-review 的过时说法</td>
 <td>低</td>
 <td>小</td>
 <td>to-spec、to-tickets、wayfinder</td>
@@ -506,6 +507,10 @@
 <tr>
 <td>2026-11-24</td>
 <td>初版：skill 目录、调用关系与断边、三条流水线、共性问题和建议修复</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>目录表后和 <a class="id-ref" href="#DSGN-AK">DSGN-AK</a> 加注：to-spec、to-tickets 已移除并被取代；建议表第 7、16 条标为已完成</td>
 </tr>
 </tbody></table></div>
       </div>

@@ -32,7 +32,7 @@
       
       <div class="doc-body">
         <h2>to-tickets — 需求</h2>
-<p>本篇从过去的对话和提交记录里，整理用户对 <code>to-tickets</code> 这个 skill 的需求。 实现见 <a href="../design/to-tickets-design.html">design</a>。 决策的来由见 <a href="../decision-history/to-tickets-decision-history.html">decision-history</a>。 Claude Code 会话原文没有保留；下文引用 <code>~/.claude/history.jsonl</code> 里的会话 id 前缀和时间。</p>
+<p>本篇从过去的对话和提交记录里，整理用户对 <code>to-tickets</code> 这个 skill 的需求。 本 skill 已于 2026-11-24 移除（<a class="id-ref" href="../decision-history/to-tickets-decision-history.html#ARD-H">ARD-H</a>），需求由 <a href="../../spec-ticket/prd/spec-ticket-prd.html">spec-ticket PRD</a> 接手。 实现见 <a href="../design/to-tickets-design.html">design</a>。 决策的来由见 <a href="../decision-history/to-tickets-decision-history.html">decision-history</a>。 Claude Code 会话原文没有保留；下文引用 <code>~/.claude/history.jsonl</code> 里的会话 id 前缀和时间。</p>
 <h3>Overview</h3>
 <p>ticket 指 issue tracker 上的一条工单；issue tracker 是问题跟踪系统，例如 GitHub Issues 或 Jira。 <code>to-tickets</code> 把一份计划、spec 或一段对话拆成一组执行工单，并写明每张工单被哪些工单挡住。 spec 是写给开发者的需求和设计文档，通常由 to-spec 产出。 这个 skill 来自 Matt Pocock 的 mattpocock/skills，于 2026-08-02 导入（commit 8730941）。 导入发生在会话 d8d2da7f：用户导入 to-spec 后说&quot;continue with to-tickets&quot;（18:35）。 导入之后正文没有再改过；git 里只有两次目录搬迁（commit 8d451059、93d4a4a）。</p>
 <h3>Goals and Success Metrics</h3>
@@ -64,6 +64,10 @@
 <tr>
 <td>2026-11-24</td>
 <td>初版：从过去的对话和提交记录反推 to-tickets 的 PRD</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>开头注明本 skill 已移除，由 spec-ticket 取代（<a class="id-ref" href="../decision-history/to-tickets-decision-history.html#ARD-H">ARD-H</a>）；health 改为 stale</td>
 </tr>
 </tbody></table></div>
       </div>
