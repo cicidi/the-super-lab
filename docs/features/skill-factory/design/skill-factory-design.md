@@ -10,7 +10,8 @@ last_verified: 2026-09-25
 
 # skill-factory Specification
 
-Part: [为什么要做，一个 skill 怎么搭](skill-factory-design-why-and-anatomy.md)
+- Part: [为什么要做，一个 skill 怎么搭](skill-factory-design-why-and-anatomy.md)
+- Part: [怎么验证 skill，怎么安装和升级](skill-factory-design-verify-upgrade.md)
 
 ## Specification
 
