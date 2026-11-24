@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>implement — 按 spec 和 ticket 实现 · design · Spec Atlas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@400;600&display=swap">
+<link rel="stylesheet" href="../../../../assets/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><a href="../../../../index.html"><span class="brand-mark">SDD</span><span class="brand-name">Spec Atlas</span></a></div>
+    <button class="strike-btn" type="button" onclick="var r=document.documentElement;var off=r.dataset.strike!=='off';r.dataset.strike=off?'off':'on';this.textContent=off?'显示删除线':'隐藏删除线'">隐藏删除线</button>
+  </div>
+</header>
+<div class="site">
+  <aside class="sidebar">
+  <nav aria-label="Directory">
+    <div class="tree-overview"><a class="tree-link" href="../../../../index.html"><span class="tree-link__num">00</span>All features</a></div>
+    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../../prd/skill-factory-prd.html"><span class="tree-ord">1</span>skill-factory PRD</a></li><li class="tree-leaf"><a class="tree-link" href="../../../decision-history/skill-factory-decision-history.html"><span class="tree-ord">2</span>skill-factory — Decision History</a></li><li class="tree-leaf"><a class="tree-link" href="../../../design/skill-factory-design.html"><span class="tree-ord">3</span>skill-factory Specification</a></li><li class="tree-leaf"><a class="tree-link" href="../../../impl-plan/skill-factory-impl-plan.html"><span class="tree-ord">4</span>skill-factory Implementation Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../../../test-plan/skill-factory-test-plan.html"><span class="tree-ord">5</span>skill-factory Test Plan</a></li><li class="tree-branch"><details open><summary><span class="tree-link"><span class="tree-ord">10</span>sub-feature</span></summary><ul class="tree"><li class="tree-branch"><details open><summary><a class="tree-link" href="../../auto-tdd/design/auto-tdd-design.html">auto-tdd</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../auto-tdd/prd/auto-tdd-prd.html"><span class="tree-ord">1</span>auto-tdd — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../auto-tdd/decision-history/auto-tdd-decision-history.html"><span class="tree-ord">2</span>auto-tdd — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../auto-tdd/design/auto-tdd-design.html"><span class="tree-ord">3</span>auto-tdd — 测试驱动开发循环</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../bug/design/bug-design.html">bug</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../bug/prd/bug-prd.html"><span class="tree-ord">1</span>bug — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../bug/decision-history/bug-decision-history.html"><span class="tree-ord">2</span>bug — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../bug/design/bug-design.html"><span class="tree-ord">3</span>bug — 调试、报告与自愈</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../domain-modeling/design/domain-modeling-design.html">domain-modeling</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../domain-modeling/prd/domain-modeling-prd.html"><span class="tree-ord">1</span>domain-modeling — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../domain-modeling/decision-history/domain-modeling-decision-history.html"><span class="tree-ord">2</span>domain-modeling — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../domain-modeling/design/domain-modeling-design.html"><span class="tree-ord">3</span>domain-modeling — 领域模型与术语表</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../english-grammar-fix/design/english-grammar-fix-design.html">english-grammar-fix</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../english-grammar-fix/prd/english-grammar-fix-prd.html"><span class="tree-ord">1</span>english-grammar-fix — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../english-grammar-fix/decision-history/english-grammar-fix-decision-history.html"><span class="tree-ord">2</span>english-grammar-fix — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../english-grammar-fix/design/english-grammar-fix-design.html"><span class="tree-ord">3</span>english-grammar-fix — 英文语法修正</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../grill-with-docs/design/grill-with-docs-design.html">grill-with-docs</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../grill-with-docs/prd/grill-with-docs-prd.html"><span class="tree-ord">1</span>grill-with-docs — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../grill-with-docs/decision-history/grill-with-docs-decision-history.html"><span class="tree-ord">2</span>grill-with-docs — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../grill-with-docs/design/grill-with-docs-design.html"><span class="tree-ord">3</span>grill-with-docs — 带文档的拷问式访谈</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="implement-design.html">implement</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../prd/implement-prd.html"><span class="tree-ord">1</span>implement — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../decision-history/implement-decision-history.html"><span class="tree-ord">2</span>implement — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="implement-design.html" aria-current="page"><span class="tree-ord">3</span>implement — 按 spec 和 ticket 实现</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../skill/design/skill-design.html">skill</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../skill/prd/skill-prd.html"><span class="tree-ord">1</span>skill — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../skill/decision-history/skill-decision-history.html"><span class="tree-ord">2</span>skill — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../skill/design/skill-design.html"><span class="tree-ord">3</span>skill — Skill 管理入口</a></li></ul></details></li></ul></details></li></ul>
+  </nav>
+</aside>
+  <main class="content">
+    <nav class="breadcrumbs"><a href="../../../../index.html">Docs</a> / <span>skill-factory</span> / <span>features</span> / <span>implement</span> / <span>design</span> / <span>implement — 按 spec 和 ticket 实现</span></nav>
+    <article class="doc" data-doc="skill-factory/features/implement/design/implement-design">
+      <header class="doc-head">
+        <p class="eyebrow">skill-factory</p>
+        <h1>implement — 按 spec 和 ticket 实现</h1>
+        <p class="source">Canonical: docs/features/skill-factory/features/implement/design/implement-design.md</p>
+      </header>
+      
+      <div class="doc-body">
+        <h2>implement — 按 spec 和 ticket 实现</h2>
+<p>本篇说明 <code>implement</code> 这个 skill 现在怎么工作。 源文件：<a href="../../../../../../../skills/implement/SKILL.md"><code>skills/implement/SKILL.md</code></a>（commit 12c7dce 导入，f67df5b 加了 Skill Dependencies 一节）。</p>
+<h3>Problem Statement</h3>
+<p>wayfinder、to-spec、to-tickets 产出的是决策、spec 和工单，还缺一步把它们变成经过测试和审查的代码（<a class="id-ref" href="../prd/implement-prd.html#PRD-A">PRD-A</a>）。 写代码时，spec 和代码还容易悄悄走偏：改了行为却不改 spec，或者看到不一致就随手改掉一边（<a class="id-ref" href="../prd/implement-prd.html#PRD-F">PRD-F</a>、<a class="id-ref" href="../prd/implement-prd.html#PRD-G">PRD-G</a>）。</p>
+<h3>Solution</h3>
+<p>一份 47 行的 SKILL.md，正文是原作者的五句话（<a class="id-ref" href="../prd/implement-prd.html#PRD-C">PRD-C</a>）：照 spec 或 ticket 实现，能用 TDD 就用，勤跑类型检查和单个测试，最后跑全量，审查后提交。 后加的 Skill Dependencies 一节管动手前的分类和冲突处理（<a class="id-ref" href="../prd/implement-prd.html#PRD-F">PRD-F</a>、<a class="id-ref" href="../prd/implement-prd.html#PRD-G">PRD-G</a>）。</p>
+<h3>User Stories</h3>
+<ul>
+<li>作为开发者，ticket 定好后，我说&quot;implement tickets&quot;，agent 就按工单写代码、跑测试、审查、提交。</li>
+<li>作为维护者，agent 发现代码和 spec 不一致时，我想先看到两边的证据，再由我决定。</li>
+</ul>
+<h3>Implementation Decisions</h3>
+<p>整个 skill 只有 <code>skills/implement/</code> 下的一个 SKILL.md，没有脚本、模板或附属文件。 触发词是 implement、build、implement tickets；<code>compatibility</code> 写的是 claude-code 和 opencode。 正文的执行步骤全部委托给别的 skill：TDD 交给 <code>/tdd</code>，审查交给 <code>/code-review</code>；分类规则交给 spec-organize 的两份参考文件。 已安装的 <code>~/.claude/skills/implement/SKILL.md</code> 和仓库里的一致（2026-11-24 用 diff 核对）。</p>
+<h3>Design</h3>
+<p><strong><a class="id-ref" href="#DSGN-A">DSGN-A</a> 什么时候用。</strong> spec 和 ticket 已经备好，验收标准清楚，测试接入点也事先商量好（<a class="id-ref" href="../prd/implement-prd.html#PRD-A">PRD-A</a>）。 spec 还含糊时先用 wayfinder 或 grill-with-docs；没有 ticket 时不用。</p>
+<p><strong><a class="id-ref" href="#DSGN-B">DSGN-B</a> 动手前先分类。</strong> 先判断这次改动是行为改动还是只改实现（<a class="id-ref" href="../prd/implement-prd.html#PRD-F">PRD-F</a>）。 行为改动指外部能观察到的行为变了，要同时改 spec；重构、改名、内部优化、换框架都不用改 spec。 SKILL.md 指向 <code>doc-organize/CONTENT-PRIORITY.md</code> 和 <code>doc-organize/AUTHORITY-BY-CONCERN.md</code>。 doc-organize 在 2026-11-04 改名为 spec-organize（commit c44e983），这两个路径已经找不到文件，见 <a class="id-ref" href="#QUES-A">QUES-A</a>。</p>
+<p><strong><a class="id-ref" href="#DSGN-C">DSGN-C</a> 在约定的接入点做 TDD。</strong> TDD 指先写一个会失败的测试，再写刚好让它通过的代码（<a class="id-ref" href="../prd/implement-prd.html#PRD-C">PRD-C</a>）。 seam（接入点）指测试能插进去观察行为的位置，例如一个公开函数或一个接口；SKILL.md 要求只在事先商量好的接入点上做。 它调用 <code>/tdd</code>，但本仓库和 <code>~/.claude/skills/</code> 下都没有叫 tdd 的 skill：tdd 已在 commit 6086424 并入 auto-tdd 的基本模式，见 <a class="id-ref" href="#QUES-B">QUES-B</a>。</p>
+<p><strong><a class="id-ref" href="#DSGN-D">DSGN-D</a> 测试节奏。</strong> 类型检查和单个测试文件要经常跑；全量测试只在最后跑一次（<a class="id-ref" href="../prd/implement-prd.html#PRD-C">PRD-C</a>）。 这样每一步的反馈快，又不在中途反复付出全量测试的时间。</p>
+<p><strong><a class="id-ref" href="#DSGN-E">DSGN-E</a> 做完先审查。</strong> 全部完成后调用 <code>/code-review</code> 审查这次的改动（<a class="id-ref" href="../prd/implement-prd.html#PRD-E">PRD-E</a>）。 本机能解析到这个名字的是 Claude Code 自带的 code-review；用户要的首选 <code>matt-code-review</code> 没有被点名，见 <a class="id-ref" href="#QUES-C">QUES-C</a>。</p>
+<p><strong><a class="id-ref" href="#DSGN-F">DSGN-F</a> 提交到当前分支。</strong> 审查之后，把工作提交到当前所在的分支，不另开分支（<a class="id-ref" href="../prd/implement-prd.html#PRD-C">PRD-C</a>）。</p>
+<p><strong><a class="id-ref" href="#DSGN-G">DSGN-G</a> 冲突先报告。</strong> 代码和 spec 说法不一致时，两边都不悄悄改（<a class="id-ref" href="../prd/implement-prd.html#PRD-G">PRD-G</a>）。 agent 报告冲突，列出两边的证据，然后问用户以哪边为准。</p>
+<p><strong><a class="id-ref" href="#DSGN-H">DSGN-H</a> 和 auto-tdd 的关系。</strong> wayfinder 的流水线是 wayfinder、to-spec、doc-review、to-tickets、auto-tdd，build 一步用的是 auto-tdd（<a class="id-ref" href="../prd/implement-prd.html#PRD-D">PRD-D</a>）。 implement 仍作为 matt 的默认实现装在本机；wayfinder 的接口表只有 interview、investigate、prototype、tracker 四项，没有 build 接口，见 <a class="id-ref" href="#QUES-D">QUES-D</a>。</p>
+<p><strong><a class="id-ref" href="#DSGN-I">DSGN-I</a> 出处。</strong> frontmatter 的 <code>source_author</code> 是 mattpocock，<code>source_url</code> 指向原仓库的 engineering/implement/SKILL.md（<a class="id-ref" href="../prd/implement-prd.html#PRD-B">PRD-B</a>）。 README 的 skill 表用 🔗 标出它来自 mattpocock/skills。</p>
+<h3>Testing Decisions</h3>
+<p>本 skill 没有自动测试或评测集，<code>skills/implement/</code> 下只有 SKILL.md 一个文件。 是否好用，目前只能在真实项目里跑一次再人工判断；没找到实际调用过它的会话记录。</p>
+<h3>Out of Scope</h3>
+<p>spec 还含糊或决定未做完时不用本 skill；没有 ticket 可依据时也不用（SKILL.md 的 <code>when_not_to_use</code>）。 本 skill 不写 spec、不拆 ticket，这些分别是 to-spec 和 to-tickets 的事。</p>
+<h3>Further Notes</h3>
+<p>需求见 <a href="../prd/implement-prd.html">PRD</a>，决策见 <a href="../decision-history/implement-decision-history.html">decision-history</a>。 用户指定的替代实现见 <a href="../../auto-tdd/design/auto-tdd-design.html">auto-tdd design</a>；skill-factory 整体见 <a href="../../../design/skill-factory-design.html">parent design</a>。</p>
+<h3>Alternatives Considered</h3>
+<p>改写正文、换成自己的步骤：没有采用，导入时原样保留（<a class="id-ref" href="../decision-history/implement-decision-history.html#ARD-C">ARD-C</a>）。 流水线的 build 一步用 implement：被否决，用户指定 auto-tdd（<a class="id-ref" href="../decision-history/implement-decision-history.html#ARD-B">ARD-B</a>）。 代码是唯一事实来源、冲突时直接改 spec：被否决，改为按关注点分权威、冲突先问（<a class="id-ref" href="../decision-history/implement-decision-history.html#ARD-A">ARD-A</a>）。</p>
+<h3>Drawbacks</h3>
+<p>正文很短，几乎所有动作都委托给别的 skill；被委托的 <code>/tdd</code> 不存在，<code>/code-review</code> 指向哪个也不确定。 implement 的描述是按 spec 实现、用 TDD；auto-tdd 的描述是用 TDD 开发功能。两者范围重叠，agent 可能选错。</p>
+<h3>Risks and Mitigations</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>风险</th>
+<th>缓解</th>
+</tr></thead><tbody>
+<tr>
+<td>分类规则的两个路径失效，agent 读不到规则就跳过分类</td>
+<td>改成 <code>spec-organize/</code> 下的现有路径，见 <a class="id-ref" href="#QUES-A">QUES-A</a></td>
+</tr>
+<tr>
+<td>调用 <code>/tdd</code> 找不到 skill，TDD 一步被省掉</td>
+<td>改为调用 auto-tdd 的基本模式，见 <a class="id-ref" href="#QUES-B">QUES-B</a></td>
+</tr>
+<tr>
+<td>审查用的不是用户首选的 <code>matt-code-review</code></td>
+<td>写明先用 matt-code-review，没有再用 Claude 自带的，见 <a class="id-ref" href="#QUES-C">QUES-C</a></td>
+</tr>
+</tbody></table></div>
+<h3>Open Questions</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>ID</th>
+<th>问题</th>
+<th>目前答案</th>
+<th>Owner</th>
+<th>Blocking</th>
+</tr></thead><tbody>
+<tr>
+<td id="QUES-A"><a class="id-ref" href="#QUES-A">QUES-A</a></td>
+<td>Skill Dependencies 里的 <code>doc-organize/</code> 路径要改成 <code>spec-organize/</code> 吗（<a class="id-ref" href="../prd/implement-prd.html#PRD-F">PRD-F</a>）？</td>
+<td>文件已在 commit c44e983 移走，SKILL.md 未跟着改</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-B"><a class="id-ref" href="#QUES-B">QUES-B</a></td>
+<td><code>/tdd</code> 要改成 auto-tdd 吗（<a class="id-ref" href="../prd/implement-prd.html#PRD-C">PRD-C</a>、<a class="id-ref" href="../prd/implement-prd.html#PRD-D">PRD-D</a>）？</td>
+<td>tdd 已并入 auto-tdd（commit 6086424），SKILL.md 仍写 <code>/tdd</code></td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-C"><a class="id-ref" href="#QUES-C">QUES-C</a></td>
+<td><code>/code-review</code> 指哪一个（<a class="id-ref" href="../prd/implement-prd.html#PRD-E">PRD-E</a>）？</td>
+<td>用户要先用 matt-code-review，没有再用 Claude 自带的；SKILL.md 没点名</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-D"><a class="id-ref" href="#QUES-D">QUES-D</a></td>
+<td>用户说替代是 auto-tdd 后，implement 该删除、改成转调 auto-tdd，还是加一个可替换的 build 接口（<a class="id-ref" href="../prd/implement-prd.html#PRD-D">PRD-D</a>）？</td>
+<td>三者都没做；implement 原样保留</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+</tbody></table></div>
+<h3>Reversibility</h3>
+<p>所有改动都落在 git 跟踪的 <a href="../../../../../../../skills/implement/SKILL.md"><code>skills/implement/SKILL.md</code></a>，用 <code>git revert</code> 即可撤回；原始导入版可从 commit 12c7dce 取回。 已安装到 <code>~/.claude/skills/</code> 的副本，须重跑 <code>install.sh</code> 才同步。</p>
+<h3>Change Log</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Date</th>
+<th>Change</th>
+</tr></thead><tbody>
+<tr>
+<td>2026-11-24</td>
+<td>初版：按 SKILL.md 写出 implement 的 design，引用 <a class="id-ref" href="../prd/implement-prd.html#PRD-A">PRD-A</a> 到 <a class="id-ref" href="../prd/implement-prd.html#PRD-G">PRD-G</a></td>
+</tr>
+</tbody></table></div>
+      </div>
+    </article>
+    <nav class="pager" aria-label="Previous and next"><a class="prev" href="../prd/implement-prd.html"><span class="label">Previous</span>implement — 需求</a><a class="next" href="../decision-history/implement-decision-history.html"><span class="label">Next</span>implement — 决策记录</a></nav>
+  </main>
+</div>
+<footer class="foot"><div class="foot-inner">Assembled from committed <code>.md</code>. The Markdown is authoritative; this page is a reading view.</div></footer>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>if(window.mermaid){mermaid.initialize({startOnLoad:false});}</script>
+<script src="../../../../assets/app.js"></script>
+</body>
+</html>
