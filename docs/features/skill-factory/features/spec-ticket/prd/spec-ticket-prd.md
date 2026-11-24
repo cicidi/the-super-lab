@@ -20,7 +20,7 @@ ticket 指 issue tracker 上的一条工单；issue tracker 是问题跟踪系�
 impl-plan 是 spec 里的实施计划文档，每一步写成一个 `IMPL-*` 小节，并写明它依赖谁、挡住谁、怎样算完成。
 `spec-ticket` 读一份 impl-plan，为每条 `IMPL-*` 开一张工单，发到用户配置的 tracker。
 用户的出发点是："to ticket 可以转成jira 或者github issue 。 看用户自己的配置"（用户 2026-11-24）。
-灵感来自 Matt Pocock 的 to-tickets（`skills/to-tickets/SKILL.md`）；新 skill 可用后，to-tickets 会被移除（PRD-I）。
+灵感来自 Matt Pocock 的 to-tickets；to-tickets 已在 commit `5370f61` 移除（PRD-I）。
 与它配对的上游新 skill 是 spec-ingest，负责把聊天和已有材料整理进 spec，见
 `docs/features/skill-factory/features/spec-ingest/prd/spec-ingest-prd.md`。
 
@@ -91,3 +91,4 @@ Jira 这一路需要 Jira 网址、账号邮箱、API token 和项目 key（环�
 | 2026-11-24 | 初版：按用户 2026-11-24 的问答写出 spec-ticket 的前瞻式 PRD |
 | 2026-11-24 | 按审阅改 PRD-D（本地路径）、PRD-G（保留 Jira）、PRD-I（改指向清单） |
 | 2026-11-24 | 加 PRD-J：每个 feature 一张母工单（ARD-O） |
+| 2026-11-24 | 背景改为现状：to-tickets 已移除（5370f61） |

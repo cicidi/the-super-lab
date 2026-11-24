@@ -68,6 +68,7 @@ agent 自己推出来、输入里没有明说的内容，不算条目，不进�
 **DSGN-D 目标 feature。** 先找条目属于哪个已有的 `docs/features/<f>/`。
 没有合适的 feature 时，spec-ingest 不建新目录；它提议一个暂定名，等人确认（SDD 的 ARD-CH）。
 确认前，分拣表放在 wayfinder 的地图目录 `docs/state/wayfinder-<暂定名>/spec-ingest/` 下（SDD 的 ARD-CH，ARD-J）。
+仓库里还没有 `docs/features/` 时走同一条路：人确认名字后，由 spec-write 建第一个 feature 目录；人不想在这个仓库放 spec 就停（ARD-M）。
 
 **DSGN-E 新文档还是改旧文档：由 spec-write 定。** spec-ingest 只定文档类型和目标 feature，不定写进哪个文件（ARD-I）。
 新建还是改旧、哪份是权威文档、冲突怎么办，都由 spec-write 按它的第 2、3 步决定（PRD-B）。
@@ -92,7 +93,7 @@ to-spec 第 2 步的"测试接缝确认"去掉（ARD-G）：设计接缝是新�
 它不建 tracker 上的 issue（ARD-H）。要建工单，用户接着跑 [spec-ticket](../../spec-ticket/design/spec-ticket-design.md)。
 
 **DSGN-J 名字和替换 to-spec。** skill 名为 spec-ingest（PRD-E）。
-能用后删掉 `skills/to-spec/`，同一个改动里改指 `grep -rln 'to-spec\|to-tickets'` 找到的每个文件，改前改后各查一次（PRD-F、ARD-K）。
+`skills/to-spec/` 已在 commit `5370f61` 删掉；同一个改动里改指了 `grep -rln 'to-spec\|to-tickets'` 找到的每个文件，改前改后各查一次（PRD-F、ARD-K）。
 顺序：本 spec、spec-review、用户审阅、SKILL.md、删旧并改指（ARD-E）。
 
 ## Testing Decisions
@@ -133,14 +134,14 @@ spec-ingest 自己写文档：被否决，会出现第二条写入路径（ARD-B
 |---|---|
 | agent 把自己的推测当成条目写进表 | DSGN-B 规定输入里没明说的不进表；每条必须带出处或 UNKNOWN |
 | 两个 skill 都判断写进哪个文件，规则分叉 | DSGN-E 规定只有 spec-write 判断（ARD-I） |
-| `docs/features/downstream-delivery/` 仍把 to-spec 写成下游 skill，删 to-spec 后它成了过时的重复文档 | 本篇不改它；见 QUES-A |
+| `docs/features/downstream-delivery/` 仍把 to-spec 写成下游 skill，删 to-spec 后它成了过时的重复文档 | 已原地改写，指向新 skill（ARD-N） |
 | 删 to-spec 时漏改某个引用，留下断链 | 删除和改指在同一个改动里做，改完用 `grep -rn to-spec` 查一遍（ARD-E） |
 
 ## Open Questions
 
 | ID | 问题 | 目前答案 | Owner | Blocking |
 |---|---|---|---|---|
-| QUES-A | spec-ingest 和 spec-ticket 上线后，`docs/features/downstream-delivery/` 怎么处理：删、合并进 skill-factory，还是标成废弃？ | 未定；本次不改它 | cicidi | no |
+| QUES-A | spec-ingest 和 spec-ticket 上线后，`docs/features/downstream-delivery/` 怎么处理：删、合并进 skill-factory，还是标成废弃？ | 已定：原地改写，discovery-research 的 PRD-B 一并改（ARD-N） | cicidi | no |
 | QUES-B | 去掉接缝确认（ARD-G）、不建 issue（ARD-H）这两条 agent 推荐，用户是否同意？ | agent 推荐，待审；spec 本身的工单已定：spec-ticket 的 ARD-O（每个 feature 一张母工单） | cicidi | no |
 | QUES-C | 扫描版 pdf 要不要先交给 pic-to-txt 做 OCR 再分拣？ | 第一版停下报告（DSGN-A） | cicidi | no |
 | QUES-D | 分拣表在 spec-write 写完后保留还是删除？ | 留在 `raw/state/spec-ingest/`，不提交（ARD-J） | cicidi | no |
@@ -159,3 +160,4 @@ spec-write 写入的改动是普通的 git 改动，可用 `git revert` 撤回�
 | 2026-11-24 | 按 spec-review 改 DSGN-D、E、F、H、I、J、测试和风险（ARD-I 到 ARD-L）；QUES-B 指向 spec-ticket |
 | 2026-11-24 | QUES-B：spec 本身的工单已定，见 spec-ticket 的 ARD-O |
 | 2026-11-24 | DSGN-B 写明理由条目的去向和文件内出处规则（写 SKILL.md 时补） |
+| 2026-11-24 | DSGN-D 加无 spec 目录的仓库（ARD-M）；QUES-A 已定（ARD-N） |

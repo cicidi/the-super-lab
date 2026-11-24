@@ -14,9 +14,9 @@ last_verified: 2026-11-04
 
 | ID | Case | Oracle |
 |---|---|---|
-| **TST-A** | to-spec output passes spec-organize lint | run_spec_checks on sample |
+| **TST-A** | spec-write output after spec-ingest passes spec-organize lint | run_spec_checks on sample |
 | **TST-B** | implement skill references verification-before-completion | SKILL.md |
-| **TST-C** | to-tickets emits ticket-sized chunks | manual review |
+| **TST-C** | spec-ticket opens one ticket per IMPL | `tools/check_spec_ticket_fixture.py` |
 
 ## Test Execution Order
 
@@ -25,10 +25,11 @@ last_verified: 2026-11-04
 
 ## Expected Pass Threshold
 
-New specs from to-spec meet SPEC-STANDARD frontmatter + Change Log.
+New specs from spec-write meet SPEC-STANDARD frontmatter + Change Log.
 
 ## Change Log
 
 | Version | Date | Description |
 |---|---|---|
 | 0.1 | 2026-11-04 | Initial |
+| 0.2 | 2026-11-24 | TST-A, TST-C name spec-write, spec-ticket |

@@ -132,7 +132,7 @@ GitHub 适配器只在一个专门的测试仓库里人工跑一次，不进自�
 
 双向同步、把工单状态写回 spec（PRD-F）。
 重新切分工作（纵向切片）；写 spec 文档（spec-ingest、spec-write）；写代码（implement）。
-不修改 `docs/features/downstream-delivery/`，它的去留见 QUES-D。
+`docs/features/downstream-delivery/` 已原地改写为新 skill（spec-ingest 的 ARD-N）。
 
 ## Further Notes
 
@@ -162,7 +162,7 @@ Jira 改用 ankitpokhrel/jira-cli：没采用，要多装一个工具；REST API
 | 依赖读错，阻塞边连错或漏连 | 两边取并集，不一致的地方写进报告（DSGN-F）；夹具专门测单边依赖 |
 | 换机器后对应表丢失，GitHub 上开出重复 issue | 开新工单前按带 feature 和 IMPL ID 的标题查找（DSGN-E、DSGN-H） |
 | 误把工单发到公开仓库 | 缺省写本地（DSGN-C）；发到网上前请用户确认一次（QUES-F） |
-| `docs/features/downstream-delivery/` 还描述 to-spec 和 to-tickets，新 skill 上线后成为过时的重复文档 | 不在本 spec 里改它；去留见 QUES-D |
+| `docs/features/downstream-delivery/` 还描述 to-spec 和 to-tickets，新 skill 上线后成为过时的重复文档 | 已原地改写（spec-ingest 的 ARD-N） |
 | Jira 这一路本机没有实测（没有 Jira），链接方向或字段格式可能不对 | 第一次用真实 Jira 时，先在测试项目开两张票核对（DSGN-K） |
 | 移除 to-tickets 后有残留引用，形成断链 | 改前改后各全仓搜索一次（DSGN-M） |
 
@@ -173,7 +173,7 @@ Jira 改用 ankitpokhrel/jira-cli：没采用，要多装一个工具；REST API
 | QUES-A | 除了每条 IMPL，要不要也为 spec 本身开一张工单？用户以前说过"spec 本身也得有一个ticket"（to-spec PRD-D） | 已定：每个 feature 一张只放链接的母工单（ARD-O、DSGN-N）；spec 仍是文档（`skills/wayfinder/SKILL.md` 第 282、292 行） | cicidi | no |
 | QUES-B | 将来接的 Jira 是云版（Jira Cloud）还是自建（Data Center）？ | UNKNOWN；DSGN-K 按云版的 REST API v3 写 | cicidi | no |
 | QUES-C | tracker 配置放在 CLAUDE.local.md 的一行 `tracker:`、缺省用本地，用户同意吗（Q4 未答）？ | 按协调者推荐暂定（ARD-C），信心中等 | cicidi | no |
-| QUES-D | downstream-delivery 的 spec 在新 skill 上线后怎么处理：删除、标为过时，还是改写？ | 未决定；本 spec 不动它 | cicidi | no |
+| QUES-D | downstream-delivery 的 spec 在新 skill 上线后怎么处理：删除、标为过时，还是改写？ | 已定：原地改写（spec-ingest 的 ARD-N） | cicidi | no |
 | QUES-E | 新 IMPL 挡住旧 IMPL 时，给旧工单补阻塞边，算不算违反"不改已有工单"？ | 暂定补边，只加边，不改标题和正文（DSGN-H） | cicidi | no |
 | QUES-F | 发到 GitHub 或 Jira 前，要不要先请用户确认一次清单？ | 暂定要（本设计自己的选择，见 Implementation Decisions） | cicidi | no |
 
@@ -192,3 +192,4 @@ GitHub 和 Jira 上已开的工单通常只能关闭，删除需要管理员权�
 | 2026-11-24 | 按审查报告改 DSGN-B、C、D、E、F、G、I、J、K、M，测试与风险；Jira 改真实适配器（ARD-I 到 ARD-N） |
 | 2026-11-24 | 加 DSGN-N 母工单，改 DSGN-I、J、K；QUES-A 由 ARD-O 回答 |
 | 2026-11-24 | 写 SKILL.md 时补：已完成的判定和它的边（DSGN-D、F）、slug 规则（DSGN-J）；本地测试去掉对应表 |
+| 2026-11-24 | QUES-D 已定：downstream-delivery 原地改写（spec-ingest 的 ARD-N） |

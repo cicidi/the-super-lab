@@ -89,6 +89,9 @@ Do not design test seams yourself (ARD-G).
 
 Find the existing `docs/features/<f>/` each item belongs to. If none fits, do not create a
 directory: propose a working name and wait for the human to confirm it (SDD ARD-CH).
+A repo with no `docs/features/` at all takes the same path: after the human confirms the name,
+spec-write creates the first feature directory. If the human does not want spec docs in this
+repo, stop. Do not publish the spec as a tracker issue instead (ARD-M).
 
 Do **not** decide new doc vs edit, which doc is the authority, or how to resolve a conflict —
 spec-write does that in its own steps (DSGN-E, ARD-I).

@@ -19,7 +19,7 @@ Completed agent skills in `skills/`: **wayfinder**, **research**, **grill-with-d
 | Goal | Metric |
 |---|---|
 | **PRD-A** | Each skill has SKILL.md with triggers and workflow |
-| **PRD-B** | Outputs feed SDD pipeline (spec-pipeline / to-spec) |
+| **PRD-B** | Outputs feed SDD pipeline (spec-pipeline / spec-ingest; to-spec removed, skill-factory spec-ingest ARD-E) |
 
 ## User Stories
 
@@ -50,3 +50,4 @@ Runtime code beyond SKILL.md orchestration
 | Version | Date | Description |
 |---|---|---|
 | 0.1 | 2026-11-04 | SDD feature bundle for discovery skills |
+| 0.2 | 2026-11-24 | PRD-B names spec-ingest |

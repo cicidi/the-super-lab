@@ -18,6 +18,8 @@ last_verified: 2026-11-24
 
 | ID | Date | Decision |
 |---|---|---|
+| ARD-N | 2026-11-24 | downstream-delivery 原地改写为 spec-ingest、spec-ticket；discovery-research 的 PRD-B 一并改 |
+| ARD-M | 2026-11-24 | 没有 `docs/features/` 的仓库也走 spec-write：人确认名字后建第一个 feature；不再像 to-spec 那样发 PRD issue |
 | ARD-L | 2026-11-24 | 测试按与期望分拣的一致率打分（≥90%）；只有硬规则做精确检查 |
 | ARD-K | 2026-11-24 | 改指清单是 `grep -rln 'to-spec\|to-tickets'` 找到的所有文件，改前改后各查一次 |
 | ARD-J | 2026-11-24 | 分拣表存为 `docs/features/<f>/raw/state/spec-ingest/<date>-sort.md` |
@@ -32,6 +34,16 @@ last_verified: 2026-11-24
 | ARD-A | 2026-11-24 | 自建 skill 替代 Matt 的 to-spec，产出是用户自己的五类 spec 文档 |
 
 ## Evidence Appendix
+
+### ARD-N
+
+理由：三篇都很短，自 65c2634 后没人改过；改写比删除少丢东西。被否决：删除；标成过时。
+出处：用户 2026-11-24（会话 80291c19）"新暴露的问题也一起修复"。
+
+### ARD-M
+
+理由：发 issue 是第二条写入路径，违反 ARD-B 和 ARD-H。被否决：在非 SDD 仓库把 PRD 发成 issue。
+出处：用户 2026-11-24（会话 80291c19）"新暴露的问题也一起修复"。
 
 ### ARD-A
 
@@ -113,3 +125,4 @@ feature 还没确认时，放在 wayfinder 地图目录下（SDD 的 ARD-CH）�
 | 2026-11-24 | 初版：记录会话 80291c19 的用户决定和两条 agent 推荐 |
 | 2026-11-24 | 按 spec-review 加 ARD-I 到 ARD-L；ARD-H 指向 spec-ticket 的 QUES-A；ARD-D、ARD-E 修正 |
 | 2026-11-24 | ARD-H 改为已定：spec-ticket 的 ARD-O（每个 feature 一张母工单） |
+| 2026-11-24 | 加 ARD-M（无 spec 目录的仓库）、ARD-N（downstream-delivery 改写） |

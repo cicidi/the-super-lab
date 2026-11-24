@@ -22,7 +22,7 @@ Skills orchestrate spec-write → tickets → code changes with verification-bef
 
 ### DSGN-A — Chain
 
-spec-pipeline Downstream phase → to-spec → to-tickets → implement.
+The spec-pipeline Downstream phase runs spec-ingest, then spec-write, then spec-review, then spec-ticket, then implement (skill-factory spec-ingest ARD-E, spec-ticket ARD-H).
 
 ### DSGN-B — Integration
 
@@ -37,3 +37,4 @@ CI deploy automation
 | Version | Date | Description |
 |---|---|---|
 | 0.1 | 2026-11-04 | Initial design |
+| 0.2 | 2026-11-24 | DSGN-A chain names spec-ingest, spec-ticket |
