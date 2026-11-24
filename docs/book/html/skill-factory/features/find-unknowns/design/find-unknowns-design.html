@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>research — 动手前找出未知 · design · Spec Atlas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@400;600&display=swap">
+<link rel="stylesheet" href="../../../../assets/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><a href="../../../../index.html"><span class="brand-mark">SDD</span><span class="brand-name">Spec Atlas</span></a></div>
+    <button class="strike-btn" type="button" onclick="var r=document.documentElement;var off=r.dataset.strike!=='off';r.dataset.strike=off?'off':'on';this.textContent=off?'显示删除线':'隐藏删除线'">隐藏删除线</button>
+  </div>
+</header>
+<div class="site">
+  <aside class="sidebar">
+  <nav aria-label="Directory">
+    <div class="tree-overview"><a class="tree-link" href="../../../../index.html"><span class="tree-link__num">00</span>All features</a></div>
+    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../../prd/skill-factory-prd.html"><span class="tree-ord">1</span>skill-factory PRD</a></li><li class="tree-leaf"><a class="tree-link" href="../../../decision-history/skill-factory-decision-history.html"><span class="tree-ord">2</span>skill-factory — Decision History</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../../design/skill-factory-design.html"><span class="tree-ord">3</span>skill-factory Specification</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../../design/skill-factory-design-skill-catalog.html">skill-factory — skill 目录、调用关系与共性问题</a></li><li class="tree-leaf"><a class="tree-link" href="../../../design/skill-factory-design-verify-upgrade.html">skill-factory — 怎么验证 skill，怎么装进 AI 工具并升级</a></li><li class="tree-leaf"><a class="tree-link" href="../../../design/skill-factory-design-why-and-anatomy.html">skill-factory — 为什么要做，一个 skill 怎么搭</a></li></ul></details></li><li class="tree-leaf"><a class="tree-link" href="../../../impl-plan/skill-factory-impl-plan.html"><span class="tree-ord">4</span>skill-factory Implementation Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../../../test-plan/skill-factory-test-plan.html"><span class="tree-ord">5</span>skill-factory Test Plan</a></li><li class="tree-branch"><details open><summary><span class="tree-link"><span class="tree-ord">10</span>sub-feature</span></summary><ul class="tree"><li class="tree-branch"><details open><summary><a class="tree-link" href="../../auto-tdd/design/auto-tdd-design.html">auto-tdd</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../auto-tdd/prd/auto-tdd-prd.html"><span class="tree-ord">1</span>auto-tdd — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../auto-tdd/decision-history/auto-tdd-decision-history.html"><span class="tree-ord">2</span>auto-tdd — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../auto-tdd/design/auto-tdd-design.html"><span class="tree-ord">3</span>auto-tdd — 测试驱动开发循环</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../bug/design/bug-design.html">bug</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../bug/prd/bug-prd.html"><span class="tree-ord">1</span>bug — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../bug/decision-history/bug-decision-history.html"><span class="tree-ord">2</span>bug — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../bug/design/bug-design.html"><span class="tree-ord">3</span>bug — 调试、报告与自愈</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../create-video-workflow/design/create-video-workflow-design.html">create-video-workflow</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../create-video-workflow/prd/create-video-workflow-prd.html"><span class="tree-ord">1</span>create-video-workflow — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../create-video-workflow/decision-history/create-video-workflow-decision-history.html"><span class="tree-ord">2</span>create-video-workflow — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../create-video-workflow/design/create-video-workflow-design.html"><span class="tree-ord">3</span>create-video-workflow — 研究文档变内容</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../doc-protect/design/doc-protect-design.html">doc-protect</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../doc-protect/prd/doc-protect-prd.html"><span class="tree-ord">1</span>doc-protect — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../doc-protect/decision-history/doc-protect-decision-history.html"><span class="tree-ord">2</span>doc-protect — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../doc-protect/design/doc-protect-design.html"><span class="tree-ord">3</span>doc-protect — 锁住文档段落</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../domain-modeling/design/domain-modeling-design.html">domain-modeling</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../domain-modeling/prd/domain-modeling-prd.html"><span class="tree-ord">1</span>domain-modeling — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../domain-modeling/decision-history/domain-modeling-decision-history.html"><span class="tree-ord">2</span>domain-modeling — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../domain-modeling/design/domain-modeling-design.html"><span class="tree-ord">3</span>domain-modeling — 领域模型与术语表</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../english-grammar-fix/design/english-grammar-fix-design.html">english-grammar-fix</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../english-grammar-fix/prd/english-grammar-fix-prd.html"><span class="tree-ord">1</span>english-grammar-fix — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../english-grammar-fix/decision-history/english-grammar-fix-decision-history.html"><span class="tree-ord">2</span>english-grammar-fix — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../english-grammar-fix/design/english-grammar-fix-design.html"><span class="tree-ord">3</span>english-grammar-fix — 英文语法修正</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="find-unknowns-design.html">find-unknowns</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../prd/find-unknowns-prd.html"><span class="tree-ord">1</span>research — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../decision-history/find-unknowns-decision-history.html"><span class="tree-ord">2</span>research — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="find-unknowns-design.html" aria-current="page"><span class="tree-ord">3</span>research — 动手前找出未知</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../grill-with-docs/design/grill-with-docs-design.html">grill-with-docs</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../grill-with-docs/prd/grill-with-docs-prd.html"><span class="tree-ord">1</span>grill-with-docs — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../grill-with-docs/decision-history/grill-with-docs-decision-history.html"><span class="tree-ord">2</span>grill-with-docs — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../grill-with-docs/design/grill-with-docs-design.html"><span class="tree-ord">3</span>grill-with-docs — 带文档的拷问式访谈</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../implement/design/implement-design.html">implement</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../implement/prd/implement-prd.html"><span class="tree-ord">1</span>implement — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../implement/decision-history/implement-decision-history.html"><span class="tree-ord">2</span>implement — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../implement/design/implement-design.html"><span class="tree-ord">3</span>implement — 按 spec 和 ticket 实现</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../luma-event-scout/design/luma-event-scout-design.html">luma-event-scout</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../luma-event-scout/prd/luma-event-scout-prd.html"><span class="tree-ord">1</span>luma-event-scout — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../luma-event-scout/decision-history/luma-event-scout-decision-history.html"><span class="tree-ord">2</span>luma-event-scout — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../luma-event-scout/design/luma-event-scout-design.html"><span class="tree-ord">3</span>luma-event-scout — Luma 湾区活动筛选</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../multi-model-team/design/multi-model-team-design.html">multi-model-team</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../multi-model-team/prd/multi-model-team-prd.html"><span class="tree-ord">1</span>multi-model-team — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../multi-model-team/decision-history/multi-model-team-decision-history.html"><span class="tree-ord">2</span>multi-model-team — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../multi-model-team/design/multi-model-team-design.html"><span class="tree-ord">3</span>multi-model-team — 多模型团队编排</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../pic-to-txt/design/pic-to-txt-design.html">pic-to-txt</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../pic-to-txt/prd/pic-to-txt-prd.html"><span class="tree-ord">1</span>pic-to-txt — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../pic-to-txt/decision-history/pic-to-txt-decision-history.html"><span class="tree-ord">2</span>pic-to-txt — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../pic-to-txt/design/pic-to-txt-design.html"><span class="tree-ord">3</span>pic-to-txt — 截图转文字文档</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../prototype/design/prototype-design.html">prototype</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../prototype/prd/prototype-prd.html"><span class="tree-ord">1</span>prototype — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../prototype/decision-history/prototype-decision-history.html"><span class="tree-ord">2</span>prototype — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../prototype/design/prototype-design.html"><span class="tree-ord">3</span>prototype — 用完就扔的原型</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../skill/design/skill-design.html">skill</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../skill/prd/skill-prd.html"><span class="tree-ord">1</span>skill — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../skill/decision-history/skill-decision-history.html"><span class="tree-ord">2</span>skill — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../skill/design/skill-design.html"><span class="tree-ord">3</span>skill — Skill 管理入口</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../spec-ingest/design/spec-ingest-design.html">spec-ingest</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../spec-ingest/prd/spec-ingest-prd.html"><span class="tree-ord">1</span>spec-ingest — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../spec-ingest/decision-history/spec-ingest-decision-history.html"><span class="tree-ord">2</span>spec-ingest — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../spec-ingest/design/spec-ingest-design.html"><span class="tree-ord">3</span>spec-ingest — 把已有信息分拣进 spec</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../spec-ticket/design/spec-ticket-design.html">spec-ticket</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../spec-ticket/prd/spec-ticket-prd.html"><span class="tree-ord">1</span>spec-ticket — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../spec-ticket/decision-history/spec-ticket-decision-history.html"><span class="tree-ord">2</span>spec-ticket — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../spec-ticket/design/spec-ticket-design.html"><span class="tree-ord">3</span>spec-ticket — 把 impl-plan 的每一步发成工单</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../tmux-status-bar/design/tmux-status-bar-design.html">tmux-status-bar</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../tmux-status-bar/prd/tmux-status-bar-prd.html"><span class="tree-ord">1</span>tmux-status-bar — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../tmux-status-bar/decision-history/tmux-status-bar-decision-history.html"><span class="tree-ord">2</span>tmux-status-bar — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../tmux-status-bar/design/tmux-status-bar-design.html"><span class="tree-ord">3</span>tmux-status-bar — tmux 状态栏显示项目上下文</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../to-spec/design/to-spec-design.html">to-spec</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../to-spec/prd/to-spec-prd.html"><span class="tree-ord">1</span>to-spec — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../to-spec/decision-history/to-spec-decision-history.html"><span class="tree-ord">2</span>to-spec — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../to-spec/design/to-spec-design.html"><span class="tree-ord">3</span>to-spec — 把对话整理成 spec</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../to-tickets/design/to-tickets-design.html">to-tickets</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../to-tickets/prd/to-tickets-prd.html"><span class="tree-ord">1</span>to-tickets — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../to-tickets/decision-history/to-tickets-decision-history.html"><span class="tree-ord">2</span>to-tickets — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../to-tickets/design/to-tickets-design.html"><span class="tree-ord">3</span>to-tickets — 把 spec 拆成执行工单</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../transcribe-audio/design/transcribe-audio-design.html">transcribe-audio</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../transcribe-audio/prd/transcribe-audio-prd.html"><span class="tree-ord">1</span>transcribe-audio — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../transcribe-audio/decision-history/transcribe-audio-decision-history.html"><span class="tree-ord">2</span>transcribe-audio — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../transcribe-audio/design/transcribe-audio-design.html"><span class="tree-ord">3</span>transcribe-audio — 本地显卡音频转文字</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../video-production-pip-style/design/video-production-pip-style-design.html">video-production-pip-style</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../video-production-pip-style/prd/video-production-pip-style-prd.html"><span class="tree-ord">1</span>video-production-pip-style — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../video-production-pip-style/decision-history/video-production-pip-style-decision-history.html"><span class="tree-ord">2</span>video-production-pip-style — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../video-production-pip-style/design/video-production-pip-style-design.html"><span class="tree-ord">3</span>video-production-pip-style — 画中画引用式视频制作指南</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../wayfinder/design/wayfinder-design.html">wayfinder</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../wayfinder/prd/wayfinder-prd.html"><span class="tree-ord">1</span>wayfinder — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../wayfinder/decision-history/wayfinder-decision-history.html"><span class="tree-ord">2</span>wayfinder — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../wayfinder/design/wayfinder-design.html"><span class="tree-ord">3</span>wayfinder — 规划大任务的决策地图</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../youtube-research/design/youtube-research-design.html">youtube-research</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../youtube-research/prd/youtube-research-prd.html"><span class="tree-ord">1</span>youtube-research — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../youtube-research/decision-history/youtube-research-decision-history.html"><span class="tree-ord">2</span>youtube-research — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../youtube-research/design/youtube-research-design.html"><span class="tree-ord">3</span>youtube-research — 从题目到视频稿 HTML</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../youtube-summarize/design/youtube-summarize-design.html">youtube-summarize</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../youtube-summarize/prd/youtube-summarize-prd.html"><span class="tree-ord">1</span>youtube-summarize — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../youtube-summarize/decision-history/youtube-summarize-decision-history.html"><span class="tree-ord">2</span>youtube-summarize — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../youtube-summarize/design/youtube-summarize-design.html"><span class="tree-ord">3</span>youtube-summarize — YouTube 视频转写与总结</a></li></ul></details></li></ul></details></li></ul>
+  </nav>
+</aside>
+  <main class="content">
+    <nav class="breadcrumbs"><a href="../../../../index.html">Docs</a> / <span>skill-factory</span> / <span>features</span> / <span>find-unknowns</span> / <span>design</span> / <span>research — 动手前找出未知</span></nav>
+    <article class="doc" data-doc="skill-factory/features/find-unknowns/design/find-unknowns-design">
+      <header class="doc-head">
+        <p class="eyebrow">skill-factory</p>
+        <h1>research — 动手前找出未知</h1>
+        <p class="source">Canonical: docs/features/skill-factory/features/find-unknowns/design/find-unknowns-design.md</p>
+      </header>
+      
+      <div class="doc-body">
+        <h2>research — 动手前找出未知</h2>
+<p>本篇说明 <code>research</code> 这个 skill 现在怎么工作。 源文件：<a href="../../../../../../../skills/research/SKILL.md"><code>skills/research/SKILL.md</code></a>（commit 6086424 新建，c127ef7 改输出路径，2026-11-24 加 Branch C 和 Branch D，见 <a class="id-ref" href="../decision-history/find-unknowns-decision-history.html#ARD-M">ARD-M</a>）。</p>
+<h3>Problem Statement</h3>
+<p>任务越复杂，用户没说出口的决定就越多；agent 碰到这些空白会自己猜（find-my-unknown 版的开篇，commit 9e4fb21）。 猜错的地方常在写完代码后才暴露，这时改起来代价高（<a class="id-ref" href="../prd/find-unknowns-prd.html#PRD-F">PRD-F</a>）。 另外，用户手上有 find-my-unknown 和 brainstorming 两个相近的 skill，不好管理（<a class="id-ref" href="../prd/find-unknowns-prd.html#PRD-A">PRD-A</a>）。 wayfinder 还需要一个不用人参与的调研能力，旧版每条路都要先问用户（<a class="id-ref" href="../prd/find-unknowns-prd.html#PRD-M">PRD-M</a>）。</p>
+<h3>Solution</h3>
+<p>一个 skill，四条分支（<a class="id-ref" href="../prd/find-unknowns-prd.html#PRD-A">PRD-A</a>）。发现未知分支：先默默做功课，再一次一个问题地访谈。 写设计文档分支：一问一答澄清想法，比较几个方案，写成设计文档，再交给写实现计划的 skill。 无人值守调研分支：不问用户，查资料后交回一份每条都带出处的 markdown 文件（<a class="id-ref" href="../prd/find-unknowns-prd.html#PRD-M">PRD-M</a>）。 小测验分支：生成一份 HTML 报告，用几道题检查用户是否真懂了（<a class="id-ref" href="../prd/find-unknowns-prd.html#PRD-N">PRD-N</a>）。</p>
+<h3>User Stories</h3>
+<ul>
+<li>作为开发者，我说&quot;我不确定该怎么做&quot;时，选发现未知分支。</li>
+<li>作为开发者，我想从一个想法走到一份设计文档时，选写设计文档分支。</li>
+<li>作为 wayfinder，我派 <code>/research</code> 子 agent 处理一条调研 brief，它直接走无人值守调研分支。</li>
+<li>作为开发者，我说&quot;考考我&quot;时，走小测验分支。</li>
+</ul>
+<h3>Implementation Decisions</h3>
+<p>本 skill 只有一个 SKILL.md，没有脚本，全靠 agent 读文字执行。 发现未知分支的规则来自 find-my-unknown（<a class="id-ref" href="../decision-history/find-unknowns-decision-history.html#ARD-H">ARD-H</a>、<a class="id-ref" href="../decision-history/find-unknowns-decision-history.html#ARD-I">ARD-I</a>）。 写设计文档分支沿用 superpowers:brainstorming 的清单，去掉了&quot;视觉辅助&quot;和&quot;提交&quot;两步（清单原文见 opencode 会话 ses_14bdec5d，2026-06-10）。 小测验分支照搬 find-my-unknown 的 Quiz 一节，只加了&quot;没有代码改动时考刚讨论的话题&quot;（<a class="id-ref" href="../decision-history/find-unknowns-decision-history.html#ARD-M">ARD-M</a>）。</p>
+<h3>Design</h3>
+<p><strong><a class="id-ref" href="#DSGN-A">DSGN-A</a> 选分支。</strong> Step 0 先看是否有人在场（<a class="id-ref" href="../prd/find-unknowns-prd.html#PRD-A">PRD-A</a>、<a class="id-ref" href="../prd/find-unknowns-prd.html#PRD-M">PRD-M</a>）。 如果是子 agent、拿到了 wayfinder 的调研 brief，或者会话不能交互，就不问任何问题，直接进 Branch C（<a class="id-ref" href="../decision-history/find-unknowns-decision-history.html#ARD-M">ARD-M</a>）。 用户说&quot;考考我&quot;或&quot;quiz me&quot;时，直接进 Branch D（<a class="id-ref" href="../prd/find-unknowns-prd.html#PRD-N">PRD-N</a>）。 其他情况只问一句&quot;你想做什么&quot;，给两个选项：发现未知、写设计文档。 各分支除了入口外不共用逻辑；是否该更深地融合，见 <a class="id-ref" href="#QUES-I">QUES-I</a>（<a class="id-ref" href="../prd/find-unknowns-prd.html#PRD-B">PRD-B</a>）。</p>
+<p><strong><a class="id-ref" href="#DSGN-B">DSGN-B</a> 默默扫描（A1）。</strong> 提问前，先读相关代码和项目规则文件（CLAUDE.md、CONVENTIONS.md）。 弄清已有什么、有哪些约束、哪些决定还没做；这一步不问用户（<a class="id-ref" href="../prd/find-unknowns-prd.html#PRD-E">PRD-E</a>）。</p>
+<p><strong><a class="id-ref" href="#DSGN-C">DSGN-C</a> 访谈（A2）。</strong> 一次只问一个问题，等用户回答后再问下一个（<a class="id-ref" href="../prd/find-unknowns-prd.html#PRD-C">PRD-C</a>、<a class="id-ref" href="../prd/find-unknowns-prd.html#PRD-D">PRD-D</a>）。 提问顺序：先问会改变架构的（数据模型、API 形状、权限），再问范围，再问沿用哪种约定，最后问优化选择（<a class="id-ref" href="../prd/find-unknowns-prd.html#PRD-E">PRD-E</a>）。</p>
+<p><strong><a class="id-ref" href="#DSGN-D">DSGN-D</a> 深度控制。</strong> 判断标准是&quot;这里错了，改起来多贵&quot;：贵就深问 2 到 3 轮，便宜就问一轮（<a class="id-ref" href="../prd/find-unknowns-prd.html#PRD-F">PRD-F</a>）。 每个话题最多 2 到 3 轮，然后总结并换话题。用户答&quot;不知道&quot;时，agent 解释选项、选一个默认值，或去查资料。 停止条件：用户连续两次以上说&quot;你看着办&quot;（<a class="id-ref" href="../decision-history/find-unknowns-decision-history.html#ARD-I">ARD-I</a>，见 <a class="id-ref" href="#QUES-E">QUES-E</a>）。</p>
+<p><strong><a class="id-ref" href="#DSGN-E">DSGN-E</a> 辅助工具。</strong> 三个工具服务于访谈，不替代访谈（<a class="id-ref" href="../prd/find-unknowns-prd.html#PRD-G">PRD-G</a>）。 盲区扫描：用户似乎不了解代码库的约束时，agent 先自己查，再把发现变成一个问题。 原型：用户说&quot;看到才知道&quot;时，生成 2 到 3 个 HTML 原型让用户挑。 参考：用户说&quot;做成像 X 那样&quot;时，agent 读 X 并提取要点。</p>
+<p><strong><a class="id-ref" href="#DSGN-F">DSGN-F</a> 总结（A3）。</strong> 访谈结束后汇总所有决定，标出还没解决的问题（<a class="id-ref" href="../prd/find-unknowns-prd.html#PRD-C">PRD-C</a>）。 再问用户：接着写设计文档，还是直接开始实现。</p>
+<p><strong><a class="id-ref" href="#DSGN-G">DSGN-G</a> 写设计文档分支的前四步（<a class="id-ref" href="../prd/find-unknowns-prd.html#PRD-H">PRD-H</a>）。</strong> B1 看文件、文档和最近的提交，了解项目现状。 B2 一次一个问题澄清目的、约束和成功标准，能出选择题就出选择题（<a class="id-ref" href="../prd/find-unknowns-prd.html#PRD-D">PRD-D</a>）。 B3 给出 2 到 3 个方案和取舍，推荐的放第一个；按 YAGNI（现在用不上的功能就不做）删掉多余功能。 B4 按复杂度分节展示设计，涵盖架构、组件、数据流、错误处理和测试，每节都请用户确认。</p>
+<p><strong><a class="id-ref" href="#DSGN-H">DSGN-H</a> 写设计文档分支的后三步（<a class="id-ref" href="../prd/find-unknowns-prd.html#PRD-H">PRD-H</a>、<a class="id-ref" href="../prd/find-unknowns-prd.html#PRD-I">PRD-I</a>、<a class="id-ref" href="../prd/find-unknowns-prd.html#PRD-O">PRD-O</a>）。</strong> B5 写设计文档。 仓库里有 <code>docs/features/spec-driven-development/</code> 时，把 B4 批准的设计交给 spec-write 写，格式由它负责（<a class="id-ref" href="../decision-history/find-unknowns-decision-history.html#ARD-M">ARD-M</a>）。 其他仓库照旧写到 <code>docs/features/&lt;feature&gt;/design/&lt;topic&gt;-design.md</code>（<a class="id-ref" href="../decision-history/find-unknowns-decision-history.html#ARD-A">ARD-A</a>）。 B6 自查：有没有 TBD/TODO 占位、前后矛盾、范围膨胀、说法含糊。 B7 用户批准文档后，调用 superpowers:writing-plans 写实现计划。</p>
+<p><strong><a class="id-ref" href="#DSGN-I">DSGN-I</a> 给别的 skill 调用（<a class="id-ref" href="../prd/find-unknowns-prd.html#PRD-J">PRD-J</a>、<a class="id-ref" href="../prd/find-unknowns-prd.html#PRD-K">PRD-K</a>）。</strong> wayfinder 的接口表把 research 列为调研接口的默认实现。 wayfinder 以子 agent 调用时走 Branch C（<a class="id-ref" href="#DSGN-K">DSGN-K</a>）。SDD 把它列为发现盲区的工具之一，走 Branch A。</p>
+<p><strong><a class="id-ref" href="#DSGN-J">DSGN-J</a> 名字和位置（<a class="id-ref" href="../prd/find-unknowns-prd.html#PRD-L">PRD-L</a>）。</strong> skill 在本仓库 <code>skills/research/</code>，名字不带前缀。 正文写明方法来自 Thariq Shihipar 的 &quot;Finding Your Unknowns&quot;；<code>source</code> 出处字段在合并时被删（<a class="id-ref" href="../decision-history/find-unknowns-decision-history.html#ARD-F">ARD-F</a>），见 <a class="id-ref" href="#QUES-D">QUES-D</a>。 规格所在的子 feature 名是 find-unknowns，不是 research，避免和 <code>docs/features/discovery-research</code> 撞车（<a class="id-ref" href="../decision-history/find-unknowns-decision-history.html#ARD-L">ARD-L</a>）。</p>
+<p><strong><a class="id-ref" href="#DSGN-K">DSGN-K</a> 无人值守调研（Branch C）。</strong> 全程不问用户（<a class="id-ref" href="../prd/find-unknowns-prd.html#PRD-M">PRD-M</a>、<a class="id-ref" href="../decision-history/find-unknowns-decision-history.html#ARD-M">ARD-M</a>）。 第一步从 brief 或调用方的提示里读出问题；问题不清楚时，在文件开头写下自己的理解，然后继续。 第二步读文档、第三方 API 和本地资料（代码、文档、git 历史、知识库），优先用一手资料。 第三步写一个 markdown 文件，分四节：问题、简短答案、发现、未知。 每条说法都带出处：URL、<code>文件:行号</code> 或 commit 哈希；查不到的标 <code>UNKNOWN</code>，并写明试过什么。 文件写在调用方指定的位置，wayfinder 指定的是一次性的 <code>research/&lt;name&gt;</code> 分支；没指定就写到工作目录的 <code>research/&lt;name&gt;.md</code>。 最后交回文件路径和一句话答案。</p>
+<p><strong><a class="id-ref" href="#DSGN-L">DSGN-L</a> 小测验（Branch D）。</strong> 生成一份 HTML 报告，内容照 find-my-unknown 的原文（<a class="id-ref" href="../prd/find-unknowns-prd.html#PRD-N">PRD-N</a>、<a class="id-ref" href="../decision-history/find-unknowns-decision-history.html#ARD-M">ARD-M</a>）。 四部分：背景（为什么改、解决什么问题）、思路（为什么选这个做法）、改动（逐个文件讲理由）、3 到 5 道考理解而不是考记忆的题。 考的对象是刚做的改动；没有代码改动时，考刚讨论的话题，&quot;改动&quot;一节改为讲这个话题的要点。 是代码改动时，用户应先答对再合并。</p>
+<h3>Testing Decisions</h3>
+<p>本 skill 没有自动测试或评测集，<code>skills/research/</code> 下只有 SKILL.md 一个文件。 2026-07-18 用户让 agent 在空目录 <code>~/project/ideas</code> 里试跑 find-my-unknown 的流程（ca8d23f7）。 合并前的真实使用有：评审文档（30bed348，2026-07-18）、讨论 PRD（71979623，2026-07-24）、设计复杂流程（d6def41e，2026-08-01）。 合并后只找到一次使用：&quot;/research 你来考考我&quot;（d8d2da7f，2026-08-02），它要的就是 Branch D 的小测验。 Branch C 还没有被 wayfinder 实际调用过的记录。</p>
+<h3>Out of Scope</h3>
+<p>小任务、需求已完全清楚、用户说已经规划好，都不用本 skill；已在实现阶段时改用 <code>/bug</code>（SKILL.md 的 When NOT to Use 一节）。</p>
+<h3>Further Notes</h3>
+<p>需求见 <a href="../prd/find-unknowns-prd.html">PRD</a>，决策见 <a href="../decision-history/find-unknowns-decision-history.html">decision-history</a>。 2026-08-02 的合并表见 <a href="../../../design/skill-factory-design.html">parent design</a>。 find-my-unknown 完整版（264 行）可用 <code>git show 9e4fb21:ai-coworker-skills/find-my-unknown/SKILL.md</code> 查看。</p>
+<h3>Alternatives Considered</h3>
+<p>五种技巧按情况五选一：被否决，改为访谈做主线、三种技巧做辅助（<a class="id-ref" href="../decision-history/find-unknowns-decision-history.html#ARD-H">ARD-H</a>）。 find-my-unknown 和 brainstorming 各自独立：被否决，2026-08-02 合成一个 skill（<a class="id-ref" href="../decision-history/find-unknowns-decision-history.html#ARD-E">ARD-E</a>）。 所有问题同样深度：被否决，改为按改错代价决定（<a class="id-ref" href="../decision-history/find-unknowns-decision-history.html#ARD-I">ARD-I</a>）。为 SDD 新建盲区 skill：被否决（<a class="id-ref" href="../decision-history/find-unknowns-decision-history.html#ARD-B">ARD-B</a>）。 给 wayfinder 另造一个调研 skill：被否决，改为在本 skill 里加 Branch C（<a class="id-ref" href="../decision-history/find-unknowns-decision-history.html#ARD-M">ARD-M</a>）。</p>
+<h3>Drawbacks</h3>
+<p>深度控制和轮数上限只写在发现未知分支；写设计文档分支的提问没有上限（<a class="id-ref" href="#DSGN-D">DSGN-D</a>、<a class="id-ref" href="#DSGN-G">DSGN-G</a>）。 B7 依赖外部的 superpowers 插件，没装时最后一步无法执行。 触发词里有 prototype，和独立的 prototype skill 重叠，见 <a class="id-ref" href="#QUES-H">QUES-H</a>。 Branch C 靠 agent 自己判断&quot;是否有人在场&quot;，判断错了会在有人时不问，或在无人时卡住（<a class="id-ref" href="#DSGN-A">DSGN-A</a>）。</p>
+<h3>Risks and Mitigations</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>风险</th>
+<th>缓解</th>
+</tr></thead><tbody>
+<tr>
+<td>wayfinder 用无人值守的子 agent 调用 research，子 agent 卡在提问上或替用户作答</td>
+<td>Step 0 先判断是否无人值守，是就走 Branch C，不提问（<a class="id-ref" href="../decision-history/find-unknowns-decision-history.html#ARD-M">ARD-M</a>）</td>
+</tr>
+<tr>
+<td>B5 直接写 <code>docs/features/</code> 下的设计文档，格式不符合 SPEC-STANDARD.md</td>
+<td>SDD 仓库里 B5 交给 spec-write（<a class="id-ref" href="../decision-history/find-unknowns-decision-history.html#ARD-M">ARD-M</a>）</td>
+</tr>
+<tr>
+<td>Branch C 的结论没有出处，或把猜测写成事实</td>
+<td>每条说法必须带出处，查不到的标 UNKNOWN（<a class="id-ref" href="#DSGN-K">DSGN-K</a>）</td>
+</tr>
+</tbody></table></div>
+<h3>Open Questions</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>ID</th>
+<th>问题</th>
+<th>目前答案</th>
+<th>Owner</th>
+<th>Blocking</th>
+</tr></thead><tbody>
+<tr>
+<td id="QUES-A"><a class="id-ref" href="#QUES-A">QUES-A</a></td>
+<td>要不要加一条无人值守的&quot;查资料&quot;分支，产出带出处的 markdown，供 wayfinder 调用（<a class="id-ref" href="../prd/find-unknowns-prd.html#PRD-J">PRD-J</a>）？</td>
+<td>已加 Branch C（<a class="id-ref" href="../decision-history/find-unknowns-decision-history.html#ARD-M">ARD-M</a>）</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-B"><a class="id-ref" href="#QUES-B">QUES-B</a></td>
+<td>要不要恢复实现后的小测验？</td>
+<td>已照原样恢复为 Branch D，也可考刚讨论的话题（<a class="id-ref" href="../decision-history/find-unknowns-decision-history.html#ARD-M">ARD-M</a>）</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-C"><a class="id-ref" href="#QUES-C">QUES-C</a></td>
+<td>要不要恢复&quot;实现中遇到偏差时再访谈&quot;这一阶段（<a class="id-ref" href="../prd/find-unknowns-prd.html#PRD-C">PRD-C</a> 说每个阶段都访谈）？</td>
+<td>合并时删除（<a class="id-ref" href="../decision-history/find-unknowns-decision-history.html#ARD-F">ARD-F</a>）</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-D"><a class="id-ref" href="#QUES-D">QUES-D</a></td>
+<td>要不要恢复 <code>source</code> 和 <code>source_url</code> 出处字段？</td>
+<td>只在正文提到作者；用户对外来内容要求注明出处（ses_14b5b4b7）</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-E"><a class="id-ref" href="#QUES-E">QUES-E</a></td>
+<td>停止条件&quot;连续两次你看着办&quot;要不要保留？</td>
+<td>agent 写入，用户没有确认（<a class="id-ref" href="../decision-history/find-unknowns-decision-history.html#ARD-I">ARD-I</a>）</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-F"><a class="id-ref" href="#QUES-F">QUES-F</a></td>
+<td>B5 要不要改为交给 spec-write 写？</td>
+<td>SDD 仓库里交给 spec-write，其他仓库照旧（<a class="id-ref" href="../decision-history/find-unknowns-decision-history.html#ARD-M">ARD-M</a>）</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-G"><a class="id-ref" href="#QUES-G">QUES-G</a></td>
+<td>B7 要不要先写 test plan 再写 impl plan？</td>
+<td>用户要求&quot;先写test plan 在写impl plan&quot;（d8d2da7f）；B7 直接调 writing-plans</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-H"><a class="id-ref" href="#QUES-H">QUES-H</a></td>
+<td>触发词 prototype 和 prototype skill 重叠，归谁？</td>
+<td>SKILL.md 没有说</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-I"><a class="id-ref" href="#QUES-I">QUES-I</a></td>
+<td>各分支要不要共用一套访谈规则（<a class="id-ref" href="../prd/find-unknowns-prd.html#PRD-B">PRD-B</a>）？</td>
+<td>各写一套，只共用入口</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+</tbody></table></div>
+<h3>Reversibility</h3>
+<p>所有改动都落在 git 跟踪的 <a href="../../../../../../../skills/research/SKILL.md"><code>skills/research/SKILL.md</code></a>，用 <code>git revert</code> 即可撤回。 被删的 find-my-unknown 完整版可从 commit 9e4fb21 取回。已安装的副本须重跑 <code>install.sh</code> 才同步。</p>
+<h3>Change Log</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Date</th>
+<th>Change</th>
+</tr></thead><tbody>
+<tr>
+<td>2026-11-24</td>
+<td>初版：按 SKILL.md 写出 research 的 design，引用 <a class="id-ref" href="../prd/find-unknowns-prd.html#PRD-A">PRD-A</a> 到 <a class="id-ref" href="../prd/find-unknowns-prd.html#PRD-L">PRD-L</a></td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>加 <a class="id-ref" href="#DSGN-K">DSGN-K</a>（Branch C）、<a class="id-ref" href="#DSGN-L">DSGN-L</a>（Branch D），改 <a class="id-ref" href="#DSGN-A">DSGN-A</a>、<a class="id-ref" href="#DSGN-H">DSGN-H</a>、<a class="id-ref" href="#DSGN-I">DSGN-I</a>；<a class="id-ref" href="#QUES-A">QUES-A</a>、<a class="id-ref" href="#QUES-B">QUES-B</a>、<a class="id-ref" href="#QUES-F">QUES-F</a> 已解决（<a class="id-ref" href="../decision-history/find-unknowns-decision-history.html#ARD-M">ARD-M</a>）</td>
+</tr>
+</tbody></table></div>
+      </div>
+    </article>
+    <nav class="pager" aria-label="Previous and next"><a class="prev" href="../prd/find-unknowns-prd.html"><span class="label">Previous</span>research — 需求</a><a class="next" href="../decision-history/find-unknowns-decision-history.html"><span class="label">Next</span>research — 决策记录</a></nav>
+  </main>
+</div>
+<footer class="foot"><div class="foot-inner">Assembled from committed <code>.md</code>. The Markdown is authoritative; this page is a reading view.</div></footer>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>if(window.mermaid){mermaid.initialize({startOnLoad:false});}</script>
+<script src="../../../../assets/app.js"></script>
+</body>
+</html>

@@ -38,7 +38,7 @@
 <p>Skills orchestrate spec-write → tickets → code changes with verification-before-completion.</p>
 <h3>Design</h3>
 <h4 id="DSGN-A"><a class="id-ref" href="#DSGN-A">DSGN-A</a> — Chain</h4>
-<p>spec-pipeline Downstream phase → to-spec → to-tickets → implement.</p>
+<p>The spec-pipeline Downstream phase runs spec-ingest, then spec-write, then spec-review, then spec-ticket, then implement (skill-factory spec-ingest ARD-E, spec-ticket ARD-H).</p>
 <h4 id="DSGN-B"><a class="id-ref" href="#DSGN-B">DSGN-B</a> — Integration</h4>
 <p>See <a href="../../../../../skills/spec-pipeline/INTEGRATIONS.md"><code>skills/spec-pipeline/INTEGRATIONS.md</code></a> for phase gates.</p>
 <h3>Out of Scope</h3>
@@ -53,6 +53,11 @@
 <td>0.1</td>
 <td>2026-11-04</td>
 <td>Initial design</td>
+</tr>
+<tr>
+<td>0.2</td>
+<td>2026-11-24</td>
+<td><a class="id-ref" href="#DSGN-A">DSGN-A</a> chain names spec-ingest, spec-ticket</td>
 </tr>
 </tbody></table></div>
       </div>
