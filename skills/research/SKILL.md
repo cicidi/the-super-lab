@@ -184,8 +184,8 @@ a research brief, or any caller needs facts gathered unattended.
 
 ## Branch D: Quiz
 
-Checks that the user understands a change or topic before moving on. Restored
-from find-my-unknown's post-implementation quiz.
+Checks that the user understands a change or topic before moving on.
+Restored from find-my-unknown's post-implementation quiz.
 
 Generate an HTML report covering:
 - **Context:** Why this change, what problem it solves

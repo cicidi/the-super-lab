@@ -54,8 +54,8 @@ description（frontmatter 里告诉 agent 何时调用的那段话）以 "Use wh
 
 ## Testing Decisions
 
-目前没有自动测试，正确性靠 DSGN-B 的 diff 确认和人工审阅。
-自动检查 SKILL.md 格式的工具是否存在，记为 QUES-A。
+正确性靠 DSGN-B 的 diff 确认、人工审阅和 `tools/check_skills.py`（ARD-K）。
+该脚本查 frontmatter、断掉的 skill 引用、链接和仓库路径，不查内容好坏。
 产出的 skill 不好时，先修 create 再重新生成（PRD-I）。
 
 ## Out of Scope
@@ -89,7 +89,7 @@ create、edit、import 都靠人审，skill 多了以后审阅成本会上升。
 
 | ID | 问题 | 目前答案 | Owner | Blocking |
 |---|---|---|---|---|
-| QUES-A | 要不要一个自动检查 SKILL.md 格式的工具？ | `tools/` 下没有 | cicidi | no |
+| QUES-A | 要不要一个自动检查 SKILL.md 格式的工具？ | 已加 `tools/check_skills.py`，create、edit、import 保存后跑（ARD-K） | cicidi | no |
 | QUES-B | import 要不要审查 skill 的内容，而不只补格式？ | 目前只补格式 | cicidi | no |
 | QUES-C | import 要不要记录原作者和出处（PRD-F）？ | 要记录：作者、URL（带 sha）、导入日期，见 DSGN-C、ARD-J | cicidi | no |
 
@@ -105,3 +105,4 @@ create、edit、import 都靠人审，skill 多了以后审阅成本会上升。
 | 2026-11-24 | 初版：按 SKILL.md 写出 skill 的 design |
 | 2026-11-24 | 引用 PRD-A 到 PRD-I，新增 QUES-C，链接 PRD 和 decision-history |
 | 2026-11-24 | DSGN-C 加出处记录和依赖检查（ARD-J），QUES-C 已答 |
+| 2026-11-24 | Testing Decisions 加 check_skills.py，QUES-A 已答（ARD-K） |

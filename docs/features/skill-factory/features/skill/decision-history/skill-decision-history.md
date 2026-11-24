@@ -19,6 +19,7 @@ opencode 会话按会话 id 前缀引用，数据在本机 opencode.db。
 
 | ID | Date | Decision |
 |---|---|---|
+| ARD-K | 2026-11-24 | 新增 `tools/check_skills.py` 查 frontmatter、断掉的 skill 引用、链接和仓库路径；create、edit、import 保存后都要跑 |
 | ARD-J | 2026-11-24 | import 记录 source_author、source_url（带 commit sha）和导入日期，并检查依赖 |
 | ARD-A | 2026-08-02 | 把 skill-create、skill-edit、skill-import、skill-list 合成一个带子命令的 `skill` |
 | ARD-B | 2026-08-02 | 导入的 skill 和自写的放在同一个 `skills/` 下，不再单设 import 目录；保留作者出处的要求不变 |
@@ -31,6 +32,13 @@ opencode 会话按会话 id 前缀引用，数据在本机 opencode.db。
 | ARD-I | 2026-06-10 | 用 create 自举出 import 和 edit；产出不好时先修 create 再重做 |
 
 ## Evidence Appendix
+
+### ARD-K
+
+理由：2026-11-24 审查发现 7 个 skill 引用已改名的 skill，没有工具能自动发现。旧名单取自 git 历史，不用手写。
+用 4 个修复前的 SKILL.md 试跑，查出 11 处断引用；当前 27 个 skill 为 0。
+被否决：沿用 `tests/test_skills.sh`（指向已不存在的 `~/project/skill-factory`）；先上 pre-commit 和 CI。
+出处：用户 2026-11-24（会话 80291c19）"其他几个按照你说的修"。
 
 ### ARD-J
 
@@ -101,3 +109,4 @@ ARD-F 里保留原作者的部分仍然有效（PRD-F）。
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 skill 的决策 |
 | 2026-11-24 | 新增 ARD-J：import 记录出处并检查依赖 |
+| 2026-11-24 | 新增 ARD-K：check_skills.py |

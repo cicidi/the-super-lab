@@ -61,6 +61,8 @@ List current skills and ask what the user wants to do.
    - Body: # heading + overview, When to Use, When NOT to Use, Process, Quality Gates
 5. Present the draft for review
 6. On approval: save to `skills/<name>/SKILL.md`
+7. Run `python3 tools/check_skills.py skills/<name>`; fix every finding
+   before reporting done
 
 ### edit workflow
 
@@ -69,6 +71,8 @@ List current skills and ask what the user wants to do.
 3. Apply changes while preserving: no TBD/TODO, no emoji in body, description
    must stay ≤1024 chars and start with "Use when"
 4. Show diff and confirm before saving
+5. After saving, run `python3 tools/check_skills.py <skill dir>`; fix every
+   finding before reporting done
 
 ### import workflow
 
@@ -88,7 +92,9 @@ List current skills and ask what the user wants to do.
    the same source, or flag it in the report. Do not finish with a dangling
    reference.
 5. Save to `skills/<original-name>/SKILL.md`, keeping the original name
-6. Report what was converted vs kept as-is, the provenance recorded, and
+6. Run `python3 tools/check_skills.py skills/<original-name>`; a finding is
+   a dangling reference from step 4
+7. Report what was converted vs kept as-is, the provenance recorded, and
    each dependency imported or still missing
 
 ### list workflow
