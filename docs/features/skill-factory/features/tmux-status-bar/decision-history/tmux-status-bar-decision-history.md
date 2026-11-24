@@ -18,20 +18,29 @@ opencode 会话按 ses_ 前缀引用（本机 opencode.db）；Claude Code 会�
 
 | ID | Date | Decision |
 |---|---|---|
-| ARD-A | 2026-09-24 | skill 里的 initiative 全部改称 feature，包括字段名和读取路径 `.coworker/features/.active` |
+| ARD-M | 2026-11-24 | SKILL.md 改为照抄本机现行的单行路径状态栏；先备份、给用户看 diff，确认后才写，只替换状态栏那一段 |
+| ~~ARD-A~~ | ~~2026-09-24~~ | ~~skill 里的 initiative 全部改称 feature，包括字段名和读取路径 `.coworker/features/.active`~~ 已被 [ARD-M](#ard-m) 取代 |
 | ARD-B | 2026-08-01 | tmux 外观不再由 walter-worker 的安装脚本部署，改由独立的个人配置项目负责 |
 | ARD-C | 2026-08-01 | 状态栏只显示当前文件夹路径；只改了本机配置，SKILL.md 没有改 |
 | ~~ARD-D~~ | ~~2026-07-13~~ | ~~两行状态栏，加 AI 会话信息、颜色和 emoji；feature 改从 CLAUDE.local.md 读~~ 已被 [ARD-C](#ard-c) 取代 |
 | ~~ARD-E~~ | ~~2026-07-02~~ | ~~加 worktree 字段，并由 walter-worker 的安装脚本部署状态栏脚本~~ 已被 [ARD-B](#ard-b) 取代 |
 | ARD-F | 2026-07-01 | 把状态栏配置做成 personal skill，触发词选"customize tmux" |
-| ARD-G | 2026-07-01 | 每个字段写成"名字:值"；会话名显示成 `tmux:名字`，不改会话本身的名字 |
-| ARD-H | 2026-07-01 | 用领先、落后、暂存、未跟踪的计数代替用户说的"git tree" |
-| ARD-I | 2026-07-01 | 左侧只放会话创建时间，其余字段放右侧，由一个脚本输出 |
-| ARD-J | 2026-06-09 | git 信息由辅助脚本取得：先进入当前窗格的目录，再跑 git 命令 |
-| ARD-K | 2026-06-09 | 状态栏底色用深灰 `colour236` |
+| ~~ARD-G~~ | ~~2026-07-01~~ | ~~每个字段写成"名字:值"；会话名显示成 `tmux:名字`，不改会话本身的名字~~ 已被 [ARD-M](#ard-m) 取代 |
+| ~~ARD-H~~ | ~~2026-07-01~~ | ~~用领先、落后、暂存、未跟踪的计数代替用户说的"git tree"~~ 已被 [ARD-M](#ard-m) 取代 |
+| ~~ARD-I~~ | ~~2026-07-01~~ | ~~左侧只放会话创建时间，其余字段放右侧，由一个脚本输出~~ 已被 [ARD-M](#ard-m) 取代 |
+| ~~ARD-J~~ | ~~2026-06-09~~ | ~~git 信息由辅助脚本取得：先进入当前窗格的目录，再跑 git 命令~~ 已被 [ARD-M](#ard-m) 取代 |
+| ~~ARD-K~~ | ~~2026-06-09~~ | ~~状态栏底色用深灰 `colour236`~~ 已被 [ARD-M](#ard-m) 取代 |
 | ARD-L | 2026-05-06 | 会话保存插件的安装另做成 tmux-setup skill，不放进状态栏 skill |
 
 ## Evidence Appendix
+
+### ARD-M
+
+理由：8 月 1 日起用户只要显示文件夹路径（ARD-C、PRD-K），SKILL.md 没跟上；照旧版执行会覆盖本机配置（design 的 QUES-C）。
+写入前备份并征得同意，依据是用户 8 月 1 日"需要给用户提示确定才能安装"（PRD-L，QUES-D）。
+被否决的方案：删掉本 skill；把五字段版留作选项；按 7 月 13 日从 CLAUDE.local.md 读 feature（ARD-D，已被 ARD-C 取代）。
+出处：用户 2026-11-24 审阅回复"update but keep the skill"。状态栏段落和脚本照抄本机 `~/.tmux.conf` 与 `status_info.sh`。
+本机配置同 computer-config commit eeba774 的 tmux-config spec。When NOT to Use 里的 tmux-setup 引用一并删掉（QUES-E）。
 
 ### ARD-A
 
@@ -52,7 +61,7 @@ opencode 会话按 ses_ 前缀引用（本机 opencode.db）；Claude Code 会�
 理由：用户说"tmux 的bar 不用显示那么多数据了， 只要一个当前的 foder path 就行了"（c173b9ed，2026-08-01）（PRD-K）。
 被否决的方案：7 月 13 日的两行十个字段版本（ARD-D）。
 出处：f251d61 的设计文档记录，本机实际运行的是只输出文件夹路径的简单版脚本，并"已确认以简单版为准"。
-computer-config 的 tmux-config spec（commit eeba774）也写明右侧只显示文件夹路径。SKILL.md 没有更新。
+computer-config 的 tmux-config spec（commit eeba774）也写明右侧只显示文件夹路径。SKILL.md 当时没有更新，2026-11-24 由 ARD-M 补上。
 
 ### ARD-D
 
@@ -102,7 +111,7 @@ computer-config 的 tmux-config spec（commit eeba774）也写明右侧只显示
 ### ARD-L
 
 理由：用户要求"把当前的tmux 和tmux resurrect 插件的安装变成一个tmux-setup skill"（b2741719，2026-05-06）。
-被否决的方案：UNKNOWN。出处：history.jsonl。本 SKILL.md 的 When NOT to Use 仍指向 tmux-setup。
+被否决的方案：UNKNOWN。出处：history.jsonl。本 SKILL.md 的 When NOT to Use 曾指向 tmux-setup，2026-11-24 删掉（ARD-M）。
 parent design 的"已不存在"表把 tmux-setup 列为已不存在的 skill，见 design 的 QUES-E。
 
 ## Change Log
@@ -110,3 +119,4 @@ parent design 的"已不存在"表把 tmux-setup 列为已不存在的 skill，�
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 tmux-status-bar 的决策 |
+| 2026-11-24 | 加 ARD-M：SKILL.md 照抄本机单行路径状态栏，写前备份并确认；ARD-A、G 到 K 被取代 |

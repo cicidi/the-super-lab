@@ -16,10 +16,10 @@ opencode 会话按 ses_ 前缀引用（本机 opencode.db）；Claude Code 会�
 ## Overview
 
 tmux 是终端复用器，一个终端里可以开多个会话（session）和窗格；底部那一行叫状态栏（status bar）。
-本 skill 把状态栏改成显示：会话名、项目文件夹、git 分支、git 状态、当前 coworker feature。
+本 skill 把状态栏改成单行：左侧显示会话名，右侧显示当前窗格的文件夹路径（PRD-K、ARD-M）。
 需求最早出现在 2026-06-09：用户要把状态栏改成灰色，并显示项目路径、分支和会话创建时间（ses_15012457）。
 2026-07-01 用户再次提出，并说"把这个做成一个skill 放在coworker 里面"（ses_0e39cb88），当晚提交为 commit 5cc3d4b。
-之后用户的要求又变了三次（PRD-I、PRD-J、PRD-K），但 SKILL.md 一直没有跟上，见 design 的 DSGN-H。
+之后用户的要求又变了三次（PRD-I、PRD-J、PRD-K）；2026-11-24 SKILL.md 按最新的 PRD-K 改写（ARD-M），见 design 的 DSGN-H。
 
 ## Goals and Success Metrics
 
@@ -47,7 +47,7 @@ agent 认为完整的提交图太宽，改成显示领先、落后、暂存、�
 
 **PRD-D 显示当前 feature。** 用户要显示"intiative"（ses_0e39cb88，2026-07-01）；2026-09-24 全仓库把 initiative 改称 feature（commit c2b3f22）。
 2026-07-13 用户要求"the initiative should read from claudel.local.md"（ses_0a12a0e1）。
-当前 SKILL.md 仍读 `.coworker/features/.active` 文件，见 QUES-B。
+PRD-K 之后不再显示 feature，SKILL.md 已去掉这一项（ARD-M），见 QUES-B。
 
 **PRD-E 显示会话创建时间。** 2026-06-09（ses_15012457）和 2026-07-01（ses_0e39cb88）两次都提到"session 创建时间"。
 
@@ -68,10 +68,10 @@ worktree 指同一个 git 仓库在另一个目录里检出另一个分支。
 SKILL.md 没有这些内容。
 
 **PRD-K 状态栏只显示当前文件夹路径。** 2026-08-01 用户说"tmux 的bar 不用显示那么多数据了， 只要一个当前的 foder path 就行了"（c173b9ed）。
-这是用户最新的要求，和 PRD-A 到 PRD-F 冲突；当前 SKILL.md 仍按 7 月 1 日的版本做，见 QUES-C。
+这是用户最新的要求，取代 PRD-A 到 PRD-G；SKILL.md 已照本机现行配置改写（ARD-M），见 QUES-C。
 
 **PRD-L 改外观前先征得同意。** 2026-08-01 用户要求安装 tmux 定制前"需要给用户提示确定才能安装"，且"对大家的claude tmux 没有影响"（13f2d9db）。
-这句话针对的是 walter-worker 的安装脚本；是否也约束本 skill，属于 UNKNOWN，见 QUES-D。
+这句话原本针对 walter-worker 的安装脚本；2026-11-24 起本 skill 也照办：先备份、给用户看 diff，确认后才写（ARD-M）。
 
 ## Out of Scope
 
@@ -80,7 +80,7 @@ SKILL.md 没有这些内容。
 
 ## Resources Needed
 
-需要 tmux 3.x、git 和 POSIX sh；feature 字段依赖 coworker 写出的 `.coworker/features/.active` 文件（SKILL.md）。
+需要 tmux 3.x 和 POSIX sh，不依赖 git 和 coworker（ARD-M）。
 人力上，用户只需说一句触发词（PRD-H）；改完 `~/.tmux.conf` 后要重新加载配置才能看到效果。
 
 ## Change Log
@@ -88,3 +88,4 @@ SKILL.md 没有这些内容。
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 tmux-status-bar 的 PRD |
+| 2026-11-24 | 按 ARD-M 更新 Overview、PRD-D、PRD-K、PRD-L 和 Resources Needed 的现状描述 |
