@@ -158,7 +158,7 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 
 ### DSGN-E — parent 和 sub-feature 的文档齐备要求
 
-- **parent**（`docs/features/spec-driven-development/` 这一层，不含 `features/` 下的 sub-feature）：spec-review 要确认五篇都在：prd、design、decision-history、impl-plan、test-plan。how-to 可选。缺任何一篇，记为严重度 3 及以上的问题。
+- **parent**（`docs/features/spec-driven-development/` 这一层，不含 `features/` 下的 sub-feature）：spec-review 要确认五篇都在：prd、design、decision-history、impl-plan、test-plan。how-to 可选。缺任何一篇，记为严重度 3 及以上的问题（MUST）。
 - **sub-feature**（`features/<sub>/`）：不要求五篇都有，可以只有 design。review 只检查已有的文档，不能因为缺了没计划写的类型而判失败。
 
 ### 旧编号对照
@@ -381,3 +381,4 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 | 2026-11-24 | 第 9 轮审查后：链到已划掉 ARD 的地方改链；QUES-A 改为三个交付 skill |
 | 2026-11-24 | 第 10 轮审查后：分数 2 最高分写对；QUES-D、QUES-E 按编号排 |
 | 2026-11-24 | 第 14 轮审查后：放弃 spec-pipeline 的理由跟上 ARD-CH |
+| 2026-11-24 | 第 15 轮审查后：DSGN-E 的 parent 五篇齐全标 MUST |

@@ -4,8 +4,9 @@
 Usage:
   python3 tools/run_readability.py DOC.md [DOC.md ...] [--runs 3] [--max-q 20] [--out FILE.json] [--dry-run]
 
-Per run: one question per numbered item (headings, bold `**PRD-A**：` paragraphs, table rows; max
-20, sampled evenly across the doc); a doc with no numbered item fails; drop questions the model
+Per run: one question per numbered item (headings, bold `**PRD-A**：` paragraphs, table rows; ids
+may carry sub-clauses like DSGN-N-F; max 20, sampled evenly across the doc); a doc with no numbered
+item uses its `##` sections as items; a doc with neither fails; drop questions the model
 answers without the doc; answer the rest with only the doc and the glossary; grade; list unexplained terms.
 A run passes at >= 80% correct and 0 unexplained terms. A doc passes when 2 of 3 runs pass.
 --dry-run swaps the API for a deterministic fake model (no network, no key).
@@ -25,10 +26,11 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 EVAL = ROOT / "skills/spec-organize/tests/eval.yaml"
 GLOSSARY_DOC = ROOT / "docs/features/spec-driven-development/design/spec-driven-development-design.md"
-_ID = r"((?:PRD|DSGN|PIPE|IMPL|TST|ARD)-[A-Z]+)(?![A-Z])"
+_ID = r"((?:PRD|DSGN|PIPE|IMPL|TST|ARD)-[A-Z]+(?:-[A-Z]+)*)(?![A-Z])"  # PRD-A, DSGN-N-F, PIPE-A-D
 ID_HEAD = re.compile(rf"^(#{{2,4}})\s+{_ID}.*$", re.M)
 ID_BOLD = re.compile(rf"^\*\*{_ID}\*\*", re.M)  # PRDs: **PRD-A**：…
 ID_ROW = re.compile(rf"^\|\s*{_ID}\s*\|.*$", re.M)  # | PRD-A | … |
+H2 = re.compile(r"^##\s+(.+)$", re.M)
 PASS_ACCURACY = 0.8
 MAX_ITEM_CHARS = 1500
 
@@ -62,7 +64,8 @@ def extract_items(text: str, max_q: int) -> list[dict[str, str]]:
         level = len(m.group(1))
         stop = len(text)
         for later in re.finditer(r"^(#{1,6})\s", text[m.end() :], re.M):
-            if len(later.group(1)) <= level:
+            # A deeper id heading (DSGN-N-F under DSGN-N) is its own, more specific item.
+            if len(later.group(1)) <= level or ID_HEAD.match(text, m.end() + later.start()):
                 stop = m.end() + later.start()
                 break
         found.append((0, m.start(), m.group(2), text[m.start() : stop]))
@@ -76,8 +79,19 @@ def extract_items(text: str, max_q: int) -> list[dict[str, str]]:
         if f[2] not in best or f[:2] < best[f[2]][:2]:
             best[f[2]] = f
     ordered = sorted(best.values(), key=lambda f: f[1])
+    if not ordered:
+        ordered = _section_items(text)
     items = [{"id": f[2], "text": f[3].strip()[:MAX_ITEM_CHARS]} for f in ordered]
     return _sample(items, max_q)
+
+
+def _section_items(text: str) -> list[tuple]:
+    """Fallback for a doc without ids: each `##` section is one item, keyed by its title."""
+    heads = list(H2.finditer(text))
+    return [
+        (0, m.start(), m.group(1).strip(), text[m.start() : heads[i + 1].start() if i + 1 < len(heads) else len(text)])
+        for i, m in enumerate(heads)
+    ]
 
 
 def _prompt(task: str, instructions: str, payload: dict) -> str:
@@ -142,7 +156,7 @@ def run_once(doc: str, glossary: str, ask: Ask, max_q: int) -> dict:
         # Nothing to ask about is a failure to flag, not a perfect score.
         return {
             "questions": 0, "dropped_by_control": 0, "kept": 0, "correct": 0, "accuracy": 0.0,
-            "unexplained_terms": [], "passed": False, "flag": "no numbered items",
+            "unexplained_terms": [], "passed": False, "flag": "no numbered items or ## sections",
         }
     questions = make_questions(items, ask)
     control = grade(questions, answer(questions, ask, None, glossary), ask)

@@ -46,7 +46,7 @@ last_verified: 2026-11-20
 来源：reader PRD 的 PRD-F、PRD-J。
 
 - markdown 是源头，HTML 是派生物。
-- markdown 里用 `<!-- html-skip -->` 包住的内容可以不显示，但不能用它包住 L1 内容。
+- markdown 里用 `<!-- html-skip -->` 包住的内容可以不显示，但不能用它包住 L1 内容（MUST）。
 - decision-history 里被划掉的句子在 HTML 里也保留。页面上有一个按钮，可以切换「显示删除线」和「隐藏删除线」。
 - 脚本生成的页面每次从 markdown 重新生成，不带 `spec-paired` 标记。手工维护的页面要带三个标记：`spec-paired=hand-maintained`、`spec-source`（源 markdown 的路径）、`spec-source-sha256`（源文件的哈希）。源文件变了而页面没变，哈希就对不上，检查会报「过期」（[ARD-AK](../../../decision-history/spec-driven-development-decision-history.md#ard-ak)）。
 - 手工维护的页面如果有更新记录，要覆盖 markdown Change Log 里的每个日期（[ARD-BA](../../../decision-history/spec-driven-development-decision-history.md#ard-ba)，NICE）。
@@ -240,3 +240,4 @@ spec-pipeline 里的 `SPEC-READER.md` 如果还在，只能是指向本篇和 `S
 | 2026-11-24 | DSGN-N-E：spec-write 改完问要不要重建，commit 前必须重建（parent ARD-CF） |
 | 2026-11-24 | 第 8 轮审查后：交付物改为三个 skill，改链 ARD-CH |
 | 2026-11-24 | 第 14 轮审查后：DSGN-N-F 改为 commit 前必须重建（parent ARD-CF），去掉错别字例外 |
+| 2026-11-24 | 第 15 轮审查后：DSGN-N-H 的 html-skip 规则标 MUST |

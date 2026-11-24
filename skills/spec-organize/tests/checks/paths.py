@@ -53,28 +53,39 @@ def _canonical_name(name: str, feature_dir: str, type_dir: str) -> bool:
     return bool(re.match(rf"^{prefix}(?:-{part})?\.md$", name))
 
 
+SKIP_CITER_DIRS = frozenset({"raw", ".scratch", "features"})
+
+
 def _is_cited(path: Path) -> bool:
-    """True when another .md in the same feature links to this file by name."""
+    """True when a committed document of the same feature links to this file by name.
+
+    Citers under raw/, .scratch/ and nested features/ (sub-features) are skipped,
+    and a citer counts only if it declares a committed `type:` (DSGN-B).
+    """
     link = re.compile(
         rf"(?:\]\(|^\[[^\]]+\]:\s*)<?(?:[^)\s>]*/)?{re.escape(path.name)}(?:#[^)\s>]*)?>?(?:\)|\s|$)",
         re.MULTILINE,
     )
-    for other in sorted(path.parent.parent.rglob("*.md")):
+    feature = path.parent.parent
+    for other in sorted(feature.rglob("*.md")):
         if other.resolve() == path.resolve():
             continue
+        if SKIP_CITER_DIRS & set(other.relative_to(feature).parts[:-1]):
+            continue
         try:
-            if link.search(other.read_text(encoding="utf-8")):
-                return True
+            text = other.read_text(encoding="utf-8")
         except (OSError, UnicodeDecodeError):
             continue
+        if _declares_type(text) and link.search(text):
+            return True
     return False
 
 
 def supporting_type(path: Path, text: str | None = None) -> str | None:
     """Type folder of a supporting file (DSGN-B), else None.
 
-    A supporting file is an .md in a type folder whose frontmatter declares no
-    committed `type:` and that another .md in the same feature cites (links to).
+    A supporting file is an .md in any `<type>/` folder of the feature, without a
+    committed `type:` frontmatter, linked from a committed document of that feature.
     A file with the canonical document name stays a document, so a missing
     frontmatter block on it is still reported; so does an uncited, wrongly named
     file (e.g. a stale slug), which is checked as a document.

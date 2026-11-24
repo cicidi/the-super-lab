@@ -71,7 +71,40 @@ def test_zero_items_fails_not_perfect():
     assert result["questions"] == 0
     assert result["accuracy"] == 0.0
     assert result["passed"] is False
-    assert result["flag"] == "no numbered items"
+    assert result["flag"] == "no numbered items or ## sections"
+
+
+def test_sub_clause_ids_are_not_truncated():
+    doc = "### DSGN-N — page\n\nintro\n\n#### DSGN-N-A — paths\n\nalpha\n\n#### DSGN-N-F — rebuild\n\nfoxtrot\n"
+    items = rr.extract_items(doc, 20)
+    assert [i["id"] for i in items] == ["DSGN-N", "DSGN-N-A", "DSGN-N-F"]
+    assert "alpha" not in items[0]["text"]  # parent stops at the more specific child heading
+    assert items[2]["text"].startswith("#### DSGN-N-F") and "foxtrot" in items[2]["text"]
+
+
+def test_multi_part_ids_in_bold_and_rows():
+    doc = "**PIPE-A-D**：rule.\n\n| PIPE-E-A | row |\n"
+    assert [i["id"] for i in rr.extract_items(doc, 20)] == ["PIPE-A-D", "PIPE-E-A"]
+
+
+def test_no_ids_falls_back_to_h2_sections():
+    doc = "# Title\n\nlead\n\n## Scope\n\nscope body\n\n### Detail\n\nd\n\n## Rules\n\nrules body\n"
+    items = rr.extract_items(doc, 20)
+    assert [i["id"] for i in items] == ["Scope", "Rules"]
+    assert "d" in items[0]["text"] and "rules body" not in items[0]["text"]
+    result = rr.run_once(doc, "", rr.FakeModel(), 20)
+    assert result["questions"] == 2 and result["passed"] is True and "flag" not in result
+
+
+def test_h2_fallback_samples_evenly_with_cap():
+    doc = "\n\n".join(f"## Section {i}\n\nbody {i}" for i in range(40))
+    ids = [i["id"] for i in rr.extract_items(doc, 20)]
+    assert len(ids) == 20 and ids[0] == "Section 0" and ids[-1] == "Section 38"
+
+
+def test_ids_win_over_h2_sections():
+    doc = "## Intro\n\nx\n\n### PRD-A — rule\n\nalpha\n"
+    assert [i["id"] for i in rr.extract_items(doc, 20)] == ["PRD-A"]
 
 
 def test_over_cap_samples_evenly_across_doc():

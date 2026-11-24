@@ -4,7 +4,7 @@ type: prd
 state: draft
 health: active
 owner: cicidi
-version: "1.0.9"
+version: "1.0.10"
 last_verified: 2026-11-24
 ---
 
@@ -130,7 +130,7 @@ AI 要把大问题拆成小的：能查的 AI 自己查（合规、财报、交�
 
 **PRD-I**：每项改动都要能验证。实在验证不了的，在 spec 里标为 `Unverified` 并写明原因；标了的项不作为 test-plan 的通过条件。
 
-**PRD-J**：写或改 feature spec 时，由 spec-write 按标准判断要新建哪篇、或要改哪几篇；提交前，询问是否先跑 spec-review。写作进度记在 wayfinder 的地图目录里，目录建好前后的位置见 pipeline design 的 PIPE-H（[ARD-CH](../decision-history/spec-driven-development-decision-history.md#ard-ch)）。
+**PRD-J**：写或改 feature spec 时，由 spec-write 按标准判断要新建哪篇、或要改哪几篇；提交前，由 wayfinder 询问是否先跑 spec-review（PIPE-A-D）。写作进度记在 wayfinder 的地图目录里，目录建好前后的位置见 pipeline design 的 PIPE-H（[ARD-CH](../decision-history/spec-driven-development-decision-history.md#ard-ch)）。
 
 **PRD-K**：适用范围不限于软件，任何有门槛的难题都用同一套 spec。四个例子：盖 shed（合规、成本、施工）、北京旅游（行程、住宿、风险、预算）、看懂一道著名数学题（零基础一步步学）、分析一只股票（基本面、财报、新闻，每个结论有依据）。这四个例子不在本仓库建 gold（[ARD-CJ](../decision-history/spec-driven-development-decision-history.md#ard-cj)）。
 
@@ -198,3 +198,4 @@ AI 要把大问题拆成小的：能查的 AI 自己查（合规、财报、交�
 | 2026-11-24 | 第 8 轮审查后：PRD-J、PRD-P、Resources 跟上 ARD-CH；复核次数跟上 ARD-CJ；改链 ARD-CE、ARD-CK |
 | 2026-11-24 | 第 9 轮审查后：PRD-K 的链接改到重述它的 ARD-CJ |
 | 2026-11-24 | 第 13 轮审查后：写明复核结论文件 judgments/ 要提交 |
+| 2026-11-24 | 第 15 轮审查后：PRD-J 写明由 wayfinder 询问审查 |

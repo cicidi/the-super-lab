@@ -27,12 +27,12 @@ metadata:
     - spec drift
     - source of truth
     - authority by concern
-  spec_bundle_version: "1.0.9"
+  spec_bundle_version: "1.0.10"
   spec_built_at: "2026-11-24"
-  spec_git_sha: "20b0445"
+  spec_git_sha: "fc86008"
 ---
 <!-- SPEC-BUNDLE-START -->
-> **SDD spec bundle** `1.0.9` · built 2026-11-24 · git `20b0445`
+> **SDD spec bundle** `1.0.10` · built 2026-11-24 · git `fc86008`
 <!-- SPEC-BUNDLE-END -->
 
 # spec-organize
@@ -198,8 +198,9 @@ each part (ARD-BQ, document-standard DSGN-B).
 - `<feature>` is kebab-case, lowercase, no spaces or special characters
 - The filename repeats the feature and the type, so a file is identifiable
   outside its directory
-- A supporting file that a document cites sits in that document's folder:
-  `docs/features/<feature>/design/<source-name>.md`
+- A supporting file is an .md in any `<type>/` folder of the feature, without
+  a committed `type:` frontmatter, linked from a committed document of that
+  feature (document-standard DSGN-B).
 - A feature has one `decision-history` entry file. It may split into parts and
   is exempt from the size cap: it is append-only history, never trimmed
 
@@ -391,8 +392,9 @@ rest.
    - **Wrong filename** — not the entry `<feature>-<type>.md`, not a part
      (`<feature>-<type>-<noun>.md` for prd/design/test-plan/how-to;
      `<feature>-<type>-NN-<name>.md` for impl-plan/decision-history), and not a
-     supporting file (an `.md` in a type folder without a committed `type:` in
-     its frontmatter, cited by a document of that type)
+     supporting file. A supporting file is an .md in any `<type>/` folder of
+     the feature, without a committed `type:` frontmatter, linked from a
+     committed document of that feature (document-standard DSGN-B).
    - **Missing or invalid frontmatter** — any of the four fields absent, or
      `state` outside `draft|final`, or `final` without `final_date`
    - **Missing required sections** for the type

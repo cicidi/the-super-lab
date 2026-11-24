@@ -46,7 +46,7 @@ One website for the whole project. Entry: `docs/book/html/index.html`.
 - The left directory shows hierarchy and numbers: 1 prd, 2 decision-history, 3 design, 4 impl plan, 5 test plan, 6 how to, 10 sub-feature (ARD-BI). Design parts and the reader expand under 3. Sub-features expand under 10. Pipeline has no HTML page.
 - After a spec edit, spec-write tells the user which pages are stale and asks whether to rebuild now; before any commit that changes markdown it rebuilds, so committed HTML matches the markdown (ARD-CF). It does not invent a second layout (DSGN-N-E, reader PRD-M).
 
-Rebuild: `python3 tools/build_sdd_site.py`
+Rebuild: `python3 tools/build_sdd_site.py` (rebuilds the site and the reader)
 
 ## Links (MUST, DSGN-N-K)
 
@@ -64,7 +64,7 @@ Rebuild: `python3 tools/build_sdd_site.py`
 
 - **spec-write:** after the markdown edit, tell the user the HTML is stale and ask whether to rebuild the one site now (`python3 tools/build_sdd_site.py`); before any commit that changes markdown, rebuild so the committed HTML matches (ARD-CF)
 - Conflict or spec bug found while assembling → **Ask human** → fix md → regenerate HTML
-- SDD parent: `python3 tools/build_sdd_reader.py` then `python3 tools/validate_sdd_reader.py`
+- SDD parent: `python3 tools/build_sdd_site.py` (rebuilds the site and the reader) then `python3 tools/validate_sdd_reader.py`
 
 ## Diagrams
 

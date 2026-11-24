@@ -10,7 +10,7 @@ last_verified: 2026-11-20
 
 # Spec-Driven Development — 写 spec 的阶段
 
-本篇讲写一套 spec 要经过哪几个阶段、每个阶段做什么、用哪个 skill。它是参考步骤，不是一个要单独调用的 skill：写或改 spec 从 spec-write 开始，提交前由 spec-write 询问是否跑 spec-review（[ARD-AJ](../../../decision-history/spec-driven-development-decision-history.md#ard-aj)）。
+本篇讲写一套 spec 要经过哪几个阶段、每个阶段做什么、用哪个 skill。它是参考步骤，不是一个要单独调用的 skill：写或改 spec 从 spec-write 开始，提交前由 wayfinder 询问是否跑 spec-review（PIPE-A-D、ARD-CH、[ARD-AJ](../../../decision-history/spec-driven-development-decision-history.md#ard-aj)）。
 
 文档的格式、路径、编号、行数见 [document-standard design](../../document-standard/design/document-standard-design.md)，本篇只链过去，不重复。pipeline 没有自己的 PRD 和 test-plan，本篇提到的 `PRD-*`、`TST-*` 都指 parent 的 PRD 和 test-plan。术语见 [parent design 的术语表](../../../design/spec-driven-development-design.md#glossary)。
 
@@ -59,7 +59,7 @@ parent PRD 讲了上游的问题（见 [PRD](../../../prd/spec-driven-developmen
 - **PIPE-A-A**：任何「写或改 spec」的任务，都从 spec-write 开始，先按 `SPEC-STANDARD.md` 判断要新建哪篇、还是改哪几篇（[ARD-AJ](../../../decision-history/spec-driven-development-decision-history.md#ard-aj)）。
 - **PIPE-A-B**：路径和格式按文档标准检查。检查由检查脚本 `run_spec_checks.py` 或 spec-organize 的 Lint 模式执行。
 - **PIPE-A-C**：文档内容的增删改由 spec-write 做。格式类 MUST 的问题（例如标题写法、frontmatter 字段）可以由 spec-organize 的 Lint 模式直接修。两者都遵守 parent design 的 DSGN-A（每次改动的大小上限）（[ARD-BV](../../../decision-history/spec-driven-development-decision-history.md#ard-bv)）。
-- **PIPE-A-D**：提交或推送已提交文档的改动之前，询问是否先跑 spec-review。用户说不跑，就把这个选择记下来，不能悄悄跳过。
+- **PIPE-A-D**：提交或推送已提交文档的改动之前，询问是否先跑 spec-review。用户说不跑，就把这个选择记下来，不能悄悄跳过（MUST）。
 - **PIPE-A-E**：用户要求，或者对话中断后重新开始时，给出进度回顾：做了什么、现在的进度、还剩什么、建议下一步。
 - **PIPE-A-F**：维护和读取 PIPE-H 定义的进度记录；按 PIPE-G 的表推荐 skill。
 
@@ -96,8 +96,8 @@ PIPE-A-D、PIPE-A-E、PIPE-A-F 由 wayfinder 执行（ARD-CH）。
 
 PRD、design、decision-history 三篇反复打磨（见 parent PRD 的 Solution）。下面三个条件全部满足，才能进入 Downstream：
 
-- **PIPE-E-A**：没有阻塞的未决问题。每个未决问题都写在本 feature 的问题清单里，并在「阻塞」一列标明是或否。只要还有标「是」的问题没解决，就不能进入 Downstream；由 wayfinder 检查（ARD-CH）（[ARD-AG](../../../decision-history/spec-driven-development-decision-history.md#ard-ag)）。
-- **PIPE-E-B**：PRD 写清了限制、偏好、时间、资源、工具五项；不适用的写 not apply，不能留空。design 和 decision-history 两篇都已存在（[ARD-Z](../../../decision-history/spec-driven-development-decision-history.md#ard-z)）。
+- **PIPE-E-A**：没有阻塞的未决问题。每个未决问题都写在本 feature 的问题清单里，并在「阻塞」一列标明是或否。只要还有标「是」的问题没解决，就不能进入 Downstream（MUST）；由 wayfinder 检查（ARD-CH）（[ARD-AG](../../../decision-history/spec-driven-development-decision-history.md#ard-ag)）。
+- **PIPE-E-B**：PRD 写清了限制、偏好、时间、资源、工具五项；不适用的写 not apply，不能留空（MUST）。design 和 decision-history 两篇都已存在（[ARD-Z](../../../decision-history/spec-driven-development-decision-history.md#ard-z)）。
 - **PIPE-E-C**：design 列出了它依赖的决定和还没定的事项，并写清了实现需要的接口和边界。实现任务的细节留到 Downstream 再定。
 
 ### PIPE-F — Downstream（下游）
@@ -214,7 +214,7 @@ Map 的拆分标准见 PIPE-D 第 6 步。还没定的事项见 [Open Questions]
 ## Alternatives Considered
 
 - **把 wayfinder-import 固定成一个 sub-feature：** 放弃。辅助工具必须可以替换（[ARD-T](../../../decision-history/spec-driven-development-decision-history.md#ard-t)）。
-- **每个阶段一个 skill：** 放弃。写和审两个 skill 已经覆盖了所有阶段（[ARD-AJ](../../../decision-history/spec-driven-development-decision-history.md#ard-aj)），按阶段拆会让职责重复。
+- **每个阶段一个 skill：** 放弃。写、审两个入口加上负责进度的 wayfinder 已经覆盖了所有阶段（ARD-CH、[ARD-AJ](../../../decision-history/spec-driven-development-decision-history.md#ard-aj)），按阶段拆会让职责重复。
 - **固定的瀑布流程，跳过 Map：** 放弃。未知很多的问题，会漏掉该拆的部分。
 
 ## Drawbacks
@@ -270,3 +270,4 @@ Map 的拆分标准见 PIPE-D 第 6 步。还没定的事项见 [Open Questions]
 | 2026-11-24 | 进度规则交给 wayfinder，进度记录改为地图文件（ARD-CH） |
 | 2026-11-24 | 第 8 轮审查后：地图改为目录；Map 访谈辅助的例子改为 grill-with-docs；改链 ARD-CH |
 | 2026-11-24 | 第 9 轮审查后：wayfinder 不可用时改为人手维护地图目录 |
+| 2026-11-24 | 第 15 轮审查后：提交前由 wayfinder 询问审查；PIPE-A-D、PIPE-E-A、PIPE-E-B 标 MUST；放弃按阶段拆的理由跟上 ARD-CH |

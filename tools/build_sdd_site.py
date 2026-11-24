@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build a paginated, tree-navigated docs site for the SDD spec set."""
+"""Build a paginated, tree-navigated docs site for the SDD spec set, then the reader."""
 
 from __future__ import annotations
 
@@ -1295,6 +1295,9 @@ APP_JS = r"""
 
 
 def main() -> None:
+    import argparse
+
+    argparse.ArgumentParser(description="Build the SDD docs site, then the SDD reader (TST-R).").parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
     ASSETS.mkdir(parents=True, exist_ok=True)
     (ASSETS / "styles.css").write_text(SITE_CSS, encoding="utf-8")
@@ -1308,6 +1311,9 @@ def main() -> None:
         if "pipeline" in stale.relative_to(OUT).parts:
             stale.unlink()
     print(f"Wrote {OUT} ({len(DOCS) + 1} pages)")
+    import build_sdd_reader  # inside main: build_sdd_reader lazy-imports from this module
+
+    build_sdd_reader.main()
 
 
 if __name__ == "__main__":

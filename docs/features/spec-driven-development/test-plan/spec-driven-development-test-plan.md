@@ -95,7 +95,7 @@ last_verified: 2026-11-24
 
 ### TST-A — 生成 MUST 清单
 
-**目标：** 扫描每篇 design 的入口和分篇（document-standard design 和它的 reader 分篇、pipeline design），以及 parent design 的 DSGN-A、DSGN-B、DSGN-E，把所有「必须」「禁止」类规则收进 `must_registry.yaml`。spec 定稿后重新扫描。**输入：** 上面这些 design。**通过条件：** 覆盖率 100%；每条都标明 `python` 或 `llm`；parent DSGN-A 的单次改动上限不收，它明确不作通过条件（PRD-I）；NICE 规则不收（[ARD-BN](../decision-history/spec-driven-development-decision-history.md#ard-bn)）。**判定：** 出处比对脚本（`registry_provenance`）。
+**目标：** 扫描每篇 design 的入口和分篇（document-standard design 和它的 reader 分篇、pipeline design），以及 parent design 的 DSGN-A、DSGN-B、DSGN-C、DSGN-E，把所有「必须」「禁止」类规则收进 `must_registry.yaml`。spec 定稿后重新扫描。**输入：** 上面这些 design。**通过条件：** 覆盖率 100%；每条都标明 `python` 或 `llm`；parent DSGN-A 的单次改动上限不收，它明确不作通过条件（PRD-I）；NICE 规则不收（[ARD-BN](../decision-history/spec-driven-development-decision-history.md#ard-bn)）。**判定：** 出处比对脚本（`registry_provenance`）。
 
 ### TST-B — 检查脚本的反例和正例
 
@@ -330,3 +330,4 @@ document-standard 的 reader PRD：
 | 2026-11-24 | 第 11 轮审查后：语义审查案例标明还没写；门槛表加 TST-N、TST-C、TST-K |
 | 2026-11-24 | 第 12 轮审查后：TST-G 移到 spec-review 发布门槛 |
 | 2026-11-24 | 第 13 轮审查后：TST-L 写明结论文件提交、语料 sha 过期就重跑 |
+| 2026-11-24 | 第 15 轮审查后：TST-A 的输入加 DSGN-C |

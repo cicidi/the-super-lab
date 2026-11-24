@@ -35,9 +35,9 @@ items:
     text: '- 质量要求（MUST）：磁盘上有、INDEX 里没列的，叫孤立文档；INDEX 里列了、磁盘上没有的，叫死链。两种都不允许。'
     method: python
     check: 'index_book'
-  - id: MUST-H
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:186
-    text: '- 原文还是 `state: draft` 时，可以暂不更新摘要；`final` 或已合并的改动必须反映到 book。'
+  - id: MUST-BD
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:185
+    text: '- 改了 `docs/features/` 下已提交的 markdown，commit 前必须重新生成 book（网页）和 INDEX（[ARD-CF](../../../decision-history/spec-driven-development-decision-history.md#ard-cf)）。具体用 pre-push hook、CI 还是手动，属于实现。本标准只要求远端能看到的文档和 book、INDEX 保持同步，避免 AI 在 GitHub 上读到新 spec，摘要却还是旧的。'
     method: llm
     check: ''
   - id: MUST-I
@@ -185,9 +185,24 @@ items:
     text: '- 图不写正文没有的事实，也不和正文矛盾（DSGN-E 的「插图」）。'
     method: llm
     check: ''
+  - id: MUST-BE
+    source: docs/features/spec-driven-development/features/pipeline/design/pipeline-design.md:62
+    text: '- **PIPE-A-D**：提交或推送已提交文档的改动之前，询问是否先跑 spec-review。用户说不跑，就把这个选择记下来，不能悄悄跳过（MUST）。'
+    method: llm
+    check: ''
   - id: MUST-AJ
     source: docs/features/spec-driven-development/features/pipeline/design/pipeline-design.md:93
     text: '7. 子问题（PRD-L）：每个子问题标明「AI 查」「人决定」或「AI 查完人决定」。人没问到的盲区和风险，AI 必须主动提出来。'
+    method: llm
+    check: ''
+  - id: MUST-BF
+    source: docs/features/spec-driven-development/features/pipeline/design/pipeline-design.md:99
+    text: '- **PIPE-E-A**：没有阻塞的未决问题。每个未决问题都写在本 feature 的问题清单里，并在「阻塞」一列标明是或否。只要还有标「是」的问题没解决，就不能进入 Downstream（MUST）；由 wayfinder 检查（ARD-CH）（[ARD-AG](../../../decision-history/spec-driven-development-decision-history.md#ard-ag)）。'
+    method: llm
+    check: ''
+  - id: MUST-BG
+    source: docs/features/spec-driven-development/features/pipeline/design/pipeline-design.md:100
+    text: '- **PIPE-E-B**：PRD 写清了限制、偏好、时间、资源、工具五项；不适用的写 not apply，不能留空（MUST）。design 和 decision-history 两篇都已存在（[ARD-Z](../../../decision-history/spec-driven-development-decision-history.md#ard-z)）。'
     method: llm
     check: ''
   - id: MUST-AK
@@ -208,6 +223,16 @@ items:
   - id: MUST-AN
     source: docs/features/spec-driven-development/design/spec-driven-development-design.md:132
     text: '实现 SDD 或文档标准时，计划里必须同时包含 skill 的修改和 CLAUDE 层的条目，两边写的是同一套规范。规则的细节写在 sub-feature 的 design 里，本文只定「两个渠道都要写」这条原则。'
+    method: llm
+    check: ''
+  - id: MUST-BH
+    source: docs/features/spec-driven-development/design/spec-driven-development-design.md:161
+    text: '- **parent**（`docs/features/spec-driven-development/` 这一层，不含 `features/` 下的 sub-feature）：spec-review 要确认五篇都在：prd、design、decision-history、impl-plan、test-plan。how-to 可选。缺任何一篇，记为严重度 3 及以上的问题（MUST）。'
+    method: llm
+    check: ''
+  - id: MUST-BI
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design-spec-reader-html.md:49
+    text: '- markdown 里用 `<!-- html-skip -->` 包住的内容可以不显示，但不能用它包住 L1 内容（MUST）。'
     method: llm
     check: ''
   - id: MUST-AO

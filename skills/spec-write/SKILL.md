@@ -18,12 +18,12 @@ metadata:
     - draft design
     - append decision
     - spec write
-  spec_bundle_version: "1.0.9"
+  spec_bundle_version: "1.0.10"
   spec_built_at: "2026-11-24"
-  spec_git_sha: "20b0445"
+  spec_git_sha: "fc86008"
 ---
 <!-- SPEC-BUNDLE-START -->
-> **SDD spec bundle** `1.0.9` · built 2026-11-24 · git `20b0445`
+> **SDD spec bundle** `1.0.10` · built 2026-11-24 · git `fc86008`
 <!-- SPEC-BUNDLE-END -->
 
 # spec-write
@@ -65,7 +65,7 @@ Illustrations, not gold. Each edit stays within 10 lines and 200 characters.
 10. A pure standard or orchestration design may say the ownership table does not apply. If every tracker row has Owner and Evidence, link to the tracker instead of copying the table.
 11. A `file:line` citation names the commit. A renamed heading keeps the old anchor above the new title.
 12. **Readability pass.** Reread each changed section as an undergraduate programmer who has only this document and the glossary (parent design appendix). Rewrite any keyword list or arrow chain as sentences. Explain or link every term at first use; add missing terms to the glossary.
-13. After a markdown edit, tell the user which HTML pages are now out of date and ask whether to rebuild now with `python3 tools/build_sdd_site.py`. Before any commit, rebuild so the committed HTML matches the markdown (ARD-CF). Each page is one directory line. A feature page keeps that feature's directory on the left and the page on the right. A hand-maintained HTML file keeps `spec-source-sha256`.
+13. After a markdown edit, tell the user which HTML pages are now out of date and ask whether to rebuild now with `python3 tools/build_sdd_site.py` (it rebuilds the site and the reader). Before any commit, rebuild so the committed HTML matches the markdown (ARD-CF). Each page is one directory line. A feature page keeps that feature's directory on the left and the page on the right. A hand-maintained HTML file keeps `spec-source-sha256`.
 14. When the **diagram-design** skill is installed (it does not ship with SDD): if a section matches a shape in `SPEC-PRESENTATION.md` §Diagram and has no figure yet, add one and cite the SVG. Without it, keep existing figures and add none; do not redraw existing figures unless the user asks.
 
 ### By type (quick)
@@ -79,7 +79,7 @@ Illustrations, not gold. Each edit stays within 10 lines and 200 characters.
 | **test-plan** | **TST-*** cases; execution order; pass threshold; a Traceability table listing every `PRD-*` |
 | **any** | Changing an existing sentence: write the current rule and link the ARD that changed it. No strikethrough outside decision-history (ARD-BM). A typo may be edited in place |
 
-After substantive spec edits, say the HTML is out of date and ask whether to rebuild with `python3 tools/build_sdd_site.py`; rebuild before commit regardless (ARD-CF). The reader assembly, when needed, is `python3 tools/build_sdd_reader.py`. HTML does not change the spec.
+After substantive spec edits, say the HTML is out of date and ask whether to rebuild with `python3 tools/build_sdd_site.py`, which rebuilds the site and the reader; rebuild before commit regardless (ARD-CF). HTML does not change the spec.
 
 ### Section headings (MUST)
 

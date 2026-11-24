@@ -214,6 +214,22 @@ def test_supporting_file_cited_from_other_feature_not_counted(tmp_path):
     assert any(f.check == "paths" for f in check_committed_path(p))
 
 
+def test_supporting_file_cited_only_from_raw_notes_flagged(tmp_path):
+    # A citer under raw/ is a note, not a committed document (DSGN-B).
+    _doc(tmp_path, "pay/design/pay-design.md", "design")
+    notes = tmp_path / "docs" / "features" / "pay" / "raw" / "notes.md"
+    notes.parent.mkdir(parents=True, exist_ok=True)
+    notes.write_text("See [n](../design/stripe-api-notes.md).\n", encoding="utf-8")
+    p = _doc(tmp_path, "pay/design/stripe-api-notes.md")
+    assert any(f.check == "paths" for f in check_committed_path(p))
+
+
+def test_supporting_file_cited_from_sub_feature_not_counted(tmp_path):
+    _cite(tmp_path, "pay/features/refund/design/refund-design.md", "../../../design/stripe-api-notes.md")
+    p = _doc(tmp_path, "pay/design/stripe-api-notes.md")
+    assert any(f.check == "paths" for f in check_committed_path(p))
+
+
 def test_neg_stale_slug_no_frontmatter():
     p = FIX / "neg" / "stale-slug-no-frontmatter" / "docs" / "features" / "demo" / "prd" / "olddemo-prd.md"
     assert any(f.check == "paths" for f in check_committed_path(p))

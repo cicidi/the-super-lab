@@ -182,8 +182,8 @@ sub-feature 的例子（parent 是 `spec-driven-development`，sub-feature 是 `
 
 **book 什么时候更新：**
 
-- `docs/features/` 下已提交的文档有改动并推送到 GitHub 时，同一次推送里（或紧挨着的前一个 commit）应该已经重新生成了对应的 book 和 INDEX。具体用 pre-push hook、CI 还是手动，属于实现。本标准只要求远端能看到的文档和 book、INDEX 保持同步，避免 AI 在 GitHub 上读到新 spec，摘要却还是旧的。
-- 原文还是 `state: draft` 时，可以暂不更新摘要；`final` 或已合并的改动必须反映到 book。
+- 改了 `docs/features/` 下已提交的 markdown，commit 前必须重新生成 book（网页）和 INDEX（[ARD-CF](../../../decision-history/spec-driven-development-decision-history.md#ard-cf)）。具体用 pre-push hook、CI 还是手动，属于实现。本标准只要求远端能看到的文档和 book、INDEX 保持同步，避免 AI 在 GitHub 上读到新 spec，摘要却还是旧的。
+- draft 和 final 一样：改了就重新生成，不再有 draft 例外（ARD-CF）。
 
 **其他：**
 
@@ -519,3 +519,4 @@ design 管「想要怎样」，代码管「现在怎样」和内部结构。机�
 | 2026-11-24 | 第 8 轮审查后：被测对象三个 skill；本地目录表加 docs/state/；改链 ARD-CH、ARD-CK |
 | 2026-11-24 | 第 9 轮审查后：链到已划掉 ARD 的地方改链 |
 | 2026-11-24 | 第 11 轮审查后：DSGN-M 的图规则改为 ARD-CA 保留的部分 |
+| 2026-11-24 | 第 15 轮审查后：DSGN-D 的 book 更新改为 commit 前必须重建，去掉 draft 例外（ARD-CF） |
