@@ -6,6 +6,7 @@ from __future__ import annotations
 import html
 import re
 import subprocess
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -139,7 +140,7 @@ def inline_figures(page_html: str, md_path: Path) -> str:
     )
 
 
-def md_to_html(md: str) -> str:
+def md_to_html(md: str, id_prefix: str = "") -> str:
     md = strip_frontmatter(md)
     lines = md.splitlines()
     out: list[str] = []
@@ -193,7 +194,7 @@ def md_to_html(md: str) -> str:
                 r"^((?:PRD|DSGN|ARD|IMPL|TST|PIPE|QUES)-[A-Z]+(?:-[A-Z]+)*)\b",
                 title,
             )
-            attr = f' id="{id_match.group(1)}"' if id_match else ""
+            attr = f' id="{id_prefix}{id_match.group(1)}"' if id_match else ""
             out.append(f"<{tag}{attr}>{inline_md(title)}</{tag}>")
             i += 1
             continue
@@ -298,6 +299,8 @@ def md_to_html(md: str) -> str:
 
 
 def panel_html(panel_id: str, title: str, sources: list[tuple[str, Path]]) -> str:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from build_sdd_site import _retarget_links  # lazy: build_sdd_site imports this module
     parts = [f'<article id="{panel_id}" class="panel{" active" if panel_id == "p-prd" else ""}">']
     parts.append(f'<p class="panel-label">{html.escape(title)}</p>')
     parts.append('<div class="md-body">')
@@ -305,7 +308,10 @@ def panel_html(panel_id: str, title: str, sources: list[tuple[str, Path]]) -> st
         text = path.read_text(encoding="utf-8")
         if idx > 0:
             parts.append(f'<hr><p class="src-inline">Source: <code>{html.escape(rel)}</code></p>')
-        parts.append(inline_figures(md_to_html(text), path))
+        # Sub-features reuse ids like DSGN-B; prefix them so one page has unique anchors.
+        feat = path.relative_to(SDD).parts
+        prefix = f"{feat[1]}-" if feat[0] == "features" else ""
+        parts.append(inline_figures(_retarget_links(md_to_html(text, prefix), path, OUT), path))
     parts.append("</div>")
     canon = " · ".join(f"<code>{html.escape(r)}</code>" for r, _ in sources)
     parts.append(f'<p class="src">Canonical: {canon}</p>')

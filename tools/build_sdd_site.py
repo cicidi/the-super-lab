@@ -90,9 +90,9 @@ def _page_for(md_path: Path) -> Path:
     return OUT / md_path.resolve().relative_to(FEATURES.resolve()).with_suffix(".html")
 
 
-def _retarget_links(body: str, md_path: Path) -> str:
+def _retarget_links(body: str, md_path: Path, page: Path | None = None) -> str:
     """Links in the markdown are relative to the source file. Point them at the HTML page."""
-    page = _page_for(md_path)
+    page = page or _page_for(md_path)
 
     def repl(match: re.Match) -> str:
         href = match.group(1)

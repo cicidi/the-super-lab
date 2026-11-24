@@ -18,7 +18,13 @@ metadata:
     - draft design
     - append decision
     - spec write
+  spec_bundle_version: "1.0.0"
+  spec_built_at: "2026-11-24"
+  spec_git_sha: "8ba542e"
 ---
+<!-- SPEC-BUNDLE-START -->
+> **SDD spec bundle** `1.0.0` · built 2026-11-24 · git `8ba542e`
+<!-- SPEC-BUNDLE-END -->
 
 # spec-write
 
@@ -55,7 +61,7 @@ Illustrations, not gold. Each edit stays within 10 lines and 200 characters.
 6. Use letter-prefix IDs only (**PRD-A**, **DSGN-B**, **ARD-C**, **IMPL-A**, **TST-A**, **QUES-A**). An Open Questions entry is `QUES-A`, not `OQ-1` or `QUES-1`, and carries question, answer so far, owner, and blocking yes/no.
 7. After create/move: regenerate INDEX when the tree changes.
 8. Cross-check before finishing: every `PRD-*` id appears in the design; every `TST-*` case names the requirement it covers; an ID from another feature names that feature ("parent test-plan 的 TST-V").
-9. On a design with sub-problems, write `子问题归属`: `| 子问题 | 归属 | 依据 |`. Owner is `AI 查`, `人决定`, or `AI 查完人决定`. 依据 is a `raw/` path, a URL, or an `ARD-*` id. If the fact was not found, write `UNKNOWN`. Do not guess.
+9. On a design with sub-problems, write `子问题归属`: `| 子问题 | 归属 | 依据 |`. Owner is `AI 查`, `人决定`, or `AI 查完人决定`. 依据 is a `raw/` path, a URL, or an `ARD-*` id. If the fact was not found, write `UNKNOWN`. Do not guess. Add rows for blind spots and risks the human did not ask about.
 10. A pure standard or orchestration design may say the ownership table does not apply. If every tracker row has Owner and Evidence, link to the tracker instead of copying the table.
 11. A `file:line` citation names the commit. A renamed heading keeps the old anchor above the new title.
 12. **Readability pass.** Reread each changed section as an undergraduate programmer who has only this document and the glossary (parent design appendix). Rewrite any keyword list or arrow chain as sentences. Explain or link every term at first use; add missing terms to the glossary.

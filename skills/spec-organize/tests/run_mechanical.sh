@@ -21,6 +21,7 @@ python3 tools/check_gold_run_scaffold.py
 python3 tools/check_eval_config.py
 python3 tools/check_eval_reports.py
 python3 tools/build_sdd_reader.py --check-sources
+python3 tools/build_spec_skills.py --check
 python3 tools/verify_sdd_skills_map.py
 python3 tools/validate_sdd_reader.py
 python3 skills/spec-review/tests/run_case_checks.py

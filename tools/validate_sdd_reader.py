@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import re
 import sys
 from pathlib import Path
 
@@ -41,6 +42,13 @@ def main() -> None:
     for pid in REQUIRED_PANELS:
         if f'id="{pid}"' not in html:
             missing.append(f"panel {pid}")
+    ids = re.findall(r'\bid="([^"]+)"', html)
+    missing += sorted({f"duplicate id {i}" for i in ids if ids.count(i) > 1})
+    for href in re.findall(r'href="([^"#][^"]*)"', html):
+        if href.startswith(("http://", "https://", "mailto:")):
+            continue
+        if not (READER.parent / href.split("#", 1)[0]).exists():
+            missing.append(f"dead link {href}")
     if missing:
         for m in missing:
             print(f"missing in reader: {m}", file=sys.stderr)

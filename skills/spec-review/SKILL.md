@@ -22,7 +22,13 @@ metadata:
     - check work
     - accept work
     - challenge this
+  spec_bundle_version: "1.0.0"
+  spec_built_at: "2026-11-24"
+  spec_git_sha: "8ba542e"
 ---
+<!-- SPEC-BUNDLE-START -->
+> **SDD spec bundle** `1.0.0` · built 2026-11-24 · git `8ba542e`
+<!-- SPEC-BUNDLE-END -->
 
 # spec-review
 

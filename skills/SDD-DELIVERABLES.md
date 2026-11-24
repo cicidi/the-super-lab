@@ -10,4 +10,4 @@ Initiative spec: `docs/features/spec-driven-development/`. Deliverable skills ar
 | [spec-review](spec-review/SKILL.md) | Mechanical + semantic review |
 | [spec-html-standard](spec-html-standard/SPEC-HTML-STANDARD.md) | Human reader HTML rules (**DSGN-N** summary); Mermaid: [MERMAID-PATTERNS.md](spec-html-standard/MERMAID-PATTERNS.md) |
 
-**Harness:** `./tools/run_sdd_mechanical.sh` · **Tools:** `tools/README-SDD.md` · **Pipeline ops:** `spec-pipeline/INDEX.md` · **Eval matrix:** `spec-organize/tests/eval/TST-J-MATRIX.md`.
+**Harness:** `./tools/run_sdd_mechanical.sh` · **Tools:** `tools/README-SDD.md` · **Spec bundle:** parent PRD `version` → `python3 tools/build_spec_skills.py` · **Pipeline ops:** `spec-pipeline/INDEX.md` · **Eval matrix:** `spec-organize/tests/eval/TST-J-MATRIX.md`.

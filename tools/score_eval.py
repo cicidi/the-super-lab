@@ -37,6 +37,7 @@ from checks.no_commit import check_no_commit_tree  # noqa: E402
 from checks.parent_complete import check_parent_complete  # noqa: E402
 from checks.paired_html import check_paired_html  # noqa: E402
 from checks.runners import run_file  # noqa: E402
+from checks.size import check_size  # noqa: E402
 
 REGISTRY = TESTS / "must_registry.yaml"
 JUDGMENTS = TESTS / "judgments" / "v1.yaml"

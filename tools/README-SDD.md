@@ -20,6 +20,7 @@ Mechanical gate: `./tools/run_sdd_mechanical.sh` (alias for `skills/spec-organiz
 | `tst_a_scan_must_registry.py` | Draft registry from design (destructive with `--write`) |
 | `tag_must_registry_checks.py` | Heuristic `method`/`check` tags |
 | `build_sdd_reader.py` | Regenerate `docs/book/html/<parent>/<parent>-reader.html` (`--check-sources`) |
+| `build_spec_skills.py` | Stamp SDD `SKILL.md` from parent PRD `version` (`--check` for CI) |
 | `verify_sdd_skills_map.py` | `SDD-DELIVERABLES.md` links exist |
 | `validate_sdd_reader.py` | Reader smoke test |
 | `eval_preflight.py` | Gold v1 asset check before TST-C |
