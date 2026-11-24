@@ -44,9 +44,9 @@
 <li>作为使用者，我想从 GitHub 导入别人的 skill，并转成本仓库的格式。</li>
 </ul>
 <h3>Implementation Decisions</h3>
-<p>格式规则不写在本 skill 里，统一引用仓库根目录的 <a href="../../../../../../../CONVENTIONS.md"><code>CONVENTIONS.md</code></a>（<a class="id-ref" href="../prd/skill-prd.html#PRD-C">PRD-C</a>）。 这样规则只有一个出处，改规则时不用同时改多个 skill。</p>
+<p>格式规则不写在本 skill 里，统一引用仓库根目录的 <code>CONVENTIONS.md</code>（<a class="id-ref" href="../prd/skill-prd.html#PRD-C">PRD-C</a>）。 这样规则只有一个出处，改规则时不用同时改多个 skill。</p>
 <h3>Design</h3>
-<p><strong><a class="id-ref" href="#DSGN-A">DSGN-A</a> create。</strong> 先问名字（kebab-case，即小写加连字符，如 <code>fix-bug</code>）。 再在本地、GitHub 和网上搜相似 skill，避免重复（<a class="id-ref" href="../prd/skill-prd.html#PRD-B">PRD-B</a>）。 然后按 <a href="../../../../../../../CONVENTIONS.md"><code>CONVENTIONS.md</code></a> 起草，给用户审阅；批准后才写入 <code>skills/&lt;name&gt;/SKILL.md</code>（<a class="id-ref" href="../prd/skill-prd.html#PRD-G">PRD-G</a>、<a class="id-ref" href="../prd/skill-prd.html#PRD-H">PRD-H</a>）。</p>
+<p><strong><a class="id-ref" href="#DSGN-A">DSGN-A</a> create。</strong> 先问名字（kebab-case，即小写加连字符，如 <code>fix-bug</code>）。 再在本地、GitHub 和网上搜相似 skill，避免重复（<a class="id-ref" href="../prd/skill-prd.html#PRD-B">PRD-B</a>）。 然后按 <code>CONVENTIONS.md</code> 起草，给用户审阅；批准后才写入 <code>skills/&lt;name&gt;/SKILL.md</code>（<a class="id-ref" href="../prd/skill-prd.html#PRD-G">PRD-G</a>、<a class="id-ref" href="../prd/skill-prd.html#PRD-H">PRD-H</a>）。</p>
 <p><strong><a class="id-ref" href="#DSGN-B">DSGN-B</a> edit。</strong> 先读现有 SKILL.md，问清改什么，改后展示 diff，确认才保存（<a class="id-ref" href="../prd/skill-prd.html#PRD-D">PRD-D</a>）。 改动必须守住三条：没有 TBD/TODO；正文不用装饰性 emoji； description（frontmatter 里告诉 agent 何时调用的那段话）以 &quot;Use when&quot; 开头且不超过 1024 字符。</p>
 <p><strong><a class="id-ref" href="#DSGN-C">DSGN-C</a> import。</strong> 从 GitHub URL 取 SKILL.md，保留原名存到 <code>skills/&lt;原名&gt;/</code>（<a class="id-ref" href="../prd/skill-prd.html#PRD-E">PRD-E</a>）。 缺 <code>license</code> 补 MIT，缺 <code>compatibility</code> 补 <code>claude-code,opencode</code>， 缺 When to Use / When NOT to Use 两节就补上。最后报告哪些改了、哪些原样保留。</p>
 <p><strong><a class="id-ref" href="#DSGN-D">DSGN-D</a> list。</strong> 运行 <code>coworker skill list</code>，显示每个 skill 的名字、路径和是否启用。</p>

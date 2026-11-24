@@ -1,4 +1,4 @@
-<!-- SDD reader · source .md · git f68d4b3 -->
+<!-- SDD reader · source .md · git 88f1ccd -->
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light">
 <head>
@@ -1803,7 +1803,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <p><strong>判定：</strong> 判分模型 <code>deepseek-flash</code>。实现见 impl-plan 的 IMPL-Q。</p>
 <h4 id="TST-W">TST-W — 网页插图与样式</h4>
 <p><strong>目标：</strong> 网页里的插图都已经嵌进页面，用 diagram-design 的默认配色；页面里没有留下等待替换的 <code>data-svg</code> 占位标记（document-standard 的 DSGN-N-D、<a href="decision-history/spec-driven-development-decision-history.html#ard-ca">ARD-CA</a>）。</p>
-<p><strong>通过条件：</strong> <code>tests/test_sdd_site_render.py</code> 通过；每个 <code>-fig-*.svg</code> 在对应 HTML 中出现一次；<code>docs/book/html</code> 无 <code>data-svg</code>。插图命名、同目录、无脚本由 <code>checks/figures.py</code> 检查。</p>
+<p><strong>通过条件：</strong> <code>tests/test_sdd_site_render.py</code> 通过；每个 <code>-fig-*.svg</code> 在对应 HTML 中出现一次；<code>docs/book/html</code> 里没有 <code>data-svg=&quot;</code> 占位属性。插图命名、同目录、无脚本由 <code>checks/figures.py</code> 检查。</p>
 <p><strong>判定：</strong> Python。</p>
 <h4 id="TST-X">TST-X — L1 内容不减少</h4>
 <p><strong>目标：</strong> 改文档时不靠删 L1 内容凑分（document-standard 的 DSGN-I）。<strong>输入：</strong> 两个 git 版本之间的 <code>docs/features/&lt;f&gt;/</code>。</p>
@@ -2120,6 +2120,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td>2026-11-24</td>
 <td>TST-X 改引 DSGN-I；TST-W 改成完整句子；TST-Y 写明四个 skill；门槛表补 TST-W 到 TST-Z，TST-R 按内容比较</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>TST-W 写明查的是 <code>data-svg=&quot;</code> 占位属性</td>
 </tr>
 </tbody></table>
 </div>
