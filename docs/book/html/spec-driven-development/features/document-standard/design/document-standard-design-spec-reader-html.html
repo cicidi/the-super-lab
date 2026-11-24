@@ -72,7 +72,7 @@
 <p>来源：reader PRD 的 <a class="id-ref" href="../prd/document-standard-prd-spec-reader-html.html#PRD-F">PRD-F</a>、<a class="id-ref" href="../prd/document-standard-prd-spec-reader-html.html#PRD-J">PRD-J</a>。</p>
 <ul>
 <li>markdown 是源头，HTML 是派生物。</li>
-<li>markdown 里用 <code>&lt;!-- html-skip --&gt;</code> 包住的内容可以不显示，但不能用它包住 L1 内容。</li>
+<li>markdown 里用 <code>&lt;!-- html-skip --&gt;</code> 包住的内容可以不显示，但不能用它包住 L1 内容（<span class="lvl lvl--must">MUST</span>）。</li>
 <li>decision-history 里被划掉的句子在 HTML 里也保留。页面上有一个按钮，可以切换「显示删除线」和「隐藏删除线」。</li>
 <li>脚本生成的页面每次从 markdown 重新生成，不带 <code>spec-paired</code> 标记。手工维护的页面要带三个标记：<code>spec-paired=hand-maintained</code>、<code>spec-source</code>（源 markdown 的路径）、<code>spec-source-sha256</code>（源文件的哈希）。源文件变了而页面没变，哈希就对不上，检查会报「过期」（<a href="../../../decision-history/spec-driven-development-decision-history.html#ard-ak">ARD-AK</a>）。</li>
 <li>手工维护的页面如果有更新记录，要覆盖 markdown Change Log 里的每个日期（<a href="../../../decision-history/spec-driven-development-decision-history.html#ard-ba">ARD-BA</a>，<span class="lvl lvl--nice">NICE</span>）。</li>
@@ -382,6 +382,10 @@
 <tr>
 <td>2026-11-24</td>
 <td>第 14 轮审查后：<a class="id-ref" href="#DSGN-N-F">DSGN-N-F</a> 改为 commit 前必须重建（parent <a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-CF">ARD-CF</a>），去掉错别字例外</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 15 轮审查后：<a class="id-ref" href="#DSGN-N-H">DSGN-N-H</a> 的 html-skip 规则标 <span class="lvl lvl--must">MUST</span></td>
 </tr>
 </tbody></table></div>
       </div>

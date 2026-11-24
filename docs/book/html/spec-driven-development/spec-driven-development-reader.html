@@ -1,4 +1,4 @@
-<!-- SDD reader · source .md · git 6337632 -->
+<!-- SDD reader · source .md · git 487730c -->
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light">
 <head>
@@ -181,7 +181,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <p><strong>PRD-G</strong>（延后）：产品级成功指标和基线，暂时定不下来，见 <a href="decision-history/spec-driven-development-decision-history.html#ard-n">ARD-N</a>。test-plan 里的分数是评测指标，不是产品成功指标。</p>
 <p><strong>PRD-H</strong>：流程里的每一步，优先使用已经流行的 skill，不重新发明。</p>
 <p><strong>PRD-I</strong>：每项改动都要能验证。实在验证不了的，在 spec 里标为 <code>Unverified</code> 并写明原因；标了的项不作为 test-plan 的通过条件。</p>
-<p><strong>PRD-J</strong>：写或改 feature spec 时，由 spec-write 按标准判断要新建哪篇、或要改哪几篇；提交前，询问是否先跑 spec-review。写作进度记在 wayfinder 的地图目录里，目录建好前后的位置见 pipeline design 的 PIPE-H（<a href="decision-history/spec-driven-development-decision-history.html#ard-ch">ARD-CH</a>）。</p>
+<p><strong>PRD-J</strong>：写或改 feature spec 时，由 spec-write 按标准判断要新建哪篇、或要改哪几篇；提交前，由 wayfinder 询问是否先跑 spec-review（PIPE-A-D）。写作进度记在 wayfinder 的地图目录里，目录建好前后的位置见 pipeline design 的 PIPE-H（<a href="decision-history/spec-driven-development-decision-history.html#ard-ch">ARD-CH</a>）。</p>
 <p><strong>PRD-K</strong>：适用范围不限于软件，任何有门槛的难题都用同一套 spec。四个例子：盖 shed（合规、成本、施工）、北京旅游（行程、住宿、风险、预算）、看懂一道著名数学题（零基础一步步学）、分析一只股票（基本面、财报、新闻，每个结论有依据）。这四个例子不在本仓库建 gold（<a href="decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a>）。</p>
 <p><strong>PRD-L</strong>：每个子问题都标明由谁处理：AI 查、人决定、或 AI 查完后人决定。人没有问到的盲区和风险，AI 必须主动提出来。</p>
 <p><strong>PRD-M</strong>：文档要让人读懂，这是硬需求，而且是通过条件。交付前，由一个 LLM（大语言模型）扮演本科水平的程序员，只读这一篇文档和术语表，回答从文档里抽出的问题；答错太多，或者有文档里没解释、术语表里也没有的术语，就不算交付（<a href="decision-history/spec-driven-development-decision-history.html#ard-bo">ARD-BO</a>）。具体门槛见 test-plan 的 TST-V。</p>
@@ -332,6 +332,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td>2026-11-24</td>
 <td>第 13 轮审查后：写明复核结论文件 judgments/ 要提交</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 15 轮审查后：PRD-J 写明由 wayfinder 询问审查</td>
 </tr>
 </tbody></table>
 </div>
@@ -587,7 +591,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <a id="8-parent-vs-sub-feature--review-齐备度"></a><a id="dsgn-e"></a>
 <h4 id="DSGN-E">DSGN-E — parent 和 sub-feature 的文档齐备要求</h4>
 <ul>
-<li><strong>parent</strong>（<code>docs/features/spec-driven-development/</code> 这一层，不含 <code>features/</code> 下的 sub-feature）：spec-review 要确认五篇都在：prd、design、decision-history、impl-plan、test-plan。how-to 可选。缺任何一篇，记为严重度 3 及以上的问题。</li>
+<li><strong>parent</strong>（<code>docs/features/spec-driven-development/</code> 这一层，不含 <code>features/</code> 下的 sub-feature）：spec-review 要确认五篇都在：prd、design、decision-history、impl-plan、test-plan。how-to 可选。缺任何一篇，记为严重度 3 及以上的问题（MUST）。</li>
 <li><strong>sub-feature</strong>（<code>features/&lt;sub&gt;/</code>）：不要求五篇都有，可以只有 design。review 只检查已有的文档，不能因为缺了没计划写的类型而判失败。</li>
 </ul>
 <h4>旧编号对照</h4>
@@ -1244,6 +1248,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <td>2026-11-24</td>
 <td>第 14 轮审查后：放弃 spec-pipeline 的理由跟上 ARD-CH</td>
 </tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 15 轮审查后：DSGN-E 的 parent 五篇齐全标 MUST</td>
+</tr>
 </tbody></table>
 <hr><p class="src-inline">Source: <code>design/spec-driven-development-design-skill-contracts.md</code></p>
 <h2>Spec-Driven Development — Skill 契约</h2>
@@ -1872,7 +1880,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <p><strong>gold 增长：</strong> 运行中发现新的好例子或坏例子，追加到 <code>annotations.yaml</code>，gold 版本号加一，<code>added_in</code> 写上新版本。报告里必须写明 gold 版本（<a href="decision-history/spec-driven-development-decision-history.html#ard-s">ARD-S</a>）。</p>
 <h3>Test Cases</h3>
 <h4 id="TST-A">TST-A — 生成 MUST 清单</h4>
-<p><strong>目标：</strong> 扫描每篇 design 的入口和分篇（document-standard design 和它的 reader 分篇、pipeline design），以及 parent design 的 DSGN-A、DSGN-B、DSGN-E，把所有「必须」「禁止」类规则收进 <code>must_registry.yaml</code>。spec 定稿后重新扫描。<strong>输入：</strong> 上面这些 design。<strong>通过条件：</strong> 覆盖率 100%；每条都标明 <code>python</code> 或 <code>llm</code>；parent DSGN-A 的单次改动上限不收，它明确不作通过条件（PRD-I）；NICE 规则不收（<a href="decision-history/spec-driven-development-decision-history.html#ard-bn">ARD-BN</a>）。<strong>判定：</strong> 出处比对脚本（<code>registry_provenance</code>）。</p>
+<p><strong>目标：</strong> 扫描每篇 design 的入口和分篇（document-standard design 和它的 reader 分篇、pipeline design），以及 parent design 的 DSGN-A、DSGN-B、DSGN-C、DSGN-E，把所有「必须」「禁止」类规则收进 <code>must_registry.yaml</code>。spec 定稿后重新扫描。<strong>输入：</strong> 上面这些 design。<strong>通过条件：</strong> 覆盖率 100%；每条都标明 <code>python</code> 或 <code>llm</code>；parent DSGN-A 的单次改动上限不收，它明确不作通过条件（PRD-I）；NICE 规则不收（<a href="decision-history/spec-driven-development-decision-history.html#ard-bn">ARD-BN</a>）。<strong>判定：</strong> 出处比对脚本（<code>registry_provenance</code>）。</p>
 <h4 id="TST-B">TST-B — 检查脚本的反例和正例</h4>
 <p><strong>目标：</strong> 证明检查脚本真的有效。<strong>输入：</strong> <code>fixtures/neg/*</code> 和 <code>fixtures/pos/*</code>。<strong>通过条件：</strong> 每个反例都报错；每个正例都不报错。<strong>判定：</strong> pytest。</p>
 <h4 id="TST-C">TST-C — 生成 gold（跑 3 次）</h4>
@@ -2282,6 +2290,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td>2026-11-24</td>
 <td>第 13 轮审查后：TST-L 写明结论文件提交、语料 sha 过期就重跑</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 15 轮审查后：TST-A 的输入加 DSGN-C</td>
 </tr>
 </tbody></table>
 </div>
@@ -3329,7 +3341,7 @@ payment-impl-plan-01-schema.md         impl-plan 分篇：序号加阶段，有�
 <p class="panel-label">Pipeline</p>
 <div class="md-body">
 <h2>Spec-Driven Development — 写 spec 的阶段</h2>
-<p>本篇讲写一套 spec 要经过哪几个阶段、每个阶段做什么、用哪个 skill。它是参考步骤，不是一个要单独调用的 skill：写或改 spec 从 spec-write 开始，提交前由 spec-write 询问是否跑 spec-review（<a href="decision-history/spec-driven-development-decision-history.html#ard-aj">ARD-AJ</a>）。</p>
+<p>本篇讲写一套 spec 要经过哪几个阶段、每个阶段做什么、用哪个 skill。它是参考步骤，不是一个要单独调用的 skill：写或改 spec 从 spec-write 开始，提交前由 wayfinder 询问是否跑 spec-review（PIPE-A-D、ARD-CH、<a href="decision-history/spec-driven-development-decision-history.html#ard-aj">ARD-AJ</a>）。</p>
 <p>文档的格式、路径、编号、行数见 <a href="features/document-standard/design/document-standard-design.html">document-standard design</a>，本篇只链过去，不重复。pipeline 没有自己的 PRD 和 test-plan，本篇提到的 <code>PRD-*</code>、<code>TST-*</code> 都指 parent 的 PRD 和 test-plan。术语见 <a href="design/spec-driven-development-design.html#glossary">parent design 的术语表</a>。</p>
 <h3>Problem Statement</h3>
 <p>parent PRD 讲了上游的问题（见 <a href="prd/spec-driven-development-prd.html">PRD</a> 的 Problem Statement）。本篇补充写 spec 这个流程本身的问题：</p>
@@ -3372,7 +3384,7 @@ payment-impl-plan-01-schema.md         impl-plan 分篇：序号加阶段，有�
 <li><strong>PIPE-A-A</strong>：任何「写或改 spec」的任务，都从 spec-write 开始，先按 <code>SPEC-STANDARD.md</code> 判断要新建哪篇、还是改哪几篇（<a href="decision-history/spec-driven-development-decision-history.html#ard-aj">ARD-AJ</a>）。</li>
 <li><strong>PIPE-A-B</strong>：路径和格式按文档标准检查。检查由检查脚本 <code>run_spec_checks.py</code> 或 spec-organize 的 Lint 模式执行。</li>
 <li><strong>PIPE-A-C</strong>：文档内容的增删改由 spec-write 做。格式类 MUST 的问题（例如标题写法、frontmatter 字段）可以由 spec-organize 的 Lint 模式直接修。两者都遵守 parent design 的 DSGN-A（每次改动的大小上限）（<a href="decision-history/spec-driven-development-decision-history.html#ard-bv">ARD-BV</a>）。</li>
-<li><strong>PIPE-A-D</strong>：提交或推送已提交文档的改动之前，询问是否先跑 spec-review。用户说不跑，就把这个选择记下来，不能悄悄跳过。</li>
+<li><strong>PIPE-A-D</strong>：提交或推送已提交文档的改动之前，询问是否先跑 spec-review。用户说不跑，就把这个选择记下来，不能悄悄跳过（MUST）。</li>
 <li><strong>PIPE-A-E</strong>：用户要求，或者对话中断后重新开始时，给出进度回顾：做了什么、现在的进度、还剩什么、建议下一步。</li>
 <li><strong>PIPE-A-F</strong>：维护和读取 PIPE-H 定义的进度记录；按 PIPE-G 的表推荐 skill。</li>
 </ul>
@@ -3446,8 +3458,8 @@ payment-impl-plan-01-schema.md         impl-plan 分篇：序号加阶段，有�
 <h4 id="pipeline-PIPE-E">PIPE-E — Converge（收敛）</h4>
 <p>PRD、design、decision-history 三篇反复打磨（见 parent PRD 的 Solution）。下面三个条件全部满足，才能进入 Downstream：</p>
 <ul>
-<li><strong>PIPE-E-A</strong>：没有阻塞的未决问题。每个未决问题都写在本 feature 的问题清单里，并在「阻塞」一列标明是或否。只要还有标「是」的问题没解决，就不能进入 Downstream；由 wayfinder 检查（ARD-CH）（<a href="decision-history/spec-driven-development-decision-history.html#ard-ag">ARD-AG</a>）。</li>
-<li><strong>PIPE-E-B</strong>：PRD 写清了限制、偏好、时间、资源、工具五项；不适用的写 not apply，不能留空。design 和 decision-history 两篇都已存在（<a href="decision-history/spec-driven-development-decision-history.html#ard-z">ARD-Z</a>）。</li>
+<li><strong>PIPE-E-A</strong>：没有阻塞的未决问题。每个未决问题都写在本 feature 的问题清单里，并在「阻塞」一列标明是或否。只要还有标「是」的问题没解决，就不能进入 Downstream（MUST）；由 wayfinder 检查（ARD-CH）（<a href="decision-history/spec-driven-development-decision-history.html#ard-ag">ARD-AG</a>）。</li>
+<li><strong>PIPE-E-B</strong>：PRD 写清了限制、偏好、时间、资源、工具五项；不适用的写 not apply，不能留空（MUST）。design 和 decision-history 两篇都已存在（<a href="decision-history/spec-driven-development-decision-history.html#ard-z">ARD-Z</a>）。</li>
 <li><strong>PIPE-E-C</strong>：design 列出了它依赖的决定和还没定的事项，并写清了实现需要的接口和边界。实现任务的细节留到 Downstream 再定。</li>
 </ul>
 <h4 id="pipeline-PIPE-F">PIPE-F — Downstream（下游）</h4>
@@ -3643,7 +3655,7 @@ payment-impl-plan-01-schema.md         impl-plan 分篇：序号加阶段，有�
 <h3>Alternatives Considered</h3>
 <ul>
 <li><strong>把 wayfinder-import 固定成一个 sub-feature：</strong> 放弃。辅助工具必须可以替换（<a href="decision-history/spec-driven-development-decision-history.html#ard-t">ARD-T</a>）。</li>
-<li><strong>每个阶段一个 skill：</strong> 放弃。写和审两个 skill 已经覆盖了所有阶段（<a href="decision-history/spec-driven-development-decision-history.html#ard-aj">ARD-AJ</a>），按阶段拆会让职责重复。</li>
+<li><strong>每个阶段一个 skill：</strong> 放弃。写、审两个入口加上负责进度的 wayfinder 已经覆盖了所有阶段（ARD-CH、<a href="decision-history/spec-driven-development-decision-history.html#ard-aj">ARD-AJ</a>），按阶段拆会让职责重复。</li>
 <li><strong>固定的瀑布流程，跳过 Map：</strong> 放弃。未知很多的问题，会漏掉该拆的部分。</li>
 </ul>
 <h3>Drawbacks</h3>
@@ -3796,6 +3808,10 @@ payment-impl-plan-01-schema.md         impl-plan 分篇：序号加阶段，有�
 <tr>
 <td>2026-11-24</td>
 <td>第 9 轮审查后：wayfinder 不可用时改为人手维护地图目录</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 15 轮审查后：提交前由 wayfinder 询问审查；PIPE-A-D、PIPE-E-A、PIPE-E-B 标 MUST；放弃按阶段拆的理由跟上 ARD-CH</td>
 </tr>
 </tbody></table>
 </div>
@@ -4168,8 +4184,8 @@ payment-impl-plan-01-schema.md         impl-plan 分篇：序号加阶段，有�
 </ul>
 <p><strong>book 什么时候更新：</strong></p>
 <ul>
-<li><code>docs/features/</code> 下已提交的文档有改动并推送到 GitHub 时，同一次推送里（或紧挨着的前一个 commit）应该已经重新生成了对应的 book 和 INDEX。具体用 pre-push hook、CI 还是手动，属于实现。本标准只要求远端能看到的文档和 book、INDEX 保持同步，避免 AI 在 GitHub 上读到新 spec，摘要却还是旧的。</li>
-<li>原文还是 <code>state: draft</code> 时，可以暂不更新摘要；<code>final</code> 或已合并的改动必须反映到 book。</li>
+<li>改了 <code>docs/features/</code> 下已提交的 markdown，commit 前必须重新生成 book（网页）和 INDEX（<a href="decision-history/spec-driven-development-decision-history.html#ard-cf">ARD-CF</a>）。具体用 pre-push hook、CI 还是手动，属于实现。本标准只要求远端能看到的文档和 book、INDEX 保持同步，避免 AI 在 GitHub 上读到新 spec，摘要却还是旧的。</li>
+<li>draft 和 final 一样：改了就重新生成，不再有 draft 例外（ARD-CF）。</li>
 </ul>
 <p><strong>其他：</strong></p>
 <ul>
@@ -4764,6 +4780,10 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 <td>2026-11-24</td>
 <td>第 11 轮审查后：DSGN-M 的图规则改为 ARD-CA 保留的部分</td>
 </tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 15 轮审查后：DSGN-D 的 book 更新改为 commit 前必须重建，去掉 draft 例外（ARD-CF）</td>
+</tr>
 </tbody></table>
 <hr><p class="src-inline">Source: <code>features/document-standard/design/document-standard-design-spec-reader-html.md</code></p>
 <h2>Document Standard — 给人读的 HTML 页面（Design）</h2>
@@ -4807,7 +4827,7 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 <p>来源：reader PRD 的 PRD-F、PRD-J。</p>
 <ul>
 <li>markdown 是源头，HTML 是派生物。</li>
-<li>markdown 里用 <code>&lt;!-- html-skip --&gt;</code> 包住的内容可以不显示，但不能用它包住 L1 内容。</li>
+<li>markdown 里用 <code>&lt;!-- html-skip --&gt;</code> 包住的内容可以不显示，但不能用它包住 L1 内容（MUST）。</li>
 <li>decision-history 里被划掉的句子在 HTML 里也保留。页面上有一个按钮，可以切换「显示删除线」和「隐藏删除线」。</li>
 <li>脚本生成的页面每次从 markdown 重新生成，不带 <code>spec-paired</code> 标记。手工维护的页面要带三个标记：<code>spec-paired=hand-maintained</code>、<code>spec-source</code>（源 markdown 的路径）、<code>spec-source-sha256</code>（源文件的哈希）。源文件变了而页面没变，哈希就对不上，检查会报「过期」（<a href="decision-history/spec-driven-development-decision-history.html#ard-ak">ARD-AK</a>）。</li>
 <li>手工维护的页面如果有更新记录，要覆盖 markdown Change Log 里的每个日期（<a href="decision-history/spec-driven-development-decision-history.html#ard-ba">ARD-BA</a>，NICE）。</li>
@@ -5117,6 +5137,10 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 <tr>
 <td>2026-11-24</td>
 <td>第 14 轮审查后：DSGN-N-F 改为 commit 前必须重建（parent ARD-CF），去掉错别字例外</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 15 轮审查后：DSGN-N-H 的 html-skip 规则标 MUST</td>
 </tr>
 </tbody></table>
 <hr><p class="src-inline">Source: <code>features/document-standard/prd/document-standard-prd-spec-reader-html.md</code></p>

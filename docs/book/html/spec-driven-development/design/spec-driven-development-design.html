@@ -277,7 +277,7 @@
 <a id="8-parent-vs-sub-feature--review-齐备度"></a><a id="dsgn-e"></a>
 <h4 id="DSGN-E"><a class="id-ref" href="#DSGN-E">DSGN-E</a> — parent 和 sub-feature 的文档齐备要求</h4>
 <ul>
-<li><strong>parent</strong>（<code>docs/features/spec-driven-development/</code> 这一层，不含 <code>features/</code> 下的 sub-feature）：spec-review 要确认五篇都在：prd、design、decision-history、impl-plan、test-plan。how-to 可选。缺任何一篇，记为严重度 3 及以上的问题。</li>
+<li><strong>parent</strong>（<code>docs/features/spec-driven-development/</code> 这一层，不含 <code>features/</code> 下的 sub-feature）：spec-review 要确认五篇都在：prd、design、decision-history、impl-plan、test-plan。how-to 可选。缺任何一篇，记为严重度 3 及以上的问题（<span class="lvl lvl--must">MUST</span>）。</li>
 <li><strong>sub-feature</strong>（<code>features/&lt;sub&gt;/</code>）：不要求五篇都有，可以只有 design。review 只检查已有的文档，不能因为缺了没计划写的类型而判失败。</li>
 </ul>
 <h4>旧编号对照</h4>
@@ -933,6 +933,10 @@
 <tr>
 <td>2026-11-24</td>
 <td>第 14 轮审查后：放弃 spec-pipeline 的理由跟上 <a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CH">ARD-CH</a></td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 15 轮审查后：<a class="id-ref" href="#DSGN-E">DSGN-E</a> 的 parent 五篇齐全标 <span class="lvl lvl--must">MUST</span></td>
 </tr>
 </tbody></table></div>
       </div>

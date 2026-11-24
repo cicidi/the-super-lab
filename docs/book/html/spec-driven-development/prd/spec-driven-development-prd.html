@@ -99,7 +99,7 @@
 <p><strong id="PRD-G"><a class="id-ref" href="#PRD-G">PRD-G</a></strong>（延后）：产品级成功指标和基线，暂时定不下来，见 <a href="../decision-history/spec-driven-development-decision-history.html#ard-n">ARD-N</a>。test-plan 里的分数是评测指标，不是产品成功指标。</p>
 <p><strong id="PRD-H"><a class="id-ref" href="#PRD-H">PRD-H</a></strong>：流程里的每一步，优先使用已经流行的 skill，不重新发明。</p>
 <p><strong id="PRD-I"><a class="id-ref" href="#PRD-I">PRD-I</a></strong>：每项改动都要能验证。实在验证不了的，在 spec 里标为 <code>Unverified</code> 并写明原因；标了的项不作为 test-plan 的通过条件。</p>
-<p><strong id="PRD-J"><a class="id-ref" href="#PRD-J">PRD-J</a></strong>：写或改 feature spec 时，由 spec-write 按标准判断要新建哪篇、或要改哪几篇；提交前，询问是否先跑 spec-review。写作进度记在 wayfinder 的地图目录里，目录建好前后的位置见 pipeline design 的 PIPE-H（<a href="../decision-history/spec-driven-development-decision-history.html#ard-ch">ARD-CH</a>）。</p>
+<p><strong id="PRD-J"><a class="id-ref" href="#PRD-J">PRD-J</a></strong>：写或改 feature spec 时，由 spec-write 按标准判断要新建哪篇、或要改哪几篇；提交前，由 wayfinder 询问是否先跑 spec-review（PIPE-A-D）。写作进度记在 wayfinder 的地图目录里，目录建好前后的位置见 pipeline design 的 PIPE-H（<a href="../decision-history/spec-driven-development-decision-history.html#ard-ch">ARD-CH</a>）。</p>
 <p><strong id="PRD-K"><a class="id-ref" href="#PRD-K">PRD-K</a></strong>：适用范围不限于软件，任何有门槛的难题都用同一套 spec。四个例子：盖 shed（合规、成本、施工）、北京旅游（行程、住宿、风险、预算）、看懂一道著名数学题（零基础一步步学）、分析一只股票（基本面、财报、新闻，每个结论有依据）。这四个例子不在本仓库建 gold（<a href="../decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a>）。</p>
 <p><strong id="PRD-L"><a class="id-ref" href="#PRD-L">PRD-L</a></strong>：每个子问题都标明由谁处理：AI 查、人决定、或 AI 查完后人决定。人没有问到的盲区和风险，AI 必须主动提出来。</p>
 <p><strong id="PRD-M"><a class="id-ref" href="#PRD-M">PRD-M</a></strong>：文档要让人读懂，这是硬需求，而且是通过条件。交付前，由一个 LLM（大语言模型）扮演本科水平的程序员，只读这一篇文档和术语表，回答从文档里抽出的问题；答错太多，或者有文档里没解释、术语表里也没有的术语，就不算交付（<a href="../decision-history/spec-driven-development-decision-history.html#ard-bo">ARD-BO</a>）。具体门槛见 test-plan 的 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-V">TST-V</a>。</p>
@@ -250,6 +250,10 @@
 <tr>
 <td>2026-11-24</td>
 <td>第 13 轮审查后：写明复核结论文件 judgments/ 要提交</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 15 轮审查后：<a class="id-ref" href="#PRD-J">PRD-J</a> 写明由 wayfinder 询问审查</td>
 </tr>
 </tbody></table></div>
       </div>
