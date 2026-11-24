@@ -53,4 +53,4 @@ Add a diagram when the prose shape is clearer visually than as a table or list (
 
 Rules — MUST (SPEC-STANDARD §Figures, ARD-CA): no fact in the figure that prose does not state; L1 text must not live only in the figure; static SVG only. NICE: ≤9 nodes and ≤12 edges per figure; Simplified Chinese in `'Geist','Noto Sans SC','PingFang SC',sans-serif` at ≥12px; titles `'Instrument Serif','Noto Serif SC',serif`; keep diagram-design default skin unless onboarding says otherwise.
 
-Workflow: draft in `raw/diagrams/` with **diagram-design**; run `self_check.py` and `verify_geometry.py`; export `<doc-stem>-fig-<slug>.svg` beside the citing `.md`; cite with a blank-line-separated `![caption](<file>.svg)` line.
+Workflow (only when the **diagram-design** skill is installed; it does not ship with SDD): draft in `raw/diagrams/` with **diagram-design**; run `self_check.py` and `verify_geometry.py`; export `<doc-stem>-fig-<slug>.svg` beside the citing `.md`; cite with a blank-line-separated `![caption](<file>.svg)` line.

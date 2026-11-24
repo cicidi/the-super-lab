@@ -125,7 +125,7 @@ last_verified: 2026-11-24
 
 **原因。** skill 正文由 spec 提炼；spec 改了以后，看不出手上的 skill 对应哪一版 spec。
 
-**规则。** 版本号只写在 parent PRD 的 `version`。脚本把版本、日期、git 短 sha 写进 `SKILL.md`；`--check` 比对版本、拒绝重复键（TST-Y）。迁移策略仍不定义（ARD-AF）。
+**规则。** 版本号只写在 parent PRD 的 `version`。脚本把版本、日期、git 短 sha 写进 `SKILL.md`；`--check` 比对版本、拒绝重复键（TST-Y）。迁移策略仍不定义。
 
 本条推翻 ARD-AF 里「不定义版本」的部分，ARD-AF 因此划掉，其余在此重述：失败处理、信息来源可信度分级、数据清理、迁移策略故意不定义；不迁移旧文档。
 
@@ -748,3 +748,4 @@ payment-impl-plan-01-schema.md         impl-plan 分篇：序号加阶段，有�
 | 2026-11-24 | 划掉 ARD-AF，由 ARD-CC 重述仍有效的部分 |
 | 2026-11-24 | ARD-CD：GitHub Pages 发布，删除 6 个从首页点不到的旧页面 |
 | 2026-11-24 | ARD-BO 的放弃方案改正对 ISO 24495-1 的描述（审查 F16） |
+| 2026-11-24 | 补记 2026-11-20 的 Log 变化：新增 ARD-BU 到 ARD-CB；划掉 ARD-BH、ARD-BE、ARD-AW、ARD-BK（各自链到推翻它的 ARD） |

@@ -166,7 +166,7 @@ last_verified: 2026-11-24
 
 ## IMPL-P — 让代码和数据跟上 2026-11-20 的决定
 
-**目标：** 2026-11-20 这批只改了 spec 的 markdown（[ARD-BK](../decision-history/spec-driven-development-decision-history.md#ard-bk)）。下面这些 markdown 以外的文件，还按旧规则写，要同步修改：
+**目标：** 2026-11-20 那批整理（[ARD-BS](../decision-history/spec-driven-development-decision-history.md#ard-bs)，它重述了 ARD-BK）只改了 spec 的 markdown，下面这些 markdown 以外的文件当时还按旧规则写，需要同步修改。这一项已于 2026-11-24 完成：
 
 | 文件 | 要改什么 | 依据 |
 |---|---|---|
@@ -271,3 +271,4 @@ last_verified: 2026-11-24
 | 2026-11-24 | 新增 IMPL-V：GitHub Pages 发布（ARD-CD） |
 | 2026-11-24 | IMPL-K 进度：11 个机械审查案例已齐；5 个语义案例待 judge 执行器 |
 | 2026-11-24 | IMPL-U 写明四个 skill；IMPL-P 现状更新；Verify 和验收只查 SDD 目录、覆盖到 TST-Z；IMPL-F、IMPL-H、IMPL-M 补上挡住的任务；IMPL-S 改成完整句子 |
+| 2026-11-24 | IMPL-P 标为已完成，改引 ARD-BS |

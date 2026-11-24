@@ -293,7 +293,7 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 | 术语 | 意思 |
 |---|---|
 | SVG | 一种用文字描述的矢量图片格式，浏览器能直接显示，放大不会模糊 |
-| diagram-design | 一个画图的 skill，按固定的配色和字体画出 SVG 插图（ARD-CA） |
+| diagram-design | 一个画图的 skill，按固定的配色和字体画出 SVG 插图（ARD-CA）。它不随 SDD 一起交付；没有安装时，spec-write 不新画图，只保留已有插图 |
 | GitHub Pages | GitHub 提供的静态网站托管；本项目由 GitHub Actions（GitHub 上的自动化脚本）生成网站后发布到这里（ARD-CD） |
 | skill | 一份写给 AI 的操作说明（`SKILL.md`），告诉它遇到某类任务时按什么步骤做 |
 | spec bundle | 整套 SDD spec 作为一个整体；版本号写在 parent PRD 的 `version`，印进 skill 用来看出 skill 出自哪一版 spec（ARD-CC） |
@@ -367,3 +367,4 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 | 2026-11-20 | 第 3 轮审查后：交付物改链 ARD-BX；术语表补上 CI、hook；QUES-C 的「map 工具」改为 Map 阶段的辅助工具 |
 | 2026-11-24 | 术语表补上 spec bundle；子问题归属的迁移一行改链 ARD-CC（ARD-AF 已划掉） |
 | 2026-11-24 | 术语表补上 SVG、diagram-design、GitHub Pages |
+| 2026-11-24 | 术语表写明 diagram-design 不随 SDD 交付，未安装时不新画图 |
