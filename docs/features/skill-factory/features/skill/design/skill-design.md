@@ -45,7 +45,10 @@ description（frontmatter 里告诉 agent 何时调用的那段话）以 "Use wh
 
 **DSGN-C import。** 从 GitHub URL 取 SKILL.md，保留原名存到 `skills/<原名>/`（PRD-E）。
 缺 `license` 补 MIT，缺 `compatibility` 补 `claude-code,opencode`，
-缺 When to Use / When NOT to Use 两节就补上。最后报告哪些改了、哪些原样保留。
+缺 When to Use / When NOT to Use 两节就补上。
+`metadata` 里记下 `source_author`、`source_url`（有 commit sha 就带上）和 `imported` 日期（PRD-F、ARD-J）。
+再检查依赖：列出原文引用的每个 skill 和文件（如 `/grilling`、`LOGIC.md`），缺的一并导入或在报告里标出（ARD-J）。
+最后报告哪些改了、哪些原样保留、出处和依赖情况。
 
 **DSGN-D list。** 运行 `coworker skill list`，显示每个 skill 的名字、路径和是否启用。
 
@@ -88,7 +91,7 @@ create、edit、import 都靠人审，skill 多了以后审阅成本会上升。
 |---|---|---|---|---|
 | QUES-A | 要不要一个自动检查 SKILL.md 格式的工具？ | `tools/` 下没有 | cicidi | no |
 | QUES-B | import 要不要审查 skill 的内容，而不只补格式？ | 目前只补格式 | cicidi | no |
-| QUES-C | import 要不要记录原作者和出处（PRD-F）？ | SKILL.md 目前不记录 | cicidi | no |
+| QUES-C | import 要不要记录原作者和出处（PRD-F）？ | 要记录：作者、URL（带 sha）、导入日期，见 DSGN-C、ARD-J | cicidi | no |
 
 ## Reversibility
 
@@ -101,3 +104,4 @@ create、edit、import 都靠人审，skill 多了以后审阅成本会上升。
 |------|--------|
 | 2026-11-24 | 初版：按 SKILL.md 写出 skill 的 design |
 | 2026-11-24 | 引用 PRD-A 到 PRD-I，新增 QUES-C，链接 PRD 和 decision-history |
+| 2026-11-24 | DSGN-C 加出处记录和依赖检查（ARD-J），QUES-C 已答 |

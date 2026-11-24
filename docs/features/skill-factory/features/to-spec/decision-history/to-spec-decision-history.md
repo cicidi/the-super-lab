@@ -18,6 +18,7 @@ skill-factory 层面的旧决策在 [parent decision history](../../../decision-
 
 | ID | Date | Decision |
 |---|---|---|
+| ARD-F | 2026-11-24 | SDD 仓库里交给 spec-write 写，再发一个链接 issue；非 SDD 仓库仍按模板写 PRD 发到 tracker |
 | ARD-A | 2026-09-25 | 模板每一节标上内容级别 L1 到 L4，加 Alternatives Considered 一节，并加 Skill Dependencies 指向文档标准 |
 | ARD-B | 2026-08-02 | spec 发布后、to-tickets 之前设一道文档审查关口；关口写在 wayfinder，不写进 to-spec |
 | ARD-C | 2026-08-02 | spec 自己作为一个 issue 发布，打 `ready-for-agent` 标签 |
@@ -25,6 +26,11 @@ skill-factory 层面的旧决策在 [parent decision history](../../../decision-
 | ~~ARD-E~~ | ~~2026-08-02~~ | ~~to-spec 列为 wayfinder 导入的后续项，这次不导入~~ 已被 [ARD-D](#ard-d) 取代 |
 
 ## Evidence Appendix
+
+### ARD-F
+
+理由：c44e983 后没有 `spec` 类型，模板也对不上 prd 和 design；SDD 规定写 spec 只走 spec-write（ARD-AJ）。
+被否决：改模板去凑现行标准。出处：用户 2026-11-24 审阅回复；SDD decision-history ARD-AJ。
 
 ### ARD-A
 
@@ -66,3 +72,4 @@ commit 7c11a7b 把这道关口写进 wayfinder 的 SKILL.md，排在 to-spec 和
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 to-spec 的决策 |
+| 2026-11-24 | 新增 ARD-F：SDD 仓库交给 spec-write |

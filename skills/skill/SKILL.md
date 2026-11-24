@@ -78,8 +78,18 @@ List current skills and ask what the user wants to do.
    - Add `compatibility: claude-code,opencode` if missing
    - Verify description starts with "Use when..."
    - Add When to Use / When NOT to Use sections if missing
-3. Save to `skills/<original-name>/SKILL.md`, keeping the original name
-4. Report what was converted vs kept as-is
+3. Record provenance in frontmatter `metadata` (never drop it):
+   - `source_author`: original author or organization
+   - `source_url`: URL of the source SKILL.md; pin it to the commit sha
+     when available (`.../blob/<sha>/...`)
+   - `imported`: import date (YYYY-MM-DD)
+4. Check dependencies: list every skill (`/grilling`) and file (`LOGIC.md`,
+   `agents/`) the imported SKILL.md references. Import each missing one from
+   the same source, or flag it in the report. Do not finish with a dangling
+   reference.
+5. Save to `skills/<original-name>/SKILL.md`, keeping the original name
+6. Report what was converted vs kept as-is, the provenance recorded, and
+   each dependency imported or still missing
 
 ### list workflow
 

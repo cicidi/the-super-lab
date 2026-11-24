@@ -54,11 +54,11 @@ frontmatter 是 SKILL.md 开头两条 `---` 之间的元数据，记录名字、
 **PRD-D 用户自己的替代是 auto-tdd。** 用户要求 wayfinder 用到的 skill 都是接口，"我自己要能提供impl 替代"（d8d2da7f，17:22）。
 对 implement，用户说"implement 我的替代是auto-tdd"（同一会话 18:37）。
 两分钟后，commit 43cb1ef 把 wayfinder 流水线的 build 一步写成 auto-tdd。
-当前 SKILL.md 仍然存在，正文没有改成调用 auto-tdd；两者怎么分工，见 design 的 QUES-D。
+2026-11-24 起，implement 保留，TDD 一步转调 auto-tdd，见 design 的 DSGN-C 和 ARD-F。
 
 **PRD-E 交付前所有代码都要审查。** 用户原话："每次delivery 以前，所有的代码都需要review 以下"（d8d2da7f，17:27 第 7 条）。
 代码审查用 ai-coworker 自己的 code review；"如果没有实现， code review 用claude 自带的"（同一条）。
-SKILL.md 只写了 `/code-review`，没说是哪一个，见 design 的 QUES-C。
+2026-11-24 起，SKILL.md 先用 `/matt-code-review`，没装再用通用的 `/code-review`（ARD-G）。
 
 **PRD-F 先判断改动类型，再决定改不改 spec。** 行为改动指外部能看到的行为变了；实现改动指重构、改名、内部优化、换框架。
 前者要改 spec，后者不用（commit f67df5b，2026-09-25）。
@@ -75,10 +75,11 @@ spec 还含糊、决定还没做完时不用本 skill，先用 wayfinder 或 gri
 ## Resources Needed
 
 被实现的项目要有类型检查和测试命令，能单独跑一个测试文件，也能跑全量（PRD-C）。
-还需要能调用的 TDD skill 和代码审查 skill（PRD-C、PRD-E）；它们现在的名字对不上，见 design 的 QUES-B 和 QUES-C。
+还需要能调用的 TDD skill 和代码审查 skill（PRD-C、PRD-E）：现在是 auto-tdd 和 matt-code-review（ARD-F、ARD-G）。
 
 ## Change Log
 
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 implement 的 PRD |
+| 2026-11-24 | PRD-D、PRD-E 和资源一节改为当前行为（ARD-F、ARD-G） |

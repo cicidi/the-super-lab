@@ -27,21 +27,23 @@ metadata:
 
 Implement the work described by the user in the spec or tickets.
 
-Use /tdd where possible, at pre-agreed seams.
+Delegate the test-driven work to /auto-tdd at pre-agreed seams. auto-tdd is
+the user's replacement for the upstream /tdd skill; let it ask basic or auto mode.
 
 Run typechecking regularly, single test files regularly, and the full test suite once at the end.
 
-Once done, use /code-review to review the work.
+Once done, review the work with /matt-code-review. If matt-code-review is not
+installed, fall back to the generic /code-review.
 
 Commit your work to the current branch.
 
 ## Skill Dependencies
 
-Classify the change before touching the spec. `doc-organize/CONTENT-PRIORITY.md`
-and `doc-organize/AUTHORITY-BY-CONCERN.md` define the difference between a
+Classify the change before touching the spec. `skills/spec-organize/CONTENT-PRIORITY.md`
+and `skills/spec-organize/AUTHORITY-BY-CONCERN.md` define the difference between a
 behavior change and an implementation-only change. Refactoring, renaming, internal
 optimization, and framework migration do not require a spec edit; a change to
-externally observable behavior does.
+externally observable behavior does — make that spec edit with /spec-write.
 
 When code and spec disagree, do not silently rewrite either one. Report the
 conflict, show the evidence on both sides, and ask.

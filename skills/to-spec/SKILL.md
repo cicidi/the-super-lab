@@ -3,7 +3,8 @@ name: to-spec
 description: |
   Use when turning the current conversation into a spec (PRD) and publishing it
   to the project issue tracker. Synthesizes what was discussed — no interview,
-  just synthesis.
+  just synthesis. In an SDD repo (docs/features/ + spec-write) it hands off to
+  spec-write instead of writing its own template.
 license: MIT
 compatibility: claude-code,opencode
 metadata:
@@ -36,10 +37,19 @@ The issue tracker configuration should have been provided via the project's init
 
 ## Skill Dependencies
 
-What this skill produces is a `spec` under the project's doc standard. Placement,
-frontmatter, and required sections come from `doc-organize`. What belongs inside
-it comes from `doc-organize/AUTHORITY-BY-CONCERN.md` and
-`doc-organize/CONTENT-PRIORITY.md`.
+The output depends on the repo:
+
+- **SDD repo** — the repo has `docs/features/` and the spec-write skill is
+  available. Committed spec docs (prd, design, ...) are written only by
+  /spec-write; there is no `spec` document type. Hand off to /spec-write
+  (step 3a). Placement, frontmatter, and required sections come from
+  `skills/spec-organize/SPEC-STANDARD.md`, which spec-write reads.
+- **Non-SDD repo** — write a PRD from the template below and publish it to the
+  issue tracker (step 3b).
+
+Either way, what belongs inside comes from
+`skills/spec-organize/AUTHORITY-BY-CONCERN.md` and
+`skills/spec-organize/CONTENT-PRIORITY.md`.
 
 Write the spec at L1: behavior, contracts, invariants, constraints, error
 semantics, security rules, architecture boundaries, out of scope, assumptions,
@@ -55,15 +65,17 @@ those belong to the code.
 
 Check with the user that these seams match their expectations.
 
-3. Write the spec using the template below, then publish it to the project issue tracker. Apply the `ready-for-agent` triage label - no need for additional triage.
+3a. SDD repo: pass the synthesis and the agreed seams to /spec-write, which decides which documents (prd, design, ...) to create or edit under `docs/features/`. Do not use the template below. Then publish one issue to the tracker that links to the committed docs, with the `ready-for-agent` triage label.
+
+3b. Non-SDD repo: write the PRD using the template below, then publish it to the project issue tracker. Apply the `ready-for-agent` triage label - no need for additional triage.
 
 <spec-template>
 
-<!-- Every section is tagged with its content level (doc-organize/CONTENT-PRIORITY.md).
+<!-- Every section is tagged with its content level (skills/spec-organize/CONTENT-PRIORITY.md).
      L1 decisive - never trimmed. L2 rationale. L3 alternatives. L4 support.
      Trim order when the spec runs long: L4 first, then L3, then compress L2.
      Never delete L1. The whole spec stays under 1,000 lines; if it cannot, split
-     it by bounded context and name the parts by doc-organize/NAMING.md. -->
+     it by bounded context and name the parts by skills/spec-organize/NAMING.md. -->
 
 ## Problem Statement — L1
 

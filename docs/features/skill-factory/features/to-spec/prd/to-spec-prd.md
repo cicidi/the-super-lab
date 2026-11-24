@@ -74,10 +74,11 @@ to-spec 模板开头的注释写了这条上限（commit f67df5b）。
 ## Resources Needed
 
 项目要配置好 issue tracker；没有配置时，默认写到本地 markdown（PRD-C、PRD-D）。
-还需要 SKILL.md 引用的文档标准文件（PRD-F）；这些文件现在的路径对不上，见 design 的 QUES-A。
+还需要 SKILL.md 引用的文档标准文件（PRD-F），现在在 `skills/spec-organize/` 下；SDD 仓库里还要有 spec-write（ARD-F）。
 
 ## Change Log
 
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 to-spec 的 PRD |
+| 2026-11-24 | 资源一节改为当前路径，并补上 spec-write（ARD-F） |

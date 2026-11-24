@@ -19,6 +19,7 @@ opencode 会话按会话 id 前缀引用，数据在本机 opencode.db。
 
 | ID | Date | Decision |
 |---|---|---|
+| ARD-J | 2026-11-24 | import 记录 source_author、source_url（带 commit sha）和导入日期，并检查依赖 |
 | ARD-A | 2026-08-02 | 把 skill-create、skill-edit、skill-import、skill-list 合成一个带子命令的 `skill` |
 | ARD-B | 2026-08-02 | 导入的 skill 和自写的放在同一个 `skills/` 下，不再单设 import 目录；保留作者出处的要求不变 |
 | ARD-C | 2026-07-22 | create 增加 Precision & Examples 一步：像法律条文一样写清边界，并给 2 到 3 个示例 |
@@ -30,6 +31,11 @@ opencode 会话按会话 id 前缀引用，数据在本机 opencode.db。
 | ARD-I | 2026-06-10 | 用 create 自举出 import 和 edit；产出不好时先修 create 再重做 |
 
 ## Evidence Appendix
+
+### ARD-J
+
+理由：用户两次要求导入保留原作者和出处（PRD-F）。缺依赖检查，导致 08-02 导入的
+grill-with-docs 和 prototype 无法运行。被否决：只补格式。出处：用户 2026-11-24 审阅回复；commit 773594b。
 
 ### ARD-A
 
@@ -94,3 +100,4 @@ ARD-F 里保留原作者的部分仍然有效（PRD-F）。
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 skill 的决策 |
+| 2026-11-24 | 新增 ARD-J：import 记录出处并检查依赖 |

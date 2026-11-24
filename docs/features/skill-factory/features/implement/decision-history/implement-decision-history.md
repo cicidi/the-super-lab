@@ -18,6 +18,8 @@ skill-factory 层面的旧决策在 [parent decision history](../../../decision-
 
 | ID | Date | Decision |
 |---|---|---|
+| ARD-G | 2026-11-24 | 审查先用 matt-code-review，没装时退回通用的 /code-review |
+| ARD-F | 2026-11-24 | 保留 implement，TDD 一步改为转调 auto-tdd（用户决定 D5 = B） |
 | ARD-A | 2026-09-25 | 加一节 Skill Dependencies：动手前先判断是行为改动还是实现改动；代码和 spec 冲突时报告证据并问人 |
 | ARD-B | 2026-08-02 | 用户把 implement 的替代指定为 auto-tdd；wayfinder 流水线的 build 一步写成 auto-tdd |
 | ARD-C | 2026-08-02 | 原样导入 mattpocock 的 implement：正文不改，只加 frontmatter 和作者出处 |
@@ -25,6 +27,16 @@ skill-factory 层面的旧决策在 [parent decision history](../../../decision-
 | ARD-E | 2026-08-02 | 交付前所有代码都要审查：优先用 ai-coworker 的 code review，没有就用 Claude 自带的 |
 
 ## Evidence Appendix
+
+### ARD-F
+
+理由：用户说"implement 我的替代是auto-tdd"（ARD-B）；`/tdd` 自 6086424 起已不存在。
+被否决：删掉 implement；加可替换的 build 接口。出处：用户 2026-11-24 审阅回复（D5 = B）。
+
+### ARD-G
+
+理由：用户要先用 matt-code-review，没有再用 Claude 自带的（ARD-E、PRD-E）。
+被否决：只写 `/code-review` 不点名。出处：用户 2026-11-24 审阅回复；d8d2da7f（17:27）。
 
 ### ARD-A
 
@@ -38,7 +50,7 @@ skill-factory 层面的旧决策在 [parent decision history](../../../decision-
 理由：用户要求 matt 的 skill 都是接口，可以换成自己的实现（PRD-D）；对 implement 说"implement 我的替代是auto-tdd"（d8d2da7f，18:37）。
 被否决的方案：流水线的 build 一步用 matt 的 implement。
 出处：d8d2da7f（17:22 第 4 条，18:37）；commit 43cb1ef（18:39）给 wayfinder 加了以 auto-tdd 结尾的流水线图。
-implement 本身没有删，也没有改成转调 auto-tdd；这是有意保留还是遗漏，属于 UNKNOWN，见 design 的 QUES-D。
+implement 当时没有删，也没有改成转调 auto-tdd；2026-11-24 起改为转调，见 ARD-F。
 
 ### ARD-C
 
@@ -58,10 +70,11 @@ implement 本身没有删，也没有改成转调 auto-tdd；这是有意保留�
 理由：用户说"每次delivery 以前，所有的代码都需要review 以下"，代码用 ai-coworker 的 code review，没有实现就用 Claude 自带的（PRD-E）。
 wayfinder 据此在 task 类 brief 关闭前加了 Delivery Review Gate：代码文件交给 `matt-code-review`（skills/wayfinder/SKILL.md）。
 被否决的方案：交付不经审查。出处：d8d2da7f（17:27 第 7 条）。
-implement 正文写的是 `/code-review`，没有点名 `matt-code-review`，见 design 的 QUES-C。
+implement 正文原写 `/code-review`，没有点名 `matt-code-review`；2026-11-24 起点名，见 ARD-G。
 
 ## Change Log
 
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 implement 的决策 |
+| 2026-11-24 | 新增 ARD-F（转调 auto-tdd）和 ARD-G（先用 matt-code-review） |

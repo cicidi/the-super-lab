@@ -60,7 +60,7 @@ parent design 的 Skill Consolidation 一节）。
 
 **PRD-F 导入保留作者和出处。** 导入时要"复合版权，著名出处"（ses_14b5b4b7，2026-06-10），
 也就是符合版权、注明出处；并"保留原作者信息"（ses_14aa890f，2026-06-11；commit 773594b）。
-当前 SKILL.md 的 import 流程没有记录作者和出处这一步，见 design 的 QUES-C。
+2026-11-24 起，import 流程记录作者、出处 URL 和导入日期，见 design 的 DSGN-C 和 ARD-J。
 
 **PRD-G 一个 skill 一个文件。** 每个 skill 就是一份 SKILL.md，不要做多层目录。
 用户问过"为什么不是世界一个Skill.md 就行了"（ses_14b5b4b7，2026-06-10）。
@@ -88,3 +88,4 @@ parent design 的 Skill Consolidation 一节）。
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 skill 的 PRD |
+| 2026-11-24 | PRD-F 改为当前行为：import 已记录出处（ARD-J） |

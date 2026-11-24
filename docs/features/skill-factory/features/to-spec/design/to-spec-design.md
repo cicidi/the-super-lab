@@ -45,7 +45,9 @@ frontmatter 的 `source_author: mattpocock` 和 `source_url` 注明原作者和�
 **DSGN-D 测试接缝。** 接缝（seam）指测试从外部接入、观察行为的位置。优先用已有的接缝，选最高的一层（PRD-C）。
 接缝越少越好，理想是一个。画好后和用户确认，这是全程唯一一次提问。
 
-**DSGN-E 按模板写并发布。** 模板有八节：Problem Statement、Solution、User Stories、Implementation Decisions，
+**DSGN-E 按仓库分两路。** SDD 仓库（有 `docs/features/` 且装了 spec-write）：把整理结果和接缝交给 `/spec-write`，
+由它决定写哪几篇 prd、design；再发一个链接这些文档的 issue（ARD-F、PRD-D）。
+非 SDD 仓库按模板写 PRD 并发布。模板有八节：Problem Statement、Solution、User Stories、Implementation Decisions，
 Alternatives Considered（可选）、Testing Decisions、Out of Scope、Further Notes。
 User Stories 要写成很长的编号列表；Testing Decisions 要求只测外部行为。
 写完发布到 tracker，打 `ready-for-agent` 标签，表示 agent 可以直接认领，不用再分诊（PRD-D）。
@@ -57,12 +59,11 @@ User Stories 要写成很长的编号列表；Testing Decisions 要求只测外�
 例外：原型产出的状态机、schema 这类片段比文字更准时，可摘关键部分并注明来自原型。
 重复别的文档里的事实，只放链接（PRD-H）。
 
-**DSGN-H 依赖的文档标准。** Skill Dependencies 一节说：放在哪、frontmatter、必需章节都看 `doc-organize`（PRD-F）。
-内容取舍看 `doc-organize/AUTHORITY-BY-CONCERN.md` 和 `doc-organize/CONTENT-PRIORITY.md`。
-doc-organize 已在 2026-11-04 改名为 spec-organize（commit c44e983），SKILL.md 没有跟着改，见 QUES-A。
+**DSGN-H 依赖的文档标准。** SDD 仓库里，放在哪、frontmatter、必需章节由 spec-write 按 `skills/spec-organize/SPEC-STANDARD.md` 定（PRD-F）。
+内容取舍看 `skills/spec-organize/` 下的 `AUTHORITY-BY-CONCERN.md` 和 `CONTENT-PRIORITY.md`（QUES-A）。
 
-**DSGN-I 在流水线里的位置。** wayfinder 写的顺序是 wayfinder、to-spec、doc-review、to-tickets、auto-tdd（PRD-A）。
-doc-review 是 to-spec 之后、to-tickets 之前的关口，必须通过才能拆工单；它写在 wayfinder 里，不在本 skill 里（PRD-E）。
+**DSGN-I 在流水线里的位置。** wayfinder 写的顺序是 wayfinder、to-spec、spec-review、to-tickets、auto-tdd（PRD-A）。
+spec-review 是 to-spec 之后、to-tickets 之前的关口，必须通过才能拆工单；它写在 wayfinder 里，不在本 skill 里（PRD-E）。
 
 ## Testing Decisions
 
@@ -84,20 +85,20 @@ SDD 指 spec-driven-development，即从 spec 驱动开发；它定下写 spec �
 ## Alternatives Considered
 
 像 wayfinder 那样改写正文：没有采用，只加 frontmatter 和出处（ARD-D）。
-spec 写完直接拆工单：被否决，改为先过 doc-review 关口（ARD-B）。
+spec 写完直接拆工单：被否决，改为先过 spec-review 关口（ARD-B）。
 模板不分级、篇幅不设上限：被否决，2026-09-25 改为 L1 到 L4 分级加 1000 行上限（ARD-A）。
 
 ## Drawbacks
 
-不访谈意味着对话里漏掉的内容会直接漏进 spec，只能靠后面的 doc-review 补。
-模板的八节和现行标准的 prd（6 节）、design（13 节）都对不上，产出不能直接通过 `run_spec_checks.py`，见 QUES-B。
+不访谈意味着对话里漏掉的内容会直接漏进 spec，只能靠后面的 spec-review 补。
+模板的八节和现行标准的 prd（6 节）、design（13 节）都对不上，所以 SDD 仓库里不用模板，改交 spec-write（ARD-F）。
 spec 发到 tracker，和写进 `docs/features/` 是两条路；同一份 spec 可能在两处各存一份。
 
 ## Risks and Mitigations
 
 | 风险 | 缓解 |
 |---|---|
-| 引用的 `doc-organize/` 文件已不存在，agent 读不到标准 | 改指 `skills/spec-organize/`，见 QUES-A |
+| 引用的 `doc-organize/` 文件已不存在，agent 读不到标准 | 已改指 `skills/spec-organize/`（QUES-A） |
 | to-spec 和 spec-write 都写 spec，规则可能分叉 | 写明两者分工，见 QUES-C |
 | 没配置 tracker 时写到本地 markdown，但位置没写 | 见 QUES-E |
 
@@ -105,12 +106,12 @@ spec 发到 tracker，和写进 `docs/features/` 是两条路；同一份 spec �
 
 | ID | 问题 | 目前答案 | Owner | Blocking |
 |---|---|---|---|---|
-| QUES-A | Skill Dependencies 要不要改指 spec-organize（PRD-F）？ | 仍指已改名的 doc-organize（c44e983） | cicidi | no |
-| QUES-B | 产出应是哪种文档类型？ | SKILL.md 说产出 `spec`；2026-11-04 起只有 prd、design 等五种类型（c44e983） | cicidi | no |
+| QUES-A | Skill Dependencies 要不要改指 spec-organize（PRD-F）？ | 是，已改指 `skills/spec-organize/` 下的文件 | cicidi | no |
+| QUES-B | 产出应是哪种文档类型？ | SDD 仓库交 spec-write 定 prd、design；非 SDD 仓库是 tracker 上的 PRD（ARD-F） | cicidi | no |
 | QUES-C | to-spec 和 spec-write 怎么分工？ | SDD 只把 spec-write 列为写 spec 的入口（ARD-AJ、ARD-BX），没提 to-spec | cicidi | no |
 | QUES-D | downstream-delivery 的 TST-A 跑过吗？ | 没找到运行记录 | cicidi | no |
 | QUES-E | 本地 markdown tracker 写到哪个目录（PRD-D）？ | SKILL.md 没写 | cicidi | no |
-| QUES-F | 关口用 doc-review 还是 spec-review（PRD-E）？ | doc-review 已改名 spec-review（c44e983），wayfinder 仍写 doc-review | cicidi | no |
+| QUES-F | 关口用 doc-review 还是 spec-review（PRD-E）？ | spec-review。688cace（2026-11-24）已把 wayfinder 里的 doc-review 改成 spec-review | cicidi | no |
 
 ## Reversibility
 
@@ -122,3 +123,6 @@ spec 发到 tracker，和写进 `docs/features/` 是两条路；同一份 spec �
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：按 SKILL.md 写出 to-spec 的 design，引用 PRD-A 到 PRD-H |
+| 2026-11-24 | QUES-F 有答案：wayfinder 已在 688cace 改用 spec-review |
+| 2026-11-24 | DSGN-E、DSGN-H 改为按仓库分两路并修路径（ARD-F），QUES-A、QUES-B 已答 |
+| 2026-11-24 | 正文里的 doc-review 改为 spec-review，跟上 688cace |
