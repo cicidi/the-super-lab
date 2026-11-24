@@ -296,7 +296,7 @@
 <tr>
 <td><code>raw/state/</code></td>
 <td>进度快照，用来在长对话被压缩后恢复上下文</td>
-<td><code>state-&lt;YYYY-MM-DD&gt;.md</code>（最多 400 行）</td>
+<td><code>state-&lt;YYYY-MM-DD&gt;.md</code>（最多 400 行）；SDD 的进度用 <code>wayfinder-map.md</code>（parent <a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-CH">ARD-CH</a>）</td>
 </tr>
 </tbody></table></div>
 <p>旧项目里直接放在 feature 根目录的 <code>state/</code>、<code>research/</code>、<code>discussion/</code>，挪进 <code>raw/</code>。工单草稿放在 <code>.scratch/&lt;feature&gt;/</code>，同样不提交。</p>
@@ -931,6 +931,10 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 <tr>
 <td>2026-11-24</td>
 <td><a class="id-ref" href="#DSGN-E">DSGN-E</a> 加「插图（<span class="lvl lvl--must">MUST</span>）」，<a class="id-ref" href="#DSGN-M">DSGN-M</a> 门槛加一条（<a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-CA">ARD-CA</a>，与 SPEC-STANDARD 一致）</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>raw/state 一行注明 SDD 用 wayfinder-map.md（parent <a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-CH">ARD-CH</a>）</td>
 </tr>
 </tbody></table></div>
       </div>

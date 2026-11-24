@@ -92,7 +92,7 @@
 <h3>Functional Requirements</h3>
 <p><strong id="PRD-A"><a class="id-ref" href="#PRD-A">PRD-A</a></strong>：写 spec 的流程沿用现有流程并加以改进，不另造一套。流程分哪几个阶段、每个阶段做什么，写在 <a href="../../../../features/spec-driven-development/features/pipeline/design/pipeline-design.md">pipeline design</a>。</p>
 <p><strong id="PRD-B"><a class="id-ref" href="#PRD-B">PRD-B</a></strong>：提供一组 skill。skill 本质上是写得好的 prompt，引导 AI 完成 spec 的四件事：书写、命名、检查、更新。</p>
-<p><strong id="PRD-C"><a class="id-ref" href="#PRD-C">PRD-C</a></strong>：AI 每次改 <code>docs/</code> 下的文档，必须同时满足两条：不超过 10 行，并且不超过 200 字符（<a href="../decision-history/spec-driven-development-decision-history.html#ard-bp">ARD-BP</a>）。更大的改动拆成多次；确实需要一次大改（restructure）时，必须有人明确授权，并记一条 ARD（例如 <a href="../decision-history/spec-driven-development-decision-history.html#ard-bk">ARD-BK</a>）。</p>
+<p><strong id="PRD-C"><a class="id-ref" href="#PRD-C">PRD-C</a></strong>：AI 每次改 <code>docs/</code> 下的文档，必须同时满足两条：不超过 10 行，并且不超过 200 字符（<a href="../decision-history/spec-driven-development-decision-history.html#ard-bp">ARD-BP</a>）；新建一个文件不算在内（<a href="../decision-history/spec-driven-development-decision-history.html#ard-ce">ARD-CE</a>）。更大的改动拆成多次；确实需要一次大改（restructure）时，必须有人明确授权，并记一条 ARD（例如 <a href="../decision-history/spec-driven-development-decision-history.html#ard-bk">ARD-BK</a>）。</p>
 <p><strong id="PRD-D"><a class="id-ref" href="#PRD-D">PRD-D</a></strong>：每篇文档有行数上限，最长不超过 1,000 行，因为太长的文档几乎没法维护。decision-history 例外，不设上限：它只增不减（<a href="../decision-history/spec-driven-development-decision-history.html#ard-e">ARD-E</a>）。各类文档的具体上限见 document-standard 的 <a class="id-ref" href="../design/spec-driven-development-design.html#DSGN-B">DSGN-B</a>。</p>
 <p><strong id="PRD-E"><a class="id-ref" href="#PRD-E">PRD-E</a></strong>：规定文档放在哪个目录、文件叫什么名字、目录之间是什么关系（parent、sub-feature、peer）。具体规则见 document-standard 的 <a class="id-ref" href="../design/spec-driven-development-design.html#DSGN-B">DSGN-B</a>。</p>
 <p><strong id="PRD-F"><a class="id-ref" href="#PRD-F">PRD-F</a></strong>：多个人的决定互相冲突时，以 decision-history 里时间较晚的那条为准；看不出先后，就问用户。AI 不猜测谁说了算。</p>
@@ -234,6 +234,10 @@
 <tr>
 <td>2026-11-24</td>
 <td>Resources：列出外部服务 deepseek API、GitHub Actions 和 Pages（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CD">ARD-CD</a>）</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td><a class="id-ref" href="#PRD-C">PRD-C</a>：新建文件不算在改动上限内（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CE">ARD-CE</a>）</td>
 </tr>
 </tbody></table></div>
       </div>

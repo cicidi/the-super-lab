@@ -47,14 +47,54 @@
 <th>Decision</th>
 </tr></thead><tbody>
 <tr>
+<td><a class="id-ref" href="#ARD-CL">ARD-CL</a></td>
+<td>2026-11-24</td>
+<td>划掉的 ARD 行一律保留；某篇超过行数上限要压缩时，先压缩已划掉的内容</td>
+</tr>
+<tr>
+<td><a class="id-ref" href="#ARD-CK">ARD-CK</a></td>
+<td>2026-11-24</td>
+<td>每次运行 <code>build_spec_skills.py</code> 都把 parent PRD 的 <code>version</code> 末位加 1，再印进 <code>SKILL.md</code>；<code>--check</code> 不升版本</td>
+</tr>
+<tr>
+<td><a class="id-ref" href="#ARD-CJ">ARD-CJ</a></td>
+<td>2026-11-24</td>
+<td>DeepSeek 复核跑 5 次，至少 4 次一致才算定论；Claude 再逐条核对没通过或有分歧的结论，记下同意还是不同意</td>
+</tr>
+<tr>
+<td><a class="id-ref" href="#ARD-CI">ARD-CI</a></td>
+<td>2026-11-24</td>
+<td>spec-review 除三份标准文件外，还读三份审查参考：<a href="../../../../../skills/spec-organize/CONTENT-PRIORITY.md"><code>CONTENT-PRIORITY.md</code></a>、<a href="../../../../../skills/spec-organize/AUTHORITY-BY-CONCERN.md"><code>AUTHORITY-BY-CONCERN.md</code></a>、<a href="../../../../../skills/spec-organize/SPEC-SCOPE.md"><code>SPEC-SCOPE.md</code></a></td>
+</tr>
+<tr>
+<td><a class="id-ref" href="#ARD-CH">ARD-CH</a></td>
+<td>2026-11-24</td>
+<td>wayfinder 负责进度规则（pipeline design 的 PIPE-A-D、PIPE-A-E、PIPE-A-F、PIPE-H、PIPE-E-A），轻量改写后成为第三个交付物</td>
+</tr>
+<tr>
+<td><a class="id-ref" href="#ARD-CG">ARD-CG</a></td>
+<td>2026-11-24</td>
+<td>CLAUDE 层按顺序找：项目里有 <code>CLAUDE.local.md</code> 就写它，没有就写 <code>CLAUDE.md</code>，两个都没有就问用户要不要新建</td>
+</tr>
+<tr>
+<td><a class="id-ref" href="#ARD-CF">ARD-CF</a></td>
+<td>2026-11-24</td>
+<td>spec-write 改完 markdown 要告诉用户网页还没更新，问要不要重建；commit 前必须重建，提交的网页和 markdown 一致（<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-R">TST-R</a>）</td>
+</tr>
+<tr>
+<td><a class="id-ref" href="#ARD-CE">ARD-CE</a></td>
+<td>2026-11-24</td>
+<td>改动上限只管修改已有文件；新建一个文件不算在内</td>
+</tr>
+<tr>
 <td><a class="id-ref" href="#ARD-CD">ARD-CD</a></td>
 <td>2026-11-24</td>
 <td>网站用 GitHub Pages 发布：推送 master 后由 GitHub Actions 从 markdown 重新生成并部署；每一页都要能从 <code>index.html</code> 点到</td>
 </tr>
 <tr>
-<td><a class="id-ref" href="#ARD-CC">ARD-CC</a></td>
+<td><del><a class="id-ref" href="#ARD-CC">ARD-CC</a></del></td>
 <td>2026-11-24</td>
-<td>parent PRD 的 <code>version</code> 是 spec bundle（整套 SDD spec）的版本；<a href="../../../../../tools/build_spec_skills.py"><code>tools/build_spec_skills.py</code></a> 把它印进四个 SDD <code>SKILL.md</code>，只标来源，不做迁移</td>
+<td><del>parent PRD 的 <code>version</code> 是 spec bundle（整套 SDD spec）的版本；<a href="../../../../../tools/build_spec_skills.py"><code>tools/build_spec_skills.py</code></a> 把它印进四个 SDD <code>SKILL.md</code>，只标来源，不做迁移</del> → <a href="#ard-ck">ARD-CK</a></td>
 </tr>
 <tr>
 <td><a class="id-ref" href="#ARD-CB">ARD-CB</a></td>
@@ -77,9 +117,9 @@
 <td>reader PRD 的 <a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-L">PRD-L</a>（全站样式统一）降为 <span class="lvl lvl--nice">NICE</span>，和 reader design 的 DSGN-N-D 一致</td>
 </tr>
 <tr>
-<td><a class="id-ref" href="#ARD-BX">ARD-BX</a></td>
+<td><del><a class="id-ref" href="#ARD-BX">ARD-BX</a></del></td>
 <td>2026-11-20</td>
-<td>交付物只有 spec-write 和 spec-review 两个 skill。它们读三份标准文件：SPEC-STANDARD.md、SPEC-PRESENTATION.md，以及讲 HTML 页面的 SPEC-HTML-STANDARD.md；标准文件不算交付物</td>
+<td><del>交付物只有 spec-write 和 spec-review 两个 skill。它们读三份标准文件：SPEC-STANDARD.md、SPEC-PRESENTATION.md，以及讲 HTML 页面的 SPEC-HTML-STANDARD.md；标准文件不算交付物</del> → <a href="#ard-ch">ARD-CH</a></td>
 </tr>
 <tr>
 <td><a class="id-ref" href="#ARD-BW">ARD-BW</a></td>
@@ -92,14 +132,14 @@
 <td>内容改动由 spec-write 做；格式类 <span class="lvl lvl--must">MUST</span> 可以由整理工具的 Lint 模式直接修，同样受 <a class="id-ref" href="#ARD-BP">ARD-BP</a> 的改动上限约束</td>
 </tr>
 <tr>
-<td><a class="id-ref" href="#ARD-BU">ARD-BU</a></td>
+<td><del><a class="id-ref" href="#ARD-BU">ARD-BU</a></del></td>
 <td>2026-11-20</td>
-<td>feature 目录要等人在 Map 阶段确认后才建；Create 阶段只把暂定名记在 CLAUDE.local.md</td>
+<td><del>feature 目录要等人在 Map 阶段确认后才建；Create 阶段只把暂定名记在 CLAUDE.local.md</del> → <a href="#ard-ch">ARD-CH</a></td>
 </tr>
 <tr>
-<td><a class="id-ref" href="#ARD-BT">ARD-BT</a></td>
+<td><del><a class="id-ref" href="#ARD-BT">ARD-BT</a></del></td>
 <td>2026-11-20</td>
-<td>重申 <a class="id-ref" href="#ARD-U">ARD-U</a>、<a class="id-ref" href="#ARD-V">ARD-V</a> 里仍然有效的部分：Map 阶段以访谈为主；进度在 feature 名字定之前记在 CLAUDE.local.md，定了以后记在 raw/state/；非软件难题留在本 PRD，用同样五篇文档</td>
+<td><del>重申 <a class="id-ref" href="#ARD-U">ARD-U</a>、<a class="id-ref" href="#ARD-V">ARD-V</a> 里仍然有效的部分：Map 阶段以访谈为主；进度在 feature 名字定之前记在 CLAUDE.local.md，定了以后记在 raw/state/；非软件难题留在本 PRD，用同样五篇文档</del> → <a href="#ard-ch">ARD-CH</a></td>
 </tr>
 <tr>
 <td><a class="id-ref" href="#ARD-BS">ARD-BS</a></td>
@@ -117,9 +157,9 @@
 <td>六种文档都可以拆分篇；有分篇时必须有入口文件 <code>&lt;f&gt;-&lt;type&gt;.md</code>，入口链到各分篇</td>
 </tr>
 <tr>
-<td><a class="id-ref" href="#ARD-BP">ARD-BP</a></td>
+<td><del><a class="id-ref" href="#ARD-BP">ARD-BP</a></del></td>
 <td>2026-11-20</td>
-<td>AI 每次改 docs/ 下的 .md，必须同时满足：不超过 10 行，并且不超过 200 字符；更大的改动拆成多次，或经人授权后一次大改</td>
+<td><del>AI 每次改 docs/ 下的 .md，必须同时满足：不超过 10 行，并且不超过 200 字符；更大的改动拆成多次，或经人授权后一次大改</del> → <a href="#ard-ce">ARD-CE</a></td>
 </tr>
 <tr>
 <td><a class="id-ref" href="#ARD-BO">ARD-BO</a></td>
@@ -458,6 +498,55 @@
 </tr>
 </tbody></table></div>
 <h3>Evidence Appendix</h3>
+<a id="ard-cl"></a>
+<h4 id="ARD-CL"><a class="id-ref" href="#ARD-CL">ARD-CL</a> — 划掉的内容保留，压缩时先压它</h4>
+<p><strong>原因。</strong> 划掉的 ARD 行说明一条规则为什么变了，删掉就查不到来龙去脉。<a class="id-ref" href="#ARD-BE">ARD-BE</a> 划掉后剩下的两句也一样保留。</p>
+<p><strong>规则。</strong> 划掉的行和它的 Evidence Appendix 一律保留。某篇文档超过行数上限、必须压缩时，先压缩已划掉的内容（例如合成一行并链到新 ARD），再动别的；L1 内容仍不能删。</p>
+<p><strong>放弃的方案。</strong> 定期清理划掉的行：会丢掉历史。</p>
+<a id="ard-ck"></a>
+<h4 id="ARD-CK"><a class="id-ref" href="#ARD-CK">ARD-CK</a> — 每次 build 升版本号</h4>
+<p><strong>原因。</strong> <a class="id-ref" href="#ARD-CC">ARD-CC</a> 只说印版本号，没说什么时候升。版本不升，两次不同的 build 印出同一个号，起不到标来源的作用。</p>
+<p><strong>规则。</strong> 每次运行 <code>build_spec_skills.py</code>（不带 <code>--check</code>），先把 parent PRD 的 <code>version</code> 末位加 1，例如 <code>1.0.0</code> 变成 <code>1.0.1</code>，再印进 <code>SKILL.md</code>。<code>--check</code> 只比对，不升版本。</p>
+<p><strong>重述。</strong> 本条推翻 <a class="id-ref" href="#ARD-CC">ARD-CC</a> 里放弃「自动升版」的部分，<a class="id-ref" href="#ARD-CC">ARD-CC</a> 因此划掉。其余仍有效：版本号只写在 parent PRD 的 <code>version</code>；脚本写入版本、日期、git 短 sha，拒绝重复键（<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-Y">TST-Y</a>）；不定义迁移策略。</p>
+<p><strong>放弃的方案。</strong> 每次由人决定升哪一位：每次都要人判断，容易忘。</p>
+<a id="ard-cj"></a>
+<h4 id="ARD-CJ"><a class="id-ref" href="#ARD-CJ">ARD-CJ</a> — 复核跑 5 次，Claude 再核对</h4>
+<p><strong>原因。</strong> 2026-11-24 夜里，<span class="lvl lvl--must">MUST</span>-B 在相关内容没变的情况下出现过一次 2 比 1 的翻转，说明 3 次太少。DeepSeek 的结论本身也可能错。</p>
+<p><strong>规则。</strong> <code>judge_deepseek.py</code> 默认跑 5 次：至少 4 次通过算通过，至少 4 次不通过算不通过，其余算有分歧，按不通过计。</p>
+<p><strong>规则（续）。</strong> Claude 逐条核对不通过和有分歧的结论，把同意或不同意及理由写进 <code>claude_audit</code>。Claude 不同意时报告用户，不自己改判；Python 检查的结果仍不能推翻。</p>
+<p><strong>放弃的方案。</strong> 5 次都一致才通过：次数越多越容易因一次波动失败。换更贵的模型：仍是一个模型说了算。</p>
+<a id="ard-ci"></a>
+<h4 id="ARD-CI"><a class="id-ref" href="#ARD-CI">ARD-CI</a> — spec-review 的三份审查参考</h4>
+<p><strong>原因。</strong> 契约说 skill 只读三份标准文件，spec-review 的正文却还加载另外三份，两处说法不一致。</p>
+<p><strong>规则。</strong> spec-review 另读三份审查参考：<a href="../../../../../skills/spec-organize/CONTENT-PRIORITY.md"><code>CONTENT-PRIORITY.md</code></a>（哪些是 L1 必有内容）、<a href="../../../../../skills/spec-organize/AUTHORITY-BY-CONCERN.md"><code>AUTHORITY-BY-CONCERN.md</code></a>（每件事以哪篇为准）、<a href="../../../../../skills/spec-organize/SPEC-SCOPE.md"><code>SPEC-SCOPE.md</code></a>（design 不写实现细节）。</p>
+<p>它们支撑审查里的具体检查，不是写作标准，spec-write 不必读。</p>
+<p><strong>放弃的方案。</strong> 并进 SPEC-STANDARD.md：标准文件变长，写作时又用不到。</p>
+<a id="ard-ch"></a>
+<h4 id="ARD-CH"><a class="id-ref" href="#ARD-CH">ARD-CH</a> — wayfinder 负责进度规则</h4>
+<p><strong>原因。</strong> spec-pipeline 不再是入口 skill 以后，pipeline design 的 PIPE-A-D、PIPE-A-E、PIPE-A-F、PIPE-H、PIPE-E-A 没有 skill 负责。</p>
+<p>另外，名字没定时进度全记在 <code>CLAUDE.local.md</code> 一处，几个 feature 同时进行就会互相覆盖。名字没定时的暂定名、粗略 PRD 和背景也一起移进地图文件。</p>
+<p><strong>规则。</strong> wayfinder 的地图（map）就是进度记录。名字没定时放在 <code>docs/state/wayfinder-&lt;暂定名&gt;.md</code>，定了以后移到 <code>docs/features/&lt;f&gt;/raw/state/wayfinder-map.md</code>，都不提交。</p>
+<p>每个 feature 一个地图文件，互不覆盖；CLAUDE 层只记当前地图的路径（<a class="id-ref" href="#ARD-CG">ARD-CG</a>）。</p>
+<p><strong>规则（续）。</strong> 重新开始时读地图给出回顾。标「阻塞」的问题对应未关闭的 brief，有未关闭的就不进入 Downstream。提交前问要不要跑 spec-review，用户说不跑就记进地图。</p>
+<p><strong>重述。</strong> 本条推翻 <a class="id-ref" href="#ARD-BX">ARD-BX</a>「交付物只有两个」，以及 <a class="id-ref" href="#ARD-BT">ARD-BT</a>、<a class="id-ref" href="#ARD-BU">ARD-BU</a>「进度记在 CLAUDE.local.md」的部分，三条因此划掉。</p>
+<p>仍有效的部分：spec-write、spec-review 读三份标准文件，标准文件不算交付物；Map 以访谈为主；非软件难题留在本 PRD；人在 Map 确认名字后才建 feature 目录。</p>
+<p><strong>放弃的方案。</strong> 交给 spec-write：正文变重，名字没定时的冲突还要另想办法。先标 Unverified：规则一直没人执行。改写 wayfinder 会和上游 mattpocock/skills 分叉，接受这个代价。</p>
+<a id="ard-cg"></a>
+<h4 id="ARD-CG"><a class="id-ref" href="#ARD-CG">ARD-CG</a> — CLAUDE 层写在哪个文件</h4>
+<p><strong>原因。</strong> <a class="id-ref" href="../design/spec-driven-development-design.html#DSGN-C">DSGN-C</a> 要求规范也写进 CLAUDE 层，但本仓库没有 <code>CLAUDE.md</code>，只有不提交的 <code>CLAUDE.local.md</code>。</p>
+<p><strong>规则。</strong> 按顺序找：项目里有 <code>CLAUDE.local.md</code> 就写它；没有就写 <code>CLAUDE.md</code>；两个都没有，问用户要不要新建，不自己建。</p>
+<p><strong>放弃的方案。</strong> 一律新建 <code>CLAUDE.md</code>：会把个人设置提交进仓库。</p>
+<a id="ard-cf"></a>
+<h4 id="ARD-CF"><a class="id-ref" href="#ARD-CF">ARD-CF</a> — 网页什么时候重建</h4>
+<p><strong>原因。</strong> <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-R">TST-R</a> 要求提交的网页和 markdown 一致，spec-write 却规定用户要求时才重建，两条冲突。</p>
+<p><strong>规则。</strong> spec-write 改完 markdown，告诉用户哪些网页还没更新，问要不要现在重建。commit 前必须重建，让提交的网页和 markdown 一致；推送 master 后 CI 再重建并部署（<a class="id-ref" href="#ARD-CD">ARD-CD</a>）。</p>
+<p><strong>放弃的方案。</strong> 不再提交 HTML、只靠 CI 生成：在本地分支上就看不到网页。</p>
+<a id="ard-ce"></a>
+<h4 id="ARD-CE"><a class="id-ref" href="#ARD-CE">ARD-CE</a> — 新建文件不受改动上限限制</h4>
+<p><strong>原因。</strong> 上限是为了让每次修改都看得清（<a class="id-ref" href="#ARD-BP">ARD-BP</a>）。新建的文件没有旧内容可对比，拆成十几次只多出步骤。</p>
+<p><strong>规则。</strong> 上限只管修改已有文件。新建一个文件可以一次写完，但仍要符合行数上限（<a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-D">PRD-D</a>）。</p>
+<p><strong>重述。</strong> 本条推翻 <a class="id-ref" href="#ARD-BP">ARD-BP</a> 没区分新建和修改的部分，<a class="id-ref" href="#ARD-BP">ARD-BP</a> 因此划掉。其余仍有效：修改 <code>docs/</code> 下已有的 markdown，每次不超过 10 行并且不超过 200 字符；更大的改动拆开，或经人授权。</p>
+<p><strong>放弃的方案。</strong> 新建文件也按 10 行拆：步骤多，看不出好处。</p>
 <a id="ard-cd"></a>
 <h4 id="ARD-CD"><a class="id-ref" href="#ARD-CD">ARD-CD</a> — 用 GitHub Pages 发布网站</h4>
 <p><strong>原因。</strong> 网站只在本地能看；还有 6 个旧页面从首页点不到，读者找不到也不知道它们过期了。</p>
@@ -942,6 +1031,10 @@ payment-impl-plan-01-schema.md         impl-plan 分篇：序号加阶段，有�
 <tr>
 <td>2026-11-24</td>
 <td>补记 2026-11-20 的 Log 变化：新增 <a class="id-ref" href="#ARD-BU">ARD-BU</a> 到 <a class="id-ref" href="#ARD-CB">ARD-CB</a>；划掉 <a class="id-ref" href="#ARD-BH">ARD-BH</a>、<a class="id-ref" href="#ARD-BE">ARD-BE</a>、<a class="id-ref" href="#ARD-AW">ARD-AW</a>、<a class="id-ref" href="#ARD-BK">ARD-BK</a>（各自链到推翻它的 ARD）</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>新增 <a class="id-ref" href="#ARD-CE">ARD-CE</a> 到 <a class="id-ref" href="#ARD-CL">ARD-CL</a>；划掉 <a class="id-ref" href="#ARD-CC">ARD-CC</a>、<a class="id-ref" href="#ARD-BX">ARD-BX</a>、<a class="id-ref" href="#ARD-BP">ARD-BP</a>、<a class="id-ref" href="#ARD-BT">ARD-BT</a>、<a class="id-ref" href="#ARD-BU">ARD-BU</a>（各自链到推翻它的 ARD）</td>
 </tr>
 </tbody></table></div>
       </div>

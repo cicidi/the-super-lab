@@ -34,7 +34,7 @@
         <h2>Spec-Driven Development — Skill 契约</h2>
 <p>本篇是 <a href="spec-driven-development-design.html">整体设计 spec-driven-development-design.md</a> 的一个分篇，只讲两个交付的 skill 各自做什么。术语见 <a href="spec-driven-development-design.html#glossary">术语表</a>。</p>
 <h3>Problem Statement</h3>
-<p>spec-write 和 spec-review 是仅有的两个交付物（<a href="../decision-history/spec-driven-development-decision-history.html#ard-bx">ARD-BX</a>）。如果它们的职责只写在各自的 <code>SKILL.md</code> 里，改 skill 的人可以随手改掉职责边界，而没人察觉。所以需要一份独立的契约：说清每个 skill 什么时候用、要什么输入、产出什么、不能做什么。</p>
+<p>交付物是 spec-write、spec-review，以及负责进度规则的 wayfinder（<a href="../decision-history/spec-driven-development-decision-history.html#ard-ch">ARD-CH</a>）。如果它们的职责只写在各自的 <code>SKILL.md</code> 里，改 skill 的人可以随手改掉职责边界，而没人察觉。所以需要一份独立的契约：说清每个 skill 什么时候用、要什么输入、产出什么、不能做什么。</p>
 <h3>Solution</h3>
 <p>本篇是两个 skill 行为的权威来源，<code>SKILL.md</code> 只是它的实现。两者不一致时，以本篇为准：先改本篇，再改 <code>SKILL.md</code>。具体的写作规则不在本篇重复，以三份标准文件 <a href="../../../../../skills/spec-organize/SPEC-STANDARD.md"><code>SPEC-STANDARD.md</code></a>、<a href="../../../../../skills/spec-html-standard/SPEC-PRESENTATION.md"><code>SPEC-PRESENTATION.md</code></a>、<a href="../../../../../skills/spec-html-standard/SPEC-HTML-STANDARD.md"><code>SPEC-HTML-STANDARD.md</code></a> 为准（<a href="../decision-history/spec-driven-development-decision-history.html#ard-aj">ARD-AJ</a>、<a href="../decision-history/spec-driven-development-decision-history.html#ard-bx">ARD-BX</a>）。</p>
 <h3>Design</h3>
@@ -55,9 +55,16 @@
 <tr>
 <td>spec-review</td>
 <td>提交前；或者有人要求审查设计</td>
-<td>要审的文档目录或改动；三份标准文件</td>
+<td>要审的文档目录或改动；三份标准文件，加三份审查参考（<a href="../decision-history/spec-driven-development-decision-history.html#ard-ci">ARD-CI</a>）</td>
 <td>一张问题表，每个问题有严重度和修改建议；一次只问用户一个问题</td>
 <td>直接改文档；改写别人的结论；讨论严重度 1 或 2 的小问题</td>
+</tr>
+<tr>
+<td>wayfinder</td>
+<td>Map 阶段规划；重新开始时；提交前</td>
+<td>用户的目标；本 feature 的地图文件</td>
+<td>更新后的地图、进度回顾、「跑不跑 spec-review」的记录</td>
+<td>有标「阻塞」的问题没关闭时进入 Downstream；把地图提交进仓库</td>
 </tr>
 <tr>
 <td>spec-organize（内部工具，不交付）</td>
@@ -181,6 +188,10 @@
 <tr>
 <td>2026-11-24</td>
 <td>故意不定义：版本改为来源标记（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CC">ARD-CC</a>）</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>交付物加上 wayfinder（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CH">ARD-CH</a>）；spec-review 另读三份审查参考（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CI">ARD-CI</a>）</td>
 </tr>
 </tbody></table></div>
       </div>

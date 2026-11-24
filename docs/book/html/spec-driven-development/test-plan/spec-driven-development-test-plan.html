@@ -61,7 +61,7 @@
 </tr>
 <tr>
 <td>复核</td>
-<td>同一个模型独立裁决 3 次，得出最终的通过或不通过。<code>eval.yaml</code> 里对应的键叫 <code>checkers</code>。它和 Python 检查脚本是两回事</td>
+<td>同一个模型独立裁决 5 次，得出最终的通过或不通过（<a href="../decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a>）。<code>eval.yaml</code> 里对应的键叫 <code>checkers</code>。它和 Python 检查脚本是两回事</td>
 </tr>
 <tr>
 <td>基线</td>
@@ -178,7 +178,7 @@
 </tr>
 </tbody></table></div>
 <p>分数 2 =（加分合计 − 减分合计）× 10 ÷ 标注总数。满分 10，可以是负数。「类似」由判分模型判断。只在同一个 gold 版本内比较。</p>
-<p><strong>门槛：</strong> 分数 1 必须满分；分数 2 不能低于同一 gold 版本的上一次运行（<a href="../decision-history/spec-driven-development-decision-history.html#ard-r">ARD-R</a>）。复核用同一个 <code>deepseek-flash</code> 独立裁决 3 次，3 次都通过才算通过，而且复核不能推翻 Python 检查的结果。不同模型之间的偏差暂时测不了，标为 Unverified。</p>
+<p><strong>门槛：</strong> 分数 1 必须满分；分数 2 不能低于同一 gold 版本的上一次运行（<a href="../decision-history/spec-driven-development-decision-history.html#ard-r">ARD-R</a>）。复核用同一个 <code>deepseek-flash</code> 独立裁决 5 次，至少 4 次通过才算通过；复核不能推翻 Python 检查的结果（<a href="../decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a>）。不同模型之间的偏差暂时测不了，标为 Unverified。</p>
 <p><strong>分数的用途：</strong> 分数 1 和分数 2 是评测指标，不是产品的成功指标（<a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-G">PRD-G</a>、<a href="../decision-history/spec-driven-development-decision-history.html#ard-n">ARD-N</a>）。</p>
 <p><strong>gold 增长：</strong> 运行中发现新的好例子或坏例子，追加到 <code>annotations.yaml</code>，gold 版本号加一，<code>added_in</code> 写上新版本。报告里必须写明 gold 版本（<a href="../decision-history/spec-driven-development-decision-history.html#ard-s">ARD-S</a>）。</p>
 <h3>Test Cases</h3>
@@ -203,9 +203,9 @@
 <h4 id="TST-J"><a class="id-ref" href="#TST-J">TST-J</a> — 不同评测配置</h4>
 <p><strong>目标：</strong> 比较加不同辅助 skill 的效果。<strong>输入：</strong> <code>grill.skills</code> 分别为 <code>[]</code>、<code>[wayfinder]</code>、<code>[grill-with-docs]</code>、两个都加。<strong>通过条件：</strong> 每种配置出一份报告；先跑基线；只报分数，不设门槛。<strong>判定：</strong> 同 <a class="id-ref" href="#TST-E">TST-E</a>。</p>
 <h4 id="TST-K"><a class="id-ref" href="#TST-K">TST-K</a> — 评测报告</h4>
-<p><strong>目标：</strong> 每次运行生成一个 HTML 报告。<strong>输入：</strong> 任意一次运行。<strong>通过条件：</strong> 报告里有 run_id、分支、gold 版本、评测配置、分数 1 的逐条结果（注明 python 或 llm）、分数 2 的加减分、<a class="id-ref" href="#TST-F">TST-F</a> 四种输入的结果、3 次复核的结果。<strong>判定：</strong> 生成报告，再按结构检查。</p>
-<h4 id="TST-L"><a class="id-ref" href="#TST-L">TST-L</a> — 3 次独立复核</h4>
-<p><strong>目标：</strong> 得出最终的通过或不通过。<strong>输入：</strong> 评测报告和改动。<strong>通过条件：</strong> 同一个 <code>deepseek-flash</code> 独立裁决 3 次，3 次都通过；不推翻 Python 检查的结果。<strong>判定：</strong> 跑 3 次。不同模型之间的偏差标为 Unverified。</p>
+<p><strong>目标：</strong> 每次运行生成一个 HTML 报告。<strong>输入：</strong> 任意一次运行。<strong>通过条件：</strong> 报告里有 run_id、分支、gold 版本、评测配置、分数 1 的逐条结果（注明 python 或 llm）、分数 2 的加减分、<a class="id-ref" href="#TST-F">TST-F</a> 四种输入的结果、5 次复核的结果和 Claude 的核对意见。<strong>判定：</strong> 生成报告，再按结构检查。</p>
+<h4 id="TST-L"><a class="id-ref" href="#TST-L">TST-L</a> — 5 次独立复核</h4>
+<p><strong>目标：</strong> 得出最终的通过或不通过。<strong>输入：</strong> 评测报告和改动。<strong>通过条件：</strong> 同一个 <code>deepseek-flash</code> 独立裁决 5 次，至少 4 次通过；不推翻 Python 检查的结果。<strong>判定：</strong> 跑 5 次，Claude 再核对没通过和有分歧的条目（<a href="../decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a>）。不同模型之间的偏差标为 Unverified。</p>
 <h4 id="TST-M"><a class="id-ref" href="#TST-M">TST-M</a> — 改了标准或 gold 之后同步测试</h4>
 <p><strong>目标：</strong> 标准或 gold 变了，测试要跟着变。<strong>输入：</strong> 改了 <a href="../../../../../skills/spec-organize/SPEC-STANDARD.md"><code>SPEC-STANDARD.md</code></a> 或 design；或者运行中发现了新的好例子、坏例子。<strong>通过条件：</strong> design 改了，同一批重跑 <a class="id-ref" href="#TST-A">TST-A</a>，并更新 <span class="lvl lvl--must">MUST</span> 清单和反例；加了新标注，gold 版本号加一。<strong>判定：</strong> 检查流程是否执行，以及覆盖率。</p>
 <h4 id="TST-N"><a class="id-ref" href="#TST-N">TST-N</a> — parent 五篇齐全，sub-feature 不要求</h4>
@@ -244,9 +244,11 @@
 <p><strong>目标：</strong> 改文档时不靠删 L1 内容凑分（document-standard 的 DSGN-I）。<strong>输入：</strong> 两个 git 版本之间的 <code>docs/features/&lt;f&gt;/</code>。</p>
 <p><strong>通过条件：</strong> 旧版本的每个编号标题在新版本里还在；每篇的 <span class="lvl lvl--must">MUST</span> 句数不减少。例外：decision-history 新增的 ARD 提到了这个编号或这篇文档。<strong>判定：</strong> Python（<a href="../../../../../tools/check_l1_delta.py"><code>tools/check_l1_delta.py</code></a>）。</p>
 <h4 id="TST-Y"><a class="id-ref" href="#TST-Y">TST-Y</a> — skill 版本戳和 PRD 一致</h4>
-<p><strong>目标：</strong> 四个 SDD <code>SKILL.md</code>（交付的 spec-write、spec-review，以及也引用标准文件的 spec-organize、spec-pipeline） 的版本戳等于 parent PRD 的 <code>version</code>，且 frontmatter 里的 <code>spec_*</code> 键各只出现一次（<a href="../decision-history/spec-driven-development-decision-history.html#ard-cc">ARD-CC</a>）。<strong>判定：</strong> Python（<code>build_spec_skills.py --check</code>）。</p>
+<p><strong>目标：</strong> 四个 SDD <code>SKILL.md</code>（交付的 spec-write、spec-review，以及也引用标准文件的 spec-organize、spec-pipeline） 的版本戳等于 parent PRD 的 <code>version</code>，且 frontmatter 里的 <code>spec_*</code> 键各只出现一次；每次 build 版本末位加 1（<a href="../decision-history/spec-driven-development-decision-history.html#ard-ck">ARD-CK</a>）。<strong>判定：</strong> Python（<code>build_spec_skills.py --check</code>）。</p>
 <h4 id="TST-Z"><a class="id-ref" href="#TST-Z">TST-Z</a> — 每页都能从首页点到</h4>
 <p><strong>目标：</strong> <code>docs/book/html/</code> 下每个 HTML 页面都能从 <code>index.html</code> 顺着链接点到（<a href="../decision-history/spec-driven-development-decision-history.html#ard-cd">ARD-CD</a>）。<strong>判定：</strong> Python（<a href="../../../../../tools/check_site_reachable.py"><code>tools/check_site_reachable.py</code></a>）。</p>
+<h4 id="TST-AA"><a class="id-ref" href="#TST-AA">TST-AA</a> — wayfinder 执行进度规则</h4>
+<p><strong>目标：</strong> <a href="../../../../../skills/wayfinder/SKILL.md"><code>skills/wayfinder/SKILL.md</code></a> 写明地图文件的两个位置、提交前问是否跑 spec-review 并记下拒绝、有阻塞问题时不进入 Downstream（<a href="../decision-history/spec-driven-development-decision-history.html#ard-ch">ARD-CH</a>）。<strong>判定：</strong> Python。</p>
 <h3>Test Execution Order</h3>
 <ol>
 <li><a class="id-ref" href="#TST-A">TST-A</a>：<span class="lvl lvl--must">MUST</span> 清单覆盖率不到 100% 就停。</li>
@@ -300,11 +302,11 @@
 </tr>
 <tr>
 <td>spec-write 可以发布</td>
-<td><a class="id-ref" href="#TST-E">TST-E</a> 分数 1 满分、分数 2 不退步；<a class="id-ref" href="#TST-F">TST-F</a> 四种输入全部通过；<a class="id-ref" href="#TST-G">TST-G</a> 没有差异；<a class="id-ref" href="#TST-L">TST-L</a> 3 次都通过</td>
+<td><a class="id-ref" href="#TST-E">TST-E</a> 分数 1 满分、分数 2 不退步；<a class="id-ref" href="#TST-F">TST-F</a> 四种输入全部通过；<a class="id-ref" href="#TST-G">TST-G</a> 没有差异；<a class="id-ref" href="#TST-L">TST-L</a> 5 次里至少 4 次通过</td>
 </tr>
 <tr>
 <td>spec-review 可以发布</td>
-<td><a class="id-ref" href="#TST-H">TST-H</a> 找出 100%、误报 0；<a class="id-ref" href="#TST-I">TST-I</a> 不低于上一次；<a class="id-ref" href="#TST-L">TST-L</a> 3 次都通过</td>
+<td><a class="id-ref" href="#TST-H">TST-H</a> 找出 100%、误报 0；<a class="id-ref" href="#TST-I">TST-I</a> 不低于上一次；<a class="id-ref" href="#TST-L">TST-L</a> 5 次里至少 4 次通过</td>
 </tr>
 <tr>
 <td>gold 升版</td>
@@ -559,6 +561,10 @@
 <tr>
 <td>2026-11-24</td>
 <td><a class="id-ref" href="#TST-W">TST-W</a> 写明查的是 <code>data-svg=&quot;</code> 占位属性</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>复核改为 5 次、至少 4 次通过，Claude 再核对（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CJ">ARD-CJ</a>）；<a class="id-ref" href="#TST-Y">TST-Y</a> 加升版本（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CK">ARD-CK</a>）；新增 <a class="id-ref" href="#TST-AA">TST-AA</a>（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CH">ARD-CH</a>）</td>
 </tr>
 </tbody></table></div>
       </div>
