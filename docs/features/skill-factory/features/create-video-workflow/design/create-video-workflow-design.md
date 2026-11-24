@@ -41,7 +41,7 @@ skill 目录下只有 SKILL.md 一个文件，本身不带脚本。生成视频�
 **DSGN-A Phase 0 渠道与听众。** 先问用户内容发到哪里：YouTube、抖音或公众号、公司内部文档、会议演讲、GitHub demo、网站，或多个渠道（PRD-C）。
 每个渠道定下听众的专业程度、细节深度、语气和平台格式（PRD-B）。
 和用户一起写一段 Goal 声明，说清核心信息；它是 Phase 6 验收的靶子（PRD-I）。
-产出 `requirements.md`：渠道与听众、Goal、成功标准、范围。用户说不清目标时，用"教程、推介、深度技术、公告"几类例子帮他收窄。
+产出 `requirements.md`：渠道与听众、Goal、成功标准、范围。用户说不清目标时，用"教程、推介、深度技术、公告"几类例子帮用户收窄。
 
 **DSGN-B Phase 1 素材摄入和检查点 1。** 输入可以是 markdown、PDF、网页、YouTube 链接、GitHub 仓库或公司内部文档（PRD-A）。
 每种都抽成文字，合并进 `source_material.md`。付费墙、纯音频、死链这类读不了的，记进 gaps 一节，问用户怎么办。

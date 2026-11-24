@@ -55,7 +55,7 @@ commit e5a4b84 加了 Strategy 0c、0d 和 5 个新 calendar，并写明"新 cal
 
 ### ARD-D
 
-理由：用户要求"不同方法便利"，直到抓到他给的几场活动，再总结为什么（PRD-M）。
+理由：用户要求"不同方法便利"，直到抓到用户给的几场活动，再总结为什么（PRD-M）。
 agent 拦截 Luma 网页下拉时调的接口，发现 `api.luma.com/calendar/get-items` 不需登录，一次找回了全部 3 场。
 被否决的方案：直接抓网页、`__NEXT_DATA__`、Playwright 下拉（见 ARD-E）。
 出处：1de9cb65（2026-07-23）；commit 24d4264。
