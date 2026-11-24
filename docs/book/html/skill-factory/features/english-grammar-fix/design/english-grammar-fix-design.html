@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>english-grammar-fix — 英文语法修正 · design · Spec Atlas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@400;600&display=swap">
+<link rel="stylesheet" href="../../../../assets/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><a href="../../../../index.html"><span class="brand-mark">SDD</span><span class="brand-name">Spec Atlas</span></a></div>
+    <button class="strike-btn" type="button" onclick="var r=document.documentElement;var off=r.dataset.strike!=='off';r.dataset.strike=off?'off':'on';this.textContent=off?'显示删除线':'隐藏删除线'">隐藏删除线</button>
+  </div>
+</header>
+<div class="site">
+  <aside class="sidebar">
+  <nav aria-label="Directory">
+    <div class="tree-overview"><a class="tree-link" href="../../../../index.html"><span class="tree-link__num">00</span>All features</a></div>
+    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../../prd/skill-factory-prd.html"><span class="tree-ord">1</span>skill-factory PRD</a></li><li class="tree-leaf"><a class="tree-link" href="../../../decision-history/skill-factory-decision-history.html"><span class="tree-ord">2</span>skill-factory — Decision History</a></li><li class="tree-leaf"><a class="tree-link" href="../../../design/skill-factory-design.html"><span class="tree-ord">3</span>skill-factory Specification</a></li><li class="tree-leaf"><a class="tree-link" href="../../../impl-plan/skill-factory-impl-plan.html"><span class="tree-ord">4</span>skill-factory Implementation Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../../../test-plan/skill-factory-test-plan.html"><span class="tree-ord">5</span>skill-factory Test Plan</a></li><li class="tree-branch"><details open><summary><span class="tree-link"><span class="tree-ord">10</span>sub-feature</span></summary><ul class="tree"><li class="tree-branch"><details open><summary><a class="tree-link" href="../../auto-tdd/design/auto-tdd-design.html">auto-tdd</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../auto-tdd/prd/auto-tdd-prd.html"><span class="tree-ord">1</span>auto-tdd — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../auto-tdd/decision-history/auto-tdd-decision-history.html"><span class="tree-ord">2</span>auto-tdd — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../auto-tdd/design/auto-tdd-design.html"><span class="tree-ord">3</span>auto-tdd — 测试驱动开发循环</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../bug/design/bug-design.html">bug</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../bug/prd/bug-prd.html"><span class="tree-ord">1</span>bug — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../bug/decision-history/bug-decision-history.html"><span class="tree-ord">2</span>bug — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../bug/design/bug-design.html"><span class="tree-ord">3</span>bug — 调试、报告与自愈</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../domain-modeling/design/domain-modeling-design.html">domain-modeling</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../domain-modeling/prd/domain-modeling-prd.html"><span class="tree-ord">1</span>domain-modeling — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../domain-modeling/decision-history/domain-modeling-decision-history.html"><span class="tree-ord">2</span>domain-modeling — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../domain-modeling/design/domain-modeling-design.html"><span class="tree-ord">3</span>domain-modeling — 领域模型与术语表</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="english-grammar-fix-design.html">english-grammar-fix</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../prd/english-grammar-fix-prd.html"><span class="tree-ord">1</span>english-grammar-fix — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../decision-history/english-grammar-fix-decision-history.html"><span class="tree-ord">2</span>english-grammar-fix — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="english-grammar-fix-design.html" aria-current="page"><span class="tree-ord">3</span>english-grammar-fix — 英文语法修正</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../skill/design/skill-design.html">skill</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../skill/prd/skill-prd.html"><span class="tree-ord">1</span>skill — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../skill/decision-history/skill-decision-history.html"><span class="tree-ord">2</span>skill — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../skill/design/skill-design.html"><span class="tree-ord">3</span>skill — Skill 管理入口</a></li></ul></details></li></ul></details></li></ul>
+  </nav>
+</aside>
+  <main class="content">
+    <nav class="breadcrumbs"><a href="../../../../index.html">Docs</a> / <span>skill-factory</span> / <span>features</span> / <span>english-grammar-fix</span> / <span>design</span> / <span>english-grammar-fix — 英文语法修正</span></nav>
+    <article class="doc" data-doc="skill-factory/features/english-grammar-fix/design/english-grammar-fix-design">
+      <header class="doc-head">
+        <p class="eyebrow">skill-factory</p>
+        <h1>english-grammar-fix — 英文语法修正</h1>
+        <p class="source">Canonical: docs/features/skill-factory/features/english-grammar-fix/design/english-grammar-fix-design.md</p>
+      </header>
+      
+      <div class="doc-body">
+        <h2>english-grammar-fix — 英文语法修正</h2>
+<p>本篇说明 <code>english-grammar-fix</code> 这个 skill 现在怎么工作。 源文件：<a href="../../../../../../../skills/english-grammar-fix/SKILL.md"><code>skills/english-grammar-fix/SKILL.md</code></a>（commit cca25cd 定稿，40a10e4 改了 audience 字段，93d4a4a 移到现在的位置）。</p>
+<h3>Problem Statement</h3>
+<p>用户英语不是母语。AI 写的英文出现主谓不一致、冠词用错这类小错时，用户不一定看得出来（<a class="id-ref" href="../prd/english-grammar-fix-prd.html#PRD-A">PRD-A</a>）。 这些文字会进入 commit 历史、PR 和文档，被别人读到（<a class="id-ref" href="../prd/english-grammar-fix-prd.html#PRD-E">PRD-E</a>）。</p>
+<h3>Solution</h3>
+<p>一个只有说明文字、没有脚本的 skill。它按扫描、分类、修改、审阅四步处理一段英文（<a class="id-ref" href="../prd/english-grammar-fix-prd.html#PRD-B">PRD-B</a>）。 语法小错直接改；风格改动标出来，由用户决定。</p>
+<h3>User Stories</h3>
+<ul>
+<li>作为开发者，提交前我对一段 commit message 说&quot;fix grammar&quot;，拿回改好的版本。</li>
+<li>作为开发者，我看到斜体标出的措辞建议和原文对照，逐条接受或拒绝。</li>
+</ul>
+<h3>Implementation Decisions</h3>
+<p>整个 skill 只有一份 70 行的 SKILL.md，没有脚本、测试或 hook。 frontmatter 的 compatibility 写了 claude-code、opencode、gemini 三个工具。 触发词有三个：english-grammar-fix、fix grammar、correct english（frontmatter 的 triggers）。 audience 字段在 2026-08-02 从 ai-coworker 改为 walter-worker（commit 40a10e4）。</p>
+<h3>Design</h3>
+<p><strong><a class="id-ref" href="#DSGN-A">DSGN-A</a> 扫描。</strong> 读目标文字，找出语法、风格和措辞问题（<a class="id-ref" href="../prd/english-grammar-fix-prd.html#PRD-A">PRD-A</a>）。</p>
+<p><strong><a class="id-ref" href="#DSGN-B">DSGN-B</a> 分类。</strong> 每个问题归入两类之一：语法类直接改，不提示；风格类用斜体标出，等用户审阅（<a class="id-ref" href="../prd/english-grammar-fix-prd.html#PRD-B">PRD-B</a>）。</p>
+<p><strong><a class="id-ref" href="#DSGN-C">DSGN-C</a> 修改。</strong> 修正直接写在原位置；小错的修正版替换原文，不加说明（<a class="id-ref" href="../prd/english-grammar-fix-prd.html#PRD-B">PRD-B</a>）。</p>
+<p><strong><a class="id-ref" href="#DSGN-D">DSGN-D</a> 审阅。</strong> 风格改动和原文并排显示，用户逐条接受或拒绝（<a class="id-ref" href="../prd/english-grammar-fix-prd.html#PRD-B">PRD-B</a>）。</p>
+<p><strong><a class="id-ref" href="#DSGN-E">DSGN-E</a> 语法检查项。</strong> 主谓一致、冠词 a 和 an、同一句内时态一致、单复数一致（<a class="id-ref" href="../prd/english-grammar-fix-prd.html#PRD-A">PRD-A</a>）。 还查技术写作里常混的词：it&#x27;s 和 its、affect 和 effect、关系从句里的 which 和 that。 Oxford comma 指列举三项以上时 and 前面的逗号，统一加上。</p>
+<p><strong><a class="id-ref" href="#DSGN-F">DSGN-F</a> commit message 规则。</strong> 用祈使语气，用 Conventional Commits 格式，标题不超过 72 个字符（<a class="id-ref" href="../prd/english-grammar-fix-prd.html#PRD-D">PRD-D</a>）。</p>
+<p><strong><a class="id-ref" href="#DSGN-G">DSGN-G</a> 不改的内容。</strong> 技术术语、变量名和函数名、故意简短的注释、正确但口语化的表达（<a class="id-ref" href="../prd/english-grammar-fix-prd.html#PRD-C">PRD-C</a>）。</p>
+<p><strong><a class="id-ref" href="#DSGN-H">DSGN-H</a> 触发方式。</strong> 只在用户点名调用或说出触发词时运行；仓库里没有自动调用它的 hook（<a class="id-ref" href="../prd/english-grammar-fix-prd.html#PRD-E">PRD-E</a>）。</p>
+<p><strong><a class="id-ref" href="#DSGN-I">DSGN-I</a> 名字。</strong> 目录名、name 字段和第一个触发词都是 english-grammar-fix，与用途一致（<a class="id-ref" href="../prd/english-grammar-fix-prd.html#PRD-F">PRD-F</a>）。</p>
+<h3>Testing Decisions</h3>
+<p>本 skill 没有自动测试或评测集，<code>skills/english-grammar-fix/</code> 下只有 SKILL.md 一个文件。 是否好用，目前只能拿一段真实的英文跑一次，再人工判断。</p>
+<h3>Out of Scope</h3>
+<p>不改代码，不改 <a class="id-ref" href="#DSGN-G">DSGN-G</a> 列出的内容；用户想自己审阅时不用本 skill（SKILL.md 的 When NOT to Use 一节）。</p>
+<h3>Further Notes</h3>
+<p>需求见 <a href="../prd/english-grammar-fix-prd.html">PRD</a>，决策见 <a href="../decision-history/english-grammar-fix-decision-history.html">decision-history</a>。 2026-08-02 的合并表把它列为独立 skill，见 <a href="../../../design/skill-factory-design.html">parent design</a>。 最早的 auto-patches 版在 walter-worker 仓库，可用 <code>git show c3f771f:templates/personal/skills/dev-ai-tool-auto-patches.md</code> 查看。</p>
+<h3>Alternatives Considered</h3>
+<p>并入某个合并后的 skill：被否决，2026-08-02 保持独立（<a class="id-ref" href="../decision-history/english-grammar-fix-decision-history.html#ARD-A">ARD-A</a>）。 叫 self-patch：被否决，约一小时后改成 english-grammar-fix（<a class="id-ref" href="../decision-history/english-grammar-fix-decision-history.html#ARD-D">ARD-D</a>、<a class="id-ref" href="../decision-history/english-grammar-fix-decision-history.html#ARD-C">ARD-C</a>）。 用 hook 自动运行：仓库里没有这样做，是否讨论过属于 UNKNOWN（<a class="id-ref" href="../decision-history/english-grammar-fix-decision-history.html#ARD-F">ARD-F</a>）。</p>
+<h3>Drawbacks</h3>
+<p>description 说 &quot;Auto-correct&quot;，但它不会自己运行，用户忘了调用就没有效果，见 <a class="id-ref" href="#QUES-A">QUES-A</a>。 commit message 规则和 commit skill 都写了 Conventional Commits，两处可能说法不同，见 <a class="id-ref" href="#QUES-C">QUES-C</a>。</p>
+<h3>Risks and Mitigations</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>风险</th>
+<th>缓解</th>
+</tr></thead><tbody>
+<tr>
+<td>静默修改改掉了用户有意的写法</td>
+<td>只静默改语法类；术语、代码名和口语表达不改（<a class="id-ref" href="#DSGN-G">DSGN-G</a>）</td>
+</tr>
+<tr>
+<td>which/that、Oxford comma 这类偏风格的规则被当成语法静默改</td>
+<td>SKILL.md 没写它们属于哪一类，见 <a class="id-ref" href="#QUES-D">QUES-D</a></td>
+</tr>
+</tbody></table></div>
+<h3>Open Questions</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>ID</th>
+<th>问题</th>
+<th>目前答案</th>
+<th>Owner</th>
+<th>Blocking</th>
+</tr></thead><tbody>
+<tr>
+<td id="QUES-A"><a class="id-ref" href="#QUES-A">QUES-A</a></td>
+<td>AI 写完 commit message 或 PR 后要不要自动运行（<a class="id-ref" href="../prd/english-grammar-fix-prd.html#PRD-E">PRD-E</a>）？</td>
+<td>只能手动调用；description 却写 Auto-correct</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-B"><a class="id-ref" href="#QUES-B">QUES-B</a></td>
+<td>要不要也修正用户自己写的英文（<a class="id-ref" href="../prd/english-grammar-fix-prd.html#PRD-A">PRD-A</a>）？</td>
+<td>SKILL.md 只说 AI 写的文字；原意 UNKNOWN</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-C"><a class="id-ref" href="#QUES-C">QUES-C</a></td>
+<td>commit message 格式以本 skill 还是 commit skill 为准（<a class="id-ref" href="../prd/english-grammar-fix-prd.html#PRD-D">PRD-D</a>）？</td>
+<td>两处都写了 Conventional Commits</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-D"><a class="id-ref" href="#QUES-D">QUES-D</a></td>
+<td>which/that 和 Oxford comma 算语法类还是风格类（<a class="id-ref" href="../prd/english-grammar-fix-prd.html#PRD-B">PRD-B</a>）？</td>
+<td>SKILL.md 没写</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-E"><a class="id-ref" href="#QUES-E">QUES-E</a></td>
+<td>语法小错要不要像蓝图说的那样用斜体标出（<a class="id-ref" href="../prd/english-grammar-fix-prd.html#PRD-B">PRD-B</a>）？</td>
+<td>蓝图写 Minor in italics，SKILL.md 写静默改</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+</tbody></table></div>
+<h3>Reversibility</h3>
+<p>所有改动都落在 git 跟踪的 <a href="../../../../../../../skills/english-grammar-fix/SKILL.md"><code>skills/english-grammar-fix/SKILL.md</code></a>，用 <code>git revert</code> 即可撤回。 已安装到 <code>~/.claude/skills/</code> 的副本，须重跑 <code>install.sh</code> 才同步。</p>
+<h3>Change Log</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Date</th>
+<th>Change</th>
+</tr></thead><tbody>
+<tr>
+<td>2026-11-24</td>
+<td>初版：按 SKILL.md 写出 english-grammar-fix 的 design，引用 <a class="id-ref" href="../prd/english-grammar-fix-prd.html#PRD-A">PRD-A</a> 到 <a class="id-ref" href="../prd/english-grammar-fix-prd.html#PRD-F">PRD-F</a></td>
+</tr>
+</tbody></table></div>
+      </div>
+    </article>
+    <nav class="pager" aria-label="Previous and next"><a class="prev" href="../prd/english-grammar-fix-prd.html"><span class="label">Previous</span>english-grammar-fix — 需求</a><a class="next" href="../decision-history/english-grammar-fix-decision-history.html"><span class="label">Next</span>english-grammar-fix — 决策记录</a></nav>
+  </main>
+</div>
+<footer class="foot"><div class="foot-inner">Assembled from committed <code>.md</code>. The Markdown is authoritative; this page is a reading view.</div></footer>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>if(window.mermaid){mermaid.initialize({startOnLoad:false});}</script>
+<script src="../../../../assets/app.js"></script>
+</body>
+</html>
