@@ -5,7 +5,7 @@ state: draft
 final_date: 2026-10-30
 health: active
 owner: cicidi
-last_verified: 2026-11-20
+last_verified: 2026-11-24
 ---
 
 # Document Standard — 文档标准
@@ -249,6 +249,8 @@ KEP 里的版本偏移、发布签核、运维就绪问卷不采用：它们是�
 - 正文可以中英文混合，只要读着通顺；英文术语同样要解释或收进术语表。Problem Statement 可以保留作者原话（[ARD-BS](../../../decision-history/spec-driven-development-decision-history.md#ard-bs)）。
 - 必需章节的标题和编号用英文。
 
+**插图（MUST）。** 图里不写正文没有的事实，也不和正文矛盾；L1 内容不能只出现在图里。spec-review 发现时报严重度 3，并写出 SVG 文件名（[ARD-CA](../../../decision-history/spec-driven-development-decision-history.md#ard-ca)）。
+
 **Decision Log（MUST）。** 表头是 `ID | Date | Decision`，可以加第四列 `Ready`；不能有 Status 列和 Supersedes 列（[ARD-AX](../../../decision-history/spec-driven-development-decision-history.md#ard-ax)）。最新的决定写在表的最上面。
 
 **Change Log（MUST）。** 每篇文档的最后一节，只往末尾追加，不改旧行。
@@ -398,6 +400,7 @@ design 管「想要怎样」，代码管「现在怎样」和内部结构。机�
 - 结论有依据，查不到写 `UNKNOWN`（pipeline design 的 PIPE-L）。
 - DSGN-E 里标了 MUST 的四条都满足：impl-plan 的任务写明依赖、挡住和完成标准；引用代码写明 commit；每个 feature 只有一份未决问题清单；文档能让本科程序员读懂。
 - 本地翻译副本不提交（DSGN-C）；改编号时留对照表和旧锚点（DSGN-F）；每条 ARD 都有说明（DSGN-J）。
+- 图不写正文没有的事实，也不和正文矛盾（DSGN-E 的「插图」）。
 
 **NICE，做不到只提醒（[ARD-BN](../../../decision-history/spec-driven-development-decision-history.md#ard-bn)；下面的 ARD 都在 parent 的 decision-history 里）：**
 
@@ -510,3 +513,4 @@ design 管「想要怎样」，代码管「现在怎样」和内部结构。机�
 | 2026-11-20 | 第 2 轮审查后：`.gitignore` 规则改为 `docs/features/**/raw/`；raw/ 草稿可作依据、指向 raw/ 的链接不算死链（ARD-BW）；DSGN-J 删去和 parent DSGN-B 重复的表，只留链接；DSGN-M 的条目改写成完整句子；PROTECTED、`sections.py`、`registry_provenance` 第一次出现时解释；指向 parent test-plan、impl-plan 的编号写明出处 |
 | 2026-11-20 | 第 3 轮审查后：DSGN-A 写明三份摘要（ARD-BX）；DSGN-E 写明 Problem Statement 小标题可以保留编号（ARD-BS 重述 ARD-AW）；DSGN-J 写明只推翻一部分时也整行划掉；子问题归属表不适用的理由改为只引 PIPE-L |
 | 2026-11-24 | DSGN-G：final 后经 ARD 授权的大改除外（parent ARD-BS）；不迁移旧文档改链 ARD-CC |
+| 2026-11-24 | DSGN-E 加「插图（MUST）」，DSGN-M 门槛加一条（ARD-CA，与 SPEC-STANDARD 一致） |

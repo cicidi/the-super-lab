@@ -23,7 +23,7 @@ from checks.open_questions import check_open_questions  # noqa: E402
 from checks.code_citation_base import check_code_citation_base  # noqa: E402
 from checks.impl_tasks import check_impl_tasks  # noqa: E402
 
-EXPECTED_MECHANICAL = 11  # TST-H: 11 mechanical cases (5 semantic need a judge runner)
+EXPECTED_MECHANICAL = 12  # TST-H: 11 planted-defect cases + 1 clean (5 semantic need a judge runner)
 
 RUNNERS = [
     check_frontmatter,

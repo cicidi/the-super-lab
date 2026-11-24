@@ -5,7 +5,7 @@ state: final
 final_date: 2026-09-25
 health: active
 owner: cicidi
-last_verified: 2026-11-20
+last_verified: 2026-11-24
 ---
 
 # Spec-Driven Development — Decision History
@@ -26,7 +26,7 @@ last_verified: 2026-11-20
 |---|------|----------|
 | ARD-CD | 2026-11-24 | 网站用 GitHub Pages 发布：推送 master 后由 GitHub Actions 从 markdown 重新生成并部署；每一页都要能从 `index.html` 点到 |
 | ARD-CC | 2026-11-24 | parent PRD 的 `version` 是 spec bundle（整套 SDD spec）的版本；`tools/build_spec_skills.py` 把它印进四个 SDD `SKILL.md`，只标来源，不做迁移 |
-| ARD-CB | 2026-11-20 | 网页离线可读指正文与已提交的 SVG 插图；字体与 Mermaid 可联网加载（PRD-O） |
+| ARD-CB | 2026-11-20 | 网页离线可读指正文与已提交的 SVG 插图；字体与 Mermaid 可联网加载（reader PRD 的 PRD-O） |
 | ARD-CA | 2026-11-20 | 插图用 diagram-design 画，SVG 与 citing md 同目录；全站配色与 diagram-design 默认一致；spec-review 查图文一致 |
 | ARD-BZ | 2026-11-20 | 补记两次编号迁移：parent design 的 §4 到 §8 改为 DSGN-A 到 DSGN-E；reader design 里重号的 DSGN-N-H、DSGN-N-I 改为 DSGN-N-M、DSGN-N-N |
 | ARD-BY | 2026-11-20 | reader PRD 的 PRD-L（全站样式统一）降为 NICE，和 reader design 的 DSGN-N-D 一致 |
@@ -135,7 +135,7 @@ last_verified: 2026-11-20
 
 ### ARD-CB — 离线可读范围
 
-**原因。** 插图内嵌进网页后，如果 PRD-O 的「直接打开就能读」要求完全不联网，字体和 Mermaid（把文字描述画成流程图的脚本）就加载不了。
+**原因。** 插图内嵌进网页后，如果 reader PRD 的 PRD-O「直接打开就能读」要求完全不联网，字体和 Mermaid（把文字描述画成流程图的脚本）就加载不了。
 
 **规则。** MUST：断网时正文和 SVG 插图能读；字体和 Mermaid 可以从网上加载。
 

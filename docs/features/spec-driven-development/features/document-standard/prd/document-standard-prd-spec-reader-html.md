@@ -5,7 +5,7 @@ state: draft
 final_date: 2026-11-03
 health: active
 owner: cicidi
-last_verified: 2026-11-20
+last_verified: 2026-11-24
 ---
 
 # Document Standard — 给人读的 HTML 页面（PRD）
@@ -47,7 +47,7 @@ spec 的正式版本是已提交的 markdown。但一个 parent feature 往往�
 
 ## Non-Functional Requirements
 
-- **PRD-O**：纯静态网页，不需要构建服务器，用浏览器直接打开文件就能看，不依赖 MkDocs（一种把 markdown 生成网站的工具）的服务。
+- **PRD-O**：纯静态网页，阅读时不需要服务器，用浏览器直接打开文件就能看；发布时由 CI 生成（parent 的 ARD-CD），不依赖 MkDocs（一种把 markdown 生成网站的工具）的服务。
 - **PRD-P**：页面里不能有密钥，也不能有 `raw/` 里给机器用的评测原文；需要的话只放路径链接。
 
 ## Out of Scope
@@ -70,3 +70,4 @@ spec 的正式版本是已提交的 markdown。但一个 parent feature 往往�
 | 2026-11-20 | 从「单文件、按 Tab 浏览」改为全站左侧目录（PRD-C，ARD-BG、ARD-BI）；PRD-L 不再引用已删除的旧 HTML；PRD-M 由 spec-write 提示重新生成，不再由 spec-pipeline 触发（ARD-AJ）；PRD-O 改为静态网页；Overview 改正 reader 路径；全文改写为完整句子（ARD-BK） |
 | 2026-11-20 | 第 1 轮审查后：链回新的入口文件 document-standard-prd.md（ARD-BQ）；PRD-C 写明 pipeline 没有单独页面（ARD-BI） |
 | 2026-11-20 | 第 2 轮审查后：PRD-L 降为 NICE（ARD-BY）；MkDocs、git hook 第一次出现时解释 |
+| 2026-11-24 | PRD-O：阅读时不需要服务器，发布由 CI 生成（ARD-CD） |

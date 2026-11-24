@@ -5,7 +5,7 @@ state: draft
 health: active
 owner: cicidi
 version: "1.0.0"
-last_verified: 2026-11-20
+last_verified: 2026-11-24
 ---
 
 # Spec-Driven Development — PRD
@@ -156,7 +156,7 @@ AI 要把大问题拆成小的：能查的 AI 自己查（合规、财报、交�
 
 ## Resources Needed
 
-- spec-write、spec-review 两个 skill，以及它们要读的三份标准文件（[ARD-BX](../decision-history/spec-driven-development-decision-history.md#ard-bx)）和一份 test-plan。不需要外部服务，也不需要数据库。
+- spec-write、spec-review 两个 skill，以及它们要读的三份标准文件（[ARD-BX](../decision-history/spec-driven-development-decision-history.md#ard-bx)）和一份 test-plan。不需要数据库。外部服务：评测用的 `deepseek-flash` API，以及发布网站用的 GitHub Actions 和 GitHub Pages（[ARD-CD](../decision-history/spec-driven-development-decision-history.md#ard-cd)）。
 - 评测需要 `deepseek-flash` 的 API，以及每次评测跑 3 次的费用。跑分结果和报告不提交（[ARD-AD](../decision-history/spec-driven-development-decision-history.md#ard-ad)）。
 
 进入下游前，PRD 要写清的五项（pipeline design 的 PIPE-E-B）：
@@ -167,7 +167,7 @@ AI 要把大问题拆成小的：能查的 AI 自己查（合规、财报、交�
 | 偏好 | not apply |
 | 时间 | not apply |
 | 资源 | 上面列出的 `deepseek-flash` API 和评测费用 |
-| 工具 | spec-write、spec-review、`run_spec_checks.py` 检查脚本、mock MCP 服务器（PRD-O） |
+| 工具 | spec-write、spec-review、`run_spec_checks.py` 检查脚本、mock MCP 服务器（PRD-O）、发布网站的 GitHub Actions |
 
 ## Change Log
 
@@ -193,3 +193,4 @@ AI 要把大问题拆成小的：能查的 AI 自己查（合规、财报、交�
 | 2026-11-20 | 第 2、3 轮审查后：Resources 写明三份标准文件；PRD-P 改链 ARD-BX（ARD-BH 已被它取代） |
 | 2026-11-20 | Resources Needed 加上 PIPE-E-B 要求的五项；偏好、时间写 not apply |
 | 2026-11-24 | Out of Scope：版本只做来源标记（ARD-CC） |
+| 2026-11-24 | Resources：列出外部服务 deepseek API、GitHub Actions 和 Pages（ARD-CD） |

@@ -6,7 +6,7 @@
 base defaults to HEAD~1; head defaults to the working tree; path defaults to docs/features/.
 Fails when a numbered heading (PRD/DSGN/PIPE/IMPL/TST/ARD/QUES) disappears from a doc, or a
 doc has fewer MUST sentences — unless a line added to a decision-history between base and
-head names that ID or that doc (MUST-D: dropping L1 to pass a check is a defect).
+head names that ID or that doc (document-standard DSGN-I: dropping L1 to pass a check is a defect).
 """
 
 from __future__ import annotations

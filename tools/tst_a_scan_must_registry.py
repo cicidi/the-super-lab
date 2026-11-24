@@ -62,11 +62,40 @@ def _letter(n: int) -> str:
     return s
 
 
+REGISTRY = ROOT / "skills/spec-organize/tests/must_registry.yaml"
+
+
+def _index(letters: str) -> int:
+    """Inverse of _letter: A -> 0, Z -> 25, AA -> 26."""
+    n = 0
+    for ch in letters:
+        n = n * 26 + (ord(ch) - ord("A") + 1)
+    return n - 1
+
+
+def _existing_ids() -> tuple[dict[str, str], int]:
+    """Map rule text -> MUST id from the current registry, and the next unused index.
+
+    Ids never change and are never reused (document-standard DSGN-F): a rule whose
+    text is unchanged keeps its id; a new rule gets the next letter after the
+    highest one ever written; a removed rule's id is retired.
+    """
+    if not REGISTRY.is_file():
+        return {}, 0
+    import yaml
+
+    data = yaml.safe_load(REGISTRY.read_text(encoding="utf-8")) or {}
+    known = {it["text"]: it["id"] for it in data.get("items", [])}
+    used = [_index(i.split("-", 1)[1]) for i in known.values()]
+    return known, (max(used) + 1 if used else 0)
+
+
 def main() -> None:
     import sys
 
     write = "--write" in sys.argv
     items: list[dict] = []
+    known, next_index = _existing_ids()
     for path in SOURCES:
         if not path.exists():
             print(f"missing: {path}")
@@ -75,9 +104,13 @@ def main() -> None:
         for i, line in rule_lines(path.read_text(encoding="utf-8")):
             text = line.strip()[:500]
             print(f"{rel}:{i}: {text[:120]}")
+            ident = known.get(text)
+            if ident is None:
+                ident = f"MUST-{_letter(next_index)}"
+                next_index += 1
             items.append(
                 {
-                    "id": f"MUST-{_letter(len(items))}",
+                    "id": ident,
                     "source": f"{rel}:{i}",
                     "text": text,
                     "method": "llm",

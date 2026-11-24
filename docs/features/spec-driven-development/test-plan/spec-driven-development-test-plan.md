@@ -5,7 +5,7 @@ state: draft
 final_date: 2026-11-03
 health: active
 owner: cicidi
-last_verified: 2026-11-20
+last_verified: 2026-11-24
 ---
 
 # Spec-Driven Development — 测试计划
@@ -195,7 +195,7 @@ last_verified: 2026-11-20
 
 ### TST-W — 网页插图与样式
 
-**目标：** 站点内嵌 SVG、diagram-design 皮肤、无未解析 `data-svg`（document-standard 的 DSGN-N-D、[ARD-CA](../decision-history/spec-driven-development-decision-history.md#ard-ca)）。
+**目标：** 网页里的插图都已经嵌进页面，用 diagram-design 的默认配色；页面里没有留下等待替换的 `data-svg` 占位标记（document-standard 的 DSGN-N-D、[ARD-CA](../decision-history/spec-driven-development-decision-history.md#ard-ca)）。
 
 **通过条件：** `tests/test_sdd_site_render.py` 通过；每个 `-fig-*.svg` 在对应 HTML 中出现一次；`docs/book/html` 无 `data-svg`。插图命名、同目录、无脚本由 `checks/figures.py` 检查。
 
@@ -203,13 +203,13 @@ last_verified: 2026-11-20
 
 ### TST-X — L1 内容不减少
 
-**目标：** 改文档时不靠删 L1 内容凑分（MUST-D）。**输入：** 两个 git 版本之间的 `docs/features/<f>/`。
+**目标：** 改文档时不靠删 L1 内容凑分（document-standard 的 DSGN-I）。**输入：** 两个 git 版本之间的 `docs/features/<f>/`。
 
 **通过条件：** 旧版本的每个编号标题在新版本里还在；每篇的 MUST 句数不减少。例外：decision-history 新增的 ARD 提到了这个编号或这篇文档。**判定：** Python（`tools/check_l1_delta.py`）。
 
 ### TST-Y — skill 版本戳和 PRD 一致
 
-**目标：** 四个 SDD `SKILL.md` 的版本戳等于 parent PRD 的 `version`，且 frontmatter 里的 `spec_*` 键各只出现一次（[ARD-CC](../decision-history/spec-driven-development-decision-history.md#ard-cc)）。**判定：** Python（`build_spec_skills.py --check`）。
+**目标：** 四个 SDD `SKILL.md`（交付的 spec-write、spec-review，以及也引用标准文件的 spec-organize、spec-pipeline） 的版本戳等于 parent PRD 的 `version`，且 frontmatter 里的 `spec_*` 键各只出现一次（[ARD-CC](../decision-history/spec-driven-development-decision-history.md#ard-cc)）。**判定：** Python（`build_spec_skills.py --check`）。
 
 ### TST-Z — 每页都能从首页点到
 
@@ -237,7 +237,8 @@ last_verified: 2026-11-20
 | 设计完整 | TST-O 100% 对应；TST-P 全部通过 |
 | 读得懂 | TST-V：每篇都通过 |
 | mock 执行 | TST-Q 有调用记录，没有真实副作用 |
-| 网页和 skill 正文 | TST-R 网页不旧于 markdown；TST-S 四个例子齐全；TST-U 通过 |
+| 网页和 skill 正文 | TST-R 网页和重新生成的一致；TST-S 四个例子齐全；TST-U、TST-W 通过；TST-Z 每页都能从首页点到 |
+| 检查和版本戳 | TST-X 没有 L1 内容减少；TST-Y 版本戳和 PRD 一致 |
 | 外部 gold | TST-T：有问题的快照上，应该找出的都找出；修好的快照上，除了允许的以外 0 个问题；源仓库不在本机就跳过 |
 | gold v1 定稿 | TST-D：范例的分数 1 满分；标注经人工认可 |
 | spec-write 可以发布 | TST-E 分数 1 满分、分数 2 不退步；TST-F 四种输入全部通过；TST-G 没有差异；TST-L 3 次都通过 |
@@ -314,3 +315,4 @@ document-standard 的 reader PRD：
 | 2026-11-24 | 新增 TST-Z：每页都能从首页点到（ARD-CD） |
 | 2026-11-24 | TST-O：编号要出现在规则小节正文里才算对应 |
 | 2026-11-24 | TST-A：写明 parent DSGN-A 的改动上限不收进清单 |
+| 2026-11-24 | TST-X 改引 DSGN-I；TST-W 改成完整句子；TST-Y 写明四个 skill；门槛表补 TST-W 到 TST-Z，TST-R 按内容比较 |

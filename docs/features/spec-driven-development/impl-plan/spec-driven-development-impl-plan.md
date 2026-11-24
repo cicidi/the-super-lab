@@ -5,7 +5,7 @@ state: draft
 final_date: 2026-11-03
 health: active
 owner: cicidi
-last_verified: 2026-11-20
+last_verified: 2026-11-24
 ---
 
 # Spec-Driven Development — 实现计划
@@ -82,7 +82,7 @@ last_verified: 2026-11-20
 
 **步骤：** markdown 改了之后，用 `tools/build_sdd_site.py` 和 `tools/build_sdd_reader.py` 重新生成；每页底部链到原文路径。
 
-**依赖：** IMPL-C。**挡住：** IMPL-O。
+**依赖：** IMPL-C。**挡住：** IMPL-O、IMPL-S。
 
 **Verify:** 用浏览器直接打开页面能看；页面里列出的原文路径都存在。
 
@@ -102,7 +102,7 @@ last_verified: 2026-11-20
 
 **步骤：** 重新生成 `docs/INDEX.md`；删除 `spec-driven-development.html`，只保留 reader。
 
-**依赖：** 无。**挡住：** IMPL-O。
+**依赖：** 无。**挡住：** IMPL-O、IMPL-V。
 
 **Verify:** 没有链接指向已删除的摘要网页，也没有指向 wayfinder-import 的路径。
 
@@ -144,7 +144,7 @@ last_verified: 2026-11-20
 
 **目标：** `sections.py` 检查五种文档的必需章节；`ids.py` 检查编号格式；去掉不该有的豁免。
 
-**依赖：** IMPL-C。**挡住：** IMPL-P。
+**依赖：** IMPL-C。**挡住：** IMPL-P、IMPL-T。
 
 **Verify:** TST-B 通过；`run_spec_checks.py` 跑 SDD 目录。
 
@@ -171,7 +171,7 @@ last_verified: 2026-11-20
 | 文件 | 要改什么 | 依据 |
 |---|---|---|
 | `skills/spec-organize/tests/eval.yaml` | `gold.cases` 改回 iPhone 案例 `gold/v1`，不再指向 SDD 目录 | [ARD-BL](../decision-history/spec-driven-development-decision-history.md#ard-bl) |
-| `skills/spec-organize/tests/must_registry.yaml` | 重新扫描（TST-A）。document-standard design 已改写，原来按行号记的出处都错位了，出处比对脚本 `registry_provenance` 现在报「只有 15/32 条出自契约小节」；把 reader design 的 MUST 也收进来（TST-A）；去掉「正文改动要留删除线」这条 MUST；标出改为 NICE 的规则 | TST-A、TST-M、[ARD-BM](../decision-history/spec-driven-development-decision-history.md#ard-bm)、[ARD-BN](../decision-history/spec-driven-development-decision-history.md#ard-bn) |
+| `skills/spec-organize/tests/must_registry.yaml` | 重新扫描（TST-A）。document-standard design 已改写，原来按行号记的出处都错位了。已于 2026-11-24 重新扫描，`registry_provenance` 报 0 个问题；把 reader design 的 MUST 也收进来（TST-A）；去掉「正文改动要留删除线」这条 MUST；标出改为 NICE 的规则 | TST-A、TST-M、[ARD-BM](../decision-history/spec-driven-development-decision-history.md#ard-bm)、[ARD-BN](../decision-history/spec-driven-development-decision-history.md#ard-bn) |
 | `skills/spec-organize/tests/checks/sections.py` | 这个脚本检查必需章节。去掉一条旧豁免：以前 design 只要有「System Context」标题，就不检查必需章节；parent design 现在已有 13 个必需章节，不再需要这条豁免 | document-standard 的 DSGN-E |
 | `.gitignore` | `docs/features/*/raw/` 改为 `docs/features/**/raw/`，把 sub-feature 下的 `raw/` 也排除 | document-standard 的 DSGN-B |
 | `skills/spec-organize/tests/checks/` 里检查链接的脚本 | 指向 `raw/` 的链接不算死链 | [ARD-BW](../decision-history/spec-driven-development-decision-history.md#ard-bw) |
@@ -181,7 +181,7 @@ last_verified: 2026-11-20
 
 **依赖：** 本批 spec 修改完成；IMPL-M。**挡住：** IMPL-E、IMPL-Q。
 
-**Verify:** `run_spec_checks.py` 跑 `docs/features/` 报 0 个问题（包括 `registry_provenance`）；TST-A 覆盖率 100%；TST-R 通过。
+**Verify:** `run_spec_checks.py` 跑 `docs/features/spec-driven-development/` 报 0 个问题（旧文档不迁移，不检查别的 feature）（包括 `registry_provenance`）；TST-A 覆盖率 100%；TST-R 通过。
 
 ## IMPL-Q — 可读性测试
 
@@ -205,7 +205,7 @@ last_verified: 2026-11-20
 
 ## IMPL-S — 插图与网页样式
 
-**目标：** diagram-design 皮肤、SVG 内嵌、MUST/NICE 标签（[ARD-CA](../decision-history/spec-driven-development-decision-history.md#ard-ca)）。
+**目标：** 网页里的插图用 diagram-design 的默认配色，SVG 文件在生成网页时嵌进页面；插图规则分清 MUST 和 NICE（[ARD-CA](../decision-history/spec-driven-development-decision-history.md#ard-ca)）。
 
 **依赖：** IMPL-F。**挡住：** 无。
 
@@ -221,7 +221,7 @@ last_verified: 2026-11-20
 
 ## IMPL-U — spec bundle 版本戳
 
-**目标：** `tools/build_spec_skills.py` 按 [ARD-CC](../decision-history/spec-driven-development-decision-history.md#ard-cc) 给四个 SDD `SKILL.md` 打版本戳。
+**目标：** `tools/build_spec_skills.py` 按 [ARD-CC](../decision-history/spec-driven-development-decision-history.md#ard-cc) 给四个 SDD `SKILL.md`（交付的 spec-write、spec-review，以及也引用标准文件的 spec-organize、spec-pipeline）打版本戳。
 
 **依赖：** 无。**挡住：** 无。
 
@@ -251,7 +251,7 @@ last_verified: 2026-11-20
 
 - 分数 1 满分，并且 3 次独立复核全部通过。
 - 分数 2 不低于同一 gold 版本的上一次运行（[ARD-R](../decision-history/spec-driven-development-decision-history.md#ard-r)：不设固定及格线）。
-- 能执行的 TST-A 到 TST-V 全部通过；`run_spec_checks.py` 报 0 个问题。
+- 能执行的 TST-A 到 TST-Z 全部通过；`run_spec_checks.py` 跑 `docs/features/spec-driven-development/` 报 0 个问题。
 
 ## Change Log
 
@@ -270,3 +270,4 @@ last_verified: 2026-11-20
 | 2026-11-24 | IMPL-S、IMPL-T 移到依赖之后的批次；新增 IMPL-U；不迁移旧文档改链 ARD-CC |
 | 2026-11-24 | 新增 IMPL-V：GitHub Pages 发布（ARD-CD） |
 | 2026-11-24 | IMPL-K 进度：11 个机械审查案例已齐；5 个语义案例待 judge 执行器 |
+| 2026-11-24 | IMPL-U 写明四个 skill；IMPL-P 现状更新；Verify 和验收只查 SDD 目录、覆盖到 TST-Z；IMPL-F、IMPL-H、IMPL-M 补上挡住的任务；IMPL-S 改成完整句子 |
