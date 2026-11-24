@@ -53,7 +53,7 @@ last_verified: 2026-11-24
 | `skills/spec-organize/tests/gold/v1/` | iPhone gold 案例：`requirement.md`、`context.md`、`context-variants/<名字>.md`、`exemplar/`、`annotations.yaml` |
 | `skills/spec-organize/tests/gold/v1/annotations.yaml` | 标注，`GOOD-*` 是应该做到的，`BAD-*` 是不该犯的错。每条有 `where`、`text`；`BAD` 还有 `expected_fix`；`added_in` 记录是哪个 gold 版本加的 |
 | `skills/spec-organize/tests/reports/<run_id>.html` | 评测报告，一次运行一个 HTML；`run_id` 是「日期加分支名」；由 `tools/render_eval_report.py` 生成；不提交 |
-| `skills/spec-review/tests/cases/<名字>/` | 审查案例：`input/`（故意埋了问题的文档）和 `expected.yaml`（应该找出的问题编号，以及应该忽略的严重度 1、2 的问题）；11 个机械案例，5 个语义案例 |
+| `skills/spec-review/tests/cases/<名字>/` | 审查案例：`input/`（故意埋了问题的文档）和 `expected.yaml`（应该找出的问题编号，以及应该忽略的严重度 1、2 的问题）；11 个机械案例，外加一个干净的；5 个语义案例还没写，要等能判 spec-review 输出的执行器 |
 
 `eval.yaml` 的键：
 
@@ -122,7 +122,7 @@ last_verified: 2026-11-24
 
 ### TST-H — spec-review 找问题的能力
 
-**目标：** 问题找全，而且不误报。**输入：** 11 个机械案例和 5 个语义案例；一份干净的范例。**通过条件：** 埋进去的每个问题都被找出，并引用对应的 DSGN 或 MUST 编号；干净的范例上没有严重度 3 及以上的问题；严重度 1、2 的问题不拿出来讨论。**判定：** 比对编号集合。
+**目标：** 问题找全，而且不误报。**输入：** 11 个机械案例和 5 个语义案例（语义案例还没写，这一半暂时跑不了，标为 Unverified）；一份干净的范例。**通过条件：** 埋进去的每个问题都被找出，并引用对应的 DSGN 或 MUST 编号；干净的范例上没有严重度 3 及以上的问题；严重度 1、2 的问题不拿出来讨论。**判定：** 比对编号集合。
 
 ### TST-I — spec-review 修改建议的质量
 
@@ -238,14 +238,14 @@ last_verified: 2026-11-24
 | 门槛 | 条件 |
 |---|---|
 | 测试框架可用 | TST-A 覆盖率 100%；TST-B 全部通过 |
-| 设计完整 | TST-O 100% 对应；TST-P 全部通过 |
+| 设计完整 | TST-N parent 五篇齐全；TST-O 100% 对应；TST-P 全部通过 |
 | 读得懂 | TST-V：每篇都通过 |
 | mock 执行 | TST-Q 有调用记录，没有真实副作用 |
 | 网页和 skill 正文 | TST-R 网页和重新生成的一致；TST-S 四个例子齐全；TST-U、TST-W 通过；TST-Z 每页都能从首页点到；TST-AA wayfinder 写明进度规则 |
 | 检查和版本戳 | TST-X 没有 L1 内容减少；TST-Y 版本戳和 PRD 一致 |
 | 外部 gold | TST-T：有问题的快照上，应该找出的都找出；修好的快照上，除了允许的以外 0 个问题；源仓库不在本机就跳过 |
-| gold v1 定稿 | TST-D：范例的分数 1 满分；标注经人工认可 |
-| spec-write 可以发布 | TST-E 分数 1 满分、分数 2 不退步；TST-F 四种输入全部通过；TST-G 没有差异；TST-L 5 次里至少 4 次通过 |
+| gold v1 定稿 | TST-C 每次运行都写出五篇；TST-D：范例的分数 1 满分；标注经人工认可 |
+| spec-write 可以发布 | TST-E 分数 1 满分、分数 2 不退步；TST-F 四种输入全部通过；TST-G 没有差异；TST-L 5 次里至少 4 次通过；TST-K 报告结构齐全 |
 | spec-review 可以发布 | TST-H 找出 100%、误报 0；TST-I 不低于上一次；TST-L 5 次里至少 4 次通过 |
 | wayfinder 可以发布 | TST-AA 通过 |
 | gold 升版 | TST-M 追加标注后，重跑 TST-E 和 TST-H，建立新的基线 |
@@ -326,3 +326,4 @@ document-standard 的 reader PRD：
 | 2026-11-24 | 第 8 轮审查后：被测对象三个 skill；checkers.repeats 改 5；TST-Y 五个 SKILL.md、升版本由单元测试判；TST-AA 加进执行顺序、门槛和追溯表 |
 | 2026-11-24 | 第 9 轮审查后：TST-J 的辅助 skill 不再含 wayfinder；门槛表加 wayfinder 发布行；PRD-P 追溯加 TST-AA；改链 ARD-CH |
 | 2026-11-24 | 第 10 轮审查后：分数 2 最高分写对；TST-L 先于 TST-K，报告带复核结果 |
+| 2026-11-24 | 第 11 轮审查后：语义审查案例标明还没写；门槛表加 TST-N、TST-C、TST-K |

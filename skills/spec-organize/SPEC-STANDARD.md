@@ -84,7 +84,7 @@ If every tracker row has Owner and Evidence, the design may link the tracker ins
 
 ## Decision history (MUST)
 
-Log: `ID | Date | Decision` (optional 4th column `Ready`; no Status, no Supersedes column), newest first. Each ARD has an Evidence Appendix entry with its reason and rejected options. Supersede: ~~strike~~ the old row + link to the new **ARD**; old rows stay. When only part of an old decision is overturned, still strike the whole row, and restate the parts that still hold in the new ARD (ARD-CH, restating ARD-BT).
+Log: `ID | Date | Decision` (optional 4th column `Ready`; no Status, no Supersedes column), newest first. Each ARD has an Evidence Appendix entry with its reason and rejected options. Supersede: ~~strike~~ the old row + link to the new **ARD**; old rows stay. When only part of an old decision is overturned, still strike the whole row, and restate the parts that still hold in the new ARD (document-standard DSGN-J).
 
 ## Size (MUST)
 

@@ -98,7 +98,7 @@ def corpus_files() -> list[Path]:
         "run_gold_eval.py",
         "score_run.py",
     }
-    code = [p for p in (ROOT / "tools").glob("*.py") if p.name not in skip]
+    code = [p for p in sorted((ROOT / "tools").glob("*.py")) if p.name not in skip]
     code += sorted((TESTS / "checks").glob("*.py"))
     harness_tests = {"test_judge_freshness.py", "test_tst_e_gold.py"}
     code += [p for p in sorted(TESTS.glob("test_*.py")) if p.name not in harness_tests]

@@ -1,4 +1,4 @@
-"""A code span links to a local file only when git tracks it (gitignored files never publish)."""
+"""A code span links to a local file only when tracked or untracked-but-not-ignored (gitignored files never publish)."""
 
 import sys
 from pathlib import Path
@@ -45,6 +45,7 @@ def test_untracked_but_not_ignored_file_is_linkable(tmp_path, monkeypatch):
     (tmp_path / "new.md").write_text("x", encoding="utf-8")
     (tmp_path / "secret.md").write_text("x", encoding="utf-8")
     monkeypatch.setattr(site, "ROOT", tmp_path)
+    monkeypatch.setattr(site, "_TRACKED", None)
     monkeypatch.setattr(site, "_TRACKED_LOADED", False)
     assert site._linkable_file("new.md")
     assert not site._linkable_file("secret.md")

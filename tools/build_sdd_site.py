@@ -207,7 +207,7 @@ def _tracked_files() -> set[str] | None:
 
 
 def _linkable_file(rel: str) -> bool:
-    """A local file earns a link only when git tracks it (gitignored files never publish)."""
+    """A local file earns a link only when tracked or untracked-but-not-ignored (gitignored files never publish)."""
     if not (ROOT / rel).is_file():
         return False
     tracked = _tracked_files()

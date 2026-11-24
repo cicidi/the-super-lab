@@ -261,7 +261,7 @@ last_verified: 2026-11-24
 
 **规则。** 写 spec 时用 diagram-design 画 SVG，文件名 `<文档名>-fig-<主题>.svg`，放在引用它的 md 旁边；网页配色用 diagram-design 的默认颜色；图里有正文没有的内容或与正文矛盾，spec-review 报 severity 3。
 
-**重述。** 本条推翻 ARD-BE「图只画流程、状态用表格不用图」的部分，SPEC-PRESENTATION 列的形状都可以画图。其余仍有效：图不能出现正文里没写的事实；步骤数和所在章节一致（NICE，ARD-BN）。
+**重述。** 本条推翻 ARD-BE「图只画流程、状态用表格不用图」的部分，SPEC-PRESENTATION 列的形状都可以画图。其余仍有效：图不能出现正文里没写的事实（MUST，见上面的规则）；步骤数和所在章节一致（NICE，ARD-BN）。另加 NICE：一张图不超过 9 个节点、12 条边。
 
 **放弃的方案。** 仅在 build 时让 AI 重画；只把配色套在 Mermaid 上。
 
@@ -867,3 +867,4 @@ payment-impl-plan-01-schema.md         impl-plan 分篇：序号加阶段，有�
 | 2026-11-24 | 第 8 轮审查后：划掉 ARD-AD，由 ARD-CJ 重述并写明范围；ARD-CE 写明挪出内容算修改；ARD-CH 地图改为目录、阻塞以 QUES 为准；ARD-CK 写明五个 SKILL.md |
 | 2026-11-24 | 第 9 轮审查后：ARD-CK、ARD-CJ、ARD-CH 补全被划掉条目里仍有效的部分；ARD-CJ 写明 claude_audit 何时保留 |
 | 2026-11-24 | 第 10 轮审查后：ARD-CA 补上对 ARD-BE 的重述 |
+| 2026-11-24 | 第 11 轮审查后：ARD-CA 的重述分清 MUST 和 NICE，补上节点和连线上限 |

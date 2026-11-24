@@ -70,9 +70,9 @@ last_verified: 2026-11-24
 
 **目标：** 跑基线评测：`grill.skills: []`，输入是 iPhone 案例的需求和背景资料（[ARD-BL](../decision-history/spec-driven-development-decision-history.md#ard-bl)）。
 
-**步骤：** 新开分支 `eval/v1/<run_id>`；用 spec-write 写出一套 feature spec；跑 TST-E、TST-F、TST-K；失败时先改 spec。
+**步骤：** 新开分支 `eval/v1/<run_id>`；用 spec-write 写出一套 feature spec；跑 TST-E、TST-F、TST-L，然后 TST-K；失败时先改 spec。
 
-**依赖：** IMPL-B、IMPL-D、IMPL-J、IMPL-P；报告部分还依赖 IMPL-L，可读性部分还依赖 IMPL-Q。**挡住：** IMPL-I。
+**依赖：** IMPL-B、IMPL-D、IMPL-J、IMPL-P；报告部分还依赖 IMPL-L 和 IMPL-X，可读性部分还依赖 IMPL-Q。**挡住：** IMPL-I。
 
 **Verify:** 生成了 HTML 报告；分数按 test-plan 的 Scoring 计算。
 
@@ -126,7 +126,7 @@ last_verified: 2026-11-24
 
 ## IMPL-K — 反例、正例和审查案例
 
-**目标：** 每个检查至少一个反例和一个正例；spec-review 的 16 个审查案例（11 个机械，5 个语义）。
+**目标：** 每个检查至少一个反例和一个正例；spec-review 的 16 个审查案例（11 个机械，5 个语义）。现状：机械案例和一个干净案例已写好；5 个语义案例还没写，要等执行器。
 
 **依赖：** IMPL-D。**挡住：** IMPL-I。
 
@@ -247,7 +247,7 @@ last_verified: 2026-11-24
 
 **目标：** `tools/judge_deepseek.py` 按 [ARD-CJ](../decision-history/spec-driven-development-decision-history.md#ard-cj) 默认跑 5 次、4 次一致才算定论，输出里留 `claude_audit` 给 Claude 填。
 
-**依赖：** 无。**挡住：** 无。
+**依赖：** 无。**挡住：** IMPL-E 的报告部分。
 
 **Verify:** TST-L 按 5 次判定。
 
@@ -291,3 +291,4 @@ last_verified: 2026-11-24
 | 2026-11-24 | 新增 IMPL-W、IMPL-X；IMPL-R 进度路径改为地图文件（ARD-CH）；IMPL-U 加升版本（ARD-CK） |
 | 2026-11-24 | 第 8 轮审查后：IMPL-G 改为 CLAUDE 层只记地图路径；评测次数跟上 ARD-CJ；IMPL-U 五个 SKILL.md；验收改到 TST-AA |
 | 2026-11-24 | 第 9 轮审查后：IMPL-W 目标跟上地图目录和 QUES 规则；改链 ARD-CK、ARD-CE |
+| 2026-11-24 | 第 11 轮审查后：IMPL-E 先跑 TST-L 再跑 TST-K，依赖 IMPL-X；IMPL-K 写明现状 |

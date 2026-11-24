@@ -32,12 +32,12 @@ metadata:
     - tech leads
   source_author: mattpocock
   source_url: https://github.com/mattpocock/skills/blob/main/skills/engineering/wayfinder/SKILL.md
-  spec_bundle_version: "1.0.4"
+  spec_bundle_version: "1.0.5"
   spec_built_at: "2026-11-24"
-  spec_git_sha: "ab9b322"
+  spec_git_sha: "37ec9a5"
 ---
 <!-- SPEC-BUNDLE-START -->
-> **SDD spec bundle** `1.0.4` · built 2026-11-24 · git `ab9b322`
+> **SDD spec bundle** `1.0.5` · built 2026-11-24 · git `37ec9a5`
 <!-- SPEC-BUNDLE-END -->
 
 A loose idea has arrived — too big for one agent session, and wrapped in fog: the way from here to the **destination** isn't visible yet. Wayfinding is about finding that way, not charging at the destination. This skill charts the way as a **shared map** on the repo's issue tracker, then works its **decision briefs** — questions whose resolution is a decision, not slices of a build to execute — one at a time until the route is clear.
@@ -111,9 +111,9 @@ Each brief is a **child issue** of the map; the tracker's issue id is its identi
 
 Each brief carries a `wayfinder:<type>` label — one of `research`, `prototype`, `grilling`, `task` (see [Brief Types](#brief-types)).
 
-A session **claims** a brief by assigning it to the dev driving the map (SDD: an `Assignee:` line in the brief file), **first**, before any work, so concurrent sessions skip it. That assignee _is_ the claim: an open, unassigned brief is unclaimed.
+A session **claims** a brief by assigning it to the dev driving the map (SDD: set `Status: claimed` in the brief file; see [SDD progress record](#sdd-progress-record-ard-ch)), **first**, before any work, so concurrent sessions skip it. That assignee _is_ the claim: an open, unassigned brief is unclaimed.
 
-Blocking uses the tracker's **native** dependency relationship — essential because it renders the frontier _visually_ in the tracker's own UI, so the human sees what's takeable without opening the map. Only a tracker that lacks native blocking falls back to a body convention (SDD: a `Blocked by:` line listing brief file names). A brief is **unblocked** when every brief blocking it is closed; the **frontier** is the open, unblocked, unclaimed children — the edge of the known.
+Blocking uses the tracker's **native** dependency relationship — essential because it renders the frontier _visually_ in the tracker's own UI, so the human sees what's takeable without opening the map. Only a tracker that lacks native blocking falls back to a body convention (SDD: a `Blocked by: NN, NN` line of brief numbers; see [SDD progress record](#sdd-progress-record-ard-ch)). A brief is **unblocked** when every brief blocking it is closed (SDD: `Status: resolved`); the **frontier** is the open, unblocked, unclaimed children — the edge of the known.
 
 The answer isn't part of the body — it's recorded on resolution (see [Work through the map](#work-through-the-map)). Assets created while resolving a brief are linked from the issue, not pasted in.
 
@@ -161,9 +161,10 @@ tracker is upstream's local-markdown layout (mattpocock/skills
 `map.md` plus one file per brief, `issues/NN-<slug>.md`. The operations follow
 upstream word for word:
 
-- **Brief header:** `Status:` (one of `open`, `claimed`, `resolved`), `Type:` (`research`, `prototype`, `grilling` or `task` — the local stand-in for the `wayfinder:<type>` label) and `Blocked by:` (brief numbers `NN, NN`, or empty).
+- **Brief header:** `Status:` (one of `open`, `claimed`, `resolved`, `out-of-scope`), `Type:` (`research`, `prototype`, `grilling` or `task` — the local stand-in for the `wayfinder:<type>` label) and `Blocked by:` (brief numbers `NN, NN`, or empty).
 - **Claim:** set `Status: claimed`. **Frontier:** open briefs whose blockers are all resolved; take the lowest number first.
 - **Resolve:** add a `## Answer` section, set `Status: resolved`, and append the one-line gist to map.md **Decisions so far**.
+- **Out of scope:** set `Status: out-of-scope`. It does **not** count as resolved for blocking: any brief listing it in `Blocked by:` must be re-scoped (drop the blocker) or ruled out of scope too.
 - **Work through the map:** invoke it with the map path, not a URL or number.
 
 The **map is the progress record**:
@@ -221,7 +222,7 @@ Fog only ever gathers _toward_ the destination. The destination fixes the scope,
 
 Out-of-scope work never graduates — the frontier stops at the destination — so it returns only if the destination is redrawn, and then as a fresh effort, not a resumption.
 
-Ruling something out of scope is a scoping act, not a step on the route. When a brief that already exists turns out to sit past the destination — mis-scoped in while charting, or exposed by a resolution — **close it** (a closed brief is unambiguously off the frontier) and leave one line in the **Out of scope** section: the gist plus why it's out of scope, linking the closed brief. It stays out of **Decisions so far**, which records the route actually walked — a scope boundary isn't a step on it.
+Ruling something out of scope is a scoping act, not a step on the route. When a brief that already exists turns out to sit past the destination — mis-scoped in while charting, or exposed by a resolution — **close it** (a closed brief is unambiguously off the frontier) and leave one line in the **Out of scope** section: the gist plus why it's out of scope, linking the closed brief (SDD: set `Status: out-of-scope`, then re-scope or rule out every brief that lists it in `Blocked by:`; see [SDD progress record](#sdd-progress-record-ard-ch)). It stays out of **Decisions so far**, which records the route actually walked — a scope boundary isn't a step on it.
 
 ## Spec site
 
@@ -310,7 +311,7 @@ User invokes with a loose idea.
 User invokes with a map (URL or number; in an SDD repo, the map path). A brief is **optional** — without one, you pick the next decision, not the user.
 
 1. Load the **map** — the low-res view, not every brief body.
-2. Choose the brief. If the user named one, use it. Otherwise take the first frontier brief in order. **Claim it**: assign it to yourself before any work.
+2. Choose the brief. If the user named one, use it. Otherwise take the first frontier brief in order. **Claim it**: assign it to yourself before any work (SDD: set `Status: claimed`; see [SDD progress record](#sdd-progress-record-ard-ch)).
 3. Resolve it — **zoom as needed**: fetch the full body of any related or closed brief on demand; invoke the skills the `## Notes` block names. If in doubt, use `/grilling` and `/domain-modeling`.
 4. Record the resolution:
    4a. **Delivery Review Gate.** IF the brief type is `task` AND the task produced

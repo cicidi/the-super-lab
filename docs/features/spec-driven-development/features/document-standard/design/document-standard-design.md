@@ -413,7 +413,7 @@ design 管「想要怎样」，代码管「现在怎样」和内部结构。机�
 - 写成「§N」的链接落在第 N 节或它的上下级；同一篇里的步骤范围不重叠（ARD-AZ）。
 - 手工维护的 HTML 更新记录，覆盖 markdown Change Log 里的每个日期（ARD-BA）。
 - 问题清单里写的总数和各状态的数量，等于实际行数（ARD-BB）。
-- 图只画文字说不清的流程，一个流程只画一张图（ARD-BE）。
+- 图的步骤数和所在章节一致；一张图不超过 9 个节点、12 条边；用 diagram-design 默认的字体和配色（ARD-CA）。
 
 ## Testing Decisions
 
@@ -518,3 +518,4 @@ design 管「想要怎样」，代码管「现在怎样」和内部结构。机�
 | 2026-11-24 | raw/state 一行注明 SDD 用 wayfinder-map.md（parent ARD-CH） |
 | 2026-11-24 | 第 8 轮审查后：被测对象三个 skill；本地目录表加 docs/state/；改链 ARD-CH、ARD-CK |
 | 2026-11-24 | 第 9 轮审查后：链到已划掉 ARD 的地方改链 |
+| 2026-11-24 | 第 11 轮审查后：DSGN-M 的图规则改为 ARD-CA 保留的部分 |
