@@ -21,7 +21,7 @@ last_verified: 2026-11-24
 ## Solution
 
 把规划写成 tracker 上的一张地图（map）和一组决策问题（brief），每个会话只解决一个 brief。
-brief 全部定完后，交给 to-spec、doc-review、to-tickets、auto-tdd 这条流水线（PRD-L）。
+brief 全部定完后，交给 to-spec、spec-review、to-tickets、auto-tdd 这条流水线（PRD-L）。
 
 ## User Stories
 
@@ -33,7 +33,7 @@ brief 全部定完后，交给 to-spec、doc-review、to-tickets、auto-tdd 这�
 
 正文在 matt 原版上改写，只有 SKILL.md 一个文件（ARD-J）。兄弟 skill to-spec、to-tickets、implement 只加了 frontmatter。
 导入后正文只改过一次：43cb1ef 加了 Pipeline 一节；8d451059、93d4a4a 只搬目录。
-SKILL.md 说 research、doc-review、matt-code-review 来自 ai-coworker；research 现在就在本仓库 `skills/research/`。
+SKILL.md 说 research、matt-code-review 来自 ai-coworker；research 现在就在本仓库 `skills/research/`。
 
 ## Design
 
@@ -73,17 +73,17 @@ SKILL.md 说选择会被记下，但没写记在哪里，见 QUES-C。
 接着建新浮现的 brief，把变清楚的迷雾升级成 brief。除 research 外，每个会话只解决一个 brief。
 
 **DSGN-I 交付审查关口。** 走地图第 4a 步：task 类 brief 产出了文件、代码或文档时，关闭前必须过审查（PRD-F）。
-`.md` 文件用 doc-review，代码用 matt-code-review，都没有时用 Claude 默认审查；没通过就修了再审。
+`.md` 文件用 spec-review（688cace 起），代码用 matt-code-review，都没有时用 Claude 默认审查；没通过就修了再审。
 其余三类 brief 跳过这一步，因为它们产出的是知识和决策。
 
 **DSGN-J MkDocs-ready。** 每次建或移文档都顺手跑 doc-organize：维护 INDEX.md，文件名用 kebab-case（小写加连字符）（PRD-H）。
 目录结构对应网站导航；加了新栏目就更新 `mkdocs.yml` 的导航。
 
 **DSGN-K spec 和文档审查关口。** 地图走完后先跑 to-spec，把所有 brief 的结论合成一份 spec，并为 spec 建一个 issue（PRD-G）。
-接着 doc-review 审 spec、所有已关闭的 brief、CONTEXT.md 和 ADR，查一致、完整、无矛盾，并确认 MkDocs-ready。
+接着 spec-review 审 spec、所有已关闭的 brief、CONTEXT.md 和 ADR，查一致、完整、无矛盾，并确认 MkDocs-ready。
 通过后才能跑 to-tickets。数量关系是 N 个 brief 合成 1 份 spec，再拆成 M 张执行工单。
 
-**DSGN-L 流水线。** 顺序是 wayfinder（决定）、to-spec（写）、doc-review（核对）、to-tickets（拆工单）、auto-tdd（实现）（PRD-L）。
+**DSGN-L 流水线。** 顺序是 wayfinder（决定）、to-spec（写）、spec-review（核对）、to-tickets（拆工单）、auto-tdd（实现）（PRD-L）。
 
 **DSGN-M 出处。** frontmatter 写 `source_author: mattpocock` 和指向原文件的 `source_url`（PRD-A）。
 
@@ -115,18 +115,18 @@ SDD 的 [TST-J](../../../../spec-driven-development/test-plan/spec-driven-develo
 原样导入 matt 的 wayfinder：被否决，改写了术语、接口和关口（ARD-J）。
 把术语整体换成《绝命毒师》的词：被否决（ARD-F、ARD-K）。
 依赖写死为 matt 的 skill：被否决，改为可替换接口（ARD-H）。
-spec 写完直接拆工单：被否决，中间加 doc-review 关口（ARD-E）。
+spec 写完直接拆工单：被否决，中间加 spec-review 关口（ARD-E）。
 
 ## Drawbacks
 
 tracker 的说法不统一：接口表默认 GitHub Issues，没配置时又默认 `.scratch/` 下的本地 markdown，审查关口图和实体关系却写 Jira，见 QUES-B。
-SKILL.md 引用的 /grilling 在本机没有同名 skill，只有 grill-with-docs，见 QUES-D。
+SKILL.md 引用的 /grilling 曾找不到；2026-11-24 已补导到 `skills/grilling/`，见 QUES-D。
 
 ## Risks and Mitigations
 
 | 风险 | 缓解 |
 |---|---|
-| 引用的 skill 改了名：本仓库的 doc-review 已改名 spec-review（c44e983） | 暂无；见 QUES-D |
+| 引用的 skill 改了名：本仓库的 doc-review 已改名 spec-review（c44e983） | 688cace 已改用新名；见 QUES-D |
 | 安装时的接口选择没处保存，下次调用读不到 | 暂无；见 QUES-C |
 | 多个会话同时编辑 tracker，抢同一个 brief | 开工前先 claim，指派即占用（DSGN-C） |
 
@@ -137,7 +137,7 @@ SKILL.md 引用的 /grilling 在本机没有同名 skill，只有 grill-with-doc
 | QUES-A | 定终点（讨论 PRD）要不要做成地图上的第一个 brief（PRD-D）？ | 用户 17:27 说"3 yes"，SKILL.md 仍写成一个步骤 | cicidi | no |
 | QUES-B | 默认 tracker 是 GitHub Issues、本地 `.scratch/` 还是 Jira？ | SKILL.md 三种说法都有 | cicidi | no |
 | QUES-C | 安装时的四个接口选择记在哪里（PRD-E）？ | SKILL.md 说"会记下"，仓库里没有对应配置文件 | cicidi | no |
-| QUES-D | /grilling 和 doc-review 现在分别指哪个 skill？ | 本机只有 grill-with-docs；doc-review 已改名 spec-review（c44e983） | cicidi | no |
+| QUES-D | /grilling 和 doc-review 现在分别指哪个 skill？ | /grilling 指 `skills/grilling/`（2026-11-24 补导，grill-with-docs 的 ARD-G）；688cace 已把 doc-review 改成 spec-review | cicidi | no |
 | QUES-E | spec 的 issue 该由 to-spec 还是 to-tickets 建（PRD-G）？ | SKILL.md 写 to-spec，与用户 17:55 原话不同；同 to-tickets 的 QUES-A | cicidi | no |
 | QUES-F | 完整生命周期示例要不要放进 SKILL.md（PRD-I）？ | 只在已删除的导入规格第 8 节 | cicidi | no |
 
@@ -151,3 +151,5 @@ SKILL.md 引用的 /grilling 在本机没有同名 skill，只有 grill-with-doc
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：按 SKILL.md 写出 wayfinder 的 design，引用 PRD-A 到 PRD-L |
+| 2026-11-24 | QUES-D 有答案：`/grilling` 已补导；doc-review 已在 688cace 改为 spec-review |
+| 2026-11-24 | 正文里的 doc-review 改为 spec-review，跟上 688cace |

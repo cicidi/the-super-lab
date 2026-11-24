@@ -71,8 +71,8 @@ issue 模板有四节：Parent（父 issue，没有可省）、What to build、A
 例外：原型产出的状态机、schema、类型这类片段比文字更准时，可摘关键部分，并注明来自原型。
 
 **DSGN-I 词汇与流水线位置。** 本 skill 里 ticket 只指执行工单；wayfinder 的决策工单叫 brief（PRD-D）。
-wayfinder 写的顺序是 wayfinder、to-spec、doc-review、to-tickets、auto-tdd（PRD-A、PRD-G）。
-doc-review 关口必须先通过才能运行 to-tickets；它写在 wayfinder 里，不在本 skill 里（PRD-F）。
+wayfinder 写的顺序是 wayfinder、to-spec、spec-review、to-tickets、auto-tdd（PRD-A、PRD-G）。
+spec-review 关口必须先通过才能运行 to-tickets；它写在 wayfinder 里，不在本 skill 里（PRD-F）。
 spec 自己的 issue 由 to-spec 建，本 skill 不建；这与用户的原话不同，见 QUES-A（PRD-E）。
 
 ## Testing Decisions
@@ -93,14 +93,14 @@ downstream-delivery 的 PRD-F2 说 to-tickets 把 impl-plan 拆成工单（commi
 ## Alternatives Considered
 
 像 wayfinder 那样改写正文：没有采用，只加 frontmatter 和出处（ARD-F）。
-spec 写完直接拆工单：被否决，先过 doc-review 关口（ARD-C）。
+spec 写完直接拆工单：被否决，先过 spec-review 关口（ARD-C）。
 由 implement 接手工单：被否决，改为 auto-tdd（ARD-B）。
 把本地工单放进 `docs/features/`：被否决，放在 `.scratch/`（ARD-A）。
 
 ## Drawbacks
 
 拆法要等用户认可才发布（DSGN-F），无人值守的流水线会停在这一步。
-本地工单放在 `.scratch/`，但它没被 git 忽略，可能被误提交，见 QUES-D。
+本地工单放在 `.scratch/`；它在 2026-11-24 才加入 .gitignore，此前可能被误提交，见 QUES-D。
 工单发到 tracker，和 `docs/features/` 下的 impl-plan 是两条路；同一份计划可能两处各存一份。
 
 ## Risks and Mitigations
@@ -109,7 +109,7 @@ spec 写完直接拆工单：被否决，先过 doc-review 关口（ARD-C）。
 |---|---|
 | 用户要 to-tickets 为 spec 建 ticket，现在落在 to-spec，职责可能两边都漏 | 确认分工，见 QUES-A |
 | 本仓库找不到 init 流程写的 tracker 配置，agent 只能落到本地文件 | 写明配置位置，见 QUES-B |
-| `.scratch/` 没被 git 忽略，临时工单可能被提交 | 补 `.gitignore` 规则，见 QUES-D |
+| `.scratch/` 没被 git 忽略，临时工单可能被提交 | 2026-11-24 已补 `.gitignore` 规则，见 QUES-D |
 
 ## Open Questions
 
@@ -118,9 +118,9 @@ spec 写完直接拆工单：被否决，先过 doc-review 关口（ARD-C）。
 | QUES-A | spec 的 ticket 该由 to-tickets 还是 to-spec 建（PRD-E）？ | wayfinder 写的是 to-spec（7c11a7b），与用户 17:55 原话不同 | cicidi | no |
 | QUES-B | tracker 配置放在哪（PRD-C）？ | SKILL.md 说来自 init 流程；本仓库没找到配置文件 | cicidi | no |
 | QUES-C | implement 要不要移除（PRD-G）？ | 用户说用 auto-tdd 替代，implement 仍在 `skills/` 里 | cicidi | no |
-| QUES-D | `.scratch/` 要不要加进 `.gitignore`（ARD-A）？ | e1465f1 说两棵树都被忽略，实际没有这条规则 | cicidi | no |
+| QUES-D | `.scratch/` 要不要加进 `.gitignore`（ARD-A）？ | 要。2026-11-24 已加入 .gitignore | cicidi | no |
 | QUES-E | downstream-delivery 的 TST-C 跑过吗？ | 没找到运行记录 | cicidi | no |
-| QUES-F | 关口用 doc-review 还是 spec-review（PRD-F）？ | doc-review 已改名 spec-review（c44e983），wayfinder 仍写 doc-review | cicidi | no |
+| QUES-F | 关口用 doc-review 还是 spec-review（PRD-F）？ | spec-review。688cace（2026-11-24）已把 wayfinder 里的 doc-review 改成 spec-review | cicidi | no |
 
 ## Reversibility
 
@@ -132,3 +132,5 @@ spec 写完直接拆工单：被否决，先过 doc-review 关口（ARD-C）。
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：按 SKILL.md 写出 to-tickets 的 design，引用 PRD-A 到 PRD-G |
+| 2026-11-24 | QUES-D、QUES-F 有答案：`.scratch/` 已加入 .gitignore；wayfinder 已在 688cace 改用 spec-review |
+| 2026-11-24 | 正文里的 doc-review 改为 spec-review，跟上 688cace |

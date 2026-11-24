@@ -17,9 +17,10 @@ Claude Code 会话按 `~/.claude/history.jsonl` 里的会话 id 前缀引用；�
 
 | ID | Date | Decision |
 |---|---|---|
+| ARD-G | 2026-11-24 | 补导上游 commit fa460cb 版的 `/grilling` 到 `skills/grilling/`，正文原样 |
 | ARD-A | 2026-11-04 | SDD 流程把 grill-with-docs 列为 Map 阶段可选的压力测试，评测矩阵加 grill-docs 一行 |
 | ARD-B | 2026-08-02 | 和其他 skill 一起从 `import-skills/` 移到 `skills/grill-with-docs/` |
-| ARD-C | 2026-08-02 | 只导入 grill-with-docs 本身，不导入它调用的 `/grilling` |
+| ~~ARD-C~~ | ~~2026-08-02~~ | ~~只导入 grill-with-docs 本身，不导入它调用的 `/grilling`~~ 已被 [ARD-G](#ard-g) 取代 |
 | ARD-D | 2026-08-02 | 正文原样导入，只改 frontmatter，并写上原作者和原文链接 |
 | ARD-E | 2026-08-02 | 和 domain-modeling 一起作为 wayfinder 的 interview 接口默认实现；用户可换成自己的实现 |
 | ARD-F | 2026-08-02 | 直接导入 Matt Pocock 的版本，不自己从头写 |
@@ -69,8 +70,15 @@ docs/book/imported-skills.md 把导入日期写成 2026-07-25，与 commit 68354
 导入前用户问过"grill with docs , what does this do?"（同一会话 10:15）。
 被否决的方案：自己写一个访谈 skill。助手当时怎么回答的没有保留，用户为何满意属于 UNKNOWN。
 
+### ARD-G
+
+理由：正文调用的 `/grilling` 找不到。fa460cb 版一次问一个问题，与 wayfinder 的写法一致。
+被否决的方案：取上游 HEAD。a4b2009（2026-07-16）起改为一轮问多个问题，与 wayfinder 不符。
+出处：用户 2026-11-24 审阅回复（"D2 yes"）；mattpocock/skills 的 fa460cb。
+
 ## Change Log
 
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 grill-with-docs 的决策 |
+| 2026-11-24 | 加 ARD-G：补导 `/grilling`（fa460cb 版）；划掉 ARD-C |

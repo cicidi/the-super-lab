@@ -20,7 +20,7 @@ grilling（拷问式访谈）指 agent 一个接一个地追问用户，直到�
 `grill-with-docs` 跑一次这种访谈，并借 `domain-modeling` 把术语和决策当场写进文档。
 这个 skill 来自 Matt Pocock 的 mattpocock/skills，于 2026-08-02 导入（commit 6835420）。
 需求起点是同日的会话 d8d2da7f：用户在学习 wayfinder，问"grill with docs , what does this do?"（10:15）。
-它调用的 `/grilling` 在本仓库 `skills/` 和 `~/.claude/skills/` 下都不存在（2026-11-24 核对），见 design 的 QUES-A。
+它调用的 `/grilling` 于 2026-11-24 从上游 commit fa460cb 补导到 `skills/grilling/`（decision-history 的 ARD-G）。
 
 ## Goals and Success Metrics
 
@@ -61,15 +61,16 @@ SKILL.md 的 `compatibility` 字段写的是 `claude-code,opencode`。用户的�
 需求已经很清楚、或用户只想要一个快速回答时，不用本 skill（SKILL.md 的 `when_not_to_use`）。
 改写原版正文不在范围内（PRD-C）。
 导入清单只有 wayfinder、grill-with-docs、domain-modeling、prototype 四个，没有 `/grilling`（wayfinder-import-spec 的 Files to Import）。
-用户是否有意不导入 `/grilling`，属于 UNKNOWN。
+2026-11-24 用户同意补导 `/grilling`（ARD-G）。
 
 ## Resources Needed
 
 不需要外部服务或 API key。运行时依赖两个 skill：`/grilling` 和 `/domain-modeling`。
-前者目前缺失（见 Overview）。人力上，访谈必须有真人在场回答问题（skills/wayfinder/SKILL.md 的 HITL 定义）。
+两者都在 `skills/` 下（见 Overview）。人力上，访谈必须有真人在场回答问题（skills/wayfinder/SKILL.md 的 HITL 定义）。
 
 ## Change Log
 
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 grill-with-docs 的 PRD |
+| 2026-11-24 | `/grilling` 已补导（ARD-G）：更新 Overview、Out of Scope、Resources Needed |

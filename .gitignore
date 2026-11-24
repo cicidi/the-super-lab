@@ -11,6 +11,8 @@ CHANGELOG.md
 .idea/
 
 # doc-organize: scratch and state are working material, never committed
+# .scratch/: local-markdown issue tracker of to-tickets / wayfinder (e1465f1)
+.scratch/
 docs/features/*/research/
 docs/features/*/discussion/
 docs/features/*/state/

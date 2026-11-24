@@ -31,7 +31,7 @@ wayfinder 定方向时，需要一种能做出具体东西、让人看了再判�
 ## Implementation Decisions
 
 全部行为写在 SKILL.md 里，没有脚本。正文与原版一致，本仓库只改了 frontmatter（PRD-B、PRD-C）。
-SKILL.md 用相对链接指向 `LOGIC.md` 和 `UI.md`，但这两个文件没有导入，目录里只有 SKILL.md（decision-history 的 ARD-B）。
+SKILL.md 用相对链接指向 `LOGIC.md` 和 `UI.md`；两者于 2026-11-24 从上游 fa460cb 原样补导（decision-history 的 ARD-F）。
 
 ## Design
 
@@ -39,10 +39,10 @@ SKILL.md 用相对链接指向 `LOGIC.md` 和 `UI.md`，但这两个文件没有
 问题含糊又问不到人时，后端模块走逻辑分支，页面或组件走 UI 分支，并把这个假设写在原型开头。
 
 **DSGN-B 逻辑分支。** 回答"这个逻辑或状态模型对不对"。做一个很小的交互式终端程序，把状态机推过纸上难想清的情况。
-细节本应写在 `LOGIC.md`，该文件缺失，见 QUES-A（PRD-C）。
+细节写在 `LOGIC.md`（ARD-F，PRD-C）。
 
 **DSGN-C UI 分支。** 回答"这个应该长什么样"。在同一个路由上生成几种差别很大的 UI 变体。
-用 URL 查询参数和页面底部的浮动切换条来切换变体。细节本应写在 `UI.md`，该文件缺失，见 QUES-A。
+用 URL 查询参数和页面底部的浮动切换条来切换变体。细节写在 `UI.md`（ARD-F）。
 
 **DSGN-D 就近放置，一眼可辨。** 原型代码放在它服务的模块或页面旁边，名字要让人看出是原型（PRD-C）。
 UI 路由沿用项目现有的路由约定，不新造顶层目录。
@@ -90,7 +90,7 @@ prototype brief 属于 HITL；它的产出是决定而不是交付物，所以�
 
 ## Drawbacks
 
-两个分支的细节文件缺失，agent 只能凭 SKILL.md 的一句概述来做，结果因模型而异（QUES-A）。
+补导的细节文件停在 fa460cb，上游之后的改动（如 6bcbcb0 改用 HTML 演示）不会自动跟进（ARD-F）。
 DSGN-I 要求开临时分支，但 2026-11-05 的原型页实际留在本地、没有提交，两者不一致（QUES-C）。
 
 ## Risks and Mitigations
@@ -99,13 +99,13 @@ DSGN-I 要求开临时分支，但 2026-11-05 的原型页实际留在本地、�
 |---|---|
 | 原型代码被当成正式代码合进主分支 | 名字标明是原型；收尾时只把结论并入主分支（DSGN-D、DSGN-I） |
 | 原型用的临时数据被当真 | 默认不持久化；必须用库时名字写明 wipe me（DSGN-F） |
-| 上游更新了 LOGIC.md、UI.md，本地不知道 | 目前没有同步机制，见 QUES-A |
+| 上游更新了 LOGIC.md、UI.md，本地不知道 | 文件头注明来源 commit fa460cb；仍没有同步机制（ARD-F） |
 
 ## Open Questions
 
 | ID | 问题 | 目前答案 | Owner | Blocking |
 |---|---|---|---|---|
-| QUES-A | 要不要补导上游的 `LOGIC.md`、`UI.md` 和 `agents/` 目录？ | 导入时只取了 SKILL.md；上游三者都在（gh api，2026-11-24） | cicidi | no |
+| QUES-A | 要不要补导上游的 `LOGIC.md`、`UI.md` 和 `agents/` 目录？ | 已补导 fa460cb 版 `LOGIC.md`、`UI.md`；`agents/` 不导入（ARD-F） | cicidi | no |
 | QUES-B | prototype brief 要不要过交付前审查？ | wayfinder 让它跳过；用户原话是"所有的代码都需要review"（d8d2da7f，17:27） | cicidi | no |
 | QUES-C | 收尾时原型放临时分支，还是留在本地不提交？ | SKILL.md 要求临时分支；2026-11-05 的原型页留在本地未提交 | cicidi | no |
 | QUES-D | 支持 OpenCode 是用户的要求吗？ | 只见于导入规格，用户原话没有找到（PRD-F） | cicidi | no |
@@ -120,3 +120,4 @@ DSGN-I 要求开临时分支，但 2026-11-05 的原型页实际留在本地、�
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：按 SKILL.md 写出 prototype 的 design，引用 PRD-A 到 PRD-F |
+| 2026-11-24 | `LOGIC.md`、`UI.md` 已补导（ARD-F）：更新 DSGN-B、DSGN-C，QUES-A 有答案 |

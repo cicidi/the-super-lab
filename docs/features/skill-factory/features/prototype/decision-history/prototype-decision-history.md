@@ -17,8 +17,9 @@ Claude Code 会话原文没有保留；下文引用 `~/.claude/history.jsonl` �
 
 | ID | Date | Decision |
 |---|---|---|
+| ARD-F | 2026-11-24 | 补导上游 commit fa460cb 的 `LOGIC.md` 和 `UI.md`，原样复制；不导入 `agents/` |
 | ARD-A | 2026-08-02 | 和其他 skill 一起从 `import-skills/` 移到 `skills/prototype/` |
-| ARD-B | 2026-08-02 | 只导入 SKILL.md，没有导入它链接的 `LOGIC.md` 和 `UI.md` |
+| ~~ARD-B~~ | ~~2026-08-02~~ | ~~只导入 SKILL.md，没有导入它链接的 `LOGIC.md` 和 `UI.md`~~ 已被 [ARD-F](#ard-f) 取代 |
 | ARD-C | 2026-08-02 | 正文原样导入，只改 frontmatter，并写上原作者和原文链接 |
 | ARD-D | 2026-08-02 | 作为 wayfinder 的 prototype 接口默认实现；prototype brief 要人参与，且不过交付前审查 |
 | ARD-E | 2026-08-02 | 直接导入 Matt Pocock 的版本，不自己从头写 |
@@ -57,8 +58,15 @@ Claude Code 会话原文没有保留；下文引用 `~/.claude/history.jsonl` �
 导入前用户问过"what about prototype?"（同一会话 12:12），助手当时的回答没有保留。
 被否决的方案：自己写一个原型 skill。用户为何认可这个版本，属于 UNKNOWN。
 
+### ARD-F
+
+理由：本地 SKILL.md 正文与 fa460cb 一致。6bcbcb0 把逻辑分支改成 HTML 演示，取 HEAD 会对不上。
+被否决的方案：取 HEAD；连 `agents/` 一起导入（fa460cb 时还没有）。
+出处：用户 2026-11-24 审阅回复（"D2 yes"）；mattpocock/skills 的 fa460cb。
+
 ## Change Log
 
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 prototype 的决策 |
+| 2026-11-24 | 加 ARD-F：补导 `LOGIC.md`、`UI.md`（fa460cb 版）；划掉 ARD-B |

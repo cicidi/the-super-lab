@@ -42,10 +42,10 @@ wayfinder 的 interview（访谈）接口需要一个默认实现来做这件事
 agent 读到后，应当用 `/grilling` 的方式追问，再按 `/domain-modeling` 的规则把结论写进文档。
 文中没有步骤、轮数或结束条件，这些都交给两个被调用的 skill。
 
-**DSGN-C `/grilling` 缺失。** 本仓库 `skills/` 和 `~/.claude/skills/` 下都没有名为 grilling 的 skill（2026-11-24 核对）。
-所以 agent 只能凭字面意思去追问，没有固定的提问规则（PRD-A）。
+**DSGN-C `/grilling` 的来源。** `skills/grilling/` 是 2026-11-24 补导的上游 fa460cb 版（ARD-G）。
+它要求一次问一个问题，每题附推荐答案，事实自己查，决定交给用户（PRD-A）。
 wayfinder 对 grilling 的描述是"one question at a time"、必须有真人回答（skills/wayfinder/SKILL.md 的 Brief Types）。
-上游仓库现有 `skills/productivity/grilling/SKILL.md`，本仓库没有导入，见 QUES-A。
+上游 a4b2009（2026-07-16）起改为一轮问多个问题，与 wayfinder 不符，所以没取 HEAD（ARD-G）。
 
 **DSGN-D 由 domain-modeling 负责记录。** `skills/domain-modeling/` 存在，负责收紧术语、写 `CONTEXT.md` 和 `docs/adr/`（PRD-A）。
 它的行为见 [domain-modeling design](../../domain-modeling/design/domain-modeling-design.md)。
@@ -80,13 +80,13 @@ SDD 评测矩阵 TST-J 有 grill-docs 一行，用来比较加不加本 skill �
 ## Further Notes
 
 需求见 [PRD](../prd/grill-with-docs-prd.md)，决策见 [decision-history](../decision-history/grill-with-docs-decision-history.md)。
-domain-modeling 的 design 也记了 `/grilling` 缺失（其 QUES-C），wayfinder 同样调用 `/grilling`，三者应一起解决。
+domain-modeling（其 QUES-C）和 wayfinder 同样调用 `/grilling`，三者都随 ARD-G 一起解决。
 
 ## Alternatives Considered
 
 自己从头写一个访谈 skill：被否决，直接导入上游版本（ARD-F）。
 在 wayfinder 里写死访谈 skill 的名字：被否决，改为可替换的接口（ARD-E）。
-连同 `/grilling` 一起导入：没有见到讨论，结果是没有导入（ARD-C）。
+导入上游 HEAD 版 `/grilling`：被否决，它一轮问多个问题；改取 fa460cb 版（ARD-G）。
 
 ## Drawbacks
 
@@ -97,7 +97,7 @@ domain-modeling 的 design 也记了 `/grilling` 缺失（其 QUES-C），wayfin
 
 | 风险 | 缓解 |
 |---|---|
-| `/grilling` 找不到，访谈没有固定规则 | 目前没有缓解，见 QUES-A |
+| `/grilling` 曾找不到，访谈没有固定规则 | 2026-11-24 已补导 fa460cb 版（ARD-G） |
 | 与上游渐行渐远，agent 可自行触发而上游不允许 | 目前没有同步机制，见 QUES-B |
 | docs/book/imported-skills.md 把导入日期写成 2026-07-25 | 以 commit 6835420（2026-08-02）为准，见 QUES-C |
 
@@ -105,7 +105,7 @@ domain-modeling 的 design 也记了 `/grilling` 缺失（其 QUES-C），wayfin
 
 | ID | 问题 | 目前答案 | Owner | Blocking |
 |---|---|---|---|---|
-| QUES-A | `/grilling` 指哪个 skill？要导入上游的 grilling 吗？ | `skills/` 和 `~/.claude/skills/` 下都没有；上游有 `skills/productivity/grilling/` | cicidi | no |
+| QUES-A | `/grilling` 指哪个 skill？要导入上游的 grilling 吗？ | 已导入：`skills/grilling/` 取自上游 fa460cb（ARD-G） | cicidi | no |
 | QUES-B | 要不要按上游更新正文，并加 `disable-model-invocation: true`？ | 未同步；本仓库版本允许 agent 自行触发 | cicidi | no |
 | QUES-C | 要不要把 docs/book/imported-skills.md 的导入日期改成 2026-08-02？ | 该文写 2026-07-25，git 是 2026-08-02 | cicidi | no |
 | QUES-D | 安装时真的会问用户替换 interview 接口吗？ | wayfinder 接口表写"(ask on install)"，实现未核实 | cicidi | no |
@@ -120,3 +120,4 @@ domain-modeling 的 design 也记了 `/grilling` 缺失（其 QUES-C），wayfin
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：按 SKILL.md 写出 grill-with-docs 的 design，引用 PRD-A 到 PRD-E |
+| 2026-11-24 | `/grilling` 已补导（ARD-G）：改写 DSGN-C，QUES-A 有答案 |

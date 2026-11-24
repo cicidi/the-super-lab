@@ -104,7 +104,7 @@ ADR 的写入位置 `docs/adr/` 与本仓库的 spec 标准不一致，见 QUES-
 | 风险 | 缓解 |
 |---|---|
 | 在本仓库按原样写 `docs/adr/`，与 spec 标准冲突 | spec-organize 把 `docs/adr/` 当作旧布局，要求并入 decision-history；SKILL.md 没写，见 QUES-A |
-| grill-with-docs 和 wayfinder 引用的 `/grilling` 找不到 | 目前没有缓解，见 QUES-C |
+| grill-with-docs 和 wayfinder 引用的 `/grilling` 曾找不到 | 2026-11-24 已补导，见 QUES-C |
 | 上游原版更新后，本地副本落后 | 没有同步机制；`source_url` 至少能找到原文，见 QUES-D |
 
 ## Open Questions
@@ -113,7 +113,7 @@ ADR 的写入位置 `docs/adr/` 与本仓库的 spec 标准不一致，见 QUES-
 |---|---|---|---|---|
 | QUES-A | 在本仓库用时，ADR 写到 `docs/adr/` 还是 feature 的 decision-history？ | SKILL.md 写 `docs/adr/`；spec-organize 要求并入 decision-history | cicidi | no |
 | QUES-B | 被动触发不可靠，要不要在 wayfinder 之外加显式的触发点？ | 只靠 description 和 triggers 字段 | cicidi | no |
-| QUES-C | `/grilling` 指哪个 skill？ | `skills/` 和 `~/.claude/skills/` 下都没有 | cicidi | no |
+| QUES-C | `/grilling` 指哪个 skill？ | `skills/grilling/`，2026-11-24 取自上游 fa460cb（grill-with-docs 的 ARD-G） | cicidi | no |
 | QUES-D | 要不要跟进上游更新，补上 META.yaml？ | parent design 要求导入的 skill 带 upstream_commit，本目录没有 | cicidi | no |
 | QUES-E | `CONTEXT.md` 每个项目一份，还是集中一份？ | 用户问过（d8d2da7f，10:24）；SKILL.md 是每个仓库一份；用户的结论 UNKNOWN | cicidi | no |
 
@@ -128,3 +128,4 @@ ADR 的写入位置 `docs/adr/` 与本仓库的 spec 标准不一致，见 QUES-
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：按 SKILL.md 写出 domain-modeling 的 design，引用 PRD-A 到 PRD-F |
+| 2026-11-24 | QUES-C 有答案：`/grilling` 已补导（grill-with-docs 的 ARD-G） |
