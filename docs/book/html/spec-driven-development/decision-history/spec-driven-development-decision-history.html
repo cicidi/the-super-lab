@@ -347,9 +347,9 @@
 <td>非软件问题也用同样的五篇文档；design 里写子问题归属表；结论必须有依据，查不到写 UNKNOWN</td>
 </tr>
 <tr>
-<td><a class="id-ref" href="#ARD-AD">ARD-AD</a></td>
+<td><del><a class="id-ref" href="#ARD-AD">ARD-AD</a></del></td>
 <td>2026-11-04</td>
-<td>评测用 deepseek-flash 独立跑 3 次；gold 由案例、版本、范例、标注四部分组成；跑分结果和报告不提交；四个非软件例子写进 skill 正文，不在本仓库建 gold</td>
+<td><del>评测用 deepseek-flash 独立跑 3 次；gold 由案例、版本、范例、标注四部分组成；跑分结果和报告不提交；四个非软件例子写进 skill 正文，不在本仓库建 gold</del> → <a href="#ard-cj">ARD-CJ</a></td>
 </tr>
 <tr>
 <td><a class="id-ref" href="#ARD-AC">ARD-AC</a></td>
@@ -505,7 +505,7 @@
 <p><strong>放弃的方案。</strong> 定期清理划掉的行：会丢掉历史。</p>
 <a id="ard-ck"></a>
 <h4 id="ARD-CK"><a class="id-ref" href="#ARD-CK">ARD-CK</a> — 每次 build 升版本号</h4>
-<p><strong>原因。</strong> <a class="id-ref" href="#ARD-CC">ARD-CC</a> 只说印版本号，没说什么时候升。版本不升，两次不同的 build 印出同一个号，起不到标来源的作用。</p>
+<p><strong>原因。</strong> <a class="id-ref" href="#ARD-CC">ARD-CC</a> 只说印版本号，没说什么时候升。印戳的是五个 <code>SKILL.md</code>：spec-write、spec-review、wayfinder、spec-organize、spec-pipeline。版本不升，两次不同的 build 印出同一个号，起不到标来源的作用。</p>
 <p><strong>规则。</strong> 每次运行 <code>build_spec_skills.py</code>（不带 <code>--check</code>），先把 parent PRD 的 <code>version</code> 末位加 1，例如 <code>1.0.0</code> 变成 <code>1.0.1</code>，再印进 <code>SKILL.md</code>。<code>--check</code> 只比对，不升版本。</p>
 <p><strong>重述。</strong> 本条推翻 <a class="id-ref" href="#ARD-CC">ARD-CC</a> 里放弃「自动升版」的部分，<a class="id-ref" href="#ARD-CC">ARD-CC</a> 因此划掉。其余仍有效：版本号只写在 parent PRD 的 <code>version</code>；脚本写入版本、日期、git 短 sha，拒绝重复键（<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-Y">TST-Y</a>）；不定义迁移策略。</p>
 <p><strong>放弃的方案。</strong> 每次由人决定升哪一位：每次都要人判断，容易忘。</p>
@@ -514,6 +514,8 @@
 <p><strong>原因。</strong> 2026-11-24 夜里，<span class="lvl lvl--must">MUST</span>-B 在相关内容没变的情况下出现过一次 2 比 1 的翻转，说明 3 次太少。DeepSeek 的结论本身也可能错。</p>
 <p><strong>规则。</strong> <code>judge_deepseek.py</code> 默认跑 5 次：至少 4 次通过算通过，至少 4 次不通过算不通过，其余算有分歧，按不通过计。</p>
 <p><strong>规则（续）。</strong> Claude 逐条核对不通过和有分歧的结论，把同意或不同意及理由写进 <code>claude_audit</code>。Claude 不同意时报告用户，不自己改判；Python 检查的结果仍不能推翻。</p>
+<p><strong>范围。</strong> 本条管 <code>judge_deepseek.py</code> 的复核（<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-L">TST-L</a>）。<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-V">TST-V</a> 的可读性判分另有门槛，不变。Claude 不同意的条目在用户决定前仍算没通过。</p>
+<p><strong>重述。</strong> 本条推翻 <a class="id-ref" href="#ARD-AD">ARD-AD</a>「复核跑 3 次」的部分，<a class="id-ref" href="#ARD-AD">ARD-AD</a> 因此划掉。其余仍有效：生成 gold 跑 3 次；gold 由案例、版本、范例、标注组成；跑分结果和报告不提交；四个非软件例子写进 skill 正文。</p>
 <p><strong>放弃的方案。</strong> 5 次都一致才通过：次数越多越容易因一次波动失败。换更贵的模型：仍是一个模型说了算。</p>
 <a id="ard-ci"></a>
 <h4 id="ARD-CI"><a class="id-ref" href="#ARD-CI">ARD-CI</a> — spec-review 的三份审查参考</h4>
@@ -525,9 +527,9 @@
 <h4 id="ARD-CH"><a class="id-ref" href="#ARD-CH">ARD-CH</a> — wayfinder 负责进度规则</h4>
 <p><strong>原因。</strong> spec-pipeline 不再是入口 skill 以后，pipeline design 的 PIPE-A-D、PIPE-A-E、PIPE-A-F、PIPE-H、PIPE-E-A 没有 skill 负责。</p>
 <p>另外，名字没定时进度全记在 <code>CLAUDE.local.md</code> 一处，几个 feature 同时进行就会互相覆盖。名字没定时的暂定名、粗略 PRD 和背景也一起移进地图文件。</p>
-<p><strong>规则。</strong> wayfinder 的地图（map）就是进度记录。名字没定时放在 <code>docs/state/wayfinder-&lt;暂定名&gt;.md</code>，定了以后移到 <code>docs/features/&lt;f&gt;/raw/state/wayfinder-map.md</code>，都不提交。</p>
-<p>每个 feature 一个地图文件，互不覆盖；CLAUDE 层只记当前地图的路径（<a class="id-ref" href="#ARD-CG">ARD-CG</a>）。</p>
-<p><strong>规则（续）。</strong> 重新开始时读地图给出回顾。标「阻塞」的问题对应未关闭的 brief，有未关闭的就不进入 Downstream。提交前问要不要跑 spec-review，用户说不跑就记进地图。</p>
+<p><strong>规则。</strong> wayfinder 的地图目录就是进度记录：<code>map.md</code> 加 <code>issues/</code> 下每个 brief 一个文件。名字没定时放在 <code>docs/state/wayfinder-&lt;暂定名&gt;/</code>，定了以后整个移到 <code>docs/features/&lt;f&gt;/raw/state/wayfinder/</code>，都不提交。</p>
+<p>每个 feature 一个地图目录，互不覆盖；任务再小也建地图。CLAUDE 层只记当前地图的路径（<a class="id-ref" href="#ARD-CG">ARD-CG</a>）。</p>
+<p><strong>规则（续）。</strong> 重新开始时读地图给出回顾。阻塞与否以 design 的问题清单（QUES-*）为准，有标「是」的没解决就不进入 Downstream；处理它的 brief 写明 QUES 编号。提交前问要不要跑 spec-review，用户说不跑就记进地图。</p>
 <p><strong>重述。</strong> 本条推翻 <a class="id-ref" href="#ARD-BX">ARD-BX</a>「交付物只有两个」，以及 <a class="id-ref" href="#ARD-BT">ARD-BT</a>、<a class="id-ref" href="#ARD-BU">ARD-BU</a>「进度记在 CLAUDE.local.md」的部分，三条因此划掉。</p>
 <p>仍有效的部分：spec-write、spec-review 读三份标准文件，标准文件不算交付物；Map 以访谈为主；非软件难题留在本 PRD；人在 Map 确认名字后才建 feature 目录。</p>
 <p><strong>放弃的方案。</strong> 交给 spec-write：正文变重，名字没定时的冲突还要另想办法。先标 Unverified：规则一直没人执行。改写 wayfinder 会和上游 mattpocock/skills 分叉，接受这个代价。</p>
@@ -544,7 +546,7 @@
 <a id="ard-ce"></a>
 <h4 id="ARD-CE"><a class="id-ref" href="#ARD-CE">ARD-CE</a> — 新建文件不受改动上限限制</h4>
 <p><strong>原因。</strong> 上限是为了让每次修改都看得清（<a class="id-ref" href="#ARD-BP">ARD-BP</a>）。新建的文件没有旧内容可对比，拆成十几次只多出步骤。</p>
-<p><strong>规则。</strong> 上限只管修改已有文件。新建一个文件可以一次写完，但仍要符合行数上限（<a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-D">PRD-D</a>）。</p>
+<p><strong>规则。</strong> 上限只管修改已有文件。新建一个文件可以一次写完，但仍要符合行数上限（<a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-D">PRD-D</a>）。从已有文件挪出内容另建分篇，算修改，不算新建。</p>
 <p><strong>重述。</strong> 本条推翻 <a class="id-ref" href="#ARD-BP">ARD-BP</a> 没区分新建和修改的部分，<a class="id-ref" href="#ARD-BP">ARD-BP</a> 因此划掉。其余仍有效：修改 <code>docs/</code> 下已有的 markdown，每次不超过 10 行并且不超过 200 字符；更大的改动拆开，或经人授权。</p>
 <p><strong>放弃的方案。</strong> 新建文件也按 10 行拆：步骤多，看不出好处。</p>
 <a id="ard-cd"></a>
@@ -1035,6 +1037,10 @@ payment-impl-plan-01-schema.md         impl-plan 分篇：序号加阶段，有�
 <tr>
 <td>2026-11-24</td>
 <td>新增 <a class="id-ref" href="#ARD-CE">ARD-CE</a> 到 <a class="id-ref" href="#ARD-CL">ARD-CL</a>；划掉 <a class="id-ref" href="#ARD-CC">ARD-CC</a>、<a class="id-ref" href="#ARD-BX">ARD-BX</a>、<a class="id-ref" href="#ARD-BP">ARD-BP</a>、<a class="id-ref" href="#ARD-BT">ARD-BT</a>、<a class="id-ref" href="#ARD-BU">ARD-BU</a>（各自链到推翻它的 ARD）</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 8 轮审查后：划掉 <a class="id-ref" href="#ARD-AD">ARD-AD</a>，由 <a class="id-ref" href="#ARD-CJ">ARD-CJ</a> 重述并写明范围；<a class="id-ref" href="#ARD-CE">ARD-CE</a> 写明挪出内容算修改；<a class="id-ref" href="#ARD-CH">ARD-CH</a> 地图改为目录、阻塞以 QUES 为准；<a class="id-ref" href="#ARD-CK">ARD-CK</a> 写明五个 SKILL.md</td>
 </tr>
 </tbody></table></div>
       </div>

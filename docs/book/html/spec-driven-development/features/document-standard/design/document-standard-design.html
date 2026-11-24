@@ -36,7 +36,7 @@
 <p>相关文档：</p>
 <ul>
 <li>写 spec 分几个阶段，见 <a href="../../../../../../features/spec-driven-development/features/pipeline/design/pipeline-design.md">pipeline design</a>。</li>
-<li>怎么测试，见 parent 的 <a href="../../../test-plan/spec-driven-development-test-plan.html">test-plan</a>。被测的是 spec-write 和 spec-review 两个 skill；本篇的每条 <span class="lvl lvl--must">MUST</span> 都收进 <span class="lvl lvl--must">MUST</span> 清单，由测试逐条检查。</li>
+<li>怎么测试，见 parent 的 <a href="../../../test-plan/spec-driven-development-test-plan.html">test-plan</a>。被测的是 spec-write、spec-review 和 wayfinder 三个 skill；本篇的每条 <span class="lvl lvl--must">MUST</span> 都收进 <span class="lvl lvl--must">MUST</span> 清单，由测试逐条检查。</li>
 <li>术语和缩写，见 <a href="../../../design/spec-driven-development-design.html#glossary">parent design 的术语表</a>。</li>
 </ul>
 <p>本篇的规则小节用 DSGN 编号，只在 document-standard 这个 feature 内有效：</p>
@@ -124,10 +124,10 @@
 </ul>
 <h3>Implementation Decisions</h3>
 <ul>
-<li>本篇的规则会摘要写进 <a href="../../../../../../../skills/spec-organize/SPEC-STANDARD.md"><code>SPEC-STANDARD.md</code></a> 和 <a href="../../../../../../../skills/spec-html-standard/SPEC-PRESENTATION.md"><code>SPEC-PRESENTATION.md</code></a>；reader design 的规则摘要写进 <a href="../../../../../../../skills/spec-html-standard/SPEC-HTML-STANDARD.md"><code>SPEC-HTML-STANDARD.md</code></a>。spec-write 和 spec-review 读的是这三份摘要（<a href="../../../decision-history/spec-driven-development-decision-history.html#ard-bx">ARD-BX</a>）。摘要和本篇不一致时，先改本篇，再改摘要。</li>
+<li>本篇的规则会摘要写进 <a href="../../../../../../../skills/spec-organize/SPEC-STANDARD.md"><code>SPEC-STANDARD.md</code></a> 和 <a href="../../../../../../../skills/spec-html-standard/SPEC-PRESENTATION.md"><code>SPEC-PRESENTATION.md</code></a>；reader design 的规则摘要写进 <a href="../../../../../../../skills/spec-html-standard/SPEC-HTML-STANDARD.md"><code>SPEC-HTML-STANDARD.md</code></a>。spec-write 和 spec-review 读的是这三份摘要（<a href="../../../decision-history/spec-driven-development-decision-history.html#ard-ch">ARD-CH</a> 重述 <a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-BX">ARD-BX</a>）。摘要和本篇不一致时，先改本篇，再改摘要。</li>
 <li>格式类的 <span class="lvl lvl--must">MUST</span> 由检查脚本执行；内容类的问题由 spec-review 报告。</li>
 <li>how-to 暂不做机械检查；其他五种文档按 <a class="id-ref" href="#DSGN-E">DSGN-E</a> 检查。</li>
-<li>已有的不合规文档不迁移，只报告（<a href="../../../decision-history/spec-driven-development-decision-history.html#ard-cc">ARD-CC</a>，重述 <a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-AF">ARD-AF</a>）。</li>
+<li>已有的不合规文档不迁移，只报告（<a href="../../../decision-history/spec-driven-development-decision-history.html#ard-ck">ARD-CK</a>，重述 <a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-AF">ARD-AF</a>）。</li>
 <li>本篇是一份纯标准，「子问题归属表」不适用（pipeline design 的 PIPE-L 允许这样注明）。还没定的事项和它们的负责人见 <a href="#open-questions">Open Questions</a>。</li>
 </ul>
 <h3>Design</h3>
@@ -296,7 +296,7 @@
 <tr>
 <td><code>raw/state/</code></td>
 <td>进度快照，用来在长对话被压缩后恢复上下文</td>
-<td><code>state-&lt;YYYY-MM-DD&gt;.md</code>（最多 400 行）；SDD 的进度用 <code>wayfinder-map.md</code>（parent <a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-CH">ARD-CH</a>）</td>
+<td><code>state-&lt;YYYY-MM-DD&gt;.md</code>（最多 400 行）；SDD 的进度用 <code>raw/state/wayfinder/</code> 地图目录（parent <a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-CH">ARD-CH</a>）</td>
 </tr>
 </tbody></table></div>
 <p>旧项目里直接放在 feature 根目录的 <code>state/</code>、<code>research/</code>、<code>discussion/</code>，挪进 <code>raw/</code>。工单草稿放在 <code>.scratch/&lt;feature&gt;/</code>，同样不提交。</p>
@@ -308,6 +308,10 @@
 <tr>
 <td><code>docs/features/&lt;f&gt;/raw/**</code></td>
 <td>整个草稿目录，包括 <code>raw/state/</code></td>
+</tr>
+<tr>
+<td><code>docs/state/</code></td>
+<td>名字没定时的 wayfinder 地图目录（parent <a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-CH">ARD-CH</a>）</td>
 </tr>
 <tr>
 <td><code>.scratch/&lt;feature&gt;/</code></td>
@@ -671,7 +675,7 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 <li>图只画文字说不清的流程，一个流程只画一张图（<a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-BE">ARD-BE</a>）。</li>
 </ul>
 <h3>Testing Decisions</h3>
-<p>测试见 parent 的 <a href="../../../test-plan/spec-driven-development-test-plan.html">test-plan</a>。被测的是 spec-write 和 spec-review 两个 skill，不是本篇。本篇所有的 <span class="lvl lvl--must">MUST</span> 和禁止事项，由 parent test-plan 的 <a class="id-ref" href="../../../test-plan/spec-driven-development-test-plan.html#TST-A">TST-A</a> 扫描收进 <code>must_registry.yaml</code>：格式类的由 Python 脚本判断，其余由判分模型判断。</p>
+<p>测试见 parent 的 <a href="../../../test-plan/spec-driven-development-test-plan.html">test-plan</a>。被测的是 spec-write、spec-review 和 wayfinder 三个 skill，不是本篇。本篇所有的 <span class="lvl lvl--must">MUST</span> 和禁止事项，由 parent test-plan 的 <a class="id-ref" href="../../../test-plan/spec-driven-development-test-plan.html#TST-A">TST-A</a> 扫描收进 <code>must_registry.yaml</code>：格式类的由 Python 脚本判断，其余由判分模型判断。</p>
 <h3>Out of Scope</h3>
 <ul>
 <li>写 spec 的阶段怎么安排，见 pipeline design。</li>
@@ -935,6 +939,10 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 <tr>
 <td>2026-11-24</td>
 <td>raw/state 一行注明 SDD 用 wayfinder-map.md（parent <a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-CH">ARD-CH</a>）</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 8 轮审查后：被测对象三个 skill；本地目录表加 docs/state/；改链 <a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-CH">ARD-CH</a>、<a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-CK">ARD-CK</a></td>
 </tr>
 </tbody></table></div>
       </div>

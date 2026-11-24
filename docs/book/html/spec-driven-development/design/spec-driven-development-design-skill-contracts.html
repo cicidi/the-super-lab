@@ -36,7 +36,7 @@
 <h3>Problem Statement</h3>
 <p>交付物是 spec-write、spec-review，以及负责进度规则的 wayfinder（<a href="../decision-history/spec-driven-development-decision-history.html#ard-ch">ARD-CH</a>）。如果它们的职责只写在各自的 <code>SKILL.md</code> 里，改 skill 的人可以随手改掉职责边界，而没人察觉。所以需要一份独立的契约：说清每个 skill 什么时候用、要什么输入、产出什么、不能做什么。</p>
 <h3>Solution</h3>
-<p>本篇是两个 skill 行为的权威来源，<code>SKILL.md</code> 只是它的实现。两者不一致时，以本篇为准：先改本篇，再改 <code>SKILL.md</code>。具体的写作规则不在本篇重复，以三份标准文件 <a href="../../../../../skills/spec-organize/SPEC-STANDARD.md"><code>SPEC-STANDARD.md</code></a>、<a href="../../../../../skills/spec-html-standard/SPEC-PRESENTATION.md"><code>SPEC-PRESENTATION.md</code></a>、<a href="../../../../../skills/spec-html-standard/SPEC-HTML-STANDARD.md"><code>SPEC-HTML-STANDARD.md</code></a> 为准（<a href="../decision-history/spec-driven-development-decision-history.html#ard-aj">ARD-AJ</a>、<a href="../decision-history/spec-driven-development-decision-history.html#ard-bx">ARD-BX</a>）。</p>
+<p>本篇是三个交付 skill 行为的权威来源，<code>SKILL.md</code> 只是它的实现。两者不一致时，以本篇为准：先改本篇，再改 <code>SKILL.md</code>。具体的写作规则不在本篇重复，以三份标准文件 <a href="../../../../../skills/spec-organize/SPEC-STANDARD.md"><code>SPEC-STANDARD.md</code></a>、<a href="../../../../../skills/spec-html-standard/SPEC-PRESENTATION.md"><code>SPEC-PRESENTATION.md</code></a>、<a href="../../../../../skills/spec-html-standard/SPEC-HTML-STANDARD.md"><code>SPEC-HTML-STANDARD.md</code></a> 为准（<a href="../decision-history/spec-driven-development-decision-history.html#ard-aj">ARD-AJ</a>、<a href="../decision-history/spec-driven-development-decision-history.html#ard-bx">ARD-BX</a>）。</p>
 <h3>Design</h3>
 <div class="table-wrap"><table><thead><tr>
 <th>Skill</th>
@@ -49,7 +49,7 @@
 <td>spec-write</td>
 <td>新建或修改 spec 文档</td>
 <td>用户的意图；三份标准文件</td>
-<td>改好的文档</td>
+<td>改好的文档；改完告诉用户网页没更新、问要不要重建，commit 前必须重建（<a href="../decision-history/spec-driven-development-decision-history.html#ard-cf">ARD-CF</a>）</td>
 <td>动笔前没判断「新建哪篇、还是改哪几篇」；一次改动超过 10 行或超过 200 字符而没有授权（parent design 的 <a class="id-ref" href="spec-driven-development-design.html#DSGN-A">DSGN-A</a>）；悄悄改动上游文档</td>
 </tr>
 <tr>
@@ -62,9 +62,9 @@
 <tr>
 <td>wayfinder</td>
 <td>Map 阶段规划；重新开始时；提交前</td>
-<td>用户的目标；本 feature 的地图文件</td>
+<td>用户的目标；本 feature 的地图目录</td>
 <td>更新后的地图、进度回顾、「跑不跑 spec-review」的记录</td>
-<td>有标「阻塞」的问题没关闭时进入 Downstream；把地图提交进仓库</td>
+<td>design 问题清单里有标「阻塞」的 QUES 没解决时进入 Downstream；把地图提交进仓库</td>
 </tr>
 <tr>
 <td>spec-organize（内部工具，不交付）</td>
@@ -97,7 +97,7 @@
 </tr>
 <tr>
 <td>四个例子（<a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-Q">PRD-Q</a>）</td>
-<td>写进两个 skill 的 <code>SKILL.md</code> 正文，由 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-S">TST-S</a> 检查</td>
+<td>写进 spec-write、spec-review 的 <code>SKILL.md</code> 正文，由 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-S">TST-S</a> 检查；wayfinder 不需要</td>
 </tr>
 </tbody></table></div>
 <h3>User Stories</h3>
@@ -109,13 +109,13 @@
 <h3>Implementation Decisions</h3>
 <ul>
 <li><strong>以谁为准：</strong> 以本篇为准。<code>SKILL.md</code> 和本篇冲突时，先改本篇，再改 <code>SKILL.md</code>。这条沿用「按关注点分权威」的原则（document-standard 的 DSGN-G）。</li>
-<li><strong>故意不定义：</strong> 失败处理、迁移、信息来源可信度分级、数据清理；版本只是来源标记（<a href="../decision-history/spec-driven-development-decision-history.html#ard-cc">ARD-CC</a>，重述已划掉的 <a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-AF">ARD-AF</a>）。</li>
-<li><strong>四个例子：</strong> 两个 skill 的正文都要提到盖 shed、北京旅游、数学题、股票（<a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-Q">PRD-Q</a>）。它们只是说明用的例子，不是本仓库的 gold。</li>
+<li><strong>故意不定义：</strong> 失败处理、迁移、信息来源可信度分级、数据清理；版本只是来源标记，每次 build 末位加 1（<a href="../decision-history/spec-driven-development-decision-history.html#ard-ck">ARD-CK</a>，重述已划掉的 <a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-AF">ARD-AF</a>）。</li>
+<li><strong>四个例子：</strong> spec-write、spec-review 的正文都要提到盖 shed、北京旅游、数学题、股票（<a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-Q">PRD-Q</a>）。它们只是说明用的例子，不是本仓库的 gold。</li>
 <li><strong>暂时测不了的：</strong> 阶段编排、单次改动大小、不同模型之间的偏差，按 <a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-I">PRD-I</a> 标为 <code>Unverified</code>。</li>
 </ul>
 <h3>Testing Decisions</h3>
 <ul>
-<li><a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-S">TST-S</a>：两个 skill 的 <code>SKILL.md</code> 都包含四个例子。</li>
+<li><a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-S">TST-S</a>：spec-write、spec-review 的 <code>SKILL.md</code> 都包含四个例子。</li>
 <li><a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-O">TST-O</a>、<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-P">TST-P</a>：PRD 的每条需求都能在 design 里找到对应；归属、证据、<code>UNKNOWN</code> 写得对。</li>
 <li><a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-Q">TST-Q</a>：mock MCP 调用打印出记录，并且没有真实副作用。</li>
 <li><a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-V">TST-V</a>：每篇文档本科生读得懂。</li>
@@ -192,6 +192,10 @@
 <tr>
 <td>2026-11-24</td>
 <td>交付物加上 wayfinder（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CH">ARD-CH</a>）；spec-review 另读三份审查参考（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CI">ARD-CI</a>）</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 8 轮审查后：spec-write 加重建网页职责（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CF">ARD-CF</a>）；四个例子只要求 spec-write、spec-review；wayfinder 阻塞以 QUES 为准</td>
 </tr>
 </tbody></table></div>
       </div>

@@ -33,7 +33,7 @@
       <div class="doc-body">
         <h2>Document Standard — 给人读的 HTML 页面（Design）</h2>
 <p>本篇是 <a href="document-standard-design.html">document-standard-design.md</a> 的分篇，规则编号 <a class="id-ref" href="#DSGN-N">DSGN-N</a>。需求见 <a href="../prd/document-standard-prd-spec-reader-html.html">reader PRD</a>（<a class="id-ref" href="../prd/document-standard-prd-spec-reader-html.html#PRD-A">PRD-A</a> 到 <a class="id-ref" href="../prd/document-standard-prd-spec-reader-html.html#PRD-P">PRD-P</a>）。路径规则和 <a class="id-ref" href="document-standard-design.html#DSGN-B">DSGN-B</a> 一致，内容优先级和 <a class="id-ref" href="document-standard-design.html#DSGN-I">DSGN-I</a> 一致，编号和 <a class="id-ref" href="document-standard-design.html#DSGN-F">DSGN-F</a> 一致。术语见 <a href="../../../design/spec-driven-development-design.html#glossary">parent design 的术语表</a>。</p>
-<p>生成网页时要遵守的规则摘要在 <a href="../../../../../../../skills/spec-html-standard/SPEC-HTML-STANDARD.md"><code>SPEC-HTML-STANDARD.md</code></a> 和 <a href="../../../../../../../skills/spec-html-standard/SPEC-PRESENTATION.md"><code>SPEC-PRESENTATION.md</code></a>，它们是两个 skill 要读的三份标准文件中的两份（<a href="../../../decision-history/spec-driven-development-decision-history.html#ard-bx">ARD-BX</a>）。markdown 是全文，HTML 只是方便阅读的视图。spec-write 只改 markdown；spec-review 检查 HTML 有没有丢内容（<a href="../../../decision-history/spec-driven-development-decision-history.html#ard-aj">ARD-AJ</a>）。</p>
+<p>生成网页时要遵守的规则摘要在 <a href="../../../../../../../skills/spec-html-standard/SPEC-HTML-STANDARD.md"><code>SPEC-HTML-STANDARD.md</code></a> 和 <a href="../../../../../../../skills/spec-html-standard/SPEC-PRESENTATION.md"><code>SPEC-PRESENTATION.md</code></a>，它们是 spec-write、spec-review 要读的三份标准文件中的两份（<a href="../../../decision-history/spec-driven-development-decision-history.html#ard-ch">ARD-CH</a> 重述 <a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-BX">ARD-BX</a>）。markdown 是全文，HTML 只是方便阅读的视图。spec-write 只改 markdown；spec-review 检查 HTML 有没有丢内容（<a href="../../../decision-history/spec-driven-development-decision-history.html#ard-aj">ARD-AJ</a>）。</p>
 <h3>Problem Statement</h3>
 <ol>
 <li>feature spec 有很多篇、好几层，人很难一次读完。</li>
@@ -247,7 +247,7 @@
 <h3>Further Notes</h3>
 <ul>
 <li>早期手工维护的汇编页，很多 design 只剩一句口号。改为脚本从 markdown 全文生成后，按 <a class="id-ref" href="#DSGN-N-B">DSGN-N-B</a> 检查。</li>
-<li>parent design 已经写明网页的路径。交付物只有 spec-write 和 spec-review（<a href="../../../decision-history/spec-driven-development-decision-history.html#ard-bx">ARD-BX</a>）；网页的规则在 <code>skills/spec-html-standard/</code>。</li>
+<li>parent design 已经写明网页的路径。交付物是 spec-write、spec-review 和 wayfinder（<a href="../../../decision-history/spec-driven-development-decision-history.html#ard-ch">ARD-CH</a>）；网页的规则在 <code>skills/spec-html-standard/</code>。</li>
 </ul>
 <h3>Alternatives Considered</h3>
 <ul>
@@ -374,6 +374,10 @@
 <tr>
 <td>2026-11-24</td>
 <td><a class="id-ref" href="#DSGN-N-E">DSGN-N-E</a>：spec-write 改完问要不要重建，commit 前必须重建（parent <a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-CF">ARD-CF</a>）</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 8 轮审查后：交付物改为三个 skill，改链 <a class="id-ref" href="../../../decision-history/spec-driven-development-decision-history.html#ARD-CH">ARD-CH</a></td>
 </tr>
 </tbody></table></div>
       </div>
