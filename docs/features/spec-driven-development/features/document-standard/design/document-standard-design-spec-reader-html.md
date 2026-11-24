@@ -142,9 +142,9 @@ spec-pipeline 里的 `SPEC-READER.md` 如果还在，只能是指向本篇和 `S
 
 来源：reader PRD 的 PRD-M。
 
-- parent 或任何 sub-feature 的已提交文档有实质修改（尤其是 L1、L2）之后，重新生成（NICE；网页过期由 parent test-plan 的 TST-R 检查）。
+- parent 或任何 sub-feature 的已提交文档有实质修改（尤其是 L1、L2）之后，commit 前必须重新生成（MUST，parent ARD-CF；网页过期由 parent test-plan 的 TST-R 检查）。
 - 用户明确要求时，例如「生成 reader」「生成网页」「reader 太简略了，补全」。
-- 只改了错别字的提交，不必每次都重新生成（NICE）。
+- 只改错别字的提交也一样：改了 markdown 就重新生成，TST-R 要求网页和重新生成的一致。
 
 #### DSGN-N-G — 以后的 markdown 转 HTML
 
@@ -239,3 +239,4 @@ spec-pipeline 里的 `SPEC-READER.md` 如果还在，只能是指向本篇和 `S
 | 2026-11-24 | 全站每页都能从入口点到；GitHub Pages 从 master 发布（ARD-CD） |
 | 2026-11-24 | DSGN-N-E：spec-write 改完问要不要重建，commit 前必须重建（parent ARD-CF） |
 | 2026-11-24 | 第 8 轮审查后：交付物改为三个 skill，改链 ARD-CH |
+| 2026-11-24 | 第 14 轮审查后：DSGN-N-F 改为 commit 前必须重建（parent ARD-CF），去掉错别字例外 |

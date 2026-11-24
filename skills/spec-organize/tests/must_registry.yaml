@@ -21,192 +21,192 @@ items:
     method: llm
     check: ''
   - id: MUST-E
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:151
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:152
     text: '这些路径必须写进 `.gitignore` 或用等效的办法排除。误提交算违反 DSGN-M 的 MUST。这些文件不需要 frontmatter、Change Log，也不进 INDEX。'
     method: python
     check: 'no_commit'
   - id: MUST-F
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:153
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:154
     text: '**本地翻译副本（MUST）。** `<name>.<lang>.md` 这样的翻译副本只放在本地，不提交。副本开头写明以 `<name>.md` 为准；副本里的标题可以翻译（[ARD-AU](../../../decision-history/spec-driven-development-decision-history.md#ard-au)）。'
     method: llm
     check: ''
   - id: MUST-G
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:172
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:173
     text: '- 质量要求（MUST）：磁盘上有、INDEX 里没列的，叫孤立文档；INDEX 里列了、磁盘上没有的，叫死链。两种都不允许。'
     method: python
     check: 'index_book'
   - id: MUST-H
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:185
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:186
     text: '- 原文还是 `state: draft` 时，可以暂不更新摘要；`final` 或已合并的改动必须反映到 book。'
     method: llm
     check: ''
   - id: MUST-I
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:197
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:198
     text: '**frontmatter（MUST）。** 每篇已提交的文档开头都有：'
     method: python
     check: 'frontmatter'
   - id: MUST-J
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:210
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:211
     text: '**必需章节（MUST）。** 每种文档必须有下面这些 `##` 章节。标题用英文原文，不翻译、不编号、不改名、不删；可以另外加章节。比如把 Overview 写成 `## 1. 概述` 就违反规则。其他章节只有写有序步骤时才编号；例外是 Problem Statement 下面作者原话的小标题可以保留编号（[ARD-BS](../../../decision-history/spec-driven-development-decision-history.md#ard-bs)）。'
     method: python
     check: 'sections'
   - id: MUST-K
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:239
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:240
     text: '**impl-plan 正文（MUST，由 spec-write 执行）。** 每个 `IMPL-*` 写明三件事：依赖哪个任务、挡住了哪个任务、完成标准。依赖和挡住要两头对得上：A 写了挡住 B，B 就要写依赖 A。最后的执行顺序把被挡住的任务排在后面，例如先改数据库，再改用到它的接口。优先级高又没被挡住的先做；互不相挡的可以同时做。先做只读的部分，再做会写入的部分；对方的接口还没上线时，写明用什么 mock 代替（[ARD-AT](../../../decision-history/spec-driven-development-decision-history.md#ard-at)）。'
     method: llm
     check: ''
   - id: MUST-L
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:241
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:242
     text: '**引用代码（MUST）。** 写「某文件第几行」时，同时写明是哪个 commit（[ARD-AQ](../../../decision-history/spec-driven-development-decision-history.md#ard-aq)）。'
     method: python
     check: 'code_citation_base'
   - id: MUST-M
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:243
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:244
     text: '**未决问题清单（MUST）。** 每个 feature 只有一份未决问题清单，一般是 design 的 `## Open Questions`；其他文档链过去，不抄一份。每个条目编号是 `QUES-` 加字母，写明问题、目前答案、负责人，以及是否阻塞（[ARD-AO](../../../decision-history/spec-driven-development-decision-history.md#ard-ao)、[ARD-AG](../../../decision-history/spec-driven-development-decision-history.md#ard-ag)）。在别处提到某个问题时，写的「未决」或「已决」要和清单一致（[ARD-BC](../../../decision-history/spec-driven-development-decision-history.md#ard-bc)）。'
     method: python
     check: 'open_questions'
   - id: MUST-N
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:245
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:246
     text: '**可读性（MUST）。** 来源：parent PRD 的 PRD-M。一个本科水平的程序员，只读这一篇和术语表，就要能读懂（[ARD-BO](../../../decision-history/spec-driven-development-decision-history.md#ard-bo)，由 parent test-plan 的 TST-V 检查）。具体要求：'
     method: llm
     check: ''
   - id: MUST-BA
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:252
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:253
     text: '**插图（MUST）。** 图里不写正文没有的事实，也不和正文矛盾；L1 内容不能只出现在图里。spec-review 发现时报严重度 3，并写出 SVG 文件名（[ARD-CA](../../../decision-history/spec-driven-development-decision-history.md#ard-ca)）。'
     method: llm
     check: ''
   - id: MUST-O
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:254
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:255
     text: '**Decision Log（MUST）。** 表头是 `ID | Date | Decision`，可以加第四列 `Ready`；不能有 Status 列和 Supersedes 列（[ARD-AX](../../../decision-history/spec-driven-development-decision-history.md#ard-ax)）。最新的决定写在表的最上面。'
     method: python
     check: 'decision_log'
   - id: MUST-P
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:256
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:257
     text: '**Change Log（MUST）。** 每篇文档的最后一节，只往末尾追加，不改旧行。'
     method: python
     check: 'change_log'
   - id: MUST-Q
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:273
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:274
     text: '**编号永不改（MUST）。** 一个编号一旦写进文档（表格、标题、正文、外部链接），就永远不变：不改字母、不改前缀、不「修正拼写」、不重新编号、不把一个条目并进另一个。用过的编号即使条目已作废，也不再给别的条目用。说法变了，就起一个新编号，旧的按 DSGN-J 处理。'
     method: llm
     check: ''
   - id: MUST-R
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:275
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:276
     text: '**迁移时留对照（MUST）。** 如果确实必须改编号（例如修正不合规的编号，要记一条 ARD），保留一张新旧编号对照表。标题改名时，把旧锚点留在新标题上方，旧链接才不会失效（[ARD-AP](../../../decision-history/spec-driven-development-decision-history.md#ard-ap)）。'
     method: llm
     check: ''
   - id: MUST-S
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:277
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:278
     text: '**凡是要被引用的都要编号（MUST）。** 需求、design 的规则小节、实现任务、测试用例、延后或未决的问题，都必须用上表的格式。不能用纯数字（`0001`），也不能用 `PRD-1`、`FR-3`、`OQ-1`、`QUES-1`、`D1` 这类数字编号。一个规则小节下面的子条款，可以在后面再加一个字母，例如 `DSGN-N-A`，只在本篇内使用。'
     method: python
     check: 'ids'
   - id: MUST-T
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:279
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:280
     text: '**编号的范围（MUST）。** 编号在「同一个 feature 的同一种文档」里唯一。引用别的 feature 的编号时写成 `<feature>/<编号>`，例如 `document-standard/DSGN-B`，或者在句子里写明是哪个 feature。不带 feature 的编号只在本 feature 内有意义。'
     method: llm
     check: ''
   - id: MUST-U
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:285
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:286
     text: '**改已有正文（MUST，由 spec-write 执行）。** 正文只写现行规则：不再成立的句子直接改写，在新句后面链到推翻旧说法的 ARD。删除线只用在 decision-history，正文的旧版本从 git 历史里找。错别字直接改（[ARD-BM](../../../decision-history/spec-driven-development-decision-history.md#ard-bm)、[ARD-AS](../../../decision-history/spec-driven-development-decision-history.md#ard-as)）。'
     method: llm
     check: ''
   - id: MUST-V
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:340
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:341
     text: '**每条都有一节说明（MUST）。** 每条 ARD 在 Evidence Appendix 里有一节，写明原因；当时考虑过别的做法，就写出放弃了哪些、为什么。'
     method: llm
     check: ''
   - id: MUST-W
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:354
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:355
     text: '新建 feature 或文件时，必须和已有的名字比一比。符合下面任何一条，就算撞车：'
     method: python
     check: 'collision'
   - id: MUST-X
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:391
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:392
     text: '- DSGN-A 契约全部满足，包括编号永不改、永不复用（DSGN-F）。'
     method: llm
     check: ''
   - id: MUST-Y
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:392
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:393
     text: '- 冲突不能悄悄处理（DSGN-G）。'
     method: llm
     check: ''
   - id: MUST-Z
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:393
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:394
     text: '- 不删 L1（DSGN-I）。'
     method: llm
     check: ''
   - id: MUST-AA
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:394
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:395
     text: '- 合并文档时不丢任何决定。'
     method: llm
     check: ''
   - id: MUST-AB
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:395
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:396
     text: '- 不能提交的路径没有被提交（DSGN-C）。'
     method: python
     check: 'no_commit'
   - id: MUST-AC
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:396
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:397
     text: '- INDEX 没有孤立文档和死链；文档里的链接和锚点都能打开（[ARD-AP](../../../decision-history/spec-driven-development-decision-history.md#ard-ap)）。指向 `raw/` 的链接不算死链（[ARD-BW](../../../decision-history/spec-driven-development-decision-history.md#ard-bw)）。'
     method: python
     check: 'index_book'
   - id: MUST-AD
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:397
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:398
     text: '- 推送 `docs/features/` 的改动时，INDEX 和 book 已经同步。'
     method: python
     check: 'index_book'
   - id: MUST-AE
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:398
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:399
     text: '- 新名字已经检查过撞车（DSGN-K）。'
     method: python
     check: 'collision'
   - id: MUST-AF
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:399
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:400
     text: '- 正文改动遵守 DSGN-F 的「改已有正文」规则。'
     method: llm
     check: ''
   - id: MUST-AG
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:400
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:401
     text: '- 结论有依据，查不到写 `UNKNOWN`（pipeline design 的 PIPE-L）。'
     method: llm
     check: ''
   - id: MUST-AH
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:401
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:402
     text: '- DSGN-E 里标了 MUST 的四条都满足：impl-plan 的任务写明依赖、挡住和完成标准；引用代码写明 commit；每个 feature 只有一份未决问题清单；文档能让本科程序员读懂。'
     method: llm
     check: ''
   - id: MUST-AI
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:402
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:403
     text: '- 本地翻译副本不提交（DSGN-C）；改编号时留对照表和旧锚点（DSGN-F）；每条 ARD 都有说明（DSGN-J）。'
     method: llm
     check: ''
   - id: MUST-BB
-    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:403
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:404
     text: '- 图不写正文没有的事实，也不和正文矛盾（DSGN-E 的「插图」）。'
     method: llm
     check: ''
   - id: MUST-AJ
-    source: docs/features/spec-driven-development/features/pipeline/design/pipeline-design.md:91
+    source: docs/features/spec-driven-development/features/pipeline/design/pipeline-design.md:93
     text: '7. 子问题（PRD-L）：每个子问题标明「AI 查」「人决定」或「AI 查完人决定」。人没问到的盲区和风险，AI 必须主动提出来。'
     method: llm
     check: ''
   - id: MUST-AK
-    source: docs/features/spec-driven-development/features/pipeline/design/pipeline-design.md:167
+    source: docs/features/spec-driven-development/features/pipeline/design/pipeline-design.md:169
     text: '有子问题的 feature，它的 design 必须有一张「子问题归属」表。纯标准或纯流程的 design 可以注明不适用。'
     method: llm
     check: ''
   - id: MUST-AL
-    source: docs/features/spec-driven-development/features/pipeline/design/pipeline-design.md:173
+    source: docs/features/spec-driven-development/features/pipeline/design/pipeline-design.md:175
     text: '- 归属只能是这三种之一。人没问到的盲区和风险，AI 必须主动加行。'
     method: llm
     check: ''
   - id: MUST-AM
-    source: docs/features/spec-driven-development/features/pipeline/design/pipeline-design.md:174
+    source: docs/features/spec-driven-development/features/pipeline/design/pipeline-design.md:176
     text: '- 依据必须能追溯；查不到写 `UNKNOWN`，不能写推测。'
     method: llm
     check: ''
   - id: MUST-AN
-    source: docs/features/spec-driven-development/design/spec-driven-development-design.md:130
+    source: docs/features/spec-driven-development/design/spec-driven-development-design.md:132
     text: '实现 SDD 或文档标准时，计划里必须同时包含 skill 的修改和 CLAUDE 层的条目，两边写的是同一套规范。规则的细节写在 sub-feature 的 design 里，本文只定「两个渠道都要写」这条原则。'
     method: llm
     check: ''
@@ -263,6 +263,11 @@ items:
   - id: MUST-AY
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design-spec-reader-html.md:126
     text: '- 页面标题、节、小节、条目的字号、粗细、样式各不相同；段落前面不加 a、b、c 或 1、2、3 这类序号（MUST）。'
+    method: llm
+    check: ''
+  - id: MUST-BC
+    source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design-spec-reader-html.md:145
+    text: '- parent 或任何 sub-feature 的已提交文档有实质修改（尤其是 L1、L2）之后，commit 前必须重新生成（MUST，parent ARD-CF；网页过期由 parent test-plan 的 TST-R 检查）。'
     method: llm
     check: ''
   - id: MUST-AZ

@@ -36,4 +36,4 @@ if ! python3 -m pytest --version >/dev/null 2>&1; then
     exit 1
   fi
 fi
-"${PYTEST[@]}" skills/spec-organize/tests/test_checks.py -q
+"${PYTEST[@]}" skills/spec-organize/tests/test_checks.py skills/spec-organize/tests/test_judge_freshness.py -q

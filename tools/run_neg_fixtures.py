@@ -40,6 +40,7 @@ from checks.figure_tree import check_figure_tree  # noqa: E402
 CASES: list[tuple[str, str, object]] = [
     ("missing-frontmatter", "frontmatter", check_frontmatter),
     ("bad-filename", "paths", check_committed_path),
+    ("stale-slug-no-frontmatter", "paths", check_committed_path),
     ("bad-frontmatter-key", "frontmatter", check_frontmatter),
     ("bad-index", "index_book", check_index_book),
     ("bad-index-dead-link", "index_book", check_index_book),

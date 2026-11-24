@@ -53,12 +53,31 @@ def _canonical_name(name: str, feature_dir: str, type_dir: str) -> bool:
     return bool(re.match(rf"^{prefix}(?:-{part})?\.md$", name))
 
 
+def _is_cited(path: Path) -> bool:
+    """True when another .md in the same feature links to this file by name."""
+    link = re.compile(
+        rf"(?:\]\(|^\[[^\]]+\]:\s*)<?(?:[^)\s>]*/)?{re.escape(path.name)}(?:#[^)\s>]*)?>?(?:\)|\s|$)",
+        re.MULTILINE,
+    )
+    for other in sorted(path.parent.parent.rglob("*.md")):
+        if other.resolve() == path.resolve():
+            continue
+        try:
+            if link.search(other.read_text(encoding="utf-8")):
+                return True
+        except (OSError, UnicodeDecodeError):
+            continue
+    return False
+
+
 def supporting_type(path: Path, text: str | None = None) -> str | None:
     """Type folder of a supporting file (DSGN-B), else None.
 
     A supporting file is an .md in a type folder whose frontmatter declares no
-    committed `type:`. A file with the canonical document name stays a document,
-    so a missing frontmatter block on it is still reported.
+    committed `type:` and that another .md in the same feature cites (links to).
+    A file with the canonical document name stays a document, so a missing
+    frontmatter block on it is still reported; so does an uncited, wrongly named
+    file (e.g. a stale slug), which is checked as a document.
     """
     loc = _type_folder(path)
     if loc is None or _canonical_name(path.name, *loc):
@@ -68,7 +87,9 @@ def supporting_type(path: Path, text: str | None = None) -> str | None:
             text = path.read_text(encoding="utf-8")
         except OSError:
             return None
-    return None if _declares_type(text) else loc[1]
+    if _declares_type(text) or not _is_cited(path):
+        return None
+    return loc[1]
 
 
 def is_supporting_file(path: Path, text: str | None = None) -> bool:

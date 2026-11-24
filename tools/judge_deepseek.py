@@ -24,6 +24,9 @@ from pathlib import Path
 
 import yaml
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from verify_sdd_tools_manifest import sdd_tool_names  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[1]
 TESTS = ROOT / "skills/spec-organize/tests"
 SDD = ROOT / "docs/features/spec-driven-development"
@@ -93,7 +96,9 @@ def corpus_files() -> list[Path]:
         for p in sorted(SDD.rglob("*.md"))
         if not p.name.startswith("._") and "raw" not in p.parts and "site" not in p.parts
     ]
-    docs += [INDEX]  # gold BAD-A judges the INDEX entries; corpus() keeps only SDD lines
+    # tests/annotations.yaml BAD-A (check: index_complete) judges INDEX entries, not
+    # gold/v1/annotations.yaml BAD-A (numeric ids); corpus() keeps only SDD lines.
+    docs += [INDEX]
     docs += [ROOT / "skills/spec-organize/SPEC-STANDARD.md"]
     docs += [
         ROOT / f"skills/{n}/SKILL.md"
@@ -111,7 +116,10 @@ def corpus_files() -> list[Path]:
         "run_gold_eval.py",
         "score_run.py",
     }
-    code = [p for p in sorted((ROOT / "tools").glob("*.py")) if p.name not in skip]
+    # Only the SDD tool set (README-SDD manifest), so an unrelated new tool in
+    # tools/ does not make the judgments stale.
+    sdd_tools = sdd_tool_names()
+    code = [p for p in sorted((ROOT / "tools").glob("*.py")) if p.name in sdd_tools and p.name not in skip]
     code += sorted((TESTS / "checks").glob("*.py"))
     harness_tests = {"test_judge_freshness.py", "test_tst_e_gold.py"}
     code += [p for p in sorted(TESTS.glob("test_*.py")) if p.name not in harness_tests]

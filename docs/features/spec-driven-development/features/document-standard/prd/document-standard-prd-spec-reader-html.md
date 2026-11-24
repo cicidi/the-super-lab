@@ -42,7 +42,7 @@ spec 的正式版本是已提交的 markdown。但一个 parent feature 往往�
 | PRD-J | 生成 HTML 必须遵守 DSGN-N 的保真规则，和 document-standard 的 DSGN-I 一致：L1 不删；L2 可以写得更短，但不能删掉事实；L3、L4 可以概括，但必须链到原文 |
 | PRD-K | 不能把整篇 design 或 PRD 压成一段概述。如果一种文档拆成了多个分篇，网页必须按分篇分开展示，每个分篇的 L1 都保留 |
 | PRD-L | 全站视觉风格统一：衬线字体的标题、等宽字体的编号标签、浅色的提示框。这一条是 NICE：做不到只提醒，不算失败（[ARD-BY](../../../decision-history/spec-driven-development-decision-history.md#ard-by)） |
-| PRD-M | spec-write 改完 markdown 后，应该提示重新生成网页；用户要求时也重新生成。生成时必须按 `skills/spec-html-standard/SPEC-HTML-STANDARD.md` 做（没有单独的 reader skill） |
+| PRD-M | spec-write 改完 markdown 后，应该提示重新生成网页；用户要求时也重新生成；commit 前必须重新生成（parent ARD-CF）。生成时必须按 `skills/spec-html-standard/SPEC-HTML-STANDARD.md` 做（没有单独的 reader skill） |
 | PRD-N | 如果发现 HTML 和 markdown 说法不一致，或者 HTML 暴露出 spec 本身的错误：先报告并问人，先改 markdown，再重新生成 HTML（和 DSGN-G 的原则一样） |
 
 ## Non-Functional Requirements
@@ -71,3 +71,4 @@ spec 的正式版本是已提交的 markdown。但一个 parent feature 往往�
 | 2026-11-20 | 第 1 轮审查后：链回新的入口文件 document-standard-prd.md（ARD-BQ）；PRD-C 写明 pipeline 没有单独页面（ARD-BI） |
 | 2026-11-20 | 第 2 轮审查后：PRD-L 降为 NICE（ARD-BY）；MkDocs、git hook 第一次出现时解释 |
 | 2026-11-24 | PRD-O：阅读时不需要服务器，发布由 CI 生成（ARD-CD） |
+| 2026-11-24 | 第 14 轮审查后：PRD-M 加 commit 前必须重建（parent ARD-CF） |

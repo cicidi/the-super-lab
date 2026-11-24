@@ -179,7 +179,7 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 
 - **一个 skill 同时负责写和审**：放弃。自己审自己写的东西，容易看不出问题（[ARD-AJ](../decision-history/spec-driven-development-decision-history.md#ard-aj)）。
 - **一篇大文档装下所有内容**：放弃。很快会超过行数上限，而且「要什么」「为什么」「怎么做」混在一起，改一处要翻全篇。
-- **保留 spec-pipeline 作为统一入口**：放弃。四个 skill 让使用者不知道该从哪个开始；写和审两个动作已经覆盖全部场景（[ARD-AJ](../decision-history/spec-driven-development-decision-history.md#ard-aj)）。
+- **保留 spec-pipeline 作为统一入口**：放弃。四个入口让使用者不知道该从哪个开始；写、审两个入口加上负责进度的 wayfinder 覆盖全部场景（[ARD-CH](../decision-history/spec-driven-development-decision-history.md#ard-ch)、[ARD-AJ](../decision-history/spec-driven-development-decision-history.md#ard-aj)）。
 
 ## Drawbacks
 
@@ -380,3 +380,4 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 | 2026-11-24 | 第 8 轮审查后：三个交付 skill（ARD-CH）；复核 5 次（ARD-CJ）；DSGN-A 加新建文件例外（ARD-CE）；术语表加地图目录、brief、交付物、claude_audit，改写 BMAD、GSD；新增 QUES-E；Drawbacks 加 wayfinder 分叉 |
 | 2026-11-24 | 第 9 轮审查后：链到已划掉 ARD 的地方改链；QUES-A 改为三个交付 skill |
 | 2026-11-24 | 第 10 轮审查后：分数 2 最高分写对；QUES-D、QUES-E 按编号排 |
+| 2026-11-24 | 第 14 轮审查后：放弃 spec-pipeline 的理由跟上 ARD-CH |

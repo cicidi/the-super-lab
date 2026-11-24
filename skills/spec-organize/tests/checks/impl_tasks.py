@@ -8,9 +8,12 @@ from pathlib import Path
 from checks.frontmatter import Finding, _parse_frontmatter
 
 _DONE = re.compile(r"Done when|Verify:|完成标准")
-_IMPL_ID = re.compile(r"IMPL-[A-Z]+\b")
-_DEPS = re.compile(r"依赖：(.*?)(?=挡住：|$)", re.MULTILINE)
-_BLOCKS = re.compile(r"挡住：(.*)$", re.MULTILINE)
+# No `\b`: `IMPL-K的…` (CJK right after the id) must still match.
+_IMPL_ID = re.compile(r"IMPL-[A-Z]+(?![A-Z])")
+_DEPS_LABEL = r"(?:依赖|Depends on)\s*[：:]"
+_BLOCKS_LABEL = r"(?:挡住|Blocks)\s*[：:]"
+_DEPS = re.compile(rf"{_DEPS_LABEL}(.*?)(?={_BLOCKS_LABEL}|$)", re.MULTILINE)
+_BLOCKS = re.compile(rf"{_BLOCKS_LABEL}(.*)$", re.MULTILINE)
 
 
 def _ids(pattern: re.Pattern[str], body: str) -> set[str]:

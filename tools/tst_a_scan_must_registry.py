@@ -73,11 +73,12 @@ def _index(letters: str) -> int:
     return n - 1
 
 
-def _existing_ids() -> tuple[dict[str, str], int]:
-    """Map rule text -> MUST id from the current registry, and the next unused index.
+def _existing_ids() -> tuple[dict[str, dict], int]:
+    """Map rule text -> registry item from the current registry, and the next unused index.
 
     Ids never change and are never reused (document-standard DSGN-F): a rule whose
-    text is unchanged keeps its id; a new rule gets the next letter after the
+    text is unchanged keeps its id, method and check, and only its `source:` line
+    moves to where the text now sits; a new rule gets the next letter after the
     highest one ever written; a removed rule's id is retired.
     """
     if not REGISTRY.is_file():
@@ -85,8 +86,8 @@ def _existing_ids() -> tuple[dict[str, str], int]:
     import yaml
 
     data = yaml.safe_load(REGISTRY.read_text(encoding="utf-8")) or {}
-    known = {it["text"]: it["id"] for it in data.get("items", [])}
-    used = [_index(i.split("-", 1)[1]) for i in known.values()]
+    known = {it["text"]: it for it in data.get("items", [])}
+    used = [_index(it["id"].split("-", 1)[1]) for it in known.values()]
     return known, (max(used) + 1 if used else 0)
 
 
@@ -104,17 +105,17 @@ def main() -> None:
         for i, line in rule_lines(path.read_text(encoding="utf-8")):
             text = line.strip()[:500]
             print(f"{rel}:{i}: {text[:120]}")
-            ident = known.get(text)
-            if ident is None:
-                ident = f"MUST-{_letter(next_index)}"
+            old = known.get(text)
+            if old is None:
+                old = {"id": f"MUST-{_letter(next_index)}", "method": "llm", "check": ""}
                 next_index += 1
             items.append(
                 {
-                    "id": ident,
+                    "id": old["id"],
                     "source": f"{rel}:{i}",
                     "text": text,
-                    "method": "llm",
-                    "check": "",
+                    "method": old.get("method") or "llm",
+                    "check": old.get("check") or "",
                 }
             )
     print(f"\n# candidates: {len(items)}")

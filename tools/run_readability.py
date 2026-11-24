@@ -4,8 +4,9 @@
 Usage:
   python3 tools/run_readability.py DOC.md [DOC.md ...] [--runs 3] [--max-q 20] [--out FILE.json] [--dry-run]
 
-Per run: one question per numbered item (max 20); drop questions the model answers without the
-doc; answer the rest with only the doc and the glossary; grade; list unexplained terms.
+Per run: one question per numbered item (headings, bold `**PRD-A**：` paragraphs, table rows; max
+20, sampled evenly across the doc); a doc with no numbered item fails; drop questions the model
+answers without the doc; answer the rest with only the doc and the glossary; grade; list unexplained terms.
 A run passes at >= 80% correct and 0 unexplained terms. A doc passes when 2 of 3 runs pass.
 --dry-run swaps the API for a deterministic fake model (no network, no key).
 """
@@ -24,7 +25,10 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 EVAL = ROOT / "skills/spec-organize/tests/eval.yaml"
 GLOSSARY_DOC = ROOT / "docs/features/spec-driven-development/design/spec-driven-development-design.md"
-ID_HEAD = re.compile(r"^(#{2,4})\s+((?:PRD|DSGN|PIPE|IMPL|TST|ARD)-[A-Z]+)\b.*$", re.M)
+_ID = r"((?:PRD|DSGN|PIPE|IMPL|TST|ARD)-[A-Z]+)(?![A-Z])"
+ID_HEAD = re.compile(rf"^(#{{2,4}})\s+{_ID}.*$", re.M)
+ID_BOLD = re.compile(rf"^\*\*{_ID}\*\*", re.M)  # PRDs: **PRD-A**：…
+ID_ROW = re.compile(rf"^\|\s*{_ID}\s*\|.*$", re.M)  # | PRD-A | … |
 PASS_ACCURACY = 0.8
 MAX_ITEM_CHARS = 1500
 
@@ -45,20 +49,35 @@ def glossary_text() -> str:
     return text[start : end if end > 0 else len(text)]
 
 
+def _sample(items: list, k: int) -> list:
+    """k items spread evenly from first to last (deterministic), not the first k."""
+    n = len(items)
+    return items if n <= k else [items[i * n // k] for i in range(k)]
+
+
 def extract_items(text: str, max_q: int) -> list[dict[str, str]]:
-    heads = list(ID_HEAD.finditer(text))
-    items = []
-    for i, m in enumerate(heads):
+    # (rank, position, id, text): a heading section beats a bold paragraph beats a table row.
+    found = []
+    for m in ID_HEAD.finditer(text):
         level = len(m.group(1))
         stop = len(text)
         for later in re.finditer(r"^(#{1,6})\s", text[m.end() :], re.M):
             if len(later.group(1)) <= level:
                 stop = m.end() + later.start()
                 break
-        items.append({"id": m.group(2), "text": text[m.start() : stop].strip()[:MAX_ITEM_CHARS]})
-    seen: set[str] = set()
-    unique = [it for it in items if not (it["id"] in seen or seen.add(it["id"]))]
-    return unique[:max_q]
+        found.append((0, m.start(), m.group(2), text[m.start() : stop]))
+    for m in ID_BOLD.finditer(text):
+        end = re.search(r"\n\s*\n|\n#", text[m.start() :])
+        found.append((1, m.start(), m.group(1), text[m.start() : m.start() + end.start() if end else len(text)]))
+    for m in ID_ROW.finditer(text):
+        found.append((2, m.start(), m.group(1), m.group(0)))
+    best: dict[str, tuple] = {}
+    for f in found:
+        if f[2] not in best or f[:2] < best[f[2]][:2]:
+            best[f[2]] = f
+    ordered = sorted(best.values(), key=lambda f: f[1])
+    items = [{"id": f[2], "text": f[3].strip()[:MAX_ITEM_CHARS]} for f in ordered]
+    return _sample(items, max_q)
 
 
 def _prompt(task: str, instructions: str, payload: dict) -> str:
@@ -118,7 +137,14 @@ def unexplained_terms(doc: str, glossary: str, ask: Ask) -> list[str]:
 
 
 def run_once(doc: str, glossary: str, ask: Ask, max_q: int) -> dict:
-    questions = make_questions(extract_items(doc, max_q), ask)
+    items = extract_items(doc, max_q)
+    if not items:
+        # Nothing to ask about is a failure to flag, not a perfect score.
+        return {
+            "questions": 0, "dropped_by_control": 0, "kept": 0, "correct": 0, "accuracy": 0.0,
+            "unexplained_terms": [], "passed": False, "flag": "no numbered items",
+        }
+    questions = make_questions(items, ask)
     control = grade(questions, answer(questions, ask, None, glossary), ask)
     kept = [q for q in questions if not control.get(q["id"], False)]
     grades = grade(kept, answer(kept, ask, doc, glossary), ask) if kept else {}
@@ -211,7 +237,9 @@ def main() -> None:
         reports.append(rep)
         accs = ", ".join(f"{r['accuracy']:.0%}" for r in rep["runs"])
         terms = sorted({t for r in rep["runs"] for t in r["unexplained_terms"]})
-        print(f"{'PASS' if rep['passed'] else 'FAIL'}\t{rep['doc']}\taccuracy {accs}\tterms {terms or '-'}")
+        flags = sorted({r["flag"] for r in rep["runs"] if r.get("flag")})
+        note = f"\tflag {', '.join(flags)}" if flags else ""
+        print(f"{'PASS' if rep['passed'] else 'FAIL'}\t{rep['doc']}\taccuracy {accs}\tterms {terms or '-'}{note}")
     if args.out:
         Path(args.out).write_text(json.dumps({"readability": reports}, ensure_ascii=False, indent=2), encoding="utf-8")
     sys.exit(0 if all(r["passed"] for r in reports) else 1)
