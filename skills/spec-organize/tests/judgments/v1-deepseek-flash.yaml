@@ -1,7 +1,7 @@
 model: deepseek-flash
 runs: 3
 target: must
-corpus_sha: 2f1b5d4ae9859ce1
+corpus_sha: 0af8c04c7e45771f
 items:
 - id: MUST-B
   verdict: pass
@@ -9,8 +9,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'document-standard-design.md DSGN-B: six types may split; entry file links
-    parts; part naming noun/sequence.'
+  evidence: 'document-standard-design.md DSGN-B: six types, all may split, entry <f>-<type>.md
+    links parts; SPEC-STANDARD Path & filename repeats.'
   confidence: 0.95
 - id: MUST-D
   verdict: pass
@@ -18,8 +18,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'document-standard-design.md DSGN-B: entry `<f>-<type>.md` must link each
-    part; collisions DSGN-K.'
+  evidence: 'document-standard-design.md DSGN-B step 3: entry must link parts and
+    collisions go to DSGN-K; SPEC-STANDARD repeats entry-links-parts.'
   confidence: 0.95
 - id: MUST-F
   verdict: pass
@@ -27,8 +27,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'document-standard-design.md DSGN-C: translation copies local only, banner
-    defers to source, headings translatable.'
+  evidence: document-standard-design.md DSGN-C local translation MUST; SPEC-STANDARD
+    Chapter 2 and translation_banner check enforce local-only source note.
   confidence: 0.95
 - id: MUST-H
   verdict: pass
@@ -36,8 +36,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'document-standard-design.md DSGN-D: draft may skip book summary; final/merged
-    changes must reach book.'
+  evidence: 'document-standard-design.md DSGN-D: draft may skip book summary, final/merged
+    must reach book; SPEC-STANDARD INDEX/book repeats.'
   confidence: 0.95
 - id: MUST-K
   verdict: pass
@@ -45,8 +45,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: spec-write/SKILL.md Quality Gates + document-standard-design.md DSGN-E
-    require deps, blocks, done; order/mock.
+  evidence: document-standard-design.md DSGN-E impl-plan MUST; SPEC-STANDARD impl-plan
+    tasks; spec-write quality gate repeats.
   confidence: 0.95
 - id: MUST-N
   verdict: pass
@@ -54,8 +54,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'document-standard-design.md DSGN-E and SPEC-STANDARD Readability: undergrad
-    with doc+glossary; TST-V.'
+  evidence: document-standard-design.md DSGN-E readability MUST; SPEC-STANDARD Readability;
+    spec-write step 12 and gate require undergraduate pass.
   confidence: 0.95
 - id: MUST-Q
   verdict: pass
@@ -63,8 +63,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'document-standard-design.md DSGN-F: IDs immutable, never reused; new
-    ID for changed rule.'
+  evidence: document-standard-design.md DSGN-F IDs immutable/never reused; SPEC-STANDARD
+    IDs repeats immutable and never reused.
   confidence: 0.95
 - id: MUST-R
   verdict: pass
@@ -72,8 +72,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'document-standard-design.md DSGN-F: keep old-new ID table; old anchor
-    above renamed heading.'
+  evidence: document-standard-design.md DSGN-F migration old-new table and old anchors;
+    SPEC-STANDARD IDs repeats; spec-write keeps old anchor.
   confidence: 0.95
 - id: MUST-T
   verdict: pass
@@ -81,8 +81,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'document-standard-design.md DSGN-F: IDs unique per feature/type; cross-feature
-    cite feature/id or name feature.'
+  evidence: document-standard-design.md DSGN-F ID scope and cross-feature citation;
+    SPEC-STANDARD IDs; spec-write cross-check names feature.
   confidence: 0.95
 - id: MUST-U
   verdict: pass
@@ -90,8 +90,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'document-standard-design.md DSGN-F + spec-write/SKILL.md: prose current
-    only, link ARD, strike only decision-history.'
+  evidence: document-standard-design.md DSGN-F edit-prose rule; SPEC-STANDARD Edits;
+    spec-write gate bans strikethrough outside decision-history.
   confidence: 0.95
 - id: MUST-V
   verdict: pass
@@ -99,8 +99,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'document-standard-design.md DSGN-J: every ARD has Evidence Appendix entry
-    with reason/rejected options.'
+  evidence: document-standard-design.md DSGN-J each ARD needs Evidence Appendix reason/rejections;
+    SPEC-STANDARD decision history; spec-write gate.
   confidence: 0.95
 - id: MUST-X
   verdict: pass
@@ -108,17 +108,17 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'document-standard-design.md DSGN-M MUST: DSGN-A contract fully met incl
-    immutable/non-reused IDs.'
-  confidence: 0.92
+  evidence: document-standard-design.md DSGN-M requires full DSGN-A contract incl
+    immutable IDs; SPEC-STANDARD covers contract; spec-review checks MUST.
+  confidence: 0.9
 - id: MUST-Y
   verdict: pass
   votes:
   - pass
   - pass
   - pass
-  evidence: 'document-standard-design.md DSGN-M/DSGN-G and SPEC-STANDARD Conflicts:
-    detect, report, ask; never silent.'
+  evidence: document-standard-design.md DSGN-M/DSGN-G conflicts detect-report-ask;
+    SPEC-STANDARD Conflicts; spec-organize/spec-review report only.
   confidence: 0.95
 - id: MUST-Z
   verdict: pass
@@ -126,8 +126,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'document-standard-design.md DSGN-M/DSGN-I and spec-write Quality Gates:
-    never delete L1.'
+  evidence: document-standard-design.md DSGN-M/DSGN-I L1 never deleted; SPEC-STANDARD
+    Size/Content priority; spec-write gate repeats.
   confidence: 0.95
 - id: MUST-AA
   verdict: pass
@@ -135,8 +135,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'document-standard-design.md DSGN-M/DSGN-L: consolidation preserves every
-    decision; spec-organize gate.'
+  evidence: document-standard-design.md DSGN-M merging loses no decisions; spec-organize
+    Consolidate gate and anti-pattern preserve every decision.
   confidence: 0.95
 - id: MUST-AF
   verdict: pass
@@ -144,8 +144,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'document-standard-design.md DSGN-M and spec-write/SKILL.md: prose edits
-    obey DSGN-F edit-existing-prose.'
+  evidence: document-standard-design.md DSGN-M requires DSGN-F edit-prose; SPEC-STANDARD
+    Edits; spec-write gate requires current rule plus ARD link.
   confidence: 0.95
 - id: MUST-AG
   verdict: pass
@@ -153,8 +153,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'document-standard-design.md DSGN-M, PIPE-L, SPEC-STANDARD: cite evidence;
-    UNKNOWN if not found.'
+  evidence: document-standard-design.md DSGN-M evidence/UNKNOWN; SPEC-STANDARD Chapter
+    3; spec-write step 9 and gate repeat UNKNOWN.
   confidence: 0.95
 - id: MUST-AH
   verdict: pass
@@ -162,8 +162,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'document-standard-design.md DSGN-M + DSGN-E: four MUSTs (deps/blocks/done,
-    commit, one tracker, readable).'
+  evidence: document-standard-design.md DSGN-M lists four DSGN-E MUSTs; SPEC-STANDARD
+    impl/open questions/readability and code commit; spec-write gates.
   confidence: 0.95
 - id: MUST-AI
   verdict: pass
@@ -171,8 +171,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'document-standard-design.md DSGN-M: translation local, ID mapping+anchors,
-    every ARD explained.'
+  evidence: document-standard-design.md DSGN-M lists translation/migration/ARD-explanation;
+    SPEC-STANDARD covers translation, IDs, decision history.
   confidence: 0.95
 - id: MUST-AJ
   verdict: pass
@@ -180,8 +180,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'pipeline-design.md PIPE-D step 7 and PIPE-L: owner one of three; AI adds
-    unseen blind spots/risks.'
+  evidence: pipeline-design.md PIPE-D step 7/PIPE-L; SPEC-STANDARD Sub-problem ownership;
+    spec-write step 9 adds blind-spot rows.
   confidence: 0.95
 - id: MUST-AK
   verdict: pass
@@ -189,8 +189,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'pipeline-design.md PIPE-L and SPEC-STANDARD: design with sub-problems
-    must have ownership table; not-applicable allowed.'
+  evidence: pipeline-design.md PIPE-L requires ownership table or not-applicable note;
+    SPEC-STANDARD Sub-problem ownership repeats.
   confidence: 0.95
 - id: MUST-AL
   verdict: pass
@@ -198,8 +198,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'pipeline-design.md PIPE-L and spec-write/SKILL.md: owner only AI查/人决定/AI查完人决定;
-    add unseen rows.'
+  evidence: pipeline-design.md PIPE-L restricts owner to three values and requires
+    AI-added rows; SPEC-STANDARD and spec-write repeat.
   confidence: 0.95
 - id: MUST-AM
   verdict: pass
@@ -207,8 +207,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'pipeline-design.md PIPE-L and SPEC-STANDARD: evidence traceable to raw/URL/ARD;
-    otherwise UNKNOWN, no guessing.'
+  evidence: pipeline-design.md PIPE-L evidence traceable, unknown as UNKNOWN; SPEC-STANDARD
+    Sub-problem ownership; spec-write step 9.
   confidence: 0.95
 - id: MUST-AN
   verdict: pass
@@ -216,6 +216,6 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'spec-driven-development-design.md DSGN-C and impl-plan IMPL-R: plan must
-    include skill + CLAUDE layer same rules.'
+  evidence: spec-driven-development-design.md DSGN-C requires skill and CLAUDE-layer
+    edits together; impl-plan IMPL-R checks both stay in sync.
   confidence: 0.95
