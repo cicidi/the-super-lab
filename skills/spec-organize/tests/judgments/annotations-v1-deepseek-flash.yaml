@@ -1,7 +1,7 @@
 model: deepseek-flash
 runs: 5
 target: gold
-corpus_sha: 92093d406d249ea6
+corpus_sha: 2c46027e6a526aaa
 items:
 - id: GOOD-A
   verdict: pass
@@ -11,8 +11,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: document-standard-design.md DSGN-F bans PRD-1/0001; actual PRD/ARD/DSGN/IMPL/TST/PIPE
-    ids in target docs use letter forms.
+  evidence: decision-history defines ARD-A..CL; PRD/DSGN/IMPL/TST docs use letter
+    IDs; numeric forms appear only as forbidden examples in document-standard-design.md
+    DSGN-F.
   confidence: 0.95
 - id: GOOD-B
   verdict: pass
@@ -22,8 +23,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: test-plan TST-O traces parent PRD-A–Q to DSGN/PIPE clauses; PRD-G is deferred
-    by ARD-N.
+  evidence: test-plan TST-O traces parent PRD-A..Q to design clauses; pipeline PIPE-A/K/L
+    and document-standard DSGN-B/E anchor them; PRD-G deferred.
   confidence: 0.9
 - id: GOOD-C
   verdict: pass
@@ -33,9 +34,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: docs/INDEX.md lists parent prd, design, decision-history, impl-plan, test-plan
-    entries under spec-driven-development.
-  confidence: 0.98
+  evidence: docs/INDEX.md lists parent prd, design, decision-history, impl-plan, and
+    test-plan entries.
+  confidence: 1.0
 - id: GOOD-D
   verdict: pass
   votes:
@@ -44,8 +45,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'spec-driven-development-design.md''s last ## is Change Log; same pattern
-    in all target committed docs.'
+  evidence: 'All target docs end with ## Change Log; e.g. decision-history, impl-plan,
+    test-plan, pipeline/design, and reader design last H2 is Change Log.'
   confidence: 0.95
 - id: GOOD-E
   verdict: pass
@@ -55,9 +56,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: spec-driven-development-design.md '子问题归属' table rows use allowed owners
-    and ARD evidence links.
-  confidence: 0.98
+  evidence: spec-driven-development-design.md has a 子问题归属 table with allowed owners
+    and ARD evidence rows.
+  confidence: 1.0
 - id: GOOD-F
   verdict: pass
   votes:
@@ -66,9 +67,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: spec-write/SKILL.md and spec-review/SKILL.md Example Domains name 盖 shed,
-    北京旅游, 数学题, 股票.
-  confidence: 0.98
+  evidence: skills/spec-write/SKILL.md and skills/spec-review/SKILL.md Example Domains
+    mention 盖 shed, 北京旅游, 数学题, 股票.
+  confidence: 1.0
 - id: BAD-A
   verdict: pass
   votes:
@@ -77,9 +78,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: docs/INDEX.md links all target entry docs; no missing committed target
-    entry or dead INDEX link observed.
-  confidence: 0.95
+  evidence: docs/INDEX.md links all target committed entries (parent five plus pipeline/design
+    and document-standard prd/design) and links resolve.
+  confidence: 0.9
 - id: BAD-B
   verdict: pass
   votes:
@@ -88,9 +89,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: document-standard-design.md DSGN-B caps; no target prd/design/impl-plan/test-plan/how-to
-    file exceeds cap; decision-history exempt.
-  confidence: 0.8
+  evidence: document-standard-design.md DSGN-B sets caps; target prd/design/impl-plan/test-plan
+    docs are under caps, decision-history exempt.
+  confidence: 0.85
 - id: BAD-C
   verdict: pass
   votes:
@@ -99,9 +100,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: spec-review/SKILL.md 'Contract authority' cites ...spec-driven-development-design-skill-contracts.md
-    and says contract wins.
-  confidence: 0.98
+  evidence: skills/spec-review/SKILL.md 'Contract authority' cites spec-driven-development-design-skill-contracts.md
+    and states the contract wins on conflict.
+  confidence: 1.0
 - id: BAD-D
   verdict: pass
   votes:
@@ -110,6 +111,6 @@ items:
   - pass
   - pass
   - pass
-  evidence: spec-driven-development-decision-history.md Decision Log descends 2026-11-24,
-    11-20, 11-18, 11-07, 11-04, 11-03, 10-30, 09-25.
-  confidence: 0.98
+  evidence: decision-history Decision Log starts ARD-CL/CK/CJ (2026-11-24) then older
+    dates, newest first.
+  confidence: 1.0

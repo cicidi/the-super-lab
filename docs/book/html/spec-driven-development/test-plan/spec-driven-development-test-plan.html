@@ -67,6 +67,10 @@
 <td>基线</td>
 <td>只装被测 skill、不加任何辅助 skill 的配置，即 <code>grill.skills: []</code></td>
 </tr>
+<tr>
+<td>对照运行</td>
+<td>同一 gold 版本的上一次运行，用来判断这次有没有退步；和「基线」不是一回事</td>
+</tr>
 </tbody></table></div>
 <h3>Test Assets</h3>
 <div class="table-wrap"><table><thead><tr>
@@ -208,7 +212,7 @@
 <h4 id="TST-H"><a class="id-ref" href="#TST-H">TST-H</a> — spec-review 找问题的能力</h4>
 <p><strong>目标：</strong> 问题找全，而且不误报。<strong>输入：</strong> 11 个机械案例和 5 个语义案例（语义案例还没写，这一半暂时跑不了，标为 Unverified）；一份干净的范例。<strong>通过条件：</strong> 埋进去的每个问题都被找出，并引用对应的 DSGN 或 <span class="lvl lvl--must">MUST</span> 编号；干净的范例上没有严重度 3 及以上的问题；严重度 1、2 的问题不拿出来讨论。<strong>判定：</strong> 比对编号集合。</p>
 <h4 id="TST-I"><a class="id-ref" href="#TST-I">TST-I</a> — spec-review 修改建议的质量</h4>
-<p><strong>目标：</strong> 修改建议是对的。<strong>输入：</strong> <a class="id-ref" href="#TST-H">TST-H</a> 找出的问题。<strong>通过条件：</strong> 把建议和 <code>expected_fix</code> 比较：照着建议改了之后，问题消失，而且没有引入新的 <span class="lvl lvl--must">MUST</span> 违反。<strong>判定：</strong> 判分模型；报告「建议正确的条数 / 找出的条数」。这个比例不能低于同一 gold 版本的上一次运行；第一次运行建立基线。</p>
+<p><strong>目标：</strong> 修改建议是对的。<strong>输入：</strong> <a class="id-ref" href="#TST-H">TST-H</a> 找出的问题。<strong>通过条件：</strong> 把建议和 <code>expected_fix</code> 比较：照着建议改了之后，问题消失，而且没有引入新的 <span class="lvl lvl--must">MUST</span> 违反。<strong>判定：</strong> 判分模型；报告「建议正确的条数 / 找出的条数」。这个比例不能低于同一 gold 版本的对照运行（上一次运行）；第一次运行就是之后的对照运行。</p>
 <h4 id="TST-J"><a class="id-ref" href="#TST-J">TST-J</a> — 不同评测配置</h4>
 <p><strong>目标：</strong> 比较加不同辅助 skill 的效果。<strong>输入：</strong> <code>grill.skills</code> 分别为 <code>[]</code>、<code>[research]</code>、<code>[grill-with-docs]</code>、两个都加；wayfinder 是交付物，每种配置都带（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CH">ARD-CH</a>）。<strong>通过条件：</strong> 每种配置出一份报告；先跑基线；只报分数，不设门槛。<strong>判定：</strong> 同 <a class="id-ref" href="#TST-E">TST-E</a>。</p>
 <h4 id="TST-K"><a class="id-ref" href="#TST-K">TST-K</a> — 评测报告</h4>
@@ -263,7 +267,7 @@
 <li><a class="id-ref" href="#TST-A">TST-A</a>：<span class="lvl lvl--must">MUST</span> 清单覆盖率不到 100% 就停。</li>
 <li><a class="id-ref" href="#TST-B">TST-B</a>：检查脚本失效就停。</li>
 <li><a class="id-ref" href="#TST-O">TST-O</a>、<a class="id-ref" href="#TST-P">TST-P</a>、<a class="id-ref" href="#TST-V">TST-V</a>：design 的覆盖、证据、可读性。这一步的 <a class="id-ref" href="#TST-V">TST-V</a> 只测 SDD 自己的文档。</li>
-<li><a class="id-ref" href="#TST-S">TST-S</a>，然后 <a class="id-ref" href="#TST-C">TST-C</a>、<a class="id-ref" href="#TST-D">TST-D</a>：生成 gold 前先确认 spec-write 正文齐全；第一次运行，或者 gold 升版时。</li>
+<li><a class="id-ref" href="#TST-S">TST-S</a>，然后 <a class="id-ref" href="#TST-C">TST-C</a>、<a class="id-ref" href="#TST-D">TST-D</a>：生成 gold 前先确认 spec-write 正文齐全；只在第一次运行、或需求和背景输入变了时做。gold 升版（追加标注）走 <a class="id-ref" href="#TST-M">TST-M</a>。</li>
 <li><a class="id-ref" href="#TST-G">TST-G</a>、<a class="id-ref" href="#TST-N">TST-N</a>、<a class="id-ref" href="#TST-R">TST-R</a>、<a class="id-ref" href="#TST-T">TST-T</a>、<a class="id-ref" href="#TST-U">TST-U</a>、<a class="id-ref" href="#TST-W">TST-W</a>、<a class="id-ref" href="#TST-X">TST-X</a>、<a class="id-ref" href="#TST-Y">TST-Y</a>、<a class="id-ref" href="#TST-Z">TST-Z</a>、<a class="id-ref" href="#TST-AA">TST-AA</a>。</li>
 <li><a class="id-ref" href="#TST-E">TST-E</a>、<a class="id-ref" href="#TST-F">TST-F</a>，然后对 <a class="id-ref" href="#TST-C">TST-C</a>、<a class="id-ref" href="#TST-E">TST-E</a> 里 spec-write 写出的文档跑 <a class="id-ref" href="#TST-V">TST-V</a>。</li>
 <li><a class="id-ref" href="#TST-H">TST-H</a>，然后 <a class="id-ref" href="#TST-I">TST-I</a>。</li>
@@ -323,7 +327,7 @@
 </tr>
 <tr>
 <td>gold 升版</td>
-<td><a class="id-ref" href="#TST-M">TST-M</a> 追加标注后，重跑 <a class="id-ref" href="#TST-E">TST-E</a> 和 <a class="id-ref" href="#TST-H">TST-H</a>，建立新的基线</td>
+<td><a class="id-ref" href="#TST-M">TST-M</a> 追加标注后，重跑 <a class="id-ref" href="#TST-E">TST-E</a> 和 <a class="id-ref" href="#TST-H">TST-H</a>，作为新版本的对照运行</td>
 </tr>
 </tbody></table></div>
 <h3>Traceability</h3>
@@ -622,6 +626,10 @@
 <tr>
 <td>2026-11-24</td>
 <td>第 22 轮审查后：<a class="id-ref" href="#TST-S">TST-S</a> 移到生成 gold 之前；<a class="id-ref" href="#TST-K">TST-K</a> 报告加 <a class="id-ref" href="#TST-V">TST-V</a> 结果</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 23 轮审查后：<a class="id-ref" href="#TST-C">TST-C</a>/D 只在首次或输入变了时做；「对照运行」和「基线」分开</td>
 </tr>
 </tbody></table></div>
       </div>

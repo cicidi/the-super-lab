@@ -1,4 +1,4 @@
-<!-- SDD reader · source .md · git 6cc9dcf -->
+<!-- SDD reader · source .md · git bdaf01b -->
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light">
 <head>
@@ -1107,6 +1107,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <td>只装被测 skill、不加任何辅助 skill 的评测配置（<code>eval.yaml</code> 里 <code>grill.skills: []</code>）</td>
 </tr>
 <tr>
+<td>对照运行</td>
+<td>同一 gold 版本的上一次评测运行，用来判断这次有没有退步</td>
+</tr>
+<tr>
 <td>run_id</td>
 <td>一次评测运行的名字，格式是「日期加分支名」</td>
 </tr>
@@ -1259,6 +1263,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td>2026-11-24</td>
 <td>第 20 轮审查后：风险表写明 IMPL-Z 已完成</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 23 轮审查后：术语表加「对照运行」</td>
 </tr>
 </tbody></table>
 <hr><p class="src-inline">Source: <code>design/spec-driven-development-design-skill-contracts.md</code></p>
@@ -1628,7 +1636,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <p><strong>依赖：</strong> IMPL-M。<strong>挡住：</strong> 无。</p>
 <p><strong>Verify:</strong> <code>must_registry_coverage.py</code> 不再列出没对应的检查脚本：每个要么对上 MUST 条目，要么在 <code>HELPER</code> 表里。2026-11-24 已完成。</p>
 <h3 id="IMPL-AA">IMPL-AA — 生成并整理 gold v1</h3>
-<p><strong>目标：</strong> 按 TST-C 用 iPhone 案例跑 3 次，再按 TST-D 整理出范例和 <code>gold/v1/annotations.yaml</code>。现状：已用当时的 spec-write 完成；IMPL-B 之后改了 spec-write，就按 TST-M 重跑并建立新基线。</p>
+<p><strong>目标：</strong> 按 TST-C 用 iPhone 案例跑 3 次，再按 TST-D 整理出范例和 <code>gold/v1/annotations.yaml</code>。现状：已完成。spec-write 之后的改动由 IMPL-E 的 TST-E 对照 gold v1 检查，不重做 gold；只有需求或背景输入变了才重跑 TST-C、TST-D。</p>
 <p><strong>依赖：</strong> IMPL-B、IMPL-D、IMPL-J。<strong>挡住：</strong> IMPL-E。</p>
 <p><strong>Verify:</strong> TST-C、TST-D 通过。</p>
 <h3 id="IMPL-AB">IMPL-AB — mock MCP 服务器</h3>
@@ -1762,6 +1770,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <td>2026-11-24</td>
 <td>第 22 轮审查后：IMPL-AA 写明 gold v1 的基线条件；IMPL-E 加 TST-V</td>
 </tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 23 轮审查后：IMPL-AA 改正：spec-write 改动由 TST-E 对照 gold v1，不重做 gold</td>
+</tr>
 </tbody></table>
 </div>
 <p class="src">Canonical: <code>docs/features/spec-driven-development/impl-plan/spec-driven-development-impl-plan.md</code></p>
@@ -1805,6 +1817,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td>基线</td>
 <td>只装被测 skill、不加任何辅助 skill 的配置，即 <code>grill.skills: []</code></td>
+</tr>
+<tr>
+<td>对照运行</td>
+<td>同一 gold 版本的上一次运行，用来判断这次有没有退步；和「基线」不是一回事</td>
 </tr>
 </tbody></table>
 <h3>Test Assets</h3>
@@ -1947,7 +1963,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <h4 id="TST-H">TST-H — spec-review 找问题的能力</h4>
 <p><strong>目标：</strong> 问题找全，而且不误报。<strong>输入：</strong> 11 个机械案例和 5 个语义案例（语义案例还没写，这一半暂时跑不了，标为 Unverified）；一份干净的范例。<strong>通过条件：</strong> 埋进去的每个问题都被找出，并引用对应的 DSGN 或 MUST 编号；干净的范例上没有严重度 3 及以上的问题；严重度 1、2 的问题不拿出来讨论。<strong>判定：</strong> 比对编号集合。</p>
 <h4 id="TST-I">TST-I — spec-review 修改建议的质量</h4>
-<p><strong>目标：</strong> 修改建议是对的。<strong>输入：</strong> TST-H 找出的问题。<strong>通过条件：</strong> 把建议和 <code>expected_fix</code> 比较：照着建议改了之后，问题消失，而且没有引入新的 MUST 违反。<strong>判定：</strong> 判分模型；报告「建议正确的条数 / 找出的条数」。这个比例不能低于同一 gold 版本的上一次运行；第一次运行建立基线。</p>
+<p><strong>目标：</strong> 修改建议是对的。<strong>输入：</strong> TST-H 找出的问题。<strong>通过条件：</strong> 把建议和 <code>expected_fix</code> 比较：照着建议改了之后，问题消失，而且没有引入新的 MUST 违反。<strong>判定：</strong> 判分模型；报告「建议正确的条数 / 找出的条数」。这个比例不能低于同一 gold 版本的对照运行（上一次运行）；第一次运行就是之后的对照运行。</p>
 <h4 id="TST-J">TST-J — 不同评测配置</h4>
 <p><strong>目标：</strong> 比较加不同辅助 skill 的效果。<strong>输入：</strong> <code>grill.skills</code> 分别为 <code>[]</code>、<code>[research]</code>、<code>[grill-with-docs]</code>、两个都加；wayfinder 是交付物，每种配置都带（ARD-CH）。<strong>通过条件：</strong> 每种配置出一份报告；先跑基线；只报分数，不设门槛。<strong>判定：</strong> 同 TST-E。</p>
 <h4 id="TST-K">TST-K — 评测报告</h4>
@@ -2002,7 +2018,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <li>TST-A：MUST 清单覆盖率不到 100% 就停。</li>
 <li>TST-B：检查脚本失效就停。</li>
 <li>TST-O、TST-P、TST-V：design 的覆盖、证据、可读性。这一步的 TST-V 只测 SDD 自己的文档。</li>
-<li>TST-S，然后 TST-C、TST-D：生成 gold 前先确认 spec-write 正文齐全；第一次运行，或者 gold 升版时。</li>
+<li>TST-S，然后 TST-C、TST-D：生成 gold 前先确认 spec-write 正文齐全；只在第一次运行、或需求和背景输入变了时做。gold 升版（追加标注）走 TST-M。</li>
 <li>TST-G、TST-N、TST-R、TST-T、TST-U、TST-W、TST-X、TST-Y、TST-Z、TST-AA。</li>
 <li>TST-E、TST-F，然后对 TST-C、TST-E 里 spec-write 写出的文档跑 TST-V。</li>
 <li>TST-H，然后 TST-I。</li>
@@ -2062,7 +2078,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 </tr>
 <tr>
 <td>gold 升版</td>
-<td>TST-M 追加标注后，重跑 TST-E 和 TST-H，建立新的基线</td>
+<td>TST-M 追加标注后，重跑 TST-E 和 TST-H，作为新版本的对照运行</td>
 </tr>
 </tbody></table>
 <h3>Traceability</h3>
@@ -2361,6 +2377,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td>2026-11-24</td>
 <td>第 22 轮审查后：TST-S 移到生成 gold 之前；TST-K 报告加 TST-V 结果</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 23 轮审查后：TST-C/D 只在首次或输入变了时做；「对照运行」和「基线」分开</td>
 </tr>
 </tbody></table>
 </div>
