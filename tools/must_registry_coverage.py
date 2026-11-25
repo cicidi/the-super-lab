@@ -11,6 +11,25 @@ ROOT = Path(__file__).resolve().parents[1]
 REG = ROOT / "skills/spec-organize/tests/must_registry.yaml"
 CHECKS = ROOT / "skills/spec-organize/tests/checks"
 
+# Helper checks (IMPL-Z): they back a rule only in part, check a NICE rule, or
+# check tooling, so they are not the sole scorer of any MUST item. Each needs a reason.
+HELPER = {
+    "anchors": "dead-anchor half of the INDEX/book MUST; index_book scores the rule",
+    "audience_authority": "NICE: audience field vs authority table",
+    "book": "part of the INDEX/book MUST; index_book scores the rule",
+    "counts": "NICE: counts stated in a tracker match its rows (ARD-BB)",
+    "diagram_steps": "NICE: figure step count matches its section (ARD-CA)",
+    "figures": "part of the figure MUST; the fact-match half needs the LLM judge",
+    "impl_tasks": "part of MUST-K; execution order and read-before-write need the LLM judge",
+    "paired_html": "part of the HTML freshness rule; TST-R scores it",
+    "publish_nav": "part of the INDEX/book MUST (Pages nav); index_book scores the rule",
+    "registry_provenance": "tooling: registry items resolve to their source",
+    "resolved_refs": "part of the dead-link rule; index_book scores the rule",
+    "section_refs": "NICE: section references resolve",
+    "test_trace": "tooling: TST cases name a requirement (TST-O covers traceability)",
+    "translation_banner": "part of the translation-copy MUST; no_commit scores the rule",
+}
+
 IMPLEMENTED = {
     "frontmatter",
     "paths",
@@ -84,7 +103,7 @@ def main() -> None:
     if missing_mod:
         print("unknown check modules:", ", ".join(missing_mod))
     mapped = {i.get("check") for i in python if i.get("check")}
-    unused = IMPLEMENTED - mapped
+    unused = IMPLEMENTED - mapped - set(HELPER)
     if unused:
         print("note: TST-B modules not yet mapped in registry:", ", ".join(sorted(unused)))
     sys.exit(1 if bad_check or missing_mod else 0)

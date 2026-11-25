@@ -127,7 +127,6 @@ def corpus_files() -> list[Path]:
         TESTS / "must_registry.yaml",
         TESTS / "eval.yaml",
         TESTS / "annotations.yaml",
-        TESTS / "judgments" / "v1.yaml",
     ]
     files = []
     for p in docs + code:

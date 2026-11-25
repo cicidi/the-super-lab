@@ -18,12 +18,12 @@ metadata:
     - draft design
     - append decision
     - spec write
-  spec_bundle_version: "1.0.13"
+  spec_bundle_version: "1.0.14"
   spec_built_at: "2026-11-24"
-  spec_git_sha: "e20a294"
+  spec_git_sha: "45f3741"
 ---
 <!-- SPEC-BUNDLE-START -->
-> **SDD spec bundle** `1.0.13` · built 2026-11-24 · git `e20a294`
+> **SDD spec bundle** `1.0.14` · built 2026-11-24 · git `45f3741`
 <!-- SPEC-BUNDLE-END -->
 
 # spec-write
@@ -75,7 +75,7 @@ Illustrations, not gold. Each edit stays within 10 lines and 200 characters.
 | **prd** | Problem, goals, requirements with **PRD-*** IDs; deferrals → **ARD-** in decision-history |
 | **design** | Behavior, contracts, boundaries, ownership table or a link to the question tracker, evidence or `UNKNOWN`. One Open Questions tracker per feature |
 | **decision-history** | New **ARD-*** row at **top** of Log, plus an Evidence Appendix entry with the reason and rejected options; supersede = ~~strike~~ the old row + link. The only place strikethrough is used |
-| **impl-plan** | Each **IMPL-*** names its dependency, who it blocks, and a done line. Read side before write side. Mock an interface owned by another team or service when it is not live yet |
+| **impl-plan** | Each **IMPL-*** has a `**依赖：**` and a `**挡住：**` line (无 when none) and a done line; if A blocks B, B depends on A. Read side before write side. Mock an interface owned by another team or service when it is not live yet |
 | **test-plan** | **TST-*** cases; execution order; pass threshold; a Traceability table listing every `PRD-*` |
 | **any** | Changing an existing sentence: write the current rule and link the ARD that changed it. No strikethrough outside decision-history (ARD-BM). A typo may be edited in place |
 
@@ -98,7 +98,7 @@ added; a required one is never dropped or renamed.
 - [ ] Decision-history: newest-first; supersede via strike + link; every ARD has an Evidence Appendix entry
 - [ ] No L1 deletion to meet size cap
 - [ ] Sub-problem design has `子问题归属`; missing facts are `UNKNOWN`, not guesses
-- [ ] impl-plan: every `IMPL-*` names its dependency, who it blocks, and a done line; `Execution order` does blocked work later
+- [ ] impl-plan: every `IMPL-*` has `**依赖：**`, `**挡住：**` (无 when none) and a done line, the two sides agree; `Execution order` does blocked work later
 - [ ] Body text states the current rule and links the ARD that changed it; strikethrough only in decision-history
 - [ ] Readable by an undergraduate: complete sentences; every term explained at first use or in the glossary
 
