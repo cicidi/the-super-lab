@@ -124,7 +124,7 @@ Report 每次都要用户确认仓库，多一步问答，换来不会提错仓�
 | QUES-A | 要不要恢复"先收集一切、再推理并列证据"（PRD-C）？ | 恢复，Collect 后 Reason 并列证据（ARD-K） | cicidi | no |
 | QUES-B | 要不要恢复原因不明时的深挖模式（PRD-D）？ | 恢复，含事故报告格式（ARD-K） | cicidi | no |
 | QUES-C | Report 要不要恢复"先选仓库"，面向所有 GitHub 仓库（PRD-F）？ | 默认当前仓库，可另选，提交前请用户确认（ARD-L） | cicidi | no |
-| QUES-D | Heal 要不要恢复"先检查 hook、没有就提示安装"，并注册已有的 hook（PRD-H）？ | 先检查并告诉用户（ARD-M）；要不要注册仍待用户决定 | cicidi | no |
+| QUES-D | Heal 要不要恢复"先检查 hook、没有就提示安装"，并注册已有的 hook（PRD-H）？ | 已答：不替用户注册，只检查并告诉用户（ARD-M；用户 2026-11-24（会话 80291c19）"按照你的建议来吧"） | cicidi | no |
 | QUES-E | "2 次以上才生成规则"这个阈值是用户定的吗（ARD-H）？ | UNKNOWN，沿用迁入的旧版 | cicidi | no |
 | QUES-F | Report 和全局 CLAUDE.md 里的 walter-worker-fix skill 怎么分工？ | 都处理 walter-worker 自身的问题，未划分 | cicidi | no |
 
@@ -139,3 +139,4 @@ Heal 写入 CLAUDE.md 的规则只在 SELF-ANALYZE 块里，删掉这个块即�
 |------|--------|
 | 2026-11-24 | 初版：按 SKILL.md 写出 bug 的 design，引用 PRD-A 到 PRD-J |
 | 2026-11-24 | 按 ARD-K 到 ARD-N 改写 DSGN-B、C、E、F、G、I；QUES-A 到 QUES-C 已答，QUES-D 部分答 |
+| 2026-11-24 | QUES-D 已答：不注册 hook |

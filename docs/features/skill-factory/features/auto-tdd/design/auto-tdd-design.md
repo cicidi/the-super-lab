@@ -116,7 +116,7 @@ skill-factory 整体的设计和 2026-08-02 的合并表，见 [parent design](.
 |---|---|---|---|---|
 | QUES-A | 要不要恢复"每做一点就提交"（PRD-I）？ | 恢复，每个绿步提交（ARD-K） | cicidi | no |
 | QUES-B | 要不要恢复每 30 分钟自查一次（PRD-D）？ | 恢复（ARD-K） | cicidi | no |
-| QUES-C | 第二层的真实 LLM 测试，要不要先得到用户同意再跑（PRD-F、PRD-G）？ | SKILL.md 无条件要求跑 | cicidi | no |
+| QUES-C | 第二层的真实 LLM 测试，要不要先得到用户同意再跑（PRD-F、PRD-G）？ | 已答：第一次跑前先问用户一次，不同意就跳过并写进报告（ARD-M） | cicidi | no |
 | QUES-D | 被测对象不是对话 agent 时，第二、三层怎么做？ | SKILL.md 没有说 | cicidi | no |
 | QUES-E | 四个角色要不要用真正的子 agent 分别执行？ | 目前是同一个 LLM 依次扮演（ses_0a0d1bce，2026-07-13） | cicidi | no |
 | QUES-F | 基本模式要不要注明来自 mattpocock/skills？ | 当前 SKILL.md 没有出处 | cicidi | no |
@@ -133,3 +133,4 @@ skill-factory 整体的设计和 2026-08-02 的合并表，见 [parent design](.
 |------|--------|
 | 2026-11-24 | 初版：按 SKILL.md 写出 auto-tdd 的 design，引用 PRD-A 到 PRD-L |
 | 2026-11-24 | 按 ARD-K、ARD-L 改写 DSGN-B、G、J；QUES-A、B、G 已答；QUES-C 不动 |
+| 2026-11-24 | QUES-C 已答（ARD-M） |

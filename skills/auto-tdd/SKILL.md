@@ -111,6 +111,8 @@ test, write 2-3 variant tests by changing one dimension.
 
 **Tier 2 — Simulated LLM:** An actual LLM role-plays as the user. At least
 2 different models. Same variant protocol.
+Tier 2 calls real models and costs money: ask the user once before the first
+Tier 2 run. If they decline, skip it and say so in the report (ARD-M).
 
 **Tier 3 — Quality Judge:** Turn-by-turn analysis of response quality,
 error detection, multi-turn coherence. Score 1-10.

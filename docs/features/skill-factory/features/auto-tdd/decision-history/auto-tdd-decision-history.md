@@ -18,6 +18,7 @@ opencode 会话按会话 id 前缀引用，数据在本机 opencode.db。
 
 | ID | Date | Decision |
 |---|---|---|
+| ARD-M | 2026-11-24 | 第二层（真实 LLM 扮演用户）第一次跑之前先问用户一次；用户不同意就跳过，并在报告里写明 |
 | ARD-L | 2026-11-24 | 完成标准里的 contrarian review 指 `/spec-review` 的 Quick Scan；4、5 级问题算 HIGH、CRITICAL |
 | ARD-K | 2026-11-24 | 恢复逐次提交（每个绿步提交一次，提交信息带通过的测试数）和每 30 分钟自查 |
 | ARD-A | 2026-08-02 | 把 auto-tdd 和导入的 tdd 合成一个两模式 skill；开头只问一个问题选模式 |
@@ -32,6 +33,10 @@ opencode 会话按会话 id 前缀引用，数据在本机 opencode.db。
 | ~~ARD-J~~ | ~~2026-06-11~~ | ~~导入 mattpocock 的 tdd，作为独立的 skill~~ 已被 [ARD-A](#ard-a) 取代 |
 
 ## Evidence Appendix
+
+### ARD-M
+
+理由：第二层至少调用两个真实模型，要花钱。被否决：无条件跑；完全不跑。出处：用户 2026-11-24（会话 80291c19）"按照你的建议来吧"。
 
 ### ARD-A
 
@@ -116,3 +121,4 @@ C 的判定顺序（spec 优先于框架约定，约定优先于风格）由 age
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 auto-tdd 的决策 |
 | 2026-11-24 | 加 ARD-K（恢复逐次提交和 30 分钟自查）、ARD-L（contrarian review 指 spec-review） |
+| 2026-11-24 | 加 ARD-M：第二层先问用户 |
