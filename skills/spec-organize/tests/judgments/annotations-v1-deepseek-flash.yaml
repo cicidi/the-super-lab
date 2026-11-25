@@ -1,7 +1,7 @@
 model: deepseek-flash
 runs: 5
 target: gold
-corpus_sha: 4fe235bfc608d4c7
+corpus_sha: 221d2d3240506394
 items:
 - id: GOOD-A
   verdict: pass
@@ -11,9 +11,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: All headings/table keys/refs use PRD-/DSGN-/ARD-/IMPL-/PIPE-/TST- letter
-    IDs; numeric forms appear only as forbidden examples (document-standard-design
-    DSGN-F).
+  evidence: decision-history/spec-driven-development-decision-history.md Log uses
+    ARD-A…ARD-CL; PRD/DSGN/PIPE/IMPL/TST all letter-prefixed.
   confidence: 0.97
 - id: GOOD-B
   verdict: pass
@@ -23,9 +22,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'Parent PRD ids are traced: e.g. PRD-A in pipeline PIPE-A, PRD-C in parent
-    DSGN-A, PRD-M in document-standard DSGN-E; PRD-G deferred.'
-  confidence: 0.93
+  evidence: test-plan/spec-driven-development-test-plan.md TST-O requires PRD→DSGN/PIPE
+    trace; parent PRD-G deferred; designs cite PRD-A…PRD-Q.
+  confidence: 0.96
 - id: GOOD-C
   verdict: pass
   votes:
@@ -34,8 +33,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: Parent feature has prd/, design/, decision-history/, impl-plan/, test-plan/
-    with committed .md entries; docs/INDEX.md lists all five types.
+  evidence: docs/features/spec-driven-development/ has prd, design, decision-history,
+    impl-plan, test-plan, each with a committed .md entry.
   confidence: 0.99
 - id: GOOD-D
   verdict: pass
@@ -45,8 +44,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: Every committed doc ends with `## Change Log`, including decision-history,
-    parent design, and all sub-feature docs; no later H2.
+  evidence: Target feature docs end with '## Change Log' as last H2, e.g. parent design
+    after glossary, test-plan, decision-history.
   confidence: 0.98
 - id: GOOD-E
   verdict: pass
@@ -56,9 +55,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: Parent design `### 子问题归属` table has allowed owners (AI 查/人决定/AI 查完人决定)
-    and ARD evidence links.
-  confidence: 0.98
+  evidence: design/spec-driven-development-design.md has '### 子问题归属' table with allowed
+    owners and ARD evidence.
+  confidence: 0.99
 - id: GOOD-F
   verdict: pass
   votes:
@@ -67,8 +66,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: spec-write/SKILL.md and spec-review/SKILL.md Example Domains name 盖 shed,
-    北京旅游, 数学题, 股票.
+  evidence: skills/spec-write/SKILL.md and skills/spec-review/SKILL.md each list 盖
+    shed, 北京旅游, 数学题, 股票.
   confidence: 0.99
 - id: BAD-A
   verdict: pass
@@ -78,9 +77,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: docs/INDEX.md links all 11 committed feature .md files in corpus; all
-    listed links resolve.
-  confidence: 0.97
+  evidence: docs/INDEX.md links all target entry docs under parent, pipeline, document-standard
+    PRDs/designs; links resolve.
+  confidence: 0.96
 - id: BAD-B
   verdict: pass
   votes:
@@ -89,9 +88,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: All committed non-decision-history docs are under caps (prd 800, design/impl
-    1000, test 800); decision-history exempt.
-  confidence: 0.95
+  evidence: 'Target docs are below caps: prd 800, design/impl-plan 1000, test-plan
+    800; decision-history exempt.'
+  confidence: 0.9
 - id: BAD-C
   verdict: pass
   votes:
@@ -100,8 +99,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: spec-review/SKILL.md cites spec-driven-development-design-skill-contracts.md
-    and states the contract wins on conflict.
+  evidence: skills/spec-review/SKILL.md cites spec-driven-development-design-skill-contracts.md
+    and says the contract wins on conflict.
   confidence: 0.99
 - id: BAD-D
   verdict: pass
@@ -111,6 +110,6 @@ items:
   - pass
   - pass
   - pass
-  evidence: Decision Log starts at 2026-11-24 ARD-CL and descends to 2026-09-25 ARD-A;
-    newest first.
-  confidence: 0.98
+  evidence: decision-history/spec-driven-development-decision-history.md Decision
+    Log starts ARD-CL 2026-11-24 and descends to ARD-A 2026-09-25.
+  confidence: 0.99

@@ -261,11 +261,11 @@ last_verified: 2026-11-24
 
 ## IMPL-Z — 剩下的检查脚本接进 MUST 清单
 
-**目标：** `must_registry_coverage.py` 报出的、还没对应到任何 MUST 条目的检查脚本，逐个对上 MUST 条目，或写明它只是辅助检查。
+**目标：** `must_registry_coverage.py` 报出的、还没对应到任何 MUST 条目的检查脚本，逐个对上 MUST 条目，或列为辅助检查：只查到规则的一部分、查的是 NICE 规则、或查的是工具本身，因此不单独给任何 MUST 打分；辅助检查写进 `must_registry_coverage.py` 的 `HELPER` 表，每个写明理由。
 
 **依赖：** IMPL-M。**挡住：** 无。
 
-**Verify:** `must_registry_coverage.py` 不再列出没对应的检查脚本。
+**Verify:** `must_registry_coverage.py` 不再列出没对应的检查脚本：每个要么对上 MUST 条目，要么在 `HELPER` 表里。2026-11-24 已完成。
 
 ## Execution order
 
@@ -311,3 +311,4 @@ last_verified: 2026-11-24
 | 2026-11-24 | 第 12 轮审查后：新增 IMPL-Y 语义案例执行器；IMPL-I 只要求机械案例；IMPL-R 加 DSGN-B 检查 |
 | 2026-11-24 | 第 13 轮审查后：IMPL-X、IMPL-K 补上和 IMPL-Y 的双向依赖；judgments/ 要提交 |
 | 2026-11-24 | 第 17 轮审查后：新增 IMPL-Z；执行顺序第 2 步写清 IMPL-Y 等 IMPL-X |
+| 2026-11-24 | 第 18 轮审查后：IMPL-Z 写明什么是辅助检查、记在哪，已完成 |

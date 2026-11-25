@@ -1,4 +1,4 @@
-<!-- SDD reader · source .md · git 1bfd566 -->
+<!-- SDD reader · source .md · git de3f8e9 -->
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light">
 <head>
@@ -1615,9 +1615,9 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <p><strong>依赖：</strong> IMPL-X。<strong>挡住：</strong> IMPL-K 的语义部分、IMPL-I。</p>
 <p><strong>Verify:</strong> 5 个语义案例能自动判出找没找到。</p>
 <h3 id="IMPL-Z">IMPL-Z — 剩下的检查脚本接进 MUST 清单</h3>
-<p><strong>目标：</strong> <code>must_registry_coverage.py</code> 报出的、还没对应到任何 MUST 条目的检查脚本，逐个对上 MUST 条目，或写明它只是辅助检查。</p>
+<p><strong>目标：</strong> <code>must_registry_coverage.py</code> 报出的、还没对应到任何 MUST 条目的检查脚本，逐个对上 MUST 条目，或列为辅助检查：只查到规则的一部分、查的是 NICE 规则、或查的是工具本身，因此不单独给任何 MUST 打分；辅助检查写进 <code>must_registry_coverage.py</code> 的 <code>HELPER</code> 表，每个写明理由。</p>
 <p><strong>依赖：</strong> IMPL-M。<strong>挡住：</strong> 无。</p>
-<p><strong>Verify:</strong> <code>must_registry_coverage.py</code> 不再列出没对应的检查脚本。</p>
+<p><strong>Verify:</strong> <code>must_registry_coverage.py</code> 不再列出没对应的检查脚本：每个要么对上 MUST 条目，要么在 <code>HELPER</code> 表里。2026-11-24 已完成。</p>
 <h3>Execution order</h3>
 <p>先做不依赖别人的任务，被挡住的后做：</p>
 <ol>
@@ -1727,6 +1727,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td>2026-11-24</td>
 <td>第 17 轮审查后：新增 IMPL-Z；执行顺序第 2 步写清 IMPL-Y 等 IMPL-X</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 18 轮审查后：IMPL-Z 写明什么是辅助检查、记在哪，已完成</td>
 </tr>
 </tbody></table>
 </div>
@@ -1908,7 +1912,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <h4 id="TST-H">TST-H — spec-review 找问题的能力</h4>
 <p><strong>目标：</strong> 问题找全，而且不误报。<strong>输入：</strong> 11 个机械案例和 5 个语义案例（语义案例还没写，这一半暂时跑不了，标为 Unverified）；一份干净的范例。<strong>通过条件：</strong> 埋进去的每个问题都被找出，并引用对应的 DSGN 或 MUST 编号；干净的范例上没有严重度 3 及以上的问题；严重度 1、2 的问题不拿出来讨论。<strong>判定：</strong> 比对编号集合。</p>
 <h4 id="TST-I">TST-I — spec-review 修改建议的质量</h4>
-<p><strong>目标：</strong> 修改建议是对的。<strong>输入：</strong> TST-H 找出的问题。<strong>通过条件：</strong> 把建议和 <code>expected_fix</code> 比较：照着建议改了之后，问题消失，而且没有引入新的 MUST 违反。<strong>判定：</strong> 判分模型；报告「建议正确的条数 / 找出的条数」。</p>
+<p><strong>目标：</strong> 修改建议是对的。<strong>输入：</strong> TST-H 找出的问题。<strong>通过条件：</strong> 把建议和 <code>expected_fix</code> 比较：照着建议改了之后，问题消失，而且没有引入新的 MUST 违反。<strong>判定：</strong> 判分模型；报告「建议正确的条数 / 找出的条数」。这个比例不能低于同一 gold 版本的上一次运行；第一次运行建立基线。</p>
 <h4 id="TST-J">TST-J — 不同评测配置</h4>
 <p><strong>目标：</strong> 比较加不同辅助 skill 的效果。<strong>输入：</strong> <code>grill.skills</code> 分别为 <code>[]</code>、<code>[research]</code>、<code>[grill-with-docs]</code>、两个都加；wayfinder 是交付物，每种配置都带（ARD-CH）。<strong>通过条件：</strong> 每种配置出一份报告；先跑基线；只报分数，不设门槛。<strong>判定：</strong> 同 TST-E。</p>
 <h4 id="TST-K">TST-K — 评测报告</h4>
@@ -1938,7 +1942,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <p><strong>输入：</strong> 一篇文档，加上 <a href="design/spec-driven-development-design.html#glossary">parent design 的术语表</a>。被测的有两类：SDD 自己的每篇文档；TST-C、TST-E 里 spec-write 写出的每篇文档。</p>
 <p><strong>做法：</strong></p>
 <ol>
-<li>从这篇文档的编号条目（<code>PRD-*</code>、<code>DSGN-*</code>、<code>PIPE-*</code>、<code>IMPL-*</code>、<code>TST-*</code>、<code>ARD-*</code>）里，每条出一道题，最多抽 20 道。例如「PRD-F 规定，多人的决定冲突时怎么办」。</li>
+<li>从这篇文档的编号条目（<code>PRD-*</code>、<code>DSGN-*</code>、<code>PIPE-*</code>、<code>IMPL-*</code>、<code>TST-*</code>、<code>ARD-*</code>）里，每条出一道题，最多抽 20 道；超过 20 条时从头到尾等间隔抽。这篇没有编号条目时，每个 <code>##</code> 小节出一道题。例如「PRD-F 规定，多人的决定冲突时怎么办」。</li>
 <li>对照：不给文档，先问一遍。不看文档也能答对的题太容易，作废。</li>
 <li>让判分模型扮演本科程序员，只读这一篇和术语表，回答剩下的题。</li>
 <li>再让它列出这篇里第一次出现时没有解释、术语表里也没有的词。</li>
@@ -2306,6 +2310,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td>2026-11-24</td>
 <td>第 15 轮审查后：TST-A 的输入加 DSGN-C</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 18 轮审查后：TST-I 正文写明不低于上一次；TST-V 写明等间隔抽题和按小节出题</td>
 </tr>
 </tbody></table>
 </div>

@@ -27,12 +27,12 @@ metadata:
     - spec drift
     - source of truth
     - authority by concern
-  spec_bundle_version: "1.0.13"
+  spec_bundle_version: "1.0.14"
   spec_built_at: "2026-11-24"
-  spec_git_sha: "e20a294"
+  spec_git_sha: "45f3741"
 ---
 <!-- SPEC-BUNDLE-START -->
-> **SDD spec bundle** `1.0.13` · built 2026-11-24 · git `e20a294`
+> **SDD spec bundle** `1.0.14` · built 2026-11-24 · git `45f3741`
 <!-- SPEC-BUNDLE-END -->
 
 # spec-organize

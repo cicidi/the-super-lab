@@ -46,7 +46,7 @@ unresolved items with an owner. `Reversibility` covers undo/return/rollback.
 
 ## impl-plan tasks (MUST)
 
-Each `IMPL-*` names what it depends on, what it blocks, and a done line (`Verify:` or `完成标准`). `Execution order` puts blocked work later (change the DB before the API that uses it). High-priority unblocked work goes first; unblocked work can proceed in parallel. Read side before write side; when a partner port is not live, state the mock (ARD-AT).
+Each `IMPL-*` has a `**依赖：**` line and a `**挡住：**` line (or `Depends on:` / `Blocks:`), writing 无 when there is none, and a done line (`Verify:` or `完成标准`). The two sides agree: if A blocks B, B depends on A. `Execution order` puts blocked work later (change the DB before the API that uses it). High-priority unblocked work goes first; unblocked work can proceed in parallel. Read side before write side; when a partner port is not live, state the mock (ARD-AT).
 
 ## IDs (MUST)
 
@@ -58,7 +58,7 @@ Every `PRD-*` id must be anchored in at least one design clause (TST-O).
 
 Body text states the current rule only. When a sentence no longer holds, rewrite it and link the ARD that changed it. Strikethrough appears **only** in decision-history (a superseded row, struck and linked to the new ARD). Older body wording lives in git history. A typo is fixed in place (ARD-BM, ARD-AS).
 
-Edit size for AI edits under `docs/`: at most 10 lines **and** at most 200 characters per edit to an existing file, both limits at once; creating a new file is exempt (content moved out of an existing file counts as an edit) but still meets **Size** (ARD-CE); a larger change needs explicit human authorization recorded as an ARD (parent design DSGN-A). Content edits go through spec-write; spec-organize Lint may fix format-class MUST violations directly, under the same cap (ARD-BV).
+Edit size (MUST, Unverified — PRD-I: spec-write enforces it, it is not in must_registry) for AI edits under `docs/`: at most 10 lines **and** at most 200 characters per edit to an existing file, both limits at once; creating a new file is exempt (content moved out of an existing file counts as an edit) but still meets **Size** (ARD-CE); a larger change needs explicit human authorization recorded as an ARD (parent design DSGN-A). Content edits go through spec-write; spec-organize Lint may fix format-class MUST violations directly, under the same cap (ARD-BV).
 
 ## Readability (MUST)
 

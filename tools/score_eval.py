@@ -5,7 +5,7 @@ Usage:
   python3 tools/score_eval.py [feature_dir] [--min-score2 N]
 
 Score 1: python-method items run the mechanical checkers; llm-method items read
-verdicts from `skills/spec-organize/tests/judgments/v1.yaml`. An unjudged llm item
+verdicts from `skills/spec-organize/tests/judgments/v1-deepseek-flash.yaml`. An unjudged llm item
 counts as fail — the gate is total/total.
 
 Score 2: each annotation in `skills/spec-organize/tests/annotations.yaml` is a
@@ -40,7 +40,6 @@ from checks.runners import run_file  # noqa: E402
 from checks.size import check_size  # noqa: E402
 
 REGISTRY = TESTS / "must_registry.yaml"
-JUDGMENTS = TESTS / "judgments" / "v1.yaml"
 JUDGED = TESTS / "judgments" / "v1-deepseek-flash.yaml"
 ANNOTATIONS = TESTS / "annotations.yaml"
 ANNOT_VERDICTS = TESTS / "judgments" / "annotations-v1-deepseek-flash.yaml"
@@ -105,7 +104,7 @@ def parse_registry() -> list[dict[str, str]]:
 def score1(feature: Path) -> tuple[int, int, list[str]]:
     grouped = collect(feature)
     judgments: dict[str, dict] = {}
-    source = JUDGED if JUDGED.exists() else JUDGMENTS
+    source = JUDGED
     if source.exists():
         raw = yaml.safe_load(source.read_text(encoding="utf-8")) or {}
         judgments = {j["id"]: j for j in raw.get("items", [])}

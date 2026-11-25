@@ -30,7 +30,7 @@ def main() -> None:
             print(f"gold missing {bad}", file=sys.stderr)
             sys.exit(1)
     write = (ROOT / "skills/spec-write/SKILL.md").read_text(encoding="utf-8")
-    for needle in ("QUES-A", "who it blocks", "No strikethrough outside decision-history"):
+    for needle in ("QUES-A", "**挡住：**", "No strikethrough outside decision-history"):
         if needle not in write:
             print(f"spec-write missing {needle}", file=sys.stderr)
             sys.exit(1)
