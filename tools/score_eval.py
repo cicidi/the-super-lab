@@ -78,8 +78,7 @@ def collect(feature: Path) -> dict[str, list[Finding]]:
         findings += check_struck_links(feature)
         findings += check_registry_provenance(ROOT)
         findings += check_figure_tree(ROOT)
-    if feature.is_dir() and feature.parent.name == "features":
-        findings += check_parent_complete(feature)
+    findings += check_parent_complete(feature)  # skips sub-features (DSGN-E)
     for path in md_files(feature):
         if path.resolve() in EXEMPT:
             continue

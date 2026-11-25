@@ -71,8 +71,7 @@ def main() -> None:
         findings.extend(check_struck_links(ROOT / "docs/features/spec-driven-development"))
         findings.extend(check_registry_provenance(ROOT))
         findings.extend(check_figure_tree(ROOT))
-    if target.is_dir() and target.name not in ("features", "docs") and "docs/features" in target.as_posix():
-        findings.extend(check_parent_complete(target))
+    findings.extend(check_parent_complete(target))  # parent only; relative paths ok
     for path in sorted(target.rglob("*.md")):
         if path.name.startswith("._") or "/raw/" in path.as_posix() or ".scratch" in path.as_posix():
             continue

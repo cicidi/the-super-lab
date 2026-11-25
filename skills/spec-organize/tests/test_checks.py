@@ -335,3 +335,21 @@ def test_registry_provenance_splits_check_lists(tmp_path):
     )
     msgs = [f.message for f in check_registry_provenance(tmp_path)]
     assert msgs == ["MUST-B: no module checks/nope.py"]
+
+
+def test_parent_complete_skips_subfeature_and_accepts_relative_path(tmp_path, monkeypatch):
+    """TST-N: a parent missing a type is flagged even via a relative path; a sub-feature
+    with only a design is not (parent design DSGN-E)."""
+    from checks.parent_complete import check_parent_complete
+
+    parent = tmp_path / "docs/features/demo"
+    for t in ("prd", "design", "impl-plan", "test-plan"):  # decision-history missing
+        (parent / t).mkdir(parents=True)
+        (parent / t / f"demo-{t}.md").write_text("x", encoding="utf-8")
+    sub = parent / "features/sub/design"
+    sub.mkdir(parents=True)
+    (sub / "sub-design.md").write_text("x", encoding="utf-8")
+    monkeypatch.chdir(tmp_path)
+    msgs = [f.message for f in check_parent_complete(Path("docs/features/demo"))]
+    assert msgs == ["missing directory `decision-history/`"]
+    assert check_parent_complete(Path("docs/features/demo/features/sub")) == []

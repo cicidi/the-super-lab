@@ -15,13 +15,20 @@ class Finding:
     message: str
 
 
+def is_parent_feature(path: Path) -> bool:
+    """True for `docs/features/<f>/`; False for a sub-feature `docs/features/<p>/features/<f>/`
+    (parent design DSGN-E: a sub-feature need not have all five types). Works for relative
+    and absolute paths."""
+    p = path.resolve()
+    return p.is_dir() and p.parent.name == "features" and p.parent.parent.name == "docs"
+
+
 def check_parent_complete(feature_root: Path) -> list[Finding]:
     """`<f>` = `docs/features/<f>/` parent (may contain `features/` subdir)."""
-    if feature_root.name == "features" or not feature_root.is_dir():
+    if not is_parent_feature(feature_root):
         return []
+    feature_root = feature_root.resolve()
     rel = feature_root.as_posix()
-    if "/docs/features/" not in rel:
-        return []
     findings: list[Finding] = []
     slug = feature_root.name
     for t in TYPES:

@@ -37,7 +37,7 @@ last_verified: 2026-11-24
 
 **步骤：** 契约或标准改了，就用 `skill edit` 同步修改两份 `SKILL.md`。
 
-**依赖：** IMPL-A、IMPL-C。**挡住：** IMPL-E、IMPL-I、IMPL-N。
+**依赖：** IMPL-A、IMPL-C、IMPL-N。**挡住：** IMPL-E、IMPL-I。
 
 **Verify:** `SKILL.md` 开头的 description（一句话说明什么时候用这个 skill）以「Use when」开头；`SKILL.md` 里有 MUST 门槛；职责和契约表一致。
 
@@ -47,7 +47,7 @@ last_verified: 2026-11-24
 
 **步骤：** 每次 DSGN 规则改动，同一批修改摘要。
 
-**依赖：** IMPL-A。**挡住：** IMPL-B、IMPL-F、IMPL-M、IMPL-R。
+**依赖：** IMPL-A。**挡住：** IMPL-B、IMPL-F、IMPL-M、IMPL-N、IMPL-R。
 
 **Verify:** 摘要里的每条 MUST 都能在 document-standard design 里找到出处；没有和 design 矛盾的说法。
 
@@ -62,7 +62,7 @@ last_verified: 2026-11-24
 - `fixtures/neg/` 和 `fixtures/pos/`，随 TST-B 增加
 - `checks/` 下的 Python 检查模块，实现 TST-B
 
-**依赖：** 无。**挡住：** IMPL-J、IMPL-K、IMPL-L、IMPL-E。
+**依赖：** 无。**挡住：** IMPL-J、IMPL-K、IMPL-L、IMPL-E、IMPL-AA、IMPL-AB。
 
 **Verify:** 有检查模块时 TST-B 能跑；gold 的输入文件都在。
 
@@ -72,7 +72,7 @@ last_verified: 2026-11-24
 
 **步骤：** 新开分支 `eval/v1/<run_id>`；用 spec-write 写出一套 feature spec；跑 TST-E、TST-F、TST-L，然后 TST-K；失败时先改 spec。
 
-**依赖：** IMPL-B、IMPL-D、IMPL-J、IMPL-P；报告部分还依赖 IMPL-L 和 IMPL-X，可读性部分还依赖 IMPL-Q。**挡住：** IMPL-I。
+**依赖：** IMPL-B、IMPL-D、IMPL-J、IMPL-P、IMPL-AA、IMPL-AB；报告部分还依赖 IMPL-L 和 IMPL-X，可读性部分还依赖 IMPL-Q。**挡住：** IMPL-I。
 
 **Verify:** 生成了 HTML 报告；分数按 test-plan 的 Scoring 计算。
 
@@ -150,9 +150,9 @@ last_verified: 2026-11-24
 
 ## IMPL-N — skill 契约和四个例子
 
-**目标：** [skill 契约](../design/spec-driven-development-design-skill-contracts.md)写好；两个 skill 的正文都提到盖 shed、北京旅游、数学题、股票（PRD-Q）。
+**目标：** 先写好 [skill 契约](../design/spec-driven-development-design-skill-contracts.md)（契约是权威，`SKILL.md` 照着改）；两个 skill 的正文都提到盖 shed、北京旅游、数学题、股票（PRD-Q）。
 
-**依赖：** IMPL-B。**挡住：** 无。
+**依赖：** IMPL-C。**挡住：** IMPL-B。
 
 **Verify:** TST-S 通过；spec-review 会读契约。
 
@@ -267,15 +267,31 @@ last_verified: 2026-11-24
 
 **Verify:** `must_registry_coverage.py` 不再列出没对应的检查脚本：每个要么对上 MUST 条目，要么在 `HELPER` 表里。2026-11-24 已完成。
 
+## IMPL-AA — 生成并整理 gold v1
+
+**目标：** 按 TST-C 用 iPhone 案例跑 3 次，再按 TST-D 整理出范例和 `gold/v1/annotations.yaml`。现状：已完成。
+
+**依赖：** IMPL-D。**挡住：** IMPL-E。
+
+**Verify:** TST-C、TST-D 通过。
+
+## IMPL-AB — mock MCP 服务器
+
+**目标：** 按 PRD-O 和 TST-Q 做一个共用的 mock MCP 服务器，调用后打印记录，不真下单。现状：已完成。
+
+**依赖：** IMPL-D。**挡住：** IMPL-E。
+
+**Verify:** TST-Q 通过。
+
 ## Execution order
 
 先做不依赖别人的任务，被挡住的后做：
 
 1. IMPL-A、IMPL-D、IMPL-G、IMPL-H、IMPL-U、IMPL-W、IMPL-X（互不依赖，可以同时做）
 2. IMPL-C；IMPL-Y（它等 IMPL-X）
-3. IMPL-B、IMPL-F、IMPL-J、IMPL-K、IMPL-L、IMPL-M、IMPL-R
-4. IMPL-N、IMPL-O、IMPL-P、IMPL-S（等 IMPL-F）、IMPL-T（等 IMPL-M）、IMPL-V（等 IMPL-H）、IMPL-Z（等 IMPL-M）
-5. IMPL-Q
+3. IMPL-N、IMPL-F、IMPL-J、IMPL-K、IMPL-L、IMPL-M、IMPL-R
+4. IMPL-B（等 IMPL-N）、IMPL-O、IMPL-P、IMPL-S（等 IMPL-F）、IMPL-T（等 IMPL-M）、IMPL-V（等 IMPL-H）、IMPL-Z（等 IMPL-M）
+5. IMPL-Q；IMPL-AA、IMPL-AB（等 IMPL-D）
 6. IMPL-E（评测要等 spec 可读、测试骨架齐全、gold 改回 iPhone 之后再跑）
 7. IMPL-I
 
@@ -312,3 +328,4 @@ last_verified: 2026-11-24
 | 2026-11-24 | 第 13 轮审查后：IMPL-X、IMPL-K 补上和 IMPL-Y 的双向依赖；judgments/ 要提交 |
 | 2026-11-24 | 第 17 轮审查后：新增 IMPL-Z；执行顺序第 2 步写清 IMPL-Y 等 IMPL-X |
 | 2026-11-24 | 第 18 轮审查后：IMPL-Z 写明什么是辅助检查、记在哪，已完成 |
+| 2026-11-24 | 第 20 轮审查后：IMPL-N 先于 IMPL-B（契约是权威）；新增 IMPL-AA（gold v1）、IMPL-AB（mock MCP），都已完成 |

@@ -61,10 +61,11 @@ last_verified: 2026-11-24
 | 键 | 值 | 含义 |
 |---|---|---|
 | `judge.model` | `deepseek-flash` | 判分用的模型 |
-| `gold.cases` | `gold/v1/` | iPhone 案例（[ARD-BL](../decision-history/spec-driven-development-decision-history.md#ard-bl)） |
+| `gold.version`、`gold.models` | `v1`、`[deepseek-flash]` | gold 版本和生成 gold 用的模型 |
+| `gold.cases.iphone.path`、`gold.cases.iphone.version` | `gold/v1`、`v1` | iPhone 案例（[ARD-BL](../decision-history/spec-driven-development-decision-history.md#ard-bl)） |
 | `gold.repeats` | `3` | 每个案例跑几次 |
 | `grill.skills` | `[]` | 辅助 skill；空表示基线 |
-| `target.repo` | `.` | 写 spec 的仓库；环境变量 `SDD_EVAL_REPO` 可覆盖 |
+| `target.repo`、`target.feature` | `.`、`iphone` | 写 spec 的仓库（环境变量 `SDD_EVAL_REPO` 可覆盖）和要写的 feature |
 | `checkers.models`、`checkers.repeats` | `[deepseek-flash]`、`5` | 复核用的模型和次数（[ARD-CJ](../decision-history/spec-driven-development-decision-history.md#ard-cj)） |
 | `single_provider` | `true` | 所有模型来自同一家服务商 |
 
@@ -333,3 +334,4 @@ document-standard 的 reader PRD：
 | 2026-11-24 | 第 15 轮审查后：TST-A 的输入加 DSGN-C |
 | 2026-11-24 | 第 18 轮审查后：TST-I 正文写明不低于上一次；TST-V 写明等间隔抽题和按小节出题 |
 | 2026-11-24 | 第 19 轮审查后：Test Scope 写明 TST-AA 覆盖阶段编排的规则文字 |
+| 2026-11-24 | 第 20 轮审查后：eval.yaml 键表跟上实际结构 |
