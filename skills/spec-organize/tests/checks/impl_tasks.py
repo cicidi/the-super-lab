@@ -1,4 +1,6 @@
-"""Each IMPL task has a done line (ARD-AT); depends/blocks edges agree both ways (DSGN-E)."""
+"""Each IMPL task has a done line (ARD-AT), a 依赖 and a 挡住 line, and depends/blocks
+edges agree both ways (DSGN-E). Execution order and read-before-write stay with the
+LLM judge (MUST-K is llm-scored)."""
 
 from __future__ import annotations
 
@@ -53,4 +55,8 @@ def check_impl_tasks(path: Path, text: str | None = None) -> list[Finding]:
             findings.append(
                 Finding("impl_tasks", str(path), f"{ident} needs Done when, Verify, or 完成标准")
             )
+        if not _DEPS.search(tasks[ident]):
+            findings.append(Finding("impl_tasks", str(path), f"{ident} needs a 依赖/Depends on line (write 无 if none)"))
+        if not _BLOCKS.search(tasks[ident]):
+            findings.append(Finding("impl_tasks", str(path), f"{ident} needs a 挡住/Blocks line (write 无 if none)"))
     return findings + _edge_findings(path, tasks)

@@ -22,12 +22,12 @@ metadata:
     - check work
     - accept work
     - challenge this
-  spec_bundle_version: "1.0.12"
+  spec_bundle_version: "1.0.13"
   spec_built_at: "2026-11-24"
-  spec_git_sha: "0956cc9"
+  spec_git_sha: "e20a294"
 ---
 <!-- SPEC-BUNDLE-START -->
-> **SDD spec bundle** `1.0.12` · built 2026-11-24 · git `0956cc9`
+> **SDD spec bundle** `1.0.13` · built 2026-11-24 · git `e20a294`
 <!-- SPEC-BUNDLE-END -->
 
 # spec-review
@@ -67,7 +67,7 @@ Also load `skills/spec-organize/SPEC-STANDARD.md` for **mechanical MUST** checks
 (**ARD-P**: format rules are checked by script, not by judgment): path/filename, frontmatter, letter IDs, decision-log shape, size caps,
 INDEX/dead links, and name collisions (two features, files, or IDs with the same name). `reference/` is not a committed type; `raw/` may exist locally and must not be committed — **suggest fixes only**, never apply edits.
 
-Severity **≥3** when a MUST rule in SPEC-STANDARD is broken, for example: an open question is not `QUES-A` or has no owner or blocking flag; an `IMPL-*` names no dependency and no one it blocks; body text outside decision-history carries strikethrough, or drops an old claim without linking the ARD that changed it (ARD-BM); two documents state the same fact differently; a cited figure states a fact not in prose or contradicts prose (ARD-CA) — name the SVG file. Reader HTML fails the same bar when the strike toggle is missing, or when the section, subsection, and clause share one size. A broken **NICE** rule (ARD-BN) is severity 2: list it as skipped, do not discuss it.
+Severity **≥3** when a MUST rule in SPEC-STANDARD is broken, for example: an open question is not `QUES-A` or has no owner or blocking flag; an `IMPL-*` is missing its dependency, the task it blocks, or its done line; body text outside decision-history carries strikethrough, or drops an old claim without linking the ARD that changed it (ARD-BM); two documents state the same fact differently; a cited figure states a fact not in prose or contradicts prose (ARD-CA) — name the SVG file. Reader HTML fails the same bar when the strike toggle is missing, or when the section, subsection, and clause share one size. A broken **NICE** rule (ARD-BN) is severity 2: list it as skipped, do not discuss it.
 
 **Readability** (PRD-M, ARD-BO): read each document as an undergraduate programmer who has only that document and the glossary in the parent design's appendix. A term or abbreviation used without explanation and absent from the glossary, or a section written as keyword strings or arrow chains that such a reader cannot follow, is severity **3**. Quote the sentence and propose the plain rewrite.
 

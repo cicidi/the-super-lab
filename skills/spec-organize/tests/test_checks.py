@@ -304,3 +304,14 @@ def test_neg_impl_blocks_one_way():
 
     p = FIX / "neg/impl-blocks-one-way/docs/features/demo/impl-plan/demo-impl-plan.md"
     assert any("blocks IMPL-B" in f.message for f in check_impl_tasks(p))
+
+
+def test_impl_missing_depends_or_blocks_line_flagged(tmp_path):
+    """MUST-K: every IMPL names its dependency and what it blocks (write 无 when none)."""
+    from checks.impl_tasks import check_impl_tasks
+
+    body = "## IMPL-A — x\n\n**Verify:** ok.\n\n## IMPL-B — y\n\n**依赖：** 无。\n\n**Verify:** ok.\n"
+    msgs = [f.message for f in check_impl_tasks(_impl_plan(tmp_path, body))]
+    assert "IMPL-A needs a 依赖/Depends on line (write 无 if none)" in msgs
+    assert "IMPL-A needs a 挡住/Blocks line (write 无 if none)" in msgs
+    assert "IMPL-B needs a 挡住/Blocks line (write 无 if none)" in msgs

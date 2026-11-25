@@ -53,8 +53,8 @@ items:
   - id: MUST-K
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:240
     text: '**impl-plan 正文（MUST，由 spec-write 执行）。** 每个 `IMPL-*` 写明三件事：依赖哪个任务、挡住了哪个任务、完成标准。依赖和挡住要两头对得上：A 写了挡住 B，B 就要写依赖 A。最后的执行顺序把被挡住的任务排在后面，例如先改数据库，再改用到它的接口。优先级高又没被挡住的先做；互不相挡的可以同时做。先做只读的部分，再做会写入的部分；对方的接口还没上线时，写明用什么 mock 代替（[ARD-AT](../../../decision-history/spec-driven-development-decision-history.md#ard-at)）。'
-    method: python
-    check: 'impl_tasks'
+    method: llm
+    check: ''
   - id: MUST-L
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:242
     text: '**引用代码（MUST）。** 写「某文件第几行」时，同时写明是哪个 commit（[ARD-AQ](../../../decision-history/spec-driven-development-decision-history.md#ard-aq)）。'

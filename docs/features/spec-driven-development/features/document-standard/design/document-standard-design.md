@@ -458,7 +458,7 @@ design 管「想要怎样」，代码管「现在怎样」和内部结构。机�
 
 | ID | 问题 | 目前答案 | 负责人 | 阻塞 |
 |---|---|---|---|---|
-| QUES-A | 所有工具是否都支持 sub-feature 目录和 sub-feature 下的 `raw/` | 部分已查：`.gitignore` 原来的 `docs/features/*/raw/` 漏掉了 sub-feature 下的 `raw/`，改成 `**` 由 parent impl-plan 的 IMPL-P 做；其他工具未核实 | AI 查完人决定 | 否 |
+| QUES-A | 所有工具是否都支持 sub-feature 目录和 sub-feature 下的 `raw/` | 部分已查：`.gitignore` 原来的 `docs/features/*/raw/` 漏掉了 sub-feature 下的 `raw/`，已改成 `docs/features/**/raw/`（parent impl-plan 的 IMPL-P，已完成）；其他工具未核实 | AI 查完人决定 | 否 |
 | QUES-B | 行数上限要不要按 feature 的规模分档 | 未定 | 人决定 | 否 |
 | QUES-C | DSGN-B 的具体数字（800、1,000、600）是否合适 | 沿用现值 | 人决定 | 否 |
 | QUES-D | `raw/` 的六个子目录够不够用 | 目前够用 | 人决定 | 否 |
@@ -521,3 +521,4 @@ design 管「想要怎样」，代码管「现在怎样」和内部结构。机�
 | 2026-11-24 | 第 11 轮审查后：DSGN-M 的图规则改为 ARD-CA 保留的部分 |
 | 2026-11-24 | 第 15 轮审查后：DSGN-D 的 book 更新改为 commit 前必须重建，去掉 draft 例外（ARD-CF） |
 | 2026-11-24 | 第 16 轮审查后：DSGN-M 不再写错 DSGN-E 的 MUST 条数 |
+| 2026-11-24 | 第 17 轮审查后：QUES-A 写明 .gitignore 已改 |

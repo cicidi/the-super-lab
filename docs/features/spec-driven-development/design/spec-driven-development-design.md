@@ -195,7 +195,7 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 | 规则越加越多 | 作者把句子压成关键词，文档变得像给机器读的 | 规则分 MUST 和 NICE，只有 MUST 算失败（[ARD-BN](../decision-history/spec-driven-development-decision-history.md#ard-bn)）；可读性作为通过条件（[ARD-BO](../decision-history/spec-driven-development-decision-history.md#ard-bo)） |
 | skill 正文和 spec 不一致 | AI 按 skill 做，结果违反 spec | skill 契约规定：不一致时以 spec 为准，先改 spec 再改 skill（[skill 契约](spec-driven-development-design-skill-contracts.md)） |
 | 靠改 gold 来提高分数 | 分数变高，质量没变 | 打分用固定的 iPhone 案例，gold 有版本号，只在同一版本内比较（[ARD-BL](../decision-history/spec-driven-development-decision-history.md#ard-bl)、[ARD-S](../decision-history/spec-driven-development-decision-history.md#ard-s)） |
-| 检查脚本没跟上规则 | 机械检查报 0 个问题，但文档其实不合规 | 规则改动后，同一批更新检查脚本和 MUST 清单（TST-M）；当前欠账列在 [impl-plan](../impl-plan/spec-driven-development-impl-plan.md) 的 IMPL-P |
+| 检查脚本没跟上规则 | 机械检查报 0 个问题，但文档其实不合规 | 规则改动后，同一批更新检查脚本和 MUST 清单（TST-M）；当前欠账（还没接进 MUST 清单的检查脚本）由 [impl-plan](../impl-plan/spec-driven-development-impl-plan.md) 的 IMPL-Z 负责 |
 
 ## Open Questions
 
@@ -382,3 +382,4 @@ DSGN-A（改动上限）、DSGN-B（什么时候记决定）以及各篇文档�
 | 2026-11-24 | 第 10 轮审查后：分数 2 最高分写对；QUES-D、QUES-E 按编号排 |
 | 2026-11-24 | 第 14 轮审查后：放弃 spec-pipeline 的理由跟上 ARD-CH |
 | 2026-11-24 | 第 15 轮审查后：DSGN-E 的 parent 五篇齐全标 MUST |
+| 2026-11-24 | 第 17 轮审查后：风险表的欠账改由 IMPL-Z 负责 |

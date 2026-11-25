@@ -144,7 +144,7 @@ last_verified: 2026-11-24
 
 **目标：** `sections.py` 检查五种文档的必需章节；`ids.py` 检查编号格式；去掉不该有的豁免。
 
-**依赖：** IMPL-C。**挡住：** IMPL-P、IMPL-T。
+**依赖：** IMPL-C。**挡住：** IMPL-P、IMPL-T、IMPL-Z。
 
 **Verify:** TST-B 通过；`run_spec_checks.py` 跑 SDD 目录。
 
@@ -259,14 +259,22 @@ last_verified: 2026-11-24
 
 **Verify:** 5 个语义案例能自动判出找没找到。
 
+## IMPL-Z — 剩下的检查脚本接进 MUST 清单
+
+**目标：** `must_registry_coverage.py` 报出的、还没对应到任何 MUST 条目的检查脚本，逐个对上 MUST 条目，或写明它只是辅助检查。
+
+**依赖：** IMPL-M。**挡住：** 无。
+
+**Verify:** `must_registry_coverage.py` 不再列出没对应的检查脚本。
+
 ## Execution order
 
 先做不依赖别人的任务，被挡住的后做：
 
 1. IMPL-A、IMPL-D、IMPL-G、IMPL-H、IMPL-U、IMPL-W、IMPL-X（互不依赖，可以同时做）
-2. IMPL-C、IMPL-Y（等 IMPL-X）
+2. IMPL-C；IMPL-Y（它等 IMPL-X）
 3. IMPL-B、IMPL-F、IMPL-J、IMPL-K、IMPL-L、IMPL-M、IMPL-R
-4. IMPL-N、IMPL-O、IMPL-P、IMPL-S（等 IMPL-F）、IMPL-T（等 IMPL-M）、IMPL-V（等 IMPL-H）
+4. IMPL-N、IMPL-O、IMPL-P、IMPL-S（等 IMPL-F）、IMPL-T（等 IMPL-M）、IMPL-V（等 IMPL-H）、IMPL-Z（等 IMPL-M）
 5. IMPL-Q
 6. IMPL-E（评测要等 spec 可读、测试骨架齐全、gold 改回 iPhone 之后再跑）
 7. IMPL-I
@@ -302,3 +310,4 @@ last_verified: 2026-11-24
 | 2026-11-24 | 第 11 轮审查后：IMPL-E 先跑 TST-L 再跑 TST-K，依赖 IMPL-X；IMPL-K 写明现状 |
 | 2026-11-24 | 第 12 轮审查后：新增 IMPL-Y 语义案例执行器；IMPL-I 只要求机械案例；IMPL-R 加 DSGN-B 检查 |
 | 2026-11-24 | 第 13 轮审查后：IMPL-X、IMPL-K 补上和 IMPL-Y 的双向依赖；judgments/ 要提交 |
+| 2026-11-24 | 第 17 轮审查后：新增 IMPL-Z；执行顺序第 2 步写清 IMPL-Y 等 IMPL-X |
