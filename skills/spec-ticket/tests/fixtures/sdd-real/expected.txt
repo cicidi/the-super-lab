@@ -26,3 +26,5 @@ IMPL-V: IMPL-H
 IMPL-W: -
 IMPL-X: -
 IMPL-Y: IMPL-X
+# IMPL-Z added by commit 0eb2437 (2026-11-24).
+IMPL-Z: IMPL-M

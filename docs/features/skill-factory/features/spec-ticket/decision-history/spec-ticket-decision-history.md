@@ -19,6 +19,8 @@ skill-factory 层面的旧决策在 [parent decision history](../../../decision-
 
 | ID | Date | Decision |
 |---|---|---|
+| ARD-S | 2026-11-24 | Jira 按标签 `spec-ticket-<f>` 查找；每次第一条 Blocks 链接读回核对方向，反了就对调；正文按段落写 ADF |
+| ARD-R | 2026-11-24 | 按本地和 GitHub 实跑补清 SKILL.md：已完成只认"这一项…完成"；正文不带 Blocked by；母工单只列已存在的文档；确认清单含补边 |
 | ARD-Q | 2026-11-24 | 复制的 IMPL 原文里相对链接改成仓库根路径（GitHub 为完整网址）；锚点按标题算；GHES 退路也写 Parent 行 |
 | ARD-P | 2026-11-24 | Jira 只支持云版（Jira Cloud，REST API v3）；自建版（Data Center）暂不支持 |
 | ARD-O | 2026-11-24 | 每个 feature 一张母工单，正文只放 PRD 和 design 的链接；每张 IMPL 工单是它的子工单 |
@@ -38,6 +40,16 @@ skill-factory 层面的旧决策在 [parent decision history](../../../decision-
 | ARD-A | 2026-11-24 | 自己新建拆工单的 skill，灵感来自 Matt Pocock 的 to-tickets，不沿用原版 |
 
 ## Evidence Appendix
+
+### ARD-S
+
+理由：Atlassian 文档说 outwardIssue 是 blocker，但 atlassian-mcp-server issue #112 在真 Jira 上看到相反结果；本机没有 Jira，只能让 skill 自己读回核对。
+被否决：照文档写死方向；去掉链接。出处：用户 2026-11-24（会话 80291c19）"验证都做完"；模拟 Jira 实跑。
+
+### ARD-R
+
+理由：两个 agent 照 SKILL.md 实跑（本地全部夹具、GitHub 沙盒仓库）共报出 14 处歧义，逐条补清。
+被否决：只改夹具不改 SKILL.md。出处：用户 2026-11-24（会话 80291c19）"验证都做完"。
 
 ### ARD-Q
 
@@ -155,3 +167,5 @@ impl-plan 已经把工作切成带依赖的步骤（`skills/spec-organize/SPEC-S
 | 2026-11-24 | 加 ARD-O：每个 feature 一张母工单（用户选 B） |
 | 2026-11-24 | 加 ARD-P：Jira 只支持云版 |
 | 2026-11-24 | 加 ARD-Q：链接、锚点和 Parent 退路 |
+| 2026-11-24 | 加 ARD-R：实跑后补清 |
+| 2026-11-24 | 加 ARD-S：Jira 查找、方向核对、ADF 段落 |

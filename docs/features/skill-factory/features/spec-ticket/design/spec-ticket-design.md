@@ -55,7 +55,7 @@ spec-ingest 的 spec 用 `docs/features/skill-factory/features/spec-ingest/desig
 这一行与 wayfinder 共用；DSGN-M 改指向时，wayfinder 的 tracker 说明也改成读这一行（ARD-J）。
 本条是协调者的推荐，用户还没确认（QUES-C）。
 
-**DSGN-D 解析 IMPL。** impl-plan 里每个 `## IMPL-X — 标题` 小节算一条 IMPL（PRD-A）。
+**DSGN-D 解析 IMPL。** impl-plan 里每个 `## IMPL-X — 标题`（或 `###`）小节算一条 IMPL（PRD-A、ARD-R）。
 每条读出：ID、标题、正文、依赖、挡住、完成标准（`Verify:` 或 `完成标准`，见 `skills/spec-organize/SPEC-STANDARD.md`）。
 在整个 IMPL 小节里找 `依赖`、`挡住` 标签（或英文 Depends on、Blocks），不限行首，取其后的所有 `IMPL-*` ID（ARD-L）。
 带条件的依赖（如"报告部分还依赖 IMPL-L"）也算依赖，宁可多连，不漏连。
@@ -67,7 +67,7 @@ spec-ingest 的 spec 用 `docs/features/skill-factory/features/spec-ingest/desig
 正文有三部分：IMPL 的原文（含完成标准），impl-plan 的仓库内路径和小节锚点，以及"Blocked by"一行（本地必写；GitHub 只作退路，见 DSGN-I；Jira 用链接，见 DSGN-K）。
 原文里的相对链接改成从仓库根算起的路径，GitHub 上改成完整网址；锚点按 GitHub 规则从小节标题算出（ARD-Q）。
 正文末尾注明"由 spec-ticket 生成，以 impl-plan 为准，工单上的修改不会写回"（PRD-F）。
-沿用 to-tickets 的 `ready-for-agent` 标签，表示 agent 可以直接认领；仓库里没有这个标签时不打，并在报告里说明。
+沿用 to-tickets 的 `ready-for-agent` 标签，表示 agent 可以直接认领；只打在 IMPL 工单上，母工单不打（ARD-R）；仓库里没有这个标签时不打，并在报告里说明。
 
 **DSGN-F 阻塞边。** 甲挡住乙，条件是乙的依赖里写了甲，或者甲的挡住里写了乙；两边取并集（PRD-C）。
 两边写得不一致时照样连，并在报告里列出不一致的地方，供作者修 impl-plan。
@@ -98,9 +98,10 @@ slug 是标题转小写后，非 `a-z0-9` 的连续字符换成一个短横线�
 
 **DSGN-K Jira 适配器。** 用 Jira REST API v3（curl 调用），连接信息来自环境变量（PRD-G、ARD-I）：
 JIRA_BASE_URL、JIRA_EMAIL、JIRA_API_TOKEN、JIRA_PROJECT_KEY；缺任何一个就停下，不退回本地。
-查找：`POST /rest/api/3/search/jql` 按项目和标题搜，再按标题精确匹配。
+查找：`POST /rest/api/3/search/jql` 按项目和标签 `spec-ticket-<f>` 搜，再按标题精确匹配；不用标题搜，因为它会分词，可能漏（ARD-S）。
 母工单建成 Epic；每张 IMPL 工单的 `parent` 字段设为这个 Epic（DSGN-N）。
 创建：`POST /rest/api/3/issue`，正文用 ADF（Atlassian 的 JSON 文档格式），标签 `ready-for-agent`。
+每次运行的第一条阻塞链接建好后读回来核对方向，反了就删掉重建并对调后续链接（ARD-S）。
 阻塞边：开完被挡住的工单，立即用 `POST /rest/api/3/issueLink` 建类型为 Blocks 的链接。
 本机没有 Jira，这一路没有实测过，链接方向要先在测试项目里核对（见 Risks）。v3 只适用于云版，自建版见 QUES-B。
 
@@ -112,10 +113,12 @@ JIRA_BASE_URL、JIRA_EMAIL、JIRA_API_TOKEN、JIRA_PROJECT_KEY；缺任何一个
 要改的文件就是 `grep -rln 'to-spec\|to-tickets'` 找到的每一个（to-spec 同时由 spec-ingest 取代）。
 改前搜一次定清单，逐处改；改完再搜一次，确认没有残留。
 
-**DSGN-N 母工单。** 每个 feature 一张，标题 `[<f>] feature`，正文只放 PRD 和 design 的仓库路径（PRD-J、ARD-O）。
+**DSGN-N 母工单。** 每个 feature 一张，标题 `[<f>] feature`，正文只放已存在的 PRD、design、impl-plan 的链接（PRD-J、ARD-O、ARD-R）。
 最先建它，之后每张 IMPL 工单建时都挂在它下面。重跑时按对应表或标题找回它，不重建。
 
 ## Testing Decisions
+
+2026-11-24 实测：agent 照 SKILL.md 手写跑完本地 6 个夹具，全过；GitHub 沙盒仓库 cicidi/spec-ticket-sandbox 开真 issue，全过；Jira 只对照模拟服务器跑过，两种链接方向都通过（ARD-R、ARD-S）。
 
 只测外部行为：给定 impl-plan 和配置，看 tracker 上（或本地 issues 目录里）出现了什么，不测内部怎么解析。
 主要测试用一个固定的小 feature 做夹具（fixture，即事先准备好的测试输入），放在 `skills/spec-ticket/tests/` 下。
@@ -196,3 +199,8 @@ GitHub 和 Jira 上已开的工单通常只能关闭，删除需要管理员权�
 | 2026-11-24 | QUES-D 已定：downstream-delivery 原地改写（spec-ingest 的 ARD-N） |
 | 2026-11-24 | QUES-B 已定：Jira 只支持云版（ARD-P） |
 | 2026-11-24 | DSGN-E 加链接和锚点规则，DSGN-I 写明 Parent 退路（ARD-Q） |
+| 2026-11-24 | DSGN-D、DSGN-N 按实跑结果补清（ARD-R） |
+| 2026-11-24 | DSGN-K：按标签查找、核对链接方向（ARD-S） |
+| 2026-11-24 | SKILL.md 第 6–8 步补清：补边时机、两张旧工单间的新边只报告、按标题找到的补写对应表（ARD-R） |
+| 2026-11-24 | 母工单不打 ready-for-agent；Jira 方向核对后再读一次（ARD-R、ARD-S） |
+| 2026-11-24 | Testing Decisions 记下本地、GitHub、模拟 Jira 的实测结果 |

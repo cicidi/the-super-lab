@@ -47,9 +47,16 @@ def read_tickets(issues_dir):
         text = f.read_text(encoding="utf-8")
         if not re.search(r"^Parent: _feature\s*$", text, re.M):
             problems.append(f"{f.name}: missing 'Parent: _feature' line")
+        lines = re.findall(r"^Blocked by:(.*)$", text, re.M)
+        if len(lines) > 1:
+            problems.append(f"{f.name}: {len(lines)} 'Blocked by:' lines, expected 1")
         bl = re.search(r"^Blocked by:(.*)$", text, re.M)
         if not bl:
             problems.append(f"{f.name}: missing 'Blocked by:' line")
+        else:
+            for ref in re.findall(r"\((IMPL-[A-Z]+[^)]*\.md)\)", bl.group(1)):
+                if not (Path(issues_dir) / ref).is_file():
+                    problems.append(f"{f.name}: blocker file {ref} does not exist")
         found[impl] = set(ID.findall(bl.group(1))) if bl else set()
     return found, problems
 
