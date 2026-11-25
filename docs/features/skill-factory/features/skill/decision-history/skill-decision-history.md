@@ -19,6 +19,7 @@ opencode 会话按会话 id 前缀引用，数据在本机 opencode.db。
 
 | ID | Date | Decision |
 |---|---|---|
+| ARD-L | 2026-11-24 | check_skills.py 也进 CI（`skills-check.yml`）和 pre-commit 钩子（`tools/git-hooks/pre-commit`，只在提交 SKILL.md 时跑） |
 | ARD-K | 2026-11-24 | 新增 `tools/check_skills.py` 查 frontmatter、断掉的 skill 引用、链接和仓库路径；create、edit、import 保存后都要跑 |
 | ARD-J | 2026-11-24 | import 记录 source_author、source_url（带 commit sha）和导入日期，并检查依赖 |
 | ARD-A | 2026-08-02 | 把 skill-create、skill-edit、skill-import、skill-list 合成一个带子命令的 `skill` |
@@ -32,6 +33,10 @@ opencode 会话按会话 id 前缀引用，数据在本机 opencode.db。
 | ARD-I | 2026-06-10 | 用 create 自举出 import 和 edit；产出不好时先修 create 再重做 |
 
 ## Evidence Appendix
+
+### ARD-L
+
+理由：只靠 /skill 拦不住手改的 SKILL.md。钩子测过三种情况：坏的拦下，好的和不含 SKILL.md 的放行。出处：用户 2026-11-24（会话 80291c19）"8 -10 按照你的建议来"。
 
 ### ARD-K
 
@@ -110,3 +115,4 @@ ARD-F 里保留原作者的部分仍然有效（PRD-F）。
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 skill 的决策 |
 | 2026-11-24 | 新增 ARD-J：import 记录出处并检查依赖 |
 | 2026-11-24 | 新增 ARD-K：check_skills.py |
+| 2026-11-24 | 新增 ARD-L：CI 和 pre-commit |

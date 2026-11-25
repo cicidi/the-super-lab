@@ -74,6 +74,11 @@ python3 tools/check_skills.py skills/bug  # one skill
 ```
 
 Checks every SKILL.md: frontmatter (name matches the directory, description set), references to skills that do not exist or were retired, relative links, and repo paths.
+CI runs it on every push and pull request (`.github/workflows/skills-check.yml`). To run it before each commit that touches a SKILL.md:
+
+```bash
+git config core.hooksPath tools/git-hooks
+```
 
 ## Conventions
 

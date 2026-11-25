@@ -55,7 +55,7 @@ description（frontmatter 里告诉 agent 何时调用的那段话）以 "Use wh
 ## Testing Decisions
 
 正确性靠 DSGN-B 的 diff 确认、人工审阅和 `tools/check_skills.py`（ARD-K）。
-该脚本查 frontmatter、断掉的 skill 引用、链接和仓库路径，不查内容好坏。
+该脚本查 frontmatter、断掉的 skill 引用、链接和仓库路径，不查内容好坏。CI 和 pre-commit 钩子也跑它（ARD-L）。
 产出的 skill 不好时，先修 create 再重新生成（PRD-I）。
 
 ## Out of Scope
@@ -106,3 +106,4 @@ create、edit、import 都靠人审，skill 多了以后审阅成本会上升。
 | 2026-11-24 | 引用 PRD-A 到 PRD-I，新增 QUES-C，链接 PRD 和 decision-history |
 | 2026-11-24 | DSGN-C 加出处记录和依赖检查（ARD-J），QUES-C 已答 |
 | 2026-11-24 | Testing Decisions 加 check_skills.py，QUES-A 已答（ARD-K） |
+| 2026-11-24 | 加 CI 和 pre-commit（ARD-L） |
