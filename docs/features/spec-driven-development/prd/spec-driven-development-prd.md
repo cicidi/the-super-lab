@@ -4,7 +4,7 @@ type: prd
 state: draft
 health: active
 owner: cicidi
-version: "1.0.17"
+version: "1.0.18"
 last_verified: 2026-11-24
 ---
 
