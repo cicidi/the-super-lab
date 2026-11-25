@@ -19,6 +19,8 @@ skill-factory 层面的旧决策在 [parent decision history](../../../decision-
 
 | ID | Date | Decision |
 |---|---|---|
+| ARD-Q | 2026-11-24 | 复制的 IMPL 原文里相对链接改成仓库根路径（GitHub 为完整网址）；锚点按标题算；GHES 退路也写 Parent 行 |
+| ARD-P | 2026-11-24 | Jira 只支持云版（Jira Cloud，REST API v3）；自建版（Data Center）暂不支持 |
 | ARD-O | 2026-11-24 | 每个 feature 一张母工单，正文只放 PRD 和 design 的链接；每张 IMPL 工单是它的子工单 |
 | ARD-N | 2026-11-24 | 本地夹具的结果由 `tools/check_spec_ticket_fixture.py` 比对期望清单，不用人工清单 |
 | ARD-M | 2026-11-24 | PIPE-E-A 闸只看 Blocking 列：`yes` 或 `是` 就停，不判断答案一栏 |
@@ -36,6 +38,15 @@ skill-factory 层面的旧决策在 [parent decision history](../../../decision-
 | ARD-A | 2026-11-24 | 自己新建拆工单的 skill，灵感来自 Matt Pocock 的 to-tickets，不沿用原版 |
 
 ## Evidence Appendix
+
+### ARD-Q
+
+理由：本地测试发现工单里的相对链接全断，`#impl-x` 也对不上真实标题（标题 `IMPL-B — 读侧` 的锚点是 `#impl-b--读侧`）。
+被否决：去掉锚点；不复制原文只放链接。出处：用户 2026-11-24（会话 80291c19）"验证都做完"。
+
+### ARD-P
+
+理由：DSGN-K 本来就按 v3 写；自建版用 v2 和别的认证方式，要另写适配器。被否决：两种都做。出处：用户 2026-11-24（会话 80291c19）"按照你的建议来吧".
 
 ### ARD-A
 
@@ -142,3 +153,5 @@ impl-plan 已经把工作切成带依赖的步骤（`skills/spec-organize/SPEC-S
 | 2026-11-24 | 初版：记录用户 2026-11-24 对 spec-ticket 的决策 ARD-A 到 ARD-H |
 | 2026-11-24 | 按审查报告加 ARD-I 到 ARD-N；ARD-F 被 ARD-I、ARD-J 取代 |
 | 2026-11-24 | 加 ARD-O：每个 feature 一张母工单（用户选 B） |
+| 2026-11-24 | 加 ARD-P：Jira 只支持云版 |
+| 2026-11-24 | 加 ARD-Q：链接、锚点和 Parent 退路 |

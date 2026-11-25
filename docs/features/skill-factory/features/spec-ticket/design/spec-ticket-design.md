@@ -65,6 +65,7 @@ spec-ingest 的 spec 用 `docs/features/skill-factory/features/spec-ingest/desig
 
 **DSGN-E 工单内容。** 标题是 `[<feature>] IMPL-X — <IMPL 标题>`；带上 feature 和 IMPL ID，重跑时能按标题找回（PRD-A、PRD-E）。
 正文有三部分：IMPL 的原文（含完成标准），impl-plan 的仓库内路径和小节锚点，以及"Blocked by"一行（本地必写；GitHub 只作退路，见 DSGN-I；Jira 用链接，见 DSGN-K）。
+原文里的相对链接改成从仓库根算起的路径，GitHub 上改成完整网址；锚点按 GitHub 规则从小节标题算出（ARD-Q）。
 正文末尾注明"由 spec-ticket 生成，以 impl-plan 为准，工单上的修改不会写回"（PRD-F）。
 沿用 to-tickets 的 `ready-for-agent` 标签，表示 agent 可以直接认领；仓库里没有这个标签时不打，并在报告里说明。
 
@@ -87,7 +88,7 @@ impl-plan 里被删掉或改了文字的 IMPL，只在报告里列出，不关�
 **DSGN-I GitHub 适配器。** 用 gh 命令行（2.94 以上，本机 2.101）操作当前仓库（PRD-B、ARD-K）。
 查找：`gh issue list --state all --json number,title --limit 1000` 取全部 issue，按标题精确匹配。
 创建：`gh issue create --parent <母工单号> --blocked-by <编号>`，创建时直接带上子工单和依赖关系（DSGN-N）。
-只有旧的自建 GitHub（GHES）不认这个参数时，才退回在正文 "Blocked by" 行写 `#编号`。
+只有旧的自建 GitHub（GHES）不认这些参数时，才退回在正文写 `Blocked by: #编号` 和 `Parent: #母工单号` 两行（ARD-Q）。
 gh 没装或没登录时，停下并提示，不自动退回本地。
 
 **DSGN-J 本地适配器。** 每张工单一个文件：`docs/features/<f>/raw/state/spec-ticket/issues/IMPL-X-<slug>.md`，和 wayfinder 的进度图同在 `raw/state/` 下（PRD-B、ARD-J）。
@@ -171,7 +172,7 @@ Jira 改用 ankitpokhrel/jira-cli：没采用，要多装一个工具；REST API
 | ID | 问题 | 目前答案 | Owner | Blocking |
 |---|---|---|---|---|
 | QUES-A | 除了每条 IMPL，要不要也为 spec 本身开一张工单？用户以前说过"spec 本身也得有一个ticket"（to-spec PRD-D） | 已定：每个 feature 一张只放链接的母工单（ARD-O、DSGN-N）；spec 仍是文档（`skills/wayfinder/SKILL.md` 第 282、292 行） | cicidi | no |
-| QUES-B | 将来接的 Jira 是云版（Jira Cloud）还是自建（Data Center）？ | UNKNOWN；DSGN-K 按云版的 REST API v3 写 | cicidi | no |
+| QUES-B | 将来接的 Jira 是云版（Jira Cloud）还是自建（Data Center）？ | 已定：只支持云版（ARD-P） | cicidi | no |
 | QUES-C | tracker 配置放在 CLAUDE.local.md 的一行 `tracker:`、缺省用本地，用户同意吗（Q4 未答）？ | 按协调者推荐暂定（ARD-C），信心中等 | cicidi | no |
 | QUES-D | downstream-delivery 的 spec 在新 skill 上线后怎么处理：删除、标为过时，还是改写？ | 已定：原地改写（spec-ingest 的 ARD-N） | cicidi | no |
 | QUES-E | 新 IMPL 挡住旧 IMPL 时，给旧工单补阻塞边，算不算违反"不改已有工单"？ | 暂定补边，只加边，不改标题和正文（DSGN-H） | cicidi | no |
@@ -193,3 +194,5 @@ GitHub 和 Jira 上已开的工单通常只能关闭，删除需要管理员权�
 | 2026-11-24 | 加 DSGN-N 母工单，改 DSGN-I、J、K；QUES-A 由 ARD-O 回答 |
 | 2026-11-24 | 写 SKILL.md 时补：已完成的判定和它的边（DSGN-D、F）、slug 规则（DSGN-J）；本地测试去掉对应表 |
 | 2026-11-24 | QUES-D 已定：downstream-delivery 原地改写（spec-ingest 的 ARD-N） |
+| 2026-11-24 | QUES-B 已定：Jira 只支持云版（ARD-P） |
+| 2026-11-24 | DSGN-E 加链接和锚点规则，DSGN-I 写明 Parent 退路（ARD-Q） |
