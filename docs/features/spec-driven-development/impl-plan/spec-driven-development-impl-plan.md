@@ -70,7 +70,7 @@ last_verified: 2026-11-24
 
 **目标：** 跑基线评测：`grill.skills: []`，输入是 iPhone 案例的需求和背景资料（[ARD-BL](../decision-history/spec-driven-development-decision-history.md#ard-bl)）。
 
-**步骤：** 新开分支 `eval/v1/<run_id>`；用 spec-write 写出一套 feature spec；跑 TST-E、TST-F、TST-L，然后 TST-K；失败时先改 spec。
+**步骤：** 新开分支 `eval/v1/<run_id>`；用 spec-write 写出一套 feature spec；跑 TST-E、TST-F，再对写出的文档跑 TST-V，然后 TST-L、TST-K；失败时先改 spec。
 
 **依赖：** IMPL-B、IMPL-D、IMPL-J、IMPL-P、IMPL-AA；报告部分还依赖 IMPL-L 和 IMPL-X，可读性部分还依赖 IMPL-Q。**挡住：** IMPL-I。
 
@@ -269,7 +269,7 @@ last_verified: 2026-11-24
 
 ## IMPL-AA — 生成并整理 gold v1
 
-**目标：** 按 TST-C 用 iPhone 案例跑 3 次，再按 TST-D 整理出范例和 `gold/v1/annotations.yaml`。现状：已完成。
+**目标：** 按 TST-C 用 iPhone 案例跑 3 次，再按 TST-D 整理出范例和 `gold/v1/annotations.yaml`。现状：已用当时的 spec-write 完成；IMPL-B 之后改了 spec-write，就按 TST-M 重跑并建立新基线。
 
 **依赖：** IMPL-B、IMPL-D、IMPL-J。**挡住：** IMPL-E。
 
@@ -332,3 +332,4 @@ last_verified: 2026-11-24
 | 2026-11-24 | 第 18 轮审查后：IMPL-Z 写明什么是辅助检查、记在哪，已完成 |
 | 2026-11-24 | 第 20 轮审查后：IMPL-N 先于 IMPL-B（契约是权威）；新增 IMPL-AA（gold v1）、IMPL-AB（mock MCP），都已完成 |
 | 2026-11-24 | 第 21 轮审查后：IMPL-N 只管契约，四个例子并入 IMPL-B；IMPL-W 等 IMPL-N；IMPL-AA 加依赖 IMPL-B、IMPL-J；IMPL-AB 不再挡住 IMPL-E |
+| 2026-11-24 | 第 22 轮审查后：IMPL-AA 写明 gold v1 的基线条件；IMPL-E 加 TST-V |

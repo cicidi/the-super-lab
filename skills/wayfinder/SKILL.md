@@ -32,12 +32,12 @@ metadata:
     - tech leads
   source_author: mattpocock
   source_url: https://github.com/mattpocock/skills/blob/main/skills/engineering/wayfinder/SKILL.md
-  spec_bundle_version: "1.0.18"
+  spec_bundle_version: "1.0.19"
   spec_built_at: "2026-11-24"
-  spec_git_sha: "f047fd0"
+  spec_git_sha: "311ec00"
 ---
 <!-- SPEC-BUNDLE-START -->
-> **SDD spec bundle** `1.0.18` · built 2026-11-24 · git `f047fd0`
+> **SDD spec bundle** `1.0.19` · built 2026-11-24 · git `311ec00`
 <!-- SPEC-BUNDLE-END -->
 
 A loose idea has arrived — too big for one agent session, and wrapped in fog: the way from here to the **destination** isn't visible yet. Wayfinding is about finding that way, not charging at the destination. This skill charts the way as a **shared map** on the repo's issue tracker, then works its **decision briefs** — questions whose resolution is a decision, not slices of a build to execute — one at a time until the route is clear.

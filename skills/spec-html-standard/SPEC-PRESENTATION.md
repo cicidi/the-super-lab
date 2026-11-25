@@ -12,9 +12,9 @@ Use prose for a single claim, a reason, or a sequence that is not a procedure. O
 
 - Write complete sentences with a subject and a verb. Not keyword strings, not `A → B → fails` arrow chains, not slash lists like `organize/lint/sync`.
 - Explain a term or an abbreviation where it first appears, or link it to the glossary. If the glossary lacks it, add it there.
-- One idea per sentence. Split a sentence that needs two semicolons.
-- Use bold only for the label at the start of a list item or a paragraph, not inside sentences for emphasis.
-- Say what an ID means in words the first time it matters ("PRD-F, the rule for conflicting decisions").
+- NICE (ARD-BN): one idea per sentence; split a sentence that needs two semicolons.
+- NICE: use bold only for the label at the start of a list item or a paragraph, not inside sentences for emphasis.
+- NICE: say what an ID means in words the first time it matters ("PRD-F, the rule for conflicting decisions").
 - Body text may mix Chinese and English if it reads smoothly; keep an author's own words in their voice. Required headings and IDs stay English (ARD-BS).
 
 ## Format

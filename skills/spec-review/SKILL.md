@@ -22,12 +22,12 @@ metadata:
     - check work
     - accept work
     - challenge this
-  spec_bundle_version: "1.0.18"
+  spec_bundle_version: "1.0.19"
   spec_built_at: "2026-11-24"
-  spec_git_sha: "f047fd0"
+  spec_git_sha: "311ec00"
 ---
 <!-- SPEC-BUNDLE-START -->
-> **SDD spec bundle** `1.0.18` · built 2026-11-24 · git `f047fd0`
+> **SDD spec bundle** `1.0.19` · built 2026-11-24 · git `311ec00`
 <!-- SPEC-BUNDLE-END -->
 
 # spec-review
@@ -132,6 +132,8 @@ noted in the report as "skipped" but are NOT debated or acted upon. This
 prevents bikeshedding and keeps the design from becoming over-complicated.
 
 ### Choose Intensity
+
+Pick the mode without asking: **Full Adversarial Review** when the target is a parent spec or a skill contract, or the user asks for an adversarial review or sign-off; **Quick Scan** otherwise.
 
 Step 0 is the only way to ask. One table row at a time. Do not add a second menu that batches every finding into "quick scan or full review". If every finding is level 2 or below, say the doc passes and stop.
 

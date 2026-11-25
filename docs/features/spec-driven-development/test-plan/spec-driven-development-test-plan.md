@@ -136,7 +136,7 @@ last_verified: 2026-11-24
 
 ### TST-K — 评测报告
 
-**目标：** 每次运行生成一个 HTML 报告。**输入：** 任意一次运行。**通过条件：** 报告里有 run_id、分支、gold 版本、评测配置、分数 1 的逐条结果（注明 python 或 llm）、分数 2 的加减分、TST-F 四种输入的结果、5 次复核的结果和 Claude 的核对意见。**判定：** 生成报告，再按结构检查。
+**目标：** 每次运行生成一个 HTML 报告。**输入：** 任意一次运行。**通过条件：** 报告里有 run_id、分支、gold 版本、评测配置、分数 1 的逐条结果（注明 python 或 llm）、分数 2 的加减分、TST-F 四种输入的结果、5 次复核的结果和 Claude 的核对意见、每篇生成文档的 TST-V 结果（答对比例和没解释的词）。**判定：** 生成报告，再按结构检查。
 
 ### TST-L — 5 次独立复核
 
@@ -226,8 +226,8 @@ last_verified: 2026-11-24
 1. TST-A：MUST 清单覆盖率不到 100% 就停。
 2. TST-B：检查脚本失效就停。
 3. TST-O、TST-P、TST-V：design 的覆盖、证据、可读性。这一步的 TST-V 只测 SDD 自己的文档。
-4. TST-C，然后 TST-D：第一次运行，或者 gold 升版时。
-5. TST-G、TST-N、TST-R、TST-S、TST-T、TST-U、TST-W、TST-X、TST-Y、TST-Z、TST-AA。
+4. TST-S，然后 TST-C、TST-D：生成 gold 前先确认 spec-write 正文齐全；第一次运行，或者 gold 升版时。
+5. TST-G、TST-N、TST-R、TST-T、TST-U、TST-W、TST-X、TST-Y、TST-Z、TST-AA。
 6. TST-E、TST-F，然后对 TST-C、TST-E 里 spec-write 写出的文档跑 TST-V。
 7. TST-H，然后 TST-I。
 8. TST-Q：mock 执行。
@@ -335,3 +335,4 @@ document-standard 的 reader PRD：
 | 2026-11-24 | 第 18 轮审查后：TST-I 正文写明不低于上一次；TST-V 写明等间隔抽题和按小节出题 |
 | 2026-11-24 | 第 19 轮审查后：Test Scope 写明 TST-AA 覆盖阶段编排的规则文字 |
 | 2026-11-24 | 第 20 轮审查后：eval.yaml 键表跟上实际结构 |
+| 2026-11-24 | 第 22 轮审查后：TST-S 移到生成 gold 之前；TST-K 报告加 TST-V 结果 |

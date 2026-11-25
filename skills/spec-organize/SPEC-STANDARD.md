@@ -67,7 +67,7 @@ An undergraduate programmer who reads only this one document must understand it 
 - Write complete sentences. A keyword list, a chain of arrows (`A → B → fails`), or a cell full of abbreviations is not a sentence.
 - Explain every term or abbreviation at first use, or link it to the glossary. The glossary lives in one place: the parent design's appendix (`#glossary`). Add new terms there.
 - Body text may mix Chinese and English when it reads smoothly; an author's own words (such as a Problem Statement) keep their voice. Required headings and IDs stay English (ARD-BS).
-- Prefer the plain word over the coined one. If a sentence needs an ID to make sense, say in words what the ID means the first time.
+- NICE (ARD-BN): prefer the plain word over the coined one. If a sentence needs an ID to make sense, say in words what the ID means the first time.
 
 ## Open questions (MUST)
 
