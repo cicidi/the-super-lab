@@ -19,6 +19,8 @@ RULES: list[tuple[re.Pattern[str], str, str]] = [
     (re.compile(r"^\*\*frontmatter（MUST"), "python", "frontmatter"),
     (re.compile(r"^\*\*必需章节（MUST"), "python", "sections"),
     (re.compile(r"^\*\*引用代码（MUST"), "python", "code_citation_base"),
+    (re.compile(r"^\*\*impl-plan 正文（MUST"), "python", "impl_tasks"),
+    (re.compile(r"^- \*\*parent\*\*（`docs/features/spec-driven-development/`"), "python", "parent_complete"),
     (re.compile(r"^\*\*未决问题清单（MUST"), "python", "open_questions"),
     (re.compile(r"^\*\*Decision Log（MUST"), "python", "decision_log"),
     (re.compile(r"^\*\*Change Log（MUST"), "python", "change_log"),

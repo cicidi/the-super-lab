@@ -53,8 +53,8 @@ items:
   - id: MUST-K
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:240
     text: '**impl-plan 正文（MUST，由 spec-write 执行）。** 每个 `IMPL-*` 写明三件事：依赖哪个任务、挡住了哪个任务、完成标准。依赖和挡住要两头对得上：A 写了挡住 B，B 就要写依赖 A。最后的执行顺序把被挡住的任务排在后面，例如先改数据库，再改用到它的接口。优先级高又没被挡住的先做；互不相挡的可以同时做。先做只读的部分，再做会写入的部分；对方的接口还没上线时，写明用什么 mock 代替（[ARD-AT](../../../decision-history/spec-driven-development-decision-history.md#ard-at)）。'
-    method: llm
-    check: ''
+    method: python
+    check: 'impl_tasks'
   - id: MUST-L
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:242
     text: '**引用代码（MUST）。** 写「某文件第几行」时，同时写明是哪个 commit（[ARD-AQ](../../../decision-history/spec-driven-development-decision-history.md#ard-aq)）。'
@@ -170,9 +170,9 @@ items:
     text: '- 结论有依据，查不到写 `UNKNOWN`（pipeline design 的 PIPE-L）。'
     method: llm
     check: ''
-  - id: MUST-AH
+  - id: MUST-BJ
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:402
-    text: '- DSGN-E 里标了 MUST 的四条都满足：impl-plan 的任务写明依赖、挡住和完成标准；引用代码写明 commit；每个 feature 只有一份未决问题清单；文档能让本科程序员读懂。'
+    text: '- DSGN-E 里所有标了 MUST 的条目都满足，例如：impl-plan 的任务写明依赖、挡住和完成标准；引用代码写明 commit；每个 feature 只有一份未决问题清单；文档能让本科程序员读懂。'
     method: llm
     check: ''
   - id: MUST-AI
@@ -228,8 +228,8 @@ items:
   - id: MUST-BH
     source: docs/features/spec-driven-development/design/spec-driven-development-design.md:161
     text: '- **parent**（`docs/features/spec-driven-development/` 这一层，不含 `features/` 下的 sub-feature）：spec-review 要确认五篇都在：prd、design、decision-history、impl-plan、test-plan。how-to 可选。缺任何一篇，记为严重度 3 及以上的问题（MUST）。'
-    method: llm
-    check: ''
+    method: python
+    check: 'parent_complete'
   - id: MUST-BI
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design-spec-reader-html.md:49
     text: '- markdown 里用 `<!-- html-skip -->` 包住的内容可以不显示，但不能用它包住 L1 内容（MUST）。'
