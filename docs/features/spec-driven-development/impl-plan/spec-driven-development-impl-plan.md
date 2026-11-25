@@ -37,9 +37,9 @@ last_verified: 2026-11-24
 
 **步骤：** 契约或标准改了，就用 `skill edit` 同步修改两份 `SKILL.md`。
 
-**依赖：** IMPL-A、IMPL-C、IMPL-N。**挡住：** IMPL-E、IMPL-I。
+**依赖：** IMPL-A、IMPL-C、IMPL-N。**挡住：** IMPL-E、IMPL-I、IMPL-AA。
 
-**Verify:** `SKILL.md` 开头的 description（一句话说明什么时候用这个 skill）以「Use when」开头；`SKILL.md` 里有 MUST 门槛；职责和契约表一致。
+**Verify:** `SKILL.md` 开头的 description（一句话说明什么时候用这个 skill）以「Use when」开头；`SKILL.md` 里有 MUST 门槛；职责和契约表一致；两个 skill 的正文都提到盖 shed、北京旅游、数学题、股票（PRD-Q），TST-S 通过。
 
 ## IMPL-C — 三份标准摘要
 
@@ -72,7 +72,7 @@ last_verified: 2026-11-24
 
 **步骤：** 新开分支 `eval/v1/<run_id>`；用 spec-write 写出一套 feature spec；跑 TST-E、TST-F、TST-L，然后 TST-K；失败时先改 spec。
 
-**依赖：** IMPL-B、IMPL-D、IMPL-J、IMPL-P、IMPL-AA、IMPL-AB；报告部分还依赖 IMPL-L 和 IMPL-X，可读性部分还依赖 IMPL-Q。**挡住：** IMPL-I。
+**依赖：** IMPL-B、IMPL-D、IMPL-J、IMPL-P、IMPL-AA；报告部分还依赖 IMPL-L 和 IMPL-X，可读性部分还依赖 IMPL-Q。**挡住：** IMPL-I。
 
 **Verify:** 生成了 HTML 报告；分数按 test-plan 的 Scoring 计算。
 
@@ -120,7 +120,7 @@ last_verified: 2026-11-24
 
 **目标：** `eval.yaml` 能用 `deepseek-flash` 生成 gold 跑 3 次、复核跑 5 次；目标仓库可以用环境变量覆盖；`test_eval_config.py` 在配置缺项时报错。
 
-**依赖：** IMPL-D。**挡住：** IMPL-E、IMPL-Q。
+**依赖：** IMPL-D。**挡住：** IMPL-E、IMPL-Q、IMPL-AA。
 
 **Verify:** `pytest test_eval_config.py` 通过；`eval.yaml` 包含所有必需的键。
 
@@ -148,13 +148,13 @@ last_verified: 2026-11-24
 
 **Verify:** TST-B 通过；`run_spec_checks.py` 跑 SDD 目录。
 
-## IMPL-N — skill 契约和四个例子
+## IMPL-N — skill 契约
 
-**目标：** 先写好 [skill 契约](../design/spec-driven-development-design-skill-contracts.md)（契约是权威，`SKILL.md` 照着改）；两个 skill 的正文都提到盖 shed、北京旅游、数学题、股票（PRD-Q）。
+**目标：** 先写好 [skill 契约](../design/spec-driven-development-design-skill-contracts.md)，三个交付 skill 各一行（契约是权威，`SKILL.md` 照着改）。
 
-**依赖：** IMPL-C。**挡住：** IMPL-B。
+**依赖：** IMPL-C。**挡住：** IMPL-B、IMPL-W。
 
-**Verify:** TST-S 通过；spec-review 会读契约。
+**Verify:** 契约表和 PRD-P、ARD-CH 一致：三个交付 skill，加上不交付的 spec-organize。
 
 ## IMPL-O — 网页新鲜度
 
@@ -239,7 +239,7 @@ last_verified: 2026-11-24
 
 **目标：** 按 [ARD-CH](../decision-history/spec-driven-development-decision-history.md#ard-ch) 改 `skills/wayfinder/SKILL.md`：地图目录当进度记录、任务再小也建，阻塞以 QUES 清单为准，审查关口用 spec-review，重新开始时给回顾。
 
-**依赖：** 无。**挡住：** 无。
+**依赖：** IMPL-N。**挡住：** 无。
 
 **Verify:** TST-AA 通过。
 
@@ -271,7 +271,7 @@ last_verified: 2026-11-24
 
 **目标：** 按 TST-C 用 iPhone 案例跑 3 次，再按 TST-D 整理出范例和 `gold/v1/annotations.yaml`。现状：已完成。
 
-**依赖：** IMPL-D。**挡住：** IMPL-E。
+**依赖：** IMPL-B、IMPL-D、IMPL-J。**挡住：** IMPL-E。
 
 **Verify:** TST-C、TST-D 通过。
 
@@ -279,7 +279,7 @@ last_verified: 2026-11-24
 
 **目标：** 按 PRD-O 和 TST-Q 做一个共用的 mock MCP 服务器，调用后打印记录，不真下单。现状：已完成。
 
-**依赖：** IMPL-D。**挡住：** IMPL-E。
+**依赖：** IMPL-D。**挡住：** 无。评测（IMPL-E）不用 mock。
 
 **Verify:** TST-Q 通过。
 
@@ -287,11 +287,11 @@ last_verified: 2026-11-24
 
 先做不依赖别人的任务，被挡住的后做：
 
-1. IMPL-A、IMPL-D、IMPL-G、IMPL-H、IMPL-U、IMPL-W、IMPL-X（互不依赖，可以同时做）
-2. IMPL-C；IMPL-Y（它等 IMPL-X）
+1. IMPL-A、IMPL-D、IMPL-G、IMPL-H、IMPL-U、IMPL-X（互不依赖，可以同时做）
+2. IMPL-C；IMPL-Y（它等 IMPL-X）；IMPL-AB（它等 IMPL-D）
 3. IMPL-N、IMPL-F、IMPL-J、IMPL-K、IMPL-L、IMPL-M、IMPL-R
-4. IMPL-B（等 IMPL-N）、IMPL-O、IMPL-P、IMPL-S（等 IMPL-F）、IMPL-T（等 IMPL-M）、IMPL-V（等 IMPL-H）、IMPL-Z（等 IMPL-M）
-5. IMPL-Q；IMPL-AA、IMPL-AB（等 IMPL-D）
+4. IMPL-B、IMPL-W（都等 IMPL-N）、IMPL-O、IMPL-P、IMPL-S（等 IMPL-F）、IMPL-T（等 IMPL-M）、IMPL-V（等 IMPL-H）、IMPL-Z（等 IMPL-M）
+5. IMPL-Q；IMPL-AA（等 IMPL-B、IMPL-J）
 6. IMPL-E（评测要等 spec 可读、测试骨架齐全、gold 改回 iPhone 之后再跑）
 7. IMPL-I
 
@@ -329,3 +329,4 @@ last_verified: 2026-11-24
 | 2026-11-24 | 第 17 轮审查后：新增 IMPL-Z；执行顺序第 2 步写清 IMPL-Y 等 IMPL-X |
 | 2026-11-24 | 第 18 轮审查后：IMPL-Z 写明什么是辅助检查、记在哪，已完成 |
 | 2026-11-24 | 第 20 轮审查后：IMPL-N 先于 IMPL-B（契约是权威）；新增 IMPL-AA（gold v1）、IMPL-AB（mock MCP），都已完成 |
+| 2026-11-24 | 第 21 轮审查后：IMPL-N 只管契约，四个例子并入 IMPL-B；IMPL-W 等 IMPL-N；IMPL-AA 加依赖 IMPL-B、IMPL-J；IMPL-AB 不再挡住 IMPL-E |

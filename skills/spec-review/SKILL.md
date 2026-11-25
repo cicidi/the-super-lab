@@ -22,12 +22,12 @@ metadata:
     - check work
     - accept work
     - challenge this
-  spec_bundle_version: "1.0.16"
+  spec_bundle_version: "1.0.17"
   spec_built_at: "2026-11-24"
-  spec_git_sha: "4eebb01"
+  spec_git_sha: "d2d2b5a"
 ---
 <!-- SPEC-BUNDLE-START -->
-> **SDD spec bundle** `1.0.16` · built 2026-11-24 · git `4eebb01`
+> **SDD spec bundle** `1.0.17` · built 2026-11-24 · git `d2d2b5a`
 <!-- SPEC-BUNDLE-END -->
 
 # spec-review
@@ -81,8 +81,9 @@ missing any of prd, design, decision-history, impl-plan, test-plan → severity 
 
 **Contract authority:** `docs/features/spec-driven-development/design/spec-driven-development-design-skill-contracts.md`
 defines this skill's inputs, outputs, and boundary. If this body and the contract
-disagree, the contract wins; change the contract first. `DSGN-G` is a different
-rule: spec and code each own their concern, and a conflict is reported, not silently picked.
+disagree, the contract wins; change the contract first. This applies document-standard
+`DSGN-G` (authority by concern: the design owns intended behavior); a conflict between
+spec and code is reported, not silently picked.
 
 ## Example Domains
 
