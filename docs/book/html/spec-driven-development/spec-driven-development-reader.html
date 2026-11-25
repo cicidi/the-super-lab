@@ -1,4 +1,4 @@
-<!-- SDD reader · source .md · git 0223ee8 -->
+<!-- SDD reader · source .md · git a5e2f17 -->
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light">
 <head>
@@ -659,7 +659,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td>检查脚本没跟上规则</td>
 <td>机械检查报 0 个问题，但文档其实不合规</td>
-<td>规则改动后，同一批更新检查脚本和 MUST 清单（TST-M）；当前欠账（还没接进 MUST 清单的检查脚本）由 <a href="impl-plan/spec-driven-development-impl-plan.html">impl-plan</a> 的 IMPL-Z 负责</td>
+<td>规则改动后，同一批更新检查脚本和 MUST 清单（TST-M）；没接进 MUST 清单的检查脚本由 <a href="impl-plan/spec-driven-development-impl-plan.html">impl-plan</a> 的 IMPL-Z 处理（已完成）；<code>must_registry_coverage.py</code> 会报出新的</td>
 </tr>
 </tbody></table>
 <h3>Open Questions</h3>
@@ -1256,6 +1256,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <td>2026-11-24</td>
 <td>第 17 轮审查后：风险表的欠账改由 IMPL-Z 负责</td>
 </tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 20 轮审查后：风险表写明 IMPL-Z 已完成</td>
+</tr>
 </tbody></table>
 <hr><p class="src-inline">Source: <code>design/spec-driven-development-design-skill-contracts.md</code></p>
 <h2>Spec-Driven Development — Skill 契约</h2>
@@ -1464,12 +1468,12 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <h3 id="IMPL-B">IMPL-B — spec-write 和 spec-review 的 SKILL.md</h3>
 <p><strong>目标：</strong> spec-write、spec-review 的 <code>SKILL.md</code> 和 <a href="design/spec-driven-development-design-skill-contracts.html">skill 契约</a>一致（<a href="decision-history/spec-driven-development-decision-history.html#ard-aj">ARD-AJ</a>、<a href="decision-history/spec-driven-development-decision-history.html#ard-ch">ARD-CH</a>）。</p>
 <p><strong>步骤：</strong> 契约或标准改了，就用 <code>skill edit</code> 同步修改两份 <code>SKILL.md</code>。</p>
-<p><strong>依赖：</strong> IMPL-A、IMPL-C。<strong>挡住：</strong> IMPL-E、IMPL-I、IMPL-N。</p>
+<p><strong>依赖：</strong> IMPL-A、IMPL-C、IMPL-N。<strong>挡住：</strong> IMPL-E、IMPL-I。</p>
 <p><strong>Verify:</strong> <code>SKILL.md</code> 开头的 description（一句话说明什么时候用这个 skill）以「Use when」开头；<code>SKILL.md</code> 里有 MUST 门槛；职责和契约表一致。</p>
 <h3 id="IMPL-C">IMPL-C — 三份标准摘要</h3>
 <p><strong>目标：</strong> <code>skills/spec-organize/SPEC-STANDARD.md</code>、<code>skills/spec-html-standard/SPEC-PRESENTATION.md</code> 和 <code>skills/spec-html-standard/SPEC-HTML-STANDARD.md</code> 是可执行的规则摘要；完整规则仍在 document-standard design 和 reader design（<a href="decision-history/spec-driven-development-decision-history.html#ard-ch">ARD-CH</a> 重述 ARD-BX）。</p>
 <p><strong>步骤：</strong> 每次 DSGN 规则改动，同一批修改摘要。</p>
-<p><strong>依赖：</strong> IMPL-A。<strong>挡住：</strong> IMPL-B、IMPL-F、IMPL-M、IMPL-R。</p>
+<p><strong>依赖：</strong> IMPL-A。<strong>挡住：</strong> IMPL-B、IMPL-F、IMPL-M、IMPL-N、IMPL-R。</p>
 <p><strong>Verify:</strong> 摘要里的每条 MUST 都能在 document-standard design 里找到出处；没有和 design 矛盾的说法。</p>
 <h3 id="IMPL-D">IMPL-D — 测试骨架和 iPhone gold 的输入</h3>
 <p><strong>目标：</strong> 按 test-plan 在 <code>skills/spec-organize/tests/</code> 下建好测试骨架。</p>
@@ -1480,12 +1484,12 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <li><code>fixtures/neg/</code> 和 <code>fixtures/pos/</code>，随 TST-B 增加</li>
 <li><code>checks/</code> 下的 Python 检查模块，实现 TST-B</li>
 </ul>
-<p><strong>依赖：</strong> 无。<strong>挡住：</strong> IMPL-J、IMPL-K、IMPL-L、IMPL-E。</p>
+<p><strong>依赖：</strong> 无。<strong>挡住：</strong> IMPL-J、IMPL-K、IMPL-L、IMPL-E、IMPL-AA、IMPL-AB。</p>
 <p><strong>Verify:</strong> 有检查模块时 TST-B 能跑；gold 的输入文件都在。</p>
 <h3 id="IMPL-E">IMPL-E — 自己跑一遍评测</h3>
 <p><strong>目标：</strong> 跑基线评测：<code>grill.skills: []</code>，输入是 iPhone 案例的需求和背景资料（<a href="decision-history/spec-driven-development-decision-history.html#ard-bl">ARD-BL</a>）。</p>
 <p><strong>步骤：</strong> 新开分支 <code>eval/v1/&lt;run_id&gt;</code>；用 spec-write 写出一套 feature spec；跑 TST-E、TST-F、TST-L，然后 TST-K；失败时先改 spec。</p>
-<p><strong>依赖：</strong> IMPL-B、IMPL-D、IMPL-J、IMPL-P；报告部分还依赖 IMPL-L 和 IMPL-X，可读性部分还依赖 IMPL-Q。<strong>挡住：</strong> IMPL-I。</p>
+<p><strong>依赖：</strong> IMPL-B、IMPL-D、IMPL-J、IMPL-P、IMPL-AA、IMPL-AB；报告部分还依赖 IMPL-L 和 IMPL-X，可读性部分还依赖 IMPL-Q。<strong>挡住：</strong> IMPL-I。</p>
 <p><strong>Verify:</strong> 生成了 HTML 报告；分数按 test-plan 的 Scoring 计算。</p>
 <h3 id="IMPL-F">IMPL-F — 给人读的网页</h3>
 <p><strong>目标：</strong> 全站一个网站，入口 <code>docs/book/html/index.html</code>；feature 页左边是目录，右边是正文；parent 的汇编页 <code>spec-driven-development-reader.html</code> 在其中（<a href="decision-history/spec-driven-development-decision-history.html#ard-bg">ARD-BG</a>、<a href="features/document-standard/design/document-standard-design-spec-reader-html.html">reader design</a>）。</p>
@@ -1524,8 +1528,8 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <p><strong>依赖：</strong> IMPL-C。<strong>挡住：</strong> IMPL-P、IMPL-T、IMPL-Z。</p>
 <p><strong>Verify:</strong> TST-B 通过；<code>run_spec_checks.py</code> 跑 SDD 目录。</p>
 <h3 id="IMPL-N">IMPL-N — skill 契约和四个例子</h3>
-<p><strong>目标：</strong> <a href="design/spec-driven-development-design-skill-contracts.html">skill 契约</a>写好；两个 skill 的正文都提到盖 shed、北京旅游、数学题、股票（PRD-Q）。</p>
-<p><strong>依赖：</strong> IMPL-B。<strong>挡住：</strong> 无。</p>
+<p><strong>目标：</strong> 先写好 <a href="design/spec-driven-development-design-skill-contracts.html">skill 契约</a>（契约是权威，<code>SKILL.md</code> 照着改）；两个 skill 的正文都提到盖 shed、北京旅游、数学题、股票（PRD-Q）。</p>
+<p><strong>依赖：</strong> IMPL-C。<strong>挡住：</strong> IMPL-B。</p>
 <p><strong>Verify:</strong> TST-S 通过；spec-review 会读契约。</p>
 <h3 id="IMPL-O">IMPL-O — 网页新鲜度</h3>
 <p><strong>目标：</strong> spec 改了之后重新生成网页；旧的 <code>spec-driven-development.html</code> 已删除。</p>
@@ -1623,14 +1627,22 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <p><strong>目标：</strong> <code>must_registry_coverage.py</code> 报出的、还没对应到任何 MUST 条目的检查脚本，逐个对上 MUST 条目，或列为辅助检查：只查到规则的一部分、查的是 NICE 规则、或查的是工具本身，因此不单独给任何 MUST 打分；辅助检查写进 <code>must_registry_coverage.py</code> 的 <code>HELPER</code> 表，每个写明理由。</p>
 <p><strong>依赖：</strong> IMPL-M。<strong>挡住：</strong> 无。</p>
 <p><strong>Verify:</strong> <code>must_registry_coverage.py</code> 不再列出没对应的检查脚本：每个要么对上 MUST 条目，要么在 <code>HELPER</code> 表里。2026-11-24 已完成。</p>
+<h3 id="IMPL-AA">IMPL-AA — 生成并整理 gold v1</h3>
+<p><strong>目标：</strong> 按 TST-C 用 iPhone 案例跑 3 次，再按 TST-D 整理出范例和 <code>gold/v1/annotations.yaml</code>。现状：已完成。</p>
+<p><strong>依赖：</strong> IMPL-D。<strong>挡住：</strong> IMPL-E。</p>
+<p><strong>Verify:</strong> TST-C、TST-D 通过。</p>
+<h3 id="IMPL-AB">IMPL-AB — mock MCP 服务器</h3>
+<p><strong>目标：</strong> 按 PRD-O 和 TST-Q 做一个共用的 mock MCP 服务器，调用后打印记录，不真下单。现状：已完成。</p>
+<p><strong>依赖：</strong> IMPL-D。<strong>挡住：</strong> IMPL-E。</p>
+<p><strong>Verify:</strong> TST-Q 通过。</p>
 <h3>Execution order</h3>
 <p>先做不依赖别人的任务，被挡住的后做：</p>
 <ol>
 <li>IMPL-A、IMPL-D、IMPL-G、IMPL-H、IMPL-U、IMPL-W、IMPL-X（互不依赖，可以同时做）</li>
 <li>IMPL-C；IMPL-Y（它等 IMPL-X）</li>
-<li>IMPL-B、IMPL-F、IMPL-J、IMPL-K、IMPL-L、IMPL-M、IMPL-R</li>
-<li>IMPL-N、IMPL-O、IMPL-P、IMPL-S（等 IMPL-F）、IMPL-T（等 IMPL-M）、IMPL-V（等 IMPL-H）、IMPL-Z（等 IMPL-M）</li>
-<li>IMPL-Q</li>
+<li>IMPL-N、IMPL-F、IMPL-J、IMPL-K、IMPL-L、IMPL-M、IMPL-R</li>
+<li>IMPL-B（等 IMPL-N）、IMPL-O、IMPL-P、IMPL-S（等 IMPL-F）、IMPL-T（等 IMPL-M）、IMPL-V（等 IMPL-H）、IMPL-Z（等 IMPL-M）</li>
+<li>IMPL-Q；IMPL-AA、IMPL-AB（等 IMPL-D）</li>
 <li>IMPL-E（评测要等 spec 可读、测试骨架齐全、gold 改回 iPhone 之后再跑）</li>
 <li>IMPL-I</li>
 </ol>
@@ -1736,6 +1748,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td>2026-11-24</td>
 <td>第 18 轮审查后：IMPL-Z 写明什么是辅助检查、记在哪，已完成</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 20 轮审查后：IMPL-N 先于 IMPL-B（契约是权威）；新增 IMPL-AA（gold v1）、IMPL-AB（mock MCP），都已完成</td>
 </tr>
 </tbody></table>
 </div>
@@ -1844,8 +1860,13 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <td>判分用的模型</td>
 </tr>
 <tr>
-<td><code>gold.cases</code></td>
-<td><code>gold/v1/</code></td>
+<td><code>gold.version</code>、<code>gold.models</code></td>
+<td><code>v1</code>、<code>[deepseek-flash]</code></td>
+<td>gold 版本和生成 gold 用的模型</td>
+</tr>
+<tr>
+<td><code>gold.cases.iphone.path</code>、<code>gold.cases.iphone.version</code></td>
+<td><code>gold/v1</code>、<code>v1</code></td>
 <td>iPhone 案例（<a href="decision-history/spec-driven-development-decision-history.html#ard-bl">ARD-BL</a>）</td>
 </tr>
 <tr>
@@ -1859,9 +1880,9 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <td>辅助 skill；空表示基线</td>
 </tr>
 <tr>
-<td><code>target.repo</code></td>
-<td><code>.</code></td>
-<td>写 spec 的仓库；环境变量 <code>SDD_EVAL_REPO</code> 可覆盖</td>
+<td><code>target.repo</code>、<code>target.feature</code></td>
+<td><code>.</code>、<code>iphone</code></td>
+<td>写 spec 的仓库（环境变量 <code>SDD_EVAL_REPO</code> 可覆盖）和要写的 feature</td>
 </tr>
 <tr>
 <td><code>checkers.models</code>、<code>checkers.repeats</code></td>
@@ -2323,6 +2344,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td>2026-11-24</td>
 <td>第 19 轮审查后：Test Scope 写明 TST-AA 覆盖阶段编排的规则文字</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 20 轮审查后：eval.yaml 键表跟上实际结构</td>
 </tr>
 </tbody></table>
 </div>

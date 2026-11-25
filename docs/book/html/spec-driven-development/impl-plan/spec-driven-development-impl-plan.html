@@ -50,12 +50,12 @@
 <h3 id="IMPL-B"><a class="id-ref" href="#IMPL-B">IMPL-B</a> — spec-write 和 spec-review 的 SKILL.md</h3>
 <p><strong>目标：</strong> spec-write、spec-review 的 <code>SKILL.md</code> 和 <a href="../design/spec-driven-development-design-skill-contracts.html">skill 契约</a>一致（<a href="../decision-history/spec-driven-development-decision-history.html#ard-aj">ARD-AJ</a>、<a href="../decision-history/spec-driven-development-decision-history.html#ard-ch">ARD-CH</a>）。</p>
 <p><strong>步骤：</strong> 契约或标准改了，就用 <code>skill edit</code> 同步修改两份 <code>SKILL.md</code>。</p>
-<p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-A">IMPL-A</a>、<a class="id-ref" href="#IMPL-C">IMPL-C</a>。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-E">IMPL-E</a>、<a class="id-ref" href="#IMPL-I">IMPL-I</a>、<a class="id-ref" href="#IMPL-N">IMPL-N</a>。</p>
+<p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-A">IMPL-A</a>、<a class="id-ref" href="#IMPL-C">IMPL-C</a>、<a class="id-ref" href="#IMPL-N">IMPL-N</a>。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-E">IMPL-E</a>、<a class="id-ref" href="#IMPL-I">IMPL-I</a>。</p>
 <p class="impl-verify"><strong>Verify:</strong> <code>SKILL.md</code> 开头的 description（一句话说明什么时候用这个 skill）以「Use when」开头；<code>SKILL.md</code> 里有 <span class="lvl lvl--must">MUST</span> 门槛；职责和契约表一致。</p>
 <h3 id="IMPL-C"><a class="id-ref" href="#IMPL-C">IMPL-C</a> — 三份标准摘要</h3>
 <p><strong>目标：</strong> <a href="../../../../../skills/spec-organize/SPEC-STANDARD.md"><code>skills/spec-organize/SPEC-STANDARD.md</code></a>、<a href="../../../../../skills/spec-html-standard/SPEC-PRESENTATION.md"><code>skills/spec-html-standard/SPEC-PRESENTATION.md</code></a> 和 <a href="../../../../../skills/spec-html-standard/SPEC-HTML-STANDARD.md"><code>skills/spec-html-standard/SPEC-HTML-STANDARD.md</code></a> 是可执行的规则摘要；完整规则仍在 document-standard design 和 reader design（<a href="../decision-history/spec-driven-development-decision-history.html#ard-ch">ARD-CH</a> 重述 <a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-BX">ARD-BX</a>）。</p>
 <p><strong>步骤：</strong> 每次 DSGN 规则改动，同一批修改摘要。</p>
-<p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-A">IMPL-A</a>。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-B">IMPL-B</a>、<a class="id-ref" href="#IMPL-F">IMPL-F</a>、<a class="id-ref" href="#IMPL-M">IMPL-M</a>、<a class="id-ref" href="#IMPL-R">IMPL-R</a>。</p>
+<p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-A">IMPL-A</a>。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-B">IMPL-B</a>、<a class="id-ref" href="#IMPL-F">IMPL-F</a>、<a class="id-ref" href="#IMPL-M">IMPL-M</a>、<a class="id-ref" href="#IMPL-N">IMPL-N</a>、<a class="id-ref" href="#IMPL-R">IMPL-R</a>。</p>
 <p class="impl-verify"><strong>Verify:</strong> 摘要里的每条 <span class="lvl lvl--must">MUST</span> 都能在 document-standard design 里找到出处；没有和 design 矛盾的说法。</p>
 <h3 id="IMPL-D"><a class="id-ref" href="#IMPL-D">IMPL-D</a> — 测试骨架和 iPhone gold 的输入</h3>
 <p><strong>目标：</strong> 按 test-plan 在 <code>skills/spec-organize/tests/</code> 下建好测试骨架。</p>
@@ -66,12 +66,12 @@
 <li><code>fixtures/neg/</code> 和 <code>fixtures/pos/</code>，随 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-B">TST-B</a> 增加</li>
 <li><code>checks/</code> 下的 Python 检查模块，实现 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-B">TST-B</a></li>
 </ul>
-<p><strong>依赖：</strong> 无。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-J">IMPL-J</a>、<a class="id-ref" href="#IMPL-K">IMPL-K</a>、<a class="id-ref" href="#IMPL-L">IMPL-L</a>、<a class="id-ref" href="#IMPL-E">IMPL-E</a>。</p>
+<p><strong>依赖：</strong> 无。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-J">IMPL-J</a>、<a class="id-ref" href="#IMPL-K">IMPL-K</a>、<a class="id-ref" href="#IMPL-L">IMPL-L</a>、<a class="id-ref" href="#IMPL-E">IMPL-E</a>、<a class="id-ref" href="#IMPL-AA">IMPL-AA</a>、<a class="id-ref" href="#IMPL-AB">IMPL-AB</a>。</p>
 <p class="impl-verify"><strong>Verify:</strong> 有检查模块时 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-B">TST-B</a> 能跑；gold 的输入文件都在。</p>
 <h3 id="IMPL-E"><a class="id-ref" href="#IMPL-E">IMPL-E</a> — 自己跑一遍评测</h3>
 <p><strong>目标：</strong> 跑基线评测：<code>grill.skills: []</code>，输入是 iPhone 案例的需求和背景资料（<a href="../decision-history/spec-driven-development-decision-history.html#ard-bl">ARD-BL</a>）。</p>
 <p><strong>步骤：</strong> 新开分支 <code>eval/v1/&lt;run_id&gt;</code>；用 spec-write 写出一套 feature spec；跑 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-E">TST-E</a>、<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-F">TST-F</a>、<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-L">TST-L</a>，然后 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-K">TST-K</a>；失败时先改 spec。</p>
-<p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-B">IMPL-B</a>、<a class="id-ref" href="#IMPL-D">IMPL-D</a>、<a class="id-ref" href="#IMPL-J">IMPL-J</a>、<a class="id-ref" href="#IMPL-P">IMPL-P</a>；报告部分还依赖 <a class="id-ref" href="#IMPL-L">IMPL-L</a> 和 <a class="id-ref" href="#IMPL-X">IMPL-X</a>，可读性部分还依赖 <a class="id-ref" href="#IMPL-Q">IMPL-Q</a>。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-I">IMPL-I</a>。</p>
+<p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-B">IMPL-B</a>、<a class="id-ref" href="#IMPL-D">IMPL-D</a>、<a class="id-ref" href="#IMPL-J">IMPL-J</a>、<a class="id-ref" href="#IMPL-P">IMPL-P</a>、<a class="id-ref" href="#IMPL-AA">IMPL-AA</a>、<a class="id-ref" href="#IMPL-AB">IMPL-AB</a>；报告部分还依赖 <a class="id-ref" href="#IMPL-L">IMPL-L</a> 和 <a class="id-ref" href="#IMPL-X">IMPL-X</a>，可读性部分还依赖 <a class="id-ref" href="#IMPL-Q">IMPL-Q</a>。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-I">IMPL-I</a>。</p>
 <p class="impl-verify"><strong>Verify:</strong> 生成了 HTML 报告；分数按 test-plan 的 Scoring 计算。</p>
 <h3 id="IMPL-F"><a class="id-ref" href="#IMPL-F">IMPL-F</a> — 给人读的网页</h3>
 <p><strong>目标：</strong> 全站一个网站，入口 <a href="../../index.html"><code>docs/book/html/index.html</code></a>；feature 页左边是目录，右边是正文；parent 的汇编页 <code>spec-driven-development-reader.html</code> 在其中（<a href="../decision-history/spec-driven-development-decision-history.html#ard-bg">ARD-BG</a>、<a href="../features/document-standard/design/document-standard-design-spec-reader-html.html">reader design</a>）。</p>
@@ -110,8 +110,8 @@
 <p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-C">IMPL-C</a>。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-P">IMPL-P</a>、<a class="id-ref" href="#IMPL-T">IMPL-T</a>、<a class="id-ref" href="#IMPL-Z">IMPL-Z</a>。</p>
 <p class="impl-verify"><strong>Verify:</strong> <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-B">TST-B</a> 通过；<code>run_spec_checks.py</code> 跑 SDD 目录。</p>
 <h3 id="IMPL-N"><a class="id-ref" href="#IMPL-N">IMPL-N</a> — skill 契约和四个例子</h3>
-<p><strong>目标：</strong> <a href="../design/spec-driven-development-design-skill-contracts.html">skill 契约</a>写好；两个 skill 的正文都提到盖 shed、北京旅游、数学题、股票（<a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-Q">PRD-Q</a>）。</p>
-<p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-B">IMPL-B</a>。<strong>挡住：</strong> 无。</p>
+<p><strong>目标：</strong> 先写好 <a href="../design/spec-driven-development-design-skill-contracts.html">skill 契约</a>（契约是权威，<code>SKILL.md</code> 照着改）；两个 skill 的正文都提到盖 shed、北京旅游、数学题、股票（<a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-Q">PRD-Q</a>）。</p>
+<p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-C">IMPL-C</a>。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-B">IMPL-B</a>。</p>
 <p class="impl-verify"><strong>Verify:</strong> <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-S">TST-S</a> 通过；spec-review 会读契约。</p>
 <h3 id="IMPL-O"><a class="id-ref" href="#IMPL-O">IMPL-O</a> — 网页新鲜度</h3>
 <p><strong>目标：</strong> spec 改了之后重新生成网页；旧的 <code>spec-driven-development.html</code> 已删除。</p>
@@ -209,14 +209,22 @@
 <p><strong>目标：</strong> <code>must_registry_coverage.py</code> 报出的、还没对应到任何 <span class="lvl lvl--must">MUST</span> 条目的检查脚本，逐个对上 <span class="lvl lvl--must">MUST</span> 条目，或列为辅助检查：只查到规则的一部分、查的是 <span class="lvl lvl--nice">NICE</span> 规则、或查的是工具本身，因此不单独给任何 <span class="lvl lvl--must">MUST</span> 打分；辅助检查写进 <code>must_registry_coverage.py</code> 的 <code>HELPER</code> 表，每个写明理由。</p>
 <p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-M">IMPL-M</a>。<strong>挡住：</strong> 无。</p>
 <p class="impl-verify"><strong>Verify:</strong> <code>must_registry_coverage.py</code> 不再列出没对应的检查脚本：每个要么对上 <span class="lvl lvl--must">MUST</span> 条目，要么在 <code>HELPER</code> 表里。2026-11-24 已完成。</p>
+<h3 id="IMPL-AA"><a class="id-ref" href="#IMPL-AA">IMPL-AA</a> — 生成并整理 gold v1</h3>
+<p><strong>目标：</strong> 按 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-C">TST-C</a> 用 iPhone 案例跑 3 次，再按 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-D">TST-D</a> 整理出范例和 <code>gold/v1/annotations.yaml</code>。现状：已完成。</p>
+<p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-D">IMPL-D</a>。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-E">IMPL-E</a>。</p>
+<p class="impl-verify"><strong>Verify:</strong> <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-C">TST-C</a>、<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-D">TST-D</a> 通过。</p>
+<h3 id="IMPL-AB"><a class="id-ref" href="#IMPL-AB">IMPL-AB</a> — mock MCP 服务器</h3>
+<p><strong>目标：</strong> 按 <a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-O">PRD-O</a> 和 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-Q">TST-Q</a> 做一个共用的 mock MCP 服务器，调用后打印记录，不真下单。现状：已完成。</p>
+<p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-D">IMPL-D</a>。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-E">IMPL-E</a>。</p>
+<p class="impl-verify"><strong>Verify:</strong> <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-Q">TST-Q</a> 通过。</p>
 <h3>Execution order</h3>
 <p>先做不依赖别人的任务，被挡住的后做：</p>
 <ol>
 <li><a class="id-ref" href="#IMPL-A">IMPL-A</a>、<a class="id-ref" href="#IMPL-D">IMPL-D</a>、<a class="id-ref" href="#IMPL-G">IMPL-G</a>、<a class="id-ref" href="#IMPL-H">IMPL-H</a>、<a class="id-ref" href="#IMPL-U">IMPL-U</a>、<a class="id-ref" href="#IMPL-W">IMPL-W</a>、<a class="id-ref" href="#IMPL-X">IMPL-X</a>（互不依赖，可以同时做）</li>
 <li><a class="id-ref" href="#IMPL-C">IMPL-C</a>；<a class="id-ref" href="#IMPL-Y">IMPL-Y</a>（它等 <a class="id-ref" href="#IMPL-X">IMPL-X</a>）</li>
-<li><a class="id-ref" href="#IMPL-B">IMPL-B</a>、<a class="id-ref" href="#IMPL-F">IMPL-F</a>、<a class="id-ref" href="#IMPL-J">IMPL-J</a>、<a class="id-ref" href="#IMPL-K">IMPL-K</a>、<a class="id-ref" href="#IMPL-L">IMPL-L</a>、<a class="id-ref" href="#IMPL-M">IMPL-M</a>、<a class="id-ref" href="#IMPL-R">IMPL-R</a></li>
-<li><a class="id-ref" href="#IMPL-N">IMPL-N</a>、<a class="id-ref" href="#IMPL-O">IMPL-O</a>、<a class="id-ref" href="#IMPL-P">IMPL-P</a>、<a class="id-ref" href="#IMPL-S">IMPL-S</a>（等 <a class="id-ref" href="#IMPL-F">IMPL-F</a>）、<a class="id-ref" href="#IMPL-T">IMPL-T</a>（等 <a class="id-ref" href="#IMPL-M">IMPL-M</a>）、<a class="id-ref" href="#IMPL-V">IMPL-V</a>（等 <a class="id-ref" href="#IMPL-H">IMPL-H</a>）、<a class="id-ref" href="#IMPL-Z">IMPL-Z</a>（等 <a class="id-ref" href="#IMPL-M">IMPL-M</a>）</li>
-<li><a class="id-ref" href="#IMPL-Q">IMPL-Q</a></li>
+<li><a class="id-ref" href="#IMPL-N">IMPL-N</a>、<a class="id-ref" href="#IMPL-F">IMPL-F</a>、<a class="id-ref" href="#IMPL-J">IMPL-J</a>、<a class="id-ref" href="#IMPL-K">IMPL-K</a>、<a class="id-ref" href="#IMPL-L">IMPL-L</a>、<a class="id-ref" href="#IMPL-M">IMPL-M</a>、<a class="id-ref" href="#IMPL-R">IMPL-R</a></li>
+<li><a class="id-ref" href="#IMPL-B">IMPL-B</a>（等 <a class="id-ref" href="#IMPL-N">IMPL-N</a>）、<a class="id-ref" href="#IMPL-O">IMPL-O</a>、<a class="id-ref" href="#IMPL-P">IMPL-P</a>、<a class="id-ref" href="#IMPL-S">IMPL-S</a>（等 <a class="id-ref" href="#IMPL-F">IMPL-F</a>）、<a class="id-ref" href="#IMPL-T">IMPL-T</a>（等 <a class="id-ref" href="#IMPL-M">IMPL-M</a>）、<a class="id-ref" href="#IMPL-V">IMPL-V</a>（等 <a class="id-ref" href="#IMPL-H">IMPL-H</a>）、<a class="id-ref" href="#IMPL-Z">IMPL-Z</a>（等 <a class="id-ref" href="#IMPL-M">IMPL-M</a>）</li>
+<li><a class="id-ref" href="#IMPL-Q">IMPL-Q</a>；<a class="id-ref" href="#IMPL-AA">IMPL-AA</a>、<a class="id-ref" href="#IMPL-AB">IMPL-AB</a>（等 <a class="id-ref" href="#IMPL-D">IMPL-D</a>）</li>
 <li><a class="id-ref" href="#IMPL-E">IMPL-E</a>（评测要等 spec 可读、测试骨架齐全、gold 改回 iPhone 之后再跑）</li>
 <li><a class="id-ref" href="#IMPL-I">IMPL-I</a></li>
 </ol>
@@ -322,6 +330,10 @@
 <tr>
 <td>2026-11-24</td>
 <td>第 18 轮审查后：<a class="id-ref" href="#IMPL-Z">IMPL-Z</a> 写明什么是辅助检查、记在哪，已完成</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 20 轮审查后：<a class="id-ref" href="#IMPL-N">IMPL-N</a> 先于 <a class="id-ref" href="#IMPL-B">IMPL-B</a>（契约是权威）；新增 <a class="id-ref" href="#IMPL-AA">IMPL-AA</a>（gold v1）、<a class="id-ref" href="#IMPL-AB">IMPL-AB</a>（mock MCP），都已完成</td>
 </tr>
 </tbody></table></div>
       </div>
