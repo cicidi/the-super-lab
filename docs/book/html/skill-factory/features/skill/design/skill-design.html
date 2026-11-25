@@ -51,7 +51,7 @@
 <p><strong><a class="id-ref" href="#DSGN-C">DSGN-C</a> import。</strong> 从 GitHub URL 取 SKILL.md，保留原名存到 <code>skills/&lt;原名&gt;/</code>（<a class="id-ref" href="../prd/skill-prd.html#PRD-E">PRD-E</a>）。 缺 <code>license</code> 补 MIT，缺 <code>compatibility</code> 补 <code>claude-code,opencode</code>， 缺 When to Use / When NOT to Use 两节就补上。 <code>metadata</code> 里记下 <code>source_author</code>、<code>source_url</code>（有 commit sha 就带上）和 <code>imported</code> 日期（<a class="id-ref" href="../prd/skill-prd.html#PRD-F">PRD-F</a>、<a class="id-ref" href="../decision-history/skill-decision-history.html#ARD-J">ARD-J</a>）。 再检查依赖：列出原文引用的每个 skill 和文件（如 <code>/grilling</code>、<a href="../../../../../../../skills/prototype/LOGIC.md"><code>LOGIC.md</code></a>），缺的一并导入或在报告里标出（<a class="id-ref" href="../decision-history/skill-decision-history.html#ARD-J">ARD-J</a>）。 最后报告哪些改了、哪些原样保留、出处和依赖情况。</p>
 <p><strong><a class="id-ref" href="#DSGN-D">DSGN-D</a> list。</strong> 运行 <code>coworker skill list</code>，显示每个 skill 的名字、路径和是否启用。</p>
 <h3>Testing Decisions</h3>
-<p>正确性靠 <a class="id-ref" href="#DSGN-B">DSGN-B</a> 的 diff 确认、人工审阅和 <a href="../../../../../../../tools/check_skills.py"><code>tools/check_skills.py</code></a>（<a class="id-ref" href="../decision-history/skill-decision-history.html#ARD-K">ARD-K</a>）。 该脚本查 frontmatter、断掉的 skill 引用、链接和仓库路径，不查内容好坏。 产出的 skill 不好时，先修 create 再重新生成（<a class="id-ref" href="../prd/skill-prd.html#PRD-I">PRD-I</a>）。</p>
+<p>正确性靠 <a class="id-ref" href="#DSGN-B">DSGN-B</a> 的 diff 确认、人工审阅和 <a href="../../../../../../../tools/check_skills.py"><code>tools/check_skills.py</code></a>（<a class="id-ref" href="../decision-history/skill-decision-history.html#ARD-K">ARD-K</a>）。 该脚本查 frontmatter、断掉的 skill 引用、链接和仓库路径，不查内容好坏。CI 和 pre-commit 钩子也跑它（<a class="id-ref" href="../decision-history/skill-decision-history.html#ARD-L">ARD-L</a>）。 产出的 skill 不好时，先修 create 再重新生成（<a class="id-ref" href="../prd/skill-prd.html#PRD-I">PRD-I</a>）。</p>
 <h3>Out of Scope</h3>
 <p>运行已有 skill（直接调用即可）、管理 feature（用 <code>/feature</code>）、 管理项目目录（用 <code>/project</code>）都不归本 skill 管。</p>
 <h3>Further Notes</h3>
@@ -126,6 +126,10 @@
 <tr>
 <td>2026-11-24</td>
 <td>Testing Decisions 加 check_skills.py，<a class="id-ref" href="#QUES-A">QUES-A</a> 已答（<a class="id-ref" href="../decision-history/skill-decision-history.html#ARD-K">ARD-K</a>）</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>加 CI 和 pre-commit（<a class="id-ref" href="../decision-history/skill-decision-history.html#ARD-L">ARD-L</a>）</td>
 </tr>
 </tbody></table></div>
       </div>

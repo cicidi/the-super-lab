@@ -94,7 +94,7 @@
 <p><strong><a class="id-ref" href="#DSGN-I">DSGN-I</a> 报告。</strong> 交接完成后，spec-ingest 向用户报告： 各文档类型分到几条；spec-write 新建和改了哪些文档；UNKNOWN 清单；新开的 QUES；被拒绝的输入及原因。 它不建 tracker 上的 issue（<a class="id-ref" href="../decision-history/spec-ingest-decision-history.html#ARD-H">ARD-H</a>）。要建工单，用户接着跑 <a href="../../spec-ticket/design/spec-ticket-design.html">spec-ticket</a>。</p>
 <p><strong><a class="id-ref" href="#DSGN-J">DSGN-J</a> 名字和替换 to-spec。</strong> skill 名为 spec-ingest（<a class="id-ref" href="../prd/spec-ingest-prd.html#PRD-E">PRD-E</a>）。 <code>skills/to-spec/</code> 已在 commit <code>5370f61</code> 删掉；同一个改动里改指了 <code>grep -rln &#x27;to-spec\|to-tickets&#x27;</code> 找到的每个文件，改前改后各查一次（<a class="id-ref" href="../prd/spec-ingest-prd.html#PRD-F">PRD-F</a>、<a class="id-ref" href="../decision-history/spec-ingest-decision-history.html#ARD-K">ARD-K</a>）。 顺序：本 spec、spec-review、用户审阅、SKILL.md、删旧并改指（<a class="id-ref" href="../decision-history/spec-ingest-decision-history.html#ARD-E">ARD-E</a>）。</p>
 <h3>Testing Decisions</h3>
-<p>用一个固定的测试 feature 做夹具（fixture，即内容已知、每次都一样的测试输入）。 夹具含一段写好的聊天记录和一个 md、一个 txt、一个带文字层的 pdf，每条内容的正确去向事先写在期望表里。 跑 spec-ingest 只到分拣表为止，按文档类型和目标 feature 算与期望表的一致率，≥90% 算过，&quot;待定&quot;行不算错（<a class="id-ref" href="../decision-history/spec-ingest-decision-history.html#ARD-L">ARD-L</a>）。 必须覆盖的情况：六种类型各至少一条；一句话含需求和理由要拆成两条；无出处要标 UNKNOWN；不支持的输入（网址）要被拒绝；扫描版 pdf 要停下报告。 硬规则做精确检查，一次不过就算失败：不经 spec-write 不写；无出处标 UNKNOWN； 跑完后 <code>git status</code> 里没有 spec-ingest 改动的提交文档（<a class="id-ref" href="../prd/spec-ingest-prd.html#PRD-B">PRD-B</a>、<a class="id-ref" href="../decision-history/spec-ingest-decision-history.html#ARD-L">ARD-L</a>）。 评测可以复用 <code>skills/spec-organize/tests/gold/</code> 的金标形式，具体放哪里由 SKILL.md 阶段定。</p>
+<p>用一个固定的测试 feature 做夹具（fixture，即内容已知、每次都一样的测试输入）。 夹具含一段写好的聊天记录和一个 md、一个 txt、一个带文字层的 pdf，每条内容的正确去向事先写在期望表里。 跑 spec-ingest 只到分拣表为止，按文档类型和目标 feature 算与期望表的一致率，≥90% 算过，&quot;待定&quot;行不算错（<a class="id-ref" href="../decision-history/spec-ingest-decision-history.html#ARD-L">ARD-L</a>）。 必须覆盖的情况：六种类型各至少一条；一句话含需求和理由要拆成两条；无出处要标 UNKNOWN；不支持的输入（网址）要被拒绝；扫描版 pdf 要停下报告。 硬规则做精确检查，一次不过就算失败：不经 spec-write 不写；无出处标 UNKNOWN； 跑完后 <code>git status</code> 里没有 spec-ingest 改动的提交文档（<a class="id-ref" href="../prd/spec-ingest-prd.html#PRD-B">PRD-B</a>、<a class="id-ref" href="../decision-history/spec-ingest-decision-history.html#ARD-L">ARD-L</a>）。 评测可以复用 <code>skills/spec-organize/tests/gold/</code> 的金标形式，具体放哪里由 SKILL.md 阶段定。 2026-11-24 第二个夹具由协调者写期望表、另一个 agent 盲跑：一致率 100%，硬规则全过；它报的 6 处歧义已在 SKILL.md 补清（<a href="../../../../../../../skills/spec-ingest/tests/expected-routing-2.md"><code>skills/spec-ingest/tests/expected-routing-2.md</code></a>）。</p>
 <h3>Out of Scope</h3>
 <p>网址、会议转写稿、从代码反推 spec（<a class="id-ref" href="../prd/spec-ingest-prd.html#PRD-C">PRD-C</a>）；直接写提交文档（<a class="id-ref" href="../prd/spec-ingest-prd.html#PRD-B">PRD-B</a>）；建工单（<a class="id-ref" href="../decision-history/spec-ingest-decision-history.html#ARD-H">ARD-H</a>）；对抗式审查，那是 spec-review 的事。</p>
 <h3>Further Notes</h3>
@@ -188,6 +188,10 @@
 <tr>
 <td>2026-11-24</td>
 <td><a class="id-ref" href="#DSGN-D">DSGN-D</a> 加无 spec 目录的仓库（<a class="id-ref" href="../decision-history/spec-ingest-decision-history.html#ARD-M">ARD-M</a>）；<a class="id-ref" href="#QUES-A">QUES-A</a> 已定（<a class="id-ref" href="../decision-history/spec-ingest-decision-history.html#ARD-N">ARD-N</a>）</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>Testing Decisions 记下盲测结果</td>
 </tr>
 </tbody></table></div>
       </div>

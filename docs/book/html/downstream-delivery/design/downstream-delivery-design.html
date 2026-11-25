@@ -36,13 +36,39 @@
 <p>Specs without delivery skills stall at markdown.</p>
 <h3>Solution</h3>
 <p>Skills orchestrate spec-write → tickets → code changes with verification-before-completion.</p>
+<h3>User Stories</h3>
+<p>See <code>## User Stories</code> in the <a href="../prd/downstream-delivery-prd.html">PRD</a>.</p>
+<h3>Implementation Decisions</h3>
+<p>See <code>## Design</code> below: <a class="id-ref" href="#DSGN-A">DSGN-A</a> fixes the skill chain and <a class="id-ref" href="#DSGN-B">DSGN-B</a> points to the phase gates.</p>
 <h3>Design</h3>
 <h4 id="DSGN-A"><a class="id-ref" href="#DSGN-A">DSGN-A</a> — Chain</h4>
 <p>The spec-pipeline Downstream phase runs spec-ingest, then spec-write, then spec-review, then spec-ticket, then implement (skill-factory spec-ingest ARD-E, spec-ticket ARD-H).</p>
 <h4 id="DSGN-B"><a class="id-ref" href="#DSGN-B">DSGN-B</a> — Integration</h4>
 <p>See <a href="../../../../../skills/spec-pipeline/INTEGRATIONS.md"><code>skills/spec-pipeline/INTEGRATIONS.md</code></a> for phase gates.</p>
+<h3>Testing Decisions</h3>
+<p>See <code>## Test Cases</code> in the <a href="../test-plan/downstream-delivery-test-plan.html">test plan</a>.</p>
 <h3>Out of Scope</h3>
 <p>CI deploy automation</p>
+<h3>Further Notes</h3>
+<p>Not applicable: this feature&#x27;s docs record no further notes.</p>
+<h3>Alternatives Considered</h3>
+<p>UNKNOWN: this feature&#x27;s docs record no rejected options.</p>
+<h3>Drawbacks</h3>
+<p>UNKNOWN: this feature&#x27;s docs record no drawbacks of the chosen design.</p>
+<h3>Risks and Mitigations</h3>
+<p>UNKNOWN: this feature&#x27;s docs record no risks or mitigations.</p>
+<h3>Open Questions</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>ID</th>
+<th>Question</th>
+<th>Answer so far</th>
+<th>Owner</th>
+<th>Blocking</th>
+</tr></thead><tbody>
+</tbody></table></div>
+<p>No open questions are recorded for this feature.</p>
+<h3>Reversibility</h3>
+<p>UNKNOWN: this feature&#x27;s docs record no undo or rollback path.</p>
 <h3>Change Log</h3>
 <div class="table-wrap"><table><thead><tr>
 <th>Version</th>
@@ -58,6 +84,11 @@
 <td>0.2</td>
 <td>2026-11-24</td>
 <td><a class="id-ref" href="#DSGN-A">DSGN-A</a> chain names spec-ingest, spec-ticket</td>
+</tr>
+<tr>
+<td>0.3</td>
+<td>2026-11-24</td>
+<td>Added the standard&#x27;s required sections (pointers only, no new facts)</td>
 </tr>
 </tbody></table></div>
       </div>

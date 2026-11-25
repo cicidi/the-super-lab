@@ -40,6 +40,26 @@
 <th>Decision</th>
 </tr></thead><tbody>
 <tr>
+<td><a class="id-ref" href="#ARD-S">ARD-S</a></td>
+<td>2026-11-24</td>
+<td>Jira 按标签 <code>spec-ticket-&lt;f&gt;</code> 查找；每次第一条 Blocks 链接读回核对方向，反了就对调；正文按段落写 ADF</td>
+</tr>
+<tr>
+<td><a class="id-ref" href="#ARD-R">ARD-R</a></td>
+<td>2026-11-24</td>
+<td>按本地和 GitHub 实跑补清 SKILL.md：已完成只认&quot;这一项…完成&quot;；正文不带 Blocked by；母工单只列已存在的文档；确认清单含补边</td>
+</tr>
+<tr>
+<td><a class="id-ref" href="#ARD-Q">ARD-Q</a></td>
+<td>2026-11-24</td>
+<td>复制的 IMPL 原文里相对链接改成仓库根路径（GitHub 为完整网址）；锚点按标题算；GHES 退路也写 Parent 行</td>
+</tr>
+<tr>
+<td><a class="id-ref" href="#ARD-P">ARD-P</a></td>
+<td>2026-11-24</td>
+<td>Jira 只支持云版（Jira Cloud，REST API v3）；自建版（Data Center）暂不支持</td>
+</tr>
+<tr>
 <td><a class="id-ref" href="#ARD-O">ARD-O</a></td>
 <td>2026-11-24</td>
 <td>每个 feature 一张母工单，正文只放 PRD 和 design 的链接；每张 IMPL 工单是它的子工单</td>
@@ -118,6 +138,14 @@
 </tr>
 </tbody></table></div>
 <h3>Evidence Appendix</h3>
+<h4 id="ARD-S"><a class="id-ref" href="#ARD-S">ARD-S</a></h4>
+<p>理由：Atlassian 文档说 outwardIssue 是 blocker，但 atlassian-mcp-server issue #112 在真 Jira 上看到相反结果；本机没有 Jira，只能让 skill 自己读回核对。 被否决：照文档写死方向；去掉链接。出处：用户 2026-11-24（会话 80291c19）&quot;验证都做完&quot;；模拟 Jira 实跑。</p>
+<h4 id="ARD-R"><a class="id-ref" href="#ARD-R">ARD-R</a></h4>
+<p>理由：两个 agent 照 SKILL.md 实跑（本地全部夹具、GitHub 沙盒仓库）共报出 14 处歧义，逐条补清。 被否决：只改夹具不改 SKILL.md。出处：用户 2026-11-24（会话 80291c19）&quot;验证都做完&quot;。</p>
+<h4 id="ARD-Q"><a class="id-ref" href="#ARD-Q">ARD-Q</a></h4>
+<p>理由：本地测试发现工单里的相对链接全断，<code>#impl-x</code> 也对不上真实标题（标题 <code>IMPL-B — 读侧</code> 的锚点是 <code>#impl-b--读侧</code>）。 被否决：去掉锚点；不复制原文只放链接。出处：用户 2026-11-24（会话 80291c19）&quot;验证都做完&quot;。</p>
+<h4 id="ARD-P"><a class="id-ref" href="#ARD-P">ARD-P</a></h4>
+<p>理由：<a class="id-ref" href="../design/spec-ticket-design.html#DSGN-K">DSGN-K</a> 本来就按 v3 写；自建版用 v2 和别的认证方式，要另写适配器。被否决：两种都做。出处：用户 2026-11-24（会话 80291c19）&quot;按照你的建议来吧&quot;.</p>
 <h4 id="ARD-A"><a class="id-ref" href="#ARD-A">ARD-A</a></h4>
 <p>理由：用户说&quot;to-spec to-ticket 我认为我自己应该创建一个 skill 灵感是来此matt pccock&quot;。 被否决的方案：继续用导入的 to-tickets 原版（<code>skills/to-tickets/SKILL.md</code>）。 出处：用户 2026-11-24（会话 80291c19）的第一条消息。</p>
 <h4 id="ARD-B"><a class="id-ref" href="#ARD-B">ARD-B</a></h4>
@@ -164,6 +192,22 @@
 <tr>
 <td>2026-11-24</td>
 <td>加 <a class="id-ref" href="#ARD-O">ARD-O</a>：每个 feature 一张母工单（用户选 B）</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>加 <a class="id-ref" href="#ARD-P">ARD-P</a>：Jira 只支持云版</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>加 <a class="id-ref" href="#ARD-Q">ARD-Q</a>：链接、锚点和 Parent 退路</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>加 <a class="id-ref" href="#ARD-R">ARD-R</a>：实跑后补清</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>加 <a class="id-ref" href="#ARD-S">ARD-S</a>：Jira 查找、方向核对、ADF 段落</td>
 </tr>
 </tbody></table></div>
       </div>
