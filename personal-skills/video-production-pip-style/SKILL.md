@@ -4,7 +4,7 @@ description: |
   Replicate the Andrei Jikh video production style: clean talking-head
   background + heavy Picture-in-Picture citations (74% of runtime) with
   external images, video clips, news articles, and data charts. Speaker
-  shrinks to a small bottom-right PiP box when citing sources. Includes
+  shrinks to a small circular PiP (usually left-middle) when citing sources. Includes
   equipment, DaVinci Resolve workflow, and frame-by-frame production
   checklist.
 license: MIT
@@ -34,7 +34,7 @@ metadata:
 
 Produce YouTube videos in the Andrei Jikh style — a clean, citation-heavy
 format where the speaker talks to camera on a minimal background, then
-**shrinks to a small bottom-right corner box** (Picture-in-Picture / PiP)
+**shrinks to a small circle** (Picture-in-Picture / PiP), usually at the left-middle,
 while the main screen shows external content:
 
 - News articles and headlines
@@ -117,11 +117,15 @@ Your custom background should:
 ## PiP Setup: How It Works
 
 ### PiP Position
-**97% of PiP shots are in the BOTTOM-RIGHT corner** of the screen.
+The PiP is a **circle placed in the empty part of the citation**, most often at the
+**left-middle** of the screen (35 of 50 measured citation frames). Otherwise it sits
+right, top, or center, wherever the chart or article leaves room.
 
-PiP metrics:
-- PiP box size: ~25-30% of screen width, ~20-25% of screen height
-- PiP shape: Rounded rectangle (soft corners)
+PiP metrics (measured 2026-11-24 from the video's YouTube storyboard, 186 frames at 320x180;
+this corrects the earlier "97% bottom-right, rounded rectangle" claim):
+- PiP diameter: ~22% of screen width (~39% of screen height)
+- Left-middle placement: circle center ~16-18% from the left edge, vertically centered
+- PiP shape: Circle
 - PiP border: Thin white or no border (the content behind provides separation)
 - Content fills the full screen behind PiP
 
@@ -195,10 +199,10 @@ Organize them in folders matching your script sections.
 3. **Create PiP effect:**
    - Place your talking head clip on Track 2
    - Go to Inspector → Transform
-   - Set Zoom to **50-55%** (shrink to ~1/4 size)
-   - Set Position: X = **+700 to +800**, Y = **+400 to +500**
-     (bottom-right corner — exact values depend on your resolution)
-   - Add Rounded Corners: **10-15px** radius
+   - Mask the clip to a circle (for example a Circle power window), framed on your face
+   - Scale so the circle is **~22% of frame width** (about 420px wide at 1920x1080)
+   - Position it in the empty area of the citation; default left-middle, circle
+     center ~16-18% from the left edge, vertically centered
    - Add Border: **2px white border** (optional, looks cleaner)
 
 4. **Place citation content** on Track 1 (full screen below PiP)
@@ -216,9 +220,10 @@ Organize them in folders matching your script sections.
 When transitioning from full head to PiP:
 
 ```
-Frame 0: (full screen) Scale=100%, X=960, Y=540
-Frame 5: (shrinking)   Scale=55%,  X=800, Y=450
-Frame 10: (in place)   Scale=55%,  X=780, Y=420
+Frame 0:  full screen, no mask
+Frame 5:  shrinking toward the target circle
+Frame 10: in place: circle ~22% of frame width at left-middle
+(exact Resolve values not verified; tune them once and save the macro below)
 ```
 
 Use ease-in/ease-out for smooth motion.
@@ -239,12 +244,12 @@ Use ease-in/ease-out for smooth motion.
 To make PiP faster, create a macro:
 
 1. Right-click your PiP clip → Create Compound Clip
-2. Add to Effects → Macros → Save as "PiP Bottom-Right"
+2. Add to Effects → Macros → Save as "PiP Circle Left"
 3. Now you can drag-and-drop the PiP macro onto any clip
 
 Macro settings to include:
-- Transform: Scale 55%, Position X+780, Y+420
-- Rounded corners: 15px
+- Circle mask framed on the face
+- Size ~22% of frame width, left-middle position
 - Border: 2px white
 
 ## Citation Source Labeling
@@ -339,7 +344,7 @@ If you want a **green backdrop** as your signature brand color:
 
 ## Common Anti-Patterns
 
-- **PiP too large:** Speaker box should be ≤25% of screen. Bigger = amateur.
+- **PiP too large:** The circle should be about 22% of screen width. Much bigger = amateur.
 - **PiP too small:** Should still be recognizable. Test at mobile size.
 - **No source labels:** Viewers need to know where citations come from.
 - **Static PiP:** Animate the shrink (ease in/out) or it looks jarring.

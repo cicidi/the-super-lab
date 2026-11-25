@@ -19,6 +19,7 @@ ARD-B、ARD-C、ARD-D、ARD-F 都由 agent 在同一次回复里做出，用户�
 
 | ID | Date | Decision |
 |---|---|---|
+| ARD-H | 2026-11-24 | PiP 改为实测：圆形，直径约占画面宽 22%，多在左侧居中；取代"97% 在右下角、圆角方框" |
 | ARD-G | 2026-11-24 | 相关 skill 里已不存在的 doc-organize 换成 spec-write |
 | ARD-A | 2026-07-23 | skill 随一次 luma-event-scout 的提交进入本仓库的 `personal-skills/` |
 | ARD-B | 2026-07-18 | skill 写进 skill-factory 的 `personal-skills/`，分析报告留在 mfangdai-video 项目 |
@@ -28,6 +29,11 @@ ARD-B、ARD-C、ARD-D、ARD-F 都由 agent 在同一次回复里做出，用户�
 | ARD-F | 2026-07-18 | 写稿时用 `[FULL]` 和 `[PIP]` 标记预先规划每个引用点 |
 
 ## Evidence Appendix
+
+### ARD-H
+
+理由：从样例视频 siazPdsZHuI 的 YouTube 缩略图（186 帧，320x180）量得：50 帧引用画面全是圆形小窗，35 帧在左侧居中。
+证据：`raw/state/pip-measure/`。被否决：沿用原报告的右下角方框。出处：用户 2026-11-24（会话 80291c19）"按照你的建议来吧"。
 
 ### ARD-G
 
@@ -81,3 +87,4 @@ agent 下载样例，每 10 秒抽一帧，共 185 帧，再按颜色和版面�
 |------|--------|
 | 2026-11-24 | 初版：从过去的对话和提交记录反推 video-production-pip-style 的决策 |
 | 2026-11-24 | 新增 ARD-G：doc-organize 换成 spec-write |
+| 2026-11-24 | 新增 ARD-H：PiP 按实测改为圆形、约 22% 宽 |

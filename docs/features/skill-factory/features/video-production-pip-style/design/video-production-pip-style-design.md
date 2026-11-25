@@ -118,7 +118,7 @@ SKILL.md 里有写给那一次对话的段落（Your Specific Questions），别
 |---|---|---|---|---|
 | QUES-A | 用户说的"望着"指什么（PRD-A）？ | 不确定；SKILL.md 按新闻文章和社交媒体帖子处理 | cicidi | no |
 | QUES-B | "把我的视频做成这种类型"是要指南还是自动工具（PRD-E）？ | 当前只有手工指南 | cicidi | no |
-| QUES-C | PiP 框到底多大？ | SKILL.md 同时写了占宽 25% 到 30%、缩放 50% 到 55%、不超过屏幕 25%，三者不一致。原始分析报告也自相矛盾：占宽 25% 到 30%，又写占面积约 25% | cicidi | no |
+| QUES-C | PiP 框到底多大？ | 已答：实测为圆形，直径约占画面宽 22%（ARD-H）。原先 SKILL.md 同时写了占宽 25% 到 30%、缩放 50% 到 55%、不超过屏幕 25%，三者不一致。原始分析报告也自相矛盾：占宽 25% 到 30%，又写占面积约 25% | cicidi | no |
 | QUES-D | 关键帧和宏的参数在 DaVinci Resolve 里是否可用？ | 关键帧用中心点绝对坐标，Inspector 用偏移量，未验证 | cicidi | no |
 | QUES-E | 要不要再分析几支视频，校正 74% 等数字？ | 目前只有一支样例 | cicidi | no |
 | QUES-F | 分析报告要不要搬进本仓库？ | 目前在 mfangdai-video 项目 | cicidi | no |
@@ -135,3 +135,4 @@ SKILL.md 里有写给那一次对话的段落（Your Specific Questions），别
 |------|--------|
 | 2026-11-24 | 初版：按 SKILL.md 写出 video-production-pip-style 的 design，引用 PRD-A 到 PRD-E |
 | 2026-11-24 | DSGN-I 改指 spec-write（ARD-G）；QUES-C 补上原始报告的证据 |
+| 2026-11-24 | QUES-C 已答：PiP 实测（ARD-H） |
