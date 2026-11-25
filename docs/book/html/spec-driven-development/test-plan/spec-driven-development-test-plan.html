@@ -203,7 +203,7 @@
 <h4 id="TST-H"><a class="id-ref" href="#TST-H">TST-H</a> — spec-review 找问题的能力</h4>
 <p><strong>目标：</strong> 问题找全，而且不误报。<strong>输入：</strong> 11 个机械案例和 5 个语义案例（语义案例还没写，这一半暂时跑不了，标为 Unverified）；一份干净的范例。<strong>通过条件：</strong> 埋进去的每个问题都被找出，并引用对应的 DSGN 或 <span class="lvl lvl--must">MUST</span> 编号；干净的范例上没有严重度 3 及以上的问题；严重度 1、2 的问题不拿出来讨论。<strong>判定：</strong> 比对编号集合。</p>
 <h4 id="TST-I"><a class="id-ref" href="#TST-I">TST-I</a> — spec-review 修改建议的质量</h4>
-<p><strong>目标：</strong> 修改建议是对的。<strong>输入：</strong> <a class="id-ref" href="#TST-H">TST-H</a> 找出的问题。<strong>通过条件：</strong> 把建议和 <code>expected_fix</code> 比较：照着建议改了之后，问题消失，而且没有引入新的 <span class="lvl lvl--must">MUST</span> 违反。<strong>判定：</strong> 判分模型；报告「建议正确的条数 / 找出的条数」。</p>
+<p><strong>目标：</strong> 修改建议是对的。<strong>输入：</strong> <a class="id-ref" href="#TST-H">TST-H</a> 找出的问题。<strong>通过条件：</strong> 把建议和 <code>expected_fix</code> 比较：照着建议改了之后，问题消失，而且没有引入新的 <span class="lvl lvl--must">MUST</span> 违反。<strong>判定：</strong> 判分模型；报告「建议正确的条数 / 找出的条数」。这个比例不能低于同一 gold 版本的上一次运行；第一次运行建立基线。</p>
 <h4 id="TST-J"><a class="id-ref" href="#TST-J">TST-J</a> — 不同评测配置</h4>
 <p><strong>目标：</strong> 比较加不同辅助 skill 的效果。<strong>输入：</strong> <code>grill.skills</code> 分别为 <code>[]</code>、<code>[research]</code>、<code>[grill-with-docs]</code>、两个都加；wayfinder 是交付物，每种配置都带（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CH">ARD-CH</a>）。<strong>通过条件：</strong> 每种配置出一份报告；先跑基线；只报分数，不设门槛。<strong>判定：</strong> 同 <a class="id-ref" href="#TST-E">TST-E</a>。</p>
 <h4 id="TST-K"><a class="id-ref" href="#TST-K">TST-K</a> — 评测报告</h4>
@@ -233,7 +233,7 @@
 <p><strong>输入：</strong> 一篇文档，加上 <a href="../design/spec-driven-development-design.html#glossary">parent design 的术语表</a>。被测的有两类：SDD 自己的每篇文档；<a class="id-ref" href="#TST-C">TST-C</a>、<a class="id-ref" href="#TST-E">TST-E</a> 里 spec-write 写出的每篇文档。</p>
 <p><strong>做法：</strong></p>
 <ol>
-<li>从这篇文档的编号条目（<code>PRD-*</code>、<code>DSGN-*</code>、<code>PIPE-*</code>、<code>IMPL-*</code>、<code>TST-*</code>、<code>ARD-*</code>）里，每条出一道题，最多抽 20 道。例如「<a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-F">PRD-F</a> 规定，多人的决定冲突时怎么办」。</li>
+<li>从这篇文档的编号条目（<code>PRD-*</code>、<code>DSGN-*</code>、<code>PIPE-*</code>、<code>IMPL-*</code>、<code>TST-*</code>、<code>ARD-*</code>）里，每条出一道题，最多抽 20 道；超过 20 条时从头到尾等间隔抽。这篇没有编号条目时，每个 <code>##</code> 小节出一道题。例如「<a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-F">PRD-F</a> 规定，多人的决定冲突时怎么办」。</li>
 <li>对照：不给文档，先问一遍。不看文档也能答对的题太容易，作废。</li>
 <li>让判分模型扮演本科程序员，只读这一篇和术语表，回答剩下的题。</li>
 <li>再让它列出这篇里第一次出现时没有解释、术语表里也没有的词。</li>
@@ -601,6 +601,10 @@
 <tr>
 <td>2026-11-24</td>
 <td>第 15 轮审查后：<a class="id-ref" href="#TST-A">TST-A</a> 的输入加 <a class="id-ref" href="../design/spec-driven-development-design.html#DSGN-C">DSGN-C</a></td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 18 轮审查后：<a class="id-ref" href="#TST-I">TST-I</a> 正文写明不低于上一次；<a class="id-ref" href="#TST-V">TST-V</a> 写明等间隔抽题和按小节出题</td>
 </tr>
 </tbody></table></div>
       </div>
