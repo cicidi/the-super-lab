@@ -1,4 +1,4 @@
-<!-- SDD reader · source .md · git bdaf01b -->
+<!-- SDD reader · source .md · git 6dc428e -->
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light">
 <head>
@@ -1944,7 +1944,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <p>分数 2 =（加分合计 − 减分合计）× 10 ÷ 标注总数。最高分是 GOOD 标注数 × 10 ÷ 标注总数（全是 GOOD 时才是 10），可以是负数。「类似」由判分模型判断。只在同一个 gold 版本内比较。</p>
 <p><strong>门槛：</strong> 分数 1 必须满分；分数 2 不能低于同一 gold 版本的上一次运行（<a href="decision-history/spec-driven-development-decision-history.html#ard-r">ARD-R</a>）。复核用同一个 <code>deepseek-flash</code> 独立裁决 5 次，至少 4 次通过才算通过；复核不能推翻 Python 检查的结果（<a href="decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a>）。不同模型之间的偏差暂时测不了，标为 Unverified。</p>
 <p><strong>分数的用途：</strong> 分数 1 和分数 2 是评测指标，不是产品的成功指标（PRD-G、<a href="decision-history/spec-driven-development-decision-history.html#ard-n">ARD-N</a>）。</p>
-<p><strong>gold 增长：</strong> 运行中发现新的好例子或坏例子，追加到 <code>annotations.yaml</code>，gold 版本号加一，<code>added_in</code> 写上新版本。报告里必须写明 gold 版本（<a href="decision-history/spec-driven-development-decision-history.html#ard-s">ARD-S</a>）。</p>
+<p><strong>gold 增长：</strong> 运行中发现新的好例子或坏例子，追加到 <code>annotations.yaml</code>，gold 版本号加一，<code>added_in</code> 写上新版本。原地追加：<code>eval.yaml</code> 的 <code>gold.version</code> 和 <code>gold.cases.iphone.version</code> 一起改，路径 <code>gold/v1</code> 不变。报告里必须写明 gold 版本（<a href="decision-history/spec-driven-development-decision-history.html#ard-s">ARD-S</a>）。</p>
 <h3>Test Cases</h3>
 <h4 id="TST-A">TST-A — 生成 MUST 清单</h4>
 <p><strong>目标：</strong> 扫描每篇 design 的入口和分篇（document-standard design 和它的 reader 分篇、pipeline design），以及 parent design 的 DSGN-A、DSGN-B、DSGN-C、DSGN-E，把所有「必须」「禁止」类规则收进 <code>must_registry.yaml</code>。spec 定稿后重新扫描。<strong>输入：</strong> 上面这些 design。<strong>通过条件：</strong> 覆盖率 100%；每条都标明 <code>python</code> 或 <code>llm</code>；parent DSGN-A 的单次改动上限不收，它明确不作通过条件（PRD-I）；NICE 规则不收（<a href="decision-history/spec-driven-development-decision-history.html#ard-bn">ARD-BN</a>）。<strong>判定：</strong> 出处比对脚本（<code>registry_provenance</code>）。</p>
@@ -1961,7 +1961,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <h4 id="TST-G">TST-G — 审查真实的文档</h4>
 <p><strong>目标：</strong> 检查别人写的 spec 是否合规。<strong>输入：</strong> 本仓库的 <code>docs/features/</code>；外部仓库的路径。<strong>通过条件：</strong> spec-review 报出的机械问题和 <code>checks/</code> 的结果一致；豁免的路径不报。<strong>判定：</strong> Python 对比两份结果。</p>
 <h4 id="TST-H">TST-H — spec-review 找问题的能力</h4>
-<p><strong>目标：</strong> 问题找全，而且不误报。<strong>输入：</strong> 11 个机械案例和 5 个语义案例（语义案例还没写，这一半暂时跑不了，标为 Unverified）；一份干净的范例。<strong>通过条件：</strong> 埋进去的每个问题都被找出，并引用对应的 DSGN 或 MUST 编号；干净的范例上没有严重度 3 及以上的问题；严重度 1、2 的问题不拿出来讨论。<strong>判定：</strong> 比对编号集合。</p>
+<p><strong>目标：</strong> 问题找全，而且不误报。<strong>输入：</strong> 11 个机械案例和 5 个语义案例（语义案例还没写，这一半暂时跑不了，标为 Unverified）；一份干净的范例。<strong>通过条件：</strong> 埋进去的每个问题都被找出，并引用对应的检查名（check id，经 <code>must_registry.yaml</code> 对应到 MUST 编号；和 <code>expected.yaml</code> 里写的一样）；干净的范例上没有严重度 3 及以上的问题；严重度 1、2 的问题不拿出来讨论。<strong>判定：</strong> 比对编号集合。</p>
 <h4 id="TST-I">TST-I — spec-review 修改建议的质量</h4>
 <p><strong>目标：</strong> 修改建议是对的。<strong>输入：</strong> TST-H 找出的问题。<strong>通过条件：</strong> 把建议和 <code>expected_fix</code> 比较：照着建议改了之后，问题消失，而且没有引入新的 MUST 违反。<strong>判定：</strong> 判分模型；报告「建议正确的条数 / 找出的条数」。这个比例不能低于同一 gold 版本的对照运行（上一次运行）；第一次运行就是之后的对照运行。</p>
 <h4 id="TST-J">TST-J — 不同评测配置</h4>
@@ -1971,7 +1971,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <h4 id="TST-L">TST-L — 5 次独立复核</h4>
 <p><strong>目标：</strong> 得出最终的通过或不通过。<strong>输入：</strong> 分数 1 的逐条结果和改动；结果写进 TST-K 的报告。<strong>通过条件：</strong> 同一个 <code>deepseek-flash</code> 独立裁决 5 次，至少 4 次通过；不推翻 Python 检查的结果。<strong>判定：</strong> 跑 5 次，Claude 再核对没通过和有分歧的条目。结论写进 <code>judgments/*-deepseek-flash.yaml</code> 并提交，里面记着语料 sha；SDD 文档、skill 或检查脚本改了，sha 就对不上，<code>test_judge_freshness.py</code> 失败，要重跑复核（<a href="decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a>）。不同模型之间的偏差标为 Unverified。</p>
 <h4 id="TST-M">TST-M — 改了标准或 gold 之后同步测试</h4>
-<p><strong>目标：</strong> 标准或 gold 变了，测试要跟着变。<strong>输入：</strong> 改了 <code>SPEC-STANDARD.md</code> 或 design；或者运行中发现了新的好例子、坏例子。<strong>通过条件：</strong> design 改了，同一批重跑 TST-A，并更新 MUST 清单和反例；加了新标注，gold 版本号加一。<strong>判定：</strong> 检查流程是否执行，以及覆盖率。</p>
+<p><strong>目标：</strong> 标准或 gold 变了，测试要跟着变。<strong>输入：</strong> 改了 <code>SPEC-STANDARD.md</code> 或 design；或者运行中发现了新的好例子、坏例子。<strong>通过条件：</strong> design 改了，同一批重跑 TST-A，并更新 MUST 清单和反例；加了新标注，按上面「gold 增长」改两个版本键，路径不变。<strong>判定：</strong> 检查流程是否执行，以及覆盖率。</p>
 <h4 id="TST-N">TST-N — parent 五篇齐全，sub-feature 不要求</h4>
 <p><strong>目标：</strong> parent 五篇都在；sub-feature 不会因为缺篇而失败。<strong>输入：</strong> SDD 的 parent 目录，以及 <code>features/pipeline/</code>、<code>features/document-standard/</code>。<strong>通过条件：</strong> parent 缺任何一篇，spec-review 报出严重度 3 及以上的问题；sub-feature 只有 design 也能通过。<strong>判定：</strong> Python 检查路径，加 spec-review 的报告。</p>
 <h4 id="TST-O">TST-O — PRD 到 design 的追溯</h4>
@@ -2381,6 +2381,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td>2026-11-24</td>
 <td>第 23 轮审查后：TST-C/D 只在首次或输入变了时做；「对照运行」和「基线」分开</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 24 轮审查后：TST-H 引用检查名（和 spec-review、expected.yaml 一致）；gold 升版写明改哪两个键、路径不变</td>
 </tr>
 </tbody></table>
 </div>

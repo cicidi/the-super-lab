@@ -1,7 +1,7 @@
 model: deepseek-flash
 runs: 5
 target: gold
-corpus_sha: 2c46027e6a526aaa
+corpus_sha: c0d50d78e43d2b5d
 items:
 - id: GOOD-A
   verdict: pass
@@ -11,10 +11,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: decision-history defines ARD-A..CL; PRD/DSGN/IMPL/TST docs use letter
-    IDs; numeric forms appear only as forbidden examples in document-standard-design.md
-    DSGN-F.
-  confidence: 0.95
+  evidence: Parent PRD defines PRD-A–PRD-Q; decision-history uses ARD-A–ARD-CL; design/test/impl
+    ids use letter prefixes, no active numeric ids.
+  confidence: 0.98
 - id: GOOD-B
   verdict: pass
   votes:
@@ -23,9 +22,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: test-plan TST-O traces parent PRD-A..Q to design clauses; pipeline PIPE-A/K/L
-    and document-standard DSGN-B/E anchor them; PRD-G deferred.
-  confidence: 0.9
+  evidence: pipeline-design.md PIPE-A cites PRD-A/J; PIPE-K PRD-K/Q; PIPE-L PRD-L/N;
+    document-standard DSGN-B PRD-D/E; PRD-G deferred (TST-O).
+  confidence: 0.95
 - id: GOOD-C
   verdict: pass
   votes:
@@ -34,9 +33,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: docs/INDEX.md lists parent prd, design, decision-history, impl-plan, and
-    test-plan entries.
-  confidence: 1.0
+  evidence: docs/features/spec-driven-development has prd/, design/, decision-history/,
+    impl-plan/, test-plan/ each with committed .md files.
+  confidence: 0.99
 - id: GOOD-D
   verdict: pass
   votes:
@@ -45,9 +44,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'All target docs end with ## Change Log; e.g. decision-history, impl-plan,
-    test-plan, pipeline/design, and reader design last H2 is Change Log.'
-  confidence: 0.95
+  evidence: Target feature .md files end with a level-2 '## Change Log' section (prd,
+    design, decision-history, impl-plan, test-plan, sub-feature docs).
+  confidence: 0.98
 - id: GOOD-E
   verdict: pass
   votes:
@@ -56,9 +55,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: spec-driven-development-design.md has a 子问题归属 table with allowed owners
-    and ARD evidence rows.
-  confidence: 1.0
+  evidence: spec-driven-development-design.md has '### 子问题归属' table with owners AI
+    查/人决定 and ARD evidence links.
+  confidence: 0.98
 - id: GOOD-F
   verdict: pass
   votes:
@@ -68,8 +67,8 @@ items:
   - pass
   - pass
   evidence: skills/spec-write/SKILL.md and skills/spec-review/SKILL.md Example Domains
-    mention 盖 shed, 北京旅游, 数学题, 股票.
-  confidence: 1.0
+    name 盖 shed, 北京旅游, 数学题, 股票.
+  confidence: 0.99
 - id: BAD-A
   verdict: pass
   votes:
@@ -78,9 +77,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: docs/INDEX.md links all target committed entries (parent five plus pipeline/design
-    and document-standard prd/design) and links resolve.
-  confidence: 0.9
+  evidence: docs/INDEX.md lists all 11 target-feature .md entries and every linked
+    path resolves.
+  confidence: 0.97
 - id: BAD-B
   verdict: pass
   votes:
@@ -89,9 +88,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: document-standard-design.md DSGN-B sets caps; target prd/design/impl-plan/test-plan
-    docs are under caps, decision-history exempt.
-  confidence: 0.85
+  evidence: document-standard-design.md DSGN-B caps; target PRDs/test-plans under
+    800, designs/impl-plan under 1000; decision-history exempt.
+  confidence: 0.95
 - id: BAD-C
   verdict: pass
   votes:
@@ -100,9 +99,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: skills/spec-review/SKILL.md 'Contract authority' cites spec-driven-development-design-skill-contracts.md
+  evidence: skills/spec-review/SKILL.md cites spec-driven-development-design-skill-contracts.md
     and states the contract wins on conflict.
-  confidence: 1.0
+  confidence: 0.99
 - id: BAD-D
   verdict: pass
   votes:
@@ -111,6 +110,6 @@ items:
   - pass
   - pass
   - pass
-  evidence: decision-history Decision Log starts ARD-CL/CK/CJ (2026-11-24) then older
-    dates, newest first.
-  confidence: 1.0
+  evidence: decision-history Decision Log starts with 2026-11-24 ARD-CL/CK/CJ and
+    descends to 2026-09-25 ARD-A.
+  confidence: 0.99
