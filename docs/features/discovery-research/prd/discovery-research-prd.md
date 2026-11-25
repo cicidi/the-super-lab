@@ -45,9 +45,14 @@ Completed agent skills in `skills/`: **wayfinder**, **research**, **grill-with-d
 
 Runtime code beyond SKILL.md orchestration
 
+## Resources Needed
+
+UNKNOWN: the docs name no resources beyond the four skills listed in `## Overview`.
+
 ## Change Log
 
 | Version | Date | Description |
 |---|---|---|
 | 0.1 | 2026-11-04 | SDD feature bundle for discovery skills |
 | 0.2 | 2026-11-24 | PRD-B names spec-ingest |
+| 0.3 | 2026-11-24 | Added the standard's required sections (pointers only, no new facts) |

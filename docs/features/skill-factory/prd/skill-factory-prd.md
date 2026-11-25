@@ -113,6 +113,10 @@ The project has grown organically through 126 documented decisions, covering eve
 - **Multi‑language support** – All skills are currently English‑only; internationalisation is deferred.
 - **Formal verification of skill correctness** – Quality relies on testing skills (`auto-tdd`, `bug-hunt`) but not external theorem proving.
 
+## Resources Needed
+
+UNKNOWN：本 feature 的文档没有记录所需的人力、时间或预算。
+
 ## Change Log
 
 | Date | Change |
@@ -120,3 +124,4 @@ The project has grown organically through 126 documented decisions, covering eve
 | Date | Change |
 | 2026-07-26 | Auto-generated from 126 session decisions |
 | 2026-09-25 | Added frontmatter; normalized section names to the standard; moved Change Log to the end |
+| 2026-11-24 | 补齐标准要求的小节（指向已有内容，不新增事实） |

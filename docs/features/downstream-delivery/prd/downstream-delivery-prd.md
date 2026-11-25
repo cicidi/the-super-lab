@@ -44,9 +44,14 @@ Downstream SDD skills: **spec-ingest**, **spec-ticket**, **implement** — from 
 
 Issue tracker vendor lock-in (local markdown default)
 
+## Resources Needed
+
+UNKNOWN: the docs name no resources beyond the three skills listed in `## Overview`.
+
 ## Change Log
 
 | Version | Date | Description |
 |---|---|---|
 | 0.1 | 2026-11-04 | SDD delivery bundle |
 | 0.2 | 2026-11-24 | to-spec, to-tickets replaced by spec-ingest, spec-ticket |
+| 0.3 | 2026-11-24 | Added the standard's required sections (pointers only, no new facts) |

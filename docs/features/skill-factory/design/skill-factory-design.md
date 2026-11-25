@@ -853,6 +853,61 @@ parts no longer match the repository, detected by reading the code against it on
 | Outputs under `docs/devil-advocate/`, `docs/work-review/` | Documents live under `docs/features/` | `doc-organize` standard |
 | `self-heal`, `self-analyze`, `tmux-setup` skills | No longer present | `coworker skill list` |
 
+## Problem Statement
+
+见分篇 [为什么要做，一个 skill 怎么搭](skill-factory-design-why-and-anatomy.md) 的 `## 为什么要有 skill-factory` 一节。
+
+## Solution
+
+见本篇 `## System Architecture Overview` 与 `## 高层次架构 (High-level Architecture)` 两节；与仓库不符之处见 `## Known Drift`。
+
+## User Stories
+
+见 [PRD](../prd/skill-factory-prd.md) 的 `## User Stories` 一节。
+
+## Implementation Decisions
+
+见本篇 `## 技术选择与理由 (Technology Choices and Rationale)` 一节；逐条决策见 [decision-history](../decision-history/skill-factory-decision-history.md)。
+
+## Design
+
+见本篇 `## Key Interfaces / APIs`、`## Data Models / Schemas` 和 `## 数据流与服务拓扑 (Data Flow and Service Topology)` 三节，以及文首链接的三个分篇。
+
+## Testing Decisions
+
+见 [test-plan](../test-plan/skill-factory-test-plan.md) 的 `## Testing Decisions` 一节。
+
+## Out of Scope
+
+见本篇 `## Out of Scope (personal-skills)` 一节和 [PRD](../prd/skill-factory-prd.md) 的 `## Out of Scope` 一节。
+
+## Further Notes
+
+本篇与仓库现状不符之处见 `## Known Drift`；尚未核实的事项见各分篇的 `## 未知项` 一节。
+
+## Alternatives Considered
+
+被放弃的选项和理由见本篇 `## 关键权衡与选型原因 (Key Trade-offs and Why Specific Approaches Were Chosen)` 表。
+
+## Drawbacks
+
+见分篇 [skill 目录、调用关系与共性问题](skill-factory-design-skill-catalog.md) 的 `## 共性问题` 一节（DSGN-AN 到 DSGN-AW）。
+
+## Risks and Mitigations
+
+见分篇 [skill 目录、调用关系与共性问题](skill-factory-design-skill-catalog.md) 的 `## 建议的修复` 表；表中的修复只是建议，尚待用户决定。
+
+## Open Questions
+
+| ID | Question | Answer so far | Owner | Blocking |
+|---|---|---|---|---|
+
+本篇尚未登记 QUES 条目；未决事项见各分篇的 `## 未知项` 一节。
+
+## Reversibility
+
+UNKNOWN：本 feature 的文档没有记录撤销或回滚的做法。
+
 ## Change Log
 
 | Date | Change |
@@ -883,3 +938,4 @@ parts no longer match the repository, detected by reading the code against it on
 | 版本 | 日期 | 作者 | 变更描述 |
 | 1.0 | 2026-07-24 | AI Agent | 基于全部开发决策，首次编写完整设计文档。 |
 | 2026-09-25 | Merged the companion document of the same type into this file; added frontmatter and the drift table |
+| 2026-11-24 | 补齐标准要求的小节（指向已有内容，不新增事实） |

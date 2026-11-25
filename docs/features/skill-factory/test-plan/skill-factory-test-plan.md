@@ -480,6 +480,18 @@ parts no longer match the repository, detected by reading the code against it on
 | Outputs under `docs/devil-advocate/`, `docs/work-review/` | Documents live under `docs/features/` | `doc-organize` standard |
 | `self-heal`, `self-analyze`, `tmux-setup` skills | No longer present | `coworker skill list` |
 
+## Test Cases
+
+见本篇 `## Key Test Scenarios` 一节（2.1 到 2.7），以及 2026-08-02 合并部分的 `## Layer 1` 到 `## Layer 5` 五节（T1.1 到 T5.2）。
+
+## Test Execution Order
+
+见本篇 `### Automation Priority` 一节：按 L2、L4、L1、L3、L5 的顺序运行。
+
+## Expected Pass Threshold
+
+见本篇 `## Quality Gates / Acceptance Criteria` 一节：MUST 门全部通过才能提交，NICE 门只产生警告。
+
 ## Change Log
 
 | Date | Change |
@@ -487,3 +499,4 @@ parts no longer match the repository, detected by reading the code against it on
 | Date | Version | Description |
 | 2026-07-23 | 1.0 | Initial test plan, derived from development history (commits 5d9747e9…5bfdb57e) |
 | 2026-09-25 | Merged the companion document of the same type into this file; added frontmatter and the drift table |
+| 2026-11-24 | 补齐标准要求的小节（指向已有内容，不新增事实） |
