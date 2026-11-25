@@ -80,6 +80,8 @@ CI runs it on every push and pull request (`.github/workflows/skills-check.yml`)
 git config core.hooksPath tools/git-hooks
 ```
 
+The same `core.hooksPath` setting also enables `tools/git-hooks/pre-push`. Before a push, it checks that the deepseek judgments under `skills/spec-organize/tests/judgments/` match the commit being pushed. The judged corpus includes the checkers, so even a one-line checker edit makes them stale, and SDD mechanical then fails in CI. When they are stale, the hook re-runs `tools/judge_deepseek.py` (needs `DEEPSEEK_API_KEY`), runs the full gate, commits the refreshed verdicts and stops the push; push again. Bypass once: `git push --no-verify`.
+
 ## Conventions
 
 See [CONVENTIONS.md](CONVENTIONS.md) for the project's conventions.

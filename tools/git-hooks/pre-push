@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+# Keeps the deepseek-flash judgments fresh before a push.
+#
+# The judged corpus includes the checkers as enforcement evidence
+# (tools/judge_deepseek.py corpus_files), so editing a spec doc, a skill, a
+# checker, the registry or the annotations makes both verdict files stale, and
+# SDD mechanical then fails in CI (test_judge_freshness). This hook checks the
+# commit being pushed. When its verdicts are stale it re-runs the judge on that
+# commit, runs the full gate, commits the two refreshed verdict files and stops
+# the push: push again and the verdicts go with it.
+#
+# Needs DEEPSEEK_API_KEY (about 10 runs of ~33k tokens). Enable once per clone:
+#   git config core.hooksPath tools/git-hooks
+# Bypass once: git push --no-verify
+set -euo pipefail
+
+FRESH=skills/spec-organize/tests/test_judge_freshness.py
+VERDICTS=(skills/spec-organize/tests/judgments/v1-deepseek-flash.yaml
+          skills/spec-organize/tests/judgments/annotations-v1-deepseek-flash.yaml)
+root=$(git rev-parse --show-toplevel)
+head=$(git rev-parse HEAD)
+tmp=""
+cleanup() { [[ -n "$tmp" ]] && git -C "$root" worktree remove --force "$tmp" >/dev/null 2>&1; true; }
+trap cleanup EXIT
+
+while read -r _ local_sha _ _; do
+  [[ "$local_sha" =~ ^0+$ ]] && continue                              # branch deletion
+  git cat-file -e "$local_sha:$FRESH" 2>/dev/null || continue          # no judge on this branch
+  cleanup
+  tmp=$(mktemp -d)
+  git -C "$root" worktree add -q --detach "$tmp" "$local_sha" </dev/null
+  if (cd "$tmp" && python3 -m pytest -q -p no:cacheprovider "$FRESH" </dev/null >/dev/null 2>&1); then
+    continue
+  fi
+
+  echo "pre-push: deepseek judgments are stale for ${local_sha:0:7}." >&2
+  if [[ "$local_sha" != "$head" ]]; then
+    echo "pre-push: that is not HEAD; check it out and push again to refresh them." >&2
+    exit 1
+  fi
+  if [[ -z "${DEEPSEEK_API_KEY:-}" ]]; then
+    echo "pre-push: DEEPSEEK_API_KEY is not set; run tools/judge_deepseek.py --target must and --target gold yourself." >&2
+    exit 1
+  fi
+  echo "pre-push: re-running the judge (must, gold) on ${local_sha:0:7}..." >&2
+  (cd "$tmp" && python3 tools/judge_deepseek.py --target must && python3 tools/judge_deepseek.py --target gold) </dev/null >&2
+  if ! (cd "$tmp" && ./tools/run_sdd_mechanical.sh) </dev/null >/dev/null 2>&1; then
+    echo "pre-push: the gate still fails with fresh judgments; run ./tools/run_sdd_mechanical.sh to see why. Nothing committed." >&2
+    exit 1
+  fi
+  for v in "${VERDICTS[@]}"; do cp "$tmp/$v" "$root/$v"; done
+  git -C "$root" commit -q --only -m "chore(sdd): refresh deepseek judgments (pre-push hook)" -- "${VERDICTS[@]}"
+  echo "pre-push: committed refreshed judgments as $(git -C "$root" rev-parse --short HEAD). Push again." >&2
+  exit 1
+done
+exit 0
