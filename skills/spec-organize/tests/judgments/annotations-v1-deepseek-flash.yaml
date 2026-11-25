@@ -1,7 +1,7 @@
 model: deepseek-flash
 runs: 5
 target: gold
-corpus_sha: 221d2d3240506394
+corpus_sha: 3740c56373a61de1
 items:
 - id: GOOD-A
   verdict: pass
@@ -11,9 +11,10 @@ items:
   - pass
   - pass
   - pass
-  evidence: decision-history/spec-driven-development-decision-history.md Log uses
-    ARD-A…ARD-CL; PRD/DSGN/PIPE/IMPL/TST all letter-prefixed.
-  confidence: 0.97
+  evidence: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md
+    DSGN-F requires letter-prefix IDs; target PRD/design/impl/test use PRD-A, DSGN-A,
+    IMPL-A, TST-A.
+  confidence: 0.95
 - id: GOOD-B
   verdict: pass
   votes:
@@ -22,9 +23,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: test-plan/spec-driven-development-test-plan.md TST-O requires PRD→DSGN/PIPE
-    trace; parent PRD-G deferred; designs cite PRD-A…PRD-Q.
-  confidence: 0.96
+  evidence: docs/features/spec-driven-development/test-plan/spec-driven-development-test-plan.md
+    TST-O asserts parent PRD ids except deferred PRD-G are cited in DSGN/PIPE clauses.
+  confidence: 0.95
 - id: GOOD-C
   verdict: pass
   votes:
@@ -33,9 +34,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: docs/features/spec-driven-development/ has prd, design, decision-history,
-    impl-plan, test-plan, each with a committed .md entry.
-  confidence: 0.99
+  evidence: docs/INDEX.md lists target prd, design, decision-history, impl-plan, and
+    test-plan entries; each directory has committed .md files.
+  confidence: 1.0
 - id: GOOD-D
   verdict: pass
   votes:
@@ -44,9 +45,10 @@ items:
   - pass
   - pass
   - pass
-  evidence: Target feature docs end with '## Change Log' as last H2, e.g. parent design
-    after glossary, test-plan, decision-history.
-  confidence: 0.98
+  evidence: 'docs/features/spec-driven-development/design/spec-driven-development-design.md
+    ends with ## Change Log; PRD, impl-plan, test-plan, decision-history and subfeature
+    docs do too.'
+  confidence: 0.97
 - id: GOOD-E
   verdict: pass
   votes:
@@ -55,9 +57,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: design/spec-driven-development-design.md has '### 子问题归属' table with allowed
-    owners and ARD evidence.
-  confidence: 0.99
+  evidence: 'docs/features/spec-driven-development/design/spec-driven-development-design.md
+    has ### 子问题归属 table with owners AI 查/人决定/AI 查完人决定 and ARD evidence.'
+  confidence: 1.0
 - id: GOOD-F
   verdict: pass
   votes:
@@ -66,9 +68,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: skills/spec-write/SKILL.md and skills/spec-review/SKILL.md each list 盖
-    shed, 北京旅游, 数学题, 股票.
-  confidence: 0.99
+  evidence: skills/spec-write/SKILL.md and skills/spec-review/SKILL.md Example Domains
+    list 盖 shed, 北京旅游, 数学题, 股票.
+  confidence: 1.0
 - id: BAD-A
   verdict: pass
   votes:
@@ -77,9 +79,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: docs/INDEX.md links all target entry docs under parent, pipeline, document-standard
-    PRDs/designs; links resolve.
-  confidence: 0.96
+  evidence: docs/INDEX.md links all 11 target committed entry docs under docs/features/spec-driven-development;
+    every link resolves.
+  confidence: 0.98
 - id: BAD-B
   verdict: pass
   votes:
@@ -88,9 +90,10 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'Target docs are below caps: prd 800, design/impl-plan 1000, test-plan
-    800; decision-history exempt.'
-  confidence: 0.9
+  evidence: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md
+    DSGN-B caps are 800/1000/800; target docs shown are below caps; decision-history
+    exempt.
+  confidence: 0.85
 - id: BAD-C
   verdict: pass
   votes:
@@ -99,9 +102,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: skills/spec-review/SKILL.md cites spec-driven-development-design-skill-contracts.md
-    and says the contract wins on conflict.
-  confidence: 0.99
+  evidence: skills/spec-review/SKILL.md cites docs/features/spec-driven-development/design/spec-driven-development-design-skill-contracts.md
+    and says contract wins on conflict.
+  confidence: 1.0
 - id: BAD-D
   verdict: pass
   votes:
@@ -110,6 +113,6 @@ items:
   - pass
   - pass
   - pass
-  evidence: decision-history/spec-driven-development-decision-history.md Decision
-    Log starts ARD-CL 2026-11-24 and descends to ARD-A 2026-09-25.
-  confidence: 0.99
+  evidence: docs/features/spec-driven-development/decision-history/spec-driven-development-decision-history.md
+    Decision Log starts ARD-CL 2026-11-24 and descends to ARD-A 2026-09-25.
+  confidence: 1.0

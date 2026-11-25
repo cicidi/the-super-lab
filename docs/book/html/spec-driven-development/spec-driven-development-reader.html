@@ -1,4 +1,4 @@
-<!-- SDD reader · source .md · git de3f8e9 -->
+<!-- SDD reader · source .md · git 0223ee8 -->
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light">
 <head>
@@ -1338,7 +1338,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <li><strong>以谁为准：</strong> 以本篇为准。<code>SKILL.md</code> 和本篇冲突时，先改本篇，再改 <code>SKILL.md</code>。这条沿用「按关注点分权威」的原则（document-standard 的 DSGN-G）。</li>
 <li><strong>故意不定义：</strong> 失败处理、迁移、信息来源可信度分级、数据清理；版本只是来源标记，每次 build 末位加 1（<a href="decision-history/spec-driven-development-decision-history.html#ard-ck">ARD-CK</a>，重述已划掉的 ARD-AF）。</li>
 <li><strong>四个例子：</strong> spec-write、spec-review 的正文都要提到盖 shed、北京旅游、数学题、股票（PRD-Q）。它们只是说明用的例子，不是本仓库的 gold。</li>
-<li><strong>暂时测不了的：</strong> 阶段编排、单次改动大小、不同模型之间的偏差，按 PRD-I 标为 <code>Unverified</code>。</li>
+<li><strong>暂时测不了的：</strong> 阶段编排的执行效果（wayfinder 写没写规则由 TST-AA 检查）、单次改动大小、不同模型之间的偏差，按 PRD-I 标为 <code>Unverified</code>。</li>
 </ul>
 <h3>Testing Decisions</h3>
 <ul>
@@ -1346,7 +1346,8 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <li>TST-O、TST-P：PRD 的每条需求都能在 design 里找到对应；归属、证据、<code>UNKNOWN</code> 写得对。</li>
 <li>TST-Q：mock MCP 调用打印出记录，并且没有真实副作用。</li>
 <li>TST-V：每篇文档本科生读得懂。</li>
-<li>暂时测不了：阶段编排（pipeline design 的 PIPE-A-D、PIPE-A-E、PIPE-H）、单次改动大小（PRD-C）、不同模型之间的偏差（<a href="decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a>）。</li>
+<li>TST-AA：wayfinder 的 <code>SKILL.md</code> 写明进度规则。</li>
+<li>暂时测不了：阶段编排的执行效果（pipeline design 的 PIPE-A-D、PIPE-A-E、PIPE-H）、单次改动大小（PRD-C）、不同模型之间的偏差（<a href="decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a>）。</li>
 </ul>
 <h3>Out of Scope</h3>
 <ul>
@@ -1431,6 +1432,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td>2026-11-24</td>
 <td>第 12 轮审查后：spec-write 的改动上限写上新建文件例外（ARD-CE）</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 19 轮审查后：Testing Decisions 加 TST-AA</td>
 </tr>
 </tbody></table>
 </div>
@@ -1754,7 +1759,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <ul>
 <li>skill 正文怎么改。本篇只规定测什么。</li>
 <li>设计本身是否合理；文档合并的策略。</li>
-<li>阶段编排（PRD-I，见 pipeline design 的 QUES-A）。</li>
+<li>阶段编排的执行效果（PRD-I，见 pipeline design 的 QUES-A）；wayfinder 写没写这些规则由 TST-AA 检查。</li>
 <li>单次改动的大小（PRD-C）。</li>
 <li>四个非软件例子的 gold（PRD-K）。gold 放在别处；例子写进 skill 正文，由 TST-S 检查。</li>
 </ul>
@@ -2314,6 +2319,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td>2026-11-24</td>
 <td>第 18 轮审查后：TST-I 正文写明不低于上一次；TST-V 写明等间隔抽题和按小节出题</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 19 轮审查后：Test Scope 写明 TST-AA 覆盖阶段编排的规则文字</td>
 </tr>
 </tbody></table>
 </div>
@@ -3634,7 +3643,7 @@ payment-impl-plan-01-schema.md         impl-plan 分篇：序号加阶段，有�
 <h3>Testing Decisions</h3>
 <p>测试见 parent 的 <a href="test-plan/spec-driven-development-test-plan.html">test-plan</a>。本篇至少要覆盖：</p>
 <ul>
-<li><strong>阶段编排</strong>：入口、进度回顾、提交前询问、进度记录的切换。暂时没有可执行的测试，标为 Unverified（PRD-I）。</li>
+<li><strong>阶段编排</strong>：入口、进度回顾、提交前询问、进度记录的切换。wayfinder 写没写这些规则由 parent test-plan 的 TST-AA 静态检查；执行效果仍标为 Unverified（PRD-I）。</li>
 <li><strong>PRD</strong>：五项都写了，或注明 not apply。</li>
 <li><strong>decision-history</strong>：方向性的决定都有 ARD 编号；推翻旧决定用删除线加链接（document-standard 的 DSGN-J）。</li>
 <li><strong>design</strong>：写明依赖的决定，未决事项都在问题清单里。</li>
@@ -3708,8 +3717,8 @@ payment-impl-plan-01-schema.md         impl-plan 分篇：序号加阶段，有�
 </tr></thead><tbody>
 <tr>
 <td>QUES-A</td>
-<td>阶段编排怎么测试？目前没有可执行的测试（PRD-I）</td>
-<td>标为 Unverified</td>
+<td>阶段编排的执行效果怎么测试？（PRD-I）</td>
+<td>规则写没写由 TST-AA 静态检查；执行效果标为 Unverified</td>
 <td>人决定</td>
 <td>否</td>
 </tr>
@@ -3832,6 +3841,10 @@ payment-impl-plan-01-schema.md         impl-plan 分篇：序号加阶段，有�
 <tr>
 <td>2026-11-24</td>
 <td>第 15 轮审查后：提交前由 wayfinder 询问审查；PIPE-A-D、PIPE-E-A、PIPE-E-B 标 MUST；放弃按阶段拆的理由跟上 ARD-CH</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 19 轮审查后：阶段编排写明 TST-AA 静态检查规则，执行效果 Unverified</td>
 </tr>
 </tbody></table>
 </div>
@@ -4293,7 +4306,7 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 </tr>
 </tbody></table>
 <p>KEP 里的版本偏移、发布签核、运维就绪问卷不采用：它们是为集群运维设计的，不适合非软件问题（parent PRD 的 PRD-Q 要求方法通用）。</p>
-<p><strong>impl-plan 正文（MUST，由 spec-write 执行）。</strong> 每个 <code>IMPL-*</code> 写明三件事：依赖哪个任务、挡住了哪个任务、完成标准。依赖和挡住要两头对得上：A 写了挡住 B，B 就要写依赖 A。最后的执行顺序把被挡住的任务排在后面，例如先改数据库，再改用到它的接口。优先级高又没被挡住的先做；互不相挡的可以同时做。先做只读的部分，再做会写入的部分；对方的接口还没上线时，写明用什么 mock 代替（<a href="decision-history/spec-driven-development-decision-history.html#ard-at">ARD-AT</a>）。</p>
+<p><strong>impl-plan 正文（MUST，由 spec-write 执行）。</strong> 每个 <code>IMPL-*</code> 写明三件事：依赖哪个任务、挡住了哪个任务、完成标准。依赖和挡住各写一行 <code><strong>依赖：</strong></code>、<code><strong>挡住：</strong></code>，没有就写「无」。依赖和挡住要两头对得上：A 写了挡住 B，B 就要写依赖 A。最后的执行顺序把被挡住的任务排在后面，例如先改数据库，再改用到它的接口。优先级高又没被挡住的先做；互不相挡的可以同时做。先做只读的部分，再做会写入的部分；对方的接口还没上线时，写明用什么 mock 代替（<a href="decision-history/spec-driven-development-decision-history.html#ard-at">ARD-AT</a>）。</p>
 <p><strong>引用代码（MUST）。</strong> 写「某文件第几行」时，同时写明是哪个 commit（<a href="decision-history/spec-driven-development-decision-history.html#ard-aq">ARD-AQ</a>）。</p>
 <p><strong>未决问题清单（MUST）。</strong> 每个 feature 只有一份未决问题清单，一般是 design 的 <code>## Open Questions</code>；其他文档链过去，不抄一份。每个条目编号是 <code>QUES-</code> 加字母，写明问题、目前答案、负责人，以及是否阻塞（<a href="decision-history/spec-driven-development-decision-history.html#ard-ao">ARD-AO</a>、<a href="decision-history/spec-driven-development-decision-history.html#ard-ag">ARD-AG</a>）。在别处提到某个问题时，写的「未决」或「已决」要和清单一致（<a href="decision-history/spec-driven-development-decision-history.html#ard-bc">ARD-BC</a>）。</p>
 <p><strong>可读性（MUST）。</strong> 来源：parent PRD 的 PRD-M。一个本科水平的程序员，只读这一篇和术语表，就要能读懂（<a href="decision-history/spec-driven-development-decision-history.html#ard-bo">ARD-BO</a>，由 parent test-plan 的 TST-V 检查）。具体要求：</p>
@@ -4811,6 +4824,10 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 <tr>
 <td>2026-11-24</td>
 <td>第 17 轮审查后：QUES-A 写明 .gitignore 已改</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 19 轮审查后：DSGN-E 的 impl-plan 规则写明依赖、挡住各一行，没有写「无」</td>
 </tr>
 </tbody></table>
 <hr><p class="src-inline">Source: <code>features/document-standard/design/document-standard-design-spec-reader-html.md</code></p>
