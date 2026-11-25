@@ -107,7 +107,7 @@
 <p class="impl-verify"><strong>Verify:</strong> 对一次样例运行跑 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-K">TST-K</a> 通过。</p>
 <h3 id="IMPL-M"><a class="id-ref" href="#IMPL-M">IMPL-M</a> — 检查脚本更新</h3>
 <p><strong>目标：</strong> <code>sections.py</code> 检查五种文档的必需章节；<code>ids.py</code> 检查编号格式；去掉不该有的豁免。</p>
-<p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-C">IMPL-C</a>。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-P">IMPL-P</a>、<a class="id-ref" href="#IMPL-T">IMPL-T</a>。</p>
+<p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-C">IMPL-C</a>。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-P">IMPL-P</a>、<a class="id-ref" href="#IMPL-T">IMPL-T</a>、<a class="id-ref" href="#IMPL-Z">IMPL-Z</a>。</p>
 <p class="impl-verify"><strong>Verify:</strong> <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-B">TST-B</a> 通过；<code>run_spec_checks.py</code> 跑 SDD 目录。</p>
 <h3 id="IMPL-N"><a class="id-ref" href="#IMPL-N">IMPL-N</a> — skill 契约和四个例子</h3>
 <p><strong>目标：</strong> <a href="../design/spec-driven-development-design-skill-contracts.html">skill 契约</a>写好；两个 skill 的正文都提到盖 shed、北京旅游、数学题、股票（<a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-Q">PRD-Q</a>）。</p>
@@ -205,13 +205,17 @@
 <p><strong>目标：</strong> 一个能跑 spec-review、再判它的输出有没有找出埋下的问题的执行器；有了它才能写 <a class="id-ref" href="#IMPL-K">IMPL-K</a> 的 5 个语义案例。</p>
 <p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-X">IMPL-X</a>。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-K">IMPL-K</a> 的语义部分、<a class="id-ref" href="#IMPL-I">IMPL-I</a>。</p>
 <p class="impl-verify"><strong>Verify:</strong> 5 个语义案例能自动判出找没找到。</p>
+<h3 id="IMPL-Z"><a class="id-ref" href="#IMPL-Z">IMPL-Z</a> — 剩下的检查脚本接进 <span class="lvl lvl--must">MUST</span> 清单</h3>
+<p><strong>目标：</strong> <code>must_registry_coverage.py</code> 报出的、还没对应到任何 <span class="lvl lvl--must">MUST</span> 条目的检查脚本，逐个对上 <span class="lvl lvl--must">MUST</span> 条目，或写明它只是辅助检查。</p>
+<p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-M">IMPL-M</a>。<strong>挡住：</strong> 无。</p>
+<p class="impl-verify"><strong>Verify:</strong> <code>must_registry_coverage.py</code> 不再列出没对应的检查脚本。</p>
 <h3>Execution order</h3>
 <p>先做不依赖别人的任务，被挡住的后做：</p>
 <ol>
 <li><a class="id-ref" href="#IMPL-A">IMPL-A</a>、<a class="id-ref" href="#IMPL-D">IMPL-D</a>、<a class="id-ref" href="#IMPL-G">IMPL-G</a>、<a class="id-ref" href="#IMPL-H">IMPL-H</a>、<a class="id-ref" href="#IMPL-U">IMPL-U</a>、<a class="id-ref" href="#IMPL-W">IMPL-W</a>、<a class="id-ref" href="#IMPL-X">IMPL-X</a>（互不依赖，可以同时做）</li>
-<li><a class="id-ref" href="#IMPL-C">IMPL-C</a>、<a class="id-ref" href="#IMPL-Y">IMPL-Y</a>（等 <a class="id-ref" href="#IMPL-X">IMPL-X</a>）</li>
+<li><a class="id-ref" href="#IMPL-C">IMPL-C</a>；<a class="id-ref" href="#IMPL-Y">IMPL-Y</a>（它等 <a class="id-ref" href="#IMPL-X">IMPL-X</a>）</li>
 <li><a class="id-ref" href="#IMPL-B">IMPL-B</a>、<a class="id-ref" href="#IMPL-F">IMPL-F</a>、<a class="id-ref" href="#IMPL-J">IMPL-J</a>、<a class="id-ref" href="#IMPL-K">IMPL-K</a>、<a class="id-ref" href="#IMPL-L">IMPL-L</a>、<a class="id-ref" href="#IMPL-M">IMPL-M</a>、<a class="id-ref" href="#IMPL-R">IMPL-R</a></li>
-<li><a class="id-ref" href="#IMPL-N">IMPL-N</a>、<a class="id-ref" href="#IMPL-O">IMPL-O</a>、<a class="id-ref" href="#IMPL-P">IMPL-P</a>、<a class="id-ref" href="#IMPL-S">IMPL-S</a>（等 <a class="id-ref" href="#IMPL-F">IMPL-F</a>）、<a class="id-ref" href="#IMPL-T">IMPL-T</a>（等 <a class="id-ref" href="#IMPL-M">IMPL-M</a>）、<a class="id-ref" href="#IMPL-V">IMPL-V</a>（等 <a class="id-ref" href="#IMPL-H">IMPL-H</a>）</li>
+<li><a class="id-ref" href="#IMPL-N">IMPL-N</a>、<a class="id-ref" href="#IMPL-O">IMPL-O</a>、<a class="id-ref" href="#IMPL-P">IMPL-P</a>、<a class="id-ref" href="#IMPL-S">IMPL-S</a>（等 <a class="id-ref" href="#IMPL-F">IMPL-F</a>）、<a class="id-ref" href="#IMPL-T">IMPL-T</a>（等 <a class="id-ref" href="#IMPL-M">IMPL-M</a>）、<a class="id-ref" href="#IMPL-V">IMPL-V</a>（等 <a class="id-ref" href="#IMPL-H">IMPL-H</a>）、<a class="id-ref" href="#IMPL-Z">IMPL-Z</a>（等 <a class="id-ref" href="#IMPL-M">IMPL-M</a>）</li>
 <li><a class="id-ref" href="#IMPL-Q">IMPL-Q</a></li>
 <li><a class="id-ref" href="#IMPL-E">IMPL-E</a>（评测要等 spec 可读、测试骨架齐全、gold 改回 iPhone 之后再跑）</li>
 <li><a class="id-ref" href="#IMPL-I">IMPL-I</a></li>
@@ -310,6 +314,10 @@
 <tr>
 <td>2026-11-24</td>
 <td>第 13 轮审查后：<a class="id-ref" href="#IMPL-X">IMPL-X</a>、<a class="id-ref" href="#IMPL-K">IMPL-K</a> 补上和 <a class="id-ref" href="#IMPL-Y">IMPL-Y</a> 的双向依赖；judgments/ 要提交</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 17 轮审查后：新增 <a class="id-ref" href="#IMPL-Z">IMPL-Z</a>；执行顺序第 2 步写清 <a class="id-ref" href="#IMPL-Y">IMPL-Y</a> 等 <a class="id-ref" href="#IMPL-X">IMPL-X</a></td>
 </tr>
 </tbody></table></div>
       </div>

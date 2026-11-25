@@ -1,4 +1,4 @@
-<!-- SDD reader · source .md · git a8cc1e8 -->
+<!-- SDD reader · source .md · git 0eb2437 -->
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light">
 <head>
@@ -659,7 +659,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td>检查脚本没跟上规则</td>
 <td>机械检查报 0 个问题，但文档其实不合规</td>
-<td>规则改动后，同一批更新检查脚本和 MUST 清单（TST-M）；当前欠账列在 <a href="impl-plan/spec-driven-development-impl-plan.html">impl-plan</a> 的 IMPL-P</td>
+<td>规则改动后，同一批更新检查脚本和 MUST 清单（TST-M）；当前欠账（还没接进 MUST 清单的检查脚本）由 <a href="impl-plan/spec-driven-development-impl-plan.html">impl-plan</a> 的 IMPL-Z 负责</td>
 </tr>
 </tbody></table>
 <h3>Open Questions</h3>
@@ -1252,6 +1252,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <td>2026-11-24</td>
 <td>第 15 轮审查后：DSGN-E 的 parent 五篇齐全标 MUST</td>
 </tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 17 轮审查后：风险表的欠账改由 IMPL-Z 负责</td>
+</tr>
 </tbody></table>
 <hr><p class="src-inline">Source: <code>design/spec-driven-development-design-skill-contracts.md</code></p>
 <h2>Spec-Driven Development — Skill 契约</h2>
@@ -1512,7 +1516,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <p><strong>Verify:</strong> 对一次样例运行跑 TST-K 通过。</p>
 <h3 id="IMPL-M">IMPL-M — 检查脚本更新</h3>
 <p><strong>目标：</strong> <code>sections.py</code> 检查五种文档的必需章节；<code>ids.py</code> 检查编号格式；去掉不该有的豁免。</p>
-<p><strong>依赖：</strong> IMPL-C。<strong>挡住：</strong> IMPL-P、IMPL-T。</p>
+<p><strong>依赖：</strong> IMPL-C。<strong>挡住：</strong> IMPL-P、IMPL-T、IMPL-Z。</p>
 <p><strong>Verify:</strong> TST-B 通过；<code>run_spec_checks.py</code> 跑 SDD 目录。</p>
 <h3 id="IMPL-N">IMPL-N — skill 契约和四个例子</h3>
 <p><strong>目标：</strong> <a href="design/spec-driven-development-design-skill-contracts.html">skill 契约</a>写好；两个 skill 的正文都提到盖 shed、北京旅游、数学题、股票（PRD-Q）。</p>
@@ -1610,13 +1614,17 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <p><strong>目标：</strong> 一个能跑 spec-review、再判它的输出有没有找出埋下的问题的执行器；有了它才能写 IMPL-K 的 5 个语义案例。</p>
 <p><strong>依赖：</strong> IMPL-X。<strong>挡住：</strong> IMPL-K 的语义部分、IMPL-I。</p>
 <p><strong>Verify:</strong> 5 个语义案例能自动判出找没找到。</p>
+<h3 id="IMPL-Z">IMPL-Z — 剩下的检查脚本接进 MUST 清单</h3>
+<p><strong>目标：</strong> <code>must_registry_coverage.py</code> 报出的、还没对应到任何 MUST 条目的检查脚本，逐个对上 MUST 条目，或写明它只是辅助检查。</p>
+<p><strong>依赖：</strong> IMPL-M。<strong>挡住：</strong> 无。</p>
+<p><strong>Verify:</strong> <code>must_registry_coverage.py</code> 不再列出没对应的检查脚本。</p>
 <h3>Execution order</h3>
 <p>先做不依赖别人的任务，被挡住的后做：</p>
 <ol>
 <li>IMPL-A、IMPL-D、IMPL-G、IMPL-H、IMPL-U、IMPL-W、IMPL-X（互不依赖，可以同时做）</li>
-<li>IMPL-C、IMPL-Y（等 IMPL-X）</li>
+<li>IMPL-C；IMPL-Y（它等 IMPL-X）</li>
 <li>IMPL-B、IMPL-F、IMPL-J、IMPL-K、IMPL-L、IMPL-M、IMPL-R</li>
-<li>IMPL-N、IMPL-O、IMPL-P、IMPL-S（等 IMPL-F）、IMPL-T（等 IMPL-M）、IMPL-V（等 IMPL-H）</li>
+<li>IMPL-N、IMPL-O、IMPL-P、IMPL-S（等 IMPL-F）、IMPL-T（等 IMPL-M）、IMPL-V（等 IMPL-H）、IMPL-Z（等 IMPL-M）</li>
 <li>IMPL-Q</li>
 <li>IMPL-E（评测要等 spec 可读、测试骨架齐全、gold 改回 iPhone 之后再跑）</li>
 <li>IMPL-I</li>
@@ -1715,6 +1723,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td>2026-11-24</td>
 <td>第 13 轮审查后：IMPL-X、IMPL-K 补上和 IMPL-Y 的双向依赖；judgments/ 要提交</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 17 轮审查后：新增 IMPL-Z；执行顺序第 2 步写清 IMPL-Y 等 IMPL-X</td>
 </tr>
 </tbody></table>
 </div>
@@ -4556,7 +4568,7 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 <tr>
 <td>QUES-A</td>
 <td>所有工具是否都支持 sub-feature 目录和 sub-feature 下的 <code>raw/</code></td>
-<td>部分已查：<code>.gitignore</code> 原来的 <code>docs/features/*/raw/</code> 漏掉了 sub-feature 下的 <code>raw/</code>，改成 <code>**</code> 由 parent impl-plan 的 IMPL-P 做；其他工具未核实</td>
+<td>部分已查：<code>.gitignore</code> 原来的 <code>docs/features/*/raw/</code> 漏掉了 sub-feature 下的 <code>raw/</code>，已改成 <code>docs/features/**/raw/</code>（parent impl-plan 的 IMPL-P，已完成）；其他工具未核实</td>
 <td>AI 查完人决定</td>
 <td>否</td>
 </tr>
@@ -4787,6 +4799,10 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 <tr>
 <td>2026-11-24</td>
 <td>第 16 轮审查后：DSGN-M 不再写错 DSGN-E 的 MUST 条数</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 17 轮审查后：QUES-A 写明 .gitignore 已改</td>
 </tr>
 </tbody></table>
 <hr><p class="src-inline">Source: <code>features/document-standard/design/document-standard-design-spec-reader-html.md</code></p>
