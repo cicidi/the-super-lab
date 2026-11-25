@@ -315,3 +315,23 @@ def test_impl_missing_depends_or_blocks_line_flagged(tmp_path):
     assert "IMPL-A needs a 依赖/Depends on line (write 无 if none)" in msgs
     assert "IMPL-A needs a 挡住/Blocks line (write 无 if none)" in msgs
     assert "IMPL-B needs a 挡住/Blocks line (write 无 if none)" in msgs
+
+
+def test_registry_provenance_splits_check_lists(tmp_path):
+    from checks.registry_provenance import DESIGN_REL, check_registry_provenance
+
+    tests = tmp_path / "skills/spec-organize/tests"
+    (tests / "checks").mkdir(parents=True)
+    for name in ("index_book", "anchors"):
+        (tests / "checks" / f"{name}.py").write_text("", encoding="utf-8")
+    design = tmp_path / DESIGN_REL
+    design.parent.mkdir(parents=True)
+    design.write_text("# d\n", encoding="utf-8")
+    (tests / "must_registry.yaml").write_text(
+        "items:\n"
+        "  - id: MUST-A\n    method: python\n    check: 'index_book,anchors'\n"
+        "  - id: MUST-B\n    method: python\n    check: 'index_book, nope'\n",
+        encoding="utf-8",
+    )
+    msgs = [f.message for f in check_registry_provenance(tmp_path)]
+    assert msgs == ["MUST-B: no module checks/nope.py"]

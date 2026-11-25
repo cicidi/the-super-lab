@@ -181,7 +181,7 @@ Map 阶段的访谈辅助工具随时可以换；wayfinder 负责进度规则，
 
 测试见 parent 的 [test-plan](../../../test-plan/spec-driven-development-test-plan.md)。本篇至少要覆盖：
 
-- **阶段编排**：入口、进度回顾、提交前询问、进度记录的切换。暂时没有可执行的测试，标为 Unverified（PRD-I）。
+- **阶段编排**：入口、进度回顾、提交前询问、进度记录的切换。wayfinder 写没写这些规则由 parent test-plan 的 TST-AA 静态检查；执行效果仍标为 Unverified（PRD-I）。
 - **PRD**：五项都写了，或注明 not apply。
 - **decision-history**：方向性的决定都有 ARD 编号；推翻旧决定用删除线加链接（document-standard 的 DSGN-J）。
 - **design**：写明依赖的决定，未决事项都在问题清单里。
@@ -235,7 +235,7 @@ Map 的拆分标准见 PIPE-D 第 6 步。还没定的事项见 [Open Questions]
 
 | ID | 问题 | 目前答案 | 负责人 | 阻塞 |
 |---|---|---|---|---|
-| QUES-A | 阶段编排怎么测试？目前没有可执行的测试（PRD-I） | 标为 Unverified | 人决定 | 否 |
+| QUES-A | 阶段编排的执行效果怎么测试？（PRD-I） | 规则写没写由 TST-AA 静态检查；执行效果标为 Unverified | 人决定 | 否 |
 | QUES-B | 进度回顾的格式是否适用于所有项目 | 未定 | 人决定 | 否 |
 | QUES-C | 后期的任务管理接入哪个 skill | 未定 | 人决定 | 否 |
 | QUES-D | PIPE-E 的收敛条件，自动检查怎么实现 | 未定 | AI 查完人决定 | 否 |
@@ -271,3 +271,4 @@ Map 的拆分标准见 PIPE-D 第 6 步。还没定的事项见 [Open Questions]
 | 2026-11-24 | 第 8 轮审查后：地图改为目录；Map 访谈辅助的例子改为 grill-with-docs；改链 ARD-CH |
 | 2026-11-24 | 第 9 轮审查后：wayfinder 不可用时改为人手维护地图目录 |
 | 2026-11-24 | 第 15 轮审查后：提交前由 wayfinder 询问审查；PIPE-A-D、PIPE-E-A、PIPE-E-B 标 MUST；放弃按阶段拆的理由跟上 ARD-CH |
+| 2026-11-24 | 第 19 轮审查后：阶段编排写明 TST-AA 静态检查规则，执行效果 Unverified |

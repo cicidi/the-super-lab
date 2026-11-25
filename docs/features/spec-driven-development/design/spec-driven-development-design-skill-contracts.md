@@ -49,7 +49,7 @@ last_verified: 2026-11-20
 - **以谁为准：** 以本篇为准。`SKILL.md` 和本篇冲突时，先改本篇，再改 `SKILL.md`。这条沿用「按关注点分权威」的原则（document-standard 的 DSGN-G）。
 - **故意不定义：** 失败处理、迁移、信息来源可信度分级、数据清理；版本只是来源标记，每次 build 末位加 1（[ARD-CK](../decision-history/spec-driven-development-decision-history.md#ard-ck)，重述已划掉的 ARD-AF）。
 - **四个例子：** spec-write、spec-review 的正文都要提到盖 shed、北京旅游、数学题、股票（PRD-Q）。它们只是说明用的例子，不是本仓库的 gold。
-- **暂时测不了的：** 阶段编排、单次改动大小、不同模型之间的偏差，按 PRD-I 标为 `Unverified`。
+- **暂时测不了的：** 阶段编排的执行效果（wayfinder 写没写规则由 TST-AA 检查）、单次改动大小、不同模型之间的偏差，按 PRD-I 标为 `Unverified`。
 
 ## Testing Decisions
 
@@ -57,7 +57,8 @@ last_verified: 2026-11-20
 - TST-O、TST-P：PRD 的每条需求都能在 design 里找到对应；归属、证据、`UNKNOWN` 写得对。
 - TST-Q：mock MCP 调用打印出记录，并且没有真实副作用。
 - TST-V：每篇文档本科生读得懂。
-- 暂时测不了：阶段编排（pipeline design 的 PIPE-A-D、PIPE-A-E、PIPE-H）、单次改动大小（PRD-C）、不同模型之间的偏差（[ARD-CJ](../decision-history/spec-driven-development-decision-history.md#ard-cj)）。
+- TST-AA：wayfinder 的 `SKILL.md` 写明进度规则。
+- 暂时测不了：阶段编排的执行效果（pipeline design 的 PIPE-A-D、PIPE-A-E、PIPE-H）、单次改动大小（PRD-C）、不同模型之间的偏差（[ARD-CJ](../decision-history/spec-driven-development-decision-history.md#ard-cj)）。
 
 ## Out of Scope
 
@@ -108,3 +109,4 @@ last_verified: 2026-11-20
 | 2026-11-24 | 第 8 轮审查后：spec-write 加重建网页职责（ARD-CF）；四个例子只要求 spec-write、spec-review；wayfinder 阻塞以 QUES 为准 |
 | 2026-11-24 | 第 9 轮审查后：开头改为三个交付 skill；链到已划掉 ARD 的地方改链 |
 | 2026-11-24 | 第 12 轮审查后：spec-write 的改动上限写上新建文件例外（ARD-CE） |
+| 2026-11-24 | 第 19 轮审查后：Testing Decisions 加 TST-AA |

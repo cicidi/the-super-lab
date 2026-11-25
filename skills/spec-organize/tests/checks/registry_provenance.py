@@ -70,11 +70,12 @@ def check_registry_provenance(repo_root: Path) -> list[Finding]:
                     sourced += 1
                     contract_hits += _clause_at(design_lines, int(line_no)) in CONTRACT
         if item.get("method") == "python":
-            check = item.get("check", "")
-            if check and check not in implemented:
-                findings.append(
-                    Finding("registry_provenance", "must_registry.yaml", f"{ident}: no module checks/{check}.py")
-                )
+            # `check:` may list several modules: `index_book,anchors`.
+            for check in (c.strip() for c in item.get("check", "").split(",")):
+                if check and check not in implemented:
+                    findings.append(
+                        Finding("registry_provenance", "must_registry.yaml", f"{ident}: no module checks/{check}.py")
+                    )
     if sourced and contract_hits * 3 < sourced * 2:
         findings.append(
             Finding(

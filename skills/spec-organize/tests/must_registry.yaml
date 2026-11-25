@@ -50,9 +50,9 @@ items:
     text: '**必需章节（MUST）。** 每种文档必须有下面这些 `##` 章节。标题用英文原文，不翻译、不编号、不改名、不删；可以另外加章节。比如把 Overview 写成 `## 1. 概述` 就违反规则。其他章节只有写有序步骤时才编号；例外是 Problem Statement 下面作者原话的小标题可以保留编号（[ARD-BS](../../../decision-history/spec-driven-development-decision-history.md#ard-bs)）。'
     method: python
     check: 'sections'
-  - id: MUST-K
+  - id: MUST-BK
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:240
-    text: '**impl-plan 正文（MUST，由 spec-write 执行）。** 每个 `IMPL-*` 写明三件事：依赖哪个任务、挡住了哪个任务、完成标准。依赖和挡住要两头对得上：A 写了挡住 B，B 就要写依赖 A。最后的执行顺序把被挡住的任务排在后面，例如先改数据库，再改用到它的接口。优先级高又没被挡住的先做；互不相挡的可以同时做。先做只读的部分，再做会写入的部分；对方的接口还没上线时，写明用什么 mock 代替（[ARD-AT](../../../decision-history/spec-driven-development-decision-history.md#ard-at)）。'
+    text: '**impl-plan 正文（MUST，由 spec-write 执行）。** 每个 `IMPL-*` 写明三件事：依赖哪个任务、挡住了哪个任务、完成标准。依赖和挡住各写一行 `**依赖：**`、`**挡住：**`，没有就写「无」。依赖和挡住要两头对得上：A 写了挡住 B，B 就要写依赖 A。最后的执行顺序把被挡住的任务排在后面，例如先改数据库，再改用到它的接口。优先级高又没被挡住的先做；互不相挡的可以同时做。先做只读的部分，再做会写入的部分；对方的接口还没上线时，写明用什么 mock 代替（[ARD-AT](../../../decision-history/spec-driven-development-decision-history.md#ard-at)）。'
     method: llm
     check: ''
   - id: MUST-L
@@ -64,7 +64,7 @@ items:
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:244
     text: '**未决问题清单（MUST）。** 每个 feature 只有一份未决问题清单，一般是 design 的 `## Open Questions`；其他文档链过去，不抄一份。每个条目编号是 `QUES-` 加字母，写明问题、目前答案、负责人，以及是否阻塞（[ARD-AO](../../../decision-history/spec-driven-development-decision-history.md#ard-ao)、[ARD-AG](../../../decision-history/spec-driven-development-decision-history.md#ard-ag)）。在别处提到某个问题时，写的「未决」或「已决」要和清单一致（[ARD-BC](../../../decision-history/spec-driven-development-decision-history.md#ard-bc)）。'
     method: python
-    check: 'open_questions'
+    check: 'open_questions,resolved_refs'
   - id: MUST-N
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:246
     text: '**可读性（MUST）。** 来源：parent PRD 的 PRD-M。一个本科水平的程序员，只读这一篇和术语表，就要能读懂（[ARD-BO](../../../decision-history/spec-driven-development-decision-history.md#ard-bo)，由 parent test-plan 的 TST-V 检查）。具体要求：'
@@ -149,12 +149,12 @@ items:
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:397
     text: '- INDEX 没有孤立文档和死链；文档里的链接和锚点都能打开（[ARD-AP](../../../decision-history/spec-driven-development-decision-history.md#ard-ap)）。指向 `raw/` 的链接不算死链（[ARD-BW](../../../decision-history/spec-driven-development-decision-history.md#ard-bw)）。'
     method: python
-    check: 'index_book'
+    check: 'index_book,anchors'
   - id: MUST-AD
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:398
     text: '- 推送 `docs/features/` 的改动时，INDEX 和 book 已经同步。'
     method: python
-    check: 'index_book'
+    check: 'index_book,book,publish_nav'
   - id: MUST-AE
     source: docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md:399
     text: '- 新名字已经检查过撞车（DSGN-K）。'

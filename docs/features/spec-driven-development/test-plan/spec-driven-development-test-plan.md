@@ -26,7 +26,7 @@ last_verified: 2026-11-24
 
 - skill 正文怎么改。本篇只规定测什么。
 - 设计本身是否合理；文档合并的策略。
-- 阶段编排（PRD-I，见 pipeline design 的 QUES-A）。
+- 阶段编排的执行效果（PRD-I，见 pipeline design 的 QUES-A）；wayfinder 写没写这些规则由 TST-AA 检查。
 - 单次改动的大小（PRD-C）。
 - 四个非软件例子的 gold（PRD-K）。gold 放在别处；例子写进 skill 正文，由 TST-S 检查。
 
@@ -332,3 +332,4 @@ document-standard 的 reader PRD：
 | 2026-11-24 | 第 13 轮审查后：TST-L 写明结论文件提交、语料 sha 过期就重跑 |
 | 2026-11-24 | 第 15 轮审查后：TST-A 的输入加 DSGN-C |
 | 2026-11-24 | 第 18 轮审查后：TST-I 正文写明不低于上一次；TST-V 写明等间隔抽题和按小节出题 |
+| 2026-11-24 | 第 19 轮审查后：Test Scope 写明 TST-AA 覆盖阶段编排的规则文字 |

@@ -25,9 +25,11 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 TESTS = ROOT / "skills/spec-organize/tests"
 sys.path.insert(0, str(TESTS))
+sys.path.insert(0, str(ROOT / "tools"))
 
 from checks.book import check_book  # noqa: E402
 from checks.collision import check_collision  # noqa: E402
+from checks.figure_tree import check_figure_tree  # noqa: E402
 from checks.publish_nav import check_publish_nav  # noqa: E402
 from checks.registry_provenance import check_registry_provenance  # noqa: E402
 from checks.test_trace import check_test_trace  # noqa: E402
@@ -38,6 +40,8 @@ from checks.parent_complete import check_parent_complete  # noqa: E402
 from checks.paired_html import check_paired_html  # noqa: E402
 from checks.runners import run_file  # noqa: E402
 from checks.size import check_size  # noqa: E402
+from checks.struck_links import check_struck_links  # noqa: E402
+from run_spec_checks import _filter_collision  # noqa: E402
 
 REGISTRY = TESTS / "must_registry.yaml"
 JUDGED = TESTS / "judgments" / "v1-deepseek-flash.yaml"
@@ -64,14 +68,16 @@ def collect(feature: Path) -> dict[str, list[Finding]]:
     features_root = ROOT / "docs/features"
     findings: list[Finding] = []
     if features_root.is_dir():
-        findings += check_collision(features_root)
+        findings += _filter_collision(check_collision(features_root))
         findings += check_no_commit_tree(features_root)
         findings += check_index_book(ROOT)
         findings += check_book(ROOT)
         findings += check_publish_nav(ROOT)
         findings += check_paired_html(ROOT)
         findings += check_test_trace(feature)
+        findings += check_struck_links(feature)
         findings += check_registry_provenance(ROOT)
+        findings += check_figure_tree(ROOT)
     if feature.is_dir() and feature.parent.name == "features":
         findings += check_parent_complete(feature)
     for path in md_files(feature):
@@ -81,6 +87,8 @@ def collect(feature: Path) -> dict[str, list[Finding]]:
         findings += run_file(path, text)
     grouped: dict[str, list[Finding]] = {}
     for f in findings:
+        if getattr(f, "level", "must") == "nice":  # lint fails on MUST findings only
+            continue
         grouped.setdefault(f.check, []).append(f)
     return grouped
 
@@ -101,6 +109,11 @@ def parse_registry() -> list[dict[str, str]]:
     return items
 
 
+def check_names(raw: str) -> list[str]:
+    """A registry `check:` may list several modules: `index_book,anchors`."""
+    return [name.strip() for name in raw.split(",") if name.strip()]
+
+
 def score1(feature: Path) -> tuple[int, int, list[str]]:
     grouped = collect(feature)
     judgments: dict[str, dict] = {}
@@ -113,7 +126,7 @@ def score1(feature: Path) -> tuple[int, int, list[str]]:
         ident, method = item["id"], item.get("method", "")
         if method == "python":
             check = item.get("check", "")
-            findings = grouped.get(check, [])
+            findings = [f for name in check_names(check) for f in grouped.get(name, [])]
             ok = not findings
             detail = f"{check}: {len(findings)} finding(s)"
         else:

@@ -237,7 +237,7 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 
 KEP 里的版本偏移、发布签核、运维就绪问卷不采用：它们是为集群运维设计的，不适合非软件问题（parent PRD 的 PRD-Q 要求方法通用）。
 
-**impl-plan 正文（MUST，由 spec-write 执行）。** 每个 `IMPL-*` 写明三件事：依赖哪个任务、挡住了哪个任务、完成标准。依赖和挡住要两头对得上：A 写了挡住 B，B 就要写依赖 A。最后的执行顺序把被挡住的任务排在后面，例如先改数据库，再改用到它的接口。优先级高又没被挡住的先做；互不相挡的可以同时做。先做只读的部分，再做会写入的部分；对方的接口还没上线时，写明用什么 mock 代替（[ARD-AT](../../../decision-history/spec-driven-development-decision-history.md#ard-at)）。
+**impl-plan 正文（MUST，由 spec-write 执行）。** 每个 `IMPL-*` 写明三件事：依赖哪个任务、挡住了哪个任务、完成标准。依赖和挡住各写一行 `**依赖：**`、`**挡住：**`，没有就写「无」。依赖和挡住要两头对得上：A 写了挡住 B，B 就要写依赖 A。最后的执行顺序把被挡住的任务排在后面，例如先改数据库，再改用到它的接口。优先级高又没被挡住的先做；互不相挡的可以同时做。先做只读的部分，再做会写入的部分；对方的接口还没上线时，写明用什么 mock 代替（[ARD-AT](../../../decision-history/spec-driven-development-decision-history.md#ard-at)）。
 
 **引用代码（MUST）。** 写「某文件第几行」时，同时写明是哪个 commit（[ARD-AQ](../../../decision-history/spec-driven-development-decision-history.md#ard-aq)）。
 
@@ -522,3 +522,4 @@ design 管「想要怎样」，代码管「现在怎样」和内部结构。机�
 | 2026-11-24 | 第 15 轮审查后：DSGN-D 的 book 更新改为 commit 前必须重建，去掉 draft 例外（ARD-CF） |
 | 2026-11-24 | 第 16 轮审查后：DSGN-M 不再写错 DSGN-E 的 MUST 条数 |
 | 2026-11-24 | 第 17 轮审查后：QUES-A 写明 .gitignore 已改 |
+| 2026-11-24 | 第 19 轮审查后：DSGN-E 的 impl-plan 规则写明依赖、挡住各一行，没有写「无」 |
