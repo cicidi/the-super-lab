@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Runs tools/check_skills.py when a commit touches a SKILL.md (skill design, ARD-K).
+# Enable once per clone: git config core.hooksPath tools/git-hooks
+set -euo pipefail
+changed=$(git diff --cached --name-only --diff-filter=ACMR -- 'skills/*/SKILL.md' 'personal-skills/*/SKILL.md')
+[ -z "$changed" ] && exit 0
+dirs=$(printf '%s\n' "$changed" | xargs -n1 dirname | sort -u)
+# shellcheck disable=SC2086
+python3 tools/check_skills.py $dirs || {
+  echo "check_skills found problems in a staged SKILL.md (bypass once: git commit --no-verify)" >&2
+  exit 1
+}

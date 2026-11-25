@@ -15,7 +15,7 @@ def test_judge_and_checkers_use_deepseek_flash():
     data = config()
     assert data["judge"]["model"] == "deepseek-flash"
     assert data["checkers"]["models"] == ["deepseek-flash"]
-    assert data["checkers"]["repeats"] == 3
+    assert data["checkers"]["repeats"] == 5
     assert data["single_provider"] is True
 
 

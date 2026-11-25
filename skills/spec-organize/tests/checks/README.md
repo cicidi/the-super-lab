@@ -26,6 +26,7 @@ Invoked by `tools/run_spec_checks.py` and pytest `test_checks.py`.
 | `counts.py` | `counts` |
 | `resolved_refs.py` | `resolved_refs` |
 | `diagram_steps.py` | `diagram_steps` |
+| `struck_links.py` | `struck_ard_link` |
 | `runners.py` | shared per-file list |
 
 Registry mapping: `../must_registry.yaml` · coverage: `tools/must_registry_coverage.py`.

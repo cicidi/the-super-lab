@@ -5,173 +5,217 @@ state: draft
 final_date: 2026-11-03
 health: active
 owner: cicidi
-last_verified: 2026-11-03
+last_verified: 2026-11-20
 ---
 
-# Document Standard — Spec Reader HTML（Design）
+# Document Standard — 给人读的 HTML 页面（Design）
 
-入口文件：[document-standard-design.md](document-standard-design.md)。
+本篇是 [document-standard-design.md](document-standard-design.md) 的分篇，规则编号 DSGN-N。需求见 [reader PRD](../prd/document-standard-prd-spec-reader-html.md)（PRD-A 到 PRD-P）。路径规则和 DSGN-B 一致，内容优先级和 DSGN-I 一致，编号和 DSGN-F 一致。术语见 [parent design 的术语表](../../../design/spec-driven-development-design.md#glossary)。
 
-**Aspect design：** **DSGN-N**（spec reader / human HTML 汇编）。PRD：**PRD-A–P** 见 `../prd/document-standard-prd-spec-reader-html.md`。与 **DSGN-B** 路径、**DSGN-I** 优先级、**DSGN-F** ID 引用一致。**Implementation：** `SPEC-HTML-STANDARD.md` 与 `SPEC-PRESENTATION.md`。MD 是全文，HTML 是阅读视图。spec-write 改 md；spec-review 查保真（ARD-AJ）。
+生成网页时要遵守的规则摘要在 `SPEC-HTML-STANDARD.md` 和 `SPEC-PRESENTATION.md`，它们是 spec-write、spec-review 要读的三份标准文件中的两份（[ARD-CH](../../../decision-history/spec-driven-development-decision-history.md#ard-ch) 重述 ARD-BX）。markdown 是全文，HTML 只是方便阅读的视图。spec-write 只改 markdown；spec-review 检查 HTML 有没有丢内容（[ARD-AJ](../../../decision-history/spec-driven-development-decision-history.md#ard-aj)）。
 
 ## Problem Statement
 
-1. Feature spec 多篇、多层，人类难以一次读全。
-2. 「人类可读 HTML」若写成 **短摘要**，review 与 onboarding 会 **漏 MUST**，与 document-standard「L1 永不删」冲突。
-3. 先前 v0 指引（spec-pipeline `SPEC-READER.md`）写「summarize and rephrase」易被理解成 **大幅删减** — **废止该解读**；以本篇 **DSGN-N** 为准。
+1. feature spec 有很多篇、好几层，人很难一次读完。
+2. 如果「好读的 HTML」被写成短摘要，审查和新人上手时就会漏掉 MUST 规则，这违反了 document-standard 的「L1 永远不删」。
+3. 早期 spec-pipeline 里的 `SPEC-READER.md` 写过「概括并改写」，容易被理解成可以大幅删减。这种理解作废，以本篇的 DSGN-N 为准。
 
 ## Solution
 
-定义 **Spec Reader HTML** 产物：单文件、Tab 化、富排版、**保真优先** 的 derived view；canonical 永远是 committed `.md`。
+规定一种叫「spec reader」的 HTML 产物：静态网页，排版好读，内容不丢。它从已提交的 markdown 派生出来，正式版本永远是 markdown。
 
 ---
 
 ## Design
 
-### DSGN-N — Spec Reader HTML 契约
+### DSGN-N — 给人读的 HTML 页面
 
-#### DSGN-N-A — 产物与路径
+#### DSGN-N-A — 产物和路径
 
-| 项 | Rule |
+来源：reader PRD 的 PRD-E、PRD-F。
+
+| 项 | 规则 |
 |---|---|
-| **文件名** | 汇编为 `<parent>/<parent>-reader.html`；其余 HTML 与对应 `.md` 在 `docs/features/` 下的相对路径相同，扩展名改为 `.html` |
-| **目录** | `docs/book/html/`（ARD-BF）。Parent 与 sub-feature 都在这棵树里，不放在 `docs/features/` 或 `site/` |
-| **Source of truth** | 各 Tab 对应的一篇或多篇 committed `.md`；HTML **derived**。手写稿须带 `spec-source` 与 sha256（ARD-AK） |
+| 文件名 | parent 的汇编页是 `<parent>/<parent>-reader.html`。其他页面和对应的 `.md` 在 `docs/features/` 下的相对路径相同，只把扩展名改成 `.html` |
+| 目录 | 都放在 `docs/book/html/` 下，parent 和 sub-feature 都一样；不放在 `docs/features/` 或 `site/` 里（[ARD-BF](../../../decision-history/spec-driven-development-decision-history.md#ard-bf)） |
+| 真相来源 | 每一页对应的一篇或几篇已提交的 `.md`。HTML 是派生物 |
+| 现在怎么生成 | 由 `tools/build_sdd_site.py` 和 `tools/build_sdd_reader.py` 从 markdown 生成。例子：`docs/book/html/spec-driven-development/spec-driven-development-reader.html` |
 
-#### DSGN-N-H — 单篇阅读视图
+#### DSGN-N-H — 单篇页面
 
-.md 是 source，HTML 是派生物。`<!-- html-skip -->` 与已 strike 的历史可省略；不许用它们包住 L1。生成稿带 `spec-source-sha256`；手写稿带 `spec-paired=hand-maintained`。hash 不一致则重新生成。手写 changelog 对 md Change Log 的每个日期都有一行（ARD-BA）。
-| **参考** | `docs/book/html/spec-driven-development/spec-driven-development-reader.html` — 由 `tools/build_sdd_reader.py` 自 canonical `.md` 生成（**DSGN-N-B**，ARD-BF） |
+来源：reader PRD 的 PRD-F、PRD-J。
 
-#### DSGN-N-B — 保真（MUST — 回应「不要精简这么多」）
+- markdown 是源头，HTML 是派生物。
+- markdown 里用 `<!-- html-skip -->` 包住的内容可以不显示，但不能用它包住 L1 内容（MUST）。
+- decision-history 里被划掉的句子在 HTML 里也保留。页面上有一个按钮，可以切换「显示删除线」和「隐藏删除线」。
+- 脚本生成的页面每次从 markdown 重新生成，不带 `spec-paired` 标记。手工维护的页面要带三个标记：`spec-paired=hand-maintained`、`spec-source`（源 markdown 的路径）、`spec-source-sha256`（源文件的哈希）。源文件变了而页面没变，哈希就对不上，检查会报「过期」（[ARD-AK](../../../decision-history/spec-driven-development-decision-history.md#ard-ak)）。
+- 手工维护的页面如果有更新记录，要覆盖 markdown Change Log 里的每个日期（[ARD-BA](../../../decision-history/spec-driven-development-decision-history.md#ard-ba)，NICE）。
 
-映射 **DSGN-I** 到 HTML 汇编：
+#### DSGN-N-B — 内容不丢（MUST）
 
-| Level | 在 HTML 中 |
+来源：reader PRD 的 PRD-A、PRD-G、PRD-J、PRD-K。
+
+把 DSGN-I 的四个优先级对应到 HTML：
+
+| 级别 | 在 HTML 里怎么处理 |
 |---|---|
-| **L1** | **全部呈现**：MUST/禁止/必须、functional req 表 **行**、test case **行**、impl task **条目**、decision-history **Log 行**（含 ID）、contract 表 **数据行**、Out of Scope 列表、assumption、boundary、security、error — **禁止** 用一段话代替整张表或整节 |
-| **L2** | **保留事实**；表述可改写为更短句子或 callout，**不得** 删掉 rationale 中的结论 |
-| **L3** | Alternatives 等 **可压缩** 为 bullet +「详见 canonical md」 |
-| **L4** | 可省略正文，**MUST** footer/link 指向 md |
+| L1 | 全部显示：MUST 和禁止事项、需求表的每一行、测试用例、实现任务、Decision Log 的每一行（带编号）、接口表的数据行、Out of Scope、前提假设、边界、安全规则、错误处理。不能用一段话代替整张表或整节 |
+| L2 | 事实保留；可以写得更短，或者放进提示框，但不能删掉理由里的结论 |
+| L3 | 放弃的方案等，可以压成要点，加一句「详见原文」 |
+| L4 | 可以不显示正文，但必须在页脚或链接里指向 markdown |
 
-**条目 ID（DSGN-F）：** HTML 中 **MUST** 保留可见 ID 字符串（`PRD-A`、`DSGN-B`、`ARD-C`、`IMPL-C`、`TST-A` 等 — 以 md 为准），便于与 review / registry 对齐。
+**编号必须可见（MUST）。** HTML 里要原样显示编号，例如 `PRD-A`、`DSGN-B`、`ARD-C`、`IMPL-C`、`TST-A`，方便和审查结果、MUST 清单对照。
 
-**禁止（MUST NOT）：**
+**不允许（MUST NOT）：**
 
-- 仅保留「Problem / Solution 各一段」而删掉 **Design** 下各 **DSGN-*** 小节主体。
-- 用「见 md」代替 **整 Tab**（允许 **节内** L3/L4 指向 md）。
-- Markdown 预览器模式：整页 `<pre>`、或未排版的 raw md 粘贴。
+- 只留「问题」「方案」各一段，删掉 Design 下面各个 DSGN 小节的正文。
+- 用「见原文」代替一整页。（一节里面的 L3、L4 可以指向原文。）
+- 做成 markdown 预览：整页 `<pre>`，或者没排版的 markdown 原文。
 
 **允许：**
 
-- 把 md 表格 **重排** 为 HTML `<table>`（列可合并显示，**行集合不得少**）。
-- 把长 prose **分段**、加 callout、加 mini flow（Mermaid 或 ASCII），**不减少** L1 断言数量。
-- 同一 type 多 part 文件 → 同一 Tab 内 **按 part 分 `<section>`** 或子 Tab。
+- 把 markdown 表格改成 HTML 表格。列可以合并显示，但行一行都不能少。
+- 把长段落分段，加提示框，加小流程图，前提是 L1 的内容一条都不少。
+- 一种文档有多个分篇时，按分篇分开显示。
 
-#### DSGN-N-C — 结构与 Tab
+![HTML 内容优先级 L1–L4](document-standard-design-spec-reader-html-fig-content-levels.svg)
 
-**Page header（MUST）：** 说明本页为 **阅读用汇编**；权威修改在 `.md`；列出 parent slug。
+#### DSGN-N-C — 汇编页的结构
 
-**Tab 组 1 — Parent：** 每存在一类 committed 文档一个 Tab：`PRD` | `Design` | `Impl plan` | `Test plan` | `Decision history`（`how-to` 可选 Tab）。
+来源：reader PRD 的 PRD-C、PRD-D。
 
-**Tab 组 2+ — Children：** 每个 `docs/features/<parent>/features/<sub>/` 一组 Tab（或一组内 section per type）。**至少** 纳入 `<sub>` 的 `design/<sub>-design.md` 及 design part 文件。
+parent 的汇编页（reader）把 parent 和各个 sub-feature 的文档放在一页里，方便从头读到尾。它是全站的一页，在左侧目录的「3 design」下面（[ARD-BI](../../../decision-history/spec-driven-development-decision-history.md#ard-bi)）。
 
-**每 Tab footer（MUST）：** `Canonical:` + 相对 repo 路径；多 part 时 **列出全部** part 路径。
+- **页面顶部（MUST）：** 说明这是方便阅读的汇编页，要改内容去改 `.md`；写明 parent 的名字。
+- **parent 部分：** 每种存在的文档一部分：PRD、Design、Impl plan、Test plan、Decision history；how-to 可选。
+- **sub-feature 部分：** 每个 `docs/features/<parent>/features/<sub>/` 一部分，至少包含它的 design 入口和 design 分篇。
+- **每部分底部（MUST）：** 写 `Canonical:` 加原文相对仓库根目录的路径；有多个分篇时，全部列出。
 
-#### DSGN-N-I — 全站目录（ARD-BG）
+早期的汇编页用多个 Tab 切换，现在改成全站目录加汇编页（[ARD-BG](../../../decision-history/spec-driven-development-decision-history.md#ard-bg)）。
 
-全项目一份网站，入口 `docs/book/html/index.html`。每一篇 spec HTML 是目录里的一条。目录先进入 feature。进入 feature 后，左侧是该 feature 的目录，右侧是正文。
+#### DSGN-N-I — 全站目录
 
-#### DSGN-N-K — 正文链接
+来源：reader PRD 的 PRD-C。
 
-条目号 `PRD-` `DSGN-` `ARD-` `IMPL-` `TST-` `PIPE-` `QUES-` 链到本 feature 的定义；子 feature 没有该号则链到 parent。`docs/features/` 下的 `.md` 链到 `docs/book/html/` 同路径 HTML；其他现存文件链到该文件。
+全项目只有一个网站，入口是 `docs/book/html/index.html`。每篇 spec 的 HTML 是目录里的一行。先在目录里选 feature；进入后，左边是这个 feature 的目录，右边是正文（[ARD-BG](../../../decision-history/spec-driven-development-decision-history.md#ard-bg)）。每一页都能从入口点到；网站由 GitHub Pages 从 master 发布（[ARD-CD](../../../decision-history/spec-driven-development-decision-history.md#ard-cd)）。
 
-#### DSGN-N-L — 左侧五篇
+#### DSGN-N-K — 正文里的链接
 
-feature 左侧只列五篇入口：prd、design、impl-plan、test-plan、decision-history。design part 与 reader 展开在 design 下。子 feature 在这一层占一行，再展开自己的页面。pipeline 不生成 HTML。
+来源：reader PRD 的 PRD-D、PRD-H。
 
-#### DSGN-N-D — 视觉与 HTML 技术
+- 正文里出现的编号（`PRD-`、`DSGN-`、`ARD-`、`IMPL-`、`TST-`、`PIPE-`、`QUES-`）要链到它的定义。编号前面写明了出处（例如「parent design 的 DSGN-A」或 `<feature>/<编号>`），就链到那个 feature。没写出处，才先找本 feature；本 feature 里没有，再链到 parent。
+- 指向 `docs/features/` 下 `.md` 的链接，改成指向 `docs/book/html/` 下同路径的 HTML。没有单独页面的文档（例如 pipeline design，见 DSGN-N-L），链到汇编页里对应的那一节。
+- 指向其他已存在文件的链接，直接链到那个文件。
 
-- **SHOULD** 复用 initiative 已有 CSS 模式（参考 `spec-driven-development.html`、`document-standard.html`：layout、chip、card、callout）。
-- **SHOULD** 单文件自包含 CSS（v0），便于 `file://` 或静态托管。
-- **MAY** 内联 Mermaid（若 initiative 已有先例）；否则 ASCII flow。
-- **MUST NOT** 依赖运行时 fetch 加载 `.md` 作为主内容（可 fetch 仅作 debug，非交付形态）。
+#### DSGN-N-L — 左侧目录的序号和层级
 
-#### DSGN-N-E — 流程与标准边界
+来源：reader PRD 的 PRD-C。
 
-| 角色 | 职责 |
+左侧目录显示层级和序号：1 prd、2 decision-history、3 design、4 impl plan、5 test plan、6 how to、10 sub-feature。design 的分篇和汇编页放在 3 下面。sub-feature 单独成一组，在 10 下面逐个展开。pipeline 在左侧目录里没有单独的页面，它的内容收在汇编页里（[ARD-BI](../../../decision-history/spec-driven-development-decision-history.md#ard-bi)）。
+
+#### DSGN-N-D — 视觉和技术要求
+
+来源：reader PRD 的 PRD-B、PRD-H、PRD-L、PRD-O、PRD-P。
+
+- 全站用同一套样式：页面布局、编号标签、卡片、提示框（NICE，[ARD-BY](../../../decision-history/spec-driven-development-decision-history.md#ard-by)）。
+- 浏览器直接打开文件即可阅读正文与已提交的 SVG 插图，不需要服务器（MUST，PRD-O、[ARD-CB](../../../decision-history/spec-driven-development-decision-history.md#ard-cb)）；字体与 Mermaid 可联网。
+- 插图用 diagram-design 画，SVG 与 citing md 同目录，生成时内嵌；全站配色与 diagram-design 默认一致（[ARD-CA](../../../decision-history/spec-driven-development-decision-history.md#ard-ca)）。
+- 允许内嵌 Mermaid 流程图（Mermaid 是一种用文字描述、由浏览器画成图的格式）；没有先例时用文字画的流程图。
+- 页面里不能有密钥，也不能有 `raw/` 里给机器用的评测原文；需要的话只放路径（MUST）。
+- 不能在运行时读取 `.md` 文件来显示主要内容；只有调试时可以（MUST）。
+- 页面标题、节、小节、条目的字号、粗细、样式各不相同；段落前面不加 a、b、c 或 1、2、3 这类序号（MUST）。
+
+#### DSGN-N-E — 谁负责什么
+
+来源：reader PRD 的 PRD-I、PRD-M、PRD-N。
+
+| 角色 | 负责 |
 |---|---|
-| **spec-pipeline** | 阶段感知；用户要 reader 或 major spec 更新后 **提示/触发**；指示加载 **SPEC-HTML-STANDARD** |
-| **spec-html-standard** | `skills/spec-html-standard/SPEC-HTML-STANDARD.md` — **DSGN-N** 可执行摘要；**无** SKILL.md |
-| **spec-write** | 只改 **md** 正文，不拥有 HTML 模板 |
-| **spec-organize** | 路径、INDEX；不替代 reader 汇编 |
+| spec-write | 只改 markdown 与同目录插图 SVG；改完后告诉用户网页没更新、问要不要重建，commit 前必须重建（PRD-M、parent ARD-CF） |
+| spec-review | 检查网页 L1、编号可见；插图事实与正文一致（ARD-CA） |
+| `SPEC-HTML-STANDARD.md` | `skills/spec-html-standard/` 下的规则摘要，是 DSGN-N 的可执行版本；没有对应的 SKILL.md |
+| spec-organize | 负责路径和 INDEX，不负责生成网页 |
 
-**spec-pipeline `SPEC-READER.md`（若仍存在）：** 仅 pointer 至本篇 + **SPEC-HTML-STANDARD**，避免双契约。
+spec-pipeline 里的 `SPEC-READER.md` 如果还在，只能是指向本篇和 `SPEC-HTML-STANDARD.md` 的链接，避免出现两份规则。
 
-#### DSGN-N-F — 何时更新 reader
+#### DSGN-N-F — 什么时候重新生成
 
-- Parent 或 child 任一 committed spec **实质变更**（尤其 L1/L2）后 **SHOULD** 更新 reader。
-- 用户显式：「生成 reader」「human html」「spec 汇编」「reader 太简了补全」。
-- **不必** 每次 typo 级 commit 都 regenerate（NICE）。
+来源：reader PRD 的 PRD-M。
 
-#### DSGN-N-G — 未来 md→html
+- parent 或任何 sub-feature 的已提交文档有实质修改（尤其是 L1、L2）之后，commit 前必须重新生成（MUST，parent ARD-CF；网页过期由 parent test-plan 的 TST-R 检查）。
+- 用户明确要求时，例如「生成 reader」「生成网页」「reader 太简略了，补全」。
+- 只改错别字的提交也一样：改了 markdown 就重新生成，TST-R 要求网页和重新生成的一致。
 
-可增 **mechanical contract**（例如 design part `document-standard-design-md-to-html.md`）：映射 md AST → HTML 组件。自动化 **仍 MUST** 满足 **DSGN-N-B**；本篇 + **SPEC-HTML-STANDARD** 为 semantic norm。
+#### DSGN-N-G — 以后的 markdown 转 HTML
+
+可以再加一份机械转换的规则，例如分篇 `document-standard-design-md-to-html.md`，规定 markdown 的每种结构对应哪种网页组件。自动转换仍然必须满足 DSGN-N-B。本篇和 `SPEC-HTML-STANDARD.md` 规定的是「要达到什么效果」。
 
 ---
 
 ## User Stories
 
-（与 PRD **PRD-G–I** 相同意图；实现验收以 **DSGN-N-B** 为准。）
+用户故事见 [reader PRD](../prd/document-standard-prd-spec-reader-html.md#user-stories) 的 PRD-G 到 PRD-I。是否做到，以 DSGN-N-B 为准。
 
 ## Implementation Decisions
 
-| ID | Decision |
+| ID | 决定 |
 |---|---|
-| **DSGN-N-H** | Reader 契约挂在 **document-standard** sub-feature（非 pipeline design），因属 **文档形态 / 阅读标准**，与 **DSGN-A** 并列扩展 |
-| **DSGN-N-I** | v0 手维 HTML；保真规则先写进 spec，避免 agent 再产出「极简 reader」 |
-| **DSGN-N-J** | 可执行层 **`skills/spec-html-standard/SPEC-HTML-STANDARD.md`**；main design 索引链到 aspect 篇 **DSGN-N**；**不** 新增 spec-reader skill |
+| DSGN-N-M | reader 的规则挂在 document-standard 下面，不挂在 pipeline design 下面，因为它属于「文档长什么样、怎么读」，和 DSGN-A 是同一类 |
+| DSGN-N-N | 最初的网页是手工维护的，所以先把「内容不丢」写进规则，防止 AI 再做出过度精简的页面。现在已改为脚本生成（DSGN-N-A） |
+| DSGN-N-J | 可执行的规则放在 `skills/spec-html-standard/SPEC-HTML-STANDARD.md`；document-standard 入口文件的编号表链到本篇；不新建 reader skill |
+
+**编号对照（[ARD-AP](../../../decision-history/spec-driven-development-decision-history.md#ard-ap)、[ARD-BZ](../../../decision-history/spec-driven-development-decision-history.md#ard-bz)）：** 本表原来的 DSGN-N-H 和 DSGN-N-I，和后来加的两个小节（单篇页面、全站目录）用了同样的编号，违反了「编号不复用」（DSGN-F）。小节保留原编号，本表改为 DSGN-N-M 和 DSGN-N-N：
+
+| 旧 | 新 |
+|---|---|
+| Implementation Decisions 里的 DSGN-N-H | DSGN-N-M |
+| Implementation Decisions 里的 DSGN-N-I | DSGN-N-N |
 
 ## Testing Decisions
 
-Initiative test plan 暂不单独为 reader 开 TST；**NICE：** spec-review 抽检「reader Tab 是否含 md 中全部 **PRD-*/DSGN-*/TST-*** ID」。
+- parent test-plan 的 TST-R：网页不能比 markdown 旧。
+- parent test-plan 的 TST-U：网页有「隐藏删除线」按钮，二级标题比三级标题大。
+- 可选（NICE）：spec-review 抽查网页里是否包含 markdown 中所有的 PRD、DSGN、TST 编号。
 
 ## Out of Scope
 
-- CI 阻塞「reader 与 md 逐字一致」。
-- 替代 spec-organize lint。
+- 在 CI 里强制要求网页和 markdown 逐字一致。
+- 代替 spec-organize 的检查。
 
 ## Further Notes
 
-- **反例：** 当前 `spec-driven-development-reader.html` 多处 child/parent design 仅留 slogan — regenerate 时按 **DSGN-N-B** 补全。
-- Parent HLD 已指 reader 路径；deliverable skills 仍为四个；HTML 规范在 **spec-html-standard**。
+- 早期手工维护的汇编页，很多 design 只剩一句口号。改为脚本从 markdown 全文生成后，按 DSGN-N-B 检查。
+- parent design 已经写明网页的路径。交付物是 spec-write、spec-review 和 wayfinder（[ARD-CH](../../../decision-history/spec-driven-development-decision-history.md#ard-ch)）；网页的规则在 `skills/spec-html-standard/`。
 
 ## Alternatives Considered
 
-- 直接嵌 `.md` 做预览 → 拒:**DSGN-N** 要求可读汇编,不是 markdown viewer。
-- 每个 aspect 单独一个 HTML → 拒:读者要跨文档跳转。
+- **直接嵌入 `.md` 做预览：** 放弃。DSGN-N 要求的是排好版的汇编，不是 markdown 查看器。
+- **每个分篇单独一个 HTML，互不相连：** 放弃。读者需要在多篇文档之间来回跳，所以要有全站目录。
 
 ## Drawbacks
 
-- 汇编层与源文档会漂移,需 TST-R 新鲜度检查兜底。
+- 网页和 markdown 会慢慢不一致，需要 parent test-plan 的 TST-R 检查网页是否过期。
 
 ## Risks and Mitigations
 
-- 风险:HTML 被当成 source of truth → 每页标注 canonical 路径。
-- 风险:ID 在排版中丢失 → **DSGN-N-B** 要求可见 ID 原样保留。
+| 风险 | 应对 |
+|---|---|
+| 网页被当成正式版本 | 每页底部写明原文路径 |
+| 排版时把编号弄丢 | DSGN-N-B 要求编号原样可见 |
 
 ## Open Questions
 
-- 图(mermaid)在 reader 中的渲染资格是否统一。
+本篇的未决问题记在 [document-standard 的问题清单](document-standard-design.md#open-questions)。和本篇有关的是 QUES-E：Mermaid 图在网页里怎么渲染，要不要统一。
 
 ## Reversibility
 
-- HTML 是派生物,删掉不影响 spec;重建即可。
+- 网页是派生物，删掉不影响 spec，重新生成即可。
 
 ## Change Log
 
 | Date | Change |
 |------|--------|
+| 2026-11-20 | DSGN-N-D：diagram-design 皮肤与 SVG 内嵌（ARD-CA、ARD-CB） |
 | 2026-11-03 | Initial aspect design **DSGN-N**；保真规则 |
 | 2026-11-03 | **spec-html-standard** 替代 spec-reader skill（**DSGN-N-E/J**） |
 | 2026-11-07 | 表达标准 SPEC-PRESENTATION；write 改 md，review 查保真（ARD-AJ） |
@@ -183,3 +227,17 @@ Initiative test plan 暂不单独为 reader 开 TST；**NICE：** spec-review �
 | 2026-11-07 | DSGN-N-K：正文条目号与路径必须是可用链接 |
 | 2026-11-07 | DSGN-N-L：左侧只列五篇；其余展开在 design 下；pipeline 无 HTML |
 | 2026-11-07 | DSGN-N-L：子 feature 在 design 下一层占一行，再展开自己的页面 |
+| 2026-11-18 | 页顶按钮切换显示或隐藏删除线 |
+| 2026-11-18 | 层级靠字号和样式分开，段落不用 a–z 或数字序号 |
+| 2026-11-18 | 交付 skill 改为 spec-write 与 spec-review（ARD-BH） |
+| 2026-11-18 | 左侧栏序号 1–6 与 10 sub-feature（ARD-BI） |
+| 2026-11-20 | DSGN-N-H 的生成稿与手写稿标记改为与 ARD-AK 一致；「参考」行并回 DSGN-N-A 的表；Implementation Decisions 的重复编号改为 DSGN-N-M、DSGN-N-N 并留对照表；DSGN-N-C 从 Tab 改为全站目录加汇编页（ARD-BG）；DSGN-N-D、DSGN-N-E 去掉已删除的旧 HTML 和 spec-pipeline；Testing Decisions 改指 TST-R、TST-U；全文改写为完整句子（ARD-BK） |
+| 2026-11-20 | 第 1 轮审查后：DSGN-N-D、DSGN-N-F 的 SHOULD、MAY 改为 NICE 或「允许」；DSGN-N-L 写明 pipeline 没有单独页面、内容在汇编页里 |
+| 2026-11-20 | 第 2 轮审查后：每个 DSGN-N 小节写明来源的 reader PRD 编号；DSGN-N-D 加上 PRD-P 的「不放密钥」，样式统一链到 ARD-BY；DSGN-N-K 先按编号前写明的出处链接；对照表链到 ARD-BZ；TST-R、TST-U 写明属于 parent test-plan |
+| 2026-11-20 | 第 3 轮审查后：DSGN-N-K 写明没有单独页面的文档链到汇编页的对应一节；交付物改链 ARD-BX；其余 TST-R 写明属于 parent test-plan |
+| 2026-11-20 | DSGN-N-D「浏览器直接打开」改回 MUST，和 PRD-O 一致 |
+| 2026-11-24 | 全站每页都能从入口点到；GitHub Pages 从 master 发布（ARD-CD） |
+| 2026-11-24 | DSGN-N-E：spec-write 改完问要不要重建，commit 前必须重建（parent ARD-CF） |
+| 2026-11-24 | 第 8 轮审查后：交付物改为三个 skill，改链 ARD-CH |
+| 2026-11-24 | 第 14 轮审查后：DSGN-N-F 改为 commit 前必须重建（parent ARD-CF），去掉错别字例外 |
+| 2026-11-24 | 第 15 轮审查后：DSGN-N-H 的 html-skip 规则标 MUST |

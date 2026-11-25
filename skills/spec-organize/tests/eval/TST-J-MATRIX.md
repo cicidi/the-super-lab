@@ -5,9 +5,11 @@ Configure in `skills/spec-organize/tests/eval.yaml`. Each row is one eval run �
 | Run label | `grill.skills` | Phase emphasis |
 |---|---|---|
 | baseline | `[]` | Map interview only (default gold v1) |
-| wayfinder | `[wayfinder]` | Optional map skill after interview |
+| research | `[research]` | Look-ups before Converge |
 | grill-docs | `[grill-with-docs]` | Adversarial unknowns before Converge |
-| both | `[wayfinder, grill-with-docs]` | Combined (order: interview → wayfinder → grill) |
+| both | `[research, grill-with-docs]` | Combined (order: interview → research → grill) |
+
+wayfinder is a deliverable (parent ARD-CH), so it runs in every configuration; it is not a `grill.skills` option.
 
 **Rules:** Baseline first; compare score 1/2 within same `gold.version`. No pass/fail threshold in harness — report only.
 

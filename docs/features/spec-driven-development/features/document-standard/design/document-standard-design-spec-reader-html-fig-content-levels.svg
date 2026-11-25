@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="content-levels-title content-levels-desc" viewBox="0 0 480 300" style="min-width:480px;background:#f5f5f5">
+  <title id="content-levels-title">HTML 内容优先级 L1–L4</title>
+  <desc id="content-levels-desc">L1 全量、L2 保留事实、L3 压缩、L4 仅链接。</desc>
+  <rect x="40" y="28" width="400" height="52" rx="6" fill="rgba(191,69,32,.08)" stroke="#bf4520"/>
+  <text x="60" y="52" font-family="Geist,'Noto Sans SC',sans-serif" font-size="12" font-weight="600" fill="#2d3142">L1</text>
+  <text x="100" y="52" font-family="Geist,'Noto Sans SC',sans-serif" font-size="12" fill="#2d3142">全量：表行、MUST、编号、Out of Scope</text>
+  <rect x="40" y="92" width="400" height="52" rx="6" fill="#fff" stroke="#bfc0c0"/>
+  <text x="60" y="116" font-family="Geist,'Noto Sans SC',sans-serif" font-size="12" font-weight="600" fill="#2d3142">L2</text>
+  <text x="100" y="116" font-family="Geist,'Noto Sans SC',sans-serif" font-size="12" fill="#2d3142">事实保留；可缩短措辞或放进提示框</text>
+  <rect x="40" y="156" width="400" height="52" rx="6" fill="#ececec" stroke="#bfc0c0"/>
+  <text x="60" y="180" font-family="Geist,'Noto Sans SC',sans-serif" font-size="12" font-weight="600" fill="#2d3142">L3</text>
+  <text x="100" y="180" font-family="Geist,'Noto Sans SC',sans-serif" font-size="12" fill="#2d3142">压缩要点并链接 canonical md</text>
+  <rect x="40" y="220" width="400" height="52" rx="6" fill="#ececec" stroke="rgba(45,49,66,.12)"/>
+  <text x="60" y="244" font-family="Geist,'Noto Sans SC',sans-serif" font-size="12" font-weight="600" fill="#4f5d75">L4</text>
+  <text x="100" y="244" font-family="Geist,'Noto Sans SC',sans-serif" font-size="12" fill="#4f5d75">省略正文；必须链到 md</text>
+</svg>

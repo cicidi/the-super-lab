@@ -6,6 +6,7 @@ from __future__ import annotations
 import html
 import re
 import subprocess
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -64,6 +65,10 @@ PANELS: list[tuple[str, str, list[tuple[str, Path]]]] = [
         "Document standard",
         [
             (
+                "features/document-standard/prd/document-standard-prd.md",
+                SDD / "features/document-standard/prd/document-standard-prd.md",
+            ),
+            (
                 "features/document-standard/design/document-standard-design.md",
                 SDD / "features/document-standard/design/document-standard-design.md",
             ),
@@ -97,7 +102,49 @@ def inline_md(s: str) -> str:
     return s
 
 
-def md_to_html(md: str) -> str:
+def _prefix_svg_ids(svg: str, prefix: str) -> str:
+    ids = set(re.findall(r'\bid="([^"]+)"', svg))
+    for oid in sorted(ids, key=len, reverse=True):
+        if oid.startswith(f"{prefix}-"):
+            continue
+        nid = f"{prefix}-{oid}"
+        svg = svg.replace(f'id="{oid}"', f'id="{nid}"')
+        svg = re.sub(rf"url\(#({re.escape(oid)})\)", f"url(#{nid})", svg)
+        svg = re.sub(rf'href="#({re.escape(oid)})"', f'href="#{nid}"', svg)
+
+    def aria_repl(match: re.Match) -> str:
+        parts = match.group(1).split()
+        return 'aria-labelledby="' + " ".join(
+            f"{prefix}-{p}" if p in ids else p for p in parts
+        ) + '"'
+
+    return re.sub(r'aria-labelledby="([^"]+)"', aria_repl, svg)
+
+
+def inline_figures(page_html: str, md_path: Path) -> str:
+    parent = md_path.parent
+
+    def repl(match: re.Match) -> str:
+        src = match.group(1)
+        svg_path = (parent / src).resolve()
+        if not svg_path.is_file():
+            raise SystemExit(f"missing figure SVG: {svg_path}")
+        svg = svg_path.read_text(encoding="utf-8")
+        if re.search(r"<script\b", svg, re.I) or re.search(r"on\w+\s*=", svg, re.I):
+            raise SystemExit(f"unsafe figure SVG: {svg_path}")
+        svg = re.sub(r"<\?xml[^?]*\?>\s*", "", svg, flags=re.I)
+        svg = re.sub(r"<!DOCTYPE[^>]*>\s*", "", svg, flags=re.I)
+        svg = _prefix_svg_ids(svg, svg_path.stem)
+        return f'<div class="fig-scroll">{svg}</div>'
+
+    return re.sub(
+        r'<div class="fig-svg" data-svg="([^"]+)"></div>',
+        repl,
+        page_html,
+    )
+
+
+def md_to_html(md: str, id_prefix: str = "") -> str:
     md = strip_frontmatter(md)
     lines = md.splitlines()
     out: list[str] = []
@@ -151,7 +198,7 @@ def md_to_html(md: str) -> str:
                 r"^((?:PRD|DSGN|ARD|IMPL|TST|PIPE|QUES)-[A-Z]+(?:-[A-Z]+)*)\b",
                 title,
             )
-            attr = f' id="{id_match.group(1)}"' if id_match else ""
+            attr = f' id="{id_prefix}{id_match.group(1)}"' if id_match else ""
             out.append(f"<{tag}{attr}>{inline_md(title)}</{tag}>")
             i += 1
             continue
@@ -214,6 +261,24 @@ def md_to_html(md: str) -> str:
             i += 1
             continue
 
+        if re.match(r'^\s*(?:<a id="[\w-]+"></a>)+\s*$', line):
+            close_list()
+            ids = re.findall(r'<a id="([\w-]+)"></a>', line)
+            out.append("".join(f'<a id="{html.escape(a, quote=True)}"></a>' for a in ids))
+            i += 1
+            continue
+
+        m_fig = re.match(r"^!\[([^\]]*)\]\(([^)\s]+\.svg)\)\s*$", line)
+        if m_fig:
+            close_list()
+            alt, src = m_fig.group(1), html.escape(m_fig.group(2), quote=True)
+            out.append(
+                f'<figure class="fig"><div class="fig-svg" data-svg="{src}"></div>'
+                f"<figcaption>{inline_md(alt)}</figcaption></figure>"
+            )
+            i += 1
+            continue
+
         if not line.strip():
             close_list()
             i += 1
@@ -222,7 +287,7 @@ def md_to_html(md: str) -> str:
         close_list()
         para_lines = [line]
         i += 1
-        while i < len(lines) and lines[i].strip() and not lines[i].startswith("#") and not lines[i].startswith("|") and not lines[i].startswith("```") and not re.match(r"^>\s?", lines[i]) and not re.match(r"^[-*]\s+", lines[i]) and not re.match(r"^\d+\.\s+", lines[i]):
+        while i < len(lines) and lines[i].strip() and not lines[i].startswith("#") and not lines[i].startswith("|") and not lines[i].startswith("```") and not re.match(r"^>\s?", lines[i]) and not re.match(r"^[-*]\s+", lines[i]) and not re.match(r"^\d+\.\s+", lines[i]) and not re.match(r"^!\[[^\]]*\]\([^)]+\.svg\)\s*$", lines[i]):
             para_lines.append(lines[i])
             i += 1
         out.append(f"<p>{inline_md(' '.join(para_lines))}</p>")
@@ -238,6 +303,8 @@ def md_to_html(md: str) -> str:
 
 
 def panel_html(panel_id: str, title: str, sources: list[tuple[str, Path]]) -> str:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from build_sdd_site import _retarget_links  # lazy: build_sdd_site imports this module
     parts = [f'<article id="{panel_id}" class="panel{" active" if panel_id == "p-prd" else ""}">']
     parts.append(f'<p class="panel-label">{html.escape(title)}</p>')
     parts.append('<div class="md-body">')
@@ -245,19 +312,41 @@ def panel_html(panel_id: str, title: str, sources: list[tuple[str, Path]]) -> st
         text = path.read_text(encoding="utf-8")
         if idx > 0:
             parts.append(f'<hr><p class="src-inline">Source: <code>{html.escape(rel)}</code></p>')
-        parts.append(md_to_html(text))
+        # Sub-features reuse ids like DSGN-B; prefix them so one page has unique anchors.
+        feat = path.relative_to(SDD).parts
+        prefix = f"{feat[1]}-" if feat[0] == "features" else ""
+        parts.append(inline_figures(_retarget_links(md_to_html(text, prefix), path, OUT), path))
     parts.append("</div>")
-    canon = " · ".join(f"<code>{html.escape(r)}</code>" for r, _ in sources)
+    # DSGN-N-C: Canonical names each source by its path from the repository root.
+    canon = " · ".join(f"<code>{html.escape(p.relative_to(ROOT).as_posix())}</code>" for _, p in sources)
     parts.append(f'<p class="src">Canonical: {canon}</p>')
     parts.append("</article>")
     return "\n".join(parts)
 
 
+READER_FONT_LINK = (
+    '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?'
+    "family=Instrument+Serif:ital@0;1"
+    "&family=Geist:wght@400;500;600"
+    "&family=Geist+Mono:wght@400;500"
+    "&family=Noto+Sans+SC:wght@400;500;700"
+    "&family=Noto+Serif+SC:wght@400;600"
+    '&display=swap">'
+)
+
 CSS_EXTRA = """
 .panel-label{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--orange);margin:0 0 8px}
-.md-body h2{font-size:21px;margin:24px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--line)}
-.md-body h3{font-size:16px;margin:18px 0 8px}
-.md-body h4{font-size:14.5px;margin:14px 0 6px;color:var(--muted)}
+figure.fig{margin:24px 0;border:1px solid var(--line);border-radius:6px;padding:12px;background:var(--bg)}
+figure.fig .fig-scroll{overflow-x:auto;max-width:100%}
+figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;color:var(--muted);margin-top:8px}
+.md-body h2{font-family:var(--serif);font-size:30px;font-weight:500;line-height:1.2;margin:36px 0 12px;padding-top:18px;border-top:1px solid var(--line)}
+.md-body h3{font-family:var(--sans);font-size:20px;font-weight:600;line-height:1.3;margin:26px 0 10px}
+.lvl{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.06em;padding:1px 6px;border-radius:3px;vertical-align:1px}
+.lvl--must{background:var(--orange);color:#fff}
+.lvl--nice{border:1px solid var(--line);color:var(--muted);background:var(--surface)}
+.md-body h4{font-family:var(--sans);font-size:17px;font-weight:600;line-height:1.4;margin:20px 0 8px;padding-left:10px;border-left:3px solid var(--orange)}
+.md-body h5{font-family:var(--sans);font-size:15px;font-style:italic;font-weight:500;line-height:1.45;margin:16px 0 6px;color:var(--muted)}
+.md-body p{font-size:16.5px;line-height:1.75}
 .md-body pre{background:var(--code);border:1px solid var(--line);border-radius:8px;padding:12px 14px;overflow-x:auto;font-size:12px;line-height:1.45;max-width:100%}
 .md-body pre.mermaid{background:var(--surface);border:1px solid var(--line);text-align:center}
 .md-body blockquote{margin:12px 0;padding:8px 14px;border-left:3px solid var(--line);color:var(--muted);background:var(--surface-2);border-radius:0 8px 8px 0}
@@ -270,20 +359,22 @@ SHELL_HEAD = """<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Spec-Driven Development — Human Reader</title>
+""" + READER_FONT_LINK + """
 <style>
 :root{
-  --bg:#F6F7F4;--surface:#fff;--surface-2:#EEF1F0;--ink:#14202B;--muted:#55636F;--subtle:#7C8A96;
+  --bg:#f5f5f5;--surface:#fff;--surface-2:#EEF1F0;--ink:#2d3142;--muted:#4f5d75;--subtle:#7C8A96;
   --line:#DCE2E6;--code:#F1F3F1;--navy:#102D46;--navy-2:#173B5C;
-  --yellow:#F2C94C;--green:#5F8D4E;--orange:#D98A3A;--red:#B95547;
+  --yellow:#F2C94C;--green:#5F8D4E;--orange:#bf4520;--red:#B95547;
   --soft-yellow:#FCF5DA;--soft-green:#EDF4E9;--soft-orange:#FBF0E4;--soft-red:#F8EBE9;--soft-blue:#E8F0F6;
-  --serif:Georgia,'Times New Roman','Noto Serif CJK SC',serif;
-  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'PingFang SC','Microsoft YaHei',sans-serif;
-  --mono:'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;
+  --serif:"Instrument Serif","Noto Serif SC",serif;
+  --sans:Geist,"Noto Sans SC","PingFang SC",sans-serif;
+  --mono:"Geist Mono",ui-monospace,monospace;
 }
 [data-theme="dark"]{
   --bg:#0B1824;--surface:#102434;--surface-2:#163044;--ink:#EAF0F4;--muted:#A9B8C4;--subtle:#7F93A3;
   --line:#22394C;--code:#0E2130;--navy:#08131C;--navy-2:#0E2130;
   --soft-yellow:#3A3418;--soft-green:#1B3222;--soft-orange:#3A2A1A;--soft-red:#3A2020;--soft-blue:#122A3D;
+  --orange:#f08a59;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15.5px;line-height:1.65}
@@ -293,6 +384,8 @@ code{font-family:var(--mono);font-size:.88em;background:var(--code);border:1px s
 .crumbs{font-family:var(--mono);font-size:11px;color:#9CB0C0;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .crumbs a{color:#DCE7EF}.crumbs a:hover{color:var(--yellow)}
 .theme-btn{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border:1px solid rgba(255,255,255,.18);background:transparent;color:#C4D3DE;border-radius:999px;font-family:var(--mono);font-size:10.5px;cursor:pointer}
+.top-actions{display:flex;gap:8px;align-items:center}
+html[data-strike="off"] del{display:none}
 .wrap{max-width:1040px;margin:0 auto;padding:32px 56px 80px}
 .hero{padding-bottom:20px;margin-bottom:16px;border-bottom:1px solid var(--line)}
 .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--orange)}
@@ -323,7 +416,10 @@ SHELL_MID = """
 <body>
 <div class="top">
   <div class="crumbs"><a href="../index.html">Spec Atlas</a><span>/</span><a href="prd/spec-driven-development-prd.html">SDD</a><span>/</span><span>Reader</span></div>
-  <button class="theme-btn" type="button" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark'">theme</button>
+  <div class="top-actions">
+    <button class="theme-btn" type="button" onclick="var r=document.documentElement;var off=r.dataset.strike!=='off';r.dataset.strike=off?'off':'on';this.textContent=off?'显示删除线':'隐藏删除线'">隐藏删除线</button>
+    <button class="theme-btn" type="button" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark'">theme</button>
+  </div>
 </div>
 <div class="wrap">
   <header class="hero">
@@ -400,6 +496,12 @@ def _build_marker() -> str:
     return "<!-- SDD reader · built by tools/build_sdd_reader.py -->\n"
 
 
+def render() -> str:
+    """Full reader HTML; line 1 is the build marker (git sha), the rest is content."""
+    panels = "\n\n".join(panel_html(pid, title, [(r, p) for r, p in srcs]) for pid, title, srcs in PANELS)
+    return _build_marker() + SHELL_HEAD + CSS_EXTRA + SHELL_MID + panels + SHELL_TAIL
+
+
 def main() -> None:
     import sys
 
@@ -411,8 +513,7 @@ def main() -> None:
     if "--check-sources" in sys.argv:
         print(f"ok: {sum(len(s) for _, _, s in PANELS)} reader source file(s)")
         return
-    panels = "\n\n".join(panel_html(pid, title, [(r, p) for r, p in srcs]) for pid, title, srcs in PANELS)
-    css = _build_marker() + SHELL_HEAD + CSS_EXTRA + SHELL_MID + panels + SHELL_TAIL
+    css = render()
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(css, encoding="utf-8")
     print(f"Wrote {OUT} ({OUT.stat().st_size} bytes)")

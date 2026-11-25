@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="artifact-loop-title artifact-loop-desc" viewBox="0 0 520 260" style="min-width:520px;background:#f5f5f5">
+  <title id="artifact-loop-title">SDD 文档循环与下游</title>
+  <desc id="artifact-loop-desc">PRD、decision-history、design 互相打磨；稳定后从 design 写出 impl-plan 与 test-plan。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4f5d75"/></marker>
+  </defs>
+  <path d="M120 62 H200" fill="none" stroke="#4f5d75" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M260 84 V128" fill="none" stroke="#4f5d75" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M200 150 H70 V84" fill="none" stroke="#4f5d75" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M320 140 H352 V120 H380" fill="none" stroke="#4f5d75" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M320 160 H352 V184 H380" fill="none" stroke="#4f5d75" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="20" y="40" width="100" height="44" rx="6" fill="#fff" stroke="#bfc0c0"/>
+  <text x="70" y="66" text-anchor="middle" font-family="Geist,'Noto Sans SC',sans-serif" font-size="12" font-weight="600" fill="#2d3142">PRD</text>
+  <rect x="200" y="40" width="120" height="44" rx="6" fill="#fff" stroke="#bfc0c0"/>
+  <text x="260" y="66" text-anchor="middle" font-family="Geist,'Noto Sans SC',sans-serif" font-size="11" font-weight="600" fill="#2d3142">decision-history</text>
+  <rect x="200" y="128" width="120" height="44" rx="6" fill="rgba(191,69,32,.08)" stroke="#bf4520"/>
+  <text x="260" y="154" text-anchor="middle" font-family="Geist,'Noto Sans SC',sans-serif" font-size="12" font-weight="600" fill="#2d3142">design</text>
+  <rect x="380" y="100" width="110" height="40" rx="6" fill="#fff" stroke="#bfc0c0"/>
+  <text x="435" y="124" text-anchor="middle" font-family="Geist,'Noto Sans SC',sans-serif" font-size="11" font-weight="600" fill="#2d3142">impl-plan</text>
+  <rect x="380" y="164" width="110" height="40" rx="6" fill="#fff" stroke="#bfc0c0"/>
+  <text x="435" y="188" text-anchor="middle" font-family="Geist,'Noto Sans SC',sans-serif" font-size="11" font-weight="600" fill="#2d3142">test-plan</text>
+  <text x="260" y="240" text-anchor="middle" font-family="Instrument Serif,'Noto Serif SC',serif" font-size="13" font-style="italic" fill="#4f5d75">稳定后，从 design 各写一篇 impl-plan 与 test-plan</text>
+</svg>

@@ -7,7 +7,23 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
 
-REQUIRED = ["run_id", "branch", "commit", "gold version", "judge", "score 1", "score 2"]
+REQUIRED = [
+    "run_id",
+    "branch",
+    "commit",
+    "gold version",
+    "eval config",
+    "judge",
+    "score 1",
+    "score 2",
+    "<th>method</th>",
+    ">python<",
+    "TST-F inputs",
+    "budget-conflict",
+    "Review (TST-L)",
+    "claude_audit",
+    "Configs (TST-J)",
+]
 
 
 def test_report_contains_required_fields(tmp_path):
@@ -31,6 +47,24 @@ def test_report_contains_required_fields(tmp_path):
         assert field.lower() in page.lower(), f"report missing {field}"
     assert "test-run" in page
     assert re.search(r"score 1 — MUST.*?(\d+)/(\d+)", page, flags=re.S), "score 1 missing"
+    assert "wayfinder, grill" not in page, "TST-J configs must not list wayfinder as a variant"
+    assert "TST-F: not run." in page, "no tstf.json for test-run, so TST-F shows not run"
+
+
+def test_report_shows_tstf_results(tmp_path):
+    import json
+
+    tstf = tmp_path / "tstf.json"
+    tstf.write_text(json.dumps({"budget-conflict": {"verdict": "pass", "note": "asked user"}}))
+    out = tmp_path / "report.html"
+    subprocess.run(
+        [sys.executable, str(ROOT / "tools/render_eval_report.py"), "--out", str(out), "--tstf", str(tstf)],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+    )
+    page = out.read_text(encoding="utf-8")
+    assert "asked user" in page and "midway-change" in page and "not run" in page
 
 
 def test_report_run_rows_match_registry(tmp_path):

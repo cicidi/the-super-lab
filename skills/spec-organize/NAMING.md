@@ -6,21 +6,22 @@
 docs/features/<feature>/<type>/<feature>-<type>.md
 ```
 
-One file per type per feature by default. `prd`, `test-plan`, `decision-history`,
-and `how-to` stay single-file — none of them grows without bound. `spec` and
-`impl-plan` may be split, because they do.
+One file per type per feature by default. All six types may be split into parts;
+when a type has parts, the entry file `<feature>-<type>.md` must exist and link to
+each part (ARD-BQ, document-standard DSGN-B).
 
 - `<feature>` is kebab-case, lowercase, no spaces or special characters
 - The filename repeats the feature and the type, so a file is identifiable
   outside its directory
-- A supporting file that a document cites sits in that document's folder:
-  `docs/features/<feature>/design/<source-name>.md`
-- A feature has at most one `decision-history`, and it is exempt from the
-  1,000-line cap: it is append-only history, and history is never trimmed
+- A supporting file is an .md in any `<type>/` folder of the feature, without
+  a committed `type:` frontmatter, linked from a committed document of that
+  feature (document-standard DSGN-B).
+- A feature has one `decision-history` entry file. It may split into parts and
+  is exempt from the size cap: it is append-only history, never trimmed
 
 ## Splitting a spec or a plan
 
-Split when one file would cross 1,000 lines. Split on a boundary — a bounded
+Split when one file would cross its type's DSGN-B hard cap (SPEC-STANDARD Size). Split on a boundary — a bounded
 context, domain, ownership edge, or lifecycle — never to reach a line count.
 
 ```
@@ -30,13 +31,13 @@ docs/features/payment/impl-plan/payment-impl-plan-01-schema.md
 docs/features/payment/impl-plan/payment-impl-plan-02-api.md
 ```
 
-- A `spec` part takes a bounded-context noun. Never a number: a number says
+- A `prd`, `design` (spec), `test-plan` or `how-to` part takes a bounded-context noun. Never a number: a number says
   nothing about the contents, and inserting a part forces a renumber across the
   set. A spec is cut by bounded context, so a noun carries the meaning
-- An `impl-plan` part takes a zero-padded sequence plus a phase name. A plan is
-  ordered, so the number carries meaning there
-- A `<feature>-design.md` may stay as an entry file holding global L1 constraints
-  and links to the parts. Do not keep one as an empty shell
+- An `impl-plan` or `decision-history` part takes a zero-padded sequence plus a
+  phase or period name. Both are ordered, so the number carries meaning there (ARD-G)
+- When a type has parts, the entry file `<feature>-<type>.md` must exist (ARD-BQ).
+  It holds the global L1 constraints and links to each part; never an empty shell
 
 ## Name collisions
 

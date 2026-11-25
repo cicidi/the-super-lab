@@ -1,8 +1,8 @@
 ---
 name: pic-to-txt
 description: |
-  Use when a folder of screenshot images needs to be converted into a
-  clean text document. Runs OCR on each image (PaddleOCR for Chinese,
+  Use when a folder of screenshots or photos (including iPhone HEIC/HEIF
+  photos) needs to be converted into a clean text document. Runs OCR on each image (PaddleOCR for Chinese,
   EasyOCR for English), combines results in filename order, then refines
   with LLM to produce a polished document saved alongside the images.
 license: MIT
@@ -16,6 +16,13 @@ metadata:
     - screenshot to text
     - 图片转文字
     - 提取图片文字
+    - 照片转文字
+    - OCR these photos
+    - photos to text
+    - HEIC
+    - iPhone photos to text
+    - pic 2 txt
+    - 把图片导成文档
   when_to_use: |
     When a user has a folder of screenshots, photos, or scanned images
     that need to be converted to editable text. Each folder represents
@@ -85,6 +92,14 @@ pip install easyocr
 pip install paddlepaddle paddleocr easyocr
 ```
 
+### For iPhone photos (HEIC/HEIF):
+
+`ocr.py` converts HEIC/HEIF to temporary JPEGs before OCR. It uses
+`pillow-heif` if installed (`pip install pillow-heif`), else
+`heif-convert` (`apt install libheif-examples`), else ImageMagick
+(`magick` / `convert`) built with HEIC support. If none works, it stops
+with an error that lists these install options.
+
 The companion script `ocr.py` is bundled with this skill and handles
 both engines — no additional setup needed.
 
@@ -98,9 +113,11 @@ argument, runs the appropriate engine, outputs combined text.
 python3 /path/to/ocr.py <folder> [--lang zh|en|auto]
 ```
 
-When `--lang auto`, the script inspects file extension conventions:
-`.chs`, `.zh/` subfolder, or common Chinese filename patterns →
-PaddleOCR. Defaults to English → EasyOCR otherwise.
+When `--lang auto` (the default), the script looks for Chinese characters
+in the image filenames and in the folder name. Any match → PaddleOCR;
+no match → EasyOCR. It does not look at the image content, so photos
+named like `IMG_1234.HEIC` always count as English — pass `--lang zh`
+(or ask the user) when the text is Chinese.
 
 ## Process
 
@@ -121,7 +138,7 @@ proceeding (see Prerequisites).
 Given a folder path, list all image files sorted by filename:
 
 ```bash
-ls -1v <folder>/*.{png,jpg,jpeg,gif,bmp,tiff} 2>/dev/null
+ls -1v <folder>/*.{png,jpg,jpeg,gif,bmp,tiff,webp,heic,HEIC,heif,HEIF} 2>/dev/null
 ```
 
 `ls -1v` sorts naturally (01 comes before 02, 10 before 100).
@@ -136,6 +153,9 @@ Expected image naming conventions:
 - Any alphanumeric sort produces the intended reading order
 
 ### Step 2: Run OCR
+
+For HEIC/HEIF photos, run `ocr.py` (it converts them first). The inline
+snippets below only read formats the OCR engines support directly.
 
 **English documents (EasyOCR):**
 
@@ -232,7 +252,7 @@ Report back:
 |-----------|-----------|----------|
 | "中文" / Chinese content | PaddleOCR (ch) | Chinese documents, mixed CJK |
 | "英文" / English content | EasyOCR (en) | Clean English text, GPU accelerated |
-| "auto" / mixed | Check filename conventions or ask user | When unsure, prefer PaddleOCR for mixed C/E |
+| "auto" / mixed | `ocr.py --lang auto`: Chinese characters in file or folder names → PaddleOCR, else EasyOCR; or ask user | When unsure, prefer PaddleOCR for mixed C/E |
 
 When the language is ambiguous (folder name could be either), ask the
 user before proceeding.

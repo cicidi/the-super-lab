@@ -117,7 +117,7 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--runs", type=int, default=3)
     ap.add_argument("--run-id", default="")
-    ap.add_argument("--grill", default="", help="comma-separated extra skills, TST-F variants")
+    ap.add_argument("--grill", default="", help="comma-separated extra skills, TST-J configs")
     args = ap.parse_args()
     grill = [s.strip() for s in args.grill.split(",") if s.strip()]
     if "DEEPSEEK_API_KEY" not in os.environ:

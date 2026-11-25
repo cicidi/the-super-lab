@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
-"""Real judge: deepseek-flash, 3 independent runs, writes cross-model verdicts.
+"""Real judge: deepseek-flash, 5 independent runs, writes cross-model verdicts.
 
-  python3 tools/judge_deepseek.py --target must   # 15 llm MUST items
+  python3 tools/judge_deepseek.py --target must   # llm-method MUST items in the registry
   python3 tools/judge_deepseek.py --target gold   # 10 gold annotations
 
-Corpus: committed SDD markdown + the four SKILL.md + SPEC-STANDARD.md, sent whole
-(~33k tokens/run). Verdicts aggregate 3/3: unanimous pass, unanimous fail, else
-"disputed" (counts as fail). See test-plan TST-D/E/L.
+Corpus: committed SDD markdown + the five SKILL.md + SPEC-STANDARD.md, sent whole
+(~33k tokens/run). Verdicts need 4 of 5 runs to agree (ARD-CJ): >=4 pass is pass,
+>=4 fail is fail, else "disputed" (counts as fail). Every item that is not a pass
+gets `claude_audit: null`; Claude fills it with agree/disagree and a reason and
+reports any disagreement to the user. See test-plan TST-D/E/L.
 """
 
 from __future__ import annotations
@@ -17,9 +19,13 @@ import os
 import re
 import sys
 import urllib.request
+from collections import Counter
 from pathlib import Path
 
 import yaml
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from verify_sdd_tools_manifest import sdd_tool_names  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 TESTS = ROOT / "skills/spec-organize/tests"
@@ -30,7 +36,7 @@ OUT_MUST = TESTS / "judgments" / "v1-deepseek-flash.yaml"
 OUT_GOLD = TESTS / "judgments" / "annotations-v1-deepseek-flash.yaml"
 API = "https://api.deepseek.com/chat/completions"
 MODEL = "deepseek-flash"
-RUNS = 3
+RUNS = 5
 
 SYSTEM = (
     "You are a strict repository auditor. You check whether a repository actually "
@@ -39,11 +45,42 @@ SYSTEM = (
 )
 
 
+_FIG_CITE = re.compile(r"!\[[^\]]*\]\(([^)\s]+\.svg)\)")
+_SVG_TEXT = re.compile(r"<(text|title|desc)\b[^>]*>(.*?)</\1>", re.S)
+
+
+def figure_text(md: Path, text: str) -> str:
+    """Visible words of each SVG the md cites, so the judge can compare figure and prose (ARD-CA)."""
+    out = []
+    for src in _FIG_CITE.findall(text):
+        svg = md.parent / src
+        if svg.is_file():
+            words = [m.group(2).strip() for m in _SVG_TEXT.finditer(svg.read_text(encoding="utf-8"))]
+            out.append(f"\n===== FIGURE: {svg.relative_to(ROOT)} =====\n" + "\n".join(w for w in words if w))
+    return "".join(out)
+
+
+INDEX = ROOT / "docs/INDEX.md"
+_SDD_LINE = re.compile(r"spec-driven[- ]development", re.IGNORECASE)
+
+
+def index_sdd_lines(text: str) -> str:
+    """Only the INDEX lines about SDD (plus the title), so another feature's row
+    does not make SDD judgments stale."""
+    keep = [ln for ln in text.splitlines() if ln.startswith("# ") or _SDD_LINE.search(ln)]
+    return "\n".join(keep) + "\n"
+
+
 def corpus() -> str:
-    return "".join(
-        f"\n===== FILE: {p.relative_to(ROOT)} =====\n{p.read_text(encoding='utf-8')}"
-        for p in corpus_files()
-    )
+    parts = []
+    for p in corpus_files():
+        text = p.read_text(encoding="utf-8")
+        if p == INDEX:
+            text = index_sdd_lines(text)
+        parts.append(f"\n===== FILE: {p.relative_to(ROOT)} =====\n{text}")
+        if p.suffix == ".md":
+            parts.append(figure_text(p, text))
+    return "".join(parts)
 
 
 def corpus_sha(text: str) -> str:
@@ -56,12 +93,17 @@ def corpus_files() -> list[Path]:
     """Evidence set fed to the judge; excludes the judge itself to avoid self-staleness."""
     docs = [
         p
-        for p in (ROOT / "docs/features").rglob("*.md")
+        for p in sorted(SDD.rglob("*.md"))
         if not p.name.startswith("._") and "raw" not in p.parts and "site" not in p.parts
     ]
-    docs += [ROOT / "docs/INDEX.md"]
+    # tests/annotations.yaml BAD-A (check: index_complete) judges INDEX entries, not
+    # gold/v1/annotations.yaml BAD-A (numeric ids); corpus() keeps only SDD lines.
+    docs += [INDEX]
     docs += [ROOT / "skills/spec-organize/SPEC-STANDARD.md"]
-    docs += [ROOT / f"skills/{n}/SKILL.md" for n in ("spec-pipeline", "spec-organize", "spec-review", "spec-write")]
+    docs += [
+        ROOT / f"skills/{n}/SKILL.md"
+        for n in ("spec-pipeline", "spec-organize", "spec-review", "spec-write", "wayfinder")
+    ]
     # Enforcement evidence: checkers, tools, registry, eval config.
     # Plumbing that is not evidence for any MUST: builders, the harness itself.
     skip = {
@@ -74,7 +116,10 @@ def corpus_files() -> list[Path]:
         "run_gold_eval.py",
         "score_run.py",
     }
-    code = [p for p in (ROOT / "tools").glob("*.py") if p.name not in skip]
+    # Only the SDD tool set (README-SDD manifest), so an unrelated new tool in
+    # tools/ does not make the judgments stale.
+    sdd_tools = sdd_tool_names()
+    code = [p for p in sorted((ROOT / "tools").glob("*.py")) if p.name in sdd_tools and p.name not in skip]
     code += sorted((TESTS / "checks").glob("*.py"))
     harness_tests = {"test_judge_freshness.py", "test_tst_e_gold.py"}
     code += [p for p in sorted(TESTS.glob("test_*.py")) if p.name not in harness_tests]
@@ -172,7 +217,13 @@ def call(prompt: str) -> dict:
     return json.loads(text[start:])
 
 
+def needed(runs: int) -> int:
+    """Votes needed for a settled verdict: 4 of 5, all of 3 or fewer (ARD-CJ)."""
+    return runs - 1 if runs >= 5 else runs
+
+
 def aggregate(runs: list[dict]) -> list[dict]:
+    need = needed(len(runs))
     by_id: dict[str, list[dict]] = {}
     for run in runs:
         for item in run.get("items", []):
@@ -180,24 +231,41 @@ def aggregate(runs: list[dict]) -> list[dict]:
     out = []
     for ident, votes in by_id.items():
         verdicts = [v.get("verdict", "fail") for v in votes]
-        if len(votes) < RUNS:
-            final = "fail"
-        elif all(v == "pass" for v in verdicts):
+        verdicts += ["fail"] * (len(runs) - len(verdicts))  # a missing vote counts as fail
+        if verdicts.count("pass") >= need:
             final = "pass"
-        elif all(v == "fail" for v in verdicts):
+        elif verdicts.count("fail") >= need:
             final = "fail"
         else:
             final = "disputed"
-        out.append(
-            {
-                "id": ident,
-                "verdict": final,
-                "votes": verdicts,
-                "evidence": votes[0].get("evidence", ""),
-                "confidence": votes[0].get("confidence"),
-            }
-        )
+        row = {
+            "id": ident,
+            "verdict": final,
+            "votes": verdicts,
+            "evidence": votes[0].get("evidence", ""),
+            "confidence": votes[0].get("confidence"),
+        }
+        if final != "pass":
+            row["claude_audit"] = None
+        out.append(row)
     return out
+
+
+def keep_audits(old_items: list[dict], new_items: list[dict], old_sha: str | None, new_sha: str) -> list[dict]:
+    """Carry each non-pass item's claude_audit over only when the corpus is unchanged and its
+    verdict and vote counts (order-insensitive) are unchanged; else null."""
+    old = {i["id"]: i for i in old_items} if old_sha == new_sha else {}
+    for item in new_items:
+        if "claude_audit" not in item:
+            continue
+        prev = old.get(item["id"])
+        same = (
+            prev
+            and prev.get("verdict") == item["verdict"]
+            and Counter(prev.get("votes") or []) == Counter(item["votes"])
+        )
+        item["claude_audit"] = prev.get("claude_audit") if same else None
+    return new_items
 
 
 def main() -> None:
@@ -216,6 +284,9 @@ def main() -> None:
         print(f"run {i + 1}/{args.runs} done", file=sys.stderr)
     items = aggregate(runs)
     out = OUT_MUST if args.target == "must" else OUT_GOLD
+    if out.is_file():
+        prev = yaml.safe_load(out.read_text(encoding="utf-8")) or {}
+        items = keep_audits(prev.get("items", []), items, prev.get("corpus_sha"), corpus_sha(corpus_text))
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(
         yaml.safe_dump(

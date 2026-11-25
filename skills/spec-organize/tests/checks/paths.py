@@ -12,6 +12,11 @@ COMMITTED_TYPES = frozenset(
 ENTRY_RE = re.compile(
     r"^([a-z0-9]+(?:-[a-z0-9]+)*)-(prd|design|impl-plan|test-plan|decision-history|how-to)(?:-[a-z0-9-]+)?\.md$"
 )
+# Part suffixes (ARD-G, ARD-BQ): an aspect noun for prd/design/test-plan/how-to,
+# a zero-padded sequence plus phase/period name for impl-plan/decision-history.
+NOUN_PART = r"[a-z][a-z0-9]*(?:-[a-z0-9]+)*"
+SEQ_PART = r"[0-9]{2,}-[a-z0-9]+(?:-[a-z0-9]+)*"
+SEQ_TYPES = frozenset({"impl-plan", "decision-history"})
 
 
 @dataclass(frozen=True)
@@ -21,31 +26,105 @@ class Finding:
     message: str
 
 
+def _declares_type(text: str) -> bool:
+    """True when frontmatter claims a committed type, i.e. the file is a document."""
+    if not text.startswith("---"):
+        return False
+    end = text.find("\n---", 3)
+    block = text[3:end] if end != -1 else ""
+    m = re.search(r"^type:\s*['\"]?([a-z-]+)", block, re.MULTILINE)
+    return bool(m and m.group(1) in COMMITTED_TYPES)
+
+
+def _type_folder(path: Path) -> tuple[str, str] | None:
+    """(feature_dir, type_dir) when path is docs/features/.../<f>/<type>/<file>.md."""
+    parts = path.parts
+    if "docs" not in parts or "features" not in parts:
+        return None
+    rest = parts[parts.index("features") + 1 :]
+    if len(rest) < 3 or rest[-2] not in COMMITTED_TYPES:
+        return None
+    return rest[-3], rest[-2]
+
+
+def _canonical_name(name: str, feature_dir: str, type_dir: str) -> bool:
+    prefix = re.escape(f"{feature_dir}-{type_dir}")
+    part = SEQ_PART if type_dir in SEQ_TYPES else NOUN_PART
+    return bool(re.match(rf"^{prefix}(?:-{part})?\.md$", name))
+
+
+SKIP_CITER_DIRS = frozenset({"raw", ".scratch", "features"})
+
+
+def _is_cited(path: Path) -> bool:
+    """True when a committed document of the same feature links to this file by name.
+
+    Citers under raw/, .scratch/ and nested features/ (sub-features) are skipped,
+    and a citer counts only if it declares a committed `type:` (DSGN-B).
+    """
+    link = re.compile(
+        rf"(?:\]\(|^\[[^\]]+\]:\s*)<?(?:[^)\s>]*/)?{re.escape(path.name)}(?:#[^)\s>]*)?>?(?:\)|\s|$)",
+        re.MULTILINE,
+    )
+    feature = path.parent.parent
+    for other in sorted(feature.rglob("*.md")):
+        if other.resolve() == path.resolve():
+            continue
+        if SKIP_CITER_DIRS & set(other.relative_to(feature).parts[:-1]):
+            continue
+        try:
+            text = other.read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError):
+            continue
+        if _declares_type(text) and link.search(text):
+            return True
+    return False
+
+
+def supporting_type(path: Path, text: str | None = None) -> str | None:
+    """Type folder of a supporting file (DSGN-B), else None.
+
+    A supporting file is an .md in any `<type>/` folder of the feature, without a
+    committed `type:` frontmatter, linked from a committed document of that feature.
+    A file with the canonical document name stays a document, so a missing
+    frontmatter block on it is still reported; so does an uncited, wrongly named
+    file (e.g. a stale slug), which is checked as a document.
+    """
+    loc = _type_folder(path)
+    if loc is None or _canonical_name(path.name, *loc):
+        return None
+    if text is None:
+        try:
+            text = path.read_text(encoding="utf-8")
+        except OSError:
+            return None
+    if _declares_type(text) or not _is_cited(path):
+        return None
+    return loc[1]
+
+
+def is_supporting_file(path: Path, text: str | None = None) -> bool:
+    return supporting_type(path, text) is not None
+
+
 def check_committed_path(path: Path, docs_root: Path | None = None) -> list[Finding]:
     """Validate a file under docs/features/ looks like a committed entry."""
     findings: list[Finding] = []
     rel = path.as_posix()
     parts = path.parts
-    if "docs" not in parts or "features" not in parts:
+    loc = _type_folder(path)
+    if loc is None:
         return findings
-    try:
-        fi = parts.index("features")
-    except ValueError:
-        return findings
-    rest = parts[fi + 1 :]
-    if len(rest) < 3:
-        return findings
-    # .../features/<f>/<type>/<file>.md or sub-feature .../features/<p>/features/<sub>/<type>/file
-    type_dir = rest[-2] if len(rest) >= 2 else ""
+    feature_dir, type_dir = loc
     name = path.name
-    if type_dir not in COMMITTED_TYPES:
-        return findings
-    if not ENTRY_RE.match(name):
+    if not _canonical_name(name, feature_dir, type_dir) and not is_supporting_file(path):
+        shape = "NN-<name>" if type_dir in SEQ_TYPES else "<noun>"
         findings.append(
             Finding(
                 "paths",
                 rel,
-                f"filename must match <f>-<type>… .md, got {name}",
+                f"filename must be {feature_dir}-{type_dir}.md or "
+                f"{feature_dir}-{type_dir}-{shape}.md, got {name}",
             )
         )
     if "reference" in parts:

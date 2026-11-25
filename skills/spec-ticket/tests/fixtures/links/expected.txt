@@ -1,0 +1,8 @@
+# links fixture (ARD-Q). Also check by hand in each ticket body:
+#   IMPL-A Source anchor  #impl-a--读侧-store
+#   IMPL-B Source anchor  #impl-b--write-path-v2
+#   design link  -> docs/features/links/design/links-design.md#cache   (feature dir = docs/features/links/)
+#   in-page link -> docs/features/links/impl-plan/links-impl-plan.md#impl-a--读侧-store
+#   standard link -> skills/spec-organize/SPEC-STANDARD.md
+IMPL-A: -
+IMPL-B: IMPL-A

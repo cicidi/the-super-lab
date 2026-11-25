@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>tmux-status-bar — tmux 状态栏显示项目上下文 · design · Spec Atlas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@400;600&display=swap">
+<link rel="stylesheet" href="../../../../assets/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><a href="../../../../index.html"><span class="brand-mark">SDD</span><span class="brand-name">Spec Atlas</span></a></div>
+    <button class="strike-btn" type="button" onclick="var r=document.documentElement;var off=r.dataset.strike!=='off';r.dataset.strike=off?'off':'on';this.textContent=off?'显示删除线':'隐藏删除线'">隐藏删除线</button>
+  </div>
+</header>
+<div class="site">
+  <aside class="sidebar">
+  <nav aria-label="Directory">
+    <div class="tree-overview"><a class="tree-link" href="../../../../index.html"><span class="tree-link__num">00</span>All features</a></div>
+    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../../prd/skill-factory-prd.html"><span class="tree-ord">1</span>skill-factory PRD</a></li><li class="tree-leaf"><a class="tree-link" href="../../../decision-history/skill-factory-decision-history.html"><span class="tree-ord">2</span>skill-factory — Decision History</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../../design/skill-factory-design.html"><span class="tree-ord">3</span>skill-factory Specification</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../../design/skill-factory-design-skill-catalog.html">skill-factory — skill 目录、调用关系与共性问题</a></li><li class="tree-leaf"><a class="tree-link" href="../../../design/skill-factory-design-verify-upgrade.html">skill-factory — 怎么验证 skill，怎么装进 AI 工具并升级</a></li><li class="tree-leaf"><a class="tree-link" href="../../../design/skill-factory-design-why-and-anatomy.html">skill-factory — 为什么要做，一个 skill 怎么搭</a></li></ul></details></li><li class="tree-leaf"><a class="tree-link" href="../../../impl-plan/skill-factory-impl-plan.html"><span class="tree-ord">4</span>skill-factory Implementation Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../../../test-plan/skill-factory-test-plan.html"><span class="tree-ord">5</span>skill-factory Test Plan</a></li><li class="tree-branch"><details open><summary><span class="tree-link"><span class="tree-ord">10</span>sub-feature</span></summary><ul class="tree"><li class="tree-branch"><details open><summary><a class="tree-link" href="../../auto-tdd/design/auto-tdd-design.html">auto-tdd</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../auto-tdd/prd/auto-tdd-prd.html"><span class="tree-ord">1</span>auto-tdd — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../auto-tdd/decision-history/auto-tdd-decision-history.html"><span class="tree-ord">2</span>auto-tdd — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../auto-tdd/design/auto-tdd-design.html"><span class="tree-ord">3</span>auto-tdd — 测试驱动开发循环</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../bug/design/bug-design.html">bug</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../bug/prd/bug-prd.html"><span class="tree-ord">1</span>bug — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../bug/decision-history/bug-decision-history.html"><span class="tree-ord">2</span>bug — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../bug/design/bug-design.html"><span class="tree-ord">3</span>bug — 调试、报告与自愈</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../create-video-workflow/design/create-video-workflow-design.html">create-video-workflow</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../create-video-workflow/prd/create-video-workflow-prd.html"><span class="tree-ord">1</span>create-video-workflow — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../create-video-workflow/decision-history/create-video-workflow-decision-history.html"><span class="tree-ord">2</span>create-video-workflow — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../create-video-workflow/design/create-video-workflow-design.html"><span class="tree-ord">3</span>create-video-workflow — 研究文档变内容</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../doc-protect/design/doc-protect-design.html">doc-protect</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../doc-protect/prd/doc-protect-prd.html"><span class="tree-ord">1</span>doc-protect — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../doc-protect/decision-history/doc-protect-decision-history.html"><span class="tree-ord">2</span>doc-protect — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../doc-protect/design/doc-protect-design.html"><span class="tree-ord">3</span>doc-protect — 锁住文档段落</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../domain-modeling/design/domain-modeling-design.html">domain-modeling</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../domain-modeling/prd/domain-modeling-prd.html"><span class="tree-ord">1</span>domain-modeling — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../domain-modeling/decision-history/domain-modeling-decision-history.html"><span class="tree-ord">2</span>domain-modeling — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../domain-modeling/design/domain-modeling-design.html"><span class="tree-ord">3</span>domain-modeling — 领域模型与术语表</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../english-grammar-fix/design/english-grammar-fix-design.html">english-grammar-fix</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../english-grammar-fix/prd/english-grammar-fix-prd.html"><span class="tree-ord">1</span>english-grammar-fix — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../english-grammar-fix/decision-history/english-grammar-fix-decision-history.html"><span class="tree-ord">2</span>english-grammar-fix — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../english-grammar-fix/design/english-grammar-fix-design.html"><span class="tree-ord">3</span>english-grammar-fix — 英文语法修正</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../find-unknowns/design/find-unknowns-design.html">find-unknowns</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../find-unknowns/prd/find-unknowns-prd.html"><span class="tree-ord">1</span>research — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../find-unknowns/decision-history/find-unknowns-decision-history.html"><span class="tree-ord">2</span>research — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../find-unknowns/design/find-unknowns-design.html"><span class="tree-ord">3</span>research — 动手前找出未知</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../grill-with-docs/design/grill-with-docs-design.html">grill-with-docs</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../grill-with-docs/prd/grill-with-docs-prd.html"><span class="tree-ord">1</span>grill-with-docs — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../grill-with-docs/decision-history/grill-with-docs-decision-history.html"><span class="tree-ord">2</span>grill-with-docs — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../grill-with-docs/design/grill-with-docs-design.html"><span class="tree-ord">3</span>grill-with-docs — 带文档的拷问式访谈</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../implement/design/implement-design.html">implement</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../implement/prd/implement-prd.html"><span class="tree-ord">1</span>implement — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../implement/decision-history/implement-decision-history.html"><span class="tree-ord">2</span>implement — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../implement/design/implement-design.html"><span class="tree-ord">3</span>implement — 按 spec 和 ticket 实现</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../luma-event-scout/design/luma-event-scout-design.html">luma-event-scout</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../luma-event-scout/prd/luma-event-scout-prd.html"><span class="tree-ord">1</span>luma-event-scout — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../luma-event-scout/decision-history/luma-event-scout-decision-history.html"><span class="tree-ord">2</span>luma-event-scout — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../luma-event-scout/design/luma-event-scout-design.html"><span class="tree-ord">3</span>luma-event-scout — Luma 湾区活动筛选</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../multi-model-team/design/multi-model-team-design.html">multi-model-team</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../multi-model-team/prd/multi-model-team-prd.html"><span class="tree-ord">1</span>multi-model-team — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../multi-model-team/decision-history/multi-model-team-decision-history.html"><span class="tree-ord">2</span>multi-model-team — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../multi-model-team/design/multi-model-team-design.html"><span class="tree-ord">3</span>multi-model-team — 多模型团队编排</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../pic-to-txt/design/pic-to-txt-design.html">pic-to-txt</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../pic-to-txt/prd/pic-to-txt-prd.html"><span class="tree-ord">1</span>pic-to-txt — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../pic-to-txt/decision-history/pic-to-txt-decision-history.html"><span class="tree-ord">2</span>pic-to-txt — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../pic-to-txt/design/pic-to-txt-design.html"><span class="tree-ord">3</span>pic-to-txt — 截图转文字文档</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../prototype/design/prototype-design.html">prototype</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../prototype/prd/prototype-prd.html"><span class="tree-ord">1</span>prototype — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../prototype/decision-history/prototype-decision-history.html"><span class="tree-ord">2</span>prototype — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../prototype/design/prototype-design.html"><span class="tree-ord">3</span>prototype — 用完就扔的原型</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../skill/design/skill-design.html">skill</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../skill/prd/skill-prd.html"><span class="tree-ord">1</span>skill — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../skill/decision-history/skill-decision-history.html"><span class="tree-ord">2</span>skill — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../skill/design/skill-design.html"><span class="tree-ord">3</span>skill — Skill 管理入口</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../spec-ingest/design/spec-ingest-design.html">spec-ingest</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../spec-ingest/prd/spec-ingest-prd.html"><span class="tree-ord">1</span>spec-ingest — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../spec-ingest/decision-history/spec-ingest-decision-history.html"><span class="tree-ord">2</span>spec-ingest — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../spec-ingest/design/spec-ingest-design.html"><span class="tree-ord">3</span>spec-ingest — 把已有信息分拣进 spec</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../spec-ticket/design/spec-ticket-design.html">spec-ticket</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../spec-ticket/prd/spec-ticket-prd.html"><span class="tree-ord">1</span>spec-ticket — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../spec-ticket/decision-history/spec-ticket-decision-history.html"><span class="tree-ord">2</span>spec-ticket — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../spec-ticket/design/spec-ticket-design.html"><span class="tree-ord">3</span>spec-ticket — 把 impl-plan 的每一步发成工单</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="tmux-status-bar-design.html">tmux-status-bar</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../prd/tmux-status-bar-prd.html"><span class="tree-ord">1</span>tmux-status-bar — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../decision-history/tmux-status-bar-decision-history.html"><span class="tree-ord">2</span>tmux-status-bar — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="tmux-status-bar-design.html" aria-current="page"><span class="tree-ord">3</span>tmux-status-bar — tmux 状态栏显示项目上下文</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../to-spec/design/to-spec-design.html">to-spec</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../to-spec/prd/to-spec-prd.html"><span class="tree-ord">1</span>to-spec — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../to-spec/decision-history/to-spec-decision-history.html"><span class="tree-ord">2</span>to-spec — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../to-spec/design/to-spec-design.html"><span class="tree-ord">3</span>to-spec — 把对话整理成 spec</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../to-tickets/design/to-tickets-design.html">to-tickets</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../to-tickets/prd/to-tickets-prd.html"><span class="tree-ord">1</span>to-tickets — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../to-tickets/decision-history/to-tickets-decision-history.html"><span class="tree-ord">2</span>to-tickets — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../to-tickets/design/to-tickets-design.html"><span class="tree-ord">3</span>to-tickets — 把 spec 拆成执行工单</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../transcribe-audio/design/transcribe-audio-design.html">transcribe-audio</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../transcribe-audio/prd/transcribe-audio-prd.html"><span class="tree-ord">1</span>transcribe-audio — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../transcribe-audio/decision-history/transcribe-audio-decision-history.html"><span class="tree-ord">2</span>transcribe-audio — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../transcribe-audio/design/transcribe-audio-design.html"><span class="tree-ord">3</span>transcribe-audio — 本地显卡音频转文字</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../video-production-pip-style/design/video-production-pip-style-design.html">video-production-pip-style</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../video-production-pip-style/prd/video-production-pip-style-prd.html"><span class="tree-ord">1</span>video-production-pip-style — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../video-production-pip-style/decision-history/video-production-pip-style-decision-history.html"><span class="tree-ord">2</span>video-production-pip-style — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../video-production-pip-style/design/video-production-pip-style-design.html"><span class="tree-ord">3</span>video-production-pip-style — 画中画引用式视频制作指南</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../wayfinder/design/wayfinder-design.html">wayfinder</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../wayfinder/prd/wayfinder-prd.html"><span class="tree-ord">1</span>wayfinder — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../wayfinder/decision-history/wayfinder-decision-history.html"><span class="tree-ord">2</span>wayfinder — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../wayfinder/design/wayfinder-design.html"><span class="tree-ord">3</span>wayfinder — 规划大任务的决策地图</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../youtube-research/design/youtube-research-design.html">youtube-research</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../youtube-research/prd/youtube-research-prd.html"><span class="tree-ord">1</span>youtube-research — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../youtube-research/decision-history/youtube-research-decision-history.html"><span class="tree-ord">2</span>youtube-research — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../youtube-research/design/youtube-research-design.html"><span class="tree-ord">3</span>youtube-research — 从题目到视频稿 HTML</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../youtube-summarize/design/youtube-summarize-design.html">youtube-summarize</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../youtube-summarize/prd/youtube-summarize-prd.html"><span class="tree-ord">1</span>youtube-summarize — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../youtube-summarize/decision-history/youtube-summarize-decision-history.html"><span class="tree-ord">2</span>youtube-summarize — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../youtube-summarize/design/youtube-summarize-design.html"><span class="tree-ord">3</span>youtube-summarize — YouTube 视频转写与总结</a></li></ul></details></li></ul></details></li></ul>
+  </nav>
+</aside>
+  <main class="content">
+    <nav class="breadcrumbs"><a href="../../../../index.html">Docs</a> / <span>skill-factory</span> / <span>features</span> / <span>tmux-status-bar</span> / <span>design</span> / <span>tmux-status-bar — tmux 状态栏显示项目上下文</span></nav>
+    <article class="doc" data-doc="skill-factory/features/tmux-status-bar/design/tmux-status-bar-design">
+      <header class="doc-head">
+        <p class="eyebrow">skill-factory</p>
+        <h1>tmux-status-bar — tmux 状态栏显示项目上下文</h1>
+        <p class="source">Canonical: docs/features/skill-factory/features/tmux-status-bar/design/tmux-status-bar-design.md</p>
+      </header>
+      
+      <div class="doc-body">
+        <h2>tmux-status-bar — tmux 状态栏显示项目上下文</h2>
+<p>本篇说明 <code>tmux-status-bar</code> 这个 skill 现在怎么工作。 源文件：<a href="../../../../../../../personal-skills/tmux-status-bar/SKILL.md"><code>personal-skills/tmux-status-bar/SKILL.md</code></a>（commit 5cc3d4b 加入，c2b3f22 把 initiative 改称 feature，2026-11-24 改成单行路径版，见 <a class="id-ref" href="../decision-history/tmux-status-bar-decision-history.html#ARD-M">ARD-M</a>）。</p>
+<h3>Problem Statement</h3>
+<p>用户 8 月 1 日起只要状态栏显示当前文件夹路径（<a class="id-ref" href="../prd/tmux-status-bar-prd.html#PRD-K">PRD-K</a>），本机配置已改，旧版 SKILL.md 却仍是五字段版。 照旧版执行会不备份、不询问就覆盖 <code>~/.tmux.conf</code>（<a class="id-ref" href="../prd/tmux-status-bar-prd.html#PRD-L">PRD-L</a>）。本 skill 要能原样重建本机现行的状态栏（<a class="id-ref" href="../decision-history/tmux-status-bar-decision-history.html#ARD-M">ARD-M</a>）。</p>
+<h3>Solution</h3>
+<p>一个 personal skill，分四步：备份，在临时目录生成新文件，给用户看 diff，确认后写入并重新加载（<a class="id-ref" href="../prd/tmux-status-bar-prd.html#PRD-H">PRD-H</a>、<a class="id-ref" href="../decision-history/tmux-status-bar-decision-history.html#ARD-M">ARD-M</a>）。 脚本每次刷新时输出当前窗格的路径，tmux 把它放在状态栏右侧。</p>
+<h3>User Stories</h3>
+<ul>
+<li>作为开发者，我说&quot;customize tmux&quot;，agent 先备份、给我看 diff，我确认后才把状态栏配好。</li>
+<li>作为开发者，配完后看不到输出时，我按 SKILL.md 的 Fallback 一节逐项检查。</li>
+</ul>
+<h3>Implementation Decisions</h3>
+<p>skill 只有一个 SKILL.md，脚本和状态栏段落全文写在文中，逐字照抄本机现行文件（<a class="id-ref" href="../decision-history/tmux-status-bar-decision-history.html#ARD-M">ARD-M</a>）。 本仓库没有单独的脚本文件，也没有安装步骤；脚本只在 agent 执行 skill 时生成。 脚本只用 POSIX sh 和 tmux，不调用 git 和 coworker 命令，也不读 feature（<a class="id-ref" href="../decision-history/tmux-status-bar-decision-history.html#ARD-M">ARD-M</a>）。</p>
+<h3>Design</h3>
+<p><strong><a class="id-ref" href="#DSGN-A">DSGN-A</a> 触发。</strong> 用户说&quot;customize tmux&quot;&quot;tmux bar&quot;&quot;tmux status&quot;等短语时使用（<a class="id-ref" href="../prd/tmux-status-bar-prd.html#PRD-H">PRD-H</a>）。zsh 提示符和 tmux 插件安装不用本 skill。</p>
+<p><strong><a class="id-ref" href="#DSGN-B">DSGN-B</a> 右侧路径脚本。</strong> <code>status_info.sh</code> 用 <code>tmux display-message</code> 取当前窗格路径（<a class="id-ref" href="../prd/tmux-status-bar-prd.html#PRD-K">PRD-K</a>）。家目录开头换成 <code>~</code>；取不到路径时输出 <code>~</code>（<a class="id-ref" href="../decision-history/tmux-status-bar-decision-history.html#ARD-M">ARD-M</a>）。</p>
+<p><strong><a class="id-ref" href="#DSGN-C">DSGN-C</a> 状态栏样式。</strong> 单行，底色 <code>#102D46</code>（Benjamin Blue 的 Deep Ocean），文字 <code>#EAE7DD</code>（<a class="id-ref" href="../decision-history/tmux-status-bar-decision-history.html#ARD-M">ARD-M</a>）。 右侧是黄色 📂 加白色路径，长度上限 200。</p>
+<p><strong><a class="id-ref" href="#DSGN-D">DSGN-D</a> 左侧和窗口列表。</strong> 左侧是黄色会话名加绿色 <code>●</code>。当前窗口黄底深字加粗，其他窗口灰蓝字（<a class="id-ref" href="../decision-history/tmux-status-bar-decision-history.html#ARD-M">ARD-M</a>）。 消息和活动窗格的边框也用黄色 <code>#F2C94C</code>。</p>
+<p><strong><a class="id-ref" href="#DSGN-E">DSGN-E</a> 先备份。</strong> 写任何文件前，把 <code>~/.tmux.conf</code> 和 <code>status_info.sh</code> 复制成带时间戳的副本。 副本名形如 <code>~/.tmux.conf.bak-YYYYmmdd-HHMMSS</code>（<a class="id-ref" href="../prd/tmux-status-bar-prd.html#PRD-L">PRD-L</a>、<a class="id-ref" href="../decision-history/tmux-status-bar-decision-history.html#ARD-M">ARD-M</a>）。</p>
+<p><strong><a class="id-ref" href="#DSGN-F">DSGN-F</a> 先给用户看 diff。</strong> 新文件先写到临时目录，再用 <code>diff -u</code> 和现有文件对比（<a class="id-ref" href="../prd/tmux-status-bar-prd.html#PRD-L">PRD-L</a>）。 用户说&quot;是&quot;才写入；两份 diff 都为空就说明已是最新，直接结束（<a class="id-ref" href="../decision-history/tmux-status-bar-decision-history.html#ARD-M">ARD-M</a>）。</p>
+<p><strong><a class="id-ref" href="#DSGN-G">DSGN-G</a> 只替换状态栏那一段。</strong> 从 <code># --- Status Bar</code> 起到最后一条状态栏设置为止，整段替换（<a class="id-ref" href="../decision-history/tmux-status-bar-decision-history.html#ARD-M">ARD-M</a>）。 真彩色、鼠标、插件等其他行一律不动；写完用 <code>tmux source-file</code> 重新加载。</p>
+<p><strong><a class="id-ref" href="#DSGN-H">DSGN-H</a> 不再显示的字段。</strong> 项目名（<a class="id-ref" href="../prd/tmux-status-bar-prd.html#PRD-A">PRD-A</a>）、分支（<a class="id-ref" href="../prd/tmux-status-bar-prd.html#PRD-B">PRD-B</a>）、git 状态（<a class="id-ref" href="../prd/tmux-status-bar-prd.html#PRD-C">PRD-C</a>）、feature（<a class="id-ref" href="../prd/tmux-status-bar-prd.html#PRD-D">PRD-D</a>）、创建时间（<a class="id-ref" href="../prd/tmux-status-bar-prd.html#PRD-E">PRD-E</a>）、字段名（<a class="id-ref" href="../prd/tmux-status-bar-prd.html#PRD-F">PRD-F</a>）、深灰底（<a class="id-ref" href="../prd/tmux-status-bar-prd.html#PRD-G">PRD-G</a>）都已去掉。 worktree（<a class="id-ref" href="../prd/tmux-status-bar-prd.html#PRD-I">PRD-I</a>）和 AI 会话信息（<a class="id-ref" href="../prd/tmux-status-bar-prd.html#PRD-J">PRD-J</a>）也不加。依据是用户最新的要求 <a class="id-ref" href="../prd/tmux-status-bar-prd.html#PRD-K">PRD-K</a>（<a class="id-ref" href="../decision-history/tmux-status-bar-decision-history.html#ARD-C">ARD-C</a>、<a class="id-ref" href="../decision-history/tmux-status-bar-decision-history.html#ARD-M">ARD-M</a>）。</p>
+<h3>Testing Decisions</h3>
+<p>本 skill 没有自动测试或评测集，<code>personal-skills/tmux-status-bar/</code> 下只有 SKILL.md 一个文件。 2026-11-24 核对过：SKILL.md 里的脚本和状态栏段落与本机文件逐字一致，<code>diff</code> 没有输出（<a class="id-ref" href="../decision-history/tmux-status-bar-decision-history.html#ARD-M">ARD-M</a>）。 验证方式就是看状态栏；没有输出时按 Fallback 一节检查窗格路径、脚本执行权限和右侧长度。</p>
+<h3>Out of Scope</h3>
+<p>通用 tmux 配置、插件安装、非 tmux 的终端提示符，都不用本 skill（SKILL.md 的 When NOT to Use 一节）。</p>
+<h3>Further Notes</h3>
+<p>需求见 <a href="../prd/tmux-status-bar-prd.html">PRD</a>，决策见 <a href="../decision-history/tmux-status-bar-decision-history.html">decision-history</a>。 本机现行的 tmux 配置记在 computer-config 仓库的 <code>docs/tmux-config/spec/tmux-config-spec.md</code>（commit eeba774）。 walter-worker 曾有带 worktree 和 emoji 的富版脚本，可用 <code>git show 87f4413:setup/status_info.sh</code> 查看（<a class="id-ref" href="../decision-history/tmux-status-bar-decision-history.html#ARD-D">ARD-D</a>、<a class="id-ref" href="../decision-history/tmux-status-bar-decision-history.html#ARD-E">ARD-E</a>）。</p>
+<h3>Alternatives Considered</h3>
+<p>在 <code>~/.tmux.conf</code> 里内联 git 命令：被否决，取不到窗格目录（<a class="id-ref" href="../decision-history/tmux-status-bar-decision-history.html#ARD-J">ARD-J</a>）。 把会话本身改名为 <code>tmux:名字</code>：被否决，改由脚本加标签（<a class="id-ref" href="../decision-history/tmux-status-bar-decision-history.html#ARD-G">ARD-G</a>）。 在状态栏里画提交图：被否决，太宽（<a class="id-ref" href="../decision-history/tmux-status-bar-decision-history.html#ARD-H">ARD-H</a>）。 由 walter-worker 的安装脚本统一部署：先采纳，后撤回（<a class="id-ref" href="../decision-history/tmux-status-bar-decision-history.html#ARD-E">ARD-E</a>、<a class="id-ref" href="../decision-history/tmux-status-bar-decision-history.html#ARD-B">ARD-B</a>）。 把五字段版留作选项：被否决，用户最新只要路径（<a class="id-ref" href="../decision-history/tmux-status-bar-decision-history.html#ARD-M">ARD-M</a>）。</p>
+<h3>Drawbacks</h3>
+<p>脚本不读 git，状态栏上看不出分支和未提交的改动（<a class="id-ref" href="../prd/tmux-status-bar-prd.html#PRD-B">PRD-B</a>、<a class="id-ref" href="../prd/tmux-status-bar-prd.html#PRD-C">PRD-C</a> 已被 <a class="id-ref" href="../prd/tmux-status-bar-prd.html#PRD-K">PRD-K</a> 取代）。 脚本全文嵌在 SKILL.md 里，改字段时说明、脚本和图例要一起改。 执行 skill 仍会换掉用户手改过的状态栏段落；有备份和确认，但要用户自己看懂 diff。</p>
+<h3>Risks and Mitigations</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>风险</th>
+<th>缓解</th>
+</tr></thead><tbody>
+<tr>
+<td>用户以后又改了本机状态栏，SKILL.md 再次过时</td>
+<td>写前看 diff；本机改动后同步更新 SKILL.md（<a class="id-ref" href="../decision-history/tmux-status-bar-decision-history.html#ARD-M">ARD-M</a>）</td>
+</tr>
+<tr>
+<td>找旧状态栏段落时多删或漏删了行</td>
+<td>diff 里只能出现状态栏相关的行，否则不写（<a class="id-ref" href="#DSGN-F">DSGN-F</a>、<a class="id-ref" href="#DSGN-G">DSGN-G</a>）</td>
+</tr>
+<tr>
+<td><code>~/.tmux.conf</code> 里没有 <code># --- Status Bar</code> 标记</td>
+<td>按选项名找旧行；都没有就插到第一行 <code>run-shell</code> 之前（<a class="id-ref" href="#DSGN-G">DSGN-G</a>）</td>
+</tr>
+</tbody></table></div>
+<h3>Open Questions</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>ID</th>
+<th>问题</th>
+<th>目前答案</th>
+<th>Owner</th>
+<th>Blocking</th>
+</tr></thead><tbody>
+<tr>
+<td id="QUES-A"><a class="id-ref" href="#QUES-A">QUES-A</a></td>
+<td>用户说的&quot;git tree&quot;是状态计数，还是别的（比如 worktree 列表）（<a class="id-ref" href="../prd/tmux-status-bar-prd.html#PRD-C">PRD-C</a>）？</td>
+<td>不再显示 git 信息，问题不再适用（<a class="id-ref" href="../decision-history/tmux-status-bar-decision-history.html#ARD-M">ARD-M</a>）</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-B"><a class="id-ref" href="#QUES-B">QUES-B</a></td>
+<td>feature 该读 <code>.coworker/features/.active</code> 还是 CLAUDE.local.md（<a class="id-ref" href="../prd/tmux-status-bar-prd.html#PRD-D">PRD-D</a>）？</td>
+<td>两者都不读，feature 字段已去掉（<a class="id-ref" href="../decision-history/tmux-status-bar-decision-history.html#ARD-M">ARD-M</a>）</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-C"><a class="id-ref" href="#QUES-C">QUES-C</a></td>
+<td>skill 要不要改成只显示文件夹路径（<a class="id-ref" href="../prd/tmux-status-bar-prd.html#PRD-K">PRD-K</a>），把五字段版留作选项？</td>
+<td>改成只显示文件夹路径，不留五字段选项（<a class="id-ref" href="../decision-history/tmux-status-bar-decision-history.html#ARD-M">ARD-M</a>）</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-D"><a class="id-ref" href="#QUES-D">QUES-D</a></td>
+<td>改 <code>~/.tmux.conf</code> 前要不要先征得用户同意（<a class="id-ref" href="../prd/tmux-status-bar-prd.html#PRD-L">PRD-L</a>）？</td>
+<td>要。先备份、给用户看 diff，确认后才写（<a class="id-ref" href="../decision-history/tmux-status-bar-decision-history.html#ARD-M">ARD-M</a>）</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-E"><a class="id-ref" href="#QUES-E">QUES-E</a></td>
+<td>When NOT to Use 指向的 tmux-setup 已不存在，改指哪里？</td>
+<td>删掉这条引用，不改指别处（<a class="id-ref" href="../decision-history/tmux-status-bar-decision-history.html#ARD-M">ARD-M</a>）</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-F"><a class="id-ref" href="#QUES-F">QUES-F</a></td>
+<td>worktree 字段（<a class="id-ref" href="../prd/tmux-status-bar-prd.html#PRD-I">PRD-I</a>）和 AI 会话信息（<a class="id-ref" href="../prd/tmux-status-bar-prd.html#PRD-J">PRD-J</a>）还要补进 skill 吗？</td>
+<td>不补，用户最新要求只显示路径（<a class="id-ref" href="../prd/tmux-status-bar-prd.html#PRD-K">PRD-K</a>、<a class="id-ref" href="../decision-history/tmux-status-bar-decision-history.html#ARD-M">ARD-M</a>）</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+</tbody></table></div>
+<h3>Reversibility</h3>
+<p>skill 本身在 git 跟踪的 <a href="../../../../../../../personal-skills/tmux-status-bar/SKILL.md"><code>personal-skills/tmux-status-bar/SKILL.md</code></a>，用 <code>git revert</code> 即可撤回。 执行 skill 会改写 <code>~/.tmux.conf</code> 和 <code>~/.tmux/scripts/status_info.sh</code>，两者不在 git 里；写前留有 <code>.bak-时间戳</code> 副本，复制回去再重新加载即可恢复（<a class="id-ref" href="#DSGN-E">DSGN-E</a>）。</p>
+<h3>Change Log</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Date</th>
+<th>Change</th>
+</tr></thead><tbody>
+<tr>
+<td>2026-11-24</td>
+<td>初版：按 SKILL.md 写出 tmux-status-bar 的 design，引用 <a class="id-ref" href="../prd/tmux-status-bar-prd.html#PRD-A">PRD-A</a> 到 <a class="id-ref" href="../prd/tmux-status-bar-prd.html#PRD-L">PRD-L</a></td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>按 <a class="id-ref" href="../decision-history/tmux-status-bar-decision-history.html#ARD-M">ARD-M</a> 改写：单行路径版、写前备份并确认、只换状态栏段落；<a class="id-ref" href="#QUES-A">QUES-A</a> 到 <a class="id-ref" href="#QUES-F">QUES-F</a> 已答</td>
+</tr>
+</tbody></table></div>
+      </div>
+    </article>
+    <nav class="pager" aria-label="Previous and next"><a class="prev" href="../prd/tmux-status-bar-prd.html"><span class="label">Previous</span>tmux-status-bar — 需求</a><a class="next" href="../decision-history/tmux-status-bar-decision-history.html"><span class="label">Next</span>tmux-status-bar — 决策记录</a></nav>
+  </main>
+</div>
+<footer class="foot"><div class="foot-inner">Assembled from committed <code>.md</code>. The Markdown is authoritative; this page is a reading view.</div></footer>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>if(window.mermaid){mermaid.initialize({startOnLoad:false});}</script>
+<script src="../../../../assets/app.js"></script>
+</body>
+</html>

@@ -1,24 +1,27 @@
 #!/usr/bin/env python3
-"""Build a paginated, tree-navigated docs site for the SDD spec set."""
+"""Build a paginated, tree-navigated docs site for the SDD spec set, then the reader."""
 
 from __future__ import annotations
 
 import html
 import os
 import re
+import subprocess
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from build_sdd_reader import SDD, md_to_html  # noqa: E402
+from build_sdd_reader import SDD, inline_figures, md_to_html  # noqa: E402
 
 FEATURES = ROOT / "docs/features"
 OUT = ROOT / "docs/book/html"
 ASSETS = OUT / "assets"
 
 TYPE_RANK = {"prd": 0, "design": 1, "impl-plan": 2, "test-plan": 3, "decision-history": 4, "how-to": 5}
+NAV_ORDER = ("prd", "decision-history", "design", "impl-plan", "test-plan", "how-to")
+NAV_NUM = {"prd": "1", "decision-history": "2", "design": "3", "impl-plan": "4", "test-plan": "5", "how-to": "6"}
 
 
 def _title(path: Path) -> str:
@@ -72,14 +75,14 @@ def feature_docs(feature: str) -> list[dict]:
     return [d for d in DOCS if d["feature"] == feature]
 
 
-# Single theme: Google Cloud docs (devsite) design language.
-# Tokens extracted from https://cloud.google.com clouddocs app.css (2026-11).
+# diagram-design default skin tokens (style-guide.md)
 FONT_LINK = (
-    '<link rel="stylesheet" href="https://fonts.googleapis.com/css?'
-    "family=Google+Sans:400,500"
-    "|Roboto:400,400italic,500,500italic,700"
-    "|Roboto+Mono:400,500,700"
-    "|Noto+Sans+SC:400,500,700"
+    '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?'
+    "family=Instrument+Serif:ital@0;1"
+    "&family=Geist:wght@400;500;600"
+    "&family=Geist+Mono:wght@400;500"
+    "&family=Noto+Sans+SC:wght@400;500;700"
+    "&family=Noto+Serif+SC:wght@400;600"
     '&display=swap">'
 )
 
@@ -88,9 +91,9 @@ def _page_for(md_path: Path) -> Path:
     return OUT / md_path.resolve().relative_to(FEATURES.resolve()).with_suffix(".html")
 
 
-def _retarget_links(body: str, md_path: Path) -> str:
+def _retarget_links(body: str, md_path: Path, page: Path | None = None) -> str:
     """Links in the markdown are relative to the source file. Point them at the HTML page."""
-    page = _page_for(md_path)
+    page = page or _page_for(md_path)
 
     def repl(match: re.Match) -> str:
         href = match.group(1)
@@ -162,43 +165,102 @@ def _lookup_id(page_file: str, token: str) -> str | None:
     return None
 
 
+_NAME_INDEX: dict[str, list[Path]] | None = None
+
+
+def _files_named(name: str) -> list[Path]:
+    global _NAME_INDEX
+    if _NAME_INDEX is None:
+        index: dict[str, list[Path]] = {}
+
+        def add(path: Path) -> None:
+            if not path.name.startswith("._"):
+                index.setdefault(path.name, []).append(path)
+
+        for doc in DOCS:
+            add(doc["source"][1])
+        skills = ROOT / "skills"
+        if skills.is_dir():
+            for path in skills.rglob("*.md"):
+                add(path)
+        _NAME_INDEX = index
+    return _NAME_INDEX.get(name, [])
+
+
+_TRACKED: set[str] | None = None
+_TRACKED_LOADED = False
+
+
+def _tracked_files() -> set[str] | None:
+    """Repo-relative paths git tracks or would track (not ignored), computed once; None without git."""
+    global _TRACKED, _TRACKED_LOADED
+    if not _TRACKED_LOADED:
+        _TRACKED_LOADED = True
+        try:
+            out = subprocess.run(
+                ["git", "ls-files", "-z", "--cached", "--others", "--exclude-standard"], cwd=ROOT, capture_output=True, check=True
+            ).stdout.decode("utf-8", "replace")
+            _TRACKED = {f for f in out.split("\0") if f}
+        except (OSError, subprocess.CalledProcessError):
+            _TRACKED = None
+    return _TRACKED
+
+
+def _linkable_file(rel: str) -> bool:
+    """A local file earns a link only when tracked or untracked-but-not-ignored (gitignored files never publish)."""
+    if not (ROOT / rel).is_file():
+        return False
+    tracked = _tracked_files()
+    return tracked is None or rel in tracked
+
+
+def _repo_rel(path: Path) -> str | None:
+    norm = os.path.normpath(str(path))
+    root = str(ROOT)
+    if norm == root:
+        return ""
+    prefix = root + os.sep
+    if not norm.startswith(prefix):
+        return None
+    return Path(norm[len(prefix) :]).as_posix()
+
+
+_KNOWN_MD = {doc["source"][0]: OUT / doc["file"] for doc in DOCS}
+
+
 def _dest_for_mention(raw: str, md_path: Path) -> Path | None:
     raw = html.unescape(raw).strip()
     if not raw or any(ch in raw for ch in "<>*| "):
         return None
     if raw.startswith(("http://", "https://", "mailto:")):
         return None
-    candidates: list[Path] = []
+    looks_like_file = "/" in raw or raw.endswith((".md", ".html", ".py", ".yaml", ".yml", ".sh"))
+    if not looks_like_file:
+        return None
+    rels: list[str] = []
     if raw.startswith(("./", "../")) or "/" in raw:
-        candidates.append((md_path.parent / raw).resolve())
+        rel = _repo_rel(md_path.parent / raw)
+        if rel:
+            rels.append(rel)
     if not raw.startswith(("/", ".", "..")):
-        candidates.append((ROOT / raw).resolve())
+        rels.append(raw.lstrip("/"))
     if raw.startswith("docs/features/") and raw.endswith(".html"):
-        candidates.append((OUT / raw[len("docs/features/") :]).resolve())
+        rels.append("docs/book/html/" + raw[len("docs/features/") :])
     if "/" not in raw and raw.endswith((".md", ".html")):
-        roots = (FEATURES, ROOT / "skills", OUT)
-        hits = [p for root in roots if root.is_dir() for p in root.rglob(raw) if p.is_file()]
+        hits = _files_named(Path(raw).name)
         if len(hits) == 1:
-            candidates.append(hits[0].resolve())
-    for target in candidates:
-        try:
-            target.relative_to(ROOT)
-        except ValueError:
+            rel = _repo_rel(hits[0])
+            if rel:
+                rels.append(rel)
+    for rel in rels:
+        if rel in _KNOWN_MD:
+            return _KNOWN_MD[rel]
+        if rel.startswith("docs/features/") and rel.endswith(".md"):
             continue
-        if not target.is_file() and not (
-            target.suffix == ".html" and target.is_relative_to(OUT)
-        ):
-            continue
-        try:
-            rel_feat = target.relative_to(FEATURES.resolve())
-        except ValueError:
-            rel_feat = None
-        if rel_feat is not None and target.suffix == ".md" and (FEATURES / rel_feat).is_file() and not _omitted(rel_feat):
-            return (OUT / rel_feat).with_suffix(".html")
-        if target.suffix == ".html" and target.is_relative_to(OUT):
-            return target
-        if target.is_file():
-            return target
+        if rel.startswith("docs/book/html/") and rel.endswith(".html"):
+            return OUT / rel[len("docs/book/html/") :]
+        if _linkable_file(rel):
+            return ROOT / rel
     return None
 
 
@@ -255,7 +317,7 @@ def _linkify(body: str, md_path: Path, page_file: str) -> str:
             if not dest:
                 return token
             href = f"#{token}" if dest == page_file else rel_href(page_file, dest) + f"#{token}"
-            return f'<a href="{href}">{token}</a>'
+            return f'<a class="id-ref" href="{href}">{token}</a>'
 
         out.append(_ID_RE.sub(repl, part))
     body = "".join(out)
@@ -305,6 +367,7 @@ def topbar(from_file: str) -> str:
     return f'''<header class="topbar">
   <div class="topbar-inner">
     <div class="brand"><a href="{home}"><span class="brand-mark">SDD</span><span class="brand-name">Spec Atlas</span></a></div>
+    <button class="strike-btn" type="button" onclick="var r=document.documentElement;var off=r.dataset.strike!=='off';r.dataset.strike=off?'off':'on';this.textContent=off?'显示删除线':'隐藏删除线'">隐藏删除线</button>
   </div>
 </header>'''
 
@@ -387,14 +450,35 @@ def _grouped(feature: str) -> tuple[dict[str, dict], dict[str, list[dict]], dict
     return entries, children, subs
 
 
-def _leaf(doc: dict, current: str, from_file: str) -> str:
+def _leaf(doc: dict, current: str, from_file: str, num: str = "") -> str:
     attr = ' aria-current="page"' if doc["slug"] == current else ""
-    num = NUM.get(doc["slug"], "")
-    num_html = f'<span class="tree-link__num">{num}</span>' if num else ""
+    num_html = f'<span class="tree-ord">{html.escape(num)}</span>' if num else ""
     return (
         f'<li class="tree-leaf"><a class="tree-link" href="{rel_href(from_file, doc["file"])}"{attr}>'
         f'{num_html}{html.escape(doc["title"])}</a></li>'
     )
+
+
+def _numbered_docs(pages: list[dict], current: str, from_file: str) -> str:
+    by_kind: dict[str, list[dict]] = {}
+    for doc in pages:
+        kind = doc["kind"] if doc["kind"] in NAV_NUM else "design"
+        by_kind.setdefault(kind, []).append(doc)
+    chunks: list[str] = []
+    for kind in NAV_ORDER:
+        docs = by_kind.get(kind, [])
+        if not docs:
+            continue
+        first, rest = docs[0], docs[1:]
+        if rest:
+            link = _leaf(first, current, from_file, NAV_NUM[kind]).removeprefix('<li class="tree-leaf">').removesuffix("</li>")
+            inner = "".join(_leaf(doc, current, from_file) for doc in rest)
+            chunks.append(
+                f'<li class="tree-branch"><details open><summary>{link}</summary><ul class="tree">{inner}</ul></details></li>'
+            )
+        else:
+            chunks.append(_leaf(first, current, from_file, NAV_NUM[kind]))
+    return "".join(chunks)
 
 
 def _sub_branch(name: str, pages: list[dict], current: str, from_file: str) -> str:
@@ -403,7 +487,7 @@ def _sub_branch(name: str, pages: list[dict], current: str, from_file: str) -> s
         '<li class="tree-branch"><details open><summary>'
         f'<a class="tree-link" href="{rel_href(from_file, home["file"])}">{html.escape(name)}</a>'
         '</summary><ul class="tree">'
-        + "".join(_leaf(doc, current, from_file) for doc in pages)
+        + _numbered_docs(pages, current, from_file)
         + "</ul></details></li>"
     )
 
@@ -422,23 +506,30 @@ def _layer(kind: str, kids: list[dict], subs: dict[str, list[dict]], current: st
 def _feature_tree(feature: str, current: str, from_file: str) -> str:
     entries, children, subs = _grouped(feature)
     parts = ['<ul class="tree">']
-    for kind in TYPE_RANK:
+    for kind in NAV_ORDER:
         entry = entries.get(kind)
         kids = children[kind]
-        extra = subs if kind == "design" else {}
-        if entry is None and not kids and not extra:
+        if entry is None and not kids:
             continue
-        inner = _layer(kind, kids, extra, current, from_file)
+        inner = _layer(kind, kids, {}, current, from_file)
+        num = NAV_NUM[kind]
         if entry is not None and inner:
+            link = _leaf(entry, current, from_file, num).removeprefix('<li class="tree-leaf">').removesuffix("</li>")
             parts.append(
-                '<li class="tree-branch"><details open><summary>'
-                + _leaf(entry, current, from_file).removeprefix('<li class="tree-leaf">').removesuffix("</li>")
-                + f'</summary><ul class="tree">{inner}</ul></details></li>'
+                f'<li class="tree-branch"><details open><summary>{link}</summary>'
+                f'<ul class="tree">{inner}</ul></details></li>'
             )
         elif entry is not None:
-            parts.append(_leaf(entry, current, from_file))
+            parts.append(_leaf(entry, current, from_file, num))
         else:
             parts.append(inner)
+    if subs:
+        inner = "".join(_sub_branch(name, pages, current, from_file) for name, pages in subs.items())
+        parts.append(
+            '<li class="tree-branch"><details open><summary>'
+            '<span class="tree-link"><span class="tree-ord">10</span>sub-feature</span>'
+            f'</summary><ul class="tree">{inner}</ul></details></li>'
+        )
     parts.append("</ul>")
     return "".join(parts)
 
@@ -446,13 +537,12 @@ def _feature_tree(feature: str, current: str, from_file: str) -> str:
 def _reading_order(feature: str) -> list[dict]:
     entries, children, subs = _grouped(feature)
     order = []
-    for kind in TYPE_RANK:
+    for kind in NAV_ORDER:
         if kind in entries:
             order.append(entries[kind])
         order.extend(doc for doc in children[kind] if doc["slug"] in BY_SLUG)
-        if kind == "design":
-            for pages in subs.values():
-                order.extend(doc for doc in pages if doc["slug"] in BY_SLUG)
+    for pages in subs.values():
+        order.extend(doc for doc in pages if doc["slug"] in BY_SLUG)
     return order
 
 
@@ -463,33 +553,36 @@ def _index_feature(feature: str) -> str:
         return f'<li><a href="{rel_href("index.html", doc["file"])}">{html.escape(doc["title"])}</a></li>'
 
     items: list[str] = []
-    for kind in TYPE_RANK:
+    for kind in NAV_ORDER:
         entry = entries.get(kind)
         kids = children[kind]
-        extra = subs if kind == "design" else {}
-        if entry is None and not kids and not extra:
+        if entry is None and not kids:
             continue
         nested_bits: list[str] = []
         if kind == "design":
             readers = [doc for doc in kids if doc["slug"].endswith("/reader")]
             nested_bits.extend(link(doc) for doc in kids if doc not in readers)
-            for name, pages in extra.items():
-                home = _sub_home(pages, name)
-                nested_bits.append(
-                    f'<li><a href="{rel_href("index.html", home["file"])}">{html.escape(name)}</a><ul>'
-                    + "".join(link(doc) for doc in pages)
-                    + "</ul></li>"
-                )
             nested_bits.extend(link(doc) for doc in readers)
         else:
             nested_bits.extend(link(doc) for doc in kids)
         nested = "<ul>" + "".join(nested_bits) + "</ul>" if nested_bits else ""
+        num = NAV_NUM[kind]
         if entry is not None:
             items.append(
-                f'<li><a href="{rel_href("index.html", entry["file"])}">{html.escape(entry["title"])}</a>{nested}</li>'
+                f'<li><a href="{rel_href("index.html", entry["file"])}">{num} {html.escape(entry["title"])}</a>{nested}</li>'
             )
         else:
             items.extend(nested_bits)
+    if subs:
+        bits: list[str] = []
+        for name, pages in subs.items():
+            home = _sub_home(pages, name)
+            bits.append(
+                f'<li><a href="{rel_href("index.html", home["file"])}">{html.escape(name)}</a><ul>'
+                + "".join(link(doc) for doc in pages)
+                + "</ul></li>"
+            )
+        items.append("<li>10 sub-feature<ul>" + "".join(bits) + "</ul></li>")
     home = feature_home(feature)
     return (
         '<section class="doc-group"><h3><a href="'
@@ -562,11 +655,62 @@ def pager(slug: str) -> str:
     return "".join(parts)
 
 
+def _callout_label(inner: str) -> str:
+    if "UNKNOWN" in inner or "Unverified" in inner:
+        return "UNVERIFIED"
+    lead = re.match(r"\s*(?:<p>)?\s*<strong>(.*?)</strong>", inner, re.S)
+    label = re.sub(r"<[^>]+>", "", lead.group(1)) if lead else ""
+    if re.search(r"警告|风险|Warning", label, re.I):
+        return "WARN"
+    if re.search(r"例子|例如|Example", label, re.I):
+        return "EXAMPLE"
+    return "NOTE"
+
+
+def _badge_levels(body: str) -> str:
+    parts = re.split(r"(<[^>]+>)", body)
+    skip = 0
+    out: list[str] = []
+    for part in parts:
+        if part.startswith("<"):
+            tag = re.match(r"</?([a-zA-Z0-9]+)", part)
+            if tag:
+                name = tag.group(1).lower()
+                if part.startswith("</"):
+                    if name in {"a", "code", "pre"} and skip:
+                        skip -= 1
+                elif name in {"a", "code", "pre"} and not part.endswith("/>"):
+                    skip += 1
+            out.append(part)
+            continue
+        if skip:
+            out.append(part)
+            continue
+        part = re.sub(
+            r"\bMUST NOT\b",
+            r'<span class="lvl lvl--must">MUST NOT</span>',
+            part,
+        )
+        part = re.sub(
+            r"\bMUST\b(?!\s+NOT)",
+            r'<span class="lvl lvl--must">MUST</span>',
+            part,
+        )
+        part = re.sub(
+            r"\bNICE\b",
+            r'<span class="lvl lvl--nice">NICE</span>',
+            part,
+        )
+        out.append(part)
+    return "".join(out)
+
+
 def apply_doc_transforms(doc: dict, body: str) -> str:
     rel = doc["source"][0]
+
     def callout(match: re.Match) -> str:
         inner = match.group(1)
-        label = "UNVERIFIED" if "Unverified" in inner or "UNKNOWN" in inner else "NOTE"
+        label = _callout_label(inner)
         return f'<blockquote class="callout" data-label="{label}">{inner}</blockquote>'
 
     body = re.sub(r"<blockquote>(.*?)</blockquote>", callout, body, flags=re.S)
@@ -602,6 +746,7 @@ def apply_doc_transforms(doc: dict, body: str) -> str:
             f'<section class="test-card">{part}</section>' if re.match(r"<h4>TST-", part) else part
             for part in parts
         )
+    body = _badge_levels(body)
     body = _stamp_ids(body, doc["file"])
     return _linkify(body, doc["source"][1], doc["file"])
 
@@ -615,7 +760,7 @@ def site_title(doc: dict) -> str:
 
 def doc_page(doc: dict) -> str:
     rel, path = doc["source"]
-    body = apply_doc_transforms(doc, render_source(rel, path))
+    body = inline_figures(apply_doc_transforms(doc, render_source(rel, path)), path)
     page = doc["file"]
     asset = rel_href(page, "assets/app.js")
     return f'''{head(site_title(doc), page)}
@@ -700,30 +845,30 @@ def index_page() -> str:
 
 
 SITE_CSS = r"""
-/* Google Cloud docs (devsite) theme — tokens from cloud.google.com clouddocs app.css */
+/* diagram-design editorial skin */
 :root {
-  --bg: #ffffff;
-  --bg-2: #f8f9fa;
-  --bg-3: #f1f3f4;
-  --fg: #202124;
-  --muted: #5f6368;
-  --subtle: #9aa0a6;
-  --border: #dadce0;
-  --border-2: #e8eaed;
-  --link: #1a73e8;
-  --link-hover: #1967d2;
-  --blue-soft: #e8f0fe;
-  --red: #d93025;
-  --red-soft: #fce8e6;
-  --code-bg: #f1f3f4;
-  --code-fg: #37474f;
-  --pre-bg: #283142;
-  --pre-fg: #f1f3f4;
-  --pre-link: #669df6;
-  --font-display: "Google Sans", "Noto Sans SC", Roboto, Arial, sans-serif;
-  --font-body: Roboto, "Noto Sans SC", Arial, sans-serif;
-  --font-mono: "Roboto Mono", "Sarasa Mono SC", ui-monospace, monospace;
-  --measure: 820px;
+  --bg: #f5f5f5;
+  --bg-2: #ececec;
+  --bg-3: #e4e4e4;
+  --fg: #2d3142;
+  --muted: #4f5d75;
+  --subtle: #5a6580;
+  --border: #bfc0c0;
+  --border-2: rgba(45, 49, 66, 0.12);
+  --link: #2e5aa8;
+  --link-hover: #24488a;
+  --blue-soft: rgba(46, 90, 168, 0.08);
+  --red: #bf4520;
+  --red-soft: rgba(191, 69, 32, 0.08);
+  --code-bg: #ececec;
+  --code-fg: #2d3142;
+  --pre-bg: #ececec;
+  --pre-fg: #2d3142;
+  --pre-link: #2e5aa8;
+  --font-display: "Instrument Serif", "Noto Serif SC", serif;
+  --font-body: Geist, "Noto Sans SC", "PingFang SC", sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
+  --measure: 760px;
   --topbar-h: 52px;
   color-scheme: light;
 }
@@ -753,12 +898,15 @@ button { font: inherit; }
   padding: 12px 24px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 12px;
 }
 .brand a { display: inline-flex; align-items: center; gap: 8px; color: var(--fg); text-decoration: none; }
 .brand a:hover { text-decoration: none; }
 .brand-mark { color: var(--link); font-family: var(--font-display); font-weight: 500; font-size: 18px; letter-spacing: .2px; }
 .brand-name { font-family: var(--font-display); font-size: 18px; font-weight: 500; color: var(--fg); }
+.strike-btn { font-family: ui-monospace, monospace; font-size: 12px; padding: 4px 10px; border: 1px solid var(--border); background: transparent; color: var(--fg); border-radius: 999px; cursor: pointer; }
+html[data-strike="off"] del { display: none; }
 
 /* layout: full-height left nav rail + content */
 .site {
@@ -797,6 +945,8 @@ button { font: inherit; }
 .tree-link:hover { background: var(--bg-3); color: var(--fg); text-decoration: none; }
 .tree-link[aria-current="page"] { background: var(--blue-soft); color: var(--link-hover); font-weight: 500; }
 .tree-link__num { display: none; }
+.tree-ord { flex: 0 0 auto; min-width: 1.4rem; font-variant-numeric: tabular-nums; color: var(--muted); font-size: 12px; }
+.tree-branch > details > summary > .tree-link { display: flex; align-items: baseline; gap: 8px; }
 .tree-branch > details > summary {
   display: flex;
   align-items: center;
@@ -858,13 +1008,12 @@ button { font: inherit; }
   border: 1px solid var(--border);
   border-radius: 8px;
   text-decoration: none;
-  transition: box-shadow .15s ease, border-color .15s ease;
+  transition: border-color .15s ease;
 }
 .doc-card:hover {
   color: var(--fg);
   text-decoration: none;
-  border-color: transparent;
-  box-shadow: 0 1px 2px rgba(60, 64, 67, .3), 0 1px 3px 1px rgba(60, 64, 67, .15);
+  border-color: var(--fg);
 }
 .doc-card__meta { font-size: 12px; color: var(--muted); }
 .doc-card__title { font-family: var(--font-display); font-size: 16px; font-weight: 500; line-height: 1.35; }
@@ -903,52 +1052,116 @@ button { font: inherit; }
 
 /* article body — devsite type scale */
 .doc-body { max-width: var(--measure); min-width: 0; }
-.doc-body > h2:first-child { margin-top: 0; }
 .doc-body h2 {
-  margin: 32px 0 12px;
+  margin: 40px 0 14px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
   font-family: var(--font-display);
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 32px;
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 1.2;
   color: var(--fg);
 }
+.doc-body > h2:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
 .doc-body h3 {
-  margin: 26px 0 10px;
-  font-family: var(--font-display);
-  font-weight: 400;
+  margin: 28px 0 10px;
+  font-family: var(--font-body);
+  font-weight: 600;
   font-size: 20px;
-  line-height: 28px;
+  line-height: 1.3;
   color: var(--fg);
 }
-.doc-body h4 { margin: 20px 0 8px; font-family: var(--font-display); font-weight: 500; font-size: 16px; color: var(--fg); }
-.doc-body p { margin: 0 0 12px; }
+.doc-body h4 {
+  margin: 22px 0 8px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--fg);
+  padding-left: 10px;
+  border-left: 3px solid var(--red);
+}
+.doc-body h5 {
+  margin: 18px 0 6px;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+.doc-body p { margin: 0 0 1em; font-size: 16px; line-height: 1.75; }
+.doc-body .lvl {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  border-radius: 3px;
+  padding: 1px 6px;
+  white-space: nowrap;
+}
+.doc-body .lvl--must { background: var(--red); color: #fff; }
+.doc-body .lvl--nice { border: 1px solid var(--border); color: var(--muted); background: var(--bg); }
+.doc-body a.id-ref {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  background: var(--bg-2);
+  border-radius: 3px;
+  padding: 0 4px;
+  text-decoration: none;
+}
+.doc-body a.id-ref:hover { background: var(--bg-3); color: var(--link-hover); }
 .doc-body ul, .doc-body ol { padding-left: 26px; margin: 0 0 12px; }
 .doc-body li { margin: 4px 0; }
 .doc-body li::marker { color: var(--fg); }
 .doc-body strong { font-weight: 500; }
 .doc-body hr { margin: 28px 0; border: 0; border-top: 1px solid var(--border-2); }
 
-/* callouts — devsite aside note style */
+/* callouts */
 .doc-body blockquote {
   margin: 16px 0;
   padding: 12px 16px;
-  border: 0;
-  border-radius: 8px;
-  background: var(--blue-soft);
+  border: 1px solid var(--border-2);
+  border-radius: 6px;
+  background: #fff;
   color: var(--fg);
 }
+.doc-body blockquote.callout { border-left-width: 3px; border-left-style: solid; }
 .doc-body blockquote.callout[data-label]::before {
   content: attr(data-label);
   display: block;
   margin-bottom: 4px;
-  color: var(--link-hover);
-  font-family: var(--font-display);
-  font-size: 13.5px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
   font-weight: 500;
-  letter-spacing: .3px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
 }
-.doc-body blockquote.callout[data-label="UNVERIFIED"] { background: var(--red-soft); }
+.doc-body blockquote.callout[data-label="NOTE"] { border-left-color: var(--link); }
+.doc-body blockquote.callout[data-label="WARN"],
+.doc-body blockquote.callout[data-label="UNVERIFIED"] {
+  border-left-color: var(--red);
+  background: var(--red-soft);
+}
+.doc-body blockquote.callout[data-label="WARN"]::before,
 .doc-body blockquote.callout[data-label="UNVERIFIED"]::before { color: var(--red); }
+.doc-body blockquote.callout[data-label="EXAMPLE"] { border-left-color: var(--muted); }
+
+figure.fig {
+  margin: 24px 0;
+  border: 1px solid var(--border-2);
+  border-radius: 6px;
+  background: var(--bg);
+  padding: 12px;
+}
+figure.fig .fig-scroll { overflow-x: auto; max-width: 100%; }
+figure.fig svg { display: block; max-width: 100%; height: auto; }
+figure.fig figcaption {
+  margin-top: 10px;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--muted);
+}
 .doc-body blockquote p { margin: 0 0 4px; }
 .doc-body blockquote p:last-child { margin-bottom: 0; }
 
@@ -986,14 +1199,18 @@ button { font: inherit; }
   padding: 10px 14px;
   border-bottom: 1px solid var(--border);
   background: var(--bg-2);
-  font-family: var(--font-body);
-  font-size: 13px;
+  font-family: var(--font-mono);
+  font-size: 11px;
   font-weight: 500;
   color: var(--fg);
   text-align: left;
+  text-transform: uppercase;
+  letter-spacing: .06em;
 }
 .doc-body td { padding: 10px 14px; border-bottom: 1px solid var(--border-2); vertical-align: top; text-align: left; }
 .doc-body tbody tr:last-child td { border-bottom: 0; }
+.doc-body tbody tr:nth-child(even) td { background: var(--bg-2); }
+.doc-body tbody tr:has(del) { opacity: .6; }
 
 /* requirement / clause / impl rows — reference-style rows */
 .req { display: grid; grid-template-columns: 76px 1fr; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--border-2); }
@@ -1078,6 +1295,9 @@ APP_JS = r"""
 
 
 def main() -> None:
+    import argparse
+
+    argparse.ArgumentParser(description="Build the SDD docs site, then the SDD reader (TST-R).").parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
     ASSETS.mkdir(parents=True, exist_ok=True)
     (ASSETS / "styles.css").write_text(SITE_CSS, encoding="utf-8")
@@ -1091,6 +1311,9 @@ def main() -> None:
         if "pipeline" in stale.relative_to(OUT).parts:
             stale.unlink()
     print(f"Wrote {OUT} ({len(DOCS) + 1} pages)")
+    import build_sdd_reader  # inside main: build_sdd_reader lazy-imports from this module
+
+    build_sdd_reader.main()
 
 
 if __name__ == "__main__":

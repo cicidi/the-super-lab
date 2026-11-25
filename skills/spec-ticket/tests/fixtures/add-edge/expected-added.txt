@@ -1,0 +1,5 @@
+# After appending added-section.md: one new ticket (IMPL-C) and one edge added to the OLD IMPL-B
+# ticket; nothing else on IMPL-B changes. github/jira: the confirm list must show the added edge.
+IMPL-A: -
+IMPL-B: IMPL-A, IMPL-C
+IMPL-C: -

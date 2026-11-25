@@ -5,388 +5,470 @@ state: draft
 final_date: 2026-10-30
 health: active
 owner: cicidi
-last_verified: 2026-11-04
+last_verified: 2026-11-24
 ---
 
-# Document Standard — 文档标准（待 Review）
+# Document Standard — 文档标准
 
-本文件定义 **`docs/features/` 下 feature 文档** 的类型、路径、命名、体量、格式、authority、health 与 enforcement。**不** 规定 agent skill 拆几个文件、如何加载 — 那是 **implementation** 另文对齐。
+本篇规定 `docs/features/` 下的 feature 文档怎么写：有哪几种文档、放在哪、叫什么名字、最长多少行、开头写什么、必须有哪些章节、编号怎么起、出现矛盾以谁为准。本篇不规定 skill 怎么拆文件、怎么加载这些规则，那属于实现。
 
-相关：**pipeline** 见 `../pipeline/design/pipeline-design.md`；**测试** 见 parent `../../../test-plan/spec-driven-development-test-plan.md`（被测 = spec-write / spec-review；本篇 MUST 进其 registry）。
+相关文档：
 
-### 术语（避免与 SDD「spec-driven」混淆）
+- 写 spec 分几个阶段，见 [pipeline design](../../pipeline/design/pipeline-design.md)。
+- 怎么测试，见 parent 的 [test-plan](../../../test-plan/spec-driven-development-test-plan.md)。被测的是 spec-write、spec-review 和 wayfinder 三个 skill；本篇的每条 MUST 都收进 MUST 清单，由测试逐条检查。
+- 术语和缩写，见 [parent design 的术语表](../../../design/spec-driven-development-design.md#glossary)。
 
-| 术语 | 含义 |
+本篇的规则小节用 DSGN 编号，只在 document-standard 这个 feature 内有效：
+
+| 编号 | 讲什么 |
 |---|---|
-| **Feature spec** | 一个 feature 的 **committed 文稿合称**：`prd` + **`design`** + `impl-plan` + `test-plan` + `decision-history`（+ 可选 `how-to`）。口语「维护 spec」常指 **这一套**，不是单指某一文件。 |
-| **`design`（type）** | 合称中的 **技术设计篇**：目录 `design/`，文件 `<f>-design.md`，frontmatter `type: design`。SDD 循环里与 PRD、decision-history 互磨的 **设计正文** 指此。 |
-| **SDD** | Spec-driven development — 方法名不变；与 **`type: design`** 文件夹无关。 |
-
-**DSGN 索引**
-
-| 节 | 内容 |
-|---|---|
-| DSGN-A | Contract（类型、路径、size、non-commit、INDEX/book、格式、条目 ID） |
-| DSGN-G | Authority by concern |
-| DSGN-H | `design` 篇写什么 / agent context |
-| DSGN-I | Content priority（L1–L4） |
-| DSGN-J | Decision history 语义 |
-| DSGN-K | 命名冲突处置 |
-| DSGN-L | Enforcement modes |
-| DSGN-M | Quality gates（MUST / NICE） |
-| DSGN-N | Spec reader HTML（aspect 篇 + **SPEC-HTML-STANDARD**） |
+| DSGN-A | 文档契约总览，包含下面的 DSGN-B 到 DSGN-F |
+| DSGN-B | 文档类型、目录、文件名、行数上限、怎么拆分 |
+| DSGN-C | 哪些文件不能提交 |
+| DSGN-D | INDEX 和 book 这两层派生内容 |
+| DSGN-E | frontmatter、必需章节、Decision Log 和 Change Log 的格式 |
+| DSGN-F | 编号规则，以及怎么改已有正文 |
+| DSGN-G | 冲突时以谁为准（按关注点分权威） |
+| DSGN-H | design 文档写什么、不写什么 |
+| DSGN-I | 内容的四个优先级（L1 到 L4） |
+| DSGN-J | decision-history 怎么写 |
+| DSGN-K | 名字撞车时怎么处理 |
+| DSGN-L | 检查和整理文档的几种模式 |
+| DSGN-M | 质量门槛：哪些是 MUST，哪些是 NICE |
+| DSGN-N | 给人读的 reader HTML，见[分篇](document-standard-design-spec-reader-html.md) |
 
 ## Problem Statement
 
-Feature 文档多时，缺少统一 standard 会导致：无 authoritative artifact 时的 silent overwrite、路径混乱、stale 与 wrong 不分、同一 fact 多处 drift。
+feature 文档一多，如果没有统一标准，会出现四类问题：
+
+- 两份文档说法不一致时，不知道以哪份为准，AI 就会悄悄改掉其中一份。
+- 文档放得到处都是，找不到。
+- 分不清一份文档是「过时了」还是「写错了」。
+- 同一个事实写在好几处，改了一处，其他几处还是旧的。
 
 ## Solution
 
-**DSGN-A = 契约**（MUST 主要来自 **DSGN-A**（含 **DSGN-B–F**）与 **DSGN-M**）。**DSGN-G–DSGN-L** = 语义与流程补充。
+用一份契约规定所有文档共同遵守的格式，再用几条补充规则处理语义和流程上的问题：
 
----
+- **契约（DSGN-A，包含 DSGN-B 到 DSGN-F）**：类型、路径、行数、不能提交的文件、INDEX 和 book、frontmatter、章节、编号。大多数 MUST 规则在这里，脚本可以自动检查。
+- **补充规则（DSGN-G 到 DSGN-L）**：冲突以谁为准、design 写什么、内容优先级、决定怎么记、撞名怎么办、检查模式。这些多数要靠 spec-review 判断。
+- **质量门槛（DSGN-M）**：把上面的规则分成 MUST 和 NICE。
 
 ## User Stories
 
-- 作为写 spec 的人，我希望知道文档放哪、叫什么、多大、谁是权威。
-- 作为 reviewer，我希望机械 MUST 能被脚本检查，语义问题只报告不静默改。
-- 作为 agent，我希望 frontmatter、ID、Change Log 规则明确，不用猜。
+- 作为写 spec 的人，我想知道文档放在哪、叫什么、最长多少行、哪份说了算。
+- 作为审 spec 的人，我希望格式规则能由脚本检查；内容上的问题只报告，不被悄悄改掉。
+- 作为 AI，我希望 frontmatter、编号、Change Log 的规则写得明确，不用猜。
 
 ## Implementation Decisions
 
-- 可执行摘要在 SPEC-STANDARD.md 与 SPEC-PRESENTATION.md。机械 MUST 由检查脚本执行；semantic 由 **spec-review** 报告。入口是 spec-write 与 spec-review（ARD-AJ）。
-- `how-to` 暂不机械检查；其余五类按 DSGN-E 执行。
-- 存量不合规文档不迁移，只报告（ARD-AF）。
+- 本篇的规则会摘要写进 `SPEC-STANDARD.md` 和 `SPEC-PRESENTATION.md`；reader design 的规则摘要写进 `SPEC-HTML-STANDARD.md`。spec-write 和 spec-review 读的是这三份摘要（[ARD-CH](../../../decision-history/spec-driven-development-decision-history.md#ard-ch) 重述 ARD-BX）。摘要和本篇不一致时，先改本篇，再改摘要。
+- 格式类的 MUST 由检查脚本执行；内容类的问题由 spec-review 报告。
+- how-to 暂不做机械检查；其他五种文档按 DSGN-E 检查。
+- 已有的不合规文档不迁移，只报告（[ARD-CK](../../../decision-history/spec-driven-development-decision-history.md#ard-ck)，重述 ARD-AF）。
+- 本篇是一份纯标准，「子问题归属表」不适用（pipeline design 的 PIPE-L 允许这样注明）。还没定的事项和它们的负责人见 [Open Questions](#open-questions)。
 
 ## Design
 
 ### DSGN-A — Document Contract
 
-#### DSGN-B — 类型 · 目录 · 文件名 · size · split（一表）
+文档契约由下面五条组成：DSGN-B 规定类型和路径，DSGN-C 规定哪些不能提交，DSGN-D 规定 INDEX 和 book，DSGN-E 规定格式，DSGN-F 规定编号。
 
-`<f>` = kebab-case slug，**与 committed 文件名中的 feature 段一致**。
+#### DSGN-B — 文档类型、目录、文件名、行数上限、拆分
 
-| 形态 | 根目录 | 表内 `<f>` / frontmatter `feature` |
+来源：parent PRD 的 PRD-D（行数上限）和 PRD-E（目录、文件名、目录之间的关系）。
+
+`<f>` 表示 feature 的名字，用小写字母和连字符（例如 `spec-driven-development`），并且要和文件名里的 feature 部分一致。
+
+feature 有两种放法：
+
+| 放法 | 根目录 | frontmatter 里的 `feature` 写什么 |
 |---|---|---|
-| Flat | `docs/features/<f>/` | `<f>` |
-| Sub-feature | `docs/features/<parent>/features/<sub>/` | **`<sub>`** |
+| 普通 feature | `docs/features/<f>/` | `<f>` |
+| sub-feature | `docs/features/<parent>/features/<sub>/` | `<sub>`，也就是 sub-feature 自己的名字 |
 
-**Sub 示例**（parent `spec-driven-development`，sub `document-standard`）：  
-`.../document-standard/design/document-standard-design.md`；part `document-standard-design-<aspect>.md`；  
-`.../document-standard/raw/research/<topic>.md`；`.../raw/state/state-<YYYY-MM-DD>.md`。  
-Sibling：`.../pipeline/design/pipeline-design.md`。**待 review：** tooling 是否完全支持 sub 树与 `raw/`。
+sub-feature 的例子（parent 是 `spec-driven-development`，sub-feature 是 `document-standard`）：
 
-Committed：**目录 + 文件名**；文件名 **必须** `<f>-<type>…`（`raw/` 除外）。Supporting：`docs/features/<f>/<type>/<source-name>.md`（硬 cap 同 parent type）。**禁止** 单独 `reference/` type（外链材料放在 supporting 或 `raw/`）。
+- 入口 design：`.../document-standard/design/document-standard-design.md`
+- design 分篇：`.../document-standard/design/document-standard-design-<名词>.md`
+- 调研笔记：`.../document-standard/raw/research/<主题>.md`
+- 进度快照：`.../document-standard/raw/state/state-<YYYY-MM-DD>.md`
+- 同级的另一个 sub-feature：`.../pipeline/design/pipeline-design.md`
 
-**Split / size（PRD-D；目录/文件名关系见 PRD-E）：** 六种 type 均可 part；`行数 > 硬 cap` → MUST fail；按 bounded context / domain / ownership / lifecycle / 时间线 拆（不机械切行数）。可先 **DSGN-I** trim（`decision-history` 不 trim entry，只拆 part）。Entry 文件可链 part。**Collision** → **DSGN-K**。硬 cap 含 frontmatter 与 Change Log；**删 L1 凑 cap = defect**。
+**文件名规则（MUST）。** 提交的文档必须放在对应类型的目录里，文件名以 `<f>-<type>` 开头。有两种例外：`raw/` 下的文件；被某篇文档引用的辅助文件，它放在 `docs/features/<f>/<type>/<来源名>.md`，行数上限和它所在的类型相同。不允许单独建一个 `reference/` 类型；外部资料放在辅助文件里，或者放进 `raw/`。
 
-| Type | 内容 | Commit | 目录 | 文件名（entry） | 文件名（part） | 目标行 | 硬 cap |
-|---|---|---|---|---|---|---|---|
-| `prd` | 做什么、为什么 | yes | `docs/features/<f>/prd/` | `<f>-prd.md` | `<f>-prd-<aspect>.md` | 150–400 | 800 |
-| `design` | 技术设计（怎么做） | yes | `docs/features/<f>/design/` | `<f>-design.md` | `<f>-design-<aspect>.md` | 200–500；架构 500–900 | 1,000 |
-| `impl-plan` | task 分解 | yes | `docs/features/<f>/impl-plan/` | `<f>-impl-plan.md` | `<f>-impl-plan-<NN>-<phase>.md` | 100–500 | 1,000 |
-| `test-plan` | 验证 | yes | `docs/features/<f>/test-plan/` | `<f>-test-plan.md` | `<f>-test-plan-<area>.md` | 200–600 | 800 |
-| `decision-history` | 全部 decision | yes | `docs/features/<f>/decision-history/` | `<f>-decision-history.md` | `<f>-decision-history-<NN>-<period>.md` | — | 不设 |
-| `how-to` | 使用/运维 | yes | `docs/features/<f>/how-to/` | `<f>-how-to.md` | `<f>-how-to-<scenario>.md` | 100–350 | 600 |
-| `raw` | 非 commit 原始区 | no | `docs/features/<f>/raw/<subdir>/` | 见下表 | — | 宜 ≤2,000 | — |
+六种类型，每种放在哪、叫什么：
 
-**`raw/`**（gitignore `docs/features/*/raw/`；无 frontmatter / Change Log / INDEX；升格事实 **link** 不 restate）：
+| 类型 | 写什么 | 目录 | 入口文件名 | 分篇文件名 |
+|---|---|---|---|---|
+| `prd` | 做什么、为什么 | `docs/features/<f>/prd/` | `<f>-prd.md` | `<f>-prd-<名词>.md` |
+| `design` | 怎么做 | `docs/features/<f>/design/` | `<f>-design.md` | `<f>-design-<名词>.md` |
+| `impl-plan` | 任务和先后顺序 | `docs/features/<f>/impl-plan/` | `<f>-impl-plan.md` | `<f>-impl-plan-<两位序号>-<阶段>.md` |
+| `test-plan` | 怎么验证 | `docs/features/<f>/test-plan/` | `<f>-test-plan.md` | `<f>-test-plan-<范围>.md` |
+| `decision-history` | 所有决定 | `docs/features/<f>/decision-history/` | `<f>-decision-history.md` | `<f>-decision-history-<两位序号>-<时期>.md` |
+| `how-to` | 怎么使用、怎么运维 | `docs/features/<f>/how-to/` | `<f>-how-to.md` | `<f>-how-to-<场景>.md` |
 
-| Subdir | 放什么 | 文件名 |
+这六种都要提交到 git。六种都可以拆分篇；有分篇时，必须有入口文件 `<f>-<type>.md`，入口文件链到各分篇（MUST，[ARD-BQ](../../../decision-history/spec-driven-development-decision-history.md#ard-bq)）。分篇的命名规则：prd、design、test-plan、how-to 用名词，说明这篇讲哪个方面；impl-plan 和 decision-history 用「序号加阶段或时期」，因为它们有先后顺序（[ARD-G](../../../decision-history/spec-driven-development-decision-history.md#ard-g)）。
+
+**行数（MUST）。** parent PRD 的 PRD-D 规定，除 decision-history 外，任何文档不超过 1,000 行。各类型的具体数字：
+
+| 类型 | 建议行数 | 上限（MUST） |
 |---|---|---|
-| `raw/research/` | 调研原始输出 | `<topic>.md` |
-| `raw/review/` | agent 短时 review | `<YYYY-MM-DD>-<reviewer>-<subject>.md` |
-| `raw/design/` | 未并入 **`design/` 正文** 的草稿（≠ committed `design/` 目录） | `<YYYY-MM-DD>-<subject>.md` |
-| `raw/evidence/` | evidence / 工具输出 | `<YYYY-MM-DD>-<slug>.md` |
-| `raw/discussion/` | 讨论串（可选） | `<topic>.md` |
-| `raw/state/` | compaction 快照 | `state-<YYYY-MM-DD>.md`（硬 cap 400） |
+| `prd` | 150–400 | 800 |
+| `design` | 200–500；整体架构类 500–900 | 1,000 |
+| `impl-plan` | 100–500 | 1,000 |
+| `test-plan` | 200–600 | 800 |
+| `decision-history` | 不设 | 不设（[ARD-E](../../../decision-history/spec-driven-development-decision-history.md#ard-e)） |
+| `how-to` | 100–350 | 600 |
+| `raw/` 下的文件 | 最好不超过 2,000 | 不设 |
 
-Part 命名：`prd`/`design`/`test-plan`/`how-to` 用名词；`impl-plan`/`decision-history` 用 `<NN>`+phase/period。Legacy 顶层 `state/`、`research/`、`discussion/` → 迁入 `raw/`。Ticket：`.scratch/<feature-slug>/`（同样 **不得 commit**）。
+上限包括 frontmatter 和 Change Log。超过上限就算失败，处理方法是：
 
-**Commit 列：** `yes` = 纳入版本库的标准 feature 文档；`no` = **不得** 进入 git（本地可存在）。`no` 路径须 `.gitignore` 或等价策略；误 commit 视为 **DSGN-M MUST** 违规。
+1. 先按 DSGN-I 删减：从 L4 开始删，L1 永远不删。为了凑行数删掉 L1，本身就是错误。decision-history 不删条目，只能拆分篇。
+2. 删减后仍然超过，就拆成分篇。按业务边界、领域、负责人、生命周期或时间段来拆，不要按行数机械地切。
+3. 入口文件必须链到各分篇（ARD-BQ）。拆分时如果名字撞车，见 DSGN-K。
 
-#### DSGN-C — 不得 commit（`Commit = no`）
+**`raw/` 目录。** `raw/` 放本地草稿，在 `.gitignore` 里用 `docs/features/**/raw/` 排除；两个星号表示任意层级，sub-feature 下的 `raw/` 也被排除。这里的文件不需要 frontmatter、Change Log，也不进 INDEX。草稿里的结论要正式写进文档时，在正式文档里写结论并链到草稿。草稿可以作为依据，即使其他读者打不开（[ARD-BW](../../../decision-history/spec-driven-development-decision-history.md#ard-bw)）；但它不是权威出处，权威的是写进正式文档的那句结论。
+
+| 子目录 | 放什么 | 文件名 |
+|---|---|---|
+| `raw/research/` | 调研的原始输出 | `<主题>.md` |
+| `raw/review/` | AI 临时做的审查记录 | `<YYYY-MM-DD>-<审查者>-<对象>.md` |
+| `raw/design/` | 还没写进正式 design 的草稿 | `<YYYY-MM-DD>-<对象>.md` |
+| `raw/evidence/` | 证据、工具输出 | `<YYYY-MM-DD>-<简称>.md` |
+| `raw/discussion/` | 讨论记录（可选） | `<主题>.md` |
+| `raw/state/` | 进度快照，用来在长对话被压缩后恢复上下文 | `state-<YYYY-MM-DD>.md`（最多 400 行）；SDD 的进度用 `raw/state/wayfinder/` 地图目录（parent ARD-CH） |
+
+旧项目里直接放在 feature 根目录的 `state/`、`research/`、`discussion/`，挪进 `raw/`。工单草稿放在 `.scratch/<feature>/`，同样不提交。
+
+#### DSGN-C — 不能提交的文件
 
 | 路径 | 说明 |
 |---|---|
-| `docs/features/<f>/raw/**` | 原始区全树（含 `raw/state/`） |
-| `.scratch/<feature-slug>/` | ticket 等 ephemeral（不在 `docs/features/` 但同属 non-commit） |
+| `docs/features/<f>/raw/**` | 整个草稿目录，包括 `raw/state/` |
+| `docs/state/` | 名字没定时的 wayfinder 地图目录（parent ARD-CH） |
+| `.scratch/<feature>/` | 工单等临时文件。它不在 `docs/features/` 下，但同样不能提交 |
 
-不得要求 frontmatter、Change Log、INDEX 条目。升格进 committed type 时 **link**，不把 raw 当 authoritative home。
+这些路径必须写进 `.gitignore` 或用等效的办法排除。误提交算违反 DSGN-M 的 MUST。这些文件不需要 frontmatter、Change Log，也不进 INDEX。
 
-#### DSGN-D — INDEX 与 book（派生层）
+**本地翻译副本（MUST）。** `<name>.<lang>.md` 这样的翻译副本只放在本地，不提交。副本开头写明以 `<name>.md` 为准；副本里的标题可以翻译（[ARD-AU](../../../decision-history/spec-driven-development-decision-history.md#ard-au)）。
 
-`docs/features/` 里的 committed 文档是 **source of truth**。INDEX 与 book 都是 **派生层**，不用 **DSGN-E** frontmatter / Change Log，**不写** 新 decision：
+#### DSGN-D — INDEX 和 book
 
-| | **INDEX** | **book** |
+`docs/features/` 里已提交的文档是唯一的真相来源。INDEX 和 book 都是从它们派生出来的，不用 DSGN-E 的 frontmatter 和 Change Log，也不能在里面写新的决定。
+
+| | INDEX | book |
 |---|---|---|
-| 回答的问题 | **在哪**（路径、type、initiative 结构） | **干了什么**（短摘要，便于 AI/人决定要不要打开全文） |
-| 典型粒度 | 一行链接 + 标题（可带一句 summary） | 每篇或每组 source 文档一段 **组装摘要**，链回 canonical 路径 |
+| 回答什么问题 | 文档在哪：路径、类型、feature 结构 | 文档讲了什么：短摘要，帮人和 AI 决定要不要打开原文 |
+| 粒度 | 一行一个链接加标题，可以带一句说明 | 每篇或每组文档一段摘要，链回原文 |
 
----
+**`docs/INDEX.md` 是什么。** 它是所有 feature 文档的地图：每个 feature 下有哪些 PRD、design、计划，各在什么路径。人、AI、脚本找文档时，先查 INDEX，再打开 `docs/features/` 里的原文。INDEX 不是 design，在 INDEX 里改标题或链接不等于改需求，INDEX 里也不写设计结论。
 
-**`docs/INDEX.md` — 干什么**
+**INDEX 怎么维护：**
 
-| | |
-|---|---|
-| **目的** | 全库 **feature spec** 各篇的 **地图**：哪个 initiative 下有哪些 PRD、design、plan，路径是什么。 |
-| **给谁用** | 人、agent、脚本 **发现文档** 时先查 INDEX，再打开 `docs/features/...` 里的正文。 |
-| **不是什么** | 不是 design 正文；在 INDEX 里改标题/链接 **不等于** 改 requirement；INDEX 里 **不写** 设计结论。 |
-| **与 feature 树** | 每个 listed 链接必须指向 **Commit = yes** 的标准路径；tree 变了 INDEX 必须跟着变。 |
+- 整个文件由脚本重新生成。要改内容就改生成脚本或模板，不要长期手工一行行改。
+- 任何已提交的文档新建、移动、改名、删除之后，都要重新生成 INDEX，并且和那次文档改动一起推送。
+- 只列已提交的文档，包括 sub-feature 的文档；不列 `raw/` 和 `.scratch/`。
+- 按 feature 分块，块内按类型排序：prd、design、impl-plan、test-plan、decision-history。链接写成相对 `docs/` 的路径。
+- 质量要求（MUST）：磁盘上有、INDEX 里没列的，叫孤立文档；INDEX 里列了、磁盘上没有的，叫死链。两种都不允许。
 
-**INDEX 怎么维护**
+**`docs/book/` 是什么。** 它是从 feature 文档组装出来的摘要层，用短说明写清每份 PRD、design、计划覆盖什么、结论是什么、去哪里读全文，主要帮 AI 检索和挑选要读的文档。人和 AI 先扫 book，再打开原文。book 不是真相来源，不是全文拷贝，也不能和原文各自手工维护同一个事实。
 
-- **生成物**：整文件 **regenerate**（改 generator/template，不长期手改一行行条目）。
-- **何时 regenerate**：任一 committed 文档 **create / move / rename / delete** 之后；与 book 一样，**push 到 GitHub 前/时** 应与 `docs/features/` 变更 **同批同步**（见 book 应然）。
-- **收录范围**：只列 committed 文档（含 sub-feature）；**不**列 `raw/`、`.scratch/`。
-- **结构**：按 **feature（initiative）** 分块，块内按 **type** 顺序（`prd` → `design` → … → `decision-history`）；链接相对 `docs/`。
-- **质量（DSGN-M MUST）**：disk 有文件但未 listed → **orphan**；listed 但文件不存在 → **dead link**。
+**book 写什么：**
 
----
+- 每条摘要都链到对应的原文路径。
+- 写这篇的范围和主要结论或状态，不展开 L1 的全文。
+- 新增或修改决定时，只改 feature 文档和 decision-history，然后重新生成 book；不能只在 book 里改说法。
 
-**`docs/book/**` — 干什么**
+**book 什么时候更新：**
 
-（与历史 **doc-organize** 一致：*Assembled output, built from documents that are already `final`。* — 此处 **final** 指 feature 侧已接受的 committed 正文，不是 book 自己定稿。）
+- 改了 `docs/features/` 下已提交的 markdown，commit 前必须重新生成 book（网页）和 INDEX（[ARD-CF](../../../decision-history/spec-driven-development-decision-history.md#ard-cf)）。具体用 pre-push hook、CI 还是手动，属于实现。本标准只要求远端能看到的文档和 book、INDEX 保持同步，避免 AI 在 GitHub 上读到新 spec，摘要却还是旧的。
+- draft 和 final 一样：改了就重新生成，不再有 draft 例外（ARD-CF）。
 
-| | |
-|---|---|
-| **目的** | 由 feature spec 各篇 **组装** 的 **摘要层**：用短说明写清每份 PRD/design/plan **覆盖什么、得出什么、该去哪读全文** — 主要给 **AI 检索与选篇**。 |
-| **给谁用** | Agent / 人 **先扫 book 再打开** `docs/features/...`；不是在此写第一版 design 或新 decision。 |
-| **不是什么** | **不是** source of truth；**不是** design 全文拷贝；**不能** 与 feature 正文 **手维护两份相同 fact**。 |
-| **与 INDEX** | INDEX = 目录；book = **内容摘要**。二者互补，通常 **一起** 更新。 |
+**其他：**
 
-**book 写什么（摘要契约）**
+- book 在 `docs/book/` 下，不用 DSGN-E 的 frontmatter。检查只看链接是否有效、摘要指向的文件是否存在。
+- HTML 页面在 `docs/book/html/`，目录结构和 `docs/features/` 一样。HTML 也不是真相来源（[ARD-BF](../../../decision-history/spec-driven-development-decision-history.md#ard-bf)）。
+- book 可以另外用来发布 MkDocs 或 GitHub Pages 网站。网站的导航怎么排属于实现，但不能和 feature 目录、INDEX 矛盾。
 
-- 每条摘要 **必须** 链到对应 **canonical 路径**（`docs/features/...`）。
-- 写 **scope + 主要结论/状态**（例如：document-standard 的 design 篇定 DSGN-A 契约；pending review 项），**不** 展开 L1 全文。
-- 新增/变更 decision 只改 feature / `decision-history`，再 **重生成** book 摘要，禁止只在 book 改口径。
+另外两个不算 feature 文档的文件，同样不用 frontmatter，检查只看链接：`CONTEXT.md`（领域术语表）和 `README.md`（仓库说明）。
 
-**book 什么时候更新（应然）**
+#### DSGN-E — 格式
 
-- 凡 **`docs/features/` 下 committed 文档** 有变更并 **push 到 GitHub**，**同一 push（或紧邻的前序 commit）中应已 regenerate 对应的 book**（及 INDEX）。  
-  *实现*（pre-push hook、CI、bot、手动）属 **impl**；本 standard 要求 **远端可见的 docs 与 book/INDEX 同步**，避免 AI 在 GitHub 上读到新 spec 却仍是旧摘要。
-- 源文档 **`state: draft`** 时可暂不更新对应摘要；**`final` 或已 merge 的 committed 变更** 必须反映到 book。
-
-**其它**
-
-- 路径：`docs/book/**`；无 **DSGN-E** frontmatter；Lint 查 **link 有效**、摘要指向的文件存在。
-- HTML：`docs/book/html/` 镜像 `docs/features/`。摘要仍在 book 其他路径；HTML 不是 source of truth（ARD-BF）。
-- 可 **额外** 用于 MkDocs / Pages 发布；发布 nav 属 impl，不得与 feature 树、INDEX 矛盾。
-
----
-
-**其它豁免路径**（同样不是 feature 文档，无 **DSGN-E** frontmatter；Lint 只查 link）：`CONTEXT.md`（domain glossary）、`README.md`（repo 导向）。
-
-#### DSGN-E — 格式（committed 文档）
+**frontmatter（MUST）。** 每篇已提交的文档开头都有：
 
 ```yaml
 ---
 feature: <feature-name>
 type: prd | design | impl-plan | test-plan | decision-history | how-to
 state: draft | final
-final_date: YYYY-MM-DD   # final 时必填
+final_date: YYYY-MM-DD   # state 是 final 时必填
 ---
 ```
 
-可选（NICE）：`spec_id`, `version`, `health`（`active`|`stale`|`deprecated`），`owner`, `last_verified` — 用 **`health`** 不用 `status`。
+可选字段：`spec_id`、`version`、`health`（`active`、`stale` 或 `deprecated`）、`owner`、`last_verified`、`audience`（`internal` 或 `external`，[ARD-AL](../../../decision-history/spec-driven-development-decision-history.md#ard-al)）。表示文档健康状况的字段叫 `health`，不叫 `status`（[ARD-D](../../../decision-history/spec-driven-development-decision-history.md#ard-d)）。
 
-| Type | Required sections（可 add，不可 rename/drop） |
+**必需章节（MUST）。** 每种文档必须有下面这些 `##` 章节。标题用英文原文，不翻译、不编号、不改名、不删；可以另外加章节。比如把 Overview 写成 `## 1. 概述` 就违反规则。其他章节只有写有序步骤时才编号；例外是 Problem Statement 下面作者原话的小标题可以保留编号（[ARD-BS](../../../decision-history/spec-driven-development-decision-history.md#ard-bs)）。
+
+| 类型 | 必需章节 |
 |---|---|
 | `prd` | Overview, Goals and Success Metrics, User Stories, Functional Requirements, Out of Scope, Resources Needed |
 | `design` | Problem Statement, Solution, User Stories, Implementation Decisions, Design, Testing Decisions, Out of Scope, Further Notes, Alternatives Considered, Drawbacks, Risks and Mitigations, Open Questions, Reversibility |
-| `impl-plan` | Global Constraints, Acceptance Criteria, IMPL-* tasks |
+| `impl-plan` | Global Constraints, Acceptance Criteria，以及每个任务一节 `## IMPL-*` |
 | `test-plan` | Test Cases, Test Execution Order, Expected Pass Threshold |
 | `decision-history` | Decision Log, Evidence Appendix |
 | `how-to` | Overview, Prerequisites, Steps, Verification |
 
-**检查范围：** `how-to` 暂不机械检查；其余五类按本表执行。
+- how-to 暂不做机械检查，其他五种按本表检查。
+- design 拆成多篇时，13 个必需章节只要求写在入口文件；分篇在开头链回入口，只写自己那部分（[ARD-AV](../../../decision-history/spec-driven-development-decision-history.md#ard-av)）。
+- 某个必需章节对这篇确实不适用，就保留标题，正文写一句「不适用」并说明原因，或者链到写着这件事的地方。
 
-**impl-plan 正文（MUST，spec-write 执行）：** 每条 `IMPL-*` 写依赖谁、挡住谁。`Execution order` 把被挡住的排后面（先改库，再改 API）。优先级高且没被挡住的先做；没被挡住的可以同时做。
+**几个章节的意思。** 这几个章节借鉴自 Kubernetes 的设计提案模板（KEP）和 Rust 的 RFC 模板：
 
-新增节承自 KEP / Rust RFC：`Alternatives Considered`、`Drawbacks`、`Risks and Mitigations`、
-`Open Questions` 为通用节;`Acceptance Criteria`(= Graduation Criteria)、`Reversibility`
-(= Upgrade/Downgrade)、`Resources Needed`(= Infrastructure Needed)为改名后的通用语义。
-版本偏移、发布签核、运维就绪问卷**不采纳**(集群/运维形状,违反 PRD-Q)。Decision Log 表头：`ID \| Date \| Decision`（**无** `Status` / `Supersedes` 列）。**倒序**：新 entry 在表顶。Change Log：**最后一节**，只 append。PROTECTED 块任何 mode 不改。INDEX：文档增删移后 regenerate。
+| 章节 | 写什么 |
+|---|---|
+| Alternatives Considered | 考虑过但放弃的方案，以及放弃的原因 |
+| Drawbacks | 选定的方案本身有什么缺点 |
+| Risks and Mitigations | 用起来可能出什么问题，怎么应对。和 Drawbacks 分开写 |
+| Open Questions | 还没解决的问题，每个都有负责人 |
+| Reversibility | 怎么撤回、怎么回到原来的状态（对应 KEP 的升级降级） |
+| Acceptance Criteria | 做到什么程度算完成（对应 KEP 的 Graduation Criteria） |
+| Resources Needed | 需要哪些资源（对应 KEP 的 Infrastructure Needed） |
 
-#### DSGN-F — 条目 ID（type 前缀 + 字母）
+KEP 里的版本偏移、发布签核、运维就绪问卷不采用：它们是为集群运维设计的，不适合非软件问题（parent PRD 的 PRD-Q 要求方法通用）。
 
-各 type 内可追溯条目用 **`{前缀}-{字母}`**，字母序同 Excel 列（`A`–`Z` → `AA`–`AZ` → `BA`–…）。可在已有条目之间 **插入** 新 ID（大方向顺序，见 **DSGN-J**）。
+**impl-plan 正文（MUST，由 spec-write 执行）。** 每个 `IMPL-*` 写明三件事：依赖哪个任务、挡住了哪个任务、完成标准。依赖和挡住要两头对得上：A 写了挡住 B，B 就要写依赖 A。最后的执行顺序把被挡住的任务排在后面，例如先改数据库，再改用到它的接口。优先级高又没被挡住的先做；互不相挡的可以同时做。先做只读的部分，再做会写入的部分；对方的接口还没上线时，写明用什么 mock 代替（[ARD-AT](../../../decision-history/spec-driven-development-decision-history.md#ard-at)）。
 
-**ID immutable（MUST）：** 某 ID **一旦写入** feature spec（表、标题、正文、外链），该字符串 **终身固定** — **禁止** 改字母、改前缀、拼写「修正」、重编号、把 `PRD-A` 合并进 `PRD-B`。**禁止复用** 已出现过的 ID（即使 entry 被 strike / 整段作废）。口径变了 → **新 ID** + 旧处 strike / link（**DSGN-J**）；**不得** 改旧 ID 本身。
+**引用代码（MUST）。** 写「某文件第几行」时，同时写明是哪个 commit（[ARD-AQ](../../../decision-history/spec-driven-development-decision-history.md#ard-aq)）。
 
-| Type | 前缀 | 例 |
+**未决问题清单（MUST）。** 每个 feature 只有一份未决问题清单，一般是 design 的 `## Open Questions`；其他文档链过去，不抄一份。每个条目编号是 `QUES-` 加字母，写明问题、目前答案、负责人，以及是否阻塞（[ARD-AO](../../../decision-history/spec-driven-development-decision-history.md#ard-ao)、[ARD-AG](../../../decision-history/spec-driven-development-decision-history.md#ard-ag)）。在别处提到某个问题时，写的「未决」或「已决」要和清单一致（[ARD-BC](../../../decision-history/spec-driven-development-decision-history.md#ard-bc)）。
+
+**可读性（MUST）。** 来源：parent PRD 的 PRD-M。一个本科水平的程序员，只读这一篇和术语表，就要能读懂（[ARD-BO](../../../decision-history/spec-driven-development-decision-history.md#ard-bo)，由 parent test-plan 的 TST-V 检查）。具体要求：
+
+- 写完整的句子。关键词串、`A → B → 失败` 这样的箭头链、塞满缩写的表格格子，都不算句子。
+- 每个术语和缩写，第一次出现时解释，或者链到术语表。整套 spec 只有一份术语表，在 [parent design 的附录](../../../design/spec-driven-development-design.md#glossary)；新术语加到那里。
+- 正文可以中英文混合，只要读着通顺；英文术语同样要解释或收进术语表。Problem Statement 可以保留作者原话（[ARD-BS](../../../decision-history/spec-driven-development-decision-history.md#ard-bs)）。
+- 必需章节的标题和编号用英文。
+
+**插图（MUST）。** 图里不写正文没有的事实，也不和正文矛盾；L1 内容不能只出现在图里。spec-review 发现时报严重度 3，并写出 SVG 文件名（[ARD-CA](../../../decision-history/spec-driven-development-decision-history.md#ard-ca)）。
+
+**Decision Log（MUST）。** 表头是 `ID | Date | Decision`，可以加第四列 `Ready`；不能有 Status 列和 Supersedes 列（[ARD-AX](../../../decision-history/spec-driven-development-decision-history.md#ard-ax)）。最新的决定写在表的最上面。
+
+**Change Log（MUST）。** 每篇文档的最后一节，只往末尾追加，不改旧行。
+
+**其他：** 夹在 `<!-- PROTECTED -->` 和 `<!-- END PROTECTED -->` 两行注释之间的段落是受保护的，任何工具在任何模式下都不能改。文档新建、删除、移动后，重新生成 INDEX。
+
+#### DSGN-F — 编号，以及怎么改已有正文
+
+需要被引用的条目都用「前缀加字母」编号，字母按 Excel 列号的顺序：`A` 到 `Z`，接着 `AA` 到 `AZ`，再 `BA`……可以在已有条目之间插入新编号。
+
+| 文档类型 | 前缀 | 例子 |
 |---|---|---|
-| `prd` | `PRD` | `PRD-A`, `PRD-B`, `PRD-AA` |
-| `design` | `DSGN` | `DSGN-A`, `DSGN-B` |
-| `decision-history` | `ARD` | `ARD-A`, `ARD-AA` |
-| `impl-plan` | `IMPL` | `IMPL-A`, `IMPL-B` |
-| `test-plan` | `TST` | `TST-A`, `TST-B` |
-| question（Open Questions） | `QUES` | `QUES-A`, `QUES-B` |
+| `prd` | `PRD` | `PRD-A`、`PRD-AA` |
+| `design` | `DSGN`（pipeline design 用 `PIPE`） | `DSGN-A`、`PIPE-B` |
+| `decision-history` | `ARD` | `ARD-A`、`ARD-AA` |
+| `impl-plan` | `IMPL` | `IMPL-A` |
+| `test-plan` | `TST` | `TST-A` |
+| 未决问题 | `QUES` | `QUES-A` |
 
-跨文档引用 **写全 ID**（如 `PRD-A`、`ARD-F`）。`how-to` 无强制 letter ID。
+**编号永不改（MUST）。** 一个编号一旦写进文档（表格、标题、正文、外部链接），就永远不变：不改字母、不改前缀、不「修正拼写」、不重新编号、不把一个条目并进另一个。用过的编号即使条目已作废，也不再给别的条目用。说法变了，就起一个新编号，旧的按 DSGN-J 处理。
 
-**作用域（MUST）：** ID 在 **feature + type** 内唯一；跨 feature 引用写 `<feature>/<ID>`（如 `document-standard/PRD-K`）。裸 ID 只在本 feature 内有意义。
+**迁移时留对照（MUST）。** 如果确实必须改编号（例如修正不合规的编号，要记一条 ARD），保留一张新旧编号对照表。标题改名时，把旧锚点留在新标题上方，旧链接才不会失效（[ARD-AP](../../../decision-history/spec-driven-development-decision-history.md#ard-ap)）。
 
-**HLD 例外：** 父 HLD 的 System Context / Logical Architecture 等 **架构章节** 不要求 `DSGN-*` ID；只有可追溯的规则小节才要 ID。
+**凡是要被引用的都要编号（MUST）。** 需求、design 的规则小节、实现任务、测试用例、延后或未决的问题，都必须用上表的格式。不能用纯数字（`0001`），也不能用 `PRD-1`、`FR-3`、`OQ-1`、`QUES-1`、`D1` 这类数字编号。一个规则小节下面的子条款，可以在后面再加一个字母，例如 `DSGN-N-A`，只在本篇内使用。
 
-**凡有序号即 ID（MUST）：** ADR、requirement、design 规则小节、impl task、test case、defer/open question 等 **一切** 可追溯条目 — **必须** 用上表 `{前缀}-{字母}`。**禁止** 裸数字（`0001`）、`PRD-1`/`DH-1`/`FR-3`/`OQ-1`/`QUES-1`/`D1` 等作永久 ID。Open Questions 的条目用 `QUES-A`。本 design 篇小节即 **DSGN-A** 起（见索引）。
+**编号的范围（MUST）。** 编号在「同一个 feature 的同一种文档」里唯一。引用别的 feature 的编号时写成 `<feature>/<编号>`，例如 `document-standard/DSGN-B`，或者在句子里写明是哪个 feature。不带 feature 的编号只在本 feature 内有意义。
 
-**检查：** `ids.py` 按 type 强制标题模式（`PRD-*` / `DSGN-*` / `IMPL-*` / `TST-*` / `ARD-*` / `QUES-*`），缺 ID 或裸数字即 fail。
+**整体设计的例外。** parent 的整体设计（HLD）里讲架构的章节不需要编号，只有可以被引用的规则小节才要编号（[ARD-AC](../../../decision-history/spec-driven-development-decision-history.md#ard-ac)）。
 
-**AI 单次 edit 粒度**（≤10 行 / ≤200 字）属 SDD parent HLD **§4**，不在本 document-standard；impl 目标：**spec-write** 等书写 skill。
+**检查方法。** `ids.py` 检查文档里有没有 `PRD-1` 这类数字编号，有就报错。
+
+**改已有正文（MUST，由 spec-write 执行）。** 正文只写现行规则：不再成立的句子直接改写，在新句后面链到推翻旧说法的 ARD。删除线只用在 decision-history，正文的旧版本从 git 历史里找。错别字直接改（[ARD-BM](../../../decision-history/spec-driven-development-decision-history.md#ard-bm)、[ARD-AS](../../../decision-history/spec-driven-development-decision-history.md#ard-as)）。
+
+AI 每次改动的大小上限（不超过 10 行，并且不超过 200 字符）不归本篇管，见 parent design 的 DSGN-A。
 
 ---
 
-### DSGN-G — Authority by Concern
+### DSGN-G — 冲突时以谁为准
 
-不要 global single source of truth — **按 concern 各认一个 authoritative artifact**；不一致时 **Detect → Report → Ask**（禁止 silent 改一侧；禁止默认 `design` 篇 > code）。
+不设一个「全局唯一的真相来源」，而是按关注点分：每类事实认一份文档为准。两份文档不一致时，按「发现、报告、问人」处理：不能悄悄改掉其中一份，也不能默认 design 一定比代码对。
 
-| Concern | Authoritative artifact |
+| 关注点 | 以谁为准 |
 |---|---|
-| Intended behavior | feature **`design` 文档** |
-| API contract | OpenAPI / protobuf / GraphQL / JSON Schema 等 |
-| Database structure | migrations / schema |
-| Current implementation | code |
-| Executable verification | tests |
+| 想要的行为 | feature 的 design 文档 |
+| 接口约定 | OpenAPI、protobuf、GraphQL、JSON Schema 等机器可读的定义文件 |
+| 数据库结构 | migration 或 schema 文件 |
+| 当前实现 | 代码 |
+| 可执行的验证 | 测试 |
 
-**`design` 篇** 权威 intended behavior；code 权威当前实现与内部结构。Machine-readable contract **不要**在 Markdown 里手抄全文 — link 或 generate。Tests 是 verification，不是 requirement 替身。`final` 后 maintain，不整篇 rewrite。
-
----
-
-### DSGN-H — Design 文档 Scope（`type: design` 正文）
-
-**写：** behavior、contract、invariant、constraint、error、state transition、外部交互、架构边界（含 diagram 类）。  
-**不写：** class 结构、private method、framework 内部细节（见 **DSGN-I** trim 时也应 absent）。  
-**测试句：** 可改 implementation 而不改 externally observable behavior → 不应改 **design 篇**。
-
-**Agent 加载顺序：** Global rules → Domain **design** → Architecture → Contract → Examples/tests → Code。窄问题却要整篇 design → re-cut boundary。
-
-体量与 split：**DSGN-B**。篇内设计决策 / 小节锚点用 **`DSGN-A`** 等（**DSGN-F**）。
+design 管「想要怎样」，代码管「现在怎样」和内部结构。机器可读的接口定义不要整段抄进 markdown，链过去或者自动生成。测试是验证手段，不能代替需求。文档变成 `final` 后只做维护性修改，不整篇重写；人明确授权并记成 ARD 的大改除外（例如 2026-11-20 的整理，见 parent decision-history 的 [ARD-BS](../../../decision-history/spec-driven-development-decision-history.md#ard-bs)，它重述了 ARD-BK）。
 
 ---
 
-### DSGN-I — Content Priority
+### DSGN-H — design 写什么、不写什么
 
-Trim 顺序 L4 → L3 → 压 L2；**L1 永不删**。仍 `> 硬 cap` → **DSGN-B** split。
+**写：** 系统的行为、接口约定、不变量、约束、错误怎么处理、状态怎么变化、和外部怎么交互、架构边界（包括画图）。
 
-| Level | Trim |
+**不写：** 类的层级结构、私有方法、框架内部的细节。按 DSGN-I 删减时，这些本来就不该出现。
+
+**判断方法：** 如果实现可以改、而外部看到的行为不变，那这部分就不该写进 design。
+
+**AI 读文档的顺序：** 全局规则、领域 design、架构、接口约定、例子和测试、代码。如果回答一个很窄的问题也要读完整篇 design，说明 design 的边界划得不对，应该重新拆分。
+
+行数和拆分见 DSGN-B，编号见 DSGN-F。
+
+---
+
+### DSGN-I — 内容的四个优先级
+
+文档需要变短时，按 L4、L3、L2 的顺序删减或压缩，L1 永远不删。删减后仍然超过上限，就按 DSGN-B 拆分篇（[ARD-H](../../../decision-history/spec-driven-development-decision-history.md#ard-h)）。
+
+| 级别 | 包括什么 | 删减时 |
+|---|---|---|
+| L1 决定性内容 | 行为、接口约定、不变量、错误处理、安全规则、边界、不在范围内的事项、前提假设、兼容性约束、未决问题 | 永远不删 |
+| L2 理由 | 为什么这样设计 | 可以压缩 |
+| L3 放弃的方案 | 为什么不选另一种做法 | 先删 |
+| L4 参考资料 | 引用、原始输出、例子 | 先删；已经在别处写过的事实，只能放链接 |
+
+---
+
+### DSGN-J — decision-history 怎么写
+
+**它是什么。** decision-history 是所有决定的索引加正文：Decision Log 一行一条，Evidence Appendix 每条一节（格式见 DSGN-E）。它不是 PRD 或 design 的摘要。
+
+**顺序。** 新决定写在 Decision Log 的最上面，越往下越早。
+
+**每条都有一节说明（MUST）。** 每条 ARD 在 Evidence Appendix 里有一节，写明原因；当时考虑过别的做法，就写出放弃了哪些、为什么。
+
+**编号。** `ARD-` 加字母（DSGN-F），分配后不能改。表格里的编号和 `### ARD-A — …` 小节标题里的编号一致。
+
+**推翻旧决定。** 旧行不删，用删除线划掉，后面链到新决定，例如：被划掉的旧说法，后面跟一个指向新决定的链接。新说法用一个新编号完整写一条，放在 Log 最上面。按 DSGN-I 删减时，不删被划掉的文字。只推翻旧决定的一部分时，也划掉整行，并在新决定里重述仍然有效的部分（例如 [ARD-CH](../../../decision-history/spec-driven-development-decision-history.md#ard-ch)）。这是整套 spec 里唯一使用删除线的地方（[ARD-BM](../../../decision-history/spec-driven-development-decision-history.md#ard-bm)）。
+
+**拆分篇。** decision-history 不设行数上限，但也可以拆分篇。拆了之后编号在整个 feature 内唯一；新决定写在当前那篇的 Log 最上面；旧篇保留，篇与篇之间用链接连起来。
+
+**什么时候加一条。** 规则只写在一处：[parent design 的 DSGN-B](../../../design/spec-driven-development-design.md#dsgn-b)。另外，改名、撞名这类流程要求记录的事（DSGN-K）也要加一条。
+
+---
+
+### DSGN-K — 名字撞车时怎么处理
+
+新建 feature 或文件时，必须和已有的名字比一比。符合下面任何一条，就算撞车：
+
+| 情况 | 例子 |
 |---|---|
-| **L1** | behavior、contract、invariant、error、security、boundary、out of scope、assumption、compatibility、open question — **never** |
-| **L2** | rationale — 压缩 |
-| **L3** | alternatives — 先删 |
-| **L4** | 引用、raw output — 先删；重复 fact 只能是 **link** |
+| 大小写、符号统一后相同 | `Payment` 和 `payment` |
+| 一个名字包含另一个 | `auth` 和 `auth-service` |
+| 单复数或常见缩写 | `doc` 和 `docs` |
+| 只差两个字符以内 | `payment-api` 和 `payments-api` |
+
+怎么处理：
+
+- 属于同一块业务：合并成一个 feature，再按方面拆 design 分篇。
+- 不同业务但容易混淆：两边都改名，并在 decision-history 里记一条。
+- 同一个 feature 内的文件撞名：给分篇换一个更准确的名词，或者给 feature 改名。
+
+改名本身就是一个决定：要更新所有指向它的链接，不能悄悄改。
 
 ---
 
-### DSGN-J — Decision History — 语义
+### DSGN-L — 检查和整理文档的几种模式
 
-**文件角色：** 决策 **索引 + 正文**（Decision Log / `### <ID>` 小节，格式 **DSGN-E**）。**不是** PRD / **design 篇** 的摘要。
+| 模式 | 由谁执行 | 做什么 |
+|---|---|---|
+| Organize | spec-organize | 按顺序处理：确定 feature 和类型、检查撞名、路径和文件名、frontmatter 和章节、Change Log、INDEX |
+| Lint | spec-organize | 扫描 `docs/features/`；格式类的 MUST 直接修；内容上的问题只报告 |
+| Consolidate | spec-organize | 先提出合并方案，人批准后再合并；所有决定都保留；`raw/` 里的旧内容要么被引用，要么删除 |
+| Sync | spec-organize | 找出文档和代码不一致的地方，按 DSGN-G 判断以谁为准；内容冲突只报告 |
+| Review | spec-review | 和 Lint 一样找问题（格式 MUST 加内容问题），但不改，只输出带严重度的修改建议 |
 
-**书写顺序：** **倒序** — 每加一条，写在 Decision Log **最上面**（最新在上，越往下越早）。
-
-**Decision ID：** 格式 **`ARD-{字母}`**（**DSGN-F**，分配后 **不可改**）。Log 表 / `### ARD-A — …` 与 ID 一致。
-
-**推翻旧 decision：** 旧 entry **不删行**；正文 ~~删除线~~；旁 **link 到新 ID**（如 `→ [ARD-F](#ard-f--…)`）。新口径用 **新 ARD ID** 写满一条，倒序 **插 Log 顶**。旧 entry 仅 strike + 指链（**DSGN-I** 不 trim 被 strike 字句）。
-
-**拆 part（超 **DSGN-B** 硬 cap）：** ID **全 feature 唯一**；新 entry 写入 **当前 part** Log 顶部；旧 part 保留；part 间 link 即可。
-
-**什么时候加一条（agent 写 spec 时）：** 细则表见 parent HLD **§5**。简记：
-
-| 加 | 不加 |
-|---|---|
-| 别人定下来的口径（review、结对、stakeholder），团队要能看到 | 仅在你脑子里、还没写进 **design 篇**、也 **没动代码** 的试探 |
-| 你的转向会 **改已有代码或对外契约**（breaking behavior、路径/rename、谁才是 authority） | 只在 **design 篇** 改几句就能说清的推敲；「想过又改主意」不必每条都 log |
-| rename / 撞名等流程要求记入的（**DSGN-K**） | agent **默认不** 自动批量 append；不确定问 human |
+设计本身是否合理，由 Review 的内容审查负责，不属于本标准的 MUST。
 
 ---
 
-### DSGN-K — Paths and Names — 冲突处置
+### DSGN-M — 质量门槛
 
-新 feature / 新文件名 **必须** 对照已有名称；命中任一 **collision signal** 即视为冲突：
+**MUST，做不到就算失败：**
 
-| Signal | 例 |
-|---|---|
-| normalize 后相同 | `Payment` vs `payment` |
-| token 子集 | `auth` vs `auth-service` |
-| 单复数 / 常见缩写 | `doc` vs `docs` |
-| edit distance ≤ 2 | `payment-api` vs `payments-api` |
+- DSGN-A 契约全部满足，包括编号永不改、永不复用（DSGN-F）。
+- 冲突不能悄悄处理（DSGN-G）。
+- 不删 L1（DSGN-I）。
+- 合并文档时不丢任何决定。
+- 不能提交的路径没有被提交（DSGN-C）。
+- INDEX 没有孤立文档和死链；文档里的链接和锚点都能打开（[ARD-AP](../../../decision-history/spec-driven-development-decision-history.md#ard-ap)）。指向 `raw/` 的链接不算死链（[ARD-BW](../../../decision-history/spec-driven-development-decision-history.md#ard-bw)）。
+- 推送 `docs/features/` 的改动时，INDEX 和 book 已经同步。
+- 新名字已经检查过撞车（DSGN-K）。
+- 正文改动遵守 DSGN-F 的「改已有正文」规则。
+- 结论有依据，查不到写 `UNKNOWN`（pipeline design 的 PIPE-L）。
+- DSGN-E 里所有标了 MUST 的条目都满足，例如：impl-plan 的任务写明依赖、挡住和完成标准；引用代码写明 commit；每个 feature 只有一份未决问题清单；文档能让本科程序员读懂。
+- 本地翻译副本不提交（DSGN-C）；改编号时留对照表和旧锚点（DSGN-F）；每条 ARD 都有说明（DSGN-J）。
+- 图不写正文没有的事实，也不和正文矛盾（DSGN-E 的「插图」）。
 
-处置：同一 bounded context → **merge** 再按 aspect split **`design`**。不同 context 易混 → **rename** 双方并记入 `decision-history`。同 feature 内文件撞名 → 拉开 aspect 或 rename feature。**Rename = decision**，更新 inbound link，禁止 silent。
+**NICE，做不到只提醒（[ARD-BN](../../../decision-history/spec-driven-development-decision-history.md#ard-bn)；下面的 ARD 都在 parent 的 decision-history 里）：**
 
----
-
-### DSGN-L — Enforcement Modes
-
-| Mode | 行为 |
-|---|---|
-| **Organize** | feature/type → collision → 路径/文件名 → frontmatter + sections → Change Log → INDEX |
-| **Lint** | walk `docs/features/`；MUST 机械 fix；semantic **report** |
-| **Consolidate** | propose → 批准；decision 全保留；`raw/` legacy  cite 或删 |
-| **Sync** | drift；按 **DSGN-G** authority；semantic conflict **report** |
-| **Review**（spec-review） | 同 Lint 的 detect（机械 MUST + semantic）；**不** fix，输出带 severity 的修改建议 |
-
-内容质量（设计是否成立）由 **Review** 的 semantic 部分处理，不属本 standard 的 MUST。
-
----
-
-### DSGN-M — Quality Gates
-
-**MUST：** **DSGN-A** 全满足（含 **DSGN-F** ID 不可改、不可复用）；**DSGN-G** 冲突不 silent；**DSGN-I** 不删 L1；consolidation 不丢 decision；**Commit = no** 路径未 commit；INDEX 无 orphan/dead link；含 `docs/features/` 变更的 **push** 时 INDEX/book 已与源同步；collision 已查。
-
-**NICE：** heading 不跳级；link 有效；CONTEXT 术语一致；`last_verified` 新鲜；context boundary 合理。
-
----
+- 标题层级不跳级；术语和 `CONTEXT.md` 一致；`last_verified` 不要太旧；文档边界划得合理。
+- 每节写明哪份文档对这些事实有权威（ARD-AL 的后半句）。
+- 步骤编号只表示位置（ARD-AM）。
+- 决定的就绪程度可以写在条目里，同一行可以原地修订，未决事项按负责人分组（ARD-AN）。
+- 不变量写成表格，不写成口号（ARD-AR）。
+- 写成「§N」的链接落在第 N 节或它的上下级；同一篇里的步骤范围不重叠（ARD-AZ）。
+- 手工维护的 HTML 更新记录，覆盖 markdown Change Log 里的每个日期（ARD-BA）。
+- 问题清单里写的总数和各状态的数量，等于实际行数（ARD-BB）。
+- 图的步骤数和所在章节一致；一张图不超过 9 个节点、12 条边；用 diagram-design 默认的字体和配色（ARD-CA）。
 
 ## Testing Decisions
 
-验证见 parent **`../../../test-plan/spec-driven-development-test-plan.md`**：被测对象是 **spec-organize / spec-review**，不是本篇；本篇全部 **MUST / 禁止** 由 **TST-A** 扫入 `must_registry.yaml`，机械项 Python 判、其余 LLM judge 判。
+测试见 parent 的 [test-plan](../../../test-plan/spec-driven-development-test-plan.md)。被测的是 spec-write、spec-review 和 wayfinder 三个 skill，不是本篇。本篇所有的 MUST 和禁止事项，由 parent test-plan 的 TST-A 扫描收进 `must_registry.yaml`：格式类的由 Python 脚本判断，其余由判分模型判断。
 
 ## Out of Scope
 
-- Pipeline 阶段编排（见 pipeline spec）。
-- 存量 tree 一次性 migrate（incremental 合规即可）。
-- CI / skill **如何实现** enforcement（文件数、prompt、hook）。
-- 自动 drift detection 产品化。
+- 写 spec 的阶段怎么安排，见 pipeline design。
+- 一次性把所有旧文档迁移到新标准。旧文档逐步改到合规即可。
+- 检查规则在 CI 或 skill 里具体怎么实现（拆几个文件、写什么 prompt、用什么 hook）。
+- 把「自动发现文档和代码不一致」做成产品。
 
 ## Further Notes
 
-- 已知历史偏离例：`skill-factory/design/` 等 — migrate 时按 DSGN-M 逐项清。
-- **待一起 review：** **DSGN-B** 硬 cap 数字、sub-feature 是否正式 MUST、`raw/` 子目录是否够用。AI edit 上限见 parent HLD §4；agent 全局 norm（含 §5 decision-history、§6 CLAUDE+skill）见 parent HLD。
-- **DSGN-E** 代码引用须带 commit（ARD-AQ）。每个 `IMPL-*` 有完成判据；先读后写；未上线的合作方接口写 mock（ARD-AT）。
-- **DSGN-E** design 拆篇时，13 个必需节只要求入口 `<f>-design.md`；part 链回入口，只写本 aspect（ARD-AV）。
-- **DSGN-E** 必需节用英文、不编号、不翻译。有序流程另加的节可以编号（ARD-AW）。Decision Log 可加 Ready 列，仍禁止 Status 与 Supersedes（ARD-AX）。
-- **DSGN-E** 一份问题 tracker 用 `QUES-` 字母号，正文有 Question、Answer、Owner（ARD-AO）。`all N questions` 等于行数（ARD-BB）。引用处的状态与 tracker 一致（ARD-BC）。
-- **DSGN-F** 步骤号是位置，不是永久 ID（ARD-AM）。迁入旧编号留对照表；改标题保留旧锚点（ARD-AP）。`§N` 落到 N 或其上下级；步骤段不重叠（ARD-AZ）。
-- **DSGN-G** 面向不同读者的篇，开头写明本篇对哪些事实有权威、不一致时先改哪篇（ARD-AL）。
-- **DSGN-H** 不变量写成表（ARD-AR）。图只解释散文说不清的流程；状态用表；一节一张时序图，消息数等于步骤段（ARD-BE）。
-- **DSGN-J** 就绪度可写在条目内；条目可就地修订；未决项按负责人分组（ARD-AN）。正文废弃旧口径时指向新 ARD（ARD-AS）。
-- **DSGN-C** 本地翻译副本不提交；开头写明以原文为准；标题可翻译（ARD-AU）。
+**历史上不合规的例子。** 例如 `skill-factory/design/` 等。将来要迁移时，按 DSGN-M 逐项处理。
+
+**2026-11-07 加入的规则在哪里。** 这些规则来自 ARD-AM 到 ARD-BE。其中的 MUST 已经写进对应小节的正文：翻译副本在 DSGN-C；引用代码、impl-plan 正文、未决问题清单在 DSGN-E；对照表和旧锚点在 DSGN-F。其余的是 NICE，列在 DSGN-M。
 
 ## Alternatives Considered
 
-- 单一 `spec` 类型装全部内容 → 拒:体积失控,无法按 concern 分篇(**DSGN-B**)。
-- 目录按 initiative 而非 feature 组织 → 拒:与 `docs/features/` 既有树冲突。
-- frontmatter 用 `status` 而非 `health` → 拒(**ARD-D**)。
+- **只用一种 `spec` 类型装下所有内容：** 放弃。文档会越来越大，也没法按关注点分开写（DSGN-B）。
+- **按 initiative 而不是按 feature 组织目录：** 放弃。和已有的 `docs/features/` 目录结构冲突。
+- **frontmatter 用 `status` 而不是 `health`：** 放弃（[ARD-D](../../../decision-history/spec-driven-development-decision-history.md#ard-d)）。
+- **所有规则都是 MUST：** 放弃。纯格式规则太多，作者只好把文档写得像给机器读的（[ARD-BN](../../../decision-history/spec-driven-development-decision-history.md#ard-bn)）。
 
 ## Drawbacks
 
-- 类型与必填节偏多,小 feature 也要写全;靠 sub-feature 豁免(parent HLD §8)缓解。
-- 机械检查只验结构,验不了内容质量。
+- 文档类型和必需章节偏多，小 feature 也要写全。sub-feature 可以不写全五篇（parent design 的 DSGN-E），能缓解一些。
+- 机械检查只能检查结构，检查不了内容写得好不好。
 
 ## Risks and Mitigations
 
-- 风险:规则膨胀,agent 与人都会跳过检查 → `must_registry.yaml` + `run_spec_checks.py` 强制。
-- 风险:标准与实现漂移 → SPEC-STANDARD 与 DSGN 同批改,`registry_provenance` 检查来源。
+| 风险 | 应对 |
+|---|---|
+| 规则越来越多，人和 AI 都开始跳过检查 | 规则分 MUST 和 NICE，只有 MUST 算失败（[ARD-BN](../../../decision-history/spec-driven-development-decision-history.md#ard-bn)）；MUST 由 `must_registry.yaml` 和 `run_spec_checks.py` 强制检查 |
+| 标准和检查脚本慢慢对不上 | `SPEC-STANDARD.md` 和本篇同一批修改；出处比对脚本 `registry_provenance` 检查 MUST 清单里每条规则是否真的出自本篇的规则小节 |
+| 检查脚本有漏洞，不合规的文档也能通过 | 每个检查都配有必须报错的反例（parent test-plan 的 TST-B）；发现漏洞记进 parent impl-plan 的 IMPL-P |
 
 ## Open Questions
 
-- sub-feature 的 `raw/` 是否全工具支持(待 tooling)。
-- 硬 cap 是否按 feature 规模分档。
+本表是 document-standard 这个 feature 唯一的未决问题清单（[ARD-AO](../../../decision-history/spec-driven-development-decision-history.md#ard-ao)）。
+
+| ID | 问题 | 目前答案 | 负责人 | 阻塞 |
+|---|---|---|---|---|
+| QUES-A | 所有工具是否都支持 sub-feature 目录和 sub-feature 下的 `raw/` | 部分已查：`.gitignore` 原来的 `docs/features/*/raw/` 漏掉了 sub-feature 下的 `raw/`，已改成 `docs/features/**/raw/`（parent impl-plan 的 IMPL-P，已完成）；其他工具未核实 | AI 查完人决定 | 否 |
+| QUES-B | 行数上限要不要按 feature 的规模分档 | 未定 | 人决定 | 否 |
+| QUES-C | DSGN-B 的具体数字（800、1,000、600）是否合适 | 沿用现值 | 人决定 | 否 |
+| QUES-D | `raw/` 的六个子目录够不够用 | 目前够用 | 人决定 | 否 |
+| QUES-E | 图（Mermaid）在 reader 里怎么渲染，要不要统一 | 未定 | 人决定 | 否 |
 
 ## Reversibility
 
-- 必填节可回退:改 DSGN-E + SPEC-STANDARD + `sections.py` 三处,旧文档补节即可,无数据迁移。
-- 重命名节属新规则;旧文档留旧名会被 `sections` 报错,须同批改。
+- 必需章节可以撤回：同时改 DSGN-E、`SPEC-STANDARD.md` 和 `sections.py` 三处，旧文档补上章节即可，没有数据要迁移。
+- 给必需章节改名属于新规则：旧文档还用旧名字，检查必需章节的脚本 `sections.py` 会报错，所以要同一批修改所有文档。
+- MUST 和 NICE 的划分可以调整：改 DSGN-M 和 ARD-BN，再同步检查脚本。
 
 ## Change Log
 
@@ -426,3 +508,17 @@ Trim 顺序 L4 → L3 → 压 L2；**L1 永不删**。仍 `> 硬 cap` → **DSGN
 | 2026-11-07 | 开篇被测改为 spec-write / spec-review，与 test-plan 一致 |
 | 2026-11-07 | Further Notes 写入 ARD-AM–BE 的 DSGN-C/E/F/G/H/J 规则 |
 | 2026-11-07 | DSGN-D：book/html 镜像 features 树（ARD-BF） |
+| 2026-11-18 | 改已有正文：删除线留旧句，旁边写新句和 ref |
+| 2026-11-20 | 全文改写为完整句子；术语表改为链到 parent design；标题去掉「待 Review」；DSGN-B 大表拆成「路径」和「行数」两张；DSGN-F 改已有正文改为只写现行规则、删除线只在 decision-history（ARD-BM）；DSGN-M 分 MUST 与 NICE（ARD-BN）；Testing Decisions 被测改为 spec-write 与 spec-review；Open Questions 改为 QUES 清单；补写子问题归属不适用的说明（ARD-BK） |
+| 2026-11-20 | 第 1 轮审查后：DSGN-E 加入可读性、未决问题清单、引用代码、impl 依赖两头对得上（ARD-BO、ARD-BS）；DSGN-C 加翻译副本、DSGN-F 加对照表和旧锚点、DSGN-J 加每条 ARD 都有说明，原来只在 Further Notes 里的规则移进正文；DSGN-B 六种文档都可拆分篇并需入口文件（ARD-BQ），写明辅助文件例外；跨 feature 的编号写明出处 |
+| 2026-11-20 | 第 2 轮审查后：`.gitignore` 规则改为 `docs/features/**/raw/`；raw/ 草稿可作依据、指向 raw/ 的链接不算死链（ARD-BW）；DSGN-J 删去和 parent DSGN-B 重复的表，只留链接；DSGN-M 的条目改写成完整句子；PROTECTED、`sections.py`、`registry_provenance` 第一次出现时解释；指向 parent test-plan、impl-plan 的编号写明出处 |
+| 2026-11-20 | 第 3 轮审查后：DSGN-A 写明三份摘要（ARD-BX）；DSGN-E 写明 Problem Statement 小标题可以保留编号（ARD-BS 重述 ARD-AW）；DSGN-J 写明只推翻一部分时也整行划掉；子问题归属表不适用的理由改为只引 PIPE-L |
+| 2026-11-24 | DSGN-G：final 后经 ARD 授权的大改除外（parent ARD-BS）；不迁移旧文档改链 ARD-CC |
+| 2026-11-24 | DSGN-E 加「插图（MUST）」，DSGN-M 门槛加一条（ARD-CA，与 SPEC-STANDARD 一致） |
+| 2026-11-24 | raw/state 一行注明 SDD 用 wayfinder-map.md（parent ARD-CH） |
+| 2026-11-24 | 第 8 轮审查后：被测对象三个 skill；本地目录表加 docs/state/；改链 ARD-CH、ARD-CK |
+| 2026-11-24 | 第 9 轮审查后：链到已划掉 ARD 的地方改链 |
+| 2026-11-24 | 第 11 轮审查后：DSGN-M 的图规则改为 ARD-CA 保留的部分 |
+| 2026-11-24 | 第 15 轮审查后：DSGN-D 的 book 更新改为 commit 前必须重建，去掉 draft 例外（ARD-CF） |
+| 2026-11-24 | 第 16 轮审查后：DSGN-M 不再写错 DSGN-E 的 MUST 条数 |
+| 2026-11-24 | 第 17 轮审查后：QUES-A 写明 .gitignore 已改 |

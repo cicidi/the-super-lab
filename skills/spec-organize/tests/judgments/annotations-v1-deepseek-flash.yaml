@@ -1,7 +1,7 @@
 model: deepseek-flash
-runs: 3
+runs: 5
 target: gold
-corpus_sha: b3e6be1ad9a8be2b
+corpus_sha: 4fe235bfc608d4c7
 items:
 - id: GOOD-A
   verdict: pass
@@ -9,87 +9,108 @@ items:
   - pass
   - pass
   - pass
-  evidence: docs/features/spec-driven-development/decision-history/spec-driven-development-decision-history.md
-    uses ARD-A…ARD-AI; impl-plan IMPL-A…O and test-plan TST-A…S use letter prefixes.
-  confidence: 0.95
+  - pass
+  - pass
+  evidence: All headings/table keys/refs use PRD-/DSGN-/ARD-/IMPL-/PIPE-/TST- letter
+    IDs; numeric forms appear only as forbidden examples (document-standard-design
+    DSGN-F).
+  confidence: 0.97
 - id: GOOD-B
   verdict: pass
   votes:
   - pass
   - pass
   - pass
-  evidence: 'Design docs anchor parent PRD ids: HLD §4/§6/§7, pipeline PIPE-A/PIPE-K,
-    doc-standard DSGN-B, skill contracts PRD-B/P/Q.'
-  confidence: 0.82
+  - pass
+  - pass
+  evidence: 'Parent PRD ids are traced: e.g. PRD-A in pipeline PIPE-A, PRD-C in parent
+    DSGN-A, PRD-M in document-standard DSGN-E; PRD-G deferred.'
+  confidence: 0.93
 - id: GOOD-C
   verdict: pass
   votes:
   - pass
   - pass
   - pass
-  evidence: docs/features/spec-driven-development/ has prd, design, decision-history,
-    impl-plan, test-plan entries, e.g. decision-history/spec-driven-development-decision-history.md.
-  confidence: 0.95
+  - pass
+  - pass
+  evidence: Parent feature has prd/, design/, decision-history/, impl-plan/, test-plan/
+    with committed .md entries; docs/INDEX.md lists all five types.
+  confidence: 0.99
 - id: GOOD-D
   verdict: pass
   votes:
   - pass
   - pass
   - pass
-  evidence: 'docs/features/spec-driven-development/features/document-standard/design/document-standard-design.md
-    ends with ## Change Log; all SDD docs do.'
-  confidence: 0.95
+  - pass
+  - pass
+  evidence: Every committed doc ends with `## Change Log`, including decision-history,
+    parent design, and all sub-feature docs; no later H2.
+  confidence: 0.98
 - id: GOOD-E
   verdict: pass
   votes:
   - pass
   - pass
   - pass
-  evidence: docs/features/spec-driven-development/design/spec-driven-development-design.md
-    §3.3 子问题归属 has allowed owners and ARD-AF/ARD-T/ARD-AD evidence.
-  confidence: 0.95
+  - pass
+  - pass
+  evidence: Parent design `### 子问题归属` table has allowed owners (AI 查/人决定/AI 查完人决定)
+    and ARD evidence links.
+  confidence: 0.98
 - id: GOOD-F
   verdict: pass
   votes:
   - pass
   - pass
   - pass
-  evidence: skills/spec-pipeline/SKILL.md, spec-organize, spec-review, spec-write
-    Example Domains all list 盖 shed, 北京旅游, 数学题, 股票.
-  confidence: 0.95
+  - pass
+  - pass
+  evidence: spec-write/SKILL.md and spec-review/SKILL.md Example Domains name 盖 shed,
+    北京旅游, 数学题, 股票.
+  confidence: 0.99
 - id: BAD-A
   verdict: pass
   votes:
   - pass
   - pass
   - pass
-  evidence: docs/INDEX.md lists all SDD entries (parent five types, pipeline, document-standard
-    aspects); links resolve.
-  confidence: 0.9
+  - pass
+  - pass
+  evidence: docs/INDEX.md links all 11 committed feature .md files in corpus; all
+    listed links resolve.
+  confidence: 0.97
 - id: BAD-B
   verdict: pass
   votes:
   - pass
   - pass
   - pass
-  evidence: No SDD committed doc exceeds caps; document-standard-design.md is under
-    1,000 and decision-history is exempt per DSGN-B.
-  confidence: 0.85
+  - pass
+  - pass
+  evidence: All committed non-decision-history docs are under caps (prd 800, design/impl
+    1000, test 800); decision-history exempt.
+  confidence: 0.95
 - id: BAD-C
   verdict: pass
   votes:
   - pass
   - pass
   - pass
-  evidence: skills/spec-review/SKILL.md cites spec-driven-development-design-skill-contracts.md
+  - pass
+  - pass
+  evidence: spec-review/SKILL.md cites spec-driven-development-design-skill-contracts.md
     and states the contract wins on conflict.
-  confidence: 0.98
+  confidence: 0.99
 - id: BAD-D
   verdict: pass
   votes:
   - pass
   - pass
   - pass
-  evidence: docs/features/spec-driven-development/decision-history/spec-driven-development-decision-history.md
-    Log starts ARD-AI 2026-11-04 and descends to ARD-A 2026-09-25.
-  confidence: 0.95
+  - pass
+  - pass
+  evidence: Decision Log starts at 2026-11-24 ARD-CL and descends to 2026-09-25 ARD-A;
+    newest first.
+  confidence: 0.98

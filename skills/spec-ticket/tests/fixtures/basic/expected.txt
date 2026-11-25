@@ -1,0 +1,5 @@
+# First run of the basic fixture (tracker: local). Report must name the one-sided edge A -> C.
+IMPL-A: -
+IMPL-B: IMPL-A
+IMPL-C: IMPL-A
+IMPL-D: IMPL-B, IMPL-C

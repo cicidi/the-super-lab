@@ -1,7 +1,10 @@
-"""TST-E/L gate: the eval itself must stay green (score 1 full, score 2 >= 6).
+"""TST-E/L gate: the eval itself must stay green (score 1 full).
+
+Score 2 has no fixed floor (ARD-R): a human compares it with the previous run of
+the same gold version; run results are not committed, except `judgments/` (ARD-CJ).
 
 Verdicts come from `judgments/*-deepseek-flash.yaml`, written by
-tools/judge_deepseek.py: 3 independent runs, 3/3 agreement required.
+tools/judge_deepseek.py: 5 independent runs, at least 4 agreeing (ARD-CJ).
 """
 
 import re
@@ -14,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[3]
 
 def test_eval_gates_pass():
     run = subprocess.run(
-        [sys.executable, str(ROOT / "tools/score_eval.py"), "--min-score2", "6"],
+        [sys.executable, str(ROOT / "tools/score_eval.py")],
         cwd=ROOT,
         capture_output=True,
         text=True,

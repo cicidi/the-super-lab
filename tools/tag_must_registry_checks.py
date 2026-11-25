@@ -9,42 +9,36 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 REG = ROOT / "skills/spec-organize/tests/must_registry.yaml"
 
-ID_OVERRIDES: dict[str, tuple[str, str]] = {
-    "MUST-H": ("llm", ""),  # raw/ 不得要求 frontmatter — not change_log
-    "MUST-Q": ("llm", ""),  # aggregate DSGN-M checklist
-    "MUST-AB": ("llm", ""),  # sub-feature 不要求五篇
-}
-
+# Ordered: first match on the item's `text:` wins; no match -> llm.
+# Match on the rule's own wording, never on its MUST-* id (ids move on rescan).
 RULES: list[tuple[re.Pattern[str], str, str]] = [
-    (re.compile(r"文件名.*必须|`<f>-<type>|禁止.*reference/", re.I), "python", "paths"),
-    (re.compile(r"硬 cap|行数\s*>`|删 L1 凑 cap", re.I), "python", "size"),
-    (re.compile(r"DSGN-K|\*\*Collision\*\*|collision 已查", re.I), "python", "collision"),
-    (re.compile(r"orphan|dead link|INDEX.*同步", re.I), "python", "index_book"),
-    (re.compile(r"ID immutable|凡有序号即 ID|前缀}-\{字母\}|禁止.*裸数字", re.I), "python", "ids"),
-    (re.compile(r"Decision Log 表头|ID \\| Date \\| Decision", re.I), "python", "decision_log"),
-    (re.compile(r"Change Log.*最后一节|last ## section must be Change Log", re.I), "python", "change_log"),
-    (re.compile(r"Commit = no|不得.*进入 git|reference/", re.I), "python", "no_commit"),
-    (
-        re.compile(r"final_date|health:\s|frontmatter.*必须|Required frontmatter", re.I),
-        "python",
-        "frontmatter",
-    ),
-    (re.compile(r"Required sections|必备章节", re.I), "python", "sections"),
-    (
-        re.compile(r"五篇均在|parent.*五篇|prd.*design.*decision-history.*impl-plan.*test-plan", re.I),
-        "python",
-        "parent_complete",
-    ),
+    (re.compile(r"^\*\*文件名规则"), "python", "paths"),
+    (re.compile(r"^\*\*行数（MUST"), "python", "size"),
+    (re.compile(r"必须写进 `\.gitignore`|^- 不能提交的路径没有被提交"), "python", "no_commit"),
+    (re.compile(r"孤立文档.*死链|INDEX 没有孤立文档|INDEX 和 book 已经同步"), "python", "index_book"),
+    (re.compile(r"^\*\*frontmatter（MUST"), "python", "frontmatter"),
+    (re.compile(r"^\*\*必需章节（MUST"), "python", "sections"),
+    (re.compile(r"^\*\*引用代码（MUST"), "python", "code_citation_base"),
+    (re.compile(r"^- \*\*parent\*\*（`docs/features/spec-driven-development/`"), "python", "parent_complete"),
+    (re.compile(r"^\*\*未决问题清单（MUST"), "python", "open_questions"),
+    (re.compile(r"^\*\*Decision Log（MUST"), "python", "decision_log"),
+    (re.compile(r"^\*\*Change Log（MUST"), "python", "change_log"),
+    (re.compile(r"^\*\*凡是要被引用的都要编号"), "python", "ids"),
+    (re.compile(r"必须和已有的名字比一比|新名字已经检查过撞车"), "python", "collision"),
 ]
 
 
+def _text(blob: str) -> str:
+    for ln in blob.splitlines():
+        if ln.strip().startswith("text:"):
+            return ln.split(":", 1)[1].strip().strip("'\"")
+    return ""
+
+
 def _tag(item_id: str, text_blob: str) -> tuple[str, str]:
-    if item_id in ID_OVERRIDES:
-        return ID_OVERRIDES[item_id]
-    if "不得要求 frontmatter" in text_blob:
-        return "llm", ""
+    text = _text(text_blob)
     for pat, method, check in RULES:
-        if pat.search(text_blob):
+        if pat.search(text):
             return method, check
     return "llm", ""
 

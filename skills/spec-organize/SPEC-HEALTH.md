@@ -28,7 +28,8 @@ and a second field named for "state" would be read as the same thing.
 
 Never edit a file only to move a timestamp.
 
-All five optional fields may be omitted. A document without them is still valid;
+All six optional fields (DSGN-E: `spec_id`, `version`, `health`, `owner`,
+`last_verified`, `audience`) may be omitted. A document without them is still valid;
 it simply carries no health signal, and Lint reports that as NICE, not MUST.
 
 ## Stale

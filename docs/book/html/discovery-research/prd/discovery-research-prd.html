@@ -4,20 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Discovery &amp; Research Skills — PRD · prd · Spec Atlas</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:400,400italic,500,500italic,700|Roboto+Mono:400,500,700|Noto+Sans+SC:400,500,700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@400;600&display=swap">
 <link rel="stylesheet" href="../../assets/styles.css">
 </head>
 <body>
 <header class="topbar">
   <div class="topbar-inner">
     <div class="brand"><a href="../../index.html"><span class="brand-mark">SDD</span><span class="brand-name">Spec Atlas</span></a></div>
+    <button class="strike-btn" type="button" onclick="var r=document.documentElement;var off=r.dataset.strike!=='off';r.dataset.strike=off?'off':'on';this.textContent=off?'显示删除线':'隐藏删除线'">隐藏删除线</button>
   </div>
 </header>
 <div class="site">
   <aside class="sidebar">
   <nav aria-label="Directory">
     <div class="tree-overview"><a class="tree-link" href="../../index.html"><span class="tree-link__num">00</span>All features</a></div>
-    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="discovery-research-prd.html" aria-current="page"><span class="tree-link__num">01</span>Discovery &amp; Research Skills — PRD</a></li><li class="tree-leaf"><a class="tree-link" href="../design/discovery-research-design.html"><span class="tree-link__num">02</span>Discovery &amp; Research Skills — Design</a></li><li class="tree-leaf"><a class="tree-link" href="../test-plan/discovery-research-test-plan.html"><span class="tree-link__num">03</span>Discovery &amp; Research — Test Plan</a></li></ul>
+    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="discovery-research-prd.html" aria-current="page"><span class="tree-ord">1</span>Discovery &amp; Research Skills — PRD</a></li><li class="tree-leaf"><a class="tree-link" href="../design/discovery-research-design.html"><span class="tree-ord">3</span>Discovery &amp; Research Skills — Design</a></li><li class="tree-leaf"><a class="tree-link" href="../test-plan/discovery-research-test-plan.html"><span class="tree-ord">5</span>Discovery &amp; Research — Test Plan</a></li></ul>
   </nav>
 </aside>
   <main class="content">
@@ -39,12 +40,12 @@
 <th>Metric</th>
 </tr></thead><tbody>
 <tr>
-<td><strong id="PRD-A"><a href="#PRD-A">PRD-A</a></strong></td>
+<td><strong id="PRD-A"><a class="id-ref" href="#PRD-A">PRD-A</a></strong></td>
 <td>Each skill has SKILL.md with triggers and workflow</td>
 </tr>
 <tr>
-<td><strong id="PRD-B"><a href="#PRD-B">PRD-B</a></strong></td>
-<td>Outputs feed SDD pipeline (spec-pipeline / to-spec)</td>
+<td><strong id="PRD-B"><a class="id-ref" href="#PRD-B">PRD-B</a></strong></td>
+<td>Outputs feed SDD pipeline (spec-pipeline / spec-ingest; to-spec removed, skill-factory spec-ingest ARD-E)</td>
 </tr>
 </tbody></table></div>
 <h3>User Stories</h3>
@@ -86,6 +87,8 @@
 </tbody></table></div>
 <h3>Out of Scope</h3>
 <p>Runtime code beyond SKILL.md orchestration</p>
+<h3>Resources Needed</h3>
+<p>UNKNOWN: the docs name no resources beyond the four skills listed in <code>## Overview</code>.</p>
 <h3>Change Log</h3>
 <div class="table-wrap"><table><thead><tr>
 <th>Version</th>
@@ -96,6 +99,16 @@
 <td>0.1</td>
 <td>2026-11-04</td>
 <td>SDD feature bundle for discovery skills</td>
+</tr>
+<tr>
+<td>0.2</td>
+<td>2026-11-24</td>
+<td><a class="id-ref" href="#PRD-B">PRD-B</a> names spec-ingest</td>
+</tr>
+<tr>
+<td>0.3</td>
+<td>2026-11-24</td>
+<td>Added the standard&#x27;s required sections (pointers only, no new facts)</td>
 </tr>
 </tbody></table></div>
       </div>

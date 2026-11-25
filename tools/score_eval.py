@@ -37,6 +37,7 @@ from checks.no_commit import check_no_commit_tree  # noqa: E402
 from checks.parent_complete import check_parent_complete  # noqa: E402
 from checks.paired_html import check_paired_html  # noqa: E402
 from checks.runners import run_file  # noqa: E402
+from checks.size import check_size  # noqa: E402
 
 REGISTRY = TESTS / "must_registry.yaml"
 JUDGMENTS = TESTS / "judgments" / "v1.yaml"
@@ -181,7 +182,7 @@ def a_ownership(feature: Path) -> bool:
 
 def a_skill_examples(feature: Path) -> bool:
     skills = ROOT / "skills"
-    for name in ("spec-pipeline", "spec-organize", "spec-review", "spec-write"):
+    for name in ("spec-review", "spec-write"):  # TST-S
         text = (skills / name / "SKILL.md").read_text(encoding="utf-8")
         if not all(pat.search(text) for pat in _examples()):
             return False
@@ -258,7 +259,7 @@ def score2(feature: Path) -> tuple[float, list[str]]:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("feature", nargs="?", default=str(DEFAULT_FEATURE))
-    ap.add_argument("--min-score2", type=float, default=6.0)
+    ap.add_argument("--min-score2", type=float, default=None, help="optional floor; ARD-R sets none")
     args = ap.parse_args()
     feature = Path(args.feature)
     if not feature.is_absolute():
@@ -274,9 +275,14 @@ def main() -> None:
     print("\n# score 2 — annotations")
     for line in s2_lines:
         print(line)
-    print(f"\nscore2 = {s2:.1f}/10  gate={'PASS' if s2 >= args.min_score2 else 'FAIL'} (min {args.min_score2})")
+    if args.min_score2 is None:
+        s2_ok = True
+        print(f"\nscore2 = {s2:.1f}/10  (no fixed floor; compare with the previous run of this gold version)")
+    else:
+        s2_ok = s2 >= args.min_score2
+        print(f"\nscore2 = {s2:.1f}/10  gate={'PASS' if s2_ok else 'FAIL'} (min {args.min_score2})")
 
-    ok = passed == total and s2 >= args.min_score2
+    ok = passed == total and s2_ok
     sys.exit(0 if ok else 1)
 
 

@@ -21,6 +21,6 @@ def check_counts(path: Path, text: str | None = None) -> list[Finding]:
     for n in _ALL.findall(raw):
         if int(n) != rows:
             findings.append(
-                Finding("counts", str(path), f"all {n} questions but {rows} QUES rows")
+                Finding("counts", str(path), f"all {n} questions but {rows} QUES rows", level="nice")
             )
     return findings

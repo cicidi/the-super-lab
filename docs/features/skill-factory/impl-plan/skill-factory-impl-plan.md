@@ -606,6 +606,14 @@ parts no longer match the repository, detected by reading the code against it on
 | Outputs under `docs/devil-advocate/`, `docs/work-review/` | Documents live under `docs/features/` | `doc-organize` standard |
 | `self-heal`, `self-analyze`, `tmux-setup` skills | No longer present | `coworker skill list` |
 
+## Global Constraints
+
+本篇没有单列全局约束；各阶段的前提见 Phase 1 至 Phase 6 下的 Dependencies 小节，与仓库不符之处见 `## Known Drift`。
+
+## Acceptance Criteria
+
+见 [test-plan](../test-plan/skill-factory-test-plan.md) 的 `## Quality Gates / Acceptance Criteria` 一节。
+
 ## Change Log
 
 | Date | Change |
@@ -622,3 +630,4 @@ parts no longer match the repository, detected by reading the code against it on
 | 0.9 | 2026-07-18 | Media processing skills (YouTube, OCR, transcription) |
 | 1.0 | 2026-07-22 | Pipeline skills (video workflow, event scouting) |
 | 2026-09-25 | Merged the companion document of the same type into this file; added frontmatter and the drift table |
+| 2026-11-24 | 补齐标准要求的小节（指向已有内容，不新增事实） |

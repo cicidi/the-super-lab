@@ -15,5 +15,23 @@ annotations:
     kind: bad
     where: exemplar/ (TST-D)
     text: Permanent requirement ID uses numeric suffix (e.g. PRD-1) instead of letter ID.
-    expected_fix: Renumber to PRD-A style per DSGN-F; strike+link if superseding.
+    expected_fix: Use the letter ID (PRD-A) per DSGN-F; record the renumbering in an ARD with an old-to-new table; no strikethrough outside decision-history (ARD-BM).
+    added_in: v1
+  - id: BAD-B
+    kind: bad
+    where: exemplar/ (TST-D)
+    text: An open question uses QUES-1 or OQ-1 instead of QUES-A.
+    expected_fix: Use QUES-A; record the renumbering with an old-to-new table (DSGN-F); no strikethrough outside decision-history (ARD-BM).
+    added_in: v1
+  - id: BAD-C
+    kind: bad
+    where: exemplar/ (TST-D)
+    text: An IMPL task names no dependency and names nobody it blocks.
+    expected_fix: Name what it depends on and what it blocks, then put blocked work later in Execution order.
+    added_in: v1
+  - id: BAD-D
+    kind: bad
+    where: exemplar/ (TST-D)
+    text: Body text outside decision-history carries ~~struck~~ old sentences (ARD-BM).
+    expected_fix: Remove the strikethrough; state only the current rule and link the ARD that changed it.
     added_in: v1

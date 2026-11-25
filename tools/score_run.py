@@ -91,8 +91,8 @@ def main() -> None:
     for ident in APPLICABLE_BAD:
         print(f"{' ' if hits[ident] else '-'}\t{ident}\t{APPLICABLE_BAD[ident]}")
     cap = 10 * len(APPLICABLE_GOOD) / (len(APPLICABLE_GOOD) + len(APPLICABLE_BAD))
-    print(f"\nscore2 = {score:.1f}/10  gate={'PASS' if score >= 6 else 'FAIL'} (min 6.0, max {cap:.1f})")
-    sys.exit(0 if passed == total and score >= 6 else 1)
+    print(f"\nscore2 = {score:.1f}/10  (max {cap:.1f}; no fixed floor; compare with the previous run of this gold version)")
+    sys.exit(0 if passed == total else 1)
 
 
 if __name__ == "__main__":

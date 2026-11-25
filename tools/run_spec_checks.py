@@ -17,11 +17,13 @@ from checks.registry_provenance import check_registry_provenance  # noqa: E402
 from checks.test_trace import check_test_trace  # noqa: E402
 from checks.frontmatter import Finding  # noqa: E402
 from checks.collision import check_collision  # noqa: E402
+from checks.figure_tree import check_figure_tree  # noqa: E402
 from checks.index_book import check_index_book  # noqa: E402
 from checks.no_commit import check_no_commit_tree  # noqa: E402
 from checks.parent_complete import check_parent_complete  # noqa: E402
 from checks.paired_html import check_paired_html  # noqa: E402
 from checks.runners import run_file  # noqa: E402
+from checks.struck_links import check_struck_links  # noqa: E402
 
 # No grandfathered paths: the standard applies to every committed document (IMPL-M).
 EXEMPT: set[Path] = set()
@@ -66,7 +68,9 @@ def main() -> None:
         findings.extend(check_publish_nav(ROOT))
         findings.extend(check_paired_html(ROOT))
         findings.extend(check_test_trace(ROOT / "docs/features/spec-driven-development"))
+        findings.extend(check_struck_links(ROOT / "docs/features/spec-driven-development"))
         findings.extend(check_registry_provenance(ROOT))
+        findings.extend(check_figure_tree(ROOT))
     if target.is_dir() and target.name not in ("features", "docs") and "docs/features" in target.as_posix():
         findings.extend(check_parent_complete(target))
     for path in sorted(target.rglob("*.md")):
@@ -80,12 +84,17 @@ def main() -> None:
             findings.append(Finding("encoding", str(path), "not utf-8"))
             continue
         findings.extend(run_file(path, text))
+    nice = [f for f in findings if getattr(f, "level", "must") == "nice"]
+    findings = [f for f in findings if getattr(f, "level", "must") != "nice"]
     if summary_only:
         print(len(findings))
     else:
         for f in findings:
             print(f"{f.check}\t{f.path}\t{f.message}")
+        for f in nice:
+            print(f"nice\t{f.check}\t{f.path}\t{f.message}")
         print(f"\n# findings: {len(findings)}")
+        print(f"# nice: {len(nice)}")
     sys.exit(1 if findings else 0)
 
 

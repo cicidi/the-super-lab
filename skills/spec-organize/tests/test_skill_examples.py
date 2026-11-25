@@ -15,7 +15,7 @@ EXAMPLES = [
     ("数学题", re.compile("数学题")),
     ("股票", re.compile("股票")),
 ]
-SKILL_NAMES = ["spec-pipeline", "spec-organize", "spec-review", "spec-write"]
+SKILL_NAMES = ["spec-review", "spec-write"]  # TST-S: the deliverables that write and review specs
 
 CONTRACT = "docs/features/spec-driven-development/design/spec-driven-development-design-skill-contracts.md"
 

@@ -12,11 +12,12 @@ from checks.code_citation_base import check_code_citation_base
 from checks.counts import check_counts
 from checks.decision_log import check_decision_log
 from checks.diagram_steps import check_diagram_steps
+from checks.figures import check_figures
 from checks.frontmatter import check_frontmatter
 from checks.ids import check_ids
 from checks.impl_tasks import check_impl_tasks
 from checks.open_questions import check_open_questions
-from checks.paths import check_committed_path
+from checks.paths import check_committed_path, is_supporting_file
 from checks.resolved_refs import check_resolved_refs
 from checks.section_refs import check_section_refs
 from checks.sections import check_sections
@@ -43,13 +44,17 @@ RUNNERS = [
     check_counts,
     check_resolved_refs,
     check_diagram_steps,
+    check_figures,
 ]
 
 
 def run_file(path: Path, text: str) -> list:
-    """Translation copies are banner-only (ARD-AU)."""
+    """Translation copies are banner-only (ARD-AU); supporting files are size-only."""
     if _TRANSLATION.match(path.name):
         return check_translation_banner(path, text)
+    # Supporting files skip document checks but keep their folder's size cap (DSGN-B).
+    if is_supporting_file(path, text):
+        return check_size(path, text)
     findings = []
     for fn in RUNNERS:
         findings.extend(fn(path, text))

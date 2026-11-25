@@ -4,20 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Delivery Pipeline Skills — Design · design · Spec Atlas</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:400,400italic,500,500italic,700|Roboto+Mono:400,500,700|Noto+Sans+SC:400,500,700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@400;600&display=swap">
 <link rel="stylesheet" href="../../assets/styles.css">
 </head>
 <body>
 <header class="topbar">
   <div class="topbar-inner">
     <div class="brand"><a href="../../index.html"><span class="brand-mark">SDD</span><span class="brand-name">Spec Atlas</span></a></div>
+    <button class="strike-btn" type="button" onclick="var r=document.documentElement;var off=r.dataset.strike!=='off';r.dataset.strike=off?'off':'on';this.textContent=off?'显示删除线':'隐藏删除线'">隐藏删除线</button>
   </div>
 </header>
 <div class="site">
   <aside class="sidebar">
   <nav aria-label="Directory">
     <div class="tree-overview"><a class="tree-link" href="../../index.html"><span class="tree-link__num">00</span>All features</a></div>
-    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../prd/downstream-delivery-prd.html"><span class="tree-link__num">04</span>Delivery Pipeline Skills — PRD</a></li><li class="tree-leaf"><a class="tree-link" href="downstream-delivery-design.html" aria-current="page"><span class="tree-link__num">05</span>Delivery Pipeline Skills — Design</a></li><li class="tree-leaf"><a class="tree-link" href="../test-plan/downstream-delivery-test-plan.html"><span class="tree-link__num">06</span>Downstream Delivery — Test Plan</a></li></ul>
+    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../prd/downstream-delivery-prd.html"><span class="tree-ord">1</span>Delivery Pipeline Skills — PRD</a></li><li class="tree-leaf"><a class="tree-link" href="downstream-delivery-design.html" aria-current="page"><span class="tree-ord">3</span>Delivery Pipeline Skills — Design</a></li><li class="tree-leaf"><a class="tree-link" href="../test-plan/downstream-delivery-test-plan.html"><span class="tree-ord">5</span>Downstream Delivery — Test Plan</a></li></ul>
   </nav>
 </aside>
   <main class="content">
@@ -35,13 +36,39 @@
 <p>Specs without delivery skills stall at markdown.</p>
 <h3>Solution</h3>
 <p>Skills orchestrate spec-write → tickets → code changes with verification-before-completion.</p>
+<h3>User Stories</h3>
+<p>See <code>## User Stories</code> in the <a href="../prd/downstream-delivery-prd.html">PRD</a>.</p>
+<h3>Implementation Decisions</h3>
+<p>See <code>## Design</code> below: <a class="id-ref" href="#DSGN-A">DSGN-A</a> fixes the skill chain and <a class="id-ref" href="#DSGN-B">DSGN-B</a> points to the phase gates.</p>
 <h3>Design</h3>
-<h4 id="DSGN-A"><a href="#DSGN-A">DSGN-A</a> — Chain</h4>
-<p>spec-pipeline Downstream phase → to-spec → to-tickets → implement.</p>
-<h4 id="DSGN-B"><a href="#DSGN-B">DSGN-B</a> — Integration</h4>
+<h4 id="DSGN-A"><a class="id-ref" href="#DSGN-A">DSGN-A</a> — Chain</h4>
+<p>The spec-pipeline Downstream phase runs spec-ingest, then spec-write, then spec-review, then spec-ticket, then implement (skill-factory spec-ingest ARD-E, spec-ticket ARD-H).</p>
+<h4 id="DSGN-B"><a class="id-ref" href="#DSGN-B">DSGN-B</a> — Integration</h4>
 <p>See <a href="../../../../../skills/spec-pipeline/INTEGRATIONS.md"><code>skills/spec-pipeline/INTEGRATIONS.md</code></a> for phase gates.</p>
+<h3>Testing Decisions</h3>
+<p>See <code>## Test Cases</code> in the <a href="../test-plan/downstream-delivery-test-plan.html">test plan</a>.</p>
 <h3>Out of Scope</h3>
 <p>CI deploy automation</p>
+<h3>Further Notes</h3>
+<p>Not applicable: this feature&#x27;s docs record no further notes.</p>
+<h3>Alternatives Considered</h3>
+<p>UNKNOWN: this feature&#x27;s docs record no rejected options.</p>
+<h3>Drawbacks</h3>
+<p>UNKNOWN: this feature&#x27;s docs record no drawbacks of the chosen design.</p>
+<h3>Risks and Mitigations</h3>
+<p>UNKNOWN: this feature&#x27;s docs record no risks or mitigations.</p>
+<h3>Open Questions</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>ID</th>
+<th>Question</th>
+<th>Answer so far</th>
+<th>Owner</th>
+<th>Blocking</th>
+</tr></thead><tbody>
+</tbody></table></div>
+<p>No open questions are recorded for this feature.</p>
+<h3>Reversibility</h3>
+<p>UNKNOWN: this feature&#x27;s docs record no undo or rollback path.</p>
 <h3>Change Log</h3>
 <div class="table-wrap"><table><thead><tr>
 <th>Version</th>
@@ -52,6 +79,16 @@
 <td>0.1</td>
 <td>2026-11-04</td>
 <td>Initial design</td>
+</tr>
+<tr>
+<td>0.2</td>
+<td>2026-11-24</td>
+<td><a class="id-ref" href="#DSGN-A">DSGN-A</a> chain names spec-ingest, spec-ticket</td>
+</tr>
+<tr>
+<td>0.3</td>
+<td>2026-11-24</td>
+<td>Added the standard&#x27;s required sections (pointers only, no new facts)</td>
 </tr>
 </tbody></table></div>
       </div>

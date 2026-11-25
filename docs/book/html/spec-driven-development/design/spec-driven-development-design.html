@@ -3,266 +3,812 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Spec-Driven Development — HLD · design · Spec Atlas</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:400,400italic,500,500italic,700|Roboto+Mono:400,500,700|Noto+Sans+SC:400,500,700&display=swap">
+<title>Spec-Driven Development — 整体设计 · design · Spec Atlas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@400;600&display=swap">
 <link rel="stylesheet" href="../../assets/styles.css">
 </head>
 <body>
 <header class="topbar">
   <div class="topbar-inner">
     <div class="brand"><a href="../../index.html"><span class="brand-mark">SDD</span><span class="brand-name">Spec Atlas</span></a></div>
+    <button class="strike-btn" type="button" onclick="var r=document.documentElement;var off=r.dataset.strike!=='off';r.dataset.strike=off?'off':'on';this.textContent=off?'显示删除线':'隐藏删除线'">隐藏删除线</button>
   </div>
 </header>
 <div class="site">
   <aside class="sidebar">
   <nav aria-label="Directory">
     <div class="tree-overview"><a class="tree-link" href="../../index.html"><span class="tree-link__num">00</span>All features</a></div>
-    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../prd/spec-driven-development-prd.html"><span class="tree-link__num">16</span>Spec-Driven Development — PRD</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="spec-driven-development-design.html" aria-current="page"><span class="tree-link__num">18</span>Spec-Driven Development — HLD</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="spec-driven-development-design-skill-contracts.html"><span class="tree-link__num">17</span>Spec-Driven Development — Skill Contracts</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/document-standard/design/document-standard-design.html">document-standard</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/document-standard/prd/document-standard-prd-spec-reader-html.html"><span class="tree-link__num">15</span>Document Standard — Spec Reader HTML（PRD）</a></li><li class="tree-leaf"><a class="tree-link" href="../features/document-standard/design/document-standard-design-spec-reader-html.html"><span class="tree-link__num">19</span>Document Standard — Spec Reader HTML（Design）</a></li><li class="tree-leaf"><a class="tree-link" href="../features/document-standard/design/document-standard-design.html"><span class="tree-link__num">20</span>Document Standard — 文档标准（待 Review）</a></li></ul></details></li><li class="tree-leaf"><a class="tree-link" href="../spec-driven-development-reader.html">spec-driven-development — Reader</a></li></ul></details></li><li class="tree-leaf"><a class="tree-link" href="../impl-plan/spec-driven-development-impl-plan.html"><span class="tree-link__num">21</span>Spec-Driven Development — Implementation Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../test-plan/spec-driven-development-test-plan.html"><span class="tree-link__num">22</span>Spec-Driven Development — Test Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../decision-history/spec-driven-development-decision-history.html"><span class="tree-link__num">23</span>Spec-Driven Development — Decision History</a></li></ul>
+    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../prd/spec-driven-development-prd.html"><span class="tree-ord">1</span>Spec-Driven Development — PRD</a></li><li class="tree-leaf"><a class="tree-link" href="../decision-history/spec-driven-development-decision-history.html"><span class="tree-ord">2</span>Spec-Driven Development — Decision History</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="spec-driven-development-design.html" aria-current="page"><span class="tree-ord">3</span>Spec-Driven Development — 整体设计</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="spec-driven-development-design-skill-contracts.html">Spec-Driven Development — Skill 契约</a></li><li class="tree-leaf"><a class="tree-link" href="../spec-driven-development-reader.html">spec-driven-development — Reader</a></li></ul></details></li><li class="tree-leaf"><a class="tree-link" href="../impl-plan/spec-driven-development-impl-plan.html"><span class="tree-ord">4</span>Spec-Driven Development — 实现计划</a></li><li class="tree-leaf"><a class="tree-link" href="../test-plan/spec-driven-development-test-plan.html"><span class="tree-ord">5</span>Spec-Driven Development — 测试计划</a></li><li class="tree-branch"><details open><summary><span class="tree-link"><span class="tree-ord">10</span>sub-feature</span></summary><ul class="tree"><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/document-standard/design/document-standard-design.html">document-standard</a></summary><ul class="tree"><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/document-standard/prd/document-standard-prd-spec-reader-html.html"><span class="tree-ord">1</span>Document Standard — 给人读的 HTML 页面（PRD）</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/document-standard/prd/document-standard-prd.html">Document Standard（PRD 入口）</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/document-standard/design/document-standard-design-spec-reader-html.html"><span class="tree-ord">3</span>Document Standard — 给人读的 HTML 页面（Design）</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/document-standard/design/document-standard-design.html">Document Standard — 文档标准</a></li></ul></details></li></ul></details></li></ul></details></li></ul>
   </nav>
 </aside>
   <main class="content">
-    <nav class="breadcrumbs"><a href="../../index.html">Docs</a> / <span>spec-driven-development</span> / <span>design</span> / <span>Spec-Driven Development — HLD</span></nav>
+    <nav class="breadcrumbs"><a href="../../index.html">Docs</a> / <span>spec-driven-development</span> / <span>design</span> / <span>Spec-Driven Development — 整体设计</span></nav>
     <article class="doc" data-doc="spec-driven-development/design/spec-driven-development-design">
       <header class="doc-head">
         <p class="eyebrow">spec-driven-development</p>
-        <h1>Spec-Driven Development — HLD</h1>
+        <h1>Spec-Driven Development — 整体设计</h1>
         <p class="source">Canonical: docs/features/spec-driven-development/design/spec-driven-development-design.md</p>
       </header>
       
       <div class="doc-body">
-        <h2>Spec-Driven Development — HLD</h2>
-<p>本文件 <strong>仅 HLD</strong>。Requirement 见 <code>prd/spec-driven-development-prd.md</code>；LLD、规则条文、skill 契约、迁移步骤等 <strong>全部</strong> 在 peer / sub feature 或本 initiative 的 <strong>aspect design 篇</strong> 里，此处只 link。</p>
-<h4>术语</h4>
+        <h2>Spec-Driven Development — 整体设计</h2>
+<p>这是 SDD 的整体设计（也叫 HLD，high-level design，只讲整体结构，不讲细节）。需求写在 <a href="../prd/spec-driven-development-prd.html">PRD</a>。细节写在下面几篇，这里只放链接：</p>
 <div class="table-wrap"><table><thead><tr>
-<th>术语</th>
-<th>含义</th>
+<th>内容</th>
+<th>写在哪</th>
 </tr></thead><tbody>
 <tr>
-<td><strong>Feature spec</strong></td>
-<td>一个 feature 下 <strong>全套 committed 文稿</strong>：PRD + <strong>design</strong> + impl-plan + test-plan + decision-history（+ 可选 how-to）。</td>
+<td>文档放哪、叫什么、写哪些章节、编号怎么起</td>
+<td><a href="../features/document-standard/design/document-standard-design.html">document-standard design</a></td>
 </tr>
 <tr>
-<td><strong><code>design</code> 篇</strong></td>
-<td>其中 <strong>技术设计</strong> 文件：<code>design/&lt;f&gt;-design.md</code>。SDD 图里循环打磨的「设计」指此，不是合称。</td>
+<td>写 spec 分几个阶段、每个阶段用哪个 skill</td>
+<td><a href="../../../../features/spec-driven-development/features/pipeline/design/pipeline-design.md">pipeline design</a></td>
+</tr>
+<tr>
+<td>spec-write 和 spec-review 各自的输入、输出和职责边界</td>
+<td><a href="spec-driven-development-design-skill-contracts.html">skill 契约</a></td>
+</tr>
+<tr>
+<td>给人读的 HTML 页面</td>
+<td><a href="../features/document-standard/design/document-standard-design-spec-reader-html.html">reader design</a></td>
 </tr>
 </tbody></table></div>
+<p>本文第一次出现的缩写和术语，都在文末的<a href="#glossary">附录：术语表</a>里解释。</p>
 <h3>Problem Statement</h3>
-<p>问题定义、unknown、decision 变更、可读性与文件管理、非软件难题——见 PRD Problem Statement。</p>
+<p>要解决的问题写在 PRD 的 Problem Statement：问题没定义清楚、需要 AI 帮忙发现未知、决定不断变化、人读不过来、非软件的难题也需要拆解。本文不重复。</p>
 <h3>Solution</h3>
-<p>一套 artifact + skill 体系：PRD、decision-history、design 篇、impl-plan、test-plan 五篇；spec-write 书写，spec-review 审查（<a href="../decision-history/spec-driven-development-decision-history.html#ARD-AJ">ARD-AJ</a>）。</p>
+<p>用五篇文档加三个 skill 来解决：</p>
+<ul>
+<li><strong>五篇文档</strong>：PRD、decision-history、design、impl-plan、test-plan。前三篇反复打磨，稳定后再写后两篇。</li>
+<li><strong>三个 skill</strong>：spec-write 负责写和改文档，spec-review 负责检查文档、给出修改建议，wayfinder 负责进度记录（<a href="../decision-history/spec-driven-development-decision-history.html#ard-aj">ARD-AJ</a>、<a href="../decision-history/spec-driven-development-decision-history.html#ard-ch">ARD-CH</a>）。</li>
+</ul>
 <h3>User Stories</h3>
-<ul>
-<li>作为写 spec 的人，我希望先被 interview，把未知和盲区问出来。</li>
-<li>作为 reviewer，我希望机械 MUST 和语义缺陷都能被检出。</li>
-<li>作为执行者，我希望 spec 能落到 design/impl-plan，并留下可追溯的证据。</li>
-</ul>
+<p>用户故事见 <a href="../prd/spec-driven-development-prd.html#user-stories">PRD</a>，本文不重复。</p>
 <h3>Design</h3>
-<h4>1. System Context</h4>
-<p>SDD 是一套 <strong>artifact + skill</strong> 体系：PRD 说 problem，decision history 记方向，<strong>design 篇</strong> 写技术方案；收敛后 impl plan、test plan <strong>从 design 篇</strong> 各写一份总结。文档落在 <code>docs/features/</code>。</p>
-<h4>2. Logical Architecture（HLD）</h4>
-<h4>2.1 Artifact 循环与下游</h4>
-<pre><code>     PRD ◄──────────────────► decision history
-      ▲                              │
-      │                              ▼
-      └──────── design ◄─────────────┘
-              │
-              ▼ 收敛后（从 design 篇各写一份）
-         impl plan    test plan
-              └─ 独立，无先后 ─┘</code></pre>
-<ul>
-<li><strong>循环区：</strong> PRD、decision history、<strong>design 篇</strong> 互相打磨（见 PRD Solution）。</li>
-<li><strong>下游区：</strong> impl plan、test plan 均从 <strong>design 篇</strong> 总结；细节见 <strong>pipeline</strong> sub-feature。</li>
-</ul>
-<h4>2.2 组件分解（HLD）</h4>
+<h4>整体结构</h4>
+<p>SDD 由文档和 skill 两部分组成。PRD 说清楚问题，decision-history 记下方向，design 写技术方案。三篇稳定之后，impl-plan 和 test-plan 各自从 design 总结出来。所有文档放在 <code>docs/features/</code> 下面。</p>
+<p>文档之间的关系如下。上半部分是三篇文档互相打磨的循环；循环稳定后，从 design 往下各写一篇 impl-plan 和 test-plan，两篇互不依赖：</p>
+<figure class="fig"><div class="fig-scroll"><svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="spec-driven-development-design-fig-artifact-loop-artifact-loop-title spec-driven-development-design-fig-artifact-loop-artifact-loop-desc" viewBox="0 0 520 260" style="min-width:520px;background:#f5f5f5">
+  <title id="spec-driven-development-design-fig-artifact-loop-artifact-loop-title">SDD 文档循环与下游</title>
+  <desc id="spec-driven-development-design-fig-artifact-loop-artifact-loop-desc">PRD、decision-history、design 互相打磨；稳定后从 design 写出 impl-plan 与 test-plan。</desc>
+  <defs>
+    <marker id="spec-driven-development-design-fig-artifact-loop-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4f5d75"/></marker>
+  </defs>
+  <path d="M120 62 H200" fill="none" stroke="#4f5d75" stroke-width="1.5" marker-end="url(#spec-driven-development-design-fig-artifact-loop-arrow)"/>
+  <path d="M260 84 V128" fill="none" stroke="#4f5d75" stroke-width="1.5" marker-end="url(#spec-driven-development-design-fig-artifact-loop-arrow)"/>
+  <path d="M200 150 H70 V84" fill="none" stroke="#4f5d75" stroke-width="1.5" marker-end="url(#spec-driven-development-design-fig-artifact-loop-arrow)"/>
+  <path d="M320 140 H352 V120 H380" fill="none" stroke="#4f5d75" stroke-width="1.5" marker-end="url(#spec-driven-development-design-fig-artifact-loop-arrow)"/>
+  <path d="M320 160 H352 V184 H380" fill="none" stroke="#4f5d75" stroke-width="1.5" marker-end="url(#spec-driven-development-design-fig-artifact-loop-arrow)"/>
+  <rect x="20" y="40" width="100" height="44" rx="6" fill="#fff" stroke="#bfc0c0"/>
+  <text x="70" y="66" text-anchor="middle" font-family="Geist,'Noto Sans SC',sans-serif" font-size="12" font-weight="600" fill="#2d3142">PRD</text>
+  <rect x="200" y="40" width="120" height="44" rx="6" fill="#fff" stroke="#bfc0c0"/>
+  <text x="260" y="66" text-anchor="middle" font-family="Geist,'Noto Sans SC',sans-serif" font-size="11" font-weight="600" fill="#2d3142">decision-history</text>
+  <rect x="200" y="128" width="120" height="44" rx="6" fill="rgba(191,69,32,.08)" stroke="#bf4520"/>
+  <text x="260" y="154" text-anchor="middle" font-family="Geist,'Noto Sans SC',sans-serif" font-size="12" font-weight="600" fill="#2d3142">design</text>
+  <rect x="380" y="100" width="110" height="40" rx="6" fill="#fff" stroke="#bfc0c0"/>
+  <text x="435" y="124" text-anchor="middle" font-family="Geist,'Noto Sans SC',sans-serif" font-size="11" font-weight="600" fill="#2d3142">impl-plan</text>
+  <rect x="380" y="164" width="110" height="40" rx="6" fill="#fff" stroke="#bfc0c0"/>
+  <text x="435" y="188" text-anchor="middle" font-family="Geist,'Noto Sans SC',sans-serif" font-size="11" font-weight="600" fill="#2d3142">test-plan</text>
+  <text x="260" y="240" text-anchor="middle" font-family="Instrument Serif,'Noto Serif SC',serif" font-size="13" font-style="italic" fill="#4f5d75">稳定后，从 design 各写一篇 impl-plan 与 test-plan</text>
+</svg>
+</div><figcaption>SDD 文档循环与下游</figcaption></figure>
+<p>每个阶段具体怎么走，见 <a href="../../../../features/spec-driven-development/features/pipeline/design/pipeline-design.md">pipeline design</a>。</p>
+<h4>目录结构</h4>
 <pre><code>docs/features/
-├── spec-driven-development/     ← 本 initiative（parent：PRD + 本 HLD + decision-history）
+├── spec-driven-development/     本 feature（parent）：PRD、本文、decision-history、impl-plan、test-plan
 │   └── features/
-│       ├── pipeline/
-│       └── document-standard/
-└── skill-factory/                 ← peer initiative</code></pre>
-<h4>3. Peer / Sub 清单（Review）</h4>
-<h4>3.1 Peer features（<code>docs/features/&lt;name&gt;/</code>）</h4>
+│       ├── pipeline/            sub-feature：写 spec 的阶段
+│       └── document-standard/   sub-feature：文档标准和 reader HTML
+└── skill-factory/               peer feature：skill 的生产和管理</code></pre>
+<p><strong>peer 还是 sub-feature：</strong> 一项工作如果可以单独写 PRD、单独交付，就放在 <code>docs/features/</code> 下面做 peer feature，不要放进 <code>spec-driven-development/features/</code> 里面。</p>
 <div class="table-wrap"><table><thead><tr>
-<th>#</th>
 <th>Feature</th>
-<th>判定</th>
-<th>HLD 职责（一句话）</th>
-<th>Detail design</th>
+<th>类型</th>
+<th>一句话职责</th>
+<th>详细设计</th>
 </tr></thead><tbody>
 <tr>
-<td>P0</td>
-<td><strong>spec-driven-development</strong></td>
-<td>Parent</td>
-<td>Initiative 总览、本 HLD、parent PRD/decision-history</td>
-<td>本文件 + <code>prd/spec-driven-development-prd.md</code></td>
+<td>spec-driven-development</td>
+<td>parent</td>
+<td>总体需求、本文、决定记录</td>
+<td>本文与 <a href="../prd/spec-driven-development-prd.html">PRD</a></td>
 </tr>
 <tr>
-<td>P1</td>
-<td><strong>skill-factory</strong></td>
-<td>Peer</td>
-<td>Skill 生产/管理</td>
+<td>skill-factory</td>
+<td>peer</td>
+<td>生产和管理 skill</td>
 <td><code>docs/features/skill-factory/design/</code></td>
 </tr>
-</tbody></table></div>
-<p><strong>Peer 判定规则：</strong> 可单独 PRD / feature spec / ship → 放在 <code>docs/features/</code> 下，<strong>不要</strong> nest 在 <code>spec-driven-development/features/</code>。</p>
-<h4>3.2 Sub features（<code>spec-driven-development/features/&lt;name&gt;/</code>）</h4>
-<div class="table-wrap"><table><thead><tr>
-<th>#</th>
-<th>Sub feature</th>
-<th>Detail design</th>
-</tr></thead><tbody>
 <tr>
-<td>S1</td>
-<td><strong>pipeline</strong></td>
-<td><code>features/pipeline/design/pipeline-design.md</code></td>
+<td>pipeline</td>
+<td>sub-feature</td>
+<td>写 spec 的阶段和每阶段用的 skill</td>
+<td><a href="../../../../features/spec-driven-development/features/pipeline/design/pipeline-design.md">pipeline design</a></td>
 </tr>
 <tr>
-<td>S2</td>
-<td><strong>document-standard</strong></td>
-<td><code>features/document-standard/design/document-standard-design.md</code></td>
-</tr>
-<tr>
-<td>S3–S6</td>
-<td>（延后）</td>
-<td>—</td>
+<td>document-standard</td>
+<td>sub-feature</td>
+<td>文档标准和 reader HTML</td>
+<td><a href="../features/document-standard/design/document-standard-design.html">document-standard design</a></td>
 </tr>
 </tbody></table></div>
-<h4>3.3 子问题归属（PIPE-L / <a href="../prd/spec-driven-development-prd.html#PRD-L">PRD-L</a>）</h4>
+<h4>子问题归属</h4>
+<p><a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-L">PRD-L</a> 要求每个子问题写明由谁处理。本 feature 的子问题如下：</p>
 <div class="table-wrap"><table><thead><tr>
 <th>子问题</th>
 <th>归属</th>
 <th>依据</th>
 </tr></thead><tbody>
 <tr>
-<td>存量不合规文档是否迁移</td>
+<td>已有的不合规文档要不要迁移</td>
 <td>人决定</td>
-<td><a href="../decision-history/spec-driven-development-decision-history.html#ARD-AF">ARD-AF</a></td>
+<td><a href="../decision-history/spec-driven-development-decision-history.html#ard-ck">ARD-CK</a>（重述 <a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-AF">ARD-AF</a>）</td>
 </tr>
 <tr>
-<td>wayfinder-import 是否作为子特性</td>
+<td>wayfinder-import 是不是 sub-feature</td>
 <td>人决定</td>
-<td><a href="../decision-history/spec-driven-development-decision-history.html#ARD-T">ARD-T</a></td>
+<td><a href="../decision-history/spec-driven-development-decision-history.html#ard-t">ARD-T</a></td>
 </tr>
 <tr>
-<td>eval 跑分与报告是否入库</td>
+<td>跑分结果和报告要不要提交</td>
 <td>AI 查完人决定</td>
-<td><a href="../decision-history/spec-driven-development-decision-history.html#ARD-AD">ARD-AD</a></td>
+<td><a href="../decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a></td>
 </tr>
 <tr>
-<td>四个非软件例子是否建 gold</td>
+<td>四个非软件例子要不要建 gold</td>
 <td>人决定</td>
-<td><a href="../decision-history/spec-driven-development-decision-history.html#ARD-AD">ARD-AD</a></td>
+<td><a href="../decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a></td>
+</tr>
+<tr>
+<td>用哪个案例来打分</td>
+<td>人决定</td>
+<td><a href="../decision-history/spec-driven-development-decision-history.html#ard-bl">ARD-BL</a></td>
+</tr>
+<tr>
+<td>哪些规则是 <span class="lvl lvl--must">MUST</span>、哪些是 <span class="lvl lvl--nice">NICE</span></td>
+<td>AI 查完人决定</td>
+<td><a href="../decision-history/spec-driven-development-decision-history.html#ard-bn">ARD-BN</a></td>
 </tr>
 </tbody></table></div>
+<p>还没决定的问题见 <a href="#open-questions">Open Questions</a>。</p>
 <h3>Implementation Decisions</h3>
-<h4>4. AI 文档编辑约束（SDD 全 pipeline）</h4>
-<p><strong>来源：</strong> parent PRD Requirements §3。</p>
-<p><strong>适用范围：</strong> agent 对 <strong><code>docs/</code> 内 Markdown</strong>（feature spec 各篇）的单次编辑。</p>
+<a id="4-ai-文档编辑约束sdd-全-pipeline"></a><a id="dsgn-a"></a>
+<h4 id="DSGN-A"><a class="id-ref" href="#DSGN-A">DSGN-A</a> — AI 每次改文档的上限</h4>
+<p>来源：<a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-C">PRD-C</a>。</p>
+<p>适用于 AI 对 <code>docs/</code> 下 markdown 文档的每一次修改：</p>
 <div class="table-wrap"><table><thead><tr>
 <th>规则</th>
 <th>说明</th>
 </tr></thead><tbody>
 <tr>
-<td><strong>单次上限</strong></td>
-<td>≤ <strong>10 行</strong> *或* ≤ <strong>200 字符</strong>（满足其一）</td>
+<td>单次上限</td>
+<td>两条都要满足：不超过 10 行，并且不超过 200 字符；只管修改已有文件，新建文件不算（<a href="../decision-history/spec-driven-development-decision-history.html#ard-ce">ARD-CE</a>）</td>
 </tr>
 <tr>
-<td><strong>超出时</strong></td>
-<td>拆多次；或 human 授权 <code>restructure</code></td>
+<td>超出时</td>
+<td>拆成多次改；或者由人明确授权一次大改（restructure），并记一条 ARD</td>
 </tr>
 <tr>
-<td><strong>与 document-standard</strong></td>
-<td>cap、路径、frontmatter 见 <strong>document-standard</strong> design 篇</td>
+<td>和文档标准的关系</td>
+<td>行数上限、路径、frontmatter 见 document-standard 的 <a class="id-ref" href="#DSGN-B">DSGN-B</a> 和 <a class="id-ref" href="#DSGN-E">DSGN-E</a></td>
 </tr>
 <tr>
-<td><strong>验证</strong></td>
-<td>测试验不了单次编辑大小。不作为 test plan 的通过条件</td>
+<td>怎么验证</td>
+<td>测试无法检查单次改动的大小，所以这一条不作为 test-plan 的通过条件（<a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-I">PRD-I</a>）</td>
 </tr>
 </tbody></table></div>
-<p><strong>Implementation：</strong> <strong>spec-write</strong> 已有正文。人不读 skill 正文。本条上限看 skill 执行，不靠测试。</p>
-<h4>5. Decision history — 何时写（agent / 写 spec 时注意）</h4>
-<p><strong>原则：</strong> decision-history 记 <strong>已对外生效或已强迫改 reality 的方向</strong>，不是 design 脑内迭代的日记。</p>
+<p>这条规则写在 spec-write 的正文里，靠 skill 执行，不靠测试。</p>
+<a id="5-decision-history--何时写agent-写-spec-时注意"></a><a id="dsgn-b"></a>
+<h4 id="DSGN-B"><a class="id-ref" href="#DSGN-B">DSGN-B</a> — 什么时候写 decision-history</h4>
+<p>decision-history 只记已经对外生效、或者已经逼着现实改变的方向。它不是 design 写作过程中的思考日记。</p>
 <div class="table-wrap"><table><thead><tr>
-<th>应该写</th>
-<th>不应写</th>
+<th>应该记</th>
+<th>不应该记</th>
 </tr></thead><tbody>
 <tr>
-<td><strong>他人</strong> 的 decision（review、配对、stakeholder 口径）需团队可见</td>
-<td>仍在本人脑中、<strong>未</strong> 写入 <strong>design 篇</strong> 且 <strong>未</strong> 改 existing code 的探索性微调</td>
+<td>别人做的决定（评审、结对、利益相关方的意见），团队需要看到</td>
+<td>还只在自己脑子里、没写进 design、也没改代码的试探</td>
 </tr>
 <tr>
-<td><strong>本人</strong> 重大转向且 <strong>已改或必须改 existing code</strong>（contract、路径、rename、authority 换边、breaking behavior）</td>
-<td>为「想过又改主意」每条 append；design 篇里改一句能表达的不单独开 entry</td>
+<td>自己的重大转向，并且已经改了、或者必须改已有代码（接口、路径、改名、权威换边、不兼容的行为变化）</td>
+<td>「想过又改主意」的每一步；design 里改一句话就能说清的事</td>
 </tr>
 <tr>
-<td>Pipeline 要求的 <strong>rename / collision / supersede</strong> 等（见 document-standard <strong>DSGN-J</strong>–<strong>DSGN-K</strong>）</td>
-<td>仅 enrich <strong>design 篇</strong> 正文、尚未收敛的 rationale</td>
+<td>流程要求记录的改名、撞名、推翻旧决定（见 document-standard 的 DSGN-J、DSGN-K）</td>
+<td>只是补充 design 正文、还没定下来的理由</td>
 </tr>
 </tbody></table></div>
-<p>未 commit 的 scratch 与 <code>raw/design/</code> <strong>不</strong> 替代 decision-history；升格 committed fact 时按上表判断。<strong>Agents</strong> 补写 feature spec 时 <strong>默认不</strong> 自动堆 decision-history；有疑问时 human 定夺。</p>
-<h4>6. Agent 规范落地：CLAUDE.md + skill</h4>
-<p>§4（小步编辑）、§5（decision-history 取舍）、feature spec 各篇职责等，须在 <strong>harness 全局</strong> 留下印象，不能只在 repo 内 skill 正文里写一遍（<a href="../prd/spec-driven-development-prd.html#PRD-H">PRD-H</a>：复用既有 skill，不另造）。</p>
+<p>没提交的草稿和 <code>raw/design/</code> 不能代替 decision-history。要把草稿里的结论正式写进文档时，按上表判断要不要记。AI 补写 feature spec 时，默认不自动往 decision-history 里加条目；拿不准就问人。</p>
+<a id="6-agent-规范落地claudemd-skill"></a><a id="dsgn-c"></a>
+<h4 id="DSGN-C"><a class="id-ref" href="#DSGN-C">DSGN-C</a> — 规范要同时写进 CLAUDE.md 和 skill</h4>
+<p><a class="id-ref" href="#DSGN-A">DSGN-A</a>（改动上限）、<a class="id-ref" href="#DSGN-B">DSGN-B</a>（什么时候记决定）以及各篇文档的职责，要让 AI 在任何会话里都记得，不能只写在本仓库的 skill 正文里（<a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-H">PRD-H</a>：复用已有的机制）。</p>
 <div class="table-wrap"><table><thead><tr>
-<th>通道</th>
+<th>渠道</th>
 <th>作用</th>
 </tr></thead><tbody>
 <tr>
-<td><strong><code>~/.claude/CLAUDE.md</code></strong> + 项目 <strong><code>CLAUDE.md</code> / <a href="../../../../../CLAUDE.local.md"><code>CLAUDE.local.md</code></a></strong></td>
-<td>跨 session、跨 feature 的 <strong>默认 agent 行为</strong>（含 walter-worker <strong>managed block</strong>）</td>
+<td><code>~/.claude/CLAUDE.md</code>，以及项目里的 <code>CLAUDE.md</code>、<code>CLAUDE.local.md</code></td>
+<td>跨会话、跨 feature 的默认 AI 行为</td>
 </tr>
 <tr>
-<td><strong>Skills</strong>（<strong>spec-write</strong>、<strong>spec-review</strong>）</td>
-<td>任务级 procedure；标准在 SPEC-STANDARD.md 与 SPEC-PRESENTATION.md</td>
+<td>spec-write、spec-review、wayfinder 三个 skill</td>
+<td>具体任务的操作步骤；规则来自三份标准文件</td>
 </tr>
 </tbody></table></div>
-<p>Implement SDD / document-standard 时：<strong>plan 必须含 skill 变更与 CLAUDE 层条目</strong>（managed block 或等价），二者对齐同一 norm；条文细节在 sub <strong>design 篇</strong>，本 HLD 只定双通道原则。</p>
+<p>项目里写哪个文件：有 <code>CLAUDE.local.md</code> 就写它，没有就写 <code>CLAUDE.md</code>，两个都没有就问用户要不要新建（<a href="../decision-history/spec-driven-development-decision-history.html#ard-cg">ARD-CG</a>）。</p>
+<p>实现 SDD 或文档标准时，计划里必须同时包含 skill 的修改和 CLAUDE 层的条目，两边写的是同一套规范。规则的细节写在 sub-feature 的 design 里，本文只定「两个渠道都要写」这条原则。</p>
 <h3>Testing Decisions</h3>
-<h4>7. Deliverable 与测试</h4>
+<a id="7-deliverable-与测试"></a><a id="dsgn-d"></a>
+<h4 id="DSGN-D"><a class="id-ref" href="#DSGN-D">DSGN-D</a> — 交付物和测试放在哪</h4>
+<p>来源：<a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-B">PRD-B</a>（用一组 skill 引导 AI 写 spec）、<a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-P">PRD-P</a>（交付物是三个 skill）。</p>
 <div class="table-wrap"><table><thead><tr>
 <th>项</th>
 <th>约定</th>
 </tr></thead><tbody>
 <tr>
-<td><strong>Deliverable</strong></td>
-<td>spec-write、spec-review，以及两份标准（可装任意项目；<a href="../decision-history/spec-driven-development-decision-history.html#ARD-AJ">ARD-AJ</a>）</td>
+<td>交付物</td>
+<td>spec-write、spec-review 和 wayfinder（<a href="../decision-history/spec-driven-development-decision-history.html#ard-ch">ARD-CH</a>）</td>
 </tr>
 <tr>
-<td><strong>Standard 文件</strong></td>
-<td><a href="../../../../../skills/spec-organize/SPEC-STANDARD.md"><code>skills/spec-organize/SPEC-STANDARD.md</code></a> 与 <a href="../../../../../skills/spec-html-standard/SPEC-PRESENTATION.md"><code>skills/spec-html-standard/SPEC-PRESENTATION.md</code></a>（<a href="../decision-history/spec-driven-development-decision-history.html#ARD-AJ">ARD-AJ</a>）</td>
+<td>spec-write、spec-review 读的标准文件</td>
+<td><a href="../../../../../skills/spec-organize/SPEC-STANDARD.md"><code>skills/spec-organize/SPEC-STANDARD.md</code></a>、<a href="../../../../../skills/spec-html-standard/SPEC-PRESENTATION.md"><code>skills/spec-html-standard/SPEC-PRESENTATION.md</code></a> 和 <a href="../../../../../skills/spec-html-standard/SPEC-HTML-STANDARD.md"><code>skills/spec-html-standard/SPEC-HTML-STANDARD.md</code></a>（<a href="../decision-history/spec-driven-development-decision-history.html#ard-aj">ARD-AJ</a>、<a href="../decision-history/spec-driven-development-decision-history.html#ard-ch">ARD-CH</a>）</td>
 </tr>
 <tr>
-<td><strong>测试位置</strong></td>
-<td><code>skills/&lt;skill&gt;/tests/</code>；跨 skill 检查器、gold、报告在 <code>skills/spec-organize/tests/</code>（<strong><a href="../decision-history/spec-driven-development-decision-history.html#ARD-Q">ARD-Q</a></strong>）</td>
+<td>测试放在哪</td>
+<td>每个 skill 的测试放在 <code>skills/&lt;skill&gt;/tests/</code>；跨 skill 的检查器、gold、报告放在 <code>skills/spec-organize/tests/</code>（<a href="../decision-history/spec-driven-development-decision-history.html#ard-q">ARD-Q</a>）</td>
 </tr>
 <tr>
-<td><strong>Test plan</strong></td>
-<td>parent <code>test-plan/spec-driven-development-test-plan.md</code>；sub-feature 不另写</td>
+<td>打分用的 gold</td>
+<td>iPhone 购买案例 <code>skills/spec-organize/tests/gold/v1/</code>；本套 spec 是写法样板，由 spec-review 审查，不用来打分（<a href="../decision-history/spec-driven-development-decision-history.html#ard-bl">ARD-BL</a>）</td>
 </tr>
 <tr>
-<td><strong>Pipeline design</strong></td>
-<td><code>features/pipeline/design/pipeline-design.md</code>（spec-pipeline 行为）</td>
+<td>test-plan</td>
+<td>只有 parent 一份：<a href="../test-plan/spec-driven-development-test-plan.html">test-plan</a>。sub-feature 不另写</td>
 </tr>
 <tr>
-<td><strong>Skill contracts</strong></td>
-<td><code>design/spec-driven-development-design-skill-contracts.md</code>（spec-write 与 spec-review 的输入/输出/边界）</td>
-</tr>
-<tr>
-<td><strong>Spec reader HTML</strong></td>
-<td><code>docs/book/html/&lt;parent&gt;/</code>，目录与 <code>docs/features/</code> 同构（<a href="../decision-history/spec-driven-development-decision-history.html#ARD-BF">ARD-BF</a>）；规范 <strong><a href="../../../../../skills/spec-html-standard/SPEC-HTML-STANDARD.md"><code>skills/spec-html-standard/SPEC-HTML-STANDARD.md</code></a></strong>（<strong>DSGN-N</strong>）</td>
+<td>reader HTML</td>
+<td><code>docs/book/html/</code> 下，目录结构和 <code>docs/features/</code> 一样（<a href="../decision-history/spec-driven-development-decision-history.html#ard-bf">ARD-BF</a>）；规范见 <a href="../features/document-standard/design/document-standard-design-spec-reader-html.html">reader design</a></td>
 </tr>
 </tbody></table></div>
 <h3>Out of Scope</h3>
-<ul>
-<li><strong><a href="../prd/spec-driven-development-prd.html#PRD-G">PRD-G</a></strong>：产品级 success metric 与 baseline 延后（<strong><a href="../decision-history/spec-driven-development-decision-history.html#ARD-N">ARD-N</a></strong>）；test-plan 的分数是 eval 指标，不是产品 metric。</li>
-<li>真实下单、订票、交易；执行只到 mock MCP log。</li>
-<li>更细的多人 decision 仲裁（例如同时间的 tie-breaker）；主规则按 decision-history 时间，仍看不出则问用户。</li>
-<li>存量不合规文档的批量迁移。</li>
-<li>skill / spec 的版本与迁移策略。</li>
-</ul>
+<p>不在范围内的事项见 <a href="../prd/spec-driven-development-prd.html#out-of-scope">PRD 的 Out of Scope</a>，本文不重复。</p>
 <h3>Further Notes</h3>
-<h4>8. Parent vs sub-feature — review 齐备度</h4>
-<p><strong>Parent（本 initiative 根 <code>docs/features/spec-driven-development/</code>，不含 <code>features/&lt;sub&gt;/</code>）：</strong> <strong>spec-review</strong> 须核对 <strong>feature spec 五篇</strong> 均在：<code>prd</code>、<code>design</code>、<code>decision-history</code>、<code>impl-plan</code>、<code>test-plan</code>（<code>how-to</code> 可选；类型见 document-standard <strong>DSGN-B</strong>）。缺任一篇 → severity ≥3 finding。</p>
-<p><strong>Sub-feature（<code>features/&lt;sub&gt;/</code>）：</strong> <strong>不</strong> 要求五篇齐全；可以只有 <code>design</code> 等。review 只查<strong>已有</strong>文稿；<strong>不得</strong>因未计划的 type 缺失而 fail。</p>
+<a id="8-parent-vs-sub-feature--review-齐备度"></a><a id="dsgn-e"></a>
+<h4 id="DSGN-E"><a class="id-ref" href="#DSGN-E">DSGN-E</a> — parent 和 sub-feature 的文档齐备要求</h4>
+<ul>
+<li><strong>parent</strong>（<code>docs/features/spec-driven-development/</code> 这一层，不含 <code>features/</code> 下的 sub-feature）：spec-review 要确认五篇都在：prd、design、decision-history、impl-plan、test-plan。how-to 可选。缺任何一篇，记为严重度 3 及以上的问题（<span class="lvl lvl--must">MUST</span>）。</li>
+<li><strong>sub-feature</strong>（<code>features/&lt;sub&gt;/</code>）：不要求五篇都有，可以只有 design。review 只检查已有的文档，不能因为缺了没计划写的类型而判失败。</li>
+</ul>
+<h4>旧编号对照</h4>
+<p>2026-11-20 起，本文的规则小节从「§数字」改成 DSGN 编号（<a href="../decision-history/spec-driven-development-decision-history.html#ard-ap">ARD-AP</a>、<a href="../decision-history/spec-driven-development-decision-history.html#ard-bz">ARD-BZ</a>）：</p>
+<div class="table-wrap"><table><thead><tr>
+<th>旧</th>
+<th>新</th>
+</tr></thead><tbody>
+<tr>
+<td>§4 AI 文档编辑约束</td>
+<td><a class="id-ref" href="#DSGN-A">DSGN-A</a></td>
+</tr>
+<tr>
+<td>§5 Decision history 何时写</td>
+<td><a class="id-ref" href="#DSGN-B">DSGN-B</a></td>
+</tr>
+<tr>
+<td>§6 CLAUDE.md 与 skill 双通道</td>
+<td><a class="id-ref" href="#DSGN-C">DSGN-C</a></td>
+</tr>
+<tr>
+<td>§7 Deliverable 与测试</td>
+<td><a class="id-ref" href="#DSGN-D">DSGN-D</a></td>
+</tr>
+<tr>
+<td>§8 Parent 与 sub-feature 齐备度</td>
+<td><a class="id-ref" href="#DSGN-E">DSGN-E</a></td>
+</tr>
+</tbody></table></div>
+<p>本文的 DSGN 编号只在 spec-driven-development 这个 feature 内有效。document-standard 也有 <a class="id-ref" href="#DSGN-A">DSGN-A</a> 到 DSGN-N，那是另一套；从别的文档引用时，写成「parent design 的 <a class="id-ref" href="#DSGN-E">DSGN-E</a>」或「document-standard 的 <a class="id-ref" href="#DSGN-B">DSGN-B</a>」。</p>
+<h3>Alternatives Considered</h3>
+<ul>
+<li><strong>一个 skill 同时负责写和审</strong>：放弃。自己审自己写的东西，容易看不出问题（<a href="../decision-history/spec-driven-development-decision-history.html#ard-aj">ARD-AJ</a>）。</li>
+<li><strong>一篇大文档装下所有内容</strong>：放弃。很快会超过行数上限，而且「要什么」「为什么」「怎么做」混在一起，改一处要翻全篇。</li>
+<li><strong>保留 spec-pipeline 作为统一入口</strong>：放弃。四个入口让使用者不知道该从哪个开始；写、审两个入口加上负责进度的 wayfinder 覆盖全部场景（<a href="../decision-history/spec-driven-development-decision-history.html#ard-ch">ARD-CH</a>、<a href="../decision-history/spec-driven-development-decision-history.html#ard-aj">ARD-AJ</a>）。</li>
+</ul>
+<h3>Drawbacks</h3>
+<ul>
+<li>五篇文档加上 design 的 13 个必需章节，对小问题来说太重。sub-feature 可以只写 design（<a class="id-ref" href="#DSGN-E">DSGN-E</a>），能缓解一部分。</li>
+<li>decision-history 只增不减，越来越长。</li>
+<li>wayfinder 按 SDD 改写后和上游 mattpocock/skills 分叉，上游更新要手工合并（<a href="../decision-history/spec-driven-development-decision-history.html#ard-ch">ARD-CH</a>）。</li>
+<li>审查和可读性判断都依赖 LLM，同样的输入两次结果可能不同。所以生成 gold 跑 3 次，复核跑 5 次（<a href="../decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a>）。</li>
+</ul>
+<h3>Risks and Mitigations</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>风险</th>
+<th>后果</th>
+<th>应对</th>
+</tr></thead><tbody>
+<tr>
+<td>规则越加越多</td>
+<td>作者把句子压成关键词，文档变得像给机器读的</td>
+<td>规则分 <span class="lvl lvl--must">MUST</span> 和 <span class="lvl lvl--nice">NICE</span>，只有 <span class="lvl lvl--must">MUST</span> 算失败（<a href="../decision-history/spec-driven-development-decision-history.html#ard-bn">ARD-BN</a>）；可读性作为通过条件（<a href="../decision-history/spec-driven-development-decision-history.html#ard-bo">ARD-BO</a>）</td>
+</tr>
+<tr>
+<td>skill 正文和 spec 不一致</td>
+<td>AI 按 skill 做，结果违反 spec</td>
+<td>skill 契约规定：不一致时以 spec 为准，先改 spec 再改 skill（<a href="spec-driven-development-design-skill-contracts.html">skill 契约</a>）</td>
+</tr>
+<tr>
+<td>靠改 gold 来提高分数</td>
+<td>分数变高，质量没变</td>
+<td>打分用固定的 iPhone 案例，gold 有版本号，只在同一版本内比较（<a href="../decision-history/spec-driven-development-decision-history.html#ard-bl">ARD-BL</a>、<a href="../decision-history/spec-driven-development-decision-history.html#ard-s">ARD-S</a>）</td>
+</tr>
+<tr>
+<td>检查脚本没跟上规则</td>
+<td>机械检查报 0 个问题，但文档其实不合规</td>
+<td>规则改动后，同一批更新检查脚本和 <span class="lvl lvl--must">MUST</span> 清单（<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-M">TST-M</a>）；当前欠账（还没接进 <span class="lvl lvl--must">MUST</span> 清单的检查脚本）由 <a href="../impl-plan/spec-driven-development-impl-plan.html">impl-plan</a> 的 <a class="id-ref" href="../impl-plan/spec-driven-development-impl-plan.html#IMPL-Z">IMPL-Z</a> 负责</td>
+</tr>
+</tbody></table></div>
+<h3>Open Questions</h3>
+<p>本表是 spec-driven-development 这个 feature（parent 这一层）唯一的未决问题清单，其他文档链到这里（<a href="../decision-history/spec-driven-development-decision-history.html#ard-ao">ARD-AO</a>）。「阻塞」表示这个问题不解决，就不能进入下游阶段（<a href="../decision-history/spec-driven-development-decision-history.html#ard-ag">ARD-AG</a>）。</p>
+<div class="table-wrap"><table><thead><tr>
+<th>ID</th>
+<th>问题</th>
+<th>目前答案</th>
+<th>负责人</th>
+<th>阻塞</th>
+</tr></thead><tbody>
+<tr>
+<td id="QUES-A"><a class="id-ref" href="#QUES-A">QUES-A</a></td>
+<td>交付的 skill 要读的标准文件和检查脚本，放在 spec-organize 和 spec-html-standard 目录，这两个目录不算交付物。只把三个交付的 skill 装进别的项目时，怎么把这些文件一起带过去？（<a href="../decision-history/spec-driven-development-decision-history.html#ard-c">ARD-C</a> 要求 skill 能独立带走）</td>
+<td>未定</td>
+<td>人决定</td>
+<td>否</td>
+</tr>
+<tr>
+<td id="QUES-B"><a class="id-ref" href="#QUES-B">QUES-B</a></td>
+<td>产品级成功指标怎么量、基线是多少（<a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-G">PRD-G</a>）</td>
+<td>延后（<a href="../decision-history/spec-driven-development-decision-history.html#ard-n">ARD-N</a>）</td>
+<td>人决定</td>
+<td>否</td>
+</tr>
+<tr>
+<td id="QUES-C"><a class="id-ref" href="#QUES-C">QUES-C</a></td>
+<td>以后新增的可替换工具，例如 Map 阶段的访谈辅助工具，要不要写进 skill 契约表</td>
+<td>wayfinder 已写进（<a href="../decision-history/spec-driven-development-decision-history.html#ard-ch">ARD-CH</a>）；其他工具未定</td>
+<td>人决定</td>
+<td>否</td>
+</tr>
+<tr>
+<td id="QUES-D"><a class="id-ref" href="#QUES-D">QUES-D</a></td>
+<td>用 SDD 写出的每份 spec，要不要都带一个「Agent Loop」节，写明目标与约束、什么事件触发 AI 重跑、用什么指标自动评估</td>
+<td>未定</td>
+<td>人决定</td>
+<td>否</td>
+</tr>
+<tr>
+<td id="QUES-E"><a class="id-ref" href="#QUES-E">QUES-E</a></td>
+<td>有 <code>CLAUDE.local.md</code> 就只写它（<a href="../decision-history/spec-driven-development-decision-history.html#ard-cg">ARD-CG</a>），但它不提交，别人克隆仓库拿不到 <a class="id-ref" href="#DSGN-C">DSGN-C</a> 的规则。要不要另外在提交的文件里留一份？</td>
+<td>未定</td>
+<td>人决定</td>
+<td>否</td>
+</tr>
+</tbody></table></div>
+<h3>Reversibility</h3>
+<ul>
+<li>所有文档都是 git 里的 markdown，任何修改都可以用 git 撤回。</li>
+<li>决定不删除。推翻一条决定，就新写一条 ARD，旧的划掉并链到新的，所以随时能看到当初为什么这样定。</li>
+<li>skill 的修改同样可以用 git 撤回。因为 skill 必须和 spec 一致，撤回 skill 时要一起撤回对应的 spec 修改。</li>
+</ul>
+<a id="glossary"></a>
+<h3>附录：术语表</h3>
+<p>本表是整套 SDD 文档唯一的术语表。其他文档第一次用到这些词时，链到这里。</p>
+<h4>方法和流程</h4>
+<div class="table-wrap"><table><thead><tr>
+<th>术语</th>
+<th>意思</th>
+</tr></thead><tbody>
+<tr>
+<td>SDD</td>
+<td>spec-driven development：先把问题写成 spec，再让 AI 按 spec 去做</td>
+</tr>
+<tr>
+<td>LLM</td>
+<td>大语言模型（large language model），例如 Claude、GPT、DeepSeek</td>
+</tr>
+<tr>
+<td>阶段</td>
+<td>写 spec 的四步：Create（立项）、Map（摸底）、Converge（收敛）、Downstream（写下游文档）。详见 pipeline design</td>
+</tr>
+<tr>
+<td>上游、下游</td>
+<td>上游指 PRD、decision-history、design 这三篇；下游指从 design 总结出来的 impl-plan 和 test-plan</td>
+</tr>
+<tr>
+<td>阶段编排</td>
+<td>决定什么时候进入哪个阶段、调用哪个 skill 的流程控制</td>
+</tr>
+<tr>
+<td>进度回顾（recap）</td>
+<td>AI 生成给人看的小结：做了什么、现在在哪个阶段、还剩什么、建议下一步</td>
+</tr>
+<tr>
+<td>restructure（大改）</td>
+<td>一次超过改动上限（10 行并且 200 字符）的修改，必须有人明确授权并记一条 ARD</td>
+</tr>
+</tbody></table></div>
+<h4>文档类型</h4>
+<div class="table-wrap"><table><thead><tr>
+<th>术语</th>
+<th>意思</th>
+</tr></thead><tbody>
+<tr>
+<td>spec</td>
+<td>写清楚「要做什么、为什么、怎么做、怎么验证」的一组文档。本套方法里，spec 指一个 feature 的全部五篇文档</td>
+</tr>
+<tr>
+<td>feature spec</td>
+<td>一个 feature 下面所有已提交的文档：PRD、design、impl-plan、test-plan、decision-history，可能还有 how-to</td>
+</tr>
+<tr>
+<td>PRD</td>
+<td>Product Requirements Document，需求文档：要做什么、为什么做</td>
+</tr>
+<tr>
+<td>design</td>
+<td>设计文档：怎么做。放在 <code>design/</code> 目录，文件名是 <code>&lt;feature&gt;-design.md</code></td>
+</tr>
+<tr>
+<td>HLD</td>
+<td>High-Level Design，整体设计：只讲整体结构，不讲细节。本文就是 SDD 的 HLD</td>
+</tr>
+<tr>
+<td>分篇（part）、入口文件</td>
+<td>design 太长时可以拆成几篇。<code>&lt;feature&gt;-design.md</code> 是入口文件，其他叫分篇，文件名是 <code>&lt;feature&gt;-design-&lt;名词&gt;.md</code>，名词说明这篇讲哪个方面（aspect）</td>
+</tr>
+<tr>
+<td>decision-history</td>
+<td>决定记录：每条决定一行，最新的在最上面</td>
+</tr>
+<tr>
+<td>ARD</td>
+<td>decision-history 里一条决定的编号前缀，例如 <code>ARD-A</code>。借自业界常用的 ADR（Architecture Decision Record，架构决策记录），本套方法里写作 ARD</td>
+</tr>
+<tr>
+<td>impl-plan</td>
+<td>Implementation plan，实现计划：先做什么、后做什么</td>
+</tr>
+<tr>
+<td>test-plan</td>
+<td>测试计划：怎么验证做对了</td>
+</tr>
+<tr>
+<td>how-to</td>
+<td>操作手册：需要人去操作结果时才写，可选</td>
+</tr>
+<tr>
+<td>Change Log</td>
+<td>每篇文档最后一节，记录这篇文档每次改了什么，只往末尾追加</td>
+</tr>
+<tr>
+<td>frontmatter</td>
+<td>文档开头两行 <code>---</code> 之间的字段，例如 <code>feature</code>、<code>type</code>、<code>state</code></td>
+</tr>
+<tr>
+<td><code>raw/</code></td>
+<td>每个 feature 下的本地草稿目录，放调研笔记、讨论记录、进度快照。不提交到 git，也不算权威</td>
+</tr>
+<tr>
+<td>INDEX</td>
+<td><a href="../../../../INDEX.md"><code>docs/INDEX.md</code></a>，列出所有文档在哪里的目录页</td>
+</tr>
+<tr>
+<td>book</td>
+<td><code>docs/book/</code>，从文档自动组装出来的摘要和 HTML 页面，方便人和 AI 先浏览再打开原文</td>
+</tr>
+<tr>
+<td>reader</td>
+<td>给人读的 HTML 汇编页，内容来自 markdown，排版更好读</td>
+</tr>
+</tbody></table></div>
+<h4>feature 的组织</h4>
+<div class="table-wrap"><table><thead><tr>
+<th>术语</th>
+<th>意思</th>
+</tr></thead><tbody>
+<tr>
+<td>feature</td>
+<td>一项可以单独写需求、单独交付的工作，对应 <code>docs/features/&lt;feature&gt;/</code> 一个目录</td>
+</tr>
+<tr>
+<td>parent、sub-feature</td>
+<td>一个大 feature（parent）下面可以有几个小的 sub-feature，放在 <code>&lt;parent&gt;/features/&lt;sub&gt;/</code></td>
+</tr>
+<tr>
+<td>peer feature</td>
+<td>和本 feature 平级、各自独立的另一个 feature，例如 skill-factory</td>
+</tr>
+<tr>
+<td>initiative</td>
+<td>一组相关 feature 组成的大目标。本仓库里 spec-driven-development 既是 initiative，也是 parent feature</td>
+</tr>
+<tr>
+<td>bounded context</td>
+<td>一块业务边界：边界内的词意思一致。拆分文档时按它来拆，而不是按行数机械切</td>
+</tr>
+</tbody></table></div>
+<h4>编号</h4>
+<div class="table-wrap"><table><thead><tr>
+<th>前缀</th>
+<th>用在</th>
+<th>例子</th>
+</tr></thead><tbody>
+<tr>
+<td>PRD-</td>
+<td>PRD 里的需求</td>
+<td><a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-A">PRD-A</a></td>
+</tr>
+<tr>
+<td>DSGN-</td>
+<td>design 里的规则小节</td>
+<td><a class="id-ref" href="#DSGN-B">DSGN-B</a></td>
+</tr>
+<tr>
+<td>PIPE-</td>
+<td>pipeline design 里的规则小节</td>
+<td>PIPE-E</td>
+</tr>
+<tr>
+<td>ARD-</td>
+<td>decision-history 里的决定</td>
+<td><a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-BH">ARD-BH</a></td>
+</tr>
+<tr>
+<td>IMPL-</td>
+<td>impl-plan 里的任务</td>
+<td><a class="id-ref" href="../impl-plan/spec-driven-development-impl-plan.html#IMPL-A">IMPL-A</a></td>
+</tr>
+<tr>
+<td>TST-</td>
+<td>test-plan 里的测试用例</td>
+<td><a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-C">TST-C</a></td>
+</tr>
+<tr>
+<td>QUES-</td>
+<td>未决问题清单里的问题</td>
+<td><a class="id-ref" href="#QUES-A">QUES-A</a></td>
+</tr>
+</tbody></table></div>
+<p>编号后面一律用字母，不用数字；写下后不改，也不重复使用。编号只在「同一个 feature 的同一类文档」里唯一，所以引用别的 feature 时要写明是哪个，例如「document-standard 的 <a class="id-ref" href="#DSGN-B">DSGN-B</a>」。</p>
+<h4>规则的强弱</h4>
+<div class="table-wrap"><table><thead><tr>
+<th>术语</th>
+<th>意思</th>
+</tr></thead><tbody>
+<tr>
+<td><span class="lvl lvl--must">MUST</span></td>
+<td>必须做到；做不到就算失败</td>
+</tr>
+<tr>
+<td><span class="lvl lvl--nice">NICE</span></td>
+<td>最好做到；做不到只是提醒，不算失败</td>
+</tr>
+<tr>
+<td>SHOULD、MAY</td>
+<td>SHOULD（应该）等同 <span class="lvl lvl--nice">NICE</span>，做不到不算失败；MAY（可以）表示允许这样做，不是规则</td>
+</tr>
+<tr>
+<td>L1–L4</td>
+<td>内容的四个优先级。L1 是决定性内容（需求、约束、不在范围内的事项、未决问题等），永远不删；L2 是理由；L3 是放弃的方案；L4 是参考资料。文档需要变短时，从 L4 开始删</td>
+</tr>
+<tr>
+<td>按关注点分权威</td>
+<td>不同的事实认不同的文档为准：想要的行为以 design 为准，当前实现以代码为准，接口以接口定义文件为准。冲突时先报告、再问人，不悄悄改一边</td>
+</tr>
+<tr>
+<td>UNKNOWN</td>
+<td>查不到的事实这样写，不许猜</td>
+</tr>
+<tr>
+<td>Unverified</td>
+<td>目前无法测试的项，标出原因，不作为通过条件</td>
+</tr>
+<tr>
+<td>严重度</td>
+<td>spec-review 给每个问题打的分，1 到 5。只讨论 3 及以上的问题</td>
+</tr>
+</tbody></table></div>
+<h4>skill 和工具</h4>
+<div class="table-wrap"><table><thead><tr>
+<th>术语</th>
+<th>意思</th>
+</tr></thead><tbody>
+<tr>
+<td>SVG</td>
+<td>一种用文字描述的矢量图片格式，浏览器能直接显示，放大不会模糊</td>
+</tr>
+<tr>
+<td>diagram-design</td>
+<td>一个画图的 skill，按固定的配色和字体画出 SVG 插图（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CA">ARD-CA</a>）。它不随 SDD 一起交付；没有安装时，spec-write 不新画图，只保留已有插图</td>
+</tr>
+<tr>
+<td>GitHub Pages</td>
+<td>GitHub 提供的静态网站托管；本项目由 GitHub Actions（GitHub 上的自动化脚本）生成网站后发布到这里（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CD">ARD-CD</a>）</td>
+</tr>
+<tr>
+<td>skill</td>
+<td>一份写给 AI 的操作说明（<code>SKILL.md</code>），告诉它遇到某类任务时按什么步骤做</td>
+</tr>
+<tr>
+<td>spec bundle</td>
+<td>整套 SDD spec 作为一个整体；版本号写在 parent PRD 的 <code>version</code>，每次 build 末位加 1 再印进 skill，用来看出 skill 出自哪一版 spec（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CK">ARD-CK</a>）</td>
+</tr>
+<tr>
+<td>spec-write</td>
+<td>交付的 skill 之一：新建或修改 spec 文档</td>
+</tr>
+<tr>
+<td>spec-review</td>
+<td>交付的 skill 之一：检查 spec 文档，只给修改建议，不直接改</td>
+</tr>
+<tr>
+<td>spec-organize</td>
+<td>早期的主 skill，现在不是交付物；里面放着标准文件、检查脚本和测试</td>
+</tr>
+<tr>
+<td>spec-pipeline</td>
+<td>早期的编排 skill，现在不是入口；它的阶段步骤保留在 pipeline design 里作参考</td>
+</tr>
+<tr>
+<td>SPEC-STANDARD.md</td>
+<td>文档标准的摘要：路径、章节、编号、证据等规则。完整规则在 document-standard design</td>
+</tr>
+<tr>
+<td>SPEC-PRESENTATION.md</td>
+<td>表达规则的摘要：什么时候用表格、怎么排标题、怎么画图</td>
+</tr>
+<tr>
+<td>SPEC-HTML-STANDARD.md</td>
+<td>生成 HTML 页面的规则摘要，完整规则在 reader design</td>
+</tr>
+<tr>
+<td>Organize、Lint、Consolidate、Sync 模式</td>
+<td>spec-organize 的几种工作方式：整理、扫描并修格式、合并文档、找文档和代码的不一致。详见 document-standard design 的 DSGN-L</td>
+</tr>
+<tr>
+<td><code>skill create</code>、<code>skill edit</code></td>
+<td>新建和修改 <code>SKILL.md</code> 的两个已有 skill 命令</td>
+</tr>
+<tr>
+<td>触发词</td>
+<td>skill 描述里写的关键词；用户说到这些词时，AI 就知道该用这个 skill</td>
+</tr>
+<tr>
+<td>MkDocs</td>
+<td>一种把 markdown 生成网站的工具</td>
+</tr>
+<tr>
+<td>CI</td>
+<td>持续集成（continuous integration）：代码推送后，服务器自动跑检查和测试</td>
+</tr>
+<tr>
+<td>hook、git hook、pre-push hook</td>
+<td>在某个时刻自动运行的脚本。git hook 在 git 提交或推送时运行；pre-push hook 在推送之前运行</td>
+</tr>
+<tr>
+<td>Mermaid</td>
+<td>一种用文字描述流程图、由浏览器画出来的格式</td>
+</tr>
+<tr>
+<td>检查脚本（checker）</td>
+<td><a href="../../../../../tools/run_spec_checks.py"><code>tools/run_spec_checks.py</code></a> 等 Python 脚本，自动检查路径、章节、编号这类机械规则</td>
+</tr>
+<tr>
+<td><span class="lvl lvl--must">MUST</span> 清单（registry）</td>
+<td><code>must_registry.yaml</code>，列出所有 <span class="lvl lvl--must">MUST</span> 规则以及每条由谁来检查（脚本或 LLM）</td>
+</tr>
+<tr>
+<td>CLAUDE.md、CLAUDE.local.md</td>
+<td>AI 每次会话都会读的说明文件。<code>CLAUDE.local.md</code> 只在本地，不提交</td>
+</tr>
+<tr>
+<td>wayfinder、grill-with-docs、research</td>
+<td>已有的 skill：分别用来规划路线、追问式访谈、做调研。wayfinder 还负责进度记录，是交付物（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CH">ARD-CH</a>）</td>
+</tr>
+<tr>
+<td>交付物</td>
+<td>SDD 要交给用户安装的东西：spec-write、spec-review、wayfinder 三个 skill</td>
+</tr>
+<tr>
+<td>地图目录（map）</td>
+<td>wayfinder 给每个 feature 建的进度目录：<code>map.md</code> 记阶段、已做的决定、还没想清的事；<code>issues/</code> 下每个文件是一个 brief。不提交（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CH">ARD-CH</a>）</td>
+</tr>
+<tr>
+<td>brief</td>
+<td>地图里一个待解决的问题，一个文件；解决后关闭，结论记进 <code>map.md</code></td>
+</tr>
+<tr>
+<td>wayfinder-import</td>
+<td>把 wayfinder 的规划结果导入成 spec 的一项工作；曾经是 SDD 的 sub-feature，已移出（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-T">ARD-T</a>）</td>
+</tr>
+<tr>
+<td>walter-worker</td>
+<td>作者的另一个项目（github.com/cicidi/walter-worker），放着一组 skill 和安装脚本；它的 feature create 命令用来新建 feature 目录</td>
+</tr>
+<tr>
+<td>BMAD、GSD</td>
+<td>网上公开的两套 AI 开发流程。BMAD 按角色分工，自带大量模板；GSD 较轻，侧重管理交给 AI 的上下文。SDD 两个都不引入，只在已有 skill 上加规则（<a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-A">PRD-A</a>）</td>
+</tr>
+</tbody></table></div>
+<h4>评测</h4>
+<div class="table-wrap"><table><thead><tr>
+<th>术语</th>
+<th>意思</th>
+</tr></thead><tbody>
+<tr>
+<td>eval（评测）</td>
+<td>用固定的输入跑 skill，再按规则给产出打分</td>
+</tr>
+<tr>
+<td>gold</td>
+<td>评测用的「标准答案」案例。打分用的 gold 是 iPhone 购买案例</td>
+</tr>
+<tr>
+<td>gold 案例、gold 版本</td>
+<td>一个 gold 案例包括需求 <a href="../../../../../skills/spec-organize/tests/gold/v1/requirement.md"><code>requirement.md</code></a> 和背景资料 <a href="../../../../../skills/spec-organize/tests/gold/v1/context.md"><code>context.md</code></a>；每次修改标注，版本号加一</td>
+</tr>
+<tr>
+<td>context 包</td>
+<td>模拟「人」的资料。评测时 AI 追问问题，只能从这里找答案</td>
+</tr>
+<tr>
+<td>exemplar（范例）</td>
+<td>被认可的一份优秀产出</td>
+</tr>
+<tr>
+<td>annotations（标注）</td>
+<td>对产出的好坏标注：<code>GOOD-*</code> 是应该做到的，<code>BAD-*</code> 是不该犯的错</td>
+</tr>
+<tr>
+<td>judge（判分模型）</td>
+<td>用来打分的 LLM，目前是 <code>deepseek-flash</code></td>
+</tr>
+<tr>
+<td>分数 1</td>
+<td><span class="lvl lvl--must">MUST</span> 合规分：通过的 <span class="lvl lvl--must">MUST</span> 条数除以 <span class="lvl lvl--must">MUST</span> 清单的总条数，必须满分</td>
+</tr>
+<tr>
+<td>分数 2</td>
+<td>和 gold 比的分数：按标注加减分，最高分是 GOOD 标注数 × 10 ÷ 标注总数，只在同一个 gold 版本内比较，不能比上一次低</td>
+</tr>
+<tr>
+<td>claude_audit</td>
+<td>复核结果文件里的一栏：DeepSeek 判为没通过或有分歧的条目，Claude 在这里写同意还是不同意，以及理由（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CJ">ARD-CJ</a>）</td>
+</tr>
+<tr>
+<td>复核</td>
+<td>同一个判分模型独立裁决 5 次，至少 4 次一致才算定论；没通过的条目再由 Claude 核对（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CJ">ARD-CJ</a>）。和 Python 检查脚本是两回事</td>
+</tr>
+<tr>
+<td>基线</td>
+<td>只装被测 skill、不加任何辅助 skill 的评测配置（<code>eval.yaml</code> 里 <code>grill.skills: []</code>）</td>
+</tr>
+<tr>
+<td>run_id</td>
+<td>一次评测运行的名字，格式是「日期加分支名」</td>
+</tr>
+<tr>
+<td>fixture</td>
+<td>测试用的小样例文件。反例（neg）故意违反规则，检查脚本必须报错；正例（pos）合规，检查脚本不能误报</td>
+</tr>
+<tr>
+<td>mock MCP</td>
+<td>假的工具服务器。AI 调用它只会打印调用记录，不会真的下单或订票。MCP（Model Context Protocol）是 AI 调用外部工具的一种协议</td>
+</tr>
+<tr>
+<td>oracle</td>
+<td>判断对错的依据。本套测试的 oracle 是三份标准文件</td>
+</tr>
+</tbody></table></div>
 <h3>Change Log</h3>
 <div class="table-wrap"><table><thead><tr>
 <th>Date</th>
@@ -322,7 +868,7 @@
 </tr>
 <tr>
 <td>2026-11-04</td>
-<td>Intro 允许 aspect design；§7 Standard 引用 <a href="../decision-history/spec-driven-development-decision-history.html#ARD-AB">ARD-AB</a></td>
+<td>Intro 允许 aspect design；§7 Standard 引用 <a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-AB">ARD-AB</a></td>
 </tr>
 <tr>
 <td>2026-11-04</td>
@@ -330,16 +876,76 @@
 </tr>
 <tr>
 <td>2026-11-07</td>
-<td>Solution 与 §7 Deliverable 改为 spec-write、spec-review 与两份标准（<a href="../decision-history/spec-driven-development-decision-history.html#ARD-AJ">ARD-AJ</a>）</td>
+<td>Solution 与 §7 Deliverable 改为 spec-write、spec-review 与两份标准（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-AJ">ARD-AJ</a>）</td>
 </tr>
 <tr>
 <td>2026-11-07</td>
-<td>§7 reader 改到 docs/book/html/（<a href="../decision-history/spec-driven-development-decision-history.html#ARD-BF">ARD-BF</a>）</td>
+<td>§7 reader 改到 docs/book/html/（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-BF">ARD-BF</a>）</td>
+</tr>
+<tr>
+<td>2026-11-18</td>
+<td>§7 Deliverable 只留 spec-write 与 spec-review（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-BH">ARD-BH</a>）</td>
+</tr>
+<tr>
+<td>2026-11-20</td>
+<td>补齐 Alternatives Considered、Drawbacks、Risks and Mitigations、Open Questions、Reversibility 五个必需章节；规则小节 §4–§8 改为 <a class="id-ref" href="#DSGN-A">DSGN-A</a>–E 并留对照表；新增全套唯一的术语表附录；User Stories 和 Out of Scope 改为链到 PRD，不再重复；gold 改为 iPhone 案例（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-BL">ARD-BL</a>）；全文改写为完整句子（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-BK">ARD-BK</a>）</td>
+</tr>
+<tr>
+<td>2026-11-20</td>
+<td>第 1 轮审查后：<a class="id-ref" href="#DSGN-A">DSGN-A</a> 改为两条都要满足（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-BP">ARD-BP</a>）；<a class="id-ref" href="#DSGN-D">DSGN-D</a> 写明来源 <a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-B">PRD-B</a>、<a class="id-ref" href="../prd/spec-driven-development-prd.html#PRD-P">PRD-P</a>；<a class="id-ref" href="#DSGN-A">DSGN-A</a> 到 <a class="id-ref" href="#DSGN-E">DSGN-E</a> 上方保留旧锚点（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-AP">ARD-AP</a>）；术语表补上 SDD、LLM、阶段、上下游、阶段编排、进度回顾、大改、walter-worker、BMAD、GSD、分数 1、分数 2、复核、基线、run_id；SHOULD 改为等同 <span class="lvl lvl--nice">NICE</span></td>
+</tr>
+<tr>
+<td>2026-11-20</td>
+<td>第 2 轮审查后：标准文件改为三份（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-BX">ARD-BX</a>）；<a class="id-ref" href="#DSGN-A">DSGN-A</a> 到 <a class="id-ref" href="#DSGN-E">DSGN-E</a> 加短锚点 <code>dsgn-a</code> 到 <code>dsgn-e</code>；对照表链到 <a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-BZ">ARD-BZ</a>；术语表改正 ARD 的来历，补上 SPEC-HTML-STANDARD、spec-organize 的几种模式、skill create、触发词、MkDocs、Mermaid、wayfinder-import</td>
+</tr>
+<tr>
+<td>2026-11-20</td>
+<td>第 3 轮审查后：交付物改链 <a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-BX">ARD-BX</a>；术语表补上 CI、hook；<a class="id-ref" href="#QUES-C">QUES-C</a> 的「map 工具」改为 Map 阶段的辅助工具</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>术语表补上 spec bundle；子问题归属的迁移一行改链 <a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CC">ARD-CC</a>（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-AF">ARD-AF</a> 已划掉）</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>术语表补上 SVG、diagram-design、GitHub Pages</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>术语表写明 diagram-design 不随 SDD 交付，未安装时不新画图</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td><a class="id-ref" href="#DSGN-C">DSGN-C</a>：CLAUDE 层写哪个文件（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CG">ARD-CG</a>）</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 8 轮审查后：三个交付 skill（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CH">ARD-CH</a>）；复核 5 次（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CJ">ARD-CJ</a>）；<a class="id-ref" href="#DSGN-A">DSGN-A</a> 加新建文件例外（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CE">ARD-CE</a>）；术语表加地图目录、brief、交付物、claude_audit，改写 BMAD、GSD；新增 <a class="id-ref" href="#QUES-E">QUES-E</a>；Drawbacks 加 wayfinder 分叉</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 9 轮审查后：链到已划掉 ARD 的地方改链；<a class="id-ref" href="#QUES-A">QUES-A</a> 改为三个交付 skill</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 10 轮审查后：分数 2 最高分写对；<a class="id-ref" href="#QUES-D">QUES-D</a>、<a class="id-ref" href="#QUES-E">QUES-E</a> 按编号排</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 14 轮审查后：放弃 spec-pipeline 的理由跟上 <a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CH">ARD-CH</a></td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 15 轮审查后：<a class="id-ref" href="#DSGN-E">DSGN-E</a> 的 parent 五篇齐全标 <span class="lvl lvl--must">MUST</span></td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 17 轮审查后：风险表的欠账改由 <a class="id-ref" href="../impl-plan/spec-driven-development-impl-plan.html#IMPL-Z">IMPL-Z</a> 负责</td>
 </tr>
 </tbody></table></div>
       </div>
     </article>
-    <nav class="pager" aria-label="Previous and next"><a class="prev" href="../prd/spec-driven-development-prd.html"><span class="label">Previous</span>Spec-Driven Development — PRD</a><a class="next" href="spec-driven-development-design-skill-contracts.html"><span class="label">Next</span>Spec-Driven Development — Skill Contracts</a></nav>
+    <nav class="pager" aria-label="Previous and next"><a class="prev" href="../decision-history/spec-driven-development-decision-history.html"><span class="label">Previous</span>Spec-Driven Development — Decision History</a><a class="next" href="spec-driven-development-design-skill-contracts.html"><span class="label">Next</span>Spec-Driven Development — Skill 契约</a></nav>
   </main>
 </div>
 <footer class="foot"><div class="foot-inner">Assembled from committed <code>.md</code>. The Markdown is authoritative; this page is a reading view.</div></footer>

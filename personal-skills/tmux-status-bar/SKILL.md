@@ -1,8 +1,9 @@
 ---
 name: tmux-status-bar
 description: |
-  Use when setting up or customizing the tmux status bar to display session name,
-  project folder, git branch, git status, and active feature from coworker.
+  Use when setting up or restoring the tmux status bar: one line, Benjamin Blue
+  colors, session name on the left, the current pane's folder path on the right.
+  Backs up ~/.tmux.conf first and writes only after the user confirms the diff.
   Triggered by phrases like "tmux bar", "tmux status", "customize tmux",
   "setup tmux display".
 license: MIT
@@ -16,152 +17,164 @@ metadata:
     - setup tmux
     - configure tmux
   when_to_use: |
-    When the user wants to customize their tmux status bar to show project context,
-    git information, and coworker feature. Use this skill to create or update
-    the status bar configuration.
+    When the user wants their tmux status bar set up or restored to the
+    single-line, folder-path-only Benjamin Blue bar. Use this skill to create
+    or update only the status-bar block of ~/.tmux.conf and the path script.
   when_not_to_use: |
-    For general tmux configuration (keybinds, plugins, colors) — those are
-    separate topics. For tmux session management only.
+    For general tmux configuration (keybinds, plugins, truecolor, mouse,
+    session save/restore) — leave those lines alone. For tmux session
+    management only.
 ---
 
 # tmux-status-bar
 
-Customize the tmux status bar with project-aware context: session name,
-project folder, git branch + status, and active coworker feature.
+Set up the tmux status bar the way the user runs it today: one line, Benjamin
+Blue colors, session name plus a green dot on the left, and the current pane's
+folder path on the right (`~` stands for the home directory). No git fields,
+no feature field.
 
 ## When to Use
 
-- User wants to see project/git/feature info in their tmux bar
-- Setting up tmux status bar from scratch
-- Updating an existing tmux bar to show more context
-- User asks to "show git branch in tmux" or "add feature to tmux"
+- Setting up the status bar on a new machine or after a reinstall
+- Restoring the bar after something overwrote it
+- User asks to "show the folder path in tmux" or "customize tmux"
 
 ## When NOT to Use
 
 - Non-tmux terminal setups (zsh prompt, starship, etc.)
-- tmux plugin installation (use tmux-setup skill instead)
+- tmux plugin installation or other non-status-bar tmux settings
 - General shell prompt customization
+
+## Safety Rules
+
+- Never write `~/.tmux.conf` or `~/.tmux/scripts/status_info.sh` before the
+  user has seen the diff and said yes.
+- Back up both files first. Replace only the status-bar block; every other
+  line of `~/.tmux.conf` (truecolor, mouse, clipboard, popup keybind,
+  resurrect/continuum plugins) stays byte-for-byte the same.
 
 ## Process
 
-### Step 1: Create the status info script
+### Step 1: Back up
 
-Create `~/.tmux/scripts/status_info.sh`:
+```sh
+TS=$(date +%Y%m%d-%H%M%S)
+[ -f ~/.tmux.conf ] && cp ~/.tmux.conf ~/.tmux.conf.bak-$TS
+[ -f ~/.tmux/scripts/status_info.sh ] && \
+  cp ~/.tmux/scripts/status_info.sh ~/.tmux/scripts/status_info.sh.bak-$TS
+```
+
+Tell the user the backup paths.
+
+### Step 2: Build the new files in a temp directory
+
+Write the proposed files to a temp directory (`mktemp -d`), not to their
+real paths yet.
+
+**Proposed `status_info.sh`** — exactly this:
 
 ```sh
 #!/bin/sh
-# tmux status bar: session | project | branch | git status | feature
+# Simple status: current folder path only
 
-SESSION=$(tmux display-message -p '#{session_name}' 2>/dev/null)
 PANE_PATH=$(tmux display-message -p -F '#{pane_current_path}' 2>/dev/null)
 
-if [ ! -d "$PANE_PATH" ]; then exit 0; fi
-cd "$PANE_PATH" || exit 0
-
-printf "#[fg=colour240]tmux:#[fg=green]%s#[fg=colour240] | " "$SESSION"
-
-PROJECT_DIR=$(git rev-parse --show-toplevel 2>/dev/null)
-if [ -n "$PROJECT_DIR" ]; then
-    FOLDER=$(basename "$PROJECT_DIR")
-else
-    FOLDER=$(basename "$PWD")
-fi
-printf "#[fg=colour240]project:#[fg=brightwhite]%s#[fg=colour240] | " "$FOLDER"
-
-BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
-if [ -n "$BRANCH" ]; then
-    printf "#[fg=colour240]branch:#[fg=cyan]%s" "$BRANCH"
-else
-    printf "#[fg=colour240]branch:#[fg=colour245]--"
+if [ -z "$PANE_PATH" ]; then
+  echo "~"
+  exit 0
 fi
 
-if [ -n "$BRANCH" ]; then
-    BEHIND=0; AHEAD=0
-    REMOTE=$(git rev-parse --abbrev-ref "@{u}" 2>/dev/null)
-    if [ -n "$REMOTE" ]; then
-        BEHIND=$(git rev-list --count HEAD.."@{u}" 2>/dev/null || echo 0)
-        AHEAD=$(git rev-list --count "@{u}"..HEAD 2>/dev/null || echo 0)
-    fi
-
-    DIRTY=0; STAGED=0; UNTRACKED=0
-    if [ -n "$(git status --porcelain 2>/dev/null)" ]; then
-        DIRTY=1
-        STAGED=$(git diff --cached --name-only 2>/dev/null | wc -l)
-        UNTRACKED=$(git ls-files --others --exclude-standard 2>/dev/null | wc -l)
-    fi
-
-    printf " #[fg=colour240]status:"
-    [ "$AHEAD" -gt 0 ] && printf "#[fg=yellow]%s" "↑${AHEAD}"
-    [ "$BEHIND" -gt 0 ] && printf "#[fg=red]%s" "↓${BEHIND}"
-    [ "$STAGED" -gt 0 ] && printf "#[fg=green]%s" "+${STAGED}"
-    [ "$UNTRACKED" -gt 0 ] && printf "#[fg=magenta]%s" "?${UNTRACKED}"
-    [ "$DIRTY" -eq 1 ] && printf "#[fg=yellow]*" || printf "#[fg=green]✓"
-fi
-
-FEATURE=""
-for DIR in "$PANE_PATH" "$PROJECT_DIR" "$HOME"; do
-    if [ -n "$DIR" ] && [ -f "$DIR/.coworker/features/.active" ]; then
-        FEATURE=$(cat "$DIR/.coworker/features/.active" 2>/dev/null)
-        break
-    fi
-done
-if [ -n "$FEATURE" ]; then
-    printf " #[fg=colour240]| feature:#[fg=magenta]%s" "$FEATURE"
-fi
+HOME_PFX="$HOME/"
+case "$PANE_PATH" in
+  "$HOME_PFX"*) echo "~/${PANE_PATH#$HOME_PFX}" ;;
+  *) echo "$PANE_PATH" ;;
+esac
 ```
 
-Make it executable:
-
-```sh
-chmod +x ~/.tmux/scripts/status_info.sh
-```
-
-### Step 2: Update tmux config
-
-Edit `~/.tmux.conf`. Ensure it has the following status bar settings
-(use existing settings if already configured):
+**Proposed `~/.tmux.conf`** — a copy of the current file where only the
+status-bar block is swapped for this block:
 
 ```
-set -g status-style 'bg=colour236,fg=white'
+# --- Status Bar (single-line, folder path only) ---
+set -g status on
+set -g status-style 'bg=#102D46,fg=#EAE7DD'
+set -g message-style 'bg=#F2C94C,fg=#102D46'
+set -g pane-border-style 'fg=#30506B'
+set -g pane-active-border-style 'fg=#F2C94C'
 
 set -g status-left-length 40
-set -g status-left "#[fg=yellow]#{session_created_string} "
+set -g status-left "#[fg=#F2C94C]#{session_name} #[fg=#5F8D4E]● "
 
-set -g status-right-length 250
-set -g status-right "#(~/.tmux/scripts/status_info.sh) "
+set -g status-right-length 200
+set -g status-right "#[fg=#F2C94C]📂 #[fg=brightwhite]#(~/.tmux/scripts/status_info.sh) "
+
+setw -g window-status-current-style 'fg=#102D46,bg=#F2C94C,bold'
+setw -g window-status-current-format ' #I:#W#F '
+setw -g window-status-style 'fg=#8EA2AF,bg=#102D46'
+setw -g window-status-format ' #I:#W#F '
 ```
 
-Replace existing `status-left` and `status-right` lines — do NOT append.
+How to find the old block:
 
-### Step 3: Reload
+- If the file has a `# --- Status Bar` line, the old block runs from that
+  line through the last `status*`, `message-style`, `pane-*border-style`
+  or `window-status*` line that follows it. Replace that range.
+- Otherwise, remove each existing line that sets one of those options, and
+  insert the block where the first removed line was. If there was none,
+  insert it before the first `run-shell` line (plugins must stay last), or
+  at the end of the file.
+- If `~/.tmux.conf` does not exist, the proposed file is the block alone.
+
+### Step 3: Show the diff and ask
 
 ```sh
+diff -u ~/.tmux.conf "$TMP/tmux.conf"
+diff -u ~/.tmux/scripts/status_info.sh "$TMP/status_info.sh"
+```
+
+Show both diffs (or "new file") to the user. Check that the conf diff only
+touches status-bar lines. If both diffs are empty, say the bar is already
+up to date and stop. Otherwise ask: "Apply these changes?" Stop here and
+change nothing if the user does not say yes.
+
+### Step 4: Write and reload (only after yes)
+
+```sh
+mkdir -p ~/.tmux/scripts
+cp "$TMP/status_info.sh" ~/.tmux/scripts/status_info.sh
+chmod +x ~/.tmux/scripts/status_info.sh
+cp "$TMP/tmux.conf" ~/.tmux.conf
 tmux source-file ~/.tmux.conf
 ```
 
+To undo, copy the `.bak-$TS` files back and run `tmux source-file` again.
+
 ### Fallback
 
-If the script produces no output, check:
-- `tmux display-message -p -F '#{pane_current_path}'` returns a valid directory
+If the right side shows nothing or only `~`, check:
+- `tmux display-message -p -F '#{pane_current_path}'` returns a path
 - The script has execute permission
-- `status-right-length` is at least 250
+- `status-right-length` is 200
 
 ## Status Bar Layout
 
 ```
- 2026-07-01 06:45:23   [tmux:opencode | project:opencode | branch:dev status:↑1 ✓ | feature:claude-md-design]  [1:zsh]
+ main ●  1:zsh*  2:vim                                  📂 ~/project/the-super-lab
 ```
 
-| Field | Color | Meaning |
-|-------|-------|---------|
-| `tmux:NAME` | green | Session name |
-| `project:NAME` | white | Git repo top-level basename |
-| `branch:NAME` | cyan | Current git branch |
-| `status:↑N ↓N +N ?N ✓/*` | yellow/red/green/magenta | Ahead, behind, staged, untracked, clean/dirty |
-| `feature:NAME` | magenta | Active coworker feature (from `.coworker/features/.active`) |
+| Part | Color | Meaning |
+|------|-------|---------|
+| Bar background / text | `#102D46` / `#EAE7DD` | Deep Ocean background, light text |
+| Session name | `#F2C94C` yellow | `#{session_name}` |
+| `●` | `#5F8D4E` green | Separator dot after the session name |
+| Current window | `#102D46` on `#F2C94C`, bold | ` index:name flags ` |
+| Other windows | `#8EA2AF` on `#102D46` | ` index:name flags ` |
+| `📂` + path | `#F2C94C` / brightwhite | Current pane's folder, `~` for home |
+| Messages / active pane border | `#F2C94C` | Prompts and the active pane stand out in yellow |
 
 ## Sources
 
-- Script design: confidence high — verified working on Linux with tmux 3.x
-- Color codes: tmux standard `fg=colourN` format, works with truecolor terminals
-- Feature detection: walks up from pane path to find `.coworker/features/.active`
+- Live setup on the user's machine, copied verbatim: the `# --- Status Bar`
+  block of `~/.tmux.conf` and `~/.tmux/scripts/status_info.sh` (2026-08-01)
+- User request 2026-08-01: the bar should show only the current folder path
+- Spec: `docs/features/skill-factory/features/tmux-status-bar/` (ARD-C, ARD-M)

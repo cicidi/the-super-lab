@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>luma-event-scout — Luma 湾区活动筛选 · design · Spec Atlas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@400;600&display=swap">
+<link rel="stylesheet" href="../../../../assets/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><a href="../../../../index.html"><span class="brand-mark">SDD</span><span class="brand-name">Spec Atlas</span></a></div>
+    <button class="strike-btn" type="button" onclick="var r=document.documentElement;var off=r.dataset.strike!=='off';r.dataset.strike=off?'off':'on';this.textContent=off?'显示删除线':'隐藏删除线'">隐藏删除线</button>
+  </div>
+</header>
+<div class="site">
+  <aside class="sidebar">
+  <nav aria-label="Directory">
+    <div class="tree-overview"><a class="tree-link" href="../../../../index.html"><span class="tree-link__num">00</span>All features</a></div>
+    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../../prd/skill-factory-prd.html"><span class="tree-ord">1</span>skill-factory PRD</a></li><li class="tree-leaf"><a class="tree-link" href="../../../decision-history/skill-factory-decision-history.html"><span class="tree-ord">2</span>skill-factory — Decision History</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../../design/skill-factory-design.html"><span class="tree-ord">3</span>skill-factory Specification</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../../design/skill-factory-design-skill-catalog.html">skill-factory — skill 目录、调用关系与共性问题</a></li><li class="tree-leaf"><a class="tree-link" href="../../../design/skill-factory-design-verify-upgrade.html">skill-factory — 怎么验证 skill，怎么装进 AI 工具并升级</a></li><li class="tree-leaf"><a class="tree-link" href="../../../design/skill-factory-design-why-and-anatomy.html">skill-factory — 为什么要做，一个 skill 怎么搭</a></li></ul></details></li><li class="tree-leaf"><a class="tree-link" href="../../../impl-plan/skill-factory-impl-plan.html"><span class="tree-ord">4</span>skill-factory Implementation Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../../../test-plan/skill-factory-test-plan.html"><span class="tree-ord">5</span>skill-factory Test Plan</a></li><li class="tree-branch"><details open><summary><span class="tree-link"><span class="tree-ord">10</span>sub-feature</span></summary><ul class="tree"><li class="tree-branch"><details open><summary><a class="tree-link" href="../../auto-tdd/design/auto-tdd-design.html">auto-tdd</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../auto-tdd/prd/auto-tdd-prd.html"><span class="tree-ord">1</span>auto-tdd — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../auto-tdd/decision-history/auto-tdd-decision-history.html"><span class="tree-ord">2</span>auto-tdd — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../auto-tdd/design/auto-tdd-design.html"><span class="tree-ord">3</span>auto-tdd — 测试驱动开发循环</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../bug/design/bug-design.html">bug</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../bug/prd/bug-prd.html"><span class="tree-ord">1</span>bug — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../bug/decision-history/bug-decision-history.html"><span class="tree-ord">2</span>bug — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../bug/design/bug-design.html"><span class="tree-ord">3</span>bug — 调试、报告与自愈</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../create-video-workflow/design/create-video-workflow-design.html">create-video-workflow</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../create-video-workflow/prd/create-video-workflow-prd.html"><span class="tree-ord">1</span>create-video-workflow — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../create-video-workflow/decision-history/create-video-workflow-decision-history.html"><span class="tree-ord">2</span>create-video-workflow — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../create-video-workflow/design/create-video-workflow-design.html"><span class="tree-ord">3</span>create-video-workflow — 研究文档变内容</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../doc-protect/design/doc-protect-design.html">doc-protect</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../doc-protect/prd/doc-protect-prd.html"><span class="tree-ord">1</span>doc-protect — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../doc-protect/decision-history/doc-protect-decision-history.html"><span class="tree-ord">2</span>doc-protect — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../doc-protect/design/doc-protect-design.html"><span class="tree-ord">3</span>doc-protect — 锁住文档段落</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../domain-modeling/design/domain-modeling-design.html">domain-modeling</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../domain-modeling/prd/domain-modeling-prd.html"><span class="tree-ord">1</span>domain-modeling — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../domain-modeling/decision-history/domain-modeling-decision-history.html"><span class="tree-ord">2</span>domain-modeling — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../domain-modeling/design/domain-modeling-design.html"><span class="tree-ord">3</span>domain-modeling — 领域模型与术语表</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../english-grammar-fix/design/english-grammar-fix-design.html">english-grammar-fix</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../english-grammar-fix/prd/english-grammar-fix-prd.html"><span class="tree-ord">1</span>english-grammar-fix — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../english-grammar-fix/decision-history/english-grammar-fix-decision-history.html"><span class="tree-ord">2</span>english-grammar-fix — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../english-grammar-fix/design/english-grammar-fix-design.html"><span class="tree-ord">3</span>english-grammar-fix — 英文语法修正</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../find-unknowns/design/find-unknowns-design.html">find-unknowns</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../find-unknowns/prd/find-unknowns-prd.html"><span class="tree-ord">1</span>research — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../find-unknowns/decision-history/find-unknowns-decision-history.html"><span class="tree-ord">2</span>research — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../find-unknowns/design/find-unknowns-design.html"><span class="tree-ord">3</span>research — 动手前找出未知</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../grill-with-docs/design/grill-with-docs-design.html">grill-with-docs</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../grill-with-docs/prd/grill-with-docs-prd.html"><span class="tree-ord">1</span>grill-with-docs — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../grill-with-docs/decision-history/grill-with-docs-decision-history.html"><span class="tree-ord">2</span>grill-with-docs — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../grill-with-docs/design/grill-with-docs-design.html"><span class="tree-ord">3</span>grill-with-docs — 带文档的拷问式访谈</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../implement/design/implement-design.html">implement</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../implement/prd/implement-prd.html"><span class="tree-ord">1</span>implement — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../implement/decision-history/implement-decision-history.html"><span class="tree-ord">2</span>implement — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../implement/design/implement-design.html"><span class="tree-ord">3</span>implement — 按 spec 和 ticket 实现</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="luma-event-scout-design.html">luma-event-scout</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../prd/luma-event-scout-prd.html"><span class="tree-ord">1</span>luma-event-scout — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../decision-history/luma-event-scout-decision-history.html"><span class="tree-ord">2</span>luma-event-scout — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="luma-event-scout-design.html" aria-current="page"><span class="tree-ord">3</span>luma-event-scout — Luma 湾区活动筛选</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../multi-model-team/design/multi-model-team-design.html">multi-model-team</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../multi-model-team/prd/multi-model-team-prd.html"><span class="tree-ord">1</span>multi-model-team — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../multi-model-team/decision-history/multi-model-team-decision-history.html"><span class="tree-ord">2</span>multi-model-team — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../multi-model-team/design/multi-model-team-design.html"><span class="tree-ord">3</span>multi-model-team — 多模型团队编排</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../pic-to-txt/design/pic-to-txt-design.html">pic-to-txt</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../pic-to-txt/prd/pic-to-txt-prd.html"><span class="tree-ord">1</span>pic-to-txt — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../pic-to-txt/decision-history/pic-to-txt-decision-history.html"><span class="tree-ord">2</span>pic-to-txt — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../pic-to-txt/design/pic-to-txt-design.html"><span class="tree-ord">3</span>pic-to-txt — 截图转文字文档</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../prototype/design/prototype-design.html">prototype</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../prototype/prd/prototype-prd.html"><span class="tree-ord">1</span>prototype — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../prototype/decision-history/prototype-decision-history.html"><span class="tree-ord">2</span>prototype — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../prototype/design/prototype-design.html"><span class="tree-ord">3</span>prototype — 用完就扔的原型</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../skill/design/skill-design.html">skill</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../skill/prd/skill-prd.html"><span class="tree-ord">1</span>skill — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../skill/decision-history/skill-decision-history.html"><span class="tree-ord">2</span>skill — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../skill/design/skill-design.html"><span class="tree-ord">3</span>skill — Skill 管理入口</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../spec-ingest/design/spec-ingest-design.html">spec-ingest</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../spec-ingest/prd/spec-ingest-prd.html"><span class="tree-ord">1</span>spec-ingest — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../spec-ingest/decision-history/spec-ingest-decision-history.html"><span class="tree-ord">2</span>spec-ingest — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../spec-ingest/design/spec-ingest-design.html"><span class="tree-ord">3</span>spec-ingest — 把已有信息分拣进 spec</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../spec-ticket/design/spec-ticket-design.html">spec-ticket</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../spec-ticket/prd/spec-ticket-prd.html"><span class="tree-ord">1</span>spec-ticket — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../spec-ticket/decision-history/spec-ticket-decision-history.html"><span class="tree-ord">2</span>spec-ticket — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../spec-ticket/design/spec-ticket-design.html"><span class="tree-ord">3</span>spec-ticket — 把 impl-plan 的每一步发成工单</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../tmux-status-bar/design/tmux-status-bar-design.html">tmux-status-bar</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../tmux-status-bar/prd/tmux-status-bar-prd.html"><span class="tree-ord">1</span>tmux-status-bar — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../tmux-status-bar/decision-history/tmux-status-bar-decision-history.html"><span class="tree-ord">2</span>tmux-status-bar — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../tmux-status-bar/design/tmux-status-bar-design.html"><span class="tree-ord">3</span>tmux-status-bar — tmux 状态栏显示项目上下文</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../to-spec/design/to-spec-design.html">to-spec</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../to-spec/prd/to-spec-prd.html"><span class="tree-ord">1</span>to-spec — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../to-spec/decision-history/to-spec-decision-history.html"><span class="tree-ord">2</span>to-spec — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../to-spec/design/to-spec-design.html"><span class="tree-ord">3</span>to-spec — 把对话整理成 spec</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../to-tickets/design/to-tickets-design.html">to-tickets</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../to-tickets/prd/to-tickets-prd.html"><span class="tree-ord">1</span>to-tickets — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../to-tickets/decision-history/to-tickets-decision-history.html"><span class="tree-ord">2</span>to-tickets — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../to-tickets/design/to-tickets-design.html"><span class="tree-ord">3</span>to-tickets — 把 spec 拆成执行工单</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../transcribe-audio/design/transcribe-audio-design.html">transcribe-audio</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../transcribe-audio/prd/transcribe-audio-prd.html"><span class="tree-ord">1</span>transcribe-audio — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../transcribe-audio/decision-history/transcribe-audio-decision-history.html"><span class="tree-ord">2</span>transcribe-audio — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../transcribe-audio/design/transcribe-audio-design.html"><span class="tree-ord">3</span>transcribe-audio — 本地显卡音频转文字</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../video-production-pip-style/design/video-production-pip-style-design.html">video-production-pip-style</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../video-production-pip-style/prd/video-production-pip-style-prd.html"><span class="tree-ord">1</span>video-production-pip-style — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../video-production-pip-style/decision-history/video-production-pip-style-decision-history.html"><span class="tree-ord">2</span>video-production-pip-style — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../video-production-pip-style/design/video-production-pip-style-design.html"><span class="tree-ord">3</span>video-production-pip-style — 画中画引用式视频制作指南</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../wayfinder/design/wayfinder-design.html">wayfinder</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../wayfinder/prd/wayfinder-prd.html"><span class="tree-ord">1</span>wayfinder — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../wayfinder/decision-history/wayfinder-decision-history.html"><span class="tree-ord">2</span>wayfinder — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../wayfinder/design/wayfinder-design.html"><span class="tree-ord">3</span>wayfinder — 规划大任务的决策地图</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../youtube-research/design/youtube-research-design.html">youtube-research</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../youtube-research/prd/youtube-research-prd.html"><span class="tree-ord">1</span>youtube-research — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../youtube-research/decision-history/youtube-research-decision-history.html"><span class="tree-ord">2</span>youtube-research — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../youtube-research/design/youtube-research-design.html"><span class="tree-ord">3</span>youtube-research — 从题目到视频稿 HTML</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../youtube-summarize/design/youtube-summarize-design.html">youtube-summarize</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../youtube-summarize/prd/youtube-summarize-prd.html"><span class="tree-ord">1</span>youtube-summarize — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../youtube-summarize/decision-history/youtube-summarize-decision-history.html"><span class="tree-ord">2</span>youtube-summarize — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../youtube-summarize/design/youtube-summarize-design.html"><span class="tree-ord">3</span>youtube-summarize — YouTube 视频转写与总结</a></li></ul></details></li></ul></details></li></ul>
+  </nav>
+</aside>
+  <main class="content">
+    <nav class="breadcrumbs"><a href="../../../../index.html">Docs</a> / <span>skill-factory</span> / <span>features</span> / <span>luma-event-scout</span> / <span>design</span> / <span>luma-event-scout — Luma 湾区活动筛选</span></nav>
+    <article class="doc" data-doc="skill-factory/features/luma-event-scout/design/luma-event-scout-design">
+      <header class="doc-head">
+        <p class="eyebrow">skill-factory</p>
+        <h1>luma-event-scout — Luma 湾区活动筛选</h1>
+        <p class="source">Canonical: docs/features/skill-factory/features/luma-event-scout/design/luma-event-scout-design.md</p>
+      </header>
+      
+      <div class="doc-body">
+        <h2>luma-event-scout — Luma 湾区活动筛选</h2>
+<p>本篇说明 <code>luma-event-scout</code> 这个 skill 现在怎么工作。 源文件：<a href="../../../../../../../personal-skills/luma-event-scout/SKILL.md"><code>personal-skills/luma-event-scout/SKILL.md</code></a>，按 git 已提交的版本描述（最后改动是 commit 40a10e4）。</p>
+<h3>Problem Statement</h3>
+<p>Luma 上湾区 AI 活动很多，质量参差，不少是小公司借活动推广产品（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-K">PRD-K</a>）。 Luma 网页是 SPA（single-page application，单页应用，内容由浏览器里的 JavaScript 渲染）。 直接抓网页拿不到日期，而且只看一个社区的页面会漏掉很多活动（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-M">PRD-M</a>）。</p>
+<h3>Solution</h3>
+<p>一个 personal skill：用 Luma 网页自己调用的公开接口拉活动，按固定偏好过滤，再逐个查演讲人背景。 输出一份双清单：推荐，和强力不推荐。用户同意后，可以用 Playwright 代为报名。</p>
+<h3>User Stories</h3>
+<ul>
+<li>作为用户，我说&quot;scout Luma&quot;或&quot;find me events&quot;，skill 自动跑完整个流程，写出清单。</li>
+<li>作为用户，我回复 <code>+N</code> 或 <code>-N</code> 表示对第 N 场有兴趣或不去；回复 <code>+N register</code> 让 agent 报名。</li>
+</ul>
+<h3>Implementation Decisions</h3>
+<p>skill 放在 <code>personal-skills/</code>，不在公共的 <code>skills/</code> 目录，因为标准是用户个人的（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-A">PRD-A</a>）。 抓取用 Python 标准库 urllib 直接调接口，不需要登录或 API key（commit 24d4264）。 SKILL.md 里的代码是给 agent 照着写的示例，目录里没有可直接运行的脚本。</p>
+<h3>Design</h3>
+<p><strong><a class="id-ref" href="#DSGN-A">DSGN-A</a> 触发与依赖。</strong> 用户要找湾区 AI 活动时触发（frontmatter 的 triggers）。默认偏好不再每次确认（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-A">PRD-A</a>）。 唯一声明的外部依赖是 maigret，用 <code>pip install maigret</code> 安装（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-E">PRD-E</a>）。</p>
+<p><strong><a class="id-ref" href="#DSGN-B">DSGN-B</a> 地点、窗口和时段。</strong> SF 与半岛、南湾同等优先；东湾只在演讲人特别强时才考虑（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-B">PRD-B</a>）。 偏好一节写只搜一个月内（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-D">PRD-D</a>）；但过滤代码里是 <code>WINDOW_DAYS = 10</code>，两者不一致，见 <a class="id-ref" href="#QUES-A">QUES-A</a>。 周末最优先，工作日下午 4 点以后其次；工作日 4 点前的活动，除非演讲人极强，否则跳过（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-C">PRD-C</a>）。</p>
+<p><strong><a class="id-ref" href="#DSGN-C">DSGN-C</a> 活动类型和 hackathon。</strong> 要讲座、炉边谈话、demo、论文讨论；不要纯社交活动和入门工作坊（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-G">PRD-G</a>）。 hackathon 和讲座同一标准，演讲人或评委也要过硬门槛，另加三条（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-L">PRD-L</a>）。 奖金必须有现金或礼品卡，只给平台或 API credit 的拒绝。 主办方须是大厂，或 B 轮以上、有知名产品的 startup。现金奖金池 1K 美元以上算加分信号。</p>
+<p><strong><a class="id-ref" href="#DSGN-D">DSGN-D</a> 演讲人硬门槛。</strong> 每个演讲人和主办方必须满足一项：牛校、大厂，或有真实产品的公司的 VP 以上（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-E">PRD-E</a>）。 背景检查分五步：maigret 用户名搜索、LinkedIn、GitHub、Google Scholar 或 arXiv、公司是否真实。 除 Luma 主页外查不到任何公开痕迹，或公司只有一个落地页，都直接判不通过。 通过的人要在卡片上写证据标签，例如&quot;大厂 Google Director&quot;。</p>
+<p><strong><a class="id-ref" href="#DSGN-E">DSGN-E</a> 产品分析。</strong> 有产品演示的活动，要判断它是不是&quot;AI 包装皮&quot;，即只在 ChatGPT 或 Claude 的 API 外面套一层（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-K">PRD-K</a>）。 降级信号有：能被 Claude 自定义指令或开源方案替代、用户极少、只有原型。 正面信号有：自有模型或数据、真实留存的用户、开源社区。SKILL.md 还列了几个过去被拒的例子。</p>
+<p><strong><a class="id-ref" href="#DSGN-F">DSGN-F</a> 话题、费用和文化过滤。</strong> 话题须为中高级，分 8 类按优先级排：agent 类最高，其次是 LLM 架构、agent 记忆和 MCP（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-G">PRD-G</a>）。 电影动画、医疗生物也在 8 类之中。这段话题规则前面缺了小节标题，读起来像接在产品分析后面，见 <a class="id-ref" href="#QUES-H">QUES-H</a>。 只要免费活动（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-H">PRD-H</a>）。标题或描述是中文的活动跳过（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-F">PRD-F</a>）；这是否就是用户的原意，见 <a class="id-ref" href="#QUES-D">QUES-D</a>。</p>
+<p><strong><a class="id-ref" href="#DSGN-G">DSGN-G</a> 抓取方法。</strong> SKILL.md 记录了四种方法的演进，只有第四种管用（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-M">PRD-M</a>）。 直接抓网页拿不到日期；页面内嵌的 <code>__NEXT_DATA__</code> JSON 只有首屏约 20 场； Playwright 下拉后，日期标题和活动卡片在不同的 DOM 树里，对不上。 第四种是调公开接口 <code>calendar/get-items</code>，按游标分页拉某个 calendar 的全部活动。 请求要带 User-Agent 和 Referer 两个请求头，否则返回 403。</p>
+<p><strong><a class="id-ref" href="#DSGN-H">DSGN-H</a> calendar 链式发现。</strong> Luma 的 calendar 是组织者或社区的页面，不是话题分类（1de9cb65，2026-07-23）。 做法是从湾区最大的聚合 calendar（Bond AI）出发，收集它的活动里出现的其他 calendar id（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-M">PRD-M</a>）。 再加上一份手工维护的 EXTRA_CALENDARS 列表（已提交版本有 9 个），全部拉取，按活动 URL 去重。 抓活动详情页时，还要从 HTML 里提取新的 calendar id 并拉取（Strategy 0c）。 每次发现新 calendar，必须写回 SKILL.md 的 EXTRA_CALENDARS，供下次使用（commit e5a4b84）。</p>
+<p><strong><a class="id-ref" href="#DSGN-I">DSGN-I</a> 过滤和详情。</strong> 接口数据按湾区城市名单和日期窗口过滤；城市为空的活动也保留（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-B">PRD-B</a>、<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-D">PRD-D</a>）。 接口不给演讲人信息，所以每个候选都要再抓详情页，拿描述、演讲人和场地（Strategy 1）。 命中 agent、MCP、Claude Code 等关键字的活动，不管报名人数都要抓详情（Strategy 0d）。 原因是需审批的活动，接口里的报名人数显示为 0（commit e5a4b84）。</p>
+<p><strong><a class="id-ref" href="#DSGN-J">DSGN-J</a> 输出。</strong> 清单写到 <code>~/project/luma/events-{YYYY}-{MM}.md</code>（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-I">PRD-I</a>）。 每场一张卡片，用两列表格写：时间（含周几）、地点、内容、类型、演讲人和主办方背景、要做什么、报名人数（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-J">PRD-J</a>）。 卡片后是两张汇总表：推荐（必须带演讲人证据标签）和强力不推荐（必须写具体理由）（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-K">PRD-K</a>）。</p>
+<p><strong><a class="id-ref" href="#DSGN-K">DSGN-K</a> 偏好学习。</strong> 偏好存在 <code>~/project/luma/preferences.json</code>，记喜欢和不喜欢的话题、演讲人、形式（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-I">PRD-I</a>）。 出清单后请用户回复 <code>+N</code> 或 <code>-N</code>，记进文件；下次给相似的活动加分或减分。是否真在生效，见 <a class="id-ref" href="#QUES-F">QUES-F</a>。</p>
+<p><strong><a class="id-ref" href="#DSGN-L">DSGN-L</a> 自动报名。</strong> 只有用户回复 <code>+N register</code> 才报名，绝不自主报名（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-N">PRD-N</a>）。 报名前再确认三件事：活动仍在一个月内、免费、这一场确实得到了同意。 表单数据从 <code>~/.person_info.md</code> 读，不写死在 skill 里（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-O">PRD-O</a>）。 不认识的字段合理猜测或填 N/A，绝不留空；下拉框先按关键字匹配；条款勾选框一律勾上。 提交后必须看到&quot;You&#x27;re going&quot;或待审批之类的页面，再到 Luma 的 my-events 页面确认状态；看不到就重报（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-P">PRD-P</a>）。 示例脚本新开一个 Chromium 窗口，没有沿用用户已登录的 Chrome，见 <a class="id-ref" href="#QUES-E">QUES-E</a>。</p>
+<p><strong><a class="id-ref" href="#DSGN-M">DSGN-M</a> 主流程。</strong> Process 一节共 12 步：找候选、抓详情、查背景、过硬门槛、产品分析、其余过滤、分类。 然后写清单、应用偏好、请用户反馈、记录反馈（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-I">PRD-I</a>、<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-K">PRD-K</a>）。 第 1 步仍写&quot;先抓 <code>luma.com/sf/ai</code> 分类页&quot;，与 <a class="id-ref" href="#DSGN-G">DSGN-G</a> 的结论矛盾，见 <a class="id-ref" href="#QUES-B">QUES-B</a>。</p>
+<h3>Testing Decisions</h3>
+<p>本 skill 没有自动测试或评测集；目录下只有 SKILL.md 一个文件。 SKILL.md 末尾列了 4 个手工测试场景，例如用户说&quot;+1, +3, -5&quot;时要记录反馈。 实际的验收是用户拿已知的好活动链接，问 skill 有没有搜到（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-M">PRD-M</a>）。这组链接没有存成固定的测试集。</p>
+<h3>Out of Scope</h3>
+<p>非技术活动、湾区以外的活动、纯社交活动都不管（frontmatter 的 when_not_to_use）。 不用 Luma 官方付费 API，也不接 Luma 的 MCP server（decision-history 的 <a class="id-ref" href="../decision-history/luma-event-scout-decision-history.html#ARD-G">ARD-G</a>）。</p>
+<h3>Further Notes</h3>
+<p>需求见 <a href="../prd/luma-event-scout-prd.html">PRD</a>，决策见 <a href="../decision-history/luma-event-scout-decision-history.html">decision-history</a>。 工作区里的 SKILL.md 有一处未提交的改动（来自另一个会话）：在 EXTRA_CALENDARS 里多加了一个 MongoDB calendar。 本篇按已提交版本描述，见 <a class="id-ref" href="#QUES-G">QUES-G</a>。 <code>~/project/luma/docs/</code> 下有一份 2026-07-26 自动生成的 PRD 和决策时间线，可作旁证；它由 LLM 生成，不是用户原话。</p>
+<h3>Alternatives Considered</h3>
+<p>直接抓网页、解析 <code>__NEXT_DATA__</code>、Playwright 下拉：都被否决，换成公开接口（<a class="id-ref" href="../decision-history/luma-event-scout-decision-history.html#ARD-D">ARD-D</a>、<a class="id-ref" href="../decision-history/luma-event-scout-decision-history.html#ARD-E">ARD-E</a>）。 Luma 官方 REST API：要付费订阅，而且只能查自己的 calendar，被否决（<a class="id-ref" href="../decision-history/luma-event-scout-decision-history.html#ARD-G">ARD-G</a>）。 只从一个聚合 calendar 搜：会漏掉独立社区的活动，被否决（<a class="id-ref" href="../decision-history/luma-event-scout-decision-history.html#ARD-A">ARD-A</a>、<a class="id-ref" href="../decision-history/luma-event-scout-decision-history.html#ARD-D">ARD-D</a>）。</p>
+<h3>Drawbacks</h3>
+<p>链式发现靠社交关系：没跟任何已知 calendar 交叉挂载的独立社区仍会漏（1de9cb65，2026-07-23）。 公开接口没有文档，Luma 改版就可能失效。 每次运行都要改写 SKILL.md 自身（写回新 calendar），skill 文件会一直变；工作区里那处未提交改动就属于这种写回。</p>
+<h3>Risks and Mitigations</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>风险</th>
+<th>缓解</th>
+</tr></thead><tbody>
+<tr>
+<td>公开接口加了鉴权或改了格式</td>
+<td>没有自动缓解；SKILL.md 保留了方法演进表，可以参考</td>
+</tr>
+<tr>
+<td>代为报名时填错信息或报错活动</td>
+<td>只在用户逐场同意后报名，并要求看到成功页面（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-N">PRD-N</a>、<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-P">PRD-P</a>）</td>
+</tr>
+<tr>
+<td>个人资料进入仓库</td>
+<td>资料改放 <code>~/.person_info.md</code>（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-O">PRD-O</a>）；但首版资料仍在 git 历史里，preferences.json 也还有资料字段，见 <a class="id-ref" href="#QUES-F">QUES-F</a></td>
+</tr>
+<tr>
+<td>背景检查要搜他人的公开信息</td>
+<td>SKILL.md 只要求在卡片上记职业证据标签；没写其他限制</td>
+</tr>
+</tbody></table></div>
+<h3>Open Questions</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>ID</th>
+<th>问题</th>
+<th>目前答案</th>
+<th>Owner</th>
+<th>Blocking</th>
+</tr></thead><tbody>
+<tr>
+<td id="QUES-A"><a class="id-ref" href="#QUES-A">QUES-A</a></td>
+<td>搜索窗口是一个月，还是 10 天（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-D">PRD-D</a>）？</td>
+<td>偏好一节写一个月，过滤代码写 10 天</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-B"><a class="id-ref" href="#QUES-B">QUES-B</a></td>
+<td>Process 第 1 步要不要改成先调接口（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-M">PRD-M</a>）？</td>
+<td>仍写先抓 <code>luma.com/sf/ai</code> 分类页</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-C"><a class="id-ref" href="#QUES-C">QUES-C</a></td>
+<td>Strategy 1 里残留的 Playwright 下拉代码要不要删？</td>
+<td>24d4264 说已删，代码还在；代码块已补上结束标记（<a class="id-ref" href="../decision-history/luma-event-scout-decision-history.html#ARD-N">ARD-N</a>），删不删仍未定</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-D"><a class="id-ref" href="#QUES-D">QUES-D</a></td>
+<td>&quot;不要纯中国人的&quot;是指中文活动吗（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-F">PRD-F</a>）？</td>
+<td>SKILL.md 按中文标题或描述过滤</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-E"><a class="id-ref" href="#QUES-E">QUES-E</a></td>
+<td>报名要不要用用户已登录的 Chrome（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-N">PRD-N</a>）？</td>
+<td>示例脚本新开 Chromium；当晚用户选了&quot;方案a&quot;，即自己在有显示器的机器上跑</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-F"><a class="id-ref" href="#QUES-F">QUES-F</a></td>
+<td>偏好学习真的在用吗（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-I">PRD-I</a>）？</td>
+<td>preferences.json 反馈列表为空，最后更新 2026-07-10；文件里还留着资料字段</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-G"><a class="id-ref" href="#QUES-G">QUES-G</a></td>
+<td>工作区里未提交的 MongoDB calendar 要不要提交（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-M">PRD-M</a>）？</td>
+<td>只在工作区，未提交</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-H"><a class="id-ref" href="#QUES-H">QUES-H</a></td>
+<td>话题规则要不要补回小节标题（<a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-G">PRD-G</a>）？</td>
+<td>0a50040 删掉了 &quot;Topic Requirements&quot; 标题，正文留了下来</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+</tbody></table></div>
+<h3>Reversibility</h3>
+<p>对 skill 的改动都在 git 跟踪的 SKILL.md 里，用 <code>git revert</code> 即可撤回。 清单、偏好和报名脚本在 <code>~/project/luma/</code>，那里不是 git 仓库，删了无法恢复。 已完成的报名，skill 撤不回，需要用户自己在 Luma 上取消。</p>
+<h3>Change Log</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Date</th>
+<th>Change</th>
+</tr></thead><tbody>
+<tr>
+<td>2026-11-24</td>
+<td>初版：按已提交的 SKILL.md 写出 luma-event-scout 的 design，引用 <a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-A">PRD-A</a> 到 <a class="id-ref" href="../prd/luma-event-scout-prd.html#PRD-P">PRD-P</a></td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td><a class="id-ref" href="#QUES-C">QUES-C</a> 记录代码块已闭合（<a class="id-ref" href="../decision-history/luma-event-scout-decision-history.html#ARD-N">ARD-N</a>）</td>
+</tr>
+</tbody></table></div>
+      </div>
+    </article>
+    <nav class="pager" aria-label="Previous and next"><a class="prev" href="../prd/luma-event-scout-prd.html"><span class="label">Previous</span>luma-event-scout — 需求</a><a class="next" href="../decision-history/luma-event-scout-decision-history.html"><span class="label">Next</span>luma-event-scout — 决策记录</a></nav>
+  </main>
+</div>
+<footer class="foot"><div class="foot-inner">Assembled from committed <code>.md</code>. The Markdown is authoritative; this page is a reading view.</div></footer>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>if(window.mermaid){mermaid.initialize({startOnLoad:false});}</script>
+<script src="../../../../assets/app.js"></script>
+</body>
+</html>

@@ -21,8 +21,10 @@ python3 tools/check_gold_run_scaffold.py
 python3 tools/check_eval_config.py
 python3 tools/check_eval_reports.py
 python3 tools/build_sdd_reader.py --check-sources
+python3 tools/build_spec_skills.py --check
 python3 tools/verify_sdd_skills_map.py
 python3 tools/validate_sdd_reader.py
+python3 tools/check_site_reachable.py
 python3 skills/spec-review/tests/run_case_checks.py
 export PYTHONPATH="$ROOT/skills/spec-organize/tests"
 PYTEST=(python3 -m pytest)
@@ -34,4 +36,4 @@ if ! python3 -m pytest --version >/dev/null 2>&1; then
     exit 1
   fi
 fi
-"${PYTEST[@]}" skills/spec-organize/tests/test_checks.py -q
+"${PYTEST[@]}" skills/spec-organize/tests/test_checks.py skills/spec-organize/tests/test_judge_freshness.py -q

@@ -17,7 +17,13 @@ from checks.sections import check_sections  # noqa: E402
 from checks.size import check_size  # noqa: E402
 from checks.ids import check_ids  # noqa: E402
 from checks.parent_complete import check_parent_complete  # noqa: E402
-from checks.paths import check_committed_path  # noqa: E402
+from checks.paths import check_committed_path, is_supporting_file  # noqa: E402
+from checks.decision_log import check_decision_log  # noqa: E402
+from checks.open_questions import check_open_questions  # noqa: E402
+from checks.code_citation_base import check_code_citation_base  # noqa: E402
+from checks.impl_tasks import check_impl_tasks  # noqa: E402
+
+EXPECTED_MECHANICAL = 12  # TST-H: 11 planted-defect cases + 1 clean (5 semantic need a judge runner)
 
 RUNNERS = [
     check_frontmatter,
@@ -26,6 +32,10 @@ RUNNERS = [
     check_ids,
     check_size,
     check_change_log,
+    check_decision_log,
+    check_open_questions,
+    check_code_citation_base,
+    check_impl_tasks,
 ]
 
 
@@ -72,6 +82,9 @@ def _findings_for_input(input_root: Path) -> list:
         try:
             text = path.read_text(encoding="utf-8")
         except UnicodeDecodeError:
+            continue
+        if is_supporting_file(path, text):  # DSGN-B: size cap only
+            findings.extend(check_size(path, text))
             continue
         for fn in RUNNERS:
             findings.extend(fn(path, text))
@@ -143,6 +156,9 @@ def main() -> None:
             ok_count += 1
             print(f"ok {case_dir.name} ({len(findings)} findings)")
     if failures:
+        sys.exit(1)
+    if ok_count < EXPECTED_MECHANICAL:
+        print(f"FAIL catalog: {ok_count} cases, TST-H expects {EXPECTED_MECHANICAL} mechanical")
         sys.exit(1)
     print(f"all {ok_count} cases ok")
 

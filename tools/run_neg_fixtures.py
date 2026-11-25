@@ -33,11 +33,14 @@ from checks.section_refs import check_section_refs  # noqa: E402
 from checks.counts import check_counts  # noqa: E402
 from checks.resolved_refs import check_resolved_refs  # noqa: E402
 from checks.diagram_steps import check_diagram_steps  # noqa: E402
+from checks.figures import check_figures  # noqa: E402
+from checks.figure_tree import check_figure_tree  # noqa: E402
 
 # neg folder name → (expected check id, runner)
 CASES: list[tuple[str, str, object]] = [
     ("missing-frontmatter", "frontmatter", check_frontmatter),
     ("bad-filename", "paths", check_committed_path),
+    ("stale-slug-no-frontmatter", "paths", check_committed_path),
     ("bad-frontmatter-key", "frontmatter", check_frontmatter),
     ("bad-index", "index_book", check_index_book),
     ("bad-index-dead-link", "index_book", check_index_book),
@@ -56,11 +59,16 @@ CASES: list[tuple[str, str, object]] = [
     ("dead-anchor", "anchors", check_anchors),
     ("unanchored-citation", "code_citation_base", check_code_citation_base),
     ("impl-task-no-done", "impl_tasks", check_impl_tasks),
+    ("impl-blocks-one-way", "impl_tasks", check_impl_tasks),
     ("translation-no-banner", "translation_banner", check_translation_banner),
     ("stale-section-ref", "section_refs", check_section_refs),
     ("bad-tracker-counts", "counts", check_counts),
     ("stale-question-status", "resolved_refs", check_resolved_refs),
     ("diagram-step-mismatch", "diagram_steps", check_diagram_steps),
+    ("figures/missing", "figures", check_figures),
+    ("figures/badname", "figures", check_figures),
+    ("figures/script", "figures", check_figures),
+    ("figures/orphan", "figure_tree", check_figure_tree),
 ]
 
 
@@ -68,7 +76,7 @@ def _run_case(name: str, check: str, fn) -> list:
     base = FIX / name
     if not base.is_dir():
         return [f"missing fixture dir {name}"]
-    if fn is check_paired_html:
+    if fn is check_paired_html or fn is check_figure_tree:
         findings = fn(base)
         return [] if any(f.check == check for f in findings) else [f"{name}: no {check} finding"]
     if fn is check_index_book:

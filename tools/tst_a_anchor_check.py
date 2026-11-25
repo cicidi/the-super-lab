@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
-"""TST-A helper: verify must_registry.yaml source anchors still exist in spec files."""
+"""TST-A helper: verify each must_registry.yaml `source:` line still holds the rule `text`."""
 
 from __future__ import annotations
 
+import re
 import sys
 from pathlib import Path
+
+import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 REG = ROOT / "skills/spec-organize/tests/must_registry.yaml"
@@ -23,10 +26,18 @@ def _load_items(text: str) -> list[dict[str, str]]:
         elif line.strip().startswith("source:"):
             cur["source"] = line.split(":", 1)[1].strip()
         elif line.strip().startswith("text:"):
-            cur["text"] = line.split(":", 1)[1].strip().strip("'")
+            cur["text"] = str(yaml.safe_load(line.split(":", 1)[1]) or "")
     if cur:
         items.append(cur)
     return items
+
+
+_MARKER = re.compile(r"^(?:#{1,6}|[-*+]|\d+[.)])\s+")
+
+
+def _norm(line: str) -> str:
+    """Stripped line without a leading heading or list marker."""
+    return _MARKER.sub("", line.strip()).strip()
 
 
 def main() -> None:
@@ -51,7 +62,10 @@ def main() -> None:
         if line_no < 1 or line_no > len(lines):
             missing.append(f"{it['id']}: line {line_no} out of range ({rel})")
             continue
-        # Line existence is the mechanical gate; registry `text` may paraphrase the source line.
+        cited, want = _norm(lines[line_no - 1]), _norm(it.get("text", ""))
+        # The scanner truncates `text` at 500 chars, so a prefix match is a match.
+        if not want or not cited.startswith(want):
+            missing.append(f"{it['id']}: drifted, {rel}:{line_no} does not hold the rule text")
     if missing:
         for m in missing:
             print(m, file=sys.stderr)

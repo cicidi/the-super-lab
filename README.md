@@ -28,8 +28,8 @@ A **skill** is a self-contained directory with a `SKILL.md` file. It packages "h
 | [prototype](skills/prototype/) | Build throwaway prototypes to answer design questions | 🔗 |
 | [research](skills/research/) | Surface unknowns before coding; go from vague idea to concrete design |
 | [skill](skills/skill/) | Skill lifecycle — create, edit, import, list skills |
-| [to-spec](skills/to-spec/) | Synthesize current conversation into a spec (PRD) for the issue tracker | 🔗 |
-| [to-tickets](skills/to-tickets/) | Break a plan into tracer-bullet tickets with declared blocking edges | 🔗 |
+| [spec-ingest](skills/spec-ingest/) | Sort chat or local files into prd / design / decision-history / impl-plan / test-plan items, then hand off to spec-write |
+| [spec-ticket](skills/spec-ticket/) | Open one parent ticket per feature and one ticket per IMPL-* in local / GitHub / Jira |
 | [wayfinder](skills/wayfinder/) | Plan work too large for one agent session via decision briefs on the issue tracker | 🔗 |
 
 🔗 = imported from [mattpocock/skills](https://github.com/mattpocock/skills)
@@ -69,10 +69,16 @@ To deploy skills to your IDEs, use the walter-worker install script or `coworker
 ## Testing
 
 ```bash
-bash tests/test_skills.sh
+python3 tools/check_skills.py            # all skills
+python3 tools/check_skills.py skills/bug  # one skill
 ```
 
-Validates all skills against the-super-lab conventions: frontmatter completeness, required sections, prohibited patterns, duplicate names, and more.
+Checks every SKILL.md: frontmatter (name matches the directory, description set), references to skills that do not exist or were retired, relative links, and repo paths.
+CI runs it on every push and pull request (`.github/workflows/skills-check.yml`). To run it before each commit that touches a SKILL.md:
+
+```bash
+git config core.hooksPath tools/git-hooks
+```
 
 ## Conventions
 

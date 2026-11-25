@@ -4,20 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>skill-factory — Decision History · decision-history · Spec Atlas</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:400,400italic,500,500italic,700|Roboto+Mono:400,500,700|Noto+Sans+SC:400,500,700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@400;600&display=swap">
 <link rel="stylesheet" href="../../assets/styles.css">
 </head>
 <body>
 <header class="topbar">
   <div class="topbar-inner">
     <div class="brand"><a href="../../index.html"><span class="brand-mark">SDD</span><span class="brand-name">Spec Atlas</span></a></div>
+    <button class="strike-btn" type="button" onclick="var r=document.documentElement;var off=r.dataset.strike!=='off';r.dataset.strike=off?'off':'on';this.textContent=off?'显示删除线':'隐藏删除线'">隐藏删除线</button>
   </div>
 </header>
 <div class="site">
   <aside class="sidebar">
   <nav aria-label="Directory">
     <div class="tree-overview"><a class="tree-link" href="../../index.html"><span class="tree-link__num">00</span>All features</a></div>
-    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../prd/skill-factory-prd.html"><span class="tree-link__num">10</span>skill-factory PRD</a></li><li class="tree-leaf"><a class="tree-link" href="../design/skill-factory-design.html"><span class="tree-link__num">11</span>skill-factory Specification</a></li><li class="tree-leaf"><a class="tree-link" href="../impl-plan/skill-factory-impl-plan.html"><span class="tree-link__num">12</span>skill-factory Implementation Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../test-plan/skill-factory-test-plan.html"><span class="tree-link__num">13</span>skill-factory Test Plan</a></li><li class="tree-leaf"><a class="tree-link" href="skill-factory-decision-history.html" aria-current="page"><span class="tree-link__num">14</span>skill-factory — Decision History</a></li></ul>
+    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../prd/skill-factory-prd.html"><span class="tree-ord">1</span>skill-factory PRD</a></li><li class="tree-leaf"><a class="tree-link" href="skill-factory-decision-history.html" aria-current="page"><span class="tree-ord">2</span>skill-factory — Decision History</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../design/skill-factory-design.html"><span class="tree-ord">3</span>skill-factory Specification</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../design/skill-factory-design-skill-catalog.html">skill-factory — skill 目录、调用关系与共性问题</a></li><li class="tree-leaf"><a class="tree-link" href="../design/skill-factory-design-verify-upgrade.html">skill-factory — 怎么验证 skill，怎么装进 AI 工具并升级</a></li><li class="tree-leaf"><a class="tree-link" href="../design/skill-factory-design-why-and-anatomy.html">skill-factory — 为什么要做，一个 skill 怎么搭</a></li></ul></details></li><li class="tree-leaf"><a class="tree-link" href="../impl-plan/skill-factory-impl-plan.html"><span class="tree-ord">4</span>skill-factory Implementation Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../test-plan/skill-factory-test-plan.html"><span class="tree-ord">5</span>skill-factory Test Plan</a></li><li class="tree-branch"><details open><summary><span class="tree-link"><span class="tree-ord">10</span>sub-feature</span></summary><ul class="tree"><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/auto-tdd/design/auto-tdd-design.html">auto-tdd</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/auto-tdd/prd/auto-tdd-prd.html"><span class="tree-ord">1</span>auto-tdd — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/auto-tdd/decision-history/auto-tdd-decision-history.html"><span class="tree-ord">2</span>auto-tdd — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/auto-tdd/design/auto-tdd-design.html"><span class="tree-ord">3</span>auto-tdd — 测试驱动开发循环</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/bug/design/bug-design.html">bug</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/bug/prd/bug-prd.html"><span class="tree-ord">1</span>bug — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/bug/decision-history/bug-decision-history.html"><span class="tree-ord">2</span>bug — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/bug/design/bug-design.html"><span class="tree-ord">3</span>bug — 调试、报告与自愈</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/create-video-workflow/design/create-video-workflow-design.html">create-video-workflow</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/create-video-workflow/prd/create-video-workflow-prd.html"><span class="tree-ord">1</span>create-video-workflow — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/create-video-workflow/decision-history/create-video-workflow-decision-history.html"><span class="tree-ord">2</span>create-video-workflow — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/create-video-workflow/design/create-video-workflow-design.html"><span class="tree-ord">3</span>create-video-workflow — 研究文档变内容</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/doc-protect/design/doc-protect-design.html">doc-protect</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/doc-protect/prd/doc-protect-prd.html"><span class="tree-ord">1</span>doc-protect — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/doc-protect/decision-history/doc-protect-decision-history.html"><span class="tree-ord">2</span>doc-protect — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/doc-protect/design/doc-protect-design.html"><span class="tree-ord">3</span>doc-protect — 锁住文档段落</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/domain-modeling/design/domain-modeling-design.html">domain-modeling</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/domain-modeling/prd/domain-modeling-prd.html"><span class="tree-ord">1</span>domain-modeling — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/domain-modeling/decision-history/domain-modeling-decision-history.html"><span class="tree-ord">2</span>domain-modeling — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/domain-modeling/design/domain-modeling-design.html"><span class="tree-ord">3</span>domain-modeling — 领域模型与术语表</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/english-grammar-fix/design/english-grammar-fix-design.html">english-grammar-fix</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/english-grammar-fix/prd/english-grammar-fix-prd.html"><span class="tree-ord">1</span>english-grammar-fix — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/english-grammar-fix/decision-history/english-grammar-fix-decision-history.html"><span class="tree-ord">2</span>english-grammar-fix — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/english-grammar-fix/design/english-grammar-fix-design.html"><span class="tree-ord">3</span>english-grammar-fix — 英文语法修正</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/find-unknowns/design/find-unknowns-design.html">find-unknowns</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/find-unknowns/prd/find-unknowns-prd.html"><span class="tree-ord">1</span>research — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/find-unknowns/decision-history/find-unknowns-decision-history.html"><span class="tree-ord">2</span>research — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/find-unknowns/design/find-unknowns-design.html"><span class="tree-ord">3</span>research — 动手前找出未知</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/grill-with-docs/design/grill-with-docs-design.html">grill-with-docs</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/grill-with-docs/prd/grill-with-docs-prd.html"><span class="tree-ord">1</span>grill-with-docs — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/grill-with-docs/decision-history/grill-with-docs-decision-history.html"><span class="tree-ord">2</span>grill-with-docs — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/grill-with-docs/design/grill-with-docs-design.html"><span class="tree-ord">3</span>grill-with-docs — 带文档的拷问式访谈</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/implement/design/implement-design.html">implement</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/implement/prd/implement-prd.html"><span class="tree-ord">1</span>implement — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/implement/decision-history/implement-decision-history.html"><span class="tree-ord">2</span>implement — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/implement/design/implement-design.html"><span class="tree-ord">3</span>implement — 按 spec 和 ticket 实现</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/luma-event-scout/design/luma-event-scout-design.html">luma-event-scout</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/luma-event-scout/prd/luma-event-scout-prd.html"><span class="tree-ord">1</span>luma-event-scout — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/luma-event-scout/decision-history/luma-event-scout-decision-history.html"><span class="tree-ord">2</span>luma-event-scout — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/luma-event-scout/design/luma-event-scout-design.html"><span class="tree-ord">3</span>luma-event-scout — Luma 湾区活动筛选</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/multi-model-team/design/multi-model-team-design.html">multi-model-team</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/multi-model-team/prd/multi-model-team-prd.html"><span class="tree-ord">1</span>multi-model-team — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/multi-model-team/decision-history/multi-model-team-decision-history.html"><span class="tree-ord">2</span>multi-model-team — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/multi-model-team/design/multi-model-team-design.html"><span class="tree-ord">3</span>multi-model-team — 多模型团队编排</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/pic-to-txt/design/pic-to-txt-design.html">pic-to-txt</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/pic-to-txt/prd/pic-to-txt-prd.html"><span class="tree-ord">1</span>pic-to-txt — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/pic-to-txt/decision-history/pic-to-txt-decision-history.html"><span class="tree-ord">2</span>pic-to-txt — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/pic-to-txt/design/pic-to-txt-design.html"><span class="tree-ord">3</span>pic-to-txt — 截图转文字文档</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/prototype/design/prototype-design.html">prototype</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/prototype/prd/prototype-prd.html"><span class="tree-ord">1</span>prototype — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/prototype/decision-history/prototype-decision-history.html"><span class="tree-ord">2</span>prototype — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/prototype/design/prototype-design.html"><span class="tree-ord">3</span>prototype — 用完就扔的原型</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/skill/design/skill-design.html">skill</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/skill/prd/skill-prd.html"><span class="tree-ord">1</span>skill — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/skill/decision-history/skill-decision-history.html"><span class="tree-ord">2</span>skill — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/skill/design/skill-design.html"><span class="tree-ord">3</span>skill — Skill 管理入口</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/spec-ingest/design/spec-ingest-design.html">spec-ingest</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/spec-ingest/prd/spec-ingest-prd.html"><span class="tree-ord">1</span>spec-ingest — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/spec-ingest/decision-history/spec-ingest-decision-history.html"><span class="tree-ord">2</span>spec-ingest — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/spec-ingest/design/spec-ingest-design.html"><span class="tree-ord">3</span>spec-ingest — 把已有信息分拣进 spec</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/spec-ticket/design/spec-ticket-design.html">spec-ticket</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/spec-ticket/prd/spec-ticket-prd.html"><span class="tree-ord">1</span>spec-ticket — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/spec-ticket/decision-history/spec-ticket-decision-history.html"><span class="tree-ord">2</span>spec-ticket — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/spec-ticket/design/spec-ticket-design.html"><span class="tree-ord">3</span>spec-ticket — 把 impl-plan 的每一步发成工单</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/tmux-status-bar/design/tmux-status-bar-design.html">tmux-status-bar</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/tmux-status-bar/prd/tmux-status-bar-prd.html"><span class="tree-ord">1</span>tmux-status-bar — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/tmux-status-bar/decision-history/tmux-status-bar-decision-history.html"><span class="tree-ord">2</span>tmux-status-bar — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/tmux-status-bar/design/tmux-status-bar-design.html"><span class="tree-ord">3</span>tmux-status-bar — tmux 状态栏显示项目上下文</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/to-spec/design/to-spec-design.html">to-spec</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/to-spec/prd/to-spec-prd.html"><span class="tree-ord">1</span>to-spec — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/to-spec/decision-history/to-spec-decision-history.html"><span class="tree-ord">2</span>to-spec — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/to-spec/design/to-spec-design.html"><span class="tree-ord">3</span>to-spec — 把对话整理成 spec</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/to-tickets/design/to-tickets-design.html">to-tickets</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/to-tickets/prd/to-tickets-prd.html"><span class="tree-ord">1</span>to-tickets — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/to-tickets/decision-history/to-tickets-decision-history.html"><span class="tree-ord">2</span>to-tickets — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/to-tickets/design/to-tickets-design.html"><span class="tree-ord">3</span>to-tickets — 把 spec 拆成执行工单</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/transcribe-audio/design/transcribe-audio-design.html">transcribe-audio</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/transcribe-audio/prd/transcribe-audio-prd.html"><span class="tree-ord">1</span>transcribe-audio — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/transcribe-audio/decision-history/transcribe-audio-decision-history.html"><span class="tree-ord">2</span>transcribe-audio — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/transcribe-audio/design/transcribe-audio-design.html"><span class="tree-ord">3</span>transcribe-audio — 本地显卡音频转文字</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/video-production-pip-style/design/video-production-pip-style-design.html">video-production-pip-style</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/video-production-pip-style/prd/video-production-pip-style-prd.html"><span class="tree-ord">1</span>video-production-pip-style — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/video-production-pip-style/decision-history/video-production-pip-style-decision-history.html"><span class="tree-ord">2</span>video-production-pip-style — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/video-production-pip-style/design/video-production-pip-style-design.html"><span class="tree-ord">3</span>video-production-pip-style — 画中画引用式视频制作指南</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/wayfinder/design/wayfinder-design.html">wayfinder</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/wayfinder/prd/wayfinder-prd.html"><span class="tree-ord">1</span>wayfinder — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/wayfinder/decision-history/wayfinder-decision-history.html"><span class="tree-ord">2</span>wayfinder — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/wayfinder/design/wayfinder-design.html"><span class="tree-ord">3</span>wayfinder — 规划大任务的决策地图</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/youtube-research/design/youtube-research-design.html">youtube-research</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/youtube-research/prd/youtube-research-prd.html"><span class="tree-ord">1</span>youtube-research — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/youtube-research/decision-history/youtube-research-decision-history.html"><span class="tree-ord">2</span>youtube-research — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/youtube-research/design/youtube-research-design.html"><span class="tree-ord">3</span>youtube-research — 从题目到视频稿 HTML</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/youtube-summarize/design/youtube-summarize-design.html">youtube-summarize</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/youtube-summarize/prd/youtube-summarize-prd.html"><span class="tree-ord">1</span>youtube-summarize — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/youtube-summarize/decision-history/youtube-summarize-decision-history.html"><span class="tree-ord">2</span>youtube-summarize — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/youtube-summarize/design/youtube-summarize-design.html"><span class="tree-ord">3</span>youtube-summarize — YouTube 视频转写与总结</a></li></ul></details></li></ul></details></li></ul>
   </nav>
 </aside>
   <main class="content">
@@ -687,7 +688,7 @@
 <tr>
 <td>0093</td>
 <td>unknown</td>
-<td>Include quality gates section that blocks if violated (MUST gates)</td>
+<td>Include quality gates section that blocks if violated (<span class="lvl lvl--must">MUST</span> gates)</td>
 <td>accepted</td>
 <td>—</td>
 </tr>
@@ -708,7 +709,7 @@
 <tr>
 <td>0096</td>
 <td>unknown</td>
-<td>Run quality gates before commit; MUST gates block publish</td>
+<td>Run quality gates before commit; <span class="lvl lvl--must">MUST</span> gates block publish</td>
 <td>accepted</td>
 <td>—</td>
 </tr>
@@ -771,7 +772,7 @@
 <tr>
 <td>0105</td>
 <td>unknown</td>
-<td>Define Quality Gates as MUST (block commit) and NICE (warn only) checklists</td>
+<td>Define Quality Gates as <span class="lvl lvl--must">MUST</span> (block commit) and <span class="lvl lvl--nice">NICE</span> (warn only) checklists</td>
 <td>accepted</td>
 <td>—</td>
 </tr>
@@ -792,49 +793,49 @@
 <tr>
 <td>0108</td>
 <td>unknown</td>
-<td>Tighten NICE gate &#x27;Body &lt; 500 lines&#x27; to &#x27;&lt; 150 lines&#x27; in skill-create</td>
+<td>Tighten <span class="lvl lvl--nice">NICE</span> gate &#x27;Body &lt; 500 lines&#x27; to &#x27;&lt; 150 lines&#x27; in skill-create</td>
 <td>accepted</td>
 <td>—</td>
 </tr>
 <tr>
 <td>0109</td>
 <td>unknown</td>
-<td>Add &#x27;Anti-Patterns section present&#x27; as NICE gate in skill-create</td>
+<td>Add &#x27;Anti-Patterns section present&#x27; as <span class="lvl lvl--nice">NICE</span> gate in skill-create</td>
 <td>accepted</td>
 <td>—</td>
 </tr>
 <tr>
 <td>0110</td>
 <td>unknown</td>
-<td>Add &#x27;Quality Gates section with MUST/NICE checkboxes&#x27; as NICE gate in skill-create</td>
+<td>Add &#x27;Quality Gates section with <span class="lvl lvl--must">MUST</span>/<span class="lvl lvl--nice">NICE</span> checkboxes&#x27; as <span class="lvl lvl--nice">NICE</span> gate in skill-create</td>
 <td>accepted</td>
 <td>—</td>
 </tr>
 <tr>
 <td>0111</td>
 <td>unknown</td>
-<td>Add &#x27;Philosophy-driven overview&#x27; as NICE requirement in skill-create Phase 2</td>
+<td>Add &#x27;Philosophy-driven overview&#x27; as <span class="lvl lvl--nice">NICE</span> requirement in skill-create Phase 2</td>
 <td>accepted</td>
 <td>—</td>
 </tr>
 <tr>
 <td>0112</td>
 <td>unknown</td>
-<td>Add &#x27;No deploy/ concept&#x27; prohibition as MUST gate in skill-create</td>
+<td>Add &#x27;No deploy/ concept&#x27; prohibition as <span class="lvl lvl--must">MUST</span> gate in skill-create</td>
 <td>accepted</td>
 <td>—</td>
 </tr>
 <tr>
 <td>0113</td>
 <td>unknown</td>
-<td>Add &#x27;description ≤ 500 chars&#x27; as NICE gate in skill-create</td>
+<td>Add &#x27;description ≤ 500 chars&#x27; as <span class="lvl lvl--nice">NICE</span> gate in skill-create</td>
 <td>accepted</td>
 <td>—</td>
 </tr>
 <tr>
 <td>0114</td>
 <td>unknown</td>
-<td>Accept Agent-B&#x27;s assessment that skill-edit and skill-import have zero MUST violations</td>
+<td>Accept Agent-B&#x27;s assessment that skill-edit and skill-import have zero <span class="lvl lvl--must">MUST</span> violations</td>
 <td>accepted</td>
 <td>—</td>
 </tr>
@@ -2133,10 +2134,10 @@
 <li><strong>Rationale</strong>: Prevent common mistakes</li>
 <li><strong>Confidence</strong>: high</li>
 </ul>
-<h4>0093 — Include quality gates section that blocks if violated (MUST gates)</h4>
+<h4>0093 — Include quality gates section that blocks if violated (<span class="lvl lvl--must">MUST</span> gates)</h4>
 <p>Status: accepted</p>
 <ol>
-<li>Include quality gates section that blocks if violated (MUST gates)</li>
+<li>Include quality gates section that blocks if violated (<span class="lvl lvl--must">MUST</span> gates)</li>
 </ol>
 <ul>
 <li><strong>Source</strong>: opencode</li>
@@ -2168,10 +2169,10 @@
 <li><strong>Alternatives rejected</strong>: Using Write tool</li>
 <li><strong>Confidence</strong>: high</li>
 </ul>
-<h4>0096 — Run quality gates before commit; MUST gates block publish</h4>
+<h4>0096 — Run quality gates before commit; <span class="lvl lvl--must">MUST</span> gates block publish</h4>
 <p>Status: accepted</p>
 <ol>
-<li>Run quality gates before commit; MUST gates block publish</li>
+<li>Run quality gates before commit; <span class="lvl lvl--must">MUST</span> gates block publish</li>
 </ol>
 <ul>
 <li><strong>Source</strong>: opencode</li>
@@ -2275,10 +2276,10 @@
 <li><strong>Alternatives rejected</strong>: Ask user to fill all gaps upfront, Silently guess all values</li>
 <li><strong>Confidence</strong>: high</li>
 </ul>
-<h4>0105 — Define Quality Gates as MUST (block commit) and NICE (warn only) checklists</h4>
+<h4>0105 — Define Quality Gates as <span class="lvl lvl--must">MUST</span> (block commit) and <span class="lvl lvl--nice">NICE</span> (warn only) checklists</h4>
 <p>Status: accepted</p>
 <ol>
-<li>Define Quality Gates as MUST (block commit) and NICE (warn only) checklists</li>
+<li>Define Quality Gates as <span class="lvl lvl--must">MUST</span> (block commit) and <span class="lvl lvl--nice">NICE</span> (warn only) checklists</li>
 </ol>
 <ul>
 <li><strong>Source</strong>: opencode</li>
@@ -2311,10 +2312,10 @@
 <li><strong>Alternatives rejected</strong>: Cutting required sections to meet line target</li>
 <li><strong>Confidence</strong>: medium</li>
 </ul>
-<h4>0108 — Tighten NICE gate &#x27;Body &lt; 500 lines&#x27; to &#x27;&lt; 150 lines&#x27; in skill-create</h4>
+<h4>0108 — Tighten <span class="lvl lvl--nice">NICE</span> gate &#x27;Body &lt; 500 lines&#x27; to &#x27;&lt; 150 lines&#x27; in skill-create</h4>
 <p>Status: accepted</p>
 <ol>
-<li>Tighten NICE gate &#x27;Body &lt; 500 lines&#x27; to &#x27;&lt; 150 lines&#x27; in skill-create</li>
+<li>Tighten <span class="lvl lvl--nice">NICE</span> gate &#x27;Body &lt; 500 lines&#x27; to &#x27;&lt; 150 lines&#x27; in skill-create</li>
 </ol>
 <ul>
 <li><strong>Source</strong>: opencode</li>
@@ -2323,10 +2324,10 @@
 <li><strong>Alternatives rejected</strong>: Keeping the limit at 500 lines</li>
 <li><strong>Confidence</strong>: high</li>
 </ul>
-<h4>0109 — Add &#x27;Anti-Patterns section present&#x27; as NICE gate in skill-create</h4>
+<h4>0109 — Add &#x27;Anti-Patterns section present&#x27; as <span class="lvl lvl--nice">NICE</span> gate in skill-create</h4>
 <p>Status: accepted</p>
 <ol>
-<li>Add &#x27;Anti-Patterns section present&#x27; as NICE gate in skill-create</li>
+<li>Add &#x27;Anti-Patterns section present&#x27; as <span class="lvl lvl--nice">NICE</span> gate in skill-create</li>
 </ol>
 <ul>
 <li><strong>Source</strong>: opencode</li>
@@ -2334,10 +2335,10 @@
 <li><strong>Rationale</strong>: Ensures generated skills include anti-patterns, aligning with CONVENTIONS.md.</li>
 <li><strong>Confidence</strong>: high</li>
 </ul>
-<h4>0110 — Add &#x27;Quality Gates section with MUST/NICE checkboxes&#x27; as NICE gate in skill-create</h4>
+<h4>0110 — Add &#x27;Quality Gates section with <span class="lvl lvl--must">MUST</span>/<span class="lvl lvl--nice">NICE</span> checkboxes&#x27; as <span class="lvl lvl--nice">NICE</span> gate in skill-create</h4>
 <p>Status: accepted</p>
 <ol>
-<li>Add &#x27;Quality Gates section with MUST/NICE checkboxes&#x27; as NICE gate in skill-create</li>
+<li>Add &#x27;Quality Gates section with <span class="lvl lvl--must">MUST</span>/<span class="lvl lvl--nice">NICE</span> checkboxes&#x27; as <span class="lvl lvl--nice">NICE</span> gate in skill-create</li>
 </ol>
 <ul>
 <li><strong>Source</strong>: opencode</li>
@@ -2345,10 +2346,10 @@
 <li><strong>Rationale</strong>: Makes quality criteria explicit and traceable, improving skill consistency.</li>
 <li><strong>Confidence</strong>: high</li>
 </ul>
-<h4>0111 — Add &#x27;Philosophy-driven overview&#x27; as NICE requirement in skill-create Phase 2</h4>
+<h4>0111 — Add &#x27;Philosophy-driven overview&#x27; as <span class="lvl lvl--nice">NICE</span> requirement in skill-create Phase 2</h4>
 <p>Status: accepted</p>
 <ol>
-<li>Add &#x27;Philosophy-driven overview&#x27; as NICE requirement in skill-create Phase 2</li>
+<li>Add &#x27;Philosophy-driven overview&#x27; as <span class="lvl lvl--nice">NICE</span> requirement in skill-create Phase 2</li>
 </ol>
 <ul>
 <li><strong>Source</strong>: opencode</li>
@@ -2356,10 +2357,10 @@
 <li><strong>Rationale</strong>: Philosophical framing improves skill cohesion and user understanding.</li>
 <li><strong>Confidence</strong>: medium</li>
 </ul>
-<h4>0112 — Add &#x27;No deploy/ concept&#x27; prohibition as MUST gate in skill-create</h4>
+<h4>0112 — Add &#x27;No deploy/ concept&#x27; prohibition as <span class="lvl lvl--must">MUST</span> gate in skill-create</h4>
 <p>Status: accepted</p>
 <ol>
-<li>Add &#x27;No deploy/ concept&#x27; prohibition as MUST gate in skill-create</li>
+<li>Add &#x27;No deploy/ concept&#x27; prohibition as <span class="lvl lvl--must">MUST</span> gate in skill-create</li>
 </ol>
 <ul>
 <li><strong>Source</strong>: opencode</li>
@@ -2367,10 +2368,10 @@
 <li><strong>Rationale</strong>: Prevents invalid skill structures from being created.</li>
 <li><strong>Confidence</strong>: high</li>
 </ul>
-<h4>0113 — Add &#x27;description ≤ 500 chars&#x27; as NICE gate in skill-create</h4>
+<h4>0113 — Add &#x27;description ≤ 500 chars&#x27; as <span class="lvl lvl--nice">NICE</span> gate in skill-create</h4>
 <p>Status: accepted</p>
 <ol>
-<li>Add &#x27;description ≤ 500 chars&#x27; as NICE gate in skill-create</li>
+<li>Add &#x27;description ≤ 500 chars&#x27; as <span class="lvl lvl--nice">NICE</span> gate in skill-create</li>
 </ol>
 <ul>
 <li><strong>Source</strong>: opencode</li>
@@ -2378,10 +2379,10 @@
 <li><strong>Rationale</strong>: Keeps descriptions succinct and readable.</li>
 <li><strong>Confidence</strong>: high</li>
 </ul>
-<h4>0114 — Accept Agent-B&#x27;s assessment that skill-edit and skill-import have zero MUST violations</h4>
+<h4>0114 — Accept Agent-B&#x27;s assessment that skill-edit and skill-import have zero <span class="lvl lvl--must">MUST</span> violations</h4>
 <p>Status: accepted</p>
 <ol>
-<li>Accept Agent-B&#x27;s assessment that skill-edit and skill-import have zero MUST violations</li>
+<li>Accept Agent-B&#x27;s assessment that skill-edit and skill-import have zero <span class="lvl lvl--must">MUST</span> violations</li>
 </ol>
 <ul>
 <li><strong>Source</strong>: opencode</li>
@@ -2528,7 +2529,7 @@
 <ul>
 <li><strong>Source</strong>: opencode</li>
 <li><strong>Context</strong>: After writing devil-advocate SKILL.md, it was 271 lines, then reduced to 175, then 155.</li>
-<li><strong>Rationale</strong>: Line count limit (NICE: 150) enforced by project guidelines.</li>
+<li><strong>Rationale</strong>: Line count limit (<span class="lvl lvl--nice">NICE</span>: 150) enforced by project guidelines.</li>
 <li><strong>Alternatives rejected</strong>: Leaving as is and ignoring quality gate.</li>
 <li><strong>Confidence</strong>: high</li>
 </ul>
@@ -2565,7 +2566,7 @@
 <p>Consolidated from: <code>2026-06-10-fix-skill-create-quality-gate-improvements-from-r-decision.md</code>, <code>2026-06-11-skill-add-ai-coworker-devil-advocate--multi-agen-decision.md</code>, <code>2026-06-12-skill-add-ai-coworker-work-review--2-agent-gatek-decision.md</code>, <code>2026-06-18-skill-add-ai-coworker-contrarian-review--5-agent-decision.md</code>, <code>2026-06-23-chore-remove-self-healself-analyze-from-personal-decision.md</code>, <code>2026-06-24-fix-re-apply-skill-fixes-lost-during-rebase-fron-decision.md</code>, <code>2026-07-01-skill-add-tmux-status-bar--tmux-bar-with-project-decision.md</code>, <code>2026-07-02-fix-remove-ai-coworker--prefix-from-4-skill-front-decision.md</code>, <code>2026-07-14-skill-add-multi-model-team--glm-52-architect---decision.md</code>, <code>2026-07-17-fix-knowledge-repo-is-separate-repo-at-different--decision.md</code>, <code>2026-07-18-skill-add-image-review-gate--scatterbrain-design-decision.md</code>, <code>2026-07-22-skill-add-transcribe-audio--local-gpu-whisper-au-decision.md</code>, <code>2026-07-23-skillluma-event-scout-add-robotics-reading-club-decision.md</code>, <code>unknown-add-variant-thinking-high-to-the-build-agent--decision.md</code></p>
       </div>
     </article>
-    <nav class="pager" aria-label="Previous and next"><a class="prev" href="../test-plan/skill-factory-test-plan.html"><span class="label">Previous</span>skill-factory Test Plan</a></nav>
+    <nav class="pager" aria-label="Previous and next"><a class="prev" href="../prd/skill-factory-prd.html"><span class="label">Previous</span>skill-factory PRD</a><a class="next" href="../design/skill-factory-design.html"><span class="label">Next</span>skill-factory Specification</a></nav>
   </main>
 </div>
 <footer class="foot"><div class="foot-inner">Assembled from committed <code>.md</code>. The Markdown is authoritative; this page is a reading view.</div></footer>

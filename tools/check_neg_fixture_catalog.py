@@ -24,8 +24,10 @@ def main() -> None:
     spec.loader.exec_module(mod)
     in_runner = {name for name, _check, _fn in mod.CASES}
     on_disk = {p.name for p in NEG.iterdir() if p.is_dir()}
-    extra_disk = on_disk - in_runner
-    missing_disk = in_runner - on_disk
+    # A case may live one level down (`figures/badname`); its top dir counts as used.
+    used_tops = {name.split("/", 1)[0] for name in in_runner}
+    extra_disk = on_disk - used_tops
+    missing_disk = {name for name in in_runner if not (NEG / name).is_dir()}
     if extra_disk or missing_disk:
         if extra_disk:
             print(f"neg dirs not in runner: {sorted(extra_disk)}", file=sys.stderr)

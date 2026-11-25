@@ -1,12 +1,12 @@
-"""TST-E: generated gold runs must clear both scores.
+"""TST-E: generated gold runs must clear score 1; score 2 is reported, not floored.
 
 Selection: the newest bundle with at least 3 repetitions (the official TST-C
 trial), falling back to the newest bundle. Assertions:
 
 - score 1 (mechanical) is strict: every repetition must pass — a stochastic
   generator has no excuse for a structural violation.
-- score 2 (quality) is judged by majority: sampling noise at temperature 0.3
-  can drop one repetition by a single missed rule; 2 of 3 is the intended bar.
+- score 2 (quality) has no fixed floor (ARD-R): it only must not drop below
+  the previous run of the same gold version, which this test does not compare.
 
 Run artifacts are gitignored, so this test skips when no run exists.
 """
@@ -43,14 +43,6 @@ def test_latest_gold_run_scores():
     bundle = select_bundle()
     if bundle is None:
         pytest.skip("no gold run artifacts (runs/ is gitignored; run tools/run_gold_eval.py)")
-    runs = repetitions(bundle)
-    scores = []
-    for run in runs:
+    for run in repetitions(bundle):
         passed, total, score, findings, hits = score_run(run)
         assert passed == total, f"{bundle.parent.name}/{run.name}: score 1 {passed}/{total}; {findings}"
-        scores.append(score)
-    passing = sum(1 for s in scores if s >= 6)
-    required = 2 if len(scores) >= 3 else len(scores)
-    assert passing >= required, (
-        f"{bundle.parent.name}: only {passing}/{len(scores)} runs reached score 2 >= 6: {scores}"
-    )

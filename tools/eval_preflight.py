@@ -7,20 +7,16 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-GOLD = ROOT / "skills/spec-organize/tests/gold/v1"
+SPEC = ROOT / "docs/features/spec-driven-development"
 EVAL = ROOT / "skills/spec-organize/tests/eval.yaml"
 
 REQUIRED = (
-    GOLD / "requirement.md",
-    GOLD / "context.md",
-    GOLD / "annotations.yaml",
-)
-
-VARIANTS = (
-    "budget-conflict",
-    "missing-info",
-    "midway-change",
-    "family-disagree",
+    SPEC / "prd/spec-driven-development-prd.md",
+    SPEC / "design/spec-driven-development-design.md",
+    SPEC / "decision-history/spec-driven-development-decision-history.md",
+    SPEC / "impl-plan/spec-driven-development-impl-plan.md",
+    SPEC / "test-plan/spec-driven-development-test-plan.md",
+    ROOT / "skills/spec-organize/tests/gold/v1/annotations.yaml",
 )
 
 
@@ -31,15 +27,11 @@ def main() -> None:
     for p in REQUIRED:
         if not p.is_file():
             missing.append(str(p.relative_to(ROOT)))
-    var_dir = GOLD / "context-variants"
-    for name in VARIANTS:
-        if not (var_dir / f"{name}.md").is_file():
-            missing.append(f"context-variants/{name}.md")
     if missing:
         for m in missing:
             print(f"missing: {m}", file=sys.stderr)
         sys.exit(1)
-    print("ok: gold v1 preflight")
+    print("ok: gold spec is spec-driven-development")
 
 
 if __name__ == "__main__":

@@ -30,6 +30,7 @@ Runs: `run_spec_checks.py` (SDD tree), `must_registry_coverage.py`, `tst_a_ancho
 - `python3 tools/run_gold_ref.py smb-balance` — TST-T; skip when `~/src/smb-balance` is absent
 - `python3 tools/run_neg_fixtures.py` — every `fixtures/neg/*` must fail its check
 - `python3 tools/run_pos_fixtures.py` — every `fixtures/pos/*` must pass per-file checks
+- `python3 tools/run_readability.py <doc.md> [--dry-run] [--out runs/<id>/readability.json]` — TST-V; needs `DEEPSEEK_API_KEY` unless `--dry-run`
 - CI: `.github/workflows/sdd-mechanical.yml`
 - `python3 tools/tag_must_registry_checks.py` — refresh `method`/`check` tags
 - `python3 tools/tst_a_scan_must_registry.py` — draft registry from design (use with care)

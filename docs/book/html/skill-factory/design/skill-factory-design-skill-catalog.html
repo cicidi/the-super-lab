@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>skill-factory — skill 目录、调用关系与共性问题 · design · Spec Atlas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@400;600&display=swap">
+<link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><a href="../../index.html"><span class="brand-mark">SDD</span><span class="brand-name">Spec Atlas</span></a></div>
+    <button class="strike-btn" type="button" onclick="var r=document.documentElement;var off=r.dataset.strike!=='off';r.dataset.strike=off?'off':'on';this.textContent=off?'显示删除线':'隐藏删除线'">隐藏删除线</button>
+  </div>
+</header>
+<div class="site">
+  <aside class="sidebar">
+  <nav aria-label="Directory">
+    <div class="tree-overview"><a class="tree-link" href="../../index.html"><span class="tree-link__num">00</span>All features</a></div>
+    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../prd/skill-factory-prd.html"><span class="tree-ord">1</span>skill-factory PRD</a></li><li class="tree-leaf"><a class="tree-link" href="../decision-history/skill-factory-decision-history.html"><span class="tree-ord">2</span>skill-factory — Decision History</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="skill-factory-design.html"><span class="tree-ord">3</span>skill-factory Specification</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="skill-factory-design-skill-catalog.html" aria-current="page">skill-factory — skill 目录、调用关系与共性问题</a></li><li class="tree-leaf"><a class="tree-link" href="skill-factory-design-verify-upgrade.html">skill-factory — 怎么验证 skill，怎么装进 AI 工具并升级</a></li><li class="tree-leaf"><a class="tree-link" href="skill-factory-design-why-and-anatomy.html">skill-factory — 为什么要做，一个 skill 怎么搭</a></li></ul></details></li><li class="tree-leaf"><a class="tree-link" href="../impl-plan/skill-factory-impl-plan.html"><span class="tree-ord">4</span>skill-factory Implementation Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../test-plan/skill-factory-test-plan.html"><span class="tree-ord">5</span>skill-factory Test Plan</a></li><li class="tree-branch"><details open><summary><span class="tree-link"><span class="tree-ord">10</span>sub-feature</span></summary><ul class="tree"><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/auto-tdd/design/auto-tdd-design.html">auto-tdd</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/auto-tdd/prd/auto-tdd-prd.html"><span class="tree-ord">1</span>auto-tdd — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/auto-tdd/decision-history/auto-tdd-decision-history.html"><span class="tree-ord">2</span>auto-tdd — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/auto-tdd/design/auto-tdd-design.html"><span class="tree-ord">3</span>auto-tdd — 测试驱动开发循环</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/bug/design/bug-design.html">bug</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/bug/prd/bug-prd.html"><span class="tree-ord">1</span>bug — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/bug/decision-history/bug-decision-history.html"><span class="tree-ord">2</span>bug — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/bug/design/bug-design.html"><span class="tree-ord">3</span>bug — 调试、报告与自愈</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/create-video-workflow/design/create-video-workflow-design.html">create-video-workflow</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/create-video-workflow/prd/create-video-workflow-prd.html"><span class="tree-ord">1</span>create-video-workflow — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/create-video-workflow/decision-history/create-video-workflow-decision-history.html"><span class="tree-ord">2</span>create-video-workflow — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/create-video-workflow/design/create-video-workflow-design.html"><span class="tree-ord">3</span>create-video-workflow — 研究文档变内容</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/doc-protect/design/doc-protect-design.html">doc-protect</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/doc-protect/prd/doc-protect-prd.html"><span class="tree-ord">1</span>doc-protect — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/doc-protect/decision-history/doc-protect-decision-history.html"><span class="tree-ord">2</span>doc-protect — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/doc-protect/design/doc-protect-design.html"><span class="tree-ord">3</span>doc-protect — 锁住文档段落</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/domain-modeling/design/domain-modeling-design.html">domain-modeling</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/domain-modeling/prd/domain-modeling-prd.html"><span class="tree-ord">1</span>domain-modeling — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/domain-modeling/decision-history/domain-modeling-decision-history.html"><span class="tree-ord">2</span>domain-modeling — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/domain-modeling/design/domain-modeling-design.html"><span class="tree-ord">3</span>domain-modeling — 领域模型与术语表</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/english-grammar-fix/design/english-grammar-fix-design.html">english-grammar-fix</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/english-grammar-fix/prd/english-grammar-fix-prd.html"><span class="tree-ord">1</span>english-grammar-fix — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/english-grammar-fix/decision-history/english-grammar-fix-decision-history.html"><span class="tree-ord">2</span>english-grammar-fix — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/english-grammar-fix/design/english-grammar-fix-design.html"><span class="tree-ord">3</span>english-grammar-fix — 英文语法修正</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/find-unknowns/design/find-unknowns-design.html">find-unknowns</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/find-unknowns/prd/find-unknowns-prd.html"><span class="tree-ord">1</span>research — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/find-unknowns/decision-history/find-unknowns-decision-history.html"><span class="tree-ord">2</span>research — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/find-unknowns/design/find-unknowns-design.html"><span class="tree-ord">3</span>research — 动手前找出未知</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/grill-with-docs/design/grill-with-docs-design.html">grill-with-docs</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/grill-with-docs/prd/grill-with-docs-prd.html"><span class="tree-ord">1</span>grill-with-docs — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/grill-with-docs/decision-history/grill-with-docs-decision-history.html"><span class="tree-ord">2</span>grill-with-docs — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/grill-with-docs/design/grill-with-docs-design.html"><span class="tree-ord">3</span>grill-with-docs — 带文档的拷问式访谈</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/implement/design/implement-design.html">implement</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/implement/prd/implement-prd.html"><span class="tree-ord">1</span>implement — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/implement/decision-history/implement-decision-history.html"><span class="tree-ord">2</span>implement — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/implement/design/implement-design.html"><span class="tree-ord">3</span>implement — 按 spec 和 ticket 实现</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/luma-event-scout/design/luma-event-scout-design.html">luma-event-scout</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/luma-event-scout/prd/luma-event-scout-prd.html"><span class="tree-ord">1</span>luma-event-scout — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/luma-event-scout/decision-history/luma-event-scout-decision-history.html"><span class="tree-ord">2</span>luma-event-scout — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/luma-event-scout/design/luma-event-scout-design.html"><span class="tree-ord">3</span>luma-event-scout — Luma 湾区活动筛选</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/multi-model-team/design/multi-model-team-design.html">multi-model-team</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/multi-model-team/prd/multi-model-team-prd.html"><span class="tree-ord">1</span>multi-model-team — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/multi-model-team/decision-history/multi-model-team-decision-history.html"><span class="tree-ord">2</span>multi-model-team — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/multi-model-team/design/multi-model-team-design.html"><span class="tree-ord">3</span>multi-model-team — 多模型团队编排</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/pic-to-txt/design/pic-to-txt-design.html">pic-to-txt</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/pic-to-txt/prd/pic-to-txt-prd.html"><span class="tree-ord">1</span>pic-to-txt — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/pic-to-txt/decision-history/pic-to-txt-decision-history.html"><span class="tree-ord">2</span>pic-to-txt — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/pic-to-txt/design/pic-to-txt-design.html"><span class="tree-ord">3</span>pic-to-txt — 截图转文字文档</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/prototype/design/prototype-design.html">prototype</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/prototype/prd/prototype-prd.html"><span class="tree-ord">1</span>prototype — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/prototype/decision-history/prototype-decision-history.html"><span class="tree-ord">2</span>prototype — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/prototype/design/prototype-design.html"><span class="tree-ord">3</span>prototype — 用完就扔的原型</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/skill/design/skill-design.html">skill</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/skill/prd/skill-prd.html"><span class="tree-ord">1</span>skill — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/skill/decision-history/skill-decision-history.html"><span class="tree-ord">2</span>skill — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/skill/design/skill-design.html"><span class="tree-ord">3</span>skill — Skill 管理入口</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/spec-ingest/design/spec-ingest-design.html">spec-ingest</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/spec-ingest/prd/spec-ingest-prd.html"><span class="tree-ord">1</span>spec-ingest — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/spec-ingest/decision-history/spec-ingest-decision-history.html"><span class="tree-ord">2</span>spec-ingest — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/spec-ingest/design/spec-ingest-design.html"><span class="tree-ord">3</span>spec-ingest — 把已有信息分拣进 spec</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/spec-ticket/design/spec-ticket-design.html">spec-ticket</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/spec-ticket/prd/spec-ticket-prd.html"><span class="tree-ord">1</span>spec-ticket — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/spec-ticket/decision-history/spec-ticket-decision-history.html"><span class="tree-ord">2</span>spec-ticket — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/spec-ticket/design/spec-ticket-design.html"><span class="tree-ord">3</span>spec-ticket — 把 impl-plan 的每一步发成工单</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/tmux-status-bar/design/tmux-status-bar-design.html">tmux-status-bar</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/tmux-status-bar/prd/tmux-status-bar-prd.html"><span class="tree-ord">1</span>tmux-status-bar — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/tmux-status-bar/decision-history/tmux-status-bar-decision-history.html"><span class="tree-ord">2</span>tmux-status-bar — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/tmux-status-bar/design/tmux-status-bar-design.html"><span class="tree-ord">3</span>tmux-status-bar — tmux 状态栏显示项目上下文</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/to-spec/design/to-spec-design.html">to-spec</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/to-spec/prd/to-spec-prd.html"><span class="tree-ord">1</span>to-spec — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/to-spec/decision-history/to-spec-decision-history.html"><span class="tree-ord">2</span>to-spec — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/to-spec/design/to-spec-design.html"><span class="tree-ord">3</span>to-spec — 把对话整理成 spec</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/to-tickets/design/to-tickets-design.html">to-tickets</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/to-tickets/prd/to-tickets-prd.html"><span class="tree-ord">1</span>to-tickets — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/to-tickets/decision-history/to-tickets-decision-history.html"><span class="tree-ord">2</span>to-tickets — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/to-tickets/design/to-tickets-design.html"><span class="tree-ord">3</span>to-tickets — 把 spec 拆成执行工单</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/transcribe-audio/design/transcribe-audio-design.html">transcribe-audio</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/transcribe-audio/prd/transcribe-audio-prd.html"><span class="tree-ord">1</span>transcribe-audio — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/transcribe-audio/decision-history/transcribe-audio-decision-history.html"><span class="tree-ord">2</span>transcribe-audio — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/transcribe-audio/design/transcribe-audio-design.html"><span class="tree-ord">3</span>transcribe-audio — 本地显卡音频转文字</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/video-production-pip-style/design/video-production-pip-style-design.html">video-production-pip-style</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/video-production-pip-style/prd/video-production-pip-style-prd.html"><span class="tree-ord">1</span>video-production-pip-style — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/video-production-pip-style/decision-history/video-production-pip-style-decision-history.html"><span class="tree-ord">2</span>video-production-pip-style — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/video-production-pip-style/design/video-production-pip-style-design.html"><span class="tree-ord">3</span>video-production-pip-style — 画中画引用式视频制作指南</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/wayfinder/design/wayfinder-design.html">wayfinder</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/wayfinder/prd/wayfinder-prd.html"><span class="tree-ord">1</span>wayfinder — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/wayfinder/decision-history/wayfinder-decision-history.html"><span class="tree-ord">2</span>wayfinder — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/wayfinder/design/wayfinder-design.html"><span class="tree-ord">3</span>wayfinder — 规划大任务的决策地图</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/youtube-research/design/youtube-research-design.html">youtube-research</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/youtube-research/prd/youtube-research-prd.html"><span class="tree-ord">1</span>youtube-research — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/youtube-research/decision-history/youtube-research-decision-history.html"><span class="tree-ord">2</span>youtube-research — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/youtube-research/design/youtube-research-design.html"><span class="tree-ord">3</span>youtube-research — 从题目到视频稿 HTML</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../features/youtube-summarize/design/youtube-summarize-design.html">youtube-summarize</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../features/youtube-summarize/prd/youtube-summarize-prd.html"><span class="tree-ord">1</span>youtube-summarize — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../features/youtube-summarize/decision-history/youtube-summarize-decision-history.html"><span class="tree-ord">2</span>youtube-summarize — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../features/youtube-summarize/design/youtube-summarize-design.html"><span class="tree-ord">3</span>youtube-summarize — YouTube 视频转写与总结</a></li></ul></details></li></ul></details></li></ul>
+  </nav>
+</aside>
+  <main class="content">
+    <nav class="breadcrumbs"><a href="../../index.html">Docs</a> / <span>skill-factory</span> / <span>design</span> / <span>skill-factory — skill 目录、调用关系与共性问题</span></nav>
+    <article class="doc" data-doc="skill-factory/design/skill-factory-design-skill-catalog">
+      <header class="doc-head">
+        <p class="eyebrow">skill-factory</p>
+        <h1>skill-factory — skill 目录、调用关系与共性问题</h1>
+        <p class="source">Canonical: docs/features/skill-factory/design/skill-factory-design-skill-catalog.md</p>
+      </header>
+      
+      <div class="doc-body">
+        <h2>skill-factory — skill 目录、调用关系与共性问题</h2>
+<p>本篇是 <a href="skill-factory-design.html">skill-factory 设计</a> 的一个分篇（part）。 13 个必备章节只在入口文件里，本篇只回答三个问题。 第一，工厂里一共有哪些 skill，各自从哪里来。 第二，这些 skill 之间谁调用谁，连成了哪几条流水线，哪些调用已经断了。 第三，给每个 skill 反推规格（reverse-spec，即从现有代码和聊天记录倒推出需求和设计）时，反复出现了哪些共性问题。 本篇是汇总，细节都在各 skill 自己的规格里，这里只链接，不重复。 skill 的组成见 <a href="skill-factory-design-why-and-anatomy.html">为什么要做，一个 skill 怎么搭</a>，验证和安装见 <a href="skill-factory-design-verify-upgrade.html">怎么验证 skill，怎么安装和升级</a>。</p>
+<h3>证据从哪里来</h3>
+<p>仓库事实以 HEAD <code>ca8efab</code>（2026-11-24）为准，引用 commit 短哈希。 <code>SKILL.md:行号</code> 形式的引用都指 HEAD <code>ca8efab</code> 的文件。 各 skill 的问题引用它自己 design 里 Open Questions 表的编号，例如&quot;auto-tdd 的 QUES-A&quot;。 QUES 是 open question（未决问题）的编号前缀。 <code>research</code> 的规格放在子 feature <code>find-unknowns</code> 下（find-unknowns 的 ARD-L）。 <code>raw/</code> 路径是有效证据，即使别人打不开（SPEC-STANDARD 的 ARD-BW）。 用户原话引用会话 id 前 8 位加日期，多数转引自各 skill 的 PRD。 找不到证据的地方写 UNKNOWN，不猜。 下文的&quot;建议&quot;都等用户决定，不是决策。</p>
+<h3>skill 目录</h3>
+<p><strong><a class="id-ref" href="#DSGN-AF">DSGN-AF</a> 目录。</strong> HEAD 一共有 26 份 SKILL.md：<code>skills/</code> 下 17 份，<code>personal-skills/</code> 下 9 份。 <code>skills/spec-html-standard/</code> 只放三份标准文件，没有 SKILL.md，所以不算一个 skill。 &quot;来源&quot;一列里，&quot;自写&quot;指需求出自用户自己的会话；&quot;导入&quot;指从别人的仓库拿来。 导入的 7 个都来自 Matt Pocock 的 mattpocock/skills，frontmatter 里都写了 <code>source_author: mattpocock</code> 和 <code>source_url</code>。 SDD 指 spec-driven-development（从规格驱动开发）这个 feature。 5 个 SDD skill 归那个 feature 管，本篇只列出，不分析，见 <a href="../../spec-driven-development/design/spec-driven-development-design.html">spec-driven-development 设计</a>。</p>
+<div class="table-wrap"><table><thead><tr>
+<th>skill</th>
+<th>目录</th>
+<th>来源</th>
+<th>一句话用途</th>
+<th>规格</th>
+</tr></thead><tbody>
+<tr>
+<td>auto-tdd</td>
+<td>skills/</td>
+<td>自写（ses_122b36d0，2026-06-19）；基本模式源自 mattpocock 的 tdd</td>
+<td>让 agent 按测试驱动开发写功能、修 bug</td>
+<td><a href="../features/auto-tdd/design/auto-tdd-design.html">design</a></td>
+</tr>
+<tr>
+<td>bug</td>
+<td>skills/</td>
+<td>自写；由四个旧 skill 合成（commit <code>6086424</code>）</td>
+<td>找 bug 根因、报 issue、记录纠正并生成预防规则</td>
+<td><a href="../features/bug/design/bug-design.html">design</a></td>
+</tr>
+<tr>
+<td>domain-modeling</td>
+<td>skills/</td>
+<td>导入（commit <code>f6255af</code>）</td>
+<td>收紧术语，写术语表 CONTEXT.md 和 ADR</td>
+<td><a href="../features/domain-modeling/design/domain-modeling-design.html">design</a></td>
+</tr>
+<tr>
+<td>english-grammar-fix</td>
+<td>skills/</td>
+<td>自写；前身是 ai-coworker 的 auto-patches</td>
+<td>修正 AI 写的英文里的小语法错误</td>
+<td><a href="../features/english-grammar-fix/design/english-grammar-fix-design.html">design</a></td>
+</tr>
+<tr>
+<td>grill-with-docs</td>
+<td>skills/</td>
+<td>导入（commit <code>6835420</code>）</td>
+<td>一问一答的拷问式访谈，同时写文档</td>
+<td><a href="../features/grill-with-docs/design/grill-with-docs-design.html">design</a></td>
+</tr>
+<tr>
+<td>implement</td>
+<td>skills/</td>
+<td>导入（commit <code>12c7dce</code>）</td>
+<td>按 spec 或 ticket 写代码，测试先行</td>
+<td><a href="../features/implement/design/implement-design.html">design</a></td>
+</tr>
+<tr>
+<td>multi-model-team</td>
+<td>skills/</td>
+<td>自写（ses_0a0d1e98，2026-07-13）</td>
+<td>架构师模型拆任务，工人模型实现</td>
+<td><a href="../features/multi-model-team/design/multi-model-team-design.html">design</a></td>
+</tr>
+<tr>
+<td>prototype</td>
+<td>skills/</td>
+<td>导入（commit <code>78242fa</code>）</td>
+<td>做一个用完就扔的原型来回答设计问题</td>
+<td><a href="../features/prototype/design/prototype-design.html">design</a></td>
+</tr>
+<tr>
+<td>research</td>
+<td>skills/</td>
+<td>自写；由 find-my-unknown 和 brainstorming 合成（commit <code>6086424</code>）</td>
+<td>动手前找出没想清楚的地方，或把想法写成设计</td>
+<td><a href="../features/find-unknowns/design/find-unknowns-design.html">design</a></td>
+</tr>
+<tr>
+<td>skill</td>
+<td>skills/</td>
+<td>自写（ses_14b5b4b7，2026-06-10）；由四个旧 skill 合成（commit <code>6086424</code>）</td>
+<td>在本仓库创建、修改、导入、列出 skill</td>
+<td><a href="../features/skill/design/skill-design.html">design</a></td>
+</tr>
+<tr>
+<td>to-spec</td>
+<td>skills/</td>
+<td>导入（commit <code>212aab5</code>）</td>
+<td>把对话整理成一份 spec 发到 issue tracker</td>
+<td><a href="../features/to-spec/design/to-spec-design.html">design</a></td>
+</tr>
+<tr>
+<td>to-tickets</td>
+<td>skills/</td>
+<td>导入（commit <code>8730941</code>）</td>
+<td>把计划拆成带阻塞关系的执行工单</td>
+<td><a href="../features/to-tickets/design/to-tickets-design.html">design</a></td>
+</tr>
+<tr>
+<td>wayfinder</td>
+<td>skills/</td>
+<td>导入并改造（commit <code>7c11a7b</code>）</td>
+<td>规划一个会话装不下的大任务，逐个定下决策</td>
+<td><a href="../features/wayfinder/design/wayfinder-design.html">design</a></td>
+</tr>
+<tr>
+<td>spec-write</td>
+<td>skills/</td>
+<td>自写</td>
+<td>写 spec</td>
+<td>SDD-owned</td>
+</tr>
+<tr>
+<td>spec-review</td>
+<td>skills/</td>
+<td>自写</td>
+<td>审 spec 或验收</td>
+<td>SDD-owned</td>
+</tr>
+<tr>
+<td>spec-organize</td>
+<td>skills/</td>
+<td>自写</td>
+<td>规格标准的参考文件，不是入口</td>
+<td>SDD-owned</td>
+</tr>
+<tr>
+<td>spec-pipeline</td>
+<td>skills/</td>
+<td>自写</td>
+<td>流水线阶段说明的参考文件，不是入口</td>
+<td>SDD-owned</td>
+</tr>
+<tr>
+<td>create-video-workflow</td>
+<td>personal-skills/</td>
+<td>自写；最早来自 hackathon-video-gen 项目</td>
+<td>把研究文档变成面向某类听众的演示或视频</td>
+<td><a href="../features/create-video-workflow/design/create-video-workflow-design.html">design</a></td>
+</tr>
+<tr>
+<td>doc-protect</td>
+<td>personal-skills/</td>
+<td>自写；最早是 walter-worker 的 doc-protection</td>
+<td>给文档段落加上或去掉&quot;AI 不得改动&quot;的标记</td>
+<td><a href="../features/doc-protect/design/doc-protect-design.html">design</a></td>
+</tr>
+<tr>
+<td>luma-event-scout</td>
+<td>personal-skills/</td>
+<td>自写（ses_0b3308c4，2026-07-10）</td>
+<td>在 Luma 上按用户标准找湾区 AI 活动</td>
+<td><a href="../features/luma-event-scout/design/luma-event-scout-design.html">design</a></td>
+</tr>
+<tr>
+<td>pic-to-txt</td>
+<td>personal-skills/</td>
+<td>自写（b1cdd2d6，2026-07-18）</td>
+<td>对一个文件夹的截图做文字识别，再用 LLM 修正</td>
+<td><a href="../features/pic-to-txt/design/pic-to-txt-design.html">design</a></td>
+</tr>
+<tr>
+<td>tmux-status-bar</td>
+<td>personal-skills/</td>
+<td>自写（commit <code>5cc3d4b</code>）</td>
+<td>改 tmux 底部状态栏显示的内容</td>
+<td><a href="../features/tmux-status-bar/design/tmux-status-bar-design.html">design</a></td>
+</tr>
+<tr>
+<td>transcribe-audio</td>
+<td>personal-skills/</td>
+<td>自写；借鉴本机 openclaw 项目的 openai-whisper skill</td>
+<td>用本机显卡上的 Whisper 把音频转成文字稿</td>
+<td><a href="../features/transcribe-audio/design/transcribe-audio-design.html">design</a></td>
+</tr>
+<tr>
+<td>video-production-pip-style</td>
+<td>personal-skills/</td>
+<td>自写，由 agent 一次写成（commit <code>9e4fb21</code>）</td>
+<td>一份画中画风格视频的手工制作指南</td>
+<td><a href="../features/video-production-pip-style/design/video-production-pip-style-design.html">design</a></td>
+</tr>
+<tr>
+<td>youtube-research-pipeline</td>
+<td>personal-skills/</td>
+<td>自写（commit <code>d7723a2</code>，2026-07-18）</td>
+<td>把一个话题做成带图表和文字稿的视频 HTML 页</td>
+<td><a href="../features/youtube-research/design/youtube-research-design.html">design</a></td>
+</tr>
+<tr>
+<td>youtube-summarize</td>
+<td>personal-skills/</td>
+<td>自写（commit <code>db0261d</code>）</td>
+<td>下载 YouTube 视频的文字稿并写总结</td>
+<td><a href="../features/youtube-summarize/design/youtube-summarize-design.html">design</a></td>
+</tr>
+</tbody></table></div>
+<p>2026-11-24 注：to-spec、to-tickets 已移除（<code>5370f61</code>），由 <a href="../features/spec-ingest/design/spec-ingest-design.html">spec-ingest</a>、<a href="../features/spec-ticket/design/spec-ticket-design.html">spec-ticket</a> 取代。</p>
+<p>2026-11-24 注：两份规格已提交，子 feature 名为 <code>find-unknowns</code> 和 <code>youtube-research</code>。 初稿时它们标为 parked，原因是名字和已有 feature 重名：<code>research</code> 撞 <code>docs/features/discovery-research</code>，<code>youtube-research-pipeline</code> 撞 SDD 的 <code>pipeline</code> 子 feature（<code>raw/state/state-loop.md</code>）。 用户已定名，见上一句的注。</p>
+<h3>调用关系</h3>
+<p><strong><a class="id-ref" href="#DSGN-AG">DSGN-AG</a> 怎么数一条调用。</strong> 本篇把&quot;一个 SKILL.md 让 agent 去用另一个 skill&quot;记作一条调用边。 写法有三种：<code>/名字</code> 这样的斜杠命令，正文里点名&quot;调用某 skill&quot;，以及&quot;配套 skill&quot;这类列表。 只在 When NOT to Use 里说&quot;改用某 skill&quot;的，算作转介，不算调用。 被调用的 skill 在本仓库和 <code>~/.claude/skills/</code> 下都找不到，就记为断边。 被调用的名字后来改了，SKILL.md 没跟着改，也记为断边。 以上边是逐个 grep 26 份 SKILL.md 得到的（HEAD <code>ca8efab</code>）。</p>
+<p><strong><a class="id-ref" href="#DSGN-AH">DSGN-AH</a> 规划侧的调用。</strong> wayfinder 是调用最多的 skill。 它把待定的问题写成一张张 brief（问题卡片），按类型分给别的 skill 解决（<code>skills/wayfinder/SKILL.md:123-126</code>）。 research 类 brief 交给 <code>/research</code> 子 agent 无人值守地解决。 grilling 类 brief 交给 <code>/grilling</code> 和 <code>/domain-modeling</code> 一起和用户对话。 prototype 类 brief 交给 prototype。 接口表里，访谈一栏的默认实现是 grill-with-docs 加 domain-modeling（<code>SKILL.md:135</code>）。 交付前审查时，代码文件交给 matt-code-review（<code>SKILL.md:308</code>）。 grill-with-docs 的正文只有一句：用 domain-modeling 跑一次 <code>/grilling</code>（<code>skills/grill-with-docs/SKILL.md:31</code>）。 这里有两条断边。 第一，<code>/grilling</code> 在本仓库和 <code>~/.claude/skills/</code> 下都不存在，wayfinder 和 grill-with-docs 都调用它（grill-with-docs 的 QUES-A，domain-modeling 的 QUES-C）。 第二，prototype 链接的 <a href="../../../../../skills/prototype/LOGIC.md"><code>LOGIC.md</code></a> 和 <a href="../../../../../skills/prototype/UI.md"><code>UI.md</code></a> 从没导入（<code>skills/prototype/SKILL.md:39-40</code>，prototype 的 QUES-A）。 matt-code-review 只在 <code>~/.claude/skills/</code> 下有一份部署副本，本仓库和 walter-worker 的 <code>skills/</code> 下都没有它的源，出处是 UNKNOWN。</p>
+<pre class="mermaid">flowchart LR
+  WF[wayfinder] --&gt; RS[research]
+  WF --&gt; GR[&quot;/grilling（不存在）&quot;]
+  WF --&gt; DM[domain-modeling]
+  WF --&gt; GD[grill-with-docs]
+  WF --&gt; PT[&quot;prototype（缺 LOGIC.md、UI.md）&quot;]
+  WF --&gt; MCR[&quot;matt-code-review（源不在本仓库）&quot;]
+  GD --&gt; GR
+  GD --&gt; DM</pre>
+<p><strong><a class="id-ref" href="#DSGN-AI">DSGN-AI</a> 交付侧的调用。</strong> wayfinder 写明的交付顺序是 to-spec、spec-review、to-tickets、auto-tdd 四步（<code>skills/wayfinder/SKILL.md:276</code>）。 spec-review 是一道关口，通过了 to-tickets 才能跑（<code>SKILL.md:254</code>）。 在 SDD 仓库里，spec 不发成 issue，而是由 spec-write 写进 <code>docs/features/</code>（<code>SKILL.md:270</code>）。 implement 不在这条链上，没有任何 skill 调用它。 用户在导入 implement 一分钟后说&quot;implement 我的替代是auto-tdd&quot;（d8d2da7f，2026-08-02，见 <a href="../features/implement/prd/implement-prd.html">implement 的 PRD</a>）。 implement 自己调用 <code>/tdd</code> 和 <code>/code-review</code>（<code>skills/implement/SKILL.md:30-34</code>）。 <code>/tdd</code> 已在 commit <code>6086424</code> 并入 auto-tdd，所以是断边（implement 的 QUES-B）。 <code>/code-review</code> 没说是哪一个（implement 的 QUES-C）。 implement 和 to-spec 都引用 <code>doc-organize/</code> 下的文件（<code>skills/implement/SKILL.md:40-41</code>，<code>skills/to-spec/SKILL.md:40-42</code>）。 doc-organize 在 commit <code>c44e983</code> 改名为 spec-organize，这些引用就断了（implement 的 QUES-A，to-spec 的 QUES-A）。</p>
+<pre class="mermaid">flowchart LR
+  WF[wayfinder] --&gt; TS[to-spec]
+  WF --&gt; SW[&quot;spec-write（SDD 仓库）&quot;]
+  TS --&gt; SR[spec-review]
+  SR --&gt; TT[to-tickets]
+  TT --&gt; AT[auto-tdd]
+  IM[&quot;implement（无人调用）&quot;] --&gt; TDD[&quot;/tdd（已并入 auto-tdd）&quot;]
+  IM --&gt; DO[&quot;doc-organize（已改名）&quot;]
+  TS --&gt; DO</pre>
+<p><strong><a class="id-ref" href="#DSGN-AJ">DSGN-AJ</a> 断边汇总。</strong> 下表列出 HEAD <code>ca8efab</code> 上所有找到的断边。 &quot;已有 QUES&quot;一列为空的，是本篇新发现、各 skill 规格里还没记的。</p>
+<div class="table-wrap"><table><thead><tr>
+<th>调用方</th>
+<th>断掉的引用</th>
+<th>原因</th>
+<th>已有 QUES</th>
+</tr></thead><tbody>
+<tr>
+<td>wayfinder、grill-with-docs</td>
+<td><code>/grilling</code></td>
+<td>上游另一个 skill，导入时没拿</td>
+<td>grill-with-docs 的 QUES-A；domain-modeling 的 QUES-C</td>
+</tr>
+<tr>
+<td>prototype</td>
+<td><a href="../../../../../skills/prototype/LOGIC.md"><code>LOGIC.md</code></a>、<a href="../../../../../skills/prototype/UI.md"><code>UI.md</code></a></td>
+<td>导入时只拿了 SKILL.md</td>
+<td>prototype 的 QUES-A</td>
+</tr>
+<tr>
+<td>implement</td>
+<td><code>/tdd</code></td>
+<td>并入 auto-tdd（<code>6086424</code>）</td>
+<td>implement 的 QUES-B</td>
+</tr>
+<tr>
+<td>implement、to-spec</td>
+<td><code>doc-organize/</code> 下的文件</td>
+<td>改名为 spec-organize（<code>c44e983</code>）</td>
+<td>implement 的 QUES-A；to-spec 的 QUES-A</td>
+</tr>
+<tr>
+<td>bug</td>
+<td><code>/doc-review design</code>（<code>skills/bug/SKILL.md:41</code>）</td>
+<td>doc-review 改名为 spec-review（<code>c44e983</code>）</td>
+<td>无，<a href="../features/bug/design/bug-design.html">bug 的 design</a> 原样转述了它</td>
+</tr>
+<tr>
+<td>bug</td>
+<td>&quot;run self-analyze&quot;（<code>skills/bug/SKILL.md:128</code>）</td>
+<td>self-analyze 已并入 bug 自己（<code>6086424</code>）</td>
+<td>无</td>
+</tr>
+<tr>
+<td>auto-tdd</td>
+<td>contrarian review</td>
+<td>先并入 doc-review（<code>6086424</code>），doc-review 又改名（<code>c44e983</code>）</td>
+<td>auto-tdd 的 QUES-G</td>
+</tr>
+<tr>
+<td>create-video-workflow、youtube-research-pipeline、video-production-pip-style</td>
+<td><code>doc-organize</code></td>
+<td>改名为 spec-organize（<code>c44e983</code>）</td>
+<td>无</td>
+</tr>
+<tr>
+<td>youtube-research-pipeline</td>
+<td><code>contrarian-review</code>（<code>SKILL.md:347</code>）</td>
+<td>并入 doc-review（<code>6086424</code>）</td>
+<td>无</td>
+</tr>
+<tr>
+<td>youtube-research-pipeline</td>
+<td><code>~/project/skill-factory/personal-skills/pic-to-txt/ocr.py</code>（<code>SKILL.md:107</code>）</td>
+<td>该目录已不存在</td>
+<td>pic-to-txt 的 QUES-F</td>
+</tr>
+<tr>
+<td>tmux-status-bar</td>
+<td>tmux-setup</td>
+<td>这个 skill 已不存在</td>
+<td>tmux-status-bar 的 QUES-E</td>
+</tr>
+</tbody></table></div>
+<p>wayfinder 里原来也有 5 处 doc-review，commit <code>688cace</code>（2026-11-24 09:29）已改成 spec-review。 to-spec、to-tickets、wayfinder 三份规格写在这次修改之前，所以它们说&quot;wayfinder 仍写 doc-review&quot;已经过时，见 <a class="id-ref" href="#DSGN-AW">DSGN-AW</a>。</p>
+<h3>流水线</h3>
+<p><strong><a class="id-ref" href="#DSGN-AK">DSGN-AK</a> wayfinder 交付流水线。</strong> 这是本仓库最完整的一条流水线，从模糊的想法一直走到代码。 第一段是规划：wayfinder 建地图，把 brief 分给 research、grilling、prototype 去解决（<a class="id-ref" href="#DSGN-AH">DSGN-AH</a>）。 第二段是写规格：普通仓库用 to-spec 发一个 issue，SDD 仓库用 spec-write 写进 <code>docs/features/</code>。 第三段是关口：spec-review 审过，才能拆工单。 第四段是交付：to-tickets 拆工单，auto-tdd 按工单写代码（<a class="id-ref" href="#DSGN-AI">DSGN-AI</a>）。 2026-11-24 注：to-spec、to-tickets 已移除，流水线现为 wayfinder、spec-ingest、spec-write、spec-review、spec-ticket、auto-tdd。 spec-ticket 为每个 feature 开一张母工单，再为每条 IMPL-* 开一张工单（<a href="../features/spec-ticket/design/spec-ticket-design.html">spec-ticket</a>）。 这条链现在有三处走不通。 grilling 类 brief 是默认类型（<code>skills/wayfinder/SKILL.md:125</code>），但它要的 <code>/grilling</code> 不存在。 research 类 brief 期待一个无人值守、产出带出处 markdown 的子 agent，但 research 的两条分支都先问用户问题（research 草稿的 QUES-A）。 prototype 类 brief 走 UI 或逻辑分支时，要读的两份说明文件不存在。 另外，用户要求所有代码都要审查，但 wayfinder 让 prototype brief 跳过审查关口（prototype 的 QUES-B）。</p>
+<p><strong><a class="id-ref" href="#DSGN-AL">DSGN-AL</a> 视频流水线。</strong> 视频相关的 6 个 skill 都在 <code>personal-skills/</code>，它们没有一个总入口来串联。 create-video-workflow 把研究文档变成演示、视频或网站，分 7 个阶段。 transcribe-audio 说自己服务于 create-video-workflow 的第 1 阶段（<code>personal-skills/transcribe-audio/SKILL.md:7</code>）。 但 create-video-workflow 并不调用它，而是把纯音频素材记为缺口（<code>personal-skills/create-video-workflow/SKILL.md:85</code>，create-video-workflow 的 QUES-D）。 hvg 仓库里的那份 create-video-workflow 加过这一步路由，本仓库的副本没有跟上（transcribe-audio 的 QUES-C）。 youtube-summarize 自带一套 Whisper 转写和 easyocr 截图识别（<code>personal-skills/youtube-summarize/SKILL.md:64-65</code>）。 这和 transcribe-audio、pic-to-txt 的功能重复，但它不调用这两个 skill（transcribe-audio 的 QUES-B，youtube-summarize 的 QUES-D）。 youtube-research-pipeline 的第 0 步调用 pic-to-txt 的 <code>ocr.py</code>，但路径指向已不存在的目录（<a class="id-ref" href="#DSGN-AJ">DSGN-AJ</a>）。 它的第 1 步派 3 个并行子 agent 查资料，这些是它自己的子 agent，不是 research skill。 video-production-pip-style 是一份手工指南，在&quot;配套资源&quot;一节列了 youtube-research-pipeline、pic-to-txt 和 doc-organize（<code>personal-skills/video-production-pip-style/SKILL.md:364-366</code>）。 把 youtube-summarize 和 youtube-research-pipeline 合成一个 <code>/youtube</code> 的提议，2026-08-02 被推迟（youtube-summarize 的 QUES-B）。</p>
+<pre class="mermaid">flowchart LR
+  TA[transcribe-audio] -. 自称服务第 1 阶段 .-&gt; CVW[create-video-workflow]
+  YS[youtube-summarize] -. 功能重复 .-&gt; TA
+  YRP[youtube-research-pipeline] --&gt; PTT[&quot;pic-to-txt（路径已失效）&quot;]
+  VPP[video-production-pip-style] --&gt; YRP
+  VPP --&gt; PTT
+  CVW --&gt; DO[&quot;doc-organize（已改名）&quot;]
+  YRP --&gt; DO
+  VPP --&gt; DO</pre>
+<p>图中虚线不是调用：第一条是 transcribe-audio 单方面声称，第二条是功能重复。</p>
+<p><strong><a class="id-ref" href="#DSGN-AM">DSGN-AM</a> 自愈和 bug 循环。</strong> 自愈（self-heal）指 AI 记下用户对它的纠正，同类纠正重复出现后，自动写成预防规则。 这件事集中在 bug skill 的三条分支里（<a href="../../../../../skills/bug/SKILL.md"><code>skills/bug/SKILL.md</code></a>）。 Hunt 分支找根因并修好，第 5 阶段问用户要不要跑 Heal 分支（<code>SKILL.md:94</code>）。 Report 分支把 walter-worker 自身的问题写成 GitHub issue，然后也接 Heal 分支（<code>SKILL.md:108</code>）。 Heal 分支把纠正写进 <code>.self-healing/traces/</code>，同类纠正出现 2 次以上，就把规则注入项目 CLAUDE.md 的 SELF-ANALYZE 块（<code>SKILL.md:116-139</code>）。 research 在 When NOT to Use 里说，已经在实现阶段就改用 <code>/bug hunt</code>（<code>skills/research/SKILL.md:43</code>）。 auto-tdd 的完成标准要求修代码时，连同放过这个 bug 的 spec 和 skill 一起修（<code>skills/auto-tdd/SKILL.md:123</code>）。 这个循环现在不会自己转起来。 <code>~/.claude/hooks/on-self-heal.sh</code> 文件存在，但没有在 <code>~/.claude/settings.json</code> 里注册（本篇 2026-11-24 核对，bug 的 QUES-D）。 Report 分支写死了目标仓库 <code>cicidi/walter-worker</code>（<code>SKILL.md:107</code>，bug 的 QUES-C）。 全局 CLAUDE.md 里还有一个 walter-worker-fix skill 处理同一类问题，两者没有分工（bug 的 QUES-F）。</p>
+<h3>共性问题</h3>
+<p>下面每一条问题都在至少两个 skill 里出现过，并附上 commit 证据和受影响的 QUES。</p>
+<p><strong><a class="id-ref" href="#DSGN-AN">DSGN-AN</a> 2026-08-02 的合并删掉了用户要过的功能。</strong> commit <code>6086424</code> 把 38 个 ai-coworker skill 合成 11 个。 bug 的合并输入是本仓库的旧副本，不是 walter-worker 里的新版（bug 的 decision-history）。 结果是用户要过的改动和测试场景被删了。 auto-tdd：每做一点就提交、每 30 分钟自查一次都被删（auto-tdd 的 QUES-A、QUES-B），7bfe010 版的 5 个测试场景也删了。 bug：先收集证据再推理、深挖模式、先选仓库、先检查 hook 都被删（bug 的 QUES-A 到 QUES-D）。用户 06-23 要的新版只在 walter-worker 历史里（f8b7ffb、6511f37、5138ea3）。 skill：合并前 skill-import 的描述写着&quot;preserving original authorship&quot;（<code>git show 6086424^:ai-coworker-skills/skill-import/SKILL.md</code> 第 7 行），合并后没有了（skill 的 QUES-C）。 research：实现后的小测验和实现中的再访谈被删（research 草稿的 QUES-B、QUES-C），用户后来用过&quot;/research 你来考考我&quot;（d8d2da7f）。 是有意删减还是合并时漏掉，各 skill 的 decision-history 都写 UNKNOWN。</p>
+<p><strong><a class="id-ref" href="#DSGN-AO">DSGN-AO</a> 从 mattpocock/skills 导入时只拿了 SKILL.md。</strong> 2026-08-02 一天导入了 7 个 skill，多数 commit 只加了一个 SKILL.md。 grill-with-docs（<code>6835420</code>）只有 31 行，它要调用的 <code>/grilling</code> 是上游另一个 skill，没有一起导入（grill-with-docs 的 QUES-A）。 prototype（<code>78242fa</code>）只加了 SKILL.md，上游的 <a href="../../../../../skills/prototype/LOGIC.md"><code>LOGIC.md</code></a>、<a href="../../../../../skills/prototype/UI.md"><code>UI.md</code></a> 和 <code>agents/</code> 都没拿（prototype 的 QUES-A）。2026-11-05 用户实际使用时碰到了这个问题（会话 1afe4b90，见 prototype 的 design）。 domain-modeling（<code>f6255af</code>）是反例，它一起导入了 <a href="../../../../../skills/domain-modeling/ADR-FORMAT.md"><code>ADR-FORMAT.md</code></a> 和 <a href="../../../../../skills/domain-modeling/CONTEXT-FORMAT.md"><code>CONTEXT-FORMAT.md</code></a>。 导入后也没跟进上游更新：grill-with-docs 缺上游后来加的 <code>disable-model-invocation: true</code>（grill-with-docs 的 QUES-B），domain-modeling 缺 META.yaml（domain-modeling 的 QUES-D）。 <code>/skill import</code> 的步骤里没有&quot;检查依赖的文件和 skill 是否一并导入&quot;这一步（<a href="../../../../../skills/skill/SKILL.md"><code>skills/skill/SKILL.md</code></a>，skill 的 QUES-B）。</p>
+<p><strong><a class="id-ref" href="#DSGN-AP">DSGN-AP</a> commit <code>c44e983</code> 改名后留下死引用。</strong> <code>c44e983</code>（2026-11-04）把 doc-organize 改名为 spec-organize，把 doc-review 改名为 spec-review。 这次 commit 没有改任何非 SDD 的 skill。 改名前，有 7 个非 SDD 的 SKILL.md 引用旧名字（<code>git grep</code> 于 <code>c44e983^</code>）：bug、implement、to-spec、wayfinder、create-video-workflow、youtube-research-pipeline、video-production-pip-style。 只有 wayfinder 在 <code>688cace</code> 修好了，其余 6 个至今仍是断边（<a class="id-ref" href="#DSGN-AJ">DSGN-AJ</a>）。 受影响的 QUES：implement 的 QUES-A，to-spec 的 QUES-A。另外 4 个 skill 的规格还没记这件事。 <code>/skill</code> 和 walter-worker 的 <code>install.sh</code> 都不检查断掉的 skill 引用（skill 的 QUES-A；verify-upgrade 篇的 <a class="id-ref" href="skill-factory-design-verify-upgrade.html#DSGN-W">DSGN-W</a>）。</p>
+<p><strong><a class="id-ref" href="#DSGN-AQ">DSGN-AQ</a> 外部环境搬家后，路径失效。</strong> skill 写死了别的仓库或旧目录里的路径，那边一搬家，skill 就跑不起来。 create-video-workflow 调用 <code>tools/</code> 下的脚本，但 hvg 仓库在 v3 之前已改名为 <code>scripts/</code>（hvg commit b805482）；项目目录也已搬到 video-gen-initiative 仓库（create-video-workflow 的 QUES-A、QUES-B）。 youtube-research-pipeline 调用 <code>~/project/skill-factory/</code> 下的 <code>ocr.py</code>，这个目录已不存在（pic-to-txt 的 QUES-F）。 multi-model-team 要求 opencode 里配好 architect 和 worker 两个 agent，本机 <code>~/.config/opencode/opencode.json</code> 没有（multi-model-team 的 design，Risks 表）；配置示例的模型名也和用户实际用的不同（multi-model-team 的 QUES-C）。 其中 create-video-workflow 和 multi-model-team 找不到成功运行的记录（create-video-workflow 的 design；multi-model-team 的 QUES-G）。</p>
+<p><strong><a class="id-ref" href="#DSGN-AR">DSGN-AR</a> 用户改了要求，SKILL.md 没跟上。</strong> tmux-status-bar：用户 07-13 要求 feature 从 CLAUDE.local.md 读，08-01 要求只显示文件夹路径，SKILL.md 仍是 07-01 的五字段版（tmux-status-bar 的 QUES-B、QUES-C）。 wayfinder：用户说&quot;3 yes&quot;，同意把定终点做成第一张 brief，SKILL.md 仍把它写成一个步骤（wayfinder 的 QUES-A）。 implement：用户说用 auto-tdd 替代它，它仍原样留在 <code>skills/</code>（implement 的 QUES-D，to-tickets 的 QUES-C）。 to-tickets：用户要 to-tickets 建 spec 的 ticket，wayfinder 却交给 to-spec（to-tickets 的 QUES-A，wayfinder 的 QUES-E）。 luma-event-scout：偏好一节写搜一个月，过滤代码写 10 天（luma-event-scout 的 QUES-A）。</p>
+<p><strong><a class="id-ref" href="#DSGN-AS">DSGN-AS</a> 功能重叠，没有分工。</strong> 几对 skill 做同一件事，但谁负责什么没写清楚。 transcribe-audio 和 youtube-summarize 各有一套 Whisper 转写（transcribe-audio 的 QUES-B，youtube-summarize 的 QUES-D）。 to-spec 和 spec-write 都写 spec，SDD 只承认 spec-write 是入口（to-spec 的 QUES-C）。 implement 和 auto-tdd 都按工单写代码（implement 的 QUES-D）。 english-grammar-fix 和 commit 都规定 commit message 的格式（english-grammar-fix 的 QUES-C）。 bug 的 Report 分支和 walter-worker-fix 都处理 walter-worker 自身的问题（bug 的 QUES-F）。 research 的触发词 prototype 和 prototype skill 重名（research 草稿的 QUES-H）。</p>
+<p><strong><a class="id-ref" href="#DSGN-AT">DSGN-AT</a> agent 写得比用户要的多，或者改文件前不问。</strong> 有些内容是 agent 自行加的，用户没有逐条确认。 multi-model-team 的触发语和多级失败处理都比用户在访谈里选的宽（multi-model-team 的 QUES-A、QUES-B、QUES-F）。 video-production-pip-style 由 agent 一次写成，会话里没有后续确认（<a href="../features/video-production-pip-style/prd/video-production-pip-style-prd.html">它的 PRD</a>）。 research 的停止条件&quot;连续两次你看着办&quot;是 agent 写的（research 草稿的 QUES-E）。 有两个 skill 直接改用户的文件，事先不问。 tmux-status-bar 直接替换 <code>~/.tmux.conf</code>，不备份也不确认（tmux-status-bar 的 QUES-D）。 doc-protect 每次加、减保护后都自动提交（doc-protect 的 QUES-A）。</p>
+<p><strong><a class="id-ref" href="#DSGN-AU">DSGN-AU</a> 原作者出处丢了。</strong> 用户最初要求导入的 skill &quot;复合版权，著名出处&quot;（ses_14b5b4b7，2026-06-10，见 why-and-anatomy 篇的 <a class="id-ref" href="skill-factory-design-why-and-anatomy.html#DSGN-A">DSGN-A</a>）。 auto-tdd 的基本模式来自 mattpocock/skills，commit d98ed8d（2026-06-11）删掉了 <code>source</code> 字段（auto-tdd 的 QUES-F）。 research 只在正文提到原文作者，<code>source</code> 和 <code>source_url</code> 字段没有了（research 草稿的 QUES-D）。 <code>/skill import</code> 的步骤里不记录原作者（skill 的 QUES-C，见 <a class="id-ref" href="#DSGN-AN">DSGN-AN</a>）。 2026-08-02 导入的 7 个 skill 倒是都带了 <code>source_author</code> 和 <code>source_url</code>。</p>
+<p><strong><a class="id-ref" href="#DSGN-AV">DSGN-AV</a> 仓库里的说明和实际不一致。</strong> <code>.scratch/</code> 没有被 gitignore，但 commit <code>e1465f1</code> 说它被忽略了（<code>git check-ignore</code> 于 2026-11-24 核对，to-tickets 的 QUES-D）。 本地工单因此可能被误提交。 grill-with-docs 和 domain-modeling 的导入日期，<a href="../../../imported-skills.md"><code>docs/book/imported-skills.md</code></a> 写 2026-07-25，git 是 2026-08-02（grill-with-docs 的 QUES-C）。 domain-modeling 把 ADR 写到 <code>docs/adr/</code>，本仓库的标准要求写进 decision-history（domain-modeling 的 QUES-A）。</p>
+<p><strong><a class="id-ref" href="#DSGN-AW">DSGN-AW</a> 有三份规格写完当天就部分过时。</strong> to-spec（<code>1c6b5b3</code>，05:52）、to-tickets（<code>598e86a</code>，06:24）、wayfinder（<code>3ed20a5</code>，06:53）的规格写于 2026-11-24 上午。 同日 09:29 的 <code>688cace</code> 把 wayfinder 里的 doc-review 全部改成了 spec-review。 所以 to-spec 的 QUES-F、to-tickets 的 QUES-F、wayfinder 的 QUES-D 里&quot;wayfinder 仍写 doc-review&quot;这半句已不成立。 wayfinder 的 QUES-D 里关于 <code>/grilling</code> 的另半句仍成立。 这说明逐个反推规格时，被引用的 SKILL.md 可能在同一天又被改动。</p>
+<h3>建议的修复</h3>
+<p>下表是建议，等用户决定，不是决策。 &quot;严重度&quot;指不修会怎样：高是 skill 会损坏用户的东西或核心流水线走不通，中是某个 skill 跑不通，低是规格和现实不符但不影响运行。 &quot;工作量&quot;小指一处到几处文字改动，中指要补文件或改流程，大指要重新设计。 顺序一列只是位置，不是永久编号。</p>
+<div class="table-wrap"><table><thead><tr>
+<th>顺序</th>
+<th>建议</th>
+<th>严重度</th>
+<th>工作量</th>
+<th>涉及的 skill</th>
+<th>依据</th>
+</tr></thead><tbody>
+<tr>
+<td>1</td>
+<td>tmux-status-bar 的 QUES-C 定下来之前先别运行它；改的时候加上备份和确认</td>
+<td>高</td>
+<td>小</td>
+<td>tmux-status-bar</td>
+<td>它的 QUES-C（blocking）、QUES-D</td>
+</tr>
+<tr>
+<td>2</td>
+<td>导入上游的 grilling skill，或者把 <code>/grilling</code> 改指 grill-with-docs</td>
+<td>高</td>
+<td>小</td>
+<td>grill-with-docs、wayfinder、domain-modeling</td>
+<td>grill-with-docs 的 QUES-A；<a class="id-ref" href="#DSGN-AK">DSGN-AK</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td>给 research 加一条无人值守、产出带出处 markdown 的分支，让 wayfinder 能用</td>
+<td>高</td>
+<td>中</td>
+<td>research、wayfinder</td>
+<td>research 草稿的 QUES-A</td>
+</tr>
+<tr>
+<td>4</td>
+<td>补导 prototype 的 <a href="../../../../../skills/prototype/LOGIC.md"><code>LOGIC.md</code></a>、<a href="../../../../../skills/prototype/UI.md"><code>UI.md</code></a> 和 <code>agents/</code></td>
+<td>中</td>
+<td>小</td>
+<td>prototype</td>
+<td>它的 QUES-A</td>
+</tr>
+<tr>
+<td>5</td>
+<td>把 7 个 skill 里的 doc-organize、doc-review、contrarian-review、self-analyze 改成现在的名字</td>
+<td>中</td>
+<td>小</td>
+<td>bug、implement、to-spec、auto-tdd、create-video-workflow、youtube-research-pipeline、video-production-pip-style</td>
+<td><a class="id-ref" href="#DSGN-AJ">DSGN-AJ</a>、<a class="id-ref" href="#DSGN-AP">DSGN-AP</a></td>
+</tr>
+<tr>
+<td>6</td>
+<td>改 youtube-research-pipeline 里 <code>ocr.py</code> 的路径</td>
+<td>中</td>
+<td>小</td>
+<td>youtube-research-pipeline</td>
+<td>pic-to-txt 的 QUES-F</td>
+</tr>
+<tr>
+<td>7</td>
+<td>已完成（2026-11-24，<code>85604c5</code>）：在 <code>.gitignore</code> 加一行 <code>.scratch/</code></td>
+<td>中</td>
+<td>小</td>
+<td>to-tickets、wayfinder</td>
+<td>to-tickets 的 QUES-D</td>
+</tr>
+<tr>
+<td>8</td>
+<td>决定 implement 的去留：删除、转调 auto-tdd，或者改成可替换的接口</td>
+<td>中</td>
+<td>小</td>
+<td>implement、auto-tdd</td>
+<td>implement 的 QUES-B、QUES-D</td>
+</tr>
+<tr>
+<td>9</td>
+<td>改 create-video-workflow 的脚本路径和项目目录，并加上调用 transcribe-audio 的路由</td>
+<td>中</td>
+<td>中</td>
+<td>create-video-workflow、transcribe-audio</td>
+<td>create-video-workflow 的 QUES-A、QUES-B、QUES-D</td>
+</tr>
+<tr>
+<td>10</td>
+<td>注册 self-heal hook，并让 Report 分支先问目标仓库</td>
+<td>中</td>
+<td>中</td>
+<td>bug</td>
+<td>bug 的 QUES-C、QUES-D</td>
+</tr>
+<tr>
+<td>11</td>
+<td>已完成（2026-11-24）：定名 find-unknowns 和 youtube-research，规格已提交</td>
+<td>中</td>
+<td>小</td>
+<td>research、youtube-research-pipeline</td>
+<td><code>raw/state/state-loop.md</code> 的 Questions 一节</td>
+</tr>
+<tr>
+<td>12</td>
+<td>写一个检查脚本，找出 SKILL.md 里指向不存在的 skill 或文件的引用</td>
+<td>中</td>
+<td>中</td>
+<td>全部</td>
+<td>skill 的 QUES-A；<a class="id-ref" href="#DSGN-AP">DSGN-AP</a></td>
+</tr>
+<tr>
+<td>13</td>
+<td>逐条决定是否恢复 08-02 合并删掉的功能</td>
+<td>低</td>
+<td>大</td>
+<td>auto-tdd、bug、skill、research</td>
+<td id="DSGN-AN"><a class="id-ref" href="#DSGN-AN">DSGN-AN</a></td>
+</tr>
+<tr>
+<td>14</td>
+<td>给功能重叠的几对 skill 写明分工，或合并</td>
+<td>低</td>
+<td>中</td>
+<td>见 <a class="id-ref" href="#DSGN-AS">DSGN-AS</a></td>
+<td id="DSGN-AS"><a class="id-ref" href="#DSGN-AS">DSGN-AS</a></td>
+</tr>
+<tr>
+<td>15</td>
+<td>恢复出处字段，并在 <code>/skill import</code> 里加上记录出处和检查依赖两步</td>
+<td>低</td>
+<td>小</td>
+<td>skill、auto-tdd、research</td>
+<td><a class="id-ref" href="#DSGN-AO">DSGN-AO</a>、<a class="id-ref" href="#DSGN-AU">DSGN-AU</a></td>
+</tr>
+<tr>
+<td>16</td>
+<td>已完成（2026-11-24）：更新 to-spec、to-tickets、wayfinder 三份规格里关于 doc-review 的过时说法</td>
+<td>低</td>
+<td>小</td>
+<td>to-spec、to-tickets、wayfinder</td>
+<td id="DSGN-AW"><a class="id-ref" href="#DSGN-AW">DSGN-AW</a></td>
+</tr>
+</tbody></table></div>
+<h3>未知项</h3>
+<ul>
+<li>matt-code-review 和 commit 两个 skill 的源在哪个仓库：只在 <code>~/.claude/skills/</code> 下找到部署副本，UNKNOWN。</li>
+<li>08-02 合并删掉那些功能是有意还是遗漏：各 skill 的 decision-history 都写 UNKNOWN。</li>
+<li>youtube-research-pipeline 是否被实际用过、效果如何：没有它的规格，本篇也没有查会话记录，UNKNOWN。</li>
+<li>create-video-workflow v3 是否完整跑通过：UNKNOWN（create-video-workflow 的 design）。</li>
+<li>hvg 仓库的 commit b805482 本篇没有在 hvg 仓库里重新核对，转引自 create-video-workflow 的 design。</li>
+</ul>
+<h3>Change Log</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Date</th>
+<th>Change</th>
+</tr></thead><tbody>
+<tr>
+<td>2026-11-24</td>
+<td>初版：skill 目录、调用关系与断边、三条流水线、共性问题和建议修复</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>目录表后和 <a class="id-ref" href="#DSGN-AK">DSGN-AK</a> 加注：to-spec、to-tickets 已移除并被取代；建议表第 7、16 条标为已完成</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>research、youtube-research-pipeline 的规格已提交，去掉 parked；建议表第 11 条标为已完成</td>
+</tr>
+</tbody></table></div>
+      </div>
+    </article>
+    <nav class="pager" aria-label="Previous and next"><a class="prev" href="skill-factory-design.html"><span class="label">Previous</span>skill-factory Specification</a><a class="next" href="skill-factory-design-verify-upgrade.html"><span class="label">Next</span>skill-factory — 怎么验证 skill，怎么装进 AI 工具并升级</a></nav>
+  </main>
+</div>
+<footer class="foot"><div class="foot-inner">Assembled from committed <code>.md</code>. The Markdown is authoritative; this page is a reading view.</div></footer>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>if(window.mermaid){mermaid.initialize({startOnLoad:false});}</script>
+<script src="../../assets/app.js"></script>
+</body>
+</html>

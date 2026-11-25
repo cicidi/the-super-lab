@@ -11,11 +11,11 @@ gold:
       version: v1
       path: gold/v1
 target:
-  repo: ../the-super-lab-eval # SDD_EVAL_REPO overrides
-  feature: iphone-purchase
+  repo: . # this repo; SDD_EVAL_REPO overrides
+  feature: iphone
 grill:
   skills: [] # baseline: no extra skill
 checkers:
   models: [deepseek-flash]
-  repeats: 3
+  repeats: 5 # ARD-CJ: 4 of 5 must agree
 single_provider: true

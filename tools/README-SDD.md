@@ -10,6 +10,9 @@ Mechanical gate: `./tools/run_sdd_mechanical.sh` (alias for `skills/spec-organiz
 | `run_gold_ref.py` | TST-T external gold; skips when the source checkout is absent |
 | `tst_g_real_tree.py` | TST-G finding counts vs `tst_g_baselines.txt` |
 | `run_neg_fixtures.py` / `run_pos_fixtures.py` | TST-B fixture gates |
+| `run_readability.py` | TST-V readability (IMPL-Q); `--dry-run` uses a fake model |
+| `check_l1_delta.py` | TST-X L1 content must not shrink between versions (IMPL-T) |
+| `test_gold_annotations.py` | Gold `annotations.yaml` schema (TST-D) |
 | `check_neg_fixture_catalog.py` | `neg/*` dirs ↔ runner `CASES` |
 | `check_pos_fixture_catalog.py` | `pos/*` ↔ `fixtures/README.md` |
 | `check_review_case_catalog.py` | spec-review `cases/*` ↔ `cases/README.md` |
@@ -19,8 +22,10 @@ Mechanical gate: `./tools/run_sdd_mechanical.sh` (alias for `skills/spec-organiz
 | `tst_a_scan_must_registry.py` | Draft registry from design (destructive with `--write`) |
 | `tag_must_registry_checks.py` | Heuristic `method`/`check` tags |
 | `build_sdd_reader.py` | Regenerate `docs/book/html/<parent>/<parent>-reader.html` (`--check-sources`) |
+| `build_spec_skills.py` | Stamp SDD `SKILL.md` from parent PRD `version` (`--check` for CI) |
 | `verify_sdd_skills_map.py` | `SDD-DELIVERABLES.md` links exist |
 | `validate_sdd_reader.py` | Reader smoke test |
+| `check_site_reachable.py` | Every site page reachable from `docs/book/html/index.html` (ARD-BG) |
 | `eval_preflight.py` | Gold v1 asset check before TST-C |
 | `check_gold_run_scaffold.py` | Gold runs template + TST-C runbook present |
 | `check_eval_config.py` | `eval.yaml` keys for TST-J matrix |

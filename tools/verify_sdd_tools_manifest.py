@@ -19,13 +19,18 @@ EXTRA = (
 )
 
 
+def sdd_tool_names() -> set[str]:
+    """tools/*.py names listed in README-SDD.md (the SDD tool set)."""
+    names = set(re.findall(r"`([a-z0-9_]+\.py)`", README.read_text(encoding="utf-8")))
+    names.discard("run_case_checks.py")  # lives under skills/
+    return names
+
+
 def main() -> None:
     if not README.is_file():
         print(f"missing: {README}", file=sys.stderr)
         sys.exit(1)
-    text = README.read_text(encoding="utf-8")
-    names = set(re.findall(r"`([a-z0-9_]+\.py)`", text))
-    names.discard("run_case_checks.py")  # lives under skills/
+    names = sdd_tool_names()
     missing = [n for n in sorted(names) if not (TOOLS / n).is_file()]
     if missing:
         for n in missing:

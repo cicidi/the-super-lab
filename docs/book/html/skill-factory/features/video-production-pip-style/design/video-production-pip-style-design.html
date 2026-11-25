@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>video-production-pip-style — 画中画引用式视频制作指南 · design · Spec Atlas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@400;600&display=swap">
+<link rel="stylesheet" href="../../../../assets/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><a href="../../../../index.html"><span class="brand-mark">SDD</span><span class="brand-name">Spec Atlas</span></a></div>
+    <button class="strike-btn" type="button" onclick="var r=document.documentElement;var off=r.dataset.strike!=='off';r.dataset.strike=off?'off':'on';this.textContent=off?'显示删除线':'隐藏删除线'">隐藏删除线</button>
+  </div>
+</header>
+<div class="site">
+  <aside class="sidebar">
+  <nav aria-label="Directory">
+    <div class="tree-overview"><a class="tree-link" href="../../../../index.html"><span class="tree-link__num">00</span>All features</a></div>
+    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../../prd/skill-factory-prd.html"><span class="tree-ord">1</span>skill-factory PRD</a></li><li class="tree-leaf"><a class="tree-link" href="../../../decision-history/skill-factory-decision-history.html"><span class="tree-ord">2</span>skill-factory — Decision History</a></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../../design/skill-factory-design.html"><span class="tree-ord">3</span>skill-factory Specification</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../../design/skill-factory-design-skill-catalog.html">skill-factory — skill 目录、调用关系与共性问题</a></li><li class="tree-leaf"><a class="tree-link" href="../../../design/skill-factory-design-verify-upgrade.html">skill-factory — 怎么验证 skill，怎么装进 AI 工具并升级</a></li><li class="tree-leaf"><a class="tree-link" href="../../../design/skill-factory-design-why-and-anatomy.html">skill-factory — 为什么要做，一个 skill 怎么搭</a></li></ul></details></li><li class="tree-leaf"><a class="tree-link" href="../../../impl-plan/skill-factory-impl-plan.html"><span class="tree-ord">4</span>skill-factory Implementation Plan</a></li><li class="tree-leaf"><a class="tree-link" href="../../../test-plan/skill-factory-test-plan.html"><span class="tree-ord">5</span>skill-factory Test Plan</a></li><li class="tree-branch"><details open><summary><span class="tree-link"><span class="tree-ord">10</span>sub-feature</span></summary><ul class="tree"><li class="tree-branch"><details open><summary><a class="tree-link" href="../../auto-tdd/design/auto-tdd-design.html">auto-tdd</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../auto-tdd/prd/auto-tdd-prd.html"><span class="tree-ord">1</span>auto-tdd — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../auto-tdd/decision-history/auto-tdd-decision-history.html"><span class="tree-ord">2</span>auto-tdd — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../auto-tdd/design/auto-tdd-design.html"><span class="tree-ord">3</span>auto-tdd — 测试驱动开发循环</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../bug/design/bug-design.html">bug</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../bug/prd/bug-prd.html"><span class="tree-ord">1</span>bug — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../bug/decision-history/bug-decision-history.html"><span class="tree-ord">2</span>bug — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../bug/design/bug-design.html"><span class="tree-ord">3</span>bug — 调试、报告与自愈</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../create-video-workflow/design/create-video-workflow-design.html">create-video-workflow</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../create-video-workflow/prd/create-video-workflow-prd.html"><span class="tree-ord">1</span>create-video-workflow — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../create-video-workflow/decision-history/create-video-workflow-decision-history.html"><span class="tree-ord">2</span>create-video-workflow — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../create-video-workflow/design/create-video-workflow-design.html"><span class="tree-ord">3</span>create-video-workflow — 研究文档变内容</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../doc-protect/design/doc-protect-design.html">doc-protect</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../doc-protect/prd/doc-protect-prd.html"><span class="tree-ord">1</span>doc-protect — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../doc-protect/decision-history/doc-protect-decision-history.html"><span class="tree-ord">2</span>doc-protect — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../doc-protect/design/doc-protect-design.html"><span class="tree-ord">3</span>doc-protect — 锁住文档段落</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../domain-modeling/design/domain-modeling-design.html">domain-modeling</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../domain-modeling/prd/domain-modeling-prd.html"><span class="tree-ord">1</span>domain-modeling — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../domain-modeling/decision-history/domain-modeling-decision-history.html"><span class="tree-ord">2</span>domain-modeling — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../domain-modeling/design/domain-modeling-design.html"><span class="tree-ord">3</span>domain-modeling — 领域模型与术语表</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../english-grammar-fix/design/english-grammar-fix-design.html">english-grammar-fix</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../english-grammar-fix/prd/english-grammar-fix-prd.html"><span class="tree-ord">1</span>english-grammar-fix — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../english-grammar-fix/decision-history/english-grammar-fix-decision-history.html"><span class="tree-ord">2</span>english-grammar-fix — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../english-grammar-fix/design/english-grammar-fix-design.html"><span class="tree-ord">3</span>english-grammar-fix — 英文语法修正</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../find-unknowns/design/find-unknowns-design.html">find-unknowns</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../find-unknowns/prd/find-unknowns-prd.html"><span class="tree-ord">1</span>research — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../find-unknowns/decision-history/find-unknowns-decision-history.html"><span class="tree-ord">2</span>research — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../find-unknowns/design/find-unknowns-design.html"><span class="tree-ord">3</span>research — 动手前找出未知</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../grill-with-docs/design/grill-with-docs-design.html">grill-with-docs</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../grill-with-docs/prd/grill-with-docs-prd.html"><span class="tree-ord">1</span>grill-with-docs — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../grill-with-docs/decision-history/grill-with-docs-decision-history.html"><span class="tree-ord">2</span>grill-with-docs — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../grill-with-docs/design/grill-with-docs-design.html"><span class="tree-ord">3</span>grill-with-docs — 带文档的拷问式访谈</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../implement/design/implement-design.html">implement</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../implement/prd/implement-prd.html"><span class="tree-ord">1</span>implement — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../implement/decision-history/implement-decision-history.html"><span class="tree-ord">2</span>implement — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../implement/design/implement-design.html"><span class="tree-ord">3</span>implement — 按 spec 和 ticket 实现</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../luma-event-scout/design/luma-event-scout-design.html">luma-event-scout</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../luma-event-scout/prd/luma-event-scout-prd.html"><span class="tree-ord">1</span>luma-event-scout — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../luma-event-scout/decision-history/luma-event-scout-decision-history.html"><span class="tree-ord">2</span>luma-event-scout — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../luma-event-scout/design/luma-event-scout-design.html"><span class="tree-ord">3</span>luma-event-scout — Luma 湾区活动筛选</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../multi-model-team/design/multi-model-team-design.html">multi-model-team</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../multi-model-team/prd/multi-model-team-prd.html"><span class="tree-ord">1</span>multi-model-team — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../multi-model-team/decision-history/multi-model-team-decision-history.html"><span class="tree-ord">2</span>multi-model-team — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../multi-model-team/design/multi-model-team-design.html"><span class="tree-ord">3</span>multi-model-team — 多模型团队编排</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../pic-to-txt/design/pic-to-txt-design.html">pic-to-txt</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../pic-to-txt/prd/pic-to-txt-prd.html"><span class="tree-ord">1</span>pic-to-txt — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../pic-to-txt/decision-history/pic-to-txt-decision-history.html"><span class="tree-ord">2</span>pic-to-txt — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../pic-to-txt/design/pic-to-txt-design.html"><span class="tree-ord">3</span>pic-to-txt — 截图转文字文档</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../prototype/design/prototype-design.html">prototype</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../prototype/prd/prototype-prd.html"><span class="tree-ord">1</span>prototype — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../prototype/decision-history/prototype-decision-history.html"><span class="tree-ord">2</span>prototype — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../prototype/design/prototype-design.html"><span class="tree-ord">3</span>prototype — 用完就扔的原型</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../skill/design/skill-design.html">skill</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../skill/prd/skill-prd.html"><span class="tree-ord">1</span>skill — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../skill/decision-history/skill-decision-history.html"><span class="tree-ord">2</span>skill — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../skill/design/skill-design.html"><span class="tree-ord">3</span>skill — Skill 管理入口</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../spec-ingest/design/spec-ingest-design.html">spec-ingest</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../spec-ingest/prd/spec-ingest-prd.html"><span class="tree-ord">1</span>spec-ingest — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../spec-ingest/decision-history/spec-ingest-decision-history.html"><span class="tree-ord">2</span>spec-ingest — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../spec-ingest/design/spec-ingest-design.html"><span class="tree-ord">3</span>spec-ingest — 把已有信息分拣进 spec</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../spec-ticket/design/spec-ticket-design.html">spec-ticket</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../spec-ticket/prd/spec-ticket-prd.html"><span class="tree-ord">1</span>spec-ticket — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../spec-ticket/decision-history/spec-ticket-decision-history.html"><span class="tree-ord">2</span>spec-ticket — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../spec-ticket/design/spec-ticket-design.html"><span class="tree-ord">3</span>spec-ticket — 把 impl-plan 的每一步发成工单</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../tmux-status-bar/design/tmux-status-bar-design.html">tmux-status-bar</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../tmux-status-bar/prd/tmux-status-bar-prd.html"><span class="tree-ord">1</span>tmux-status-bar — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../tmux-status-bar/decision-history/tmux-status-bar-decision-history.html"><span class="tree-ord">2</span>tmux-status-bar — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../tmux-status-bar/design/tmux-status-bar-design.html"><span class="tree-ord">3</span>tmux-status-bar — tmux 状态栏显示项目上下文</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../to-spec/design/to-spec-design.html">to-spec</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../to-spec/prd/to-spec-prd.html"><span class="tree-ord">1</span>to-spec — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../to-spec/decision-history/to-spec-decision-history.html"><span class="tree-ord">2</span>to-spec — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../to-spec/design/to-spec-design.html"><span class="tree-ord">3</span>to-spec — 把对话整理成 spec</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../to-tickets/design/to-tickets-design.html">to-tickets</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../to-tickets/prd/to-tickets-prd.html"><span class="tree-ord">1</span>to-tickets — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../to-tickets/decision-history/to-tickets-decision-history.html"><span class="tree-ord">2</span>to-tickets — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../to-tickets/design/to-tickets-design.html"><span class="tree-ord">3</span>to-tickets — 把 spec 拆成执行工单</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../transcribe-audio/design/transcribe-audio-design.html">transcribe-audio</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../transcribe-audio/prd/transcribe-audio-prd.html"><span class="tree-ord">1</span>transcribe-audio — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../transcribe-audio/decision-history/transcribe-audio-decision-history.html"><span class="tree-ord">2</span>transcribe-audio — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../transcribe-audio/design/transcribe-audio-design.html"><span class="tree-ord">3</span>transcribe-audio — 本地显卡音频转文字</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="video-production-pip-style-design.html">video-production-pip-style</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../prd/video-production-pip-style-prd.html"><span class="tree-ord">1</span>video-production-pip-style — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../decision-history/video-production-pip-style-decision-history.html"><span class="tree-ord">2</span>video-production-pip-style — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="video-production-pip-style-design.html" aria-current="page"><span class="tree-ord">3</span>video-production-pip-style — 画中画引用式视频制作指南</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../wayfinder/design/wayfinder-design.html">wayfinder</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../wayfinder/prd/wayfinder-prd.html"><span class="tree-ord">1</span>wayfinder — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../wayfinder/decision-history/wayfinder-decision-history.html"><span class="tree-ord">2</span>wayfinder — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../wayfinder/design/wayfinder-design.html"><span class="tree-ord">3</span>wayfinder — 规划大任务的决策地图</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../youtube-research/design/youtube-research-design.html">youtube-research</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../youtube-research/prd/youtube-research-prd.html"><span class="tree-ord">1</span>youtube-research — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../youtube-research/decision-history/youtube-research-decision-history.html"><span class="tree-ord">2</span>youtube-research — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../youtube-research/design/youtube-research-design.html"><span class="tree-ord">3</span>youtube-research — 从题目到视频稿 HTML</a></li></ul></details></li><li class="tree-branch"><details open><summary><a class="tree-link" href="../../youtube-summarize/design/youtube-summarize-design.html">youtube-summarize</a></summary><ul class="tree"><li class="tree-leaf"><a class="tree-link" href="../../youtube-summarize/prd/youtube-summarize-prd.html"><span class="tree-ord">1</span>youtube-summarize — 需求</a></li><li class="tree-leaf"><a class="tree-link" href="../../youtube-summarize/decision-history/youtube-summarize-decision-history.html"><span class="tree-ord">2</span>youtube-summarize — 决策记录</a></li><li class="tree-leaf"><a class="tree-link" href="../../youtube-summarize/design/youtube-summarize-design.html"><span class="tree-ord">3</span>youtube-summarize — YouTube 视频转写与总结</a></li></ul></details></li></ul></details></li></ul>
+  </nav>
+</aside>
+  <main class="content">
+    <nav class="breadcrumbs"><a href="../../../../index.html">Docs</a> / <span>skill-factory</span> / <span>features</span> / <span>video-production-pip-style</span> / <span>design</span> / <span>video-production-pip-style — 画中画引用式视频制作指南</span></nav>
+    <article class="doc" data-doc="skill-factory/features/video-production-pip-style/design/video-production-pip-style-design">
+      <header class="doc-head">
+        <p class="eyebrow">skill-factory</p>
+        <h1>video-production-pip-style — 画中画引用式视频制作指南</h1>
+        <p class="source">Canonical: docs/features/skill-factory/features/video-production-pip-style/design/video-production-pip-style-design.md</p>
+      </header>
+      
+      <div class="doc-body">
+        <h2>video-production-pip-style — 画中画引用式视频制作指南</h2>
+<p>本篇说明 <code>video-production-pip-style</code> 这个 skill 现在怎么工作。 源文件：<a href="../../../../../../../personal-skills/video-production-pip-style/SKILL.md"><code>personal-skills/video-production-pip-style/SKILL.md</code></a>（commit 9e4fb21 加入本仓库，之后没有改动）。 目录下只有 SKILL.md 一个文件。</p>
+<h3>Problem Statement</h3>
+<p>用户在做一个房产类 YouTube 频道，看中一位博主&quot;讲话人加大量引用&quot;的视频形式，想照着做（<a class="id-ref" href="../prd/video-production-pip-style-prd.html#PRD-A">PRD-A</a>、<a class="id-ref" href="../prd/video-production-pip-style-prd.html#PRD-B">PRD-B</a>）。 但这种形式由哪些画面组成、各占多少时间、背景怎么做，用户并不清楚，还问了能不能用绿幕（<a class="id-ref" href="../prd/video-production-pip-style-prd.html#PRD-C">PRD-C</a>）。</p>
+<h3>Solution</h3>
+<p>先按用户要求每 10 秒截一帧，量化样例视频的风格（<a class="id-ref" href="../prd/video-production-pip-style-prd.html#PRD-D">PRD-D</a>）。 再把结果写成一份制作指南：设备、背景、PiP 规格、五个制作阶段、分镜模板和检查清单（<a class="id-ref" href="../prd/video-production-pip-style-prd.html#PRD-E">PRD-E</a>）。 PiP 指讲话人缩成角落小框、主画面放引用素材的画面形式。</p>
+<h3>User Stories</h3>
+<ul>
+<li>作为创作者，我写稿时就标出哪里要放引用，剪辑时照着标记做 PiP。</li>
+<li>作为创作者，我按检查清单从拍摄走到导出，不漏掉来源标注等步骤。</li>
+</ul>
+<h3>Implementation Decisions</h3>
+<p>本 skill 只有文字指南，没有脚本，也不调用任何工具（decision-history 的 <a class="id-ref" href="../decision-history/video-production-pip-style-decision-history.html#ARD-D">ARD-D</a>）。 指南里的比例和位置数字全部来自一支样例视频的分析（<a class="id-ref" href="../decision-history/video-production-pip-style-decision-history.html#ARD-E">ARD-E</a>）。 详细的逐帧统计不在本仓库，而在 mfangdai-video 项目的 <code>docs/superpowers/specs/2026-07-18-andrei-jikh-style-analysis.md</code>（<a class="id-ref" href="../decision-history/video-production-pip-style-decision-history.html#ARD-B">ARD-B</a>）。</p>
+<h3>Design</h3>
+<p><strong><a class="id-ref" href="#DSGN-A">DSGN-A</a> 何时使用。</strong> 适合需要大量引用图片、片段、文章和数据，又要讲话人一直在画面里的观点分析类视频（<a class="id-ref" href="../prd/video-production-pip-style-prd.html#PRD-A">PRD-A</a>、<a class="id-ref" href="../prd/video-production-pip-style-prd.html#PRD-E">PRD-E</a>）。 纯口播、录屏教程、几乎不剪辑的视频不适用。触发词包括&quot;pip video production&quot;和&quot;视频制作风格&quot;。</p>
+<p><strong><a class="id-ref" href="#DSGN-B">DSGN-B</a> 风格基准。</strong> 样例时长 30 分 47 秒，每 10 秒一帧共 185 帧（<a class="id-ref" href="../prd/video-production-pip-style-prd.html#PRD-D">PRD-D</a>）。 分类结果：PiP 占 74%，全屏讲话 6%，无人全屏素材 2%，空背景过渡 4%，其他 14%。 PiP 框 97% 出现在右下角。</p>
+<p><strong><a class="id-ref" href="#DSGN-C">DSGN-C</a> 设备与背景。</strong> 设备分最低和推荐两档，最低档是 1080p 摄像头、纯色背景、两盏柔光灯和领夹麦。 背景给两个方案（<a class="id-ref" href="../prd/video-production-pip-style-prd.html#PRD-C">PRD-C</a>）。方案 A 是实体浅灰背景布，和样例一致，不用抠像。 方案 B 是绿幕，后期抠掉再换成浅灰渐变、品牌色或虚化的办公室。 如果想以绿色作为品牌色，SKILL.md 建议换成饱和度约 30% 的绿色渐变，而不是直接留着抠像用的绿。</p>
+<p><strong><a class="id-ref" href="#DSGN-D">DSGN-D</a> PiP 规格与用法。</strong> PiP 框放右下角，圆角，可加 2px 白边（<a class="id-ref" href="../prd/video-production-pip-style-prd.html#PRD-B">PRD-B</a>）。 一张场景表规定何时用全屏讲话、何时用 PiP：开头、换段、情绪性结论和结尾用全屏讲话；引用来源、回应素材、讲数据时用 PiP。</p>
+<p><strong><a class="id-ref" href="#DSGN-E">DSGN-E</a> 五个制作阶段。</strong> 第一阶段写稿，用 <code>[FULL]</code>（全屏讲话）和 <code>[PIP]</code>（画中画）标记每个引用点，目标是每 10 到 30 秒换一个新画面（<a class="id-ref" href="../decision-history/video-production-pip-style-decision-history.html#ARD-F">ARD-F</a>，<a class="id-ref" href="../prd/video-production-pip-style-prd.html#PRD-A">PRD-A</a>）。 第二阶段先把整篇稿当口播录完。第三阶段按稿件分段收集截图、图表和视频片段。 第四阶段在 DaVinci Resolve 里剪：引用素材放下层轨道全屏，讲话人放上层轨道缩小到右下角（<a class="id-ref" href="../prd/video-production-pip-style-prd.html#PRD-B">PRD-B</a>）。 讲话人缩小时用 0.5 秒交叉溶解，引用之间直接硬切；SKILL.md 还给了缩放关键帧和&quot;保存为宏&quot;的做法。 第五阶段调音频和画面：人声约 -6 到 -3 dB，背景音乐约 -25 dB 并在说话时自动压低。</p>
+<p><strong><a class="id-ref" href="#DSGN-F">DSGN-F</a> 引用来源标注。</strong> 每个引用都要在屏幕下方、PiP 左侧加一行小字，格式是&quot;Source: 刊物名 — 日期&quot;（<a class="id-ref" href="../prd/video-production-pip-style-prd.html#PRD-A">PRD-A</a>）。 白字配半透明黑底，随引用淡入，显示时长和引用相同。</p>
+<p><strong><a class="id-ref" href="#DSGN-G">DSGN-G</a> 分镜模板。</strong> 开头一分钟以全屏讲话的钩子起头，随后在 PiP 和全屏之间每 10 秒左右切换。 正文按&quot;论点、两三个引用、自己的分析、反方材料、小结&quot;循环。结尾一分钟全部用全屏讲话（<a class="id-ref" href="../prd/video-production-pip-style-prd.html#PRD-A">PRD-A</a>、<a class="id-ref" href="../prd/video-production-pip-style-prd.html#PRD-B">PRD-B</a>）。</p>
+<p><strong><a class="id-ref" href="#DSGN-H">DSGN-H</a> 检查清单与完成标准。</strong> 清单分前期、拍摄、后期三段（<a class="id-ref" href="../prd/video-production-pip-style-prd.html#PRD-E">PRD-E</a>）。 完成标准有六条：每个 <code>[PIP]</code> 段都做了 PiP，每个引用都有来源标注，缩放动画平滑，音频干净，1080p 导出可播放，时长和稿件相符。 SKILL.md 还列了反模式，例如 PiP 框过大、没有来源标注、一分钟才一个引用。</p>
+<p><strong><a class="id-ref" href="#DSGN-I">DSGN-I</a> 相关 skill。</strong> 研究和写稿交给 youtube-research-pipeline，图片转文字交给 <a href="../../pic-to-txt/design/pic-to-txt-design.html">pic-to-txt</a>，文档整理交给 spec-write（SKILL.md 的 Companion Resources；<a class="id-ref" href="../decision-history/video-production-pip-style-decision-history.html#ARD-G">ARD-G</a>）。 把研究文档做成视频的完整流程见 <a href="../../create-video-workflow/design/create-video-workflow-design.html">create-video-workflow</a>，音频转文字见 <a href="../../transcribe-audio/design/transcribe-audio-design.html">transcribe-audio</a>。 本 skill 没有被这两个兄弟 skill 引用，也不引用它们。</p>
+<p><strong><a class="id-ref" href="#DSGN-J">DSGN-J</a> 和用户原意的差距。</strong> 用户要的是&quot;能把我的视频做成他这种类型&quot;（<a class="id-ref" href="../prd/video-production-pip-style-prd.html#PRD-E">PRD-E</a>），当前 skill 只告诉人怎么做，不处理视频文件，见 <a class="id-ref" href="#QUES-B">QUES-B</a>。 SKILL.md 的 Background Tips 一节直接引用了用户当时的提问，是写给那一次对话的回答（<a class="id-ref" href="../prd/video-production-pip-style-prd.html#PRD-C">PRD-C</a>）。</p>
+<h3>Testing Decisions</h3>
+<p>本 skill 没有自动测试或评测集。 SKILL.md 里的剪辑参数（缩放比例、位置坐标、宏的做法）在会话里没有在 DaVinci Resolve 中实际验证过，见 <a class="id-ref" href="#QUES-C">QUES-C</a>、<a class="id-ref" href="#QUES-D">QUES-D</a>。 是否好用，目前只能拍一支视频后人工判断。</p>
+<h3>Out of Scope</h3>
+<p>纯口播 vlog、录屏教程、几乎不剪辑的视频（SKILL.md 的 <code>when_not_to_use</code>）。 选题研究和写稿（交给 youtube-research-pipeline）。</p>
+<h3>Further Notes</h3>
+<p>需求见 <a href="../prd/video-production-pip-style-prd.html">PRD</a>，决策见 <a href="../decision-history/video-production-pip-style-decision-history.html">decision-history</a>。 skill-factory 整体设计见 <a href="../../../design/skill-factory-design.html">parent design</a>。 逐帧统计、背景色值和转场时间线，见 mfangdai-video 项目里的分析报告（commit 56b2585）。</p>
+<h3>Alternatives Considered</h3>
+<p>只用绿幕：没有采用，改为实体背景首推、绿幕备选（<a class="id-ref" href="../decision-history/video-production-pip-style-decision-history.html#ARD-C">ARD-C</a>）。 用脚本自动合成 PiP：对话里没有讨论，当前是手工指南（<a class="id-ref" href="../decision-history/video-production-pip-style-decision-history.html#ARD-D">ARD-D</a>）。 参考多支视频取平均：对话里没有讨论，当前只用一支样例（<a class="id-ref" href="../decision-history/video-production-pip-style-decision-history.html#ARD-E">ARD-E</a>）。</p>
+<h3>Drawbacks</h3>
+<p>所有数字来自一支视频，换一位博主或换一期节目，比例可能不同。 SKILL.md 里有写给那一次对话的段落（Your Specific Questions），别人用时会觉得突兀。 指南绑定 DaVinci Resolve，用其他剪辑软件的人要自己换算参数。</p>
+<h3>Risks and Mitigations</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>风险</th>
+<th>缓解</th>
+</tr></thead><tbody>
+<tr>
+<td>PiP 尺寸的几处数字互相矛盾，照做会得到过大的框</td>
+<td>暂无；见 <a class="id-ref" href="#QUES-C">QUES-C</a></td>
+</tr>
+<tr>
+<td>关键帧坐标和 Inspector 位置用的不是同一套坐标，照抄会放错位置</td>
+<td>暂无；见 <a class="id-ref" href="#QUES-D">QUES-D</a></td>
+</tr>
+<tr>
+<td>分析报告在另一个项目里，项目删掉后来源就断了</td>
+<td>本篇和 decision-history 已摘录主要数字；是否搬进本仓库见 <a class="id-ref" href="#QUES-F">QUES-F</a></td>
+</tr>
+</tbody></table></div>
+<h3>Open Questions</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>ID</th>
+<th>问题</th>
+<th>目前答案</th>
+<th>Owner</th>
+<th>Blocking</th>
+</tr></thead><tbody>
+<tr>
+<td id="QUES-A"><a class="id-ref" href="#QUES-A">QUES-A</a></td>
+<td>用户说的&quot;望着&quot;指什么（<a class="id-ref" href="../prd/video-production-pip-style-prd.html#PRD-A">PRD-A</a>）？</td>
+<td>不确定；SKILL.md 按新闻文章和社交媒体帖子处理</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-B"><a class="id-ref" href="#QUES-B">QUES-B</a></td>
+<td>&quot;把我的视频做成这种类型&quot;是要指南还是自动工具（<a class="id-ref" href="../prd/video-production-pip-style-prd.html#PRD-E">PRD-E</a>）？</td>
+<td>当前只有手工指南</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-C"><a class="id-ref" href="#QUES-C">QUES-C</a></td>
+<td>PiP 框到底多大？</td>
+<td>已答：实测为圆形，直径约占画面宽 22%（<a class="id-ref" href="../decision-history/video-production-pip-style-decision-history.html#ARD-H">ARD-H</a>）。原先 SKILL.md 同时写了占宽 25% 到 30%、缩放 50% 到 55%、不超过屏幕 25%，三者不一致。原始分析报告也自相矛盾：占宽 25% 到 30%，又写占面积约 25%</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-D"><a class="id-ref" href="#QUES-D">QUES-D</a></td>
+<td>关键帧和宏的参数在 DaVinci Resolve 里是否可用？</td>
+<td>关键帧用中心点绝对坐标，Inspector 用偏移量，未验证</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-E"><a class="id-ref" href="#QUES-E">QUES-E</a></td>
+<td>要不要再分析几支视频，校正 74% 等数字？</td>
+<td>目前只有一支样例</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-F"><a class="id-ref" href="#QUES-F">QUES-F</a></td>
+<td>分析报告要不要搬进本仓库？</td>
+<td>目前在 mfangdai-video 项目</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+<tr>
+<td id="QUES-G"><a class="id-ref" href="#QUES-G">QUES-G</a></td>
+<td>本 skill 要不要留在 git 里？</td>
+<td>旧决策 0018 说 personal skills 被 gitignore，但 commit 9e4fb21 已提交它</td>
+<td>cicidi</td>
+<td>no</td>
+</tr>
+</tbody></table></div>
+<h3>Reversibility</h3>
+<p>所有改动都落在 git 跟踪的 <a href="../../../../../../../personal-skills/video-production-pip-style/SKILL.md"><code>personal-skills/video-production-pip-style/SKILL.md</code></a>，用 <code>git revert</code> 即可撤回。 已安装到 <code>~/.claude/skills/</code> 的副本，须重跑 install.sh 才同步。</p>
+<h3>Change Log</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Date</th>
+<th>Change</th>
+</tr></thead><tbody>
+<tr>
+<td>2026-11-24</td>
+<td>初版：按 SKILL.md 写出 video-production-pip-style 的 design，引用 <a class="id-ref" href="../prd/video-production-pip-style-prd.html#PRD-A">PRD-A</a> 到 <a class="id-ref" href="../prd/video-production-pip-style-prd.html#PRD-E">PRD-E</a></td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td><a class="id-ref" href="#DSGN-I">DSGN-I</a> 改指 spec-write（<a class="id-ref" href="../decision-history/video-production-pip-style-decision-history.html#ARD-G">ARD-G</a>）；<a class="id-ref" href="#QUES-C">QUES-C</a> 补上原始报告的证据</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td><a class="id-ref" href="#QUES-C">QUES-C</a> 已答：PiP 实测（<a class="id-ref" href="../decision-history/video-production-pip-style-decision-history.html#ARD-H">ARD-H</a>）</td>
+</tr>
+</tbody></table></div>
+      </div>
+    </article>
+    <nav class="pager" aria-label="Previous and next"><a class="prev" href="../prd/video-production-pip-style-prd.html"><span class="label">Previous</span>video-production-pip-style — 需求</a><a class="next" href="../decision-history/video-production-pip-style-decision-history.html"><span class="label">Next</span>video-production-pip-style — 决策记录</a></nav>
+  </main>
+</div>
+<footer class="foot"><div class="foot-inner">Assembled from committed <code>.md</code>. The Markdown is authoritative; this page is a reading view.</div></footer>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>if(window.mermaid){mermaid.initialize({startOnLoad:false});}</script>
+<script src="../../../../assets/app.js"></script>
+</body>
+</html>

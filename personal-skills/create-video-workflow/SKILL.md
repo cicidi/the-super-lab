@@ -13,7 +13,7 @@ description: |
 
 Converts research documents into audience-tailored content through a 7-phase,
 human-in-the-loop pipeline. Every output is validated by a simulated audience
-agent before going live. Existing Python tools under `tools/` handle
+agent before going live. Existing Python tools under `scripts/` (see Paths) handle
 video/image generation; new phases add channel-aware planning, flexible
 transcript generation, multi-format output, and CI/CD deploy.
 
@@ -41,7 +41,16 @@ These show the range of what this skill handles — a lite single-format request
 
 ## Skill Dependencies
 
-- `doc-organize`: used in Phase 4 when generating document assets (determines path + naming, maintains INDEX.md)
+- `spec-write`: used in Phase 4 when generating document assets (determines path + naming per SPEC-STANDARD.md, regenerates INDEX)
+- `transcribe-audio`: used in Phase 1 when source material includes audio files (local GPU Whisper, m4a/mp3/wav)
+
+## Paths
+
+- `scripts/` means `~/project/hackathon-video-gen/scripts/` (the hvg repo). It was named `tools/` before hvg commit b805482.
+- `projects/<name>/` means `~/project/video-gen-initiative/projects/<name>/`. Project data moved there in video-gen-initiative commit d000be2.
+- Known gap: the hvg scripts still build paths as `<hvg repo>/projects/<name>/`, and `~/project/hackathon-video-gen/projects/` does not exist.
+  Before running any script in Phase 4 or 5, tell the user and ask how to bridge the two
+  (for example a symlink `~/project/hackathon-video-gen/projects` → `~/project/video-gen-initiative/projects`). Do not create it without asking.
 
 ---
 
@@ -70,19 +79,21 @@ Goal: produce a requirements document that answers: what are we saying, to whom,
 Goal: gather and normalize all input materials.
 
 **MUST:**
-1. Identify all input sources: markdown notes, PDF files, URLs (papers, articles, YouTube links, GitHub repos, internal company docs).
+1. Identify all input sources: markdown notes, PDF files, URLs (papers, articles, YouTube links, GitHub repos, internal company docs, audio files).
 2. For each source type, extract readable text:
    - markdown / text: read directly
    - PDF: extract text (use an available PDF tool)
-   - YouTube: fetch transcript if available
+   - YouTube: fetch captions/transcript if available (via yt-dlp or youtube-transcript-api); if no captions, download audio and transcribe (see audio below)
    - Web URLs: fetch and convert to text
    - GitHub: read README, relevant docs
    - Internal company docs: treat as markdown or PDF
+   - **Audio (m4a, mp3, wav, webm)**: invoke `transcribe-audio` skill — local GPU Whisper, no API cost
+   - **Video with audio track (mp4, webm, mkv)**: extract audio via ffmpeg, then invoke `transcribe-audio`
 3. Consolidate into `projects/<name>/source_material.md` — a single normalized document with content summaries, links to originals, and flagged gaps.
 
 **Output:** `projects/<name>/source_material.md`
 
-**Fallback:** for sources that can't be ingested (paywalled, audio-only, dead links), flag in a `gaps` section and ask the user whether to proceed without or find alternatives.
+**Fallback:** for sources that can't be ingested (paywalled, dead links, silent video), flag in a `gaps` section and ask the user whether to proceed without or find alternatives. For audio that Whisper can't handle (heavy noise, overlapping speakers), try a larger model then flag if still poor.
 
 ---
 
@@ -164,10 +175,10 @@ Goal: parallel generation of all assets specified in `spec.json`. Existing Pytho
 
 **MUST:**
 1. For each unit in `spec.json`, dispatch to the appropriate generator:
-   - `type: video` → use existing toolchain: `tools/gen_narrative.py` + `tools/gen_scenes.py` + `tools/gen_images.py` + `tools/gen_videos.py` + `tools/poll_tasks.py`
-   - `type: image` → `tools/gen_images.py` (standalone) or direct API call to chosen engine
+   - `type: video` → use existing toolchain: `scripts/gen_narrative.py` + `scripts/gen_scenes.py` + `scripts/gen_images.py` + `scripts/gen_videos.py` + `scripts/poll_tasks.py`
+   - `type: image` → `scripts/gen_images.py` (standalone) or direct API call to chosen engine
    - `type: slide` → generate slide content (markdown with slide separators)
-   - `type: markdown` → use `doc-organize` to determine path and naming, then write the document
+   - `type: markdown` → use `spec-write` to determine path and naming, then write the document
    - `type: website` → generate HTML/CSS/JS files
    - `type: animation` → generate animation prompt for chosen engine
 2. All asset generation runs in parallel where the engine supports it. The existing video toolchain has its own internal parallelism (images can generate in parallel; videos are sequential with last-frame chaining).
@@ -180,7 +191,7 @@ Goal: parallel generation of all assets specified in `spec.json`. Existing Pytho
 - Video: if Seedance fails, retry / skip the scene / mark for manual redo
 - Image: retry with adjusted prompt or fall back to a placeholder
 - Slide/Markdown/Website: if generation produces garbled output, regenerate with a simplified prompt
-- Document (doc-organize): if type/path can't be determined, place in `projects/<name>/output/` and ask user for preferred location
+- Document (spec-write): if type/path can't be determined, place in `projects/<name>/output/` and ask user for preferred location
 
 ---
 
@@ -202,7 +213,7 @@ Goal: assemble all reviewed assets into the final output package.
 
 **MUST:**
 1. For each output type, apply the appropriate composition:
-   - Video: `tools/concat.sh` normalizes and concatenates all scene clips
+   - Video: `scripts/concat.sh` normalizes and concatenates all scene clips
    - Slide deck: compile slides into a single presentation file
    - Markdown document: insert generated images/videos as links or placeholders
    - Website: assemble pages, link assets, ensure navigation
@@ -310,7 +321,7 @@ Before proceeding past each checkpoint, confirm:
 
 - Phase 0-2 (Requirements + Design): confidence high — modeled on software development lifecycle, adapted for content creation
 - Phase 3 (Transcript → Spec): confidence high — channel-aware tone profiles derived from platform conventions
-- Phase 4 (Asset Generation): confidence high — existing toolchain at `tools/` (gen_narrative.py, gen_scenes.py, gen_images.py, gen_videos.py, poll_tasks.py, concat.sh, extract_frame.py) for video/image; new generators for slides/markdown/website/animation
+- Phase 4 (Asset Generation): confidence high — existing toolchain at `~/project/hackathon-video-gen/scripts/` (gen_narrative.py, gen_scenes.py, gen_images.py, gen_videos.py, poll_tasks.py, concat.sh, extract_frame.py) for video/image; new generators for slides/markdown/website/animation
 - Phase 5 (Composition): confidence high — ffmpeg for video; template-based assembly for other formats
 - Phase 6 (Validation): confidence medium — audience agent concept depends on quality of simulated audience prompt
 - Phase 7 (Deploy): confidence medium — platform API availability varies; manual-upload fallback included

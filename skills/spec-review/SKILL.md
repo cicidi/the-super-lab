@@ -22,7 +22,13 @@ metadata:
     - check work
     - accept work
     - challenge this
+  spec_bundle_version: "1.0.13"
+  spec_built_at: "2026-11-24"
+  spec_git_sha: "e20a294"
 ---
+<!-- SPEC-BUNDLE-START -->
+> **SDD spec bundle** `1.0.13` · built 2026-11-24 · git `e20a294`
+<!-- SPEC-BUNDLE-END -->
 
 # spec-review
 
@@ -48,21 +54,28 @@ to avoid over-engineering.
 ## Skill Dependencies
 
 Judge a spec under review against `SPEC-STANDARD.md` chapters 1–3 and
-`SPEC-PRESENTATION.md`. Also load content levels
+`SPEC-PRESENTATION.md`; when HTML pages are in scope, also
+`skills/spec-html-standard/SPEC-HTML-STANDARD.md` (three standard files, ARD-CH restating ARD-BX). Also load content levels
 (`spec-organize/CONTENT-PRIORITY.md`), the authority model
-(`spec-organize/AUTHORITY-BY-CONCERN.md`), and `spec-organize/SPEC-SCOPE.md`.
+(`spec-organize/AUTHORITY-BY-CONCERN.md`), and `spec-organize/SPEC-SCOPE.md` — three review references beyond the three standard files (ARD-CI).
 
 Report as findings: L1 content that is missing, implementation detail that should
 not be there, and any claim about current implementation that the code does not
 support. Report them — never rewrite the spec or the code silently.
 
 Also load `skills/spec-organize/SPEC-STANDARD.md` for **mechanical MUST** checks
-(**ARD-P**): path/filename, frontmatter, letter IDs, decision-log shape, size caps,
-INDEX/dead links, collision signals. `reference/` is not a committed type; `raw/` may exist locally and must not be committed — **suggest fixes only**, never apply edits.
+(**ARD-P**: format rules are checked by script, not by judgment): path/filename, frontmatter, letter IDs, decision-log shape, size caps,
+INDEX/dead links, and name collisions (two features, files, or IDs with the same name). `reference/` is not a committed type; `raw/` may exist locally and must not be committed — **suggest fixes only**, never apply edits.
+
+Severity **≥3** when a MUST rule in SPEC-STANDARD is broken, for example: an open question is not `QUES-A` or has no owner or blocking flag; an `IMPL-*` is missing its dependency, the task it blocks, or its done line; body text outside decision-history carries strikethrough, or drops an old claim without linking the ARD that changed it (ARD-BM); two documents state the same fact differently; a cited figure states a fact not in prose or contradicts prose (ARD-CA) — name the SVG file. Reader HTML fails the same bar when the strike toggle is missing, or when the section, subsection, and clause share one size. A broken **NICE** rule (ARD-BN) is severity 2: list it as skipped, do not discuss it.
+
+**Readability** (PRD-M, ARD-BO): read each document as an undergraduate programmer who has only that document and the glossary in the parent design's appendix. A term or abbreviation used without explanation and absent from the glossary, or a section written as keyword strings or arrow chains that such a reader cannot follow, is severity **3**. Quote the sentence and propose the plain rewrite.
+
+**Self-consistency:** treat the spec's own rules as the standard and check the spec against itself — a rule it states but breaks, a required section it lacks, a decision that the body still contradicts after it was superseded, a decision-log row whose text was partly overturned but is not struck, an ID from another feature cited without naming that feature, or a stage order where a later step forbids what an earlier step does. Each is severity ≥3.
 
 **Parent initiative** (`docs/features/<parent>/` root, not `features/<sub>/`):
 missing any of prd, design, decision-history, impl-plan, test-plan → severity **≥3**
-(parent HLD §8, **TST-N**).
+(parent design **DSGN-E**, **TST-N**).
 
 **Mechanical pass:** run `python3 tools/run_spec_checks.py docs/features/<f>/` (or review tree); cite each finding with `check` id + path — **suggest fixes only**. Harness cases: `python3 skills/spec-review/tests/run_case_checks.py` (`cases/README.md`). SDD map: `skills/SDD-DELIVERABLES.md`.
 
@@ -75,23 +88,23 @@ rule: spec and code each own their concern, and a conflict is reported, not sile
 
 Illustrations, not gold. Report only. Do not edit the spec.
 
-- **盖 shed**: a design that skips the permit limit is severity 4. Write the gap under `docs/features/garden-shed/raw/discussion/`.
+- **盖 shed**: a design that skips the permit limit is severity 4. Write the gap under `docs/features/garden-shed/raw/review/`.
 - **北京旅游**: "the hotel is cheap" with no source is severity 3. Ask for a URL, or require `UNKNOWN`.
-- **数学题**: a heading `## 1. 概述` is a mechanical MUST. Suggest the English unnumbered heading. Do not rename it yourself.
-- **股票**: a price target with no filing citation is severity 4. The report goes in `raw/work-review/`, not a committed `docs/work-review/`.
+- **数学题**: a heading `## 1. 概述` is a mechanical MUST. Suggest the English unnumbered heading. Do not rename it yourself. A proof step that uses "紧集" without explaining it is a readability finding at severity 3.
+- **股票**: a price target with no filing citation is severity 4. The report goes in `raw/review/`, not a committed `docs/work-review/`.
 
 ## Process
 
 ### Step 0: One choice at a time
 
-1. Read `SPEC-STANDARD.md` chapters 1–3 and `SPEC-PRESENTATION.md`.
+1. Read `SPEC-STANDARD.md` chapters 1–3 and `SPEC-PRESENTATION.md`; add `SPEC-HTML-STANDARD.md` when reviewing HTML.
 2. Decide whether the work is a new document or an edit. If an edit, name every document that states the same fact.
 3. Write findings at severity 3+ in this table. Do not edit the spec.
 
 | # | 问题 | 严重度 | 选项 A | 选项 B | 建议 | 附加题 |
 |---|---|---|---|---|---|---|
 
-4. Ask row 1 only. After the answer, ask the 附加题 when that cell is non-empty, then the next row.
+4. Ask row 1 only. After the answer, ask the 附加题 (an optional follow-up question for that row) when that cell is non-empty, then the next row.
 5. If the user did not name the documents, the first choice is which tree to review. Then fill the table.
 
 ---
@@ -123,13 +136,14 @@ Step 0 is the only way to ask. One table row at a time. Do not add a second menu
 
 ### Quick Scan
 
-1. Read the target document.
+1. Read the target document. Run the mechanical pass.
 2. Challenge every claim: is this assumption valid? Is this edge case covered?
-   Are there industry alternatives the doc ignores?
+   Are there industry alternatives the doc ignores? Does the spec obey its own
+   rules? Can an undergraduate follow each section?
 3. Search the web for conflicting evidence or better patterns (at least one
    search per major claim).
 4. Rate every finding 1-5 using the severity scale.
-5. Write `docs/features/<f>/raw/discussion/YYYY-MM-DD-<topic>-gaps.md` (do not commit `raw/`):
+5. Write `docs/features/<f>/raw/review/YYYY-MM-DD-spec-review-<topic>-gaps.md` (document-standard DSGN-B naming; do not commit `raw/`):
 
 ```markdown
 # Gap Report — {document}
@@ -196,7 +210,7 @@ The coordinator (the driving agent):
 
 #### Phase 3: Report
 
-Write `docs/features/<f>/raw/discussion/YYYY-MM-DD-<topic>-review.md` (do not commit `raw/`):
+Write `docs/features/<f>/raw/review/YYYY-MM-DD-spec-review-<topic>.md` (do not commit `raw/`):
 
 ```markdown
 # Review Report — {document}
@@ -236,7 +250,7 @@ Gather all work context:
 3. Read git log (commits since base branch).
 4. Scan the test directory and existing test files.
 
-Synthesize `docs/features/<f>/raw/work-review/YYYY-MM-DD-<topic>/acceptance.md` (do not commit `raw/`) with three sections:
+Synthesize `docs/features/<f>/raw/review/YYYY-MM-DD-spec-review-<topic>-acceptance.md` (do not commit `raw/`) with three sections:
 
 **Acceptance Criteria** — derived from the source documents. Each criterion has
 a source (doc + line), priority (MUST/SHOULD/NICE), and what "done" means.
@@ -262,7 +276,7 @@ Execute the test plan:
 
 ### Phase 3: Sign-Off
 
-Produce `docs/features/<f>/raw/work-review/YYYY-MM-DD-<topic>/report.md` (do not commit `raw/`):
+Produce `docs/features/<f>/raw/review/YYYY-MM-DD-spec-review-<topic>-report.md` (do not commit `raw/`):
 
 **REJECTED** (any FAIL or MISSING criterion):
 - Failed criteria table: #, criterion, status (FAIL/MISSING), reason, fix target
@@ -282,10 +296,11 @@ Produce `docs/features/<f>/raw/work-review/YYYY-MM-DD-<topic>/report.md` (do not
 - [ ] Web search performed for at least one major claim in full adversarial review
 - [ ] Two independent reviewers used in full adversarial mode
 - [ ] Debate capped at 3 rounds per issue
-- [ ] All debate and ruling files written under `raw/discussion/` or `raw/work-review/`, and not committed
+- [ ] All debate and ruling files written under `raw/review/`, and not committed
 - [ ] Work completion: acceptance.md has all 3 sections (criteria, test plan, regression)
 - [ ] Work completion: Reviewer actually executes tests, doesn't just read code
 - [ ] Report always generated (GAPS.md for quick scan, review.md for full, report.md for work)
+- [ ] Spec review covers mechanical MUST, self-consistency, and readability; NICE-rule breaks are listed as skipped
 
 ### NICE (warn)
 

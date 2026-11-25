@@ -19,6 +19,7 @@ class Finding:
     check: str
     path: str
     message: str
+    level: str = "must"
 
 
 def _parse_frontmatter(text: str) -> dict[str, str] | None:

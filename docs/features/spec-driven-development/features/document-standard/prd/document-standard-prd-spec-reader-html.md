@@ -5,60 +5,60 @@ state: draft
 final_date: 2026-11-03
 health: active
 owner: cicidi
-last_verified: 2026-11-03
+last_verified: 2026-11-24
 ---
 
-# Document Standard — Spec Reader HTML（PRD）
+# Document Standard — 给人读的 HTML 页面（PRD）
 
-**Aspect PRD：** 人类可读的 **feature spec 汇编 HTML**（parent + child，Tab 浏览）。权威契约见 sibling design 篇 `../design/document-standard-design-spec-reader-html.md`（**DSGN-N**）。可执行摘要：`skills/spec-html-standard/SPEC-HTML-STANDARD.md`（**非**独立 skill）；**spec-pipeline** 触发时加载该标准。
+本篇是 document-standard 的一个分篇 PRD（入口是 [document-standard-prd.md](document-standard-prd.md)），讲「给人读的 HTML 页面」要什么、不要什么。具体规则写在 [reader design](../design/document-standard-design-spec-reader-html.md)（DSGN-N）。生成 HTML 时要遵守的规则摘要在 `skills/spec-html-standard/SPEC-HTML-STANDARD.md`，它只是一份规则文件，不是 skill。术语见 [parent design 的术语表](../../../design/spec-driven-development-design.md#glossary)。
 
 ## Overview
 
-Committed feature spec 以 `.md` 为 source of truth，但 parent initiative 往往 **多篇、多层**（parent 五类 + `features/<sub>/`）。人需要 **一次打开、按 Tab 读完** 的视图，且 **不能** 因为「好读」而丢掉 spec 里的 MUST、表格行、条目 ID 与 L1 事实。
+spec 的正式版本是已提交的 markdown。但一个 parent feature 往往有很多篇、好几层文档：parent 自己的五篇，加上 `features/<sub>/` 下各个 sub-feature 的文档。人需要一个能一次浏览全部内容的网页，而且不能为了好读就丢掉 spec 里的 MUST 规则、表格的行、编号和 L1 内容。
 
-现有示例 `docs/features/spec-driven-development/spec-driven-development-reader.html` **过度精简**（大量章节被缩成几句），与「spec 可读」目标不符。本篇定义 **要什么、不要什么**；设计细则在 **DSGN-N**。
+早期手工写的汇编页删得太多，很多章节只剩几句话，和「spec 要让人读懂」的目标相反。本篇规定要什么、不要什么，细则见 DSGN-N。
 
 ## Goals and Success Metrics
 
-| ID | Goal | Success |
+| ID | 目标 | 怎么算达到 |
 |---|---|---|
-| **PRD-A** | **高保真阅读** | 读者在 HTML 里能看到与 `.md` **等价的 L1 信息**（MUST/禁止、表格主体行、前缀 ID 条目、Out of Scope、关键 diagram/流程）；**不得** 做成 executive summary |
-| **PRD-B** | **富 HTML，非 MD 预览** | 卡片、callout、表格、可选 flow；**禁止** 仅 `fetch` + `<pre>` 或整页粘贴 raw markdown |
-| **PRD-C** | **Parent + child 覆盖** | Parent：存在的五类 `prd` / `design` / `impl-plan` / `test-plan` / `decision-history` 各一 Tab（或等价分组）。Child：每个 `features/<sub>/` 至少纳入其 **design**；若另有 committed type 则一并纳入 |
-| **PRD-D** | **可追溯** | 每个 Tab（或 major section）底部 **`Canonical: <path-to.md>`**；页头声明：改 spec 先改 `.md`，再更新 HTML |
-| **PRD-E** | **位置与命名** | 输出 `docs/book/html/<parent>/<parent>-reader.html`。其余 spec HTML 按 `docs/features/` 的相对路径放在 `docs/book/html/` 下（ARD-BF） |
-| **PRD-F** | **可演进** | v0 可手维；后续可有 **md→html 机械契约** 或工具；本篇 + **DSGN-N** 在自动化之前仍是 norm |
+| PRD-A | 内容不丢 | 读者在 HTML 里看到的 L1 内容和 markdown 一样多：MUST 和禁止事项、表格的每一行、带编号的条目、Out of Scope、关键的流程图。不能做成高管摘要 |
+| PRD-B | 是排好版的网页，不是 markdown 预览 | 有卡片、提示框、表格，可以有流程图。不能只是把 markdown 原文塞进 `<pre>`，也不能运行时读取 `.md` 文件来显示 |
+| PRD-C | parent 和 sub-feature 都覆盖 | parent 的五篇文档，每篇存在的都有一页；每个 `features/<sub>/` 至少收录它的 design，有其他已提交的文档也一并收录。页面都能从左侧目录找到；pipeline 例外，它没有单独的页面，内容收在汇编页里（[ARD-BG](../../../decision-history/spec-driven-development-decision-history.md#ard-bg)、[ARD-BI](../../../decision-history/spec-driven-development-decision-history.md#ard-bi)） |
+| PRD-D | 能追溯到原文 | 每一页（或每个大的部分）底部写明 `Canonical: <markdown 路径>`；页面顶部说明：要改 spec 先改 markdown，再重新生成 HTML |
+| PRD-E | 位置和命名固定 | parent 的汇编页是 `docs/book/html/<parent>/<parent>-reader.html`；其他页面按它在 `docs/features/` 下的相对路径放在 `docs/book/html/`，扩展名换成 `.html`（[ARD-BF](../../../decision-history/spec-driven-development-decision-history.md#ard-bf)） |
+| PRD-F | 能逐步改进 | 最早可以手工维护；之后改用脚本从 markdown 生成。改用脚本以后，本篇和 DSGN-N 仍然是要遵守的规则 |
 
 ## User Stories
 
-- **PRD-G** — 作为 **reviewer**，我希望在 Tab 里看到 **完整 MUST 表与 TST/IMPL 条目**，以便不必来回开十个 md 也能审 spec。
-- **PRD-H** — 作为 **feature owner**，我希望 HTML **排版更好读**（标题层级、表格、callout），但 **不丢** design 里的 **DSGN-*** / pipeline 的 **PIPE-*** 等锚点内容。
-- **PRD-I** — 作为 **agent**，我希望有 **PRD + design + SPEC-HTML-STANDARD**，而不是散落在 spec-pipeline 里一句「rewrite」。
+- **PRD-G**：作为审查的人，我希望在网页里看到完整的 MUST 表和每个 TST、IMPL 条目，不用来回打开十几个 markdown 文件。
+- **PRD-H**：作为 feature 的负责人，我希望网页排版更好读（标题层级清楚、有表格和提示框），但不丢 design 里的 DSGN、PIPE 这些编号和它们的内容。
+- **PRD-I**：作为 AI，我希望有一份 PRD、一份 design 和一份 `SPEC-HTML-STANDARD.md` 告诉我怎么生成网页，而不是只有一句「重写一下」。
 
 ## Functional Requirements
 
-| ID | Requirement |
+| ID | 需求 |
 |---|---|
-| **PRD-J** | HTML 汇编 **MUST** 遵循 **DSGN-N** 保真规则（对齐 **DSGN-I**：L1 不删；L2 可压缩表述不可删事实；L3/L4 可摘要但 **MUST link** 到 canonical md） |
-| **PRD-K** | **MUST NOT** 将整篇 design/prd 压成一段 overview；若某 Tab 因体量需 **part 文件**，HTML **MUST** 按 part 分 section 或子 Tab，仍保留各 part 的 L1 |
-| **PRD-L** | 视觉语言 **SHOULD** 与 initiative 已有 summary HTML 一致（如 `spec-driven-development.html`、sub 的 `document-standard.html`：serif 标题、mono chip、soft callout） |
-| **PRD-M** | **spec-pipeline** 在 Converge/Downstream 后或用户要求时 **SHOULD** 触发 reader 更新；agent **MUST** 按 **`skills/spec-html-standard/SPEC-HTML-STANDARD.md`** 汇编（无 spec-reader skill） |
-| **PRD-N** | 发现 HTML 与 md 冲突或 HTML 暴露 spec 错误 → **Detect → Ask human** → 先修 **md** → 再 regenerate HTML（同 **DSGN-G** 精神） |
+| PRD-J | 生成 HTML 必须遵守 DSGN-N 的保真规则，和 document-standard 的 DSGN-I 一致：L1 不删；L2 可以写得更短，但不能删掉事实；L3、L4 可以概括，但必须链到原文 |
+| PRD-K | 不能把整篇 design 或 PRD 压成一段概述。如果一种文档拆成了多个分篇，网页必须按分篇分开展示，每个分篇的 L1 都保留 |
+| PRD-L | 全站视觉风格统一：衬线字体的标题、等宽字体的编号标签、浅色的提示框。这一条是 NICE：做不到只提醒，不算失败（[ARD-BY](../../../decision-history/spec-driven-development-decision-history.md#ard-by)） |
+| PRD-M | spec-write 改完 markdown 后，应该提示重新生成网页；用户要求时也重新生成；commit 前必须重新生成（parent ARD-CF）。生成时必须按 `skills/spec-html-standard/SPEC-HTML-STANDARD.md` 做（没有单独的 reader skill） |
+| PRD-N | 如果发现 HTML 和 markdown 说法不一致，或者 HTML 暴露出 spec 本身的错误：先报告并问人，先改 markdown，再重新生成 HTML（和 DSGN-G 的原则一样） |
 
 ## Non-Functional Requirements
 
-- **PRD-O** — 单文件 HTML（v0）：无构建步骤也可双击打开；不依赖 MkDocs 服务。
-- **PRD-P** — 不含 secrets、不含 `raw/` 机器-only eval 正文（可 link 到路径）。
+- **PRD-O**：纯静态网页，阅读时不需要服务器，用浏览器直接打开文件就能看；发布时由 CI 生成（parent 的 ARD-CD），不依赖 MkDocs（一种把 markdown 生成网站的工具）的服务。
+- **PRD-P**：页面里不能有密钥，也不能有 `raw/` 里给机器用的评测原文；需要的话只放路径链接。
 
 ## Out of Scope
 
-- 替换 book 摘要或 MkDocs 导航。Reader HTML 放在 `docs/book/html/`（ARD-BF）。
-- 每次 git commit 自动 sync（v0 无 hook 要求）。
-- 用 reader HTML 作为 lint/oracle（oracle 仍是 `SPEC-STANDARD.md` 与 committed md）。
+- 替代 book 摘要或 MkDocs 的导航。网页放在 `docs/book/html/`（[ARD-BF](../../../decision-history/spec-driven-development-decision-history.md#ard-bf)）。
+- 每次 git commit 自动同步网页。目前不要求 git hook（提交时自动运行的脚本）。
+- 拿网页当检查的依据。判断对错仍以 `SPEC-STANDARD.md` 和已提交的 markdown 为准。
 
 ## Resources Needed
 
-- 一个静态 HTML 构建脚本 + 一个本地静态服务器;无后端、无数据库。
+- 一个生成静态 HTML 的脚本，加一个本地静态文件服务器（可选）。不需要后端，也不需要数据库。
 
 ## Change Log
 
@@ -67,3 +67,8 @@ Committed feature spec 以 `.md` 为 source of truth，但 parent initiative 往
 | 2026-11-03 | Initial aspect PRD；强调禁止过度精简 |
 | 2026-11-03 | 实现改为 **spec-html-standard**（SPEC-HTML-STANDARD.md），非 spec-reader skill |
 | 2026-11-07 | PRD-E：HTML 放到 docs/book/html/，按 feature 树建目录（ARD-BF） |
+| 2026-11-20 | 从「单文件、按 Tab 浏览」改为全站左侧目录（PRD-C，ARD-BG、ARD-BI）；PRD-L 不再引用已删除的旧 HTML；PRD-M 由 spec-write 提示重新生成，不再由 spec-pipeline 触发（ARD-AJ）；PRD-O 改为静态网页；Overview 改正 reader 路径；全文改写为完整句子（ARD-BK） |
+| 2026-11-20 | 第 1 轮审查后：链回新的入口文件 document-standard-prd.md（ARD-BQ）；PRD-C 写明 pipeline 没有单独页面（ARD-BI） |
+| 2026-11-20 | 第 2 轮审查后：PRD-L 降为 NICE（ARD-BY）；MkDocs、git hook 第一次出现时解释 |
+| 2026-11-24 | PRD-O：阅读时不需要服务器，发布由 CI 生成（ARD-CD） |
+| 2026-11-24 | 第 14 轮审查后：PRD-M 加 commit 前必须重建（parent ARD-CF） |

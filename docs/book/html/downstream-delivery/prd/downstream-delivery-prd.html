@@ -4,20 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Delivery Pipeline Skills — PRD · prd · Spec Atlas</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:400,400italic,500,500italic,700|Roboto+Mono:400,500,700|Noto+Sans+SC:400,500,700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@400;600&display=swap">
 <link rel="stylesheet" href="../../assets/styles.css">
 </head>
 <body>
 <header class="topbar">
   <div class="topbar-inner">
     <div class="brand"><a href="../../index.html"><span class="brand-mark">SDD</span><span class="brand-name">Spec Atlas</span></a></div>
+    <button class="strike-btn" type="button" onclick="var r=document.documentElement;var off=r.dataset.strike!=='off';r.dataset.strike=off?'off':'on';this.textContent=off?'显示删除线':'隐藏删除线'">隐藏删除线</button>
   </div>
 </header>
 <div class="site">
   <aside class="sidebar">
   <nav aria-label="Directory">
     <div class="tree-overview"><a class="tree-link" href="../../index.html"><span class="tree-link__num">00</span>All features</a></div>
-    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="downstream-delivery-prd.html" aria-current="page"><span class="tree-link__num">04</span>Delivery Pipeline Skills — PRD</a></li><li class="tree-leaf"><a class="tree-link" href="../design/downstream-delivery-design.html"><span class="tree-link__num">05</span>Delivery Pipeline Skills — Design</a></li><li class="tree-leaf"><a class="tree-link" href="../test-plan/downstream-delivery-test-plan.html"><span class="tree-link__num">06</span>Downstream Delivery — Test Plan</a></li></ul>
+    <ul class="tree"><li class="tree-leaf"><a class="tree-link" href="downstream-delivery-prd.html" aria-current="page"><span class="tree-ord">1</span>Delivery Pipeline Skills — PRD</a></li><li class="tree-leaf"><a class="tree-link" href="../design/downstream-delivery-design.html"><span class="tree-ord">3</span>Delivery Pipeline Skills — Design</a></li><li class="tree-leaf"><a class="tree-link" href="../test-plan/downstream-delivery-test-plan.html"><span class="tree-ord">5</span>Downstream Delivery — Test Plan</a></li></ul>
   </nav>
 </aside>
   <main class="content">
@@ -32,25 +33,25 @@
       <div class="doc-body">
         <h2>Delivery Pipeline Skills — PRD</h2>
 <h3>Overview</h3>
-<p>Downstream SDD skills: <strong>to-spec</strong>, <strong>to-tickets</strong>, <strong>implement</strong> — from converged spec to shipped code.</p>
+<p>Downstream SDD skills: <strong>spec-ingest</strong>, <strong>spec-ticket</strong>, <strong>implement</strong> — from converged spec to shipped code. They replace to-spec and to-tickets (skill-factory spec-ingest ARD-E, spec-ticket ARD-H).</p>
 <h3>Goals and Success Metrics</h3>
 <div class="table-wrap"><table><thead><tr>
 <th>Goal</th>
 <th>Metric</th>
 </tr></thead><tbody>
 <tr>
-<td><strong id="PRD-A"><a href="#PRD-A">PRD-A</a></strong></td>
-<td>to-spec emits PRD-shaped docs per SPEC-STANDARD</td>
+<td><strong id="PRD-A"><a class="id-ref" href="#PRD-A">PRD-A</a></strong></td>
+<td>spec-ingest sorts input and spec-write emits docs per SPEC-STANDARD</td>
 </tr>
 <tr>
-<td><strong id="PRD-B"><a href="#PRD-B">PRD-B</a></strong></td>
+<td><strong id="PRD-B"><a class="id-ref" href="#PRD-B">PRD-B</a></strong></td>
 <td>implement respects impl-plan tasks</td>
 </tr>
 </tbody></table></div>
 <h3>User Stories</h3>
 <ol>
-<li>As a developer, I want to-spec after design freeze, so that PRD is published.</li>
-<li>As a developer, I want to-tickets, so that work is ticket-sized.</li>
+<li>As a developer, I want spec-ingest after design freeze, so that conclusions land in spec docs.</li>
+<li>As a developer, I want spec-ticket, so that each IMPL becomes a ticket.</li>
 </ol>
 <h3>Functional Requirements</h3>
 <div class="table-wrap"><table><thead><tr>
@@ -59,11 +60,11 @@
 </tr></thead><tbody>
 <tr>
 <td><strong>PRD-F1</strong></td>
-<td>to-spec synthesizes conversation → spec markdown</td>
+<td>spec-ingest sorts chat or files into doc types; spec-write writes the spec markdown</td>
 </tr>
 <tr>
 <td><strong>PRD-F2</strong></td>
-<td>to-tickets splits impl-plan into tickets</td>
+<td>spec-ticket opens one ticket per impl-plan IMPL</td>
 </tr>
 <tr>
 <td><strong>PRD-F3</strong></td>
@@ -82,6 +83,8 @@
 </tbody></table></div>
 <h3>Out of Scope</h3>
 <p>Issue tracker vendor lock-in (local markdown default)</p>
+<h3>Resources Needed</h3>
+<p>UNKNOWN: the docs name no resources beyond the three skills listed in <code>## Overview</code>.</p>
 <h3>Change Log</h3>
 <div class="table-wrap"><table><thead><tr>
 <th>Version</th>
@@ -92,6 +95,16 @@
 <td>0.1</td>
 <td>2026-11-04</td>
 <td>SDD delivery bundle</td>
+</tr>
+<tr>
+<td>0.2</td>
+<td>2026-11-24</td>
+<td>to-spec, to-tickets replaced by spec-ingest, spec-ticket</td>
+</tr>
+<tr>
+<td>0.3</td>
+<td>2026-11-24</td>
+<td>Added the standard&#x27;s required sections (pointers only, no new facts)</td>
 </tr>
 </tbody></table></div>
       </div>

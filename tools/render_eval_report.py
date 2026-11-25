@@ -21,7 +21,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
-from score_eval import JUDGED, TESTS, score1, score2  # noqa: E402
+from score_eval import ANNOTATIONS, JUDGED, TESTS, parse_registry, score1, score2  # noqa: E402
 from score_run import score_run  # noqa: E402
 
 RUNS = TESTS / "runs"
@@ -86,7 +86,91 @@ def gold_section() -> str:
     return "\n".join(blocks)
 
 
-def render(run_id: str) -> str:
+def readability_section(path: Path | None) -> str:
+    """TST-V: per-doc accuracy and unexplained terms from run_readability.py --out."""
+    if path is None or not path.is_file():
+        return "<p>No readability results (run <code>tools/run_readability.py --out</code>).</p>"
+    import json
+
+    reports = json.loads(path.read_text(encoding="utf-8")).get("readability", [])
+    body = "".join(
+        f"<tr><td class=\"{'pass' if r['passed'] else 'fail'}\">{'PASS' if r['passed'] else 'FAIL'}</td>"
+        f"<td>{html.escape(r['doc'])}</td>"
+        f"<td>{', '.join(f'{x['accuracy']:.0%}' for x in r['runs'])}</td>"
+        f"<td>{html.escape(', '.join(sorted({t for x in r['runs'] for t in x['unexplained_terms']})) or '-')}</td></tr>"
+        for r in reports
+    )
+    return (
+        "<table><thead><tr><th>verdict</th><th>doc</th><th>accuracy per run</th>"
+        f"<th>unexplained terms</th></tr></thead><tbody>{body}</tbody></table>"
+    )
+
+
+def score2_max() -> float:
+    """Highest reachable score 2: GOOD x 10 / total annotations."""
+    entries = yaml.safe_load(ANNOTATIONS.read_text(encoding="utf-8"))["annotations"]
+    return 10 * sum(1 for e in entries if e["kind"] == "good") / len(entries)
+
+
+def with_method(lines: list[str]) -> list[str]:
+    """Insert each MUST item's method (python or llm) after its id."""
+    methods = {i["id"]: i.get("method", "") for i in parse_registry()}
+    out = []
+    for line in lines:
+        verdict, ident, detail = (line.split("\t", 2) + ["", ""])[:3]
+        method = "python" if methods.get(ident) == "python" else "llm"
+        out.append(f"{verdict}\t{ident}\t{method}\t{detail}")
+    return out
+
+
+def review_section() -> str:
+    """TST-L: 5-run review per item, with Claude's audit note."""
+    files = sorted((TESTS / "judgments").glob("*-deepseek-flash.yaml"))
+    if not files:
+        return "<p>No review results (run <code>tools/judge_deepseek.py</code>).</p>"
+    blocks = []
+    for path in files:
+        data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+        body = "".join(
+            f"<tr><td>{html.escape(str(i.get('id', '')))}</td>"
+            f"<td>{html.escape(str(i.get('verdict', '')))}</td>"
+            f"<td>{html.escape(', '.join(map(str, i.get('votes') or [])))}</td>"
+            f"<td>{html.escape(str(i.get('claude_audit') or '-'))}</td></tr>"
+            for i in data.get("items", [])
+        )
+        blocks.append(
+            f"<h3>{html.escape(path.name)} — {html.escape(str(data.get('model', '')))} "
+            f"x {data.get('runs', 0)} runs</h3><table><thead><tr><th>id</th><th>verdict</th>"
+            f"<th>votes</th><th>claude_audit</th></tr></thead><tbody>{body}</tbody></table>"
+        )
+    return "\n".join(blocks)
+
+
+TSTF_INPUTS = ("budget-conflict", "family-disagree", "missing-info", "midway-change")
+
+
+def tstf_section(path: Path | None) -> str:
+    """TST-F: the four abnormal inputs, from runs/<id>/tstf.json ({input: {verdict, note}})."""
+    import json
+
+    ran = path is not None and path.is_file()
+    results = json.loads(path.read_text(encoding="utf-8")) if ran else {}
+    body = ""
+    for name in TSTF_INPUTS:
+        r = results.get(name) or {}
+        verdict = str(r.get("verdict", "not run"))
+        cls = {"pass": "pass", "fail": "fail"}.get(verdict, "")
+        body += (
+            f"<tr><td>{html.escape(name)}</td><td class=\"{cls}\">{html.escape(verdict)}</td>"
+            f"<td>{html.escape(str(r.get('note', '-')))}</td></tr>"
+        )
+    return ("" if ran else "<p>TST-F: not run.</p>") + (
+        "<table><thead><tr><th>input</th><th>verdict</th><th>note</th></tr></thead>"
+        f"<tbody>{body}</tbody></table>"
+    )
+
+
+def render(run_id: str, readability: Path | None = None, tstf: Path | None = None) -> str:
     passed, total, s1_lines = score1(ROOT / "docs/features/spec-driven-development")
     s2, s2_lines = score2(ROOT / "docs/features/spec-driven-development")
     cfg = eval_config()
@@ -98,6 +182,12 @@ def render(run_id: str) -> str:
         ("gold version", cfg["gold"]["version"]),
         ("judge", f"{judge['model']} x {judge['runs']} runs"),
         ("grill.skills", ", ".join(cfg["grill"]["skills"]) or "(baseline: none)"),
+        (
+            "eval config",
+            f"gold {', '.join(cfg['gold']['models'])} x {cfg['gold']['repeats']}; "
+            f"review {', '.join(cfg['checkers']['models'])} x {cfg['checkers']['repeats']}; "
+            f"target {cfg['target']['feature']}",
+        ),
         ("generated", datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")),
     ]
     meta_html = "\n".join(f"<tr><th>{html.escape(k)}</th><td>{html.escape(str(v))}</td></tr>" for k, v in meta)
@@ -129,12 +219,12 @@ def render(run_id: str) -> str:
 
 <div class="score">
   <div>score 1 — MUST<br><b class="{'pass' if passed == total else 'fail'}">{passed}/{total}</b></div>
-  <div>score 2 — gold<br><b class="{'pass' if s2 >= 6 else 'fail'}">{s2:.1f}/10</b></div>
+  <div>score 2 — gold<br><b>{s2:.1f}/10</b><br><small>max {score2_max():.1f}; no fixed floor (ARD-R)</small></div>
 </div>
 
 <h2>Score 1 — per MUST item</h2>
-<table><thead><tr><th>verdict</th><th>id</th><th>detail</th></tr></thead>
-<tbody>{rows(s1_lines, ["verdict", "id", "detail"])}</tbody></table>
+<table><thead><tr><th>verdict</th><th>id</th><th>method</th><th>detail</th></tr></thead>
+<tbody>{rows(with_method(s1_lines), ["verdict", "id", "method", "detail"])}</tbody></table>
 
 <h2>Score 2 — annotations</h2>
 <table><thead><tr><th>±</th><th>id</th><th>source</th><th>behavior</th></tr></thead>
@@ -143,9 +233,18 @@ def render(run_id: str) -> str:
 <h2>Generated gold runs (TST-C / TST-E)</h2>
 {gold_section()}
 
-<h2>Variants (TST-F)</h2>
-<p>Each variant above (baseline, wayfinder, grill-with-docs, both) is recorded as its own
-bundle: <code>tstf-*</code>. Scores are reported, not gated.</p>
+<h2>Readability (TST-V)</h2>
+{readability_section(readability)}
+
+<h2>TST-F inputs</h2>
+{tstf_section(tstf)}
+
+<h2>Review (TST-L)</h2>
+{review_section()}
+
+<h2>Configs (TST-J)</h2>
+<p>Each <code>grill.skills</code> config ([], [research], [grill-with-docs], both) is recorded
+as its own bundle; wayfinder is always on. Scores are reported, not gated.</p>
 </main></body></html>
 """
 
@@ -154,11 +253,15 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default="")
     ap.add_argument("--run-id", default="")
+    ap.add_argument("--readability", default="", help="run_readability.py --out JSON (default runs/<id>/readability.json)")
+    ap.add_argument("--tstf", default="", help="TST-F results JSON (default runs/<id>/tstf.json)")
     args = ap.parse_args()
     run_id = args.run_id or datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     out = Path(args.out) if args.out else TESTS / "runs" / run_id / "report.html"
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(render(run_id), encoding="utf-8")
+    readability = Path(args.readability) if args.readability else TESTS / "runs" / run_id / "readability.json"
+    tstf = Path(args.tstf) if args.tstf else TESTS / "runs" / run_id / "tstf.json"
+    out.write_text(render(run_id, readability, tstf), encoding="utf-8")
     print(f"wrote {out}")
 
 

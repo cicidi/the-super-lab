@@ -4,7 +4,7 @@
 
 **Not a skill.** Expression rules: `SPEC-PRESENTATION.md`. Agents assemble reader HTML from this standard. spec-write edits markdown; spec-review checks fidelity. No separate `spec-reader` skill.
 
-Hand-maintained HTML (ARD-AK) sets `spec-paired` to `hand-maintained`, `spec-source` to the repo path of the markdown, and `spec-source-sha256` to that file's hash. A mismatch fails `paired_html_stale`. Generated readers omit this meta and are rebuilt. Its changelog has one row for every date in the markdown Change Log (ARD-BA). `<!-- html-skip -->` may wrap L4 or struck history, not L1.
+Hand-maintained HTML (ARD-AK) sets `spec-paired` to `hand-maintained`, `spec-source` to the repo path of the markdown, and `spec-source-sha256` to that file's hash. A mismatch fails `paired_html_stale`. Generated readers omit this meta and are rebuilt. Its changelog has one row for every date in the markdown Change Log (NICE, ARD-BA / ARD-BN). `<!-- html-skip -->` may wrap L4, not L1 or a struck sentence. Struck sentences stay in the HTML. One button switches between showing the strikethrough and hiding it.
 
 ## Output (MUST)
 
@@ -42,31 +42,34 @@ One website for the whole project. Entry: `docs/book/html/index.html`.
 - Each spec HTML page is one line in the directory.
 - The directory opens a feature. It does not dump every feature's pages into one flat list with no feature.
 - Inside a feature, the left column is that feature's directory. The right column is the page.
-- The left directory lists only the five entry pages: prd, design, impl-plan, test-plan, decision-history. Design parts and the reader expand under design. A sub-feature is one line in that layer, and its own pages expand under that line (DSGN-N-L). Pipeline has no HTML page.
-- spec-write rebuilds this site after a spec edit. It does not invent a second layout.
+- Every page is reachable from the entry. GitHub Pages publishes the site from `master` (ARD-CD).
+- The left directory shows hierarchy and numbers: 1 prd, 2 decision-history, 3 design, 4 impl plan, 5 test plan, 6 how to, 10 sub-feature (ARD-BI). Design parts and the reader expand under 3. Sub-features expand under 10. Pipeline has no HTML page.
+- After a spec edit, spec-write tells the user which pages are stale and asks whether to rebuild now; before any commit that changes markdown it rebuilds, so committed HTML matches the markdown (ARD-CF). It does not invent a second layout (DSGN-N-E, reader PRD-M).
 
-Rebuild: `python3 tools/build_sdd_site.py`
+Rebuild: `python3 tools/build_sdd_site.py` (rebuilds the site and the reader)
 
 ## Links (MUST, DSGN-N-K)
 
-- An ID (`PRD-`, `DSGN-`, `ARD-`, `IMPL-`, `TST-`, `PIPE-`, `QUES-`) links to its definition in the same feature. If a sub-feature does not define that ID, the link goes to the parent.
-- A path written in the body is a link. A `.md` under `docs/features/` links to the same path under `docs/book/html/` with `.html`. Any other file that exists links to that file.
+- An ID (`PRD-`, `DSGN-`, `ARD-`, `IMPL-`, `TST-`, `PIPE-`, `QUES-`) links to its definition. If the text names the owning feature ("parent design 的 DSGN-A", or `<feature>/<id>`), link there. Only an unqualified ID resolves in the same feature first, then the parent.
+- A path written in the body is a link. A `.md` under `docs/features/` links to the same path under `docs/book/html/` with `.html`. A source with no page of its own (pipeline design) links to its section in the reader page. Any other file that exists links to that file.
 
-## Visual (SHOULD)
+## Visual and technical (DSGN-N-D)
 
-Match initiative summary HTML (e.g. `spec-driven-development.html`): self-contained CSS v0; no runtime md fetch for delivery.
+- MUST: body text and committed SVG figures open offline in the browser (reader PRD-O, ARD-CB). Fonts and Mermaid may load from the network.
+- NICE: site skin uses diagram-design default tokens and typography (ARD-CA).
+- MUST: no runtime `.md` fetch for main content; no secrets and no raw eval text in the page.
+- NICE: one site-wide style for layout, ID tags, cards, and callouts (ARD-BY).
 
 ## Workflow
 
-- **spec-pipeline:** prompt/trigger after major spec changes or on user request
-- **spec-write:** after the markdown edit, rebuild the one site from this standard (`python3 tools/build_sdd_site.py`)
+- **spec-write:** after the markdown edit, tell the user the HTML is stale and ask whether to rebuild the one site now (`python3 tools/build_sdd_site.py`); before any commit that changes markdown, rebuild so the committed HTML matches (ARD-CF)
 - Conflict or spec bug found while assembling → **Ask human** → fix md → regenerate HTML
-- SDD parent: `python3 tools/build_sdd_reader.py` then `python3 tools/validate_sdd_reader.py`
+- SDD parent: `python3 tools/build_sdd_site.py` (rebuilds the site and the reader) then `python3 tools/validate_sdd_reader.py`
 
-## Sequence / flow diagrams
+## Diagrams
 
-- Prefer **Mermaid** fenced blocks in `.md`; reader build renders them (`MERMAID-PATTERNS.md` samples).
-- ASCII flows acceptable; do not drop L1 labels when converting.
+- Committed `![alt](<doc-stem>-fig-<slug>.svg)` beside the citing `.md`; build inlines SVG (ARD-CA).
+- Mermaid fenced blocks remain allowed; reader build renders them (`MERMAID-PATTERNS.md` samples). ASCII flows remain allowed; do not drop L1 labels when converting.
 
 ## Reference (structure OK, content must meet fidelity)
 

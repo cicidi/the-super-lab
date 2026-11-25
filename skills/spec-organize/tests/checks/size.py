@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from checks.frontmatter import _parse_frontmatter
+from checks.paths import supporting_type
 
 CAPS: dict[str, int] = {
     "prd": 800,
@@ -25,10 +26,13 @@ class Finding:
 
 def check_size(path: Path, text: str | None = None) -> list[Finding]:
     raw = text if text is not None else path.read_text(encoding="utf-8")
-    fm = _parse_frontmatter(raw)
-    if not fm:
-        return []
-    t = fm.get("type", "")
+    # A supporting file has no type of its own; it takes its folder's cap (DSGN-B).
+    t = supporting_type(path, raw)
+    if t is None:
+        fm = _parse_frontmatter(raw)
+        if not fm:
+            return []
+        t = fm.get("type", "")
     cap = CAPS.get(t)
     if cap is None:
         return []

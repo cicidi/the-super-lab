@@ -8,7 +8,13 @@
 | `mechanical-missing-frontmatter` | No YAML frontmatter block |
 | `mechanical-bad-change-log` | Change Log not last `##` section |
 | `mechanical-parent-incomplete` | Parent missing five-doc directories (`tree:` block) |
+| `mechanical-bad-decision-log` | Decision Log table shape |
+| `mechanical-bad-open-questions` | Open-question tracker shape (`QUES-A`, owner, blocking) |
+| `mechanical-unanchored-citation` | `file:line` citation without a commit |
+| `mechanical-impl-task-no-done` | `IMPL-*` task without a done line |
+| `mechanical-bad-size` | Document over its hard line cap |
+| `mechanical-bad-frontmatter-key` | Frontmatter key the standard does not allow |
 
-Run: `python3 skills/spec-review/tests/run_case_checks.py` (expect **6** mechanical cases).
+Run: `python3 skills/spec-review/tests/run_case_checks.py` (expect **12**: 11 planted-defect cases + `mechanical-clean-pos`; TST-H).
 
-Semantic / severity cases (TST-H full): **`../EXPECTED-YAML.md`** (`semantic:` block); not run in CI yet.
+Semantic / severity cases (TST-H full, 5 planned): **`../EXPECTED-YAML.md`** (`semantic:` block); not written yet — they need a judge runner that runs spec-review on the input.

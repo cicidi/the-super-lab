@@ -4,14 +4,19 @@ type: prd
 state: draft
 health: active
 owner: cicidi
-last_verified: 2026-11-04
+version: "1.0.13"
+last_verified: 2026-11-24
 ---
 
 # Spec-Driven Development — PRD
 
 ## Overview
 
-本 PRD 定义 spec-driven development：用 PRD、decision-history、design 篇、impl-plan、test-plan 五篇，把有门槛的问题分析清楚，并由 spec-write 与 spec-review 执行（ARD-AJ）。
+这份 PRD 说明我们要做什么：一套「先写清楚 spec，再让 AI 去做」的方法，叫 spec-driven development（下文简称 SDD）。
+
+SDD 用五篇文档把一个有门槛的问题分析清楚：PRD（要做什么）、decision-history（做过哪些决定）、design（怎么做）、impl-plan（按什么顺序做）、test-plan（怎么验证做对了）。写文档由 spec-write 这个 skill 负责，检查文档由 spec-review 负责（[ARD-AJ](../decision-history/spec-driven-development-decision-history.md#ard-aj)）。
+
+文中的缩写和术语，例如 skill、ARD、gold，在 [parent design 附录：术语表](../design/spec-driven-development-design.md#glossary) 里有解释。
 
 ## Problem Statement
 
@@ -81,80 +86,88 @@ AI 要把大问题拆成小的：能查的 AI 自己查（合规、财报、交�
 
 ## Goals and Success Metrics
 
-- 目标：任何有门槛的难题都能拆成可查、可决策、可执行的小问题。
-- 验收：spec-write 与 spec-review 的测试结果（test-plan）；这不是产品 success metric。
-- PRD-G 的产品级 success metric 与 baseline 仍 deferred（ARD-N）。
+**目标：** 任何有门槛的难题，都能拆成三类小问题：AI 能查的、人要决定的、可以交给 AI 执行的。拆完写成一套本科生读得懂、前后一致、结论有依据的 spec。
+
+**验收方式：** 看 test-plan 的测试结果，包括机械检查、对 iPhone 案例的评测分数、可读性测试（[test-plan](../test-plan/spec-driven-development-test-plan.md)）。这些是评测指标，用来判断 skill 好不好用。
+
+**产品级成功指标：** 例如「用了 SDD 的人，决策是否真的更好」。怎么量、基线是多少，目前还定不下来，延后处理（PRD-G，[ARD-N](../decision-history/spec-driven-development-decision-history.md#ard-n)）。
 
 ## User Stories
 
-- 作为写 spec 的人，我希望先被 interview，把已知/未知/盲区问出来。
-- 作为 reviewer，我希望机械 MUST 和语义缺陷都能检出，且建议可执行。
-- 作为执行者，我希望 spec 能落到 design/impl-plan，并有 mock 执行与可追溯证据。
+- 作为写 spec 的人，我希望 AI 先追问我，把我已知的、未知的和没想到的盲区都问出来。
+- 作为审 spec 的人，我希望格式错误和内容问题都能被找出来，而且每条修改建议都能直接照着做。
+- 作为执行的人，我希望 spec 能一路落到 design 和 impl-plan，执行时先用 mock 演练，每个结论都能查到来源。
 
 ## Solution
 
-**Spec-driven development**
+我们不重新解释什么是 spec-driven。这里要做的是一组配合使用的 skill，让 AI 按固定的方法把一个具体问题分析清楚。
 
-我们不重复什么是 spec-driven。这里要做的是开发一些 skill；这些 skill 会在一起工作，而不是单个 skill。这些 skill 的目标是：通过一组 skill，把具体问题分析清楚。
+**PRD、decision-history、design 三篇是反复打磨的循环**，不是只写一遍的直线。三篇打磨到足够稳定之后，再从 design 分别总结出 impl-plan 和 test-plan。这两篇互不依赖，可以同时写。
 
-**PRD、decision history、design 篇 是互相打磨的循环**，不是只走一遍的直线；循环收敛到「够稳」后，**impl plan** 与 **test plan** 各自独立：都从 **design 篇** 总结出来，彼此不串行依赖。
-
-1. **PRD** — 我们到底要做什么、解决什么；当前的 limitation 是什么；preference 是什么；timeline、各种 resource、tool 都有什么。design 篇 或 decision 暴露缺口时，回到 PRD 改 requirement。
-2. **Decision history** — 基于 PRD 作出 decision；任何跟产品方向相关的 decision 先 update decision history（约 50% AI、50% 人）。新 decision 可能改 PRD 范围；spec 里的 trade-off 也可能要求补 decision。
-3. **Design 篇** — 与 PRD、decision 并行迭代：写设计（技术方案、contract、tool 等；HLD/LLD 不在此展开）。设计问清 problem、或发现 decision 不够，回到 1/2 继续磨。
-4. **Impl plan** — 从 design 篇 总结实现：先做什么、后做什么；各个 task 的细节、准备工作等（不依赖 test plan 先写完）。
-5. **Test plan** — 从 design 篇 总结验证：任务完成标准、可用性检查、regression guard（不依赖 impl plan 先写完）。
+1. **PRD**：要做什么、解决什么问题；有哪些限制、偏好、时间要求、可用的资源和工具。design 或某个决定暴露出缺口时，回到 PRD 修改需求。
+2. **Decision-history**：根据 PRD 做出的决定。凡是影响方向的决定，先记进 decision-history。这一步大约一半靠 AI 整理、一半靠人拍板。新决定可能改变 PRD 的范围；design 里的取舍也可能需要补一条决定。
+3. **Design**：和 PRD、decision-history 一起迭代，写技术方案、接口约定、要用的工具等。写 design 时发现问题没想清楚、或决定不够，就回到第 1 步或第 2 步继续打磨。
+4. **Impl-plan**：从 design 总结出实现步骤，包括先做什么、后做什么、每个任务的细节和准备工作。不需要等 test-plan 写完。
+5. **Test-plan**：从 design 总结出验证方法，包括每个任务怎么算完成、可用性检查、防止改坏旧功能的回归检查。不需要等 impl-plan 写完。
 
 ## Functional Requirements
 
-**PRD-A** — 做一个 pipeline，基于现在现有的 pipeline 做一些改进。
+**PRD-A**：写 spec 的流程沿用现有流程并加以改进，不另造一套。流程分哪几个阶段、每个阶段做什么，写在 [pipeline design](../features/pipeline/design/pipeline-design.md)。
 
-**PRD-B** — 做一些 skill；这些 skill 其实就是优质 prompt，或其他 popular 的 prompt，引导 AI 怎么工作：完成 spec 的书写、命名、校验、更新。
+**PRD-B**：提供一组 skill。skill 本质上是写得好的 prompt，引导 AI 完成 spec 的四件事：书写、命名、检查、更新。
 
-**PRD-C** — 每次改动不超过 **10 行** **或** **200 字符**；超出拆多次，restructure 需 human 授权。
+**PRD-C**：AI 每次改 `docs/` 下的文档，必须同时满足两条：不超过 10 行，并且不超过 200 字符；新建一个文件不算在内（[ARD-CE](../decision-history/spec-driven-development-decision-history.md#ard-ce)）。更大的改动拆成多次；确实需要一次大改（restructure）时，必须有人明确授权，并记一条 ARD。
 
-**PRD-D** — 文档大小限制在 1000 行；太大几乎没法 maintain。
+**PRD-D**：每篇文档有行数上限，最长不超过 1,000 行，因为太长的文档几乎没法维护。decision-history 例外，不设上限：它只增不减（[ARD-E](../decision-history/spec-driven-development-decision-history.md#ard-e)）。各类文档的具体上限见 document-standard 的 DSGN-B。
 
-**PRD-E** — 文档的文件组织架构、folder 关系。
+**PRD-E**：规定文档放在哪个目录、文件叫什么名字、目录之间是什么关系（parent、sub-feature、peer）。具体规则见 document-standard 的 DSGN-B。
 
-Additional constraints:
+**PRD-F**：多个人的决定互相冲突时，以 decision-history 里时间较晚的那条为准；看不出先后，就问用户。AI 不猜测谁说了算。
 
-**PRD-F** — 多人 decision 冲突时，以 decision history 里时间较晚的那条为准。看不出先后就问用户。AI 不猜测谁为准。
+**PRD-G**（延后）：产品级成功指标和基线，暂时定不下来，见 [ARD-N](../decision-history/spec-driven-development-decision-history.md#ard-n)。test-plan 里的分数是评测指标，不是产品成功指标。
 
-**PRD-G** — （open）产品级 success metric 与 baseline — deferred，见 **ARD-N**。test-plan 的分数是 eval 指标，不是产品 success metric。
+**PRD-H**：流程里的每一步，优先使用已经流行的 skill，不重新发明。
 
-**PRD-H** — Spec-driven development 的 workflow 尽量使用 popular skill，不要自己重新发明。
+**PRD-I**：每项改动都要能验证。实在验证不了的，在 spec 里标为 `Unverified` 并写明原因；标了的项不作为 test-plan 的通过条件。
 
-**PRD-I** — 修改需要验证；没有能验证的，都需要在 spec 里面标注上。标明后不作为 test plan 的通过条件。
+**PRD-J**：写或改 feature spec 时，由 spec-write 按标准判断要新建哪篇、或要改哪几篇；提交前，由 wayfinder 询问是否先跑 spec-review（PIPE-A-D）。写作进度记在 wayfinder 的地图目录里，目录建好前后的位置见 pipeline design 的 PIPE-H（[ARD-CH](../decision-history/spec-driven-development-decision-history.md#ard-ch)）。
 
-**PRD-J** — 写和改 feature spec 时，spec-write 按标准判断新建或修改哪几篇；提交前 spec-review 询问。State：feature 确定前 CLAUDE.local，之后 `docs/features/<f>/raw/state/`（ARD-AJ）。
+**PRD-K**：适用范围不限于软件，任何有门槛的难题都用同一套 spec。四个例子：盖 shed（合规、成本、施工）、北京旅游（行程、住宿、风险、预算）、看懂一道著名数学题（零基础一步步学）、分析一只股票（基本面、财报、新闻，每个结论有依据）。这四个例子不在本仓库建 gold（[ARD-CJ](../decision-history/spec-driven-development-decision-history.md#ard-cj)）。
 
-**PRD-K** — 范围不限软件：任何有门槛的难题走同一套 spec。例子四个：盖 shed（合规、成本、施工）、北京旅游（行程、住宿、风险、预算）、看懂著名数学题（零基础逐步学）、分析股票（基本面、财报、新闻，有理有据）。这轮不在本仓库建 gold，放到别处。
+**PRD-L**：每个子问题都标明由谁处理：AI 查、人决定、或 AI 查完后人决定。人没有问到的盲区和风险，AI 必须主动提出来。
 
-**PRD-L** — 每个子问题标明归属：AI 查、人决定、或 AI 查完后人决定。人没问到的盲区和风险，AI 必须主动提出。
+**PRD-M**：文档要让人读懂，这是硬需求，而且是通过条件。交付前，由一个 LLM（大语言模型）扮演本科水平的程序员，只读这一篇文档和术语表，回答从文档里抽出的问题；答错太多，或者有文档里没解释、术语表里也没有的术语，就不算交付（[ARD-BO](../decision-history/spec-driven-development-decision-history.md#ard-bo)）。具体门槛见 test-plan 的 TST-V。
 
-**PRD-M** — 把人讲明白是硬需求。交付前由一个 LLM 打分：它假设自己是一个本科水平的程序员真人，只按能不能看懂来判；看不懂不算交付。测试验不了，不作为通过条件。
+**PRD-N**：正式 spec 里的每个结论，都要能追溯到查到的事实，例如法规条文、财报、新闻、定义，不靠猜。查不到的写 `UNKNOWN`。评测时，AI 回答问题只能用 context 包里给的信息。
 
-**PRD-N** — 正式 spec 的结论必须能追溯到查到的事实（合规条文、财报、新闻、定义），不靠猜；查不到的标成未知。评测时答案只能来自 context 包。
+**PRD-O**：执行阶段不真下单、不真订票。所有例子共用一个 mock MCP 服务器，提供几个固定的工具；客户端调用后打印出调用记录，就算交付成功。
 
-**PRD-O** — 执行不真下单、不订票。一个共用 mock MCP server，若干固定工具；client call 打出 log 即算交付成功。
+**PRD-P**：最终交付物是 spec-write、spec-review，以及负责进度规则的 wayfinder 三个 skill（[ARD-CH](../decision-history/spec-driven-development-decision-history.md#ard-ch)）。用它们写出来的 spec，要满足 PRD-K 到 PRD-O。
 
-**PRD-P** — 最终交付是 spec-write、spec-review，以及 SPEC-STANDARD.md 与 SPEC-PRESENTATION.md（ARD-AJ）。写出的 spec 满足 PRD-K 到 PRD-O。
-
-**PRD-Q** — 书写、命名、校验、更新，以及 PRD-K 到 PRD-O，都是需求。spec-write 与 spec-review 不限于这几件事。两份 skill 正文写出四个例子：盖 shed、北京旅游、数学题、股票。好不好用只看测试。
+**PRD-Q**：书写、命名、检查、更新，以及 PRD-K 到 PRD-O，都是需求；spec-write 和 spec-review 能做的事不限于这几件。两个 skill 的正文里都要写出四个例子：盖 shed、北京旅游、数学题、股票。skill 好不好用，只看测试结果。
 
 ## Out of Scope
 
-- 真实下单、订票、交易；执行只到 mock MCP log。
-- 多人 decision 的仲裁细则；按 decision-history 时间，仍看不出则问用户。
-- 本仓库不建非软件四例的 gold；例子写进 skill 正文，gold 放到别处。
-- 存量不合规文档的批量迁移。
-- skill / spec 的版本与迁移策略。
+- 真实下单、订票、交易。执行只做到 mock MCP 的调用记录。
+- 多人决定的细致仲裁规则，例如两个决定时间相同怎么办。目前只按 decision-history 的先后，看不出就问用户。
+- 在本仓库为四个非软件例子建 gold。例子写进 skill 正文，gold 放在别处。
+- 把已有的不合规文档批量迁移到新标准。
+- skill 和 spec 的迁移策略。版本只做来源标记：每次 build 把 PRD 的 `version` 末位加 1 再印进 skill（[ARD-CK](../decision-history/spec-driven-development-decision-history.md#ard-ck)）。
 
 ## Resources Needed
 
-- spec-write、spec-review、两份标准 + 一份 test plan;无外部服务、无数据库。
-- 评测需 `deepseek-flash` API 与 3 次 run 的预算;runs/reports 不入库(ARD-AD)。
+- spec-write、spec-review、wayfinder 三个 skill，前两个要读的三份标准文件（[ARD-CH](../decision-history/spec-driven-development-decision-history.md#ard-ch)），和一份 test-plan。不需要数据库。外部服务：评测用的 `deepseek-flash` API，以及发布网站用的 GitHub Actions 和 GitHub Pages（[ARD-CD](../decision-history/spec-driven-development-decision-history.md#ard-cd)）。
+- 评测需要 `deepseek-flash` 的 API，以及生成 gold 跑 3 次、复核跑 5 次的费用。跑分结果和报告不提交，复核结论文件 `judgments/` 要提交（[ARD-CJ](../decision-history/spec-driven-development-decision-history.md#ard-cj)）。
+
+进入下游前，PRD 要写清的五项（pipeline design 的 PIPE-E-B）：
+
+| 项 | 本 PRD |
+|---|---|
+| 限制 | 每次改动不超过 10 行并且不超过 200 字符（PRD-C）；文档行数有上限（PRD-D） |
+| 偏好 | not apply |
+| 时间 | not apply |
+| 资源 | 上面列出的 `deepseek-flash` API 和评测费用 |
+| 工具 | spec-write、spec-review、`run_spec_checks.py` 检查脚本、mock MCP 服务器（PRD-O）、发布网站的 GitHub Actions |
 
 ## Change Log
 
@@ -174,3 +187,15 @@ Additional constraints:
 | 2026-11-04 | PRD-C 改为硬上限 10 行或 200 字符；PRD-G 区分 eval 分数与产品 metric；Solution 术语改 design 篇 |
 | 2026-11-07 | PRD-J/P/Q 与 Resources：入口为 spec-write 与 spec-review（ARD-AJ） |
 | 2026-11-07 | Overview 与 Goals 验收改为 spec-write 与 spec-review（ARD-AJ） |
+| 2026-11-18 | PRD-P：交付只有 spec-write 与 spec-review（ARD-BH） |
+| 2026-11-20 | PRD-M 改为通过条件（ARD-BO）；PRD-A、B、D、E 改写成可检查的句子，PRD-D 与 DSGN-B 的行数上限对齐；PRD-P 去掉删除线（ARD-BM）；Overview、Goals、Solution 改为完整句子并链到术语表（ARD-BK） |
+| 2026-11-20 | 第 1 轮审查后：PRD-C 改为两条都要满足（ARD-BP）；PRD-D 写明 decision-history 例外；PRD-M 与 TST-V 对齐，允许查术语表；PRD-J 链到 ARD-BT；Problem Statement 保留原话（ARD-BS） |
+| 2026-11-20 | 第 2、3 轮审查后：Resources 写明三份标准文件；PRD-P 改链 ARD-BX（ARD-BH 已被它取代） |
+| 2026-11-20 | Resources Needed 加上 PIPE-E-B 要求的五项；偏好、时间写 not apply |
+| 2026-11-24 | Out of Scope：版本只做来源标记（ARD-CC） |
+| 2026-11-24 | Resources：列出外部服务 deepseek API、GitHub Actions 和 Pages（ARD-CD） |
+| 2026-11-24 | PRD-C：新建文件不算在改动上限内（ARD-CE） |
+| 2026-11-24 | 第 8 轮审查后：PRD-J、PRD-P、Resources 跟上 ARD-CH；复核次数跟上 ARD-CJ；改链 ARD-CE、ARD-CK |
+| 2026-11-24 | 第 9 轮审查后：PRD-K 的链接改到重述它的 ARD-CJ |
+| 2026-11-24 | 第 13 轮审查后：写明复核结论文件 judgments/ 要提交 |
+| 2026-11-24 | 第 15 轮审查后：PRD-J 写明由 wayfinder 询问审查 |
