@@ -181,7 +181,7 @@ Phase 4 判断"要不要更新"用的是文件修改时间（`-nt`），不比�
 |---|---|---|---|
 | 多 agent 评审、反复迭代 skill-create（DSGN-P） | 2026-06-10 做过一轮，记录已移出 git | 只做过一次，没有可重复的流程 | ses_14aa890f；`d9baa43`；`add4f31` |
 | MUST 质量门挡住提交（DSGN-V） | 门只写在文字里；`/skill create` 没有运行门的步骤 | 26 个里 13 个缺 Quality Gates 一节，12 个超过 150 行 | 第 0096、0105、0126 条；`skills/skill/SKILL.md` |
-| 合并前跑格式校验（入口 PRD 的 F11、F15；test-plan 的 CI-01 到 CI-03） | `tests/test_skills.sh` 只扫旧目录，不进 CI | `skills/` 下的 17 个 skill 从未被这个脚本校验过 | [PRD](../prd/skill-factory-prd.md)；[test-plan](../test-plan/skill-factory-test-plan.md)；`559834a` |
+| 合并前跑格式校验（入口 PRD 的 F11、F15；test-plan 的 CI-01 到 CI-03） | 2026-11-24 起改用 `tools/check_skills.py`（skill 的 ARD-K），`tests/test_skills.sh` 已删；仍不进 CI | 2026-11-24 跑 check_skills.py：27 个 skill，0 处问题 | [PRD](../prd/skill-factory-prd.md)；[test-plan](../test-plan/skill-factory-test-plan.md)；`559834a` |
 | 改 skill 同时写测试、跑到通过（DSGN-R） | 只有 `spec-*` 有测试和评测 | SDD 以外的 skill 没有测试 | 2891600e；`68c52ce`；`.github/workflows/sdd-mechanical.yml` |
 | 导入时审查内容安全（入口 PRD 的 N2） | 导入只补格式 | 没有内容审查 | [skill 的 QUES-B](../features/skill/design/skill-design.md) |
 | 装进 Claude Code、OpenCode、Cursor（DSGN-T） | `install.sh` Step 11b 部署全部 26 个 | 符合 | ef7cf4dd；`a3d08d7` |
@@ -204,3 +204,4 @@ Phase 4 判断"要不要更新"用的是文件修改时间（`-nt`），不比�
 | Date | Change |
 |------|--------|
 | 2026-11-24 | 初版：从会话、两个仓库的代码和本机运行结果整理 skill 的验证方式、安装与升级流程，以及目标与现状对照 |
+| 2026-11-24 | 校验一行改为现状：test_skills.sh 已删，改用 check_skills.py |

@@ -69,10 +69,11 @@ To deploy skills to your IDEs, use the walter-worker install script or `coworker
 ## Testing
 
 ```bash
-bash tests/test_skills.sh
+python3 tools/check_skills.py            # all skills
+python3 tools/check_skills.py skills/bug  # one skill
 ```
 
-Validates all skills against the-super-lab conventions: frontmatter completeness, required sections, prohibited patterns, duplicate names, and more.
+Checks every SKILL.md: frontmatter (name matches the directory, description set), references to skills that do not exist or were retired, relative links, and repo paths.
 
 ## Conventions
 
