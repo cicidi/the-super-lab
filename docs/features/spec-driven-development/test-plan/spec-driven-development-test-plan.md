@@ -91,7 +91,7 @@ last_verified: 2026-11-24
 
 **分数的用途：** 分数 1 和分数 2 是评测指标，不是产品的成功指标（PRD-G、[ARD-N](../decision-history/spec-driven-development-decision-history.md#ard-n)）。
 
-**gold 增长：** 运行中发现新的好例子或坏例子，追加到 `annotations.yaml`，gold 版本号加一，`added_in` 写上新版本。报告里必须写明 gold 版本（[ARD-S](../decision-history/spec-driven-development-decision-history.md#ard-s)）。
+**gold 增长：** 运行中发现新的好例子或坏例子，追加到 `annotations.yaml`，gold 版本号加一，`added_in` 写上新版本。原地追加：`eval.yaml` 的 `gold.version` 和 `gold.cases.iphone.version` 一起改，路径 `gold/v1` 不变。报告里必须写明 gold 版本（[ARD-S](../decision-history/spec-driven-development-decision-history.md#ard-s)）。
 
 ## Test Cases
 
@@ -125,7 +125,7 @@ last_verified: 2026-11-24
 
 ### TST-H — spec-review 找问题的能力
 
-**目标：** 问题找全，而且不误报。**输入：** 11 个机械案例和 5 个语义案例（语义案例还没写，这一半暂时跑不了，标为 Unverified）；一份干净的范例。**通过条件：** 埋进去的每个问题都被找出，并引用对应的 DSGN 或 MUST 编号；干净的范例上没有严重度 3 及以上的问题；严重度 1、2 的问题不拿出来讨论。**判定：** 比对编号集合。
+**目标：** 问题找全，而且不误报。**输入：** 11 个机械案例和 5 个语义案例（语义案例还没写，这一半暂时跑不了，标为 Unverified）；一份干净的范例。**通过条件：** 埋进去的每个问题都被找出，并引用对应的检查名（check id，经 `must_registry.yaml` 对应到 MUST 编号；和 `expected.yaml` 里写的一样）；干净的范例上没有严重度 3 及以上的问题；严重度 1、2 的问题不拿出来讨论。**判定：** 比对编号集合。
 
 ### TST-I — spec-review 修改建议的质量
 
@@ -145,7 +145,7 @@ last_verified: 2026-11-24
 
 ### TST-M — 改了标准或 gold 之后同步测试
 
-**目标：** 标准或 gold 变了，测试要跟着变。**输入：** 改了 `SPEC-STANDARD.md` 或 design；或者运行中发现了新的好例子、坏例子。**通过条件：** design 改了，同一批重跑 TST-A，并更新 MUST 清单和反例；加了新标注，gold 版本号加一。**判定：** 检查流程是否执行，以及覆盖率。
+**目标：** 标准或 gold 变了，测试要跟着变。**输入：** 改了 `SPEC-STANDARD.md` 或 design；或者运行中发现了新的好例子、坏例子。**通过条件：** design 改了，同一批重跑 TST-A，并更新 MUST 清单和反例；加了新标注，按上面「gold 增长」改两个版本键，路径不变。**判定：** 检查流程是否执行，以及覆盖率。
 
 ### TST-N — parent 五篇齐全，sub-feature 不要求
 
@@ -338,3 +338,4 @@ document-standard 的 reader PRD：
 | 2026-11-24 | 第 20 轮审查后：eval.yaml 键表跟上实际结构 |
 | 2026-11-24 | 第 22 轮审查后：TST-S 移到生成 gold 之前；TST-K 报告加 TST-V 结果 |
 | 2026-11-24 | 第 23 轮审查后：TST-C/D 只在首次或输入变了时做；「对照运行」和「基线」分开 |
+| 2026-11-24 | 第 24 轮审查后：TST-H 引用检查名（和 spec-review、expected.yaml 一致）；gold 升版写明改哪两个键、路径不变 |
