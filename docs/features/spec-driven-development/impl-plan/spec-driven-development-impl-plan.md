@@ -269,7 +269,7 @@ last_verified: 2026-11-24
 
 ## IMPL-AA — 生成并整理 gold v1
 
-**目标：** 按 TST-C 用 iPhone 案例跑 3 次，再按 TST-D 整理出范例和 `gold/v1/annotations.yaml`。现状：已用当时的 spec-write 完成；IMPL-B 之后改了 spec-write，就按 TST-M 重跑并建立新基线。
+**目标：** 按 TST-C 用 iPhone 案例跑 3 次，再按 TST-D 整理出范例和 `gold/v1/annotations.yaml`。现状：已完成。spec-write 之后的改动由 IMPL-E 的 TST-E 对照 gold v1 检查，不重做 gold；只有需求或背景输入变了才重跑 TST-C、TST-D。
 
 **依赖：** IMPL-B、IMPL-D、IMPL-J。**挡住：** IMPL-E。
 
@@ -333,3 +333,4 @@ last_verified: 2026-11-24
 | 2026-11-24 | 第 20 轮审查后：IMPL-N 先于 IMPL-B（契约是权威）；新增 IMPL-AA（gold v1）、IMPL-AB（mock MCP），都已完成 |
 | 2026-11-24 | 第 21 轮审查后：IMPL-N 只管契约，四个例子并入 IMPL-B；IMPL-W 等 IMPL-N；IMPL-AA 加依赖 IMPL-B、IMPL-J；IMPL-AB 不再挡住 IMPL-E |
 | 2026-11-24 | 第 22 轮审查后：IMPL-AA 写明 gold v1 的基线条件；IMPL-E 加 TST-V |
+| 2026-11-24 | 第 23 轮审查后：IMPL-AA 改正：spec-write 改动由 TST-E 对照 gold v1，不重做 gold |

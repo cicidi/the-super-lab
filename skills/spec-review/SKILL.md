@@ -22,12 +22,12 @@ metadata:
     - check work
     - accept work
     - challenge this
-  spec_bundle_version: "1.0.19"
+  spec_bundle_version: "1.0.20"
   spec_built_at: "2026-11-24"
-  spec_git_sha: "311ec00"
+  spec_git_sha: "4d46e9d"
 ---
 <!-- SPEC-BUNDLE-START -->
-> **SDD spec bundle** `1.0.19` · built 2026-11-24 · git `311ec00`
+> **SDD spec bundle** `1.0.20` · built 2026-11-24 · git `4d46e9d`
 <!-- SPEC-BUNDLE-END -->
 
 # spec-review

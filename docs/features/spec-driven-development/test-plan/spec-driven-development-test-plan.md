@@ -39,6 +39,7 @@ last_verified: 2026-11-24
 | requirement | 固定的需求：「给我推荐一台 iPhone，并帮我购买」 |
 | 复核 | 同一个模型独立裁决 5 次，得出最终的通过或不通过（[ARD-CJ](../decision-history/spec-driven-development-decision-history.md#ard-cj)）。`eval.yaml` 里对应的键叫 `checkers`。它和 Python 检查脚本是两回事 |
 | 基线 | 只装被测 skill、不加任何辅助 skill 的配置，即 `grill.skills: []` |
+| 对照运行 | 同一 gold 版本的上一次运行，用来判断这次有没有退步；和「基线」不是一回事 |
 
 ## Test Assets
 
@@ -128,7 +129,7 @@ last_verified: 2026-11-24
 
 ### TST-I — spec-review 修改建议的质量
 
-**目标：** 修改建议是对的。**输入：** TST-H 找出的问题。**通过条件：** 把建议和 `expected_fix` 比较：照着建议改了之后，问题消失，而且没有引入新的 MUST 违反。**判定：** 判分模型；报告「建议正确的条数 / 找出的条数」。这个比例不能低于同一 gold 版本的上一次运行；第一次运行建立基线。
+**目标：** 修改建议是对的。**输入：** TST-H 找出的问题。**通过条件：** 把建议和 `expected_fix` 比较：照着建议改了之后，问题消失，而且没有引入新的 MUST 违反。**判定：** 判分模型；报告「建议正确的条数 / 找出的条数」。这个比例不能低于同一 gold 版本的对照运行（上一次运行）；第一次运行就是之后的对照运行。
 
 ### TST-J — 不同评测配置
 
@@ -226,7 +227,7 @@ last_verified: 2026-11-24
 1. TST-A：MUST 清单覆盖率不到 100% 就停。
 2. TST-B：检查脚本失效就停。
 3. TST-O、TST-P、TST-V：design 的覆盖、证据、可读性。这一步的 TST-V 只测 SDD 自己的文档。
-4. TST-S，然后 TST-C、TST-D：生成 gold 前先确认 spec-write 正文齐全；第一次运行，或者 gold 升版时。
+4. TST-S，然后 TST-C、TST-D：生成 gold 前先确认 spec-write 正文齐全；只在第一次运行、或需求和背景输入变了时做。gold 升版（追加标注）走 TST-M。
 5. TST-G、TST-N、TST-R、TST-T、TST-U、TST-W、TST-X、TST-Y、TST-Z、TST-AA。
 6. TST-E、TST-F，然后对 TST-C、TST-E 里 spec-write 写出的文档跑 TST-V。
 7. TST-H，然后 TST-I。
@@ -250,7 +251,7 @@ last_verified: 2026-11-24
 | spec-write 可以发布 | TST-E 分数 1 满分、分数 2 不退步；TST-F 四种输入全部通过；TST-L 5 次里至少 4 次通过；TST-K 报告结构齐全 |
 | spec-review 可以发布 | TST-G 没有差异；TST-H 找出 100%、误报 0；TST-I 不低于上一次；TST-L 5 次里至少 4 次通过 |
 | wayfinder 可以发布 | TST-AA 通过 |
-| gold 升版 | TST-M 追加标注后，重跑 TST-E 和 TST-H，建立新的基线 |
+| gold 升版 | TST-M 追加标注后，重跑 TST-E 和 TST-H，作为新版本的对照运行 |
 
 ## Traceability
 
@@ -336,3 +337,4 @@ document-standard 的 reader PRD：
 | 2026-11-24 | 第 19 轮审查后：Test Scope 写明 TST-AA 覆盖阶段编排的规则文字 |
 | 2026-11-24 | 第 20 轮审查后：eval.yaml 键表跟上实际结构 |
 | 2026-11-24 | 第 22 轮审查后：TST-S 移到生成 gold 之前；TST-K 报告加 TST-V 结果 |
+| 2026-11-24 | 第 23 轮审查后：TST-C/D 只在首次或输入变了时做；「对照运行」和「基线」分开 |
