@@ -1,4 +1,4 @@
-<!-- SDD reader · source .md · git 8841bf0 -->
+<!-- SDD reader · source .md · git a8cc1e8 -->
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light">
 <head>
@@ -4486,7 +4486,7 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 <li>新名字已经检查过撞车（DSGN-K）。</li>
 <li>正文改动遵守 DSGN-F 的「改已有正文」规则。</li>
 <li>结论有依据，查不到写 <code>UNKNOWN</code>（pipeline design 的 PIPE-L）。</li>
-<li>DSGN-E 里标了 MUST 的四条都满足：impl-plan 的任务写明依赖、挡住和完成标准；引用代码写明 commit；每个 feature 只有一份未决问题清单；文档能让本科程序员读懂。</li>
+<li>DSGN-E 里所有标了 MUST 的条目都满足，例如：impl-plan 的任务写明依赖、挡住和完成标准；引用代码写明 commit；每个 feature 只有一份未决问题清单；文档能让本科程序员读懂。</li>
 <li>本地翻译副本不提交（DSGN-C）；改编号时留对照表和旧锚点（DSGN-F）；每条 ARD 都有说明（DSGN-J）。</li>
 <li>图不写正文没有的事实，也不和正文矛盾（DSGN-E 的「插图」）。</li>
 </ul>
@@ -4783,6 +4783,10 @@ final_date: YYYY-MM-DD   # state 是 final 时必填
 <tr>
 <td>2026-11-24</td>
 <td>第 15 轮审查后：DSGN-D 的 book 更新改为 commit 前必须重建，去掉 draft 例外（ARD-CF）</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 16 轮审查后：DSGN-M 不再写错 DSGN-E 的 MUST 条数</td>
 </tr>
 </tbody></table>
 <hr><p class="src-inline">Source: <code>features/document-standard/design/document-standard-design-spec-reader-html.md</code></p>

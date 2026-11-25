@@ -1,7 +1,7 @@
 model: deepseek-flash
 runs: 5
 target: gold
-corpus_sha: d5eaa110ca6e54ae
+corpus_sha: 546becab07988fc2
 items:
 - id: GOOD-A
   verdict: pass
@@ -11,9 +11,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: Only historical mappings like PIPE-A1→PIPE-A-A appear in pipeline-design.md;
-    current IDs in headings/tables use letter prefixes.
-  confidence: 0.88
+  evidence: decision-history Log uses ARD-CL/CK/...; parent PRD uses PRD-A..Q; DSGN-F
+    only lists PRD-1/FR-3 as forbidden examples.
+  confidence: 0.94
 - id: GOOD-B
   verdict: pass
   votes:
@@ -22,8 +22,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: parent design DSGN-A–E and pipeline PIPE-A/K/L/I cite all parent PRD ids;
-    PRD-G is exempt (test-plan TST-O).
+  evidence: test-plan TST-O traces parent PRD-A..Q to DSGN/PIPE clauses with only
+    PRD-G deferred; designs cite PRD-A..Q.
   confidence: 0.92
 - id: GOOD-C
   verdict: pass
@@ -33,9 +33,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: docs/features/spec-driven-development contains prd, design, impl-plan,
-    test-plan, decision-history entries.
-  confidence: 0.97
+  evidence: docs/features/spec-driven-development has prd/, design/, decision-history/,
+    impl-plan/, test-plan/, each with committed spec-driven-development-*.md.
+  confidence: 0.99
 - id: GOOD-D
   verdict: pass
   votes:
@@ -44,9 +44,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: 'Every target doc''s final ## heading is Change Log, e.g. test-plan/spec-driven-development-test-plan.md
-    and design/spec-driven-development-design.md.'
-  confidence: 0.95
+  evidence: Parent PRD/design/impl-plan/test-plan, decision-history, pipeline and
+    document-standard docs all end with a level-2 Change Log heading.
+  confidence: 0.96
 - id: GOOD-E
   verdict: pass
   votes:
@@ -55,9 +55,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: spec-driven-development-design.md has a 子问题归属 table with allowed owners
-    and ARD evidence per row.
-  confidence: 0.97
+  evidence: spec-driven-development-design.md has '### 子问题归属' with rows using AI 查/人决定/AI
+    查完人决定 and ARD-* evidence.
+  confidence: 0.98
 - id: GOOD-F
   verdict: pass
   votes:
@@ -66,9 +66,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: skills/spec-write/SKILL.md and skills/spec-review/SKILL.md both list 盖
-    shed, 北京旅游, 数学题, 股票.
-  confidence: 0.97
+  evidence: skills/spec-write/SKILL.md and skills/spec-review/SKILL.md Example Domains
+    list 盖 shed, 北京旅游, 数学题, 股票.
+  confidence: 0.99
 - id: BAD-A
   verdict: pass
   votes:
@@ -77,9 +77,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: docs/INDEX.md links all committed target entries; no missing or unresolved
-    target INDEX links found.
-  confidence: 0.95
+  evidence: docs/INDEX.md links every target entry file (parent and document-standard/pipeline
+    entries); target links resolve in corpus.
+  confidence: 0.92
 - id: BAD-B
   verdict: pass
   votes:
@@ -88,8 +88,8 @@ items:
   - pass
   - pass
   - pass
-  evidence: Target prd/design/impl-plan/test-plan docs stay under hard caps; decision-history
-    is exempt (DSGN-B).
+  evidence: document-standard DSGN-B caps prd 800/design 1000/test-plan 800; target
+    non-exempt docs are under caps, decision-history exempt.
   confidence: 0.9
 - id: BAD-C
   verdict: pass
@@ -99,9 +99,9 @@ items:
   - pass
   - pass
   - pass
-  evidence: skills/spec-review/SKILL.md cites spec-driven-development-design-skill-contracts.md
-    and says the contract wins on conflict.
-  confidence: 0.98
+  evidence: skills/spec-review/SKILL.md 'Contract authority' cites docs/features/.../spec-driven-development-design-skill-contracts.md
+    and says contract wins on conflict.
+  confidence: 0.99
 - id: BAD-D
   verdict: pass
   votes:
@@ -110,6 +110,6 @@ items:
   - pass
   - pass
   - pass
-  evidence: decision-history Decision Log starts at ARD-CL 2026-11-24 and ends at
-    ARD-A 2026-09-25, newest first.
-  confidence: 0.98
+  evidence: Decision Log starts 2026-11-24 ARD-CL..CC, then 2026-11-20 down to 2026-09-25;
+    dates descend newest-first.
+  confidence: 0.97
