@@ -105,6 +105,7 @@ to-spec 第 2 步的"测试接缝确认"去掉（ARD-G）：设计接缝是新�
 硬规则做精确检查，一次不过就算失败：不经 spec-write 不写；无出处标 UNKNOWN；
 跑完后 `git status` 里没有 spec-ingest 改动的提交文档（PRD-B、ARD-L）。
 评测可以复用 `skills/spec-organize/tests/gold/` 的金标形式，具体放哪里由 SKILL.md 阶段定。
+2026-11-24 第二个夹具由协调者写期望表、另一个 agent 盲跑：一致率 100%，硬规则全过；它报的 6 处歧义已在 SKILL.md 补清（`skills/spec-ingest/tests/expected-routing-2.md`）。
 
 ## Out of Scope
 
@@ -161,3 +162,4 @@ spec-write 写入的改动是普通的 git 改动，可用 `git revert` 撤回�
 | 2026-11-24 | QUES-B：spec 本身的工单已定，见 spec-ticket 的 ARD-O |
 | 2026-11-24 | DSGN-B 写明理由条目的去向和文件内出处规则（写 SKILL.md 时补） |
 | 2026-11-24 | DSGN-D 加无 spec 目录的仓库（ARD-M）；QUES-A 已定（ARD-N） |
+| 2026-11-24 | Testing Decisions 记下盲测结果 |

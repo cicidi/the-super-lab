@@ -51,7 +51,8 @@ Accept only:
 Anything else (URL, audio/video, code directory, transcript service) → stop that input, say v1
 does not support it, and list it under "Rejected inputs". Future directions: URL, meeting
 transcripts, reverse-spec from code. A pdf with no text layer (scanned) → stop and report; do
-not guess its content.
+not guess its content. A URL written inside an accepted file is not followed: list it under
+"Rejected inputs" and do not make an item from that line.
 
 ## 2. Split into items, each with a source (DSGN-B)
 
@@ -80,7 +81,10 @@ Types and ID prefixes follow `skills/spec-organize/SPEC-STANDARD.md`.
 | an implementation step: order of work, what depends on what | impl-plan |
 | a test case: given an input, expect a result | test-plan |
 | an unanswered question | design (Open Questions, QUES) |
-| fits no row, or two rows | `待定` — the user picks at step 6 |
+| a background fact about a tool or environment (speed, limits, versions) | design |
+| fits no row, or two rows equally well | `待定` — the user picks at step 6 |
+
+Pick the most natural row when one is clearly better; use `待定` only for a real tie.
 
 Seams or testing remarks already in the input go to design (Testing Decisions) or test-plan.
 Do not design test seams yourself (ARD-G).
@@ -98,7 +102,8 @@ spec-write does that in its own steps (DSGN-E, ARD-I).
 
 ## 5. Write the sort table (DSGN-F, ARD-J)
 
-Path: `docs/features/<f>/raw/state/spec-ingest/<YYYY-MM-DD>-sort.md` (gitignored). Before the
+Path: `docs/features/<f>/raw/state/spec-ingest/<YYYY-MM-DD>-sort.md` (gitignored). `<f>` is the
+feature's path below `docs/features/`, e.g. `skill-factory/features/pic-to-txt`; the date is today's. Before the
 feature is confirmed: `docs/state/wayfinder-<working-name>/spec-ingest/<YYYY-MM-DD>-sort.md`.
 
 ```markdown
@@ -112,7 +117,7 @@ Rejected inputs: <input — reason> | none
 |---|---|---|---|---|
 | I-1 | … | 用户 2026-11-20（会话 abcd1234） | prd | <f> |
 
-UNKNOWN: I-n, …
+UNKNOWN: I-n, …   ← items whose source is UNKNOWN
 ```
 
 No target-file or action column. Permanent IDs (PRD-A …) are assigned by spec-write.
@@ -121,7 +126,7 @@ No target-file or action column. Permanent IDs (PRD-A …) are assigned by spec-
 
 Show the table and ask one question: is the sorting right? The user may change a row's type
 or feature, delete rows, and settle `待定` rows. Do not ask for new facts. No confirmation →
-stop; nothing is written.
+stop; no spec doc is written (the sort table stays as a local draft).
 
 ## 7. Hand off to spec-write (DSGN-F)
 
