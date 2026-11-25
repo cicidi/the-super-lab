@@ -70,7 +70,7 @@
 <p class="impl-verify"><strong>Verify:</strong> 有检查模块时 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-B">TST-B</a> 能跑；gold 的输入文件都在。</p>
 <h3 id="IMPL-E"><a class="id-ref" href="#IMPL-E">IMPL-E</a> — 自己跑一遍评测</h3>
 <p><strong>目标：</strong> 跑基线评测：<code>grill.skills: []</code>，输入是 iPhone 案例的需求和背景资料（<a href="../decision-history/spec-driven-development-decision-history.html#ard-bl">ARD-BL</a>）。</p>
-<p><strong>步骤：</strong> 新开分支 <code>eval/v1/&lt;run_id&gt;</code>；用 spec-write 写出一套 feature spec；跑 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-E">TST-E</a>、<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-F">TST-F</a>、<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-L">TST-L</a>，然后 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-K">TST-K</a>；失败时先改 spec。</p>
+<p><strong>步骤：</strong> 新开分支 <code>eval/v1/&lt;run_id&gt;</code>；用 spec-write 写出一套 feature spec；跑 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-E">TST-E</a>、<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-F">TST-F</a>，再对写出的文档跑 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-V">TST-V</a>，然后 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-L">TST-L</a>、<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-K">TST-K</a>；失败时先改 spec。</p>
 <p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-B">IMPL-B</a>、<a class="id-ref" href="#IMPL-D">IMPL-D</a>、<a class="id-ref" href="#IMPL-J">IMPL-J</a>、<a class="id-ref" href="#IMPL-P">IMPL-P</a>、<a class="id-ref" href="#IMPL-AA">IMPL-AA</a>；报告部分还依赖 <a class="id-ref" href="#IMPL-L">IMPL-L</a> 和 <a class="id-ref" href="#IMPL-X">IMPL-X</a>，可读性部分还依赖 <a class="id-ref" href="#IMPL-Q">IMPL-Q</a>。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-I">IMPL-I</a>。</p>
 <p class="impl-verify"><strong>Verify:</strong> 生成了 HTML 报告；分数按 test-plan 的 Scoring 计算。</p>
 <h3 id="IMPL-F"><a class="id-ref" href="#IMPL-F">IMPL-F</a> — 给人读的网页</h3>
@@ -210,7 +210,7 @@
 <p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-M">IMPL-M</a>。<strong>挡住：</strong> 无。</p>
 <p class="impl-verify"><strong>Verify:</strong> <code>must_registry_coverage.py</code> 不再列出没对应的检查脚本：每个要么对上 <span class="lvl lvl--must">MUST</span> 条目，要么在 <code>HELPER</code> 表里。2026-11-24 已完成。</p>
 <h3 id="IMPL-AA"><a class="id-ref" href="#IMPL-AA">IMPL-AA</a> — 生成并整理 gold v1</h3>
-<p><strong>目标：</strong> 按 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-C">TST-C</a> 用 iPhone 案例跑 3 次，再按 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-D">TST-D</a> 整理出范例和 <code>gold/v1/annotations.yaml</code>。现状：已完成。</p>
+<p><strong>目标：</strong> 按 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-C">TST-C</a> 用 iPhone 案例跑 3 次，再按 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-D">TST-D</a> 整理出范例和 <code>gold/v1/annotations.yaml</code>。现状：已用当时的 spec-write 完成；<a class="id-ref" href="#IMPL-B">IMPL-B</a> 之后改了 spec-write，就按 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-M">TST-M</a> 重跑并建立新基线。</p>
 <p><strong>依赖：</strong> <a class="id-ref" href="#IMPL-B">IMPL-B</a>、<a class="id-ref" href="#IMPL-D">IMPL-D</a>、<a class="id-ref" href="#IMPL-J">IMPL-J</a>。<strong>挡住：</strong> <a class="id-ref" href="#IMPL-E">IMPL-E</a>。</p>
 <p class="impl-verify"><strong>Verify:</strong> <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-C">TST-C</a>、<a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-D">TST-D</a> 通过。</p>
 <h3 id="IMPL-AB"><a class="id-ref" href="#IMPL-AB">IMPL-AB</a> — mock MCP 服务器</h3>
@@ -339,6 +339,10 @@
 <tr>
 <td>2026-11-24</td>
 <td>第 21 轮审查后：<a class="id-ref" href="#IMPL-N">IMPL-N</a> 只管契约，四个例子并入 <a class="id-ref" href="#IMPL-B">IMPL-B</a>；<a class="id-ref" href="#IMPL-W">IMPL-W</a> 等 <a class="id-ref" href="#IMPL-N">IMPL-N</a>；<a class="id-ref" href="#IMPL-AA">IMPL-AA</a> 加依赖 <a class="id-ref" href="#IMPL-B">IMPL-B</a>、<a class="id-ref" href="#IMPL-J">IMPL-J</a>；<a class="id-ref" href="#IMPL-AB">IMPL-AB</a> 不再挡住 <a class="id-ref" href="#IMPL-E">IMPL-E</a></td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 22 轮审查后：<a class="id-ref" href="#IMPL-AA">IMPL-AA</a> 写明 gold v1 的基线条件；<a class="id-ref" href="#IMPL-E">IMPL-E</a> 加 <a class="id-ref" href="../test-plan/spec-driven-development-test-plan.html#TST-V">TST-V</a></td>
 </tr>
 </tbody></table></div>
       </div>

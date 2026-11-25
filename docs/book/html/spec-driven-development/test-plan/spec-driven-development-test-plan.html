@@ -212,7 +212,7 @@
 <h4 id="TST-J"><a class="id-ref" href="#TST-J">TST-J</a> — 不同评测配置</h4>
 <p><strong>目标：</strong> 比较加不同辅助 skill 的效果。<strong>输入：</strong> <code>grill.skills</code> 分别为 <code>[]</code>、<code>[research]</code>、<code>[grill-with-docs]</code>、两个都加；wayfinder 是交付物，每种配置都带（<a class="id-ref" href="../decision-history/spec-driven-development-decision-history.html#ARD-CH">ARD-CH</a>）。<strong>通过条件：</strong> 每种配置出一份报告；先跑基线；只报分数，不设门槛。<strong>判定：</strong> 同 <a class="id-ref" href="#TST-E">TST-E</a>。</p>
 <h4 id="TST-K"><a class="id-ref" href="#TST-K">TST-K</a> — 评测报告</h4>
-<p><strong>目标：</strong> 每次运行生成一个 HTML 报告。<strong>输入：</strong> 任意一次运行。<strong>通过条件：</strong> 报告里有 run_id、分支、gold 版本、评测配置、分数 1 的逐条结果（注明 python 或 llm）、分数 2 的加减分、<a class="id-ref" href="#TST-F">TST-F</a> 四种输入的结果、5 次复核的结果和 Claude 的核对意见。<strong>判定：</strong> 生成报告，再按结构检查。</p>
+<p><strong>目标：</strong> 每次运行生成一个 HTML 报告。<strong>输入：</strong> 任意一次运行。<strong>通过条件：</strong> 报告里有 run_id、分支、gold 版本、评测配置、分数 1 的逐条结果（注明 python 或 llm）、分数 2 的加减分、<a class="id-ref" href="#TST-F">TST-F</a> 四种输入的结果、5 次复核的结果和 Claude 的核对意见、每篇生成文档的 <a class="id-ref" href="#TST-V">TST-V</a> 结果（答对比例和没解释的词）。<strong>判定：</strong> 生成报告，再按结构检查。</p>
 <h4 id="TST-L"><a class="id-ref" href="#TST-L">TST-L</a> — 5 次独立复核</h4>
 <p><strong>目标：</strong> 得出最终的通过或不通过。<strong>输入：</strong> 分数 1 的逐条结果和改动；结果写进 <a class="id-ref" href="#TST-K">TST-K</a> 的报告。<strong>通过条件：</strong> 同一个 <code>deepseek-flash</code> 独立裁决 5 次，至少 4 次通过；不推翻 Python 检查的结果。<strong>判定：</strong> 跑 5 次，Claude 再核对没通过和有分歧的条目。结论写进 <code>judgments/*-deepseek-flash.yaml</code> 并提交，里面记着语料 sha；SDD 文档、skill 或检查脚本改了，sha 就对不上，<code>test_judge_freshness.py</code> 失败，要重跑复核（<a href="../decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a>）。不同模型之间的偏差标为 Unverified。</p>
 <h4 id="TST-M"><a class="id-ref" href="#TST-M">TST-M</a> — 改了标准或 gold 之后同步测试</h4>
@@ -263,8 +263,8 @@
 <li><a class="id-ref" href="#TST-A">TST-A</a>：<span class="lvl lvl--must">MUST</span> 清单覆盖率不到 100% 就停。</li>
 <li><a class="id-ref" href="#TST-B">TST-B</a>：检查脚本失效就停。</li>
 <li><a class="id-ref" href="#TST-O">TST-O</a>、<a class="id-ref" href="#TST-P">TST-P</a>、<a class="id-ref" href="#TST-V">TST-V</a>：design 的覆盖、证据、可读性。这一步的 <a class="id-ref" href="#TST-V">TST-V</a> 只测 SDD 自己的文档。</li>
-<li><a class="id-ref" href="#TST-C">TST-C</a>，然后 <a class="id-ref" href="#TST-D">TST-D</a>：第一次运行，或者 gold 升版时。</li>
-<li><a class="id-ref" href="#TST-G">TST-G</a>、<a class="id-ref" href="#TST-N">TST-N</a>、<a class="id-ref" href="#TST-R">TST-R</a>、<a class="id-ref" href="#TST-S">TST-S</a>、<a class="id-ref" href="#TST-T">TST-T</a>、<a class="id-ref" href="#TST-U">TST-U</a>、<a class="id-ref" href="#TST-W">TST-W</a>、<a class="id-ref" href="#TST-X">TST-X</a>、<a class="id-ref" href="#TST-Y">TST-Y</a>、<a class="id-ref" href="#TST-Z">TST-Z</a>、<a class="id-ref" href="#TST-AA">TST-AA</a>。</li>
+<li><a class="id-ref" href="#TST-S">TST-S</a>，然后 <a class="id-ref" href="#TST-C">TST-C</a>、<a class="id-ref" href="#TST-D">TST-D</a>：生成 gold 前先确认 spec-write 正文齐全；第一次运行，或者 gold 升版时。</li>
+<li><a class="id-ref" href="#TST-G">TST-G</a>、<a class="id-ref" href="#TST-N">TST-N</a>、<a class="id-ref" href="#TST-R">TST-R</a>、<a class="id-ref" href="#TST-T">TST-T</a>、<a class="id-ref" href="#TST-U">TST-U</a>、<a class="id-ref" href="#TST-W">TST-W</a>、<a class="id-ref" href="#TST-X">TST-X</a>、<a class="id-ref" href="#TST-Y">TST-Y</a>、<a class="id-ref" href="#TST-Z">TST-Z</a>、<a class="id-ref" href="#TST-AA">TST-AA</a>。</li>
 <li><a class="id-ref" href="#TST-E">TST-E</a>、<a class="id-ref" href="#TST-F">TST-F</a>，然后对 <a class="id-ref" href="#TST-C">TST-C</a>、<a class="id-ref" href="#TST-E">TST-E</a> 里 spec-write 写出的文档跑 <a class="id-ref" href="#TST-V">TST-V</a>。</li>
 <li><a class="id-ref" href="#TST-H">TST-H</a>，然后 <a class="id-ref" href="#TST-I">TST-I</a>。</li>
 <li><a class="id-ref" href="#TST-Q">TST-Q</a>：mock 执行。</li>
@@ -618,6 +618,10 @@
 <tr>
 <td>2026-11-24</td>
 <td>第 20 轮审查后：eval.yaml 键表跟上实际结构</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 22 轮审查后：<a class="id-ref" href="#TST-S">TST-S</a> 移到生成 gold 之前；<a class="id-ref" href="#TST-K">TST-K</a> 报告加 <a class="id-ref" href="#TST-V">TST-V</a> 结果</td>
 </tr>
 </tbody></table></div>
       </div>

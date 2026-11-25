@@ -1,4 +1,4 @@
-<!-- SDD reader · source .md · git 7a24007 -->
+<!-- SDD reader · source .md · git 6cc9dcf -->
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light">
 <head>
@@ -1488,7 +1488,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <p><strong>Verify:</strong> 有检查模块时 TST-B 能跑；gold 的输入文件都在。</p>
 <h3 id="IMPL-E">IMPL-E — 自己跑一遍评测</h3>
 <p><strong>目标：</strong> 跑基线评测：<code>grill.skills: []</code>，输入是 iPhone 案例的需求和背景资料（<a href="decision-history/spec-driven-development-decision-history.html#ard-bl">ARD-BL</a>）。</p>
-<p><strong>步骤：</strong> 新开分支 <code>eval/v1/&lt;run_id&gt;</code>；用 spec-write 写出一套 feature spec；跑 TST-E、TST-F、TST-L，然后 TST-K；失败时先改 spec。</p>
+<p><strong>步骤：</strong> 新开分支 <code>eval/v1/&lt;run_id&gt;</code>；用 spec-write 写出一套 feature spec；跑 TST-E、TST-F，再对写出的文档跑 TST-V，然后 TST-L、TST-K；失败时先改 spec。</p>
 <p><strong>依赖：</strong> IMPL-B、IMPL-D、IMPL-J、IMPL-P、IMPL-AA；报告部分还依赖 IMPL-L 和 IMPL-X，可读性部分还依赖 IMPL-Q。<strong>挡住：</strong> IMPL-I。</p>
 <p><strong>Verify:</strong> 生成了 HTML 报告；分数按 test-plan 的 Scoring 计算。</p>
 <h3 id="IMPL-F">IMPL-F — 给人读的网页</h3>
@@ -1628,7 +1628,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <p><strong>依赖：</strong> IMPL-M。<strong>挡住：</strong> 无。</p>
 <p><strong>Verify:</strong> <code>must_registry_coverage.py</code> 不再列出没对应的检查脚本：每个要么对上 MUST 条目，要么在 <code>HELPER</code> 表里。2026-11-24 已完成。</p>
 <h3 id="IMPL-AA">IMPL-AA — 生成并整理 gold v1</h3>
-<p><strong>目标：</strong> 按 TST-C 用 iPhone 案例跑 3 次，再按 TST-D 整理出范例和 <code>gold/v1/annotations.yaml</code>。现状：已完成。</p>
+<p><strong>目标：</strong> 按 TST-C 用 iPhone 案例跑 3 次，再按 TST-D 整理出范例和 <code>gold/v1/annotations.yaml</code>。现状：已用当时的 spec-write 完成；IMPL-B 之后改了 spec-write，就按 TST-M 重跑并建立新基线。</p>
 <p><strong>依赖：</strong> IMPL-B、IMPL-D、IMPL-J。<strong>挡住：</strong> IMPL-E。</p>
 <p><strong>Verify:</strong> TST-C、TST-D 通过。</p>
 <h3 id="IMPL-AB">IMPL-AB — mock MCP 服务器</h3>
@@ -1757,6 +1757,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td>2026-11-24</td>
 <td>第 21 轮审查后：IMPL-N 只管契约，四个例子并入 IMPL-B；IMPL-W 等 IMPL-N；IMPL-AA 加依赖 IMPL-B、IMPL-J；IMPL-AB 不再挡住 IMPL-E</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 22 轮审查后：IMPL-AA 写明 gold v1 的基线条件；IMPL-E 加 TST-V</td>
 </tr>
 </tbody></table>
 </div>
@@ -1947,7 +1951,7 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <h4 id="TST-J">TST-J — 不同评测配置</h4>
 <p><strong>目标：</strong> 比较加不同辅助 skill 的效果。<strong>输入：</strong> <code>grill.skills</code> 分别为 <code>[]</code>、<code>[research]</code>、<code>[grill-with-docs]</code>、两个都加；wayfinder 是交付物，每种配置都带（ARD-CH）。<strong>通过条件：</strong> 每种配置出一份报告；先跑基线；只报分数，不设门槛。<strong>判定：</strong> 同 TST-E。</p>
 <h4 id="TST-K">TST-K — 评测报告</h4>
-<p><strong>目标：</strong> 每次运行生成一个 HTML 报告。<strong>输入：</strong> 任意一次运行。<strong>通过条件：</strong> 报告里有 run_id、分支、gold 版本、评测配置、分数 1 的逐条结果（注明 python 或 llm）、分数 2 的加减分、TST-F 四种输入的结果、5 次复核的结果和 Claude 的核对意见。<strong>判定：</strong> 生成报告，再按结构检查。</p>
+<p><strong>目标：</strong> 每次运行生成一个 HTML 报告。<strong>输入：</strong> 任意一次运行。<strong>通过条件：</strong> 报告里有 run_id、分支、gold 版本、评测配置、分数 1 的逐条结果（注明 python 或 llm）、分数 2 的加减分、TST-F 四种输入的结果、5 次复核的结果和 Claude 的核对意见、每篇生成文档的 TST-V 结果（答对比例和没解释的词）。<strong>判定：</strong> 生成报告，再按结构检查。</p>
 <h4 id="TST-L">TST-L — 5 次独立复核</h4>
 <p><strong>目标：</strong> 得出最终的通过或不通过。<strong>输入：</strong> 分数 1 的逐条结果和改动；结果写进 TST-K 的报告。<strong>通过条件：</strong> 同一个 <code>deepseek-flash</code> 独立裁决 5 次，至少 4 次通过；不推翻 Python 检查的结果。<strong>判定：</strong> 跑 5 次，Claude 再核对没通过和有分歧的条目。结论写进 <code>judgments/*-deepseek-flash.yaml</code> 并提交，里面记着语料 sha；SDD 文档、skill 或检查脚本改了，sha 就对不上，<code>test_judge_freshness.py</code> 失败，要重跑复核（<a href="decision-history/spec-driven-development-decision-history.html#ard-cj">ARD-CJ</a>）。不同模型之间的偏差标为 Unverified。</p>
 <h4 id="TST-M">TST-M — 改了标准或 gold 之后同步测试</h4>
@@ -1998,8 +2002,8 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <li>TST-A：MUST 清单覆盖率不到 100% 就停。</li>
 <li>TST-B：检查脚本失效就停。</li>
 <li>TST-O、TST-P、TST-V：design 的覆盖、证据、可读性。这一步的 TST-V 只测 SDD 自己的文档。</li>
-<li>TST-C，然后 TST-D：第一次运行，或者 gold 升版时。</li>
-<li>TST-G、TST-N、TST-R、TST-S、TST-T、TST-U、TST-W、TST-X、TST-Y、TST-Z、TST-AA。</li>
+<li>TST-S，然后 TST-C、TST-D：生成 gold 前先确认 spec-write 正文齐全；第一次运行，或者 gold 升版时。</li>
+<li>TST-G、TST-N、TST-R、TST-T、TST-U、TST-W、TST-X、TST-Y、TST-Z、TST-AA。</li>
 <li>TST-E、TST-F，然后对 TST-C、TST-E 里 spec-write 写出的文档跑 TST-V。</li>
 <li>TST-H，然后 TST-I。</li>
 <li>TST-Q：mock 执行。</li>
@@ -2353,6 +2357,10 @@ figure.fig figcaption{font-family:var(--serif);font-style:italic;font-size:14px;
 <tr>
 <td>2026-11-24</td>
 <td>第 20 轮审查后：eval.yaml 键表跟上实际结构</td>
+</tr>
+<tr>
+<td>2026-11-24</td>
+<td>第 22 轮审查后：TST-S 移到生成 gold 之前；TST-K 报告加 TST-V 结果</td>
 </tr>
 </tbody></table>
 </div>
